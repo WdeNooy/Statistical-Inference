@@ -1,0 +1,68 @@
+---
+title: "A Gentle but Critical Introduction to Statistical Inference"
+author: "Wouter de Nooy"
+date: "2016-09-20 - `r Sys.Date()`"
+site: bookdown::bookdown_site
+output: 
+  bookdown::gitbook:
+    number_sections : TRUE
+    split_by : "section+number"
+documentclass: book
+---
+
+```{r setup, include=FALSE}
+# Set echo=FALSE in a code chunk if its interactive content has been added.
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval=TRUE, tidy=TRUE)
+# Libraries used.
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(visNetwork)
+```
+
+```{r simulation-settings, eval=FALSE, echo=FALSE}
+source("norm10.R") #function to normalize scores
+# SPSS data set candy colour (uniform) and weight (normal, M = 2.8, SD = 0.2), N= 50.
+set.seed(seed = 12345)
+candies <- data.frame(colour = factor(c("blue","green","yellow","orange","red")), weight = rnorm(50, mean = 2.8, sd = 0.2), sticky = factor(c(rep(c("sticky", "sticky", "not sticky", "sticky", "not sticky"), 6), rep(c("sticky", "not sticky"), 9), c("not sticky", "sticky"))), colour_pre = rnorm(50, mean = 7.3, sd = 0.5))
+set.seed(seed = 8734)
+candies$colour_post <- candies$colour_pre + ifelse(candies$colour %in% c("blue","green","orange"), rnorm(50, mean = -1.1, sd = 0.1), ifelse(candies$colour == "yellow", rnorm(50, mean = -2.4, sd = 0.2), rnorm(50, mean = -3.7, sd = 0.4)))
+set.seed(seed = 3295)
+candies$sweetness <- 12 - candies$colour_post + rnorm(50, mean = 0, sd = 1.7)
+candies$sweetness <- norm10(candies$sweetness) #normalize to 1-10
+attributes(candies$colour)$label <- "Candy colour"
+attributes(candies$weight)$label <- "Candy weight (grams)"
+attributes(candies$sticky)$label <- "Candy is sticky"
+attributes(candies$colour_pre)$label <- "Candy colourfulness before exposure to sun light"
+candies$colour_pre <- labelled::labelled(candies$colour_pre, labels = c(`Totally faded` = 1, `Maximum colourfulness` = 10)) #Set value labels for export to SPSS
+attributes(candies$colour_post)$label <- "Candy colourfulness after exposure to sun light"
+candies$colour_post <- labelled::labelled(candies$colour_post, labels = c(`Totally faded` = 1, `Maximum colourfulness` = 10))
+attributes(candies$sweetness)$label <- "Candy sweetness"
+candies$sweetness <- labelled::labelled(candies$sweetness, labels = c(`Not a bit sweet` = 1, `Super sweet` = 10))
+haven::write_sav(candies, "data/candies.sav")
+
+# Include SPSS tabular output:
+#- Right-click table, select Style Output, Select as Group (Continue), Table Look, Compact.
+#- Select tales to be exported. Don't select separate analysis titles, they are badly formatted.
+#- Right-click selected table and export as HTML, Change Options: Export visible layer only, Export without styling, Include footnotes and captions, Export visible view only.
+#- Export HTML file to R project directory.
+#- Include HTML file in R Markdown within <iframe>. Set width="100%" and experiment to find the right height.
+
+# Links to external resources such as (SPSS) data must be absolute. They cannot be stored in the R Markdown doc root directory, so I store them in a data subdirectory of the shiny server http://82.196.4.233:3838/data. Embed links as HTML with target="_blank" to open the resource in a new window otherwise the Shiny server displays the R Markdown document in grey (must be reloaded).
+```
+
+# Introduction and Reader's Guide {-}
+
+In the years that I have been teaching inferential statistics to bachelor students in Communication Science, I have learned two things. First, it is paramount that students understand the principles of statistical inference very well before they can apply statistical inference correctly themselves. Second, formal notation, manual calculation, and estimation details distract rather than help students understand what they are doing. This book offers a non-technical but thorough introduction to statistical inference. It discusses a minimal set of concepts needed to understand both the possibilities and pitfalls of estimation and null hypothesis testing. It uses a minimum of formal notation.
+
+### Intended Audience and Setting {-}
+
+This book is written as reading material for a second course in statistics in the bachelor Communication Science at the University of Amsterdam. Students enrolled in this course have had a first course in statistics that explained them how to change research questions into variables and associations between variables, how to select and execute (in SPSS) the right analysis or test to answer their research question, and how to interpret the results in a language that is both understandable to the average reader and complying with professional standards (APA6 standard for reporting test results). In addition, they have learned the very basics of inferential statistics: How and which null hypothesis to reject based on reported p-values and how to interpret confidence intervals.  
+
+This book is meant for use in a flipped classroom setup. Students should read the text, watch embedded videos, and play with the interactive content before they meet in class. Class meetings are used to answer questions raised by the students, do group work to exercise with the concepts and techniques presented in the text, and do little tests to check understanding.  
+
+### Interactive Content {-}
+
+The interactive content in this book replaces simulations that used to be demonstrated in lectures. I expect that doing simulations yourself rather than watching them being done by someone else enhances understanding. I have tried to break down the simulations into small steps, confronting the student several times with basically the same simulation but with added complexity. I hope that this approach enhances understanding and remembrance and, at the same time, avoids frustration caused by complex dashboards offering all options at once. Most interactive content starts with a question regarding the student's expectations of what is going to happen in the simulation. I strongly recommend students to state their expectations before they start the simulations to see where their intuitions are right and where they are wrong.  
+
+__TBD: thank you's and sources used for text and interactive content__

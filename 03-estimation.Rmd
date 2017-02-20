@@ -1,0 +1,331 @@
+# Estimating a Parameter: Which Population Values Are Plausible? {#param_estim}
+> Key concepts: point estimate, interval estimate, confidence (level), precision, standard error, critical value, degrees of freedom, confidence interval, uncertainty.
+
+In this chapter, we set out to make educated guesses of a population value (parameter, often called the true value) based on our sample. This type of guessing is called _estimation_. Our first guess will be a single value for the population value. We merely guess that the population value is equal to the value of the sample statistic. This guess is the best we can make but it is most likely to be wrong. 
+
+Our second guess uses the sampling distribution to make a statement about the approximate population value. More precisely, we calculate an interval for which we are confident that it includes the population value. The wider the interval, the more confident we are that it contains the true population value but, at the same time, the less precise our guess.
+
+### Test your intuition or knowledge {-}
+
+```{r estimation, fig.cap="Point and interval estimates, confidence intervals."}
+# Combination of apps interval-level, interval-size, and crit-values: A normal curve (M = 2.8, SE = 0.1 (SD population = 0.5 and sample size = 25)) as sampling distribution with two vertical lines marking interval limits (initially set at 2.5%/95%/2.5%) ; percentages indicating the area under the curve within and outside the limits ; double arrow from mean to interval limits indicating the interval estimate ; double x-axis: the first in grams and the second in standard errors, both axes labelled ; 3 sliders: confidence level, sample size, and standard error ; any slider change will change the position of the interval limits (to represent the selected confidence level) ; changing confidence level also changes the percentages ; changing sample size or standard error also changes the scale of the x-axis in standard errors ; if possible, changing sample size (or standard error) should also change the slider position of the standard error (or sample size) to show the relation between the two.
+```
+
+Figure \@ref(fig:estimation) shows the sampling distribution of average candy weight in a sample bag, which is a normal distribution. 
+
+1. The percentage in between the two vertical lines can be interpreted as a probability. A probability of what? 
+```{r, echo=FALSE}
+#1. The probability to draw a sample (bag) with a sample mean (average candy weight) between the value of the left (lower) limit and the right (upper) limit.
+```
+2. The double arrow represents an interval of sample means, in this example average candy weight. What happens if you change the confidence level? Explain why this makes sense.
+```{r, echo=FALSE}
+#2. Raising the confidence level increases the width of the interval because it increases the area under the curve between the interval limits. This makes sense because the confidence level is the probability of drawing a sample with a mean (sample statistic value) within the interval. If we want to have a higher probability, we must be mor einclusive, that is, we must allow for a greater range of sample means.
+```
+3. What happens to the graph if you change sample size?
+```{r, echo=FALSE}
+#3. A larger sample size makes the sampling distribution more peaked, so the interval containing the middle 95% of all samples becomes narrower. We have to expect less variation in sample means, so we have a more precise estimate of the sample mean that we are very likely (95% probability) to draw.
+```
+4. What happens to the standard error slider if you change sample size? How are sample size and standard error linked? What characteristic of the sampling distribution is expressed by the standard error?
+```{r, echo=FALSE}
+#4. Increasing sample size decreases the standard error, so the two are negatively correlated. A larger sample size creates a more peaked distribution, which indicates lower variation (scores are closer to the mean), standard error expresses the variation in the sampling distribution. Actually, it is the standard deviation of the sampling distribution. This makes sense: A larger sample contains more information, so its mean should (on average) be closer to the true population mean (hence to the mean of the sampling distribution).
+```
+5. The values of the interval limits---average candy weights in this example---on the scale in standard errors are called critical values. What happens to the critical values if you change sample size?
+```{r, echo=FALSE}
+#5. Nothing changes. Critical values are fixed values in terms of standard errors if the confidence level and the degrees of freedom do not change. If this was a t distribution, the critical values would slightly decrease with larger sample size but this change is too small to be of practical relevance, so it is ignored in this booklet.
+```
+6. What happens to the critical values if you change the standard error?
+```{r, echo=FALSE}
+#6. Nothing changes. Critical values are fixed values in terms of standard errors if the confidence level and the degrees of freedom do not change.
+```
+7. What happens to the critical values if you change confidence level?
+```{r, echo=FALSE}
+#7. Higher confidence levels yield more extreme critical values because the interval must cover a larger prportion of all possible samples.
+```
+8. If 2.8 is average candy weight in the sample but not necessarily true average candy weight in the population, the interval marked by the arrows is called a _confidence interval_. In this example, a confidence interval for what? And what is the point estimate?
+```{r, echo=FALSE}
+#8. A confidence interval always belongs to a population statistic (parameter). In this example, we use the sample mean to estimate the populaiton mean, so the confidence interval refers to average candy weight in the population. The point estimate, which gives a single number instead of an interval, would be 2.8 grams here.
+```
+
+On first reading, you may not know all answers. Never mind that. Just try again after you have studied this chapter.
+
+## Point Estimate
+
+```{r point-estimates", fig.cap="A sample from a population with unknown proportion of yelow candies."}
+# A button allows to draw a sample of size 20 from a population with five colours and random proportion of yellow candies within the range .10 .40 ; the sample is shown as a dotplot (stacks of coloured dots) with the proportion of yellow as a number ; result: true population proportion, sample proportion, and student's proportion with current winner (closest to true population proportion) and a bar chart showing cumulative number of wins for sample proportion versus student's choice.
+```
+
+Figure \@ref(fig:point-estimates) generates random samples from a population of candies for which we do not know the proportion of yellow candies. It uses the sample proportion as estimate of the population proportion. Note that each sample is drawn from a different population. 
+
+1. Can you do better? Draw a sample and guess the population proportion. See which estimate is better. Repeat this until you are convinced that you can or cannot do better than the sample proportion.  
+
+If we have to name one value for the population value, our best guess is the value of the sample statistic. For example, if 18% of the candies in our sample bag are yellow, our best guess of the proportion of yellow candies in the population of all candies from which this bag was filled, is .18. What other number can we give if we only have our sample? This type of guess is called a _point estimate_ and we use it a lot.  
+
+The sample statistic is the best estimate of the population value only if the sample statistic is an unbiased estimator of the population value. As we have learned in Section \@ref(cont_sample_stat), the true population value is equal to the mean of the sampling distribution for an unbiased estimator. The mean of the sampling distribution is the expected value for the sample. In other words, an unbiased estimator neither systematically overestimates the population value nor does it systematically underestimate the population value. With an unbiased estimator, then, there is no reason to prefer a value higher or lower than the sample value as our estimate of the population value.  
+
+Even though the value of the statistic in the sample is our best guess, it is very unlikely that our sample statistic is exactly equal to the population value (parameter). The recurrent theme in our discussion of random samples is that a random sample differs from the population because of chance during the sampling process. The precise population value is highly unlikely to actually appear in our sample. The sample statistic value is our best point estimate but it is nearly certain that it is wrong. It may be slightly or strongly off the mark but it will hardly ever be spot on. For this reason, it is better to estimate a range within which the population value falls. Let us turn to this in the next section.  
+
+## Interval Estimate for the Sample Statistic  
+
+The sampling distribution of a continuous sample statistic tells us the probability of finding a range of scores for the sample statistic. For example, the average weight of candies in a sample bag is a continuous random variable. The sampling distribution tells us the probability of drawing a sample with average candy weight between 2.7 and 2.9 gram. We can use this range as our interval estimate. 
+
+Remember that the average or expected value of a sampling distribution is equal to the population value if the estimator is unbiased. For example, the mean weight of yellow candies averaged over very many samples is equal to the mean weight of yellow candies in the population. For an interval estimate, we now select the sample statistic values that are closest to the average of the sampling distribution. 
+
+Between which borders are the sample statistic values situated that are closest to the population value? Of course, we have to specify what we mean by "closest". Which part of all samples do we want to include? A popular proportion is 95%, so we want to know the border values that include 95% of all samples that are closest to the population value. For example, between which borders is average candy weight situated for 95% of all samples that are closest to average candy weight in the population?
+
+```{r ci-borders, fig.cap="Sampling distribution and interval estimate."}
+# Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight"; add two vertical lines, one to the extreme left, one to the extreme right with their values on the x-axis displayed and the percentage of observations (area) between the two lines displayed (initially near 50%) ; slider moves right line and left line (in opposite directions) and adjusts percentage of area between lines ; note that the lines cannot be moved across the center of the distribution
+```
+
+Figure \@ref(fig:ci-borders) shows the sampling distribution of average sample candy weight.
+
+1. Move the slider until you have found the interval containing 95% of all samples, which are closest to the (true) population value. Press the button to repeat with a different sampling distribution.  
+
+2. What is average candy weight in the population of candies?  
+
+Say, for example, that 95% of all possible samples in the middle of the sampling distribution have an average candy weight ranging from 2.7 to 2.9 gram. The proportion .95 can be interpreted as a probability. Our sampling distribution tells us that we have 95% probability that the average weight of yellow candies will lie between 2.7 and 2.9 gram in a random sample that we draw from this population. 
+
+We now have border values, that is, a range of sample statistic values, and a probability of drawing a sample with a statistic falling within this range. The probability shows our _confidence_ in the estimate. It is called the _confidence level_ of an interval estimate. 
+
+## Precision, Standard Error, and Sample Size
+
+The width of the estimated interval represents the _precision_ of our estimate. The wider the interval, the less precise our estimate. With a less precise interval estimate, we reckon with a wider variety of outcomes in our sample. 
+
+```{r interval-level, fig.cap="Factors that affect the precision of an interval estimate."}
+# (as in ci-borders) Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight" ; vertical lines for borders interval estimate ; show a double-pointed arrow on top of or above/under the x-axis representing the confidence interval for the initial confidence level (95%) and sample size (30); add a slider to adjust the confidence level (50%-100%?) ; update the vertical lines (borders) and the arrow representing the precision of the confidence interval if the slider position changes.
+```
+
+Figure \@ref(fig:interval-level) shows a sampling distribution of average candy weight in candy sample bags. The horizontal arrow indicates the precision of the interval estimate.
+
+1. How, do you think, does the precision of the interval estimate change if you change the confidence level? First write down what you expect and why you expect that. Then check what happens if you change the confidence level slider.
+
+If we want to predict something, however, we value precision. We rather conclude that the average weight of candies in the next sample we draw lies between 2.75 and 2.85 gram than between 1.5 and 4.1 gram. If we would be satisfied with a very imprecise estimate, we need not do any research at all. With a little knowledge about the candies that we are investigating, we could straightaway predict that the average candy weight is between zero and ten gram. The goal of our research is to make more precise estimations.  
+
+There are several ways to increase the precision of our interval estimate, that is, obtain a narrower interval for our estimate. The easiest and least useful way is to decrease the probability that our estimate is correct. If we lower the probability that we are right, we can discard more possible sample statistic outcomes and focus on a narrower range of sample outcomes around the true population value. 
+
+This method is not useful because we sacrifice our confidence that the range includes the outcome in the sample that we are going to draw. What is the use of a more precise estimate if we are less sure that it predicts correctly? Therefore, we usually do not change the probability and leave it at 95% or thereabouts (90%, 99%). We think it important to be quite sure that our prediction will be right.  
+
+### Sample size  
+```{r interval-size, fig.cap="Factors that affect the precision of an interval estimate."}
+# same as interval-level but the slider adjusts sample size (N between 5 and 100, steps of 5) ; update the line/arc representing the precision of the confidence interval if the slider position changes ; also update the normal curve and ensure that the scale of the x-axis remains the same, so it is clear that the sampling distribution becomes more peaked for larger samples. 
+```
+
+Figure \@ref(fig:interval-size) shows a sampling distribution of average candy weight in candy sample bags. The horizontal arrow indicates the precision of the interval estimate.
+
+1. How, do you think, does the precision of the interval estimate change if you change the size of the sample? First write down what you expect and why you expect that. Then check what happens if you change the confidence level slider.
+
+2. How does the shape of the sampling distribution change if you change sample size? Explain what this means for the values of the sample statistic.
+
+A less practical but very useful method of narrowing the interval estimate is increasing sample size. As you may have noticed while playing with Figure \@ref(fig:interval-size), a larger sample yields a narrower, that is, more precise interval. You may have expected intuitively that larger samples give more precise estimates because they offer more information. This intuition is correct.  
+
+In a larger sample, an observation above the mean is more likely to be compensated by an observation below the mean. Just because there are more observations, it is less likely that we sample relatively high scores but no or considerably less scores that are relatively low. 
+
+In other words, the larger the sample, the more the distribution of scores on a variable in the sample will resemble the distribution of scores on this variable in the population. As a consequence, a sample statistic value will be closer to the population value for this statistic.  
+
+Larger samples are more similar to the population and therefore large samples drawn from the same population are more similar to one another. The result is that the sample statistic values in the sampling distribution are less varied and more similar. They are more concentrated around the true population value, which is the average of the sampling distribution. The sampling distribution is more peaked, so the middle 95% of all sample statistic values are closer to the center.  
+
+### Standard error {#standard-error}
+The concentration of sample statistic values, such as average candy weight in a sample bag, is expressed by the standard deviation of the sampling distribution. Hitherto, we have only paid attention to the center of the sampling distribution, its mean, because it is the expected value in a sample and it is equal to the population value if the estimator is unbiased. 
+
+Now we start looking also at the standard deviation of the sampling distribution because it tells us how precise our interval estimate is going to be. The sampling distribution's standard deviation is so important that it has received a special name: the _standard error_.  
+
+```{r se-point-est, fig.cap="The standard error: How wrong are point estimates?"}
+# Two goals. First, remind student of the fact that a standard deviation represents deviations from the mean. Second, show that the standard error equals the standard deviation of the sampling distribution in that it is the standard deviation calculated for many samples.
+# Use a normally distributed population with M = 2.8 and SD = 2 (candy weight) ; one button creates a random sample (N = 10?) displaying it as a dotplot with vertical lines for both the sample average and population average ; mark the difference between the two averages as a (fat red?) horizontal arrow pointing from population to sample mean ; add the sample average to a histogram (with a normal curve representing the true sampling distribution as background) also displaying the population mean as a vertical line ; show the standard deviation of the means over all preceding samples as a (double)left- and right-pointing) arrow (at such a height that it touches the normal curve when it reaches the value of the standard error) ; add a second button to add another 10 (or 100?) samples that are not shown as a dot plot but theirs means are added to the histogram and the arrow representing the standard deviation is updated
+```
+
+Figure \@ref(se-point-est) shows both a sample of candies and the (eventual) sampling distribution. A horizontal arrow in the sample displays the difference between the sample mean and the true (population) mean, which is 2.8 gram. The horizontal arrows in the sampling distribution show the average difference between the population mean and the average mean in all samples that have been drawn. 
+
+1. Explain why we can interpret the horizontal arrows as error.  
+
+2. Use the button __Add Sample__ several times. Explain why the horizontal arrow in the sampling distribution expresses variation, for example, standard deviation. 
+
+3. Use the button __Add 10 Samples__ several times. What happens to the length of the horizontal arrow in the sampling distribution? 
+
+4. If we would add the means of very many samples to the sampling distribution, what would the horizontal arrow mean here?
+
+The word _error_ reminds us that the standard error tells us the size of the error that we are likely to make (on average under many repetitions) if we use the value of the sample statistic as a point estimate for the population value. Let us assume, for example, that the standard error of the average weight of candies in a sample bag is 0.2. Loosely stated, this means that the average difference between the true average candy weight and the average candy weight in a sample is 0.2 if we draw very many samples from the same population. 
+
+By the way, the standard deviation does not give us the ordinary average difference but it gives us the square root of the average of squared differences. But this detail is irrelevant to how we interpret the standard error.  
+
+The smaller the standard error, the more the sample statistic values resemble the true population value, the more precise our interval estimate with a given confidence level, for example, 95%. Because we like more precise interval estimates, we prefer small standard errors over high standard errors. 
+
+In theory, it is easy to obtain smaller standard errors: just increase sample size. See Figure \@ref(fig:interval-size): larger samples yield more peaked sampling distributions. In a peaked distribution, values are closer to the mean. In our example, average candy weight in sample bags are closer to the average candy weight in the population. Imagine a horizontal arc showing the width of the distribution: It becomes smaller for a more peaked distribution, so the standard error is lower.
+
+In practice, however, it is both time-consuming and expensive to draw a very large sample. Usually, we want to settle on the optimal size of the sample, namely a sample that is large enough to have interval estimates at the confidence level and precision that we need but as small as possible to save on time and expenses. We return to this matter in Chapter \@ref(power).  
+
+## Critical Values  
+
+__interactive content: as above (??) but with double labeling of the x-axis: raw scores and standard errors? ; see that critical value remains the same (even if raw scores change) when the sample size is changed (and, hence, the standard error)?__
+
+```{r crit-values, fig.cap="Critical values and the normal distribution."}
+# same as interval-size but the slider adjusts the standard error (start value = 0.1, so one standard error aligns with 0.1 gram above or below average; slider range 0.05 and 0.15?) ; the vertical lines are fixed at 2.5% and 97.5% of the cumulative area under the normal curve ; first x-axis has fixed scale in grams (population mean is 2.8) ; add a second x-axis representing z scores with values -1.96, -1.0, 0, 1.0, 1.96 ; if the standard error is adjusted, the normal curve changes as well as the scale of the second x-axis and the two verticl lines at -1.96 and 1.96. 
+```
+
+Figure \@ref(fig:crit-values) shows the sampling distribution over average candy weight per sample bag. It contains two horizontal axes, one with average candy weight in grams and one with average candy weight in standard errors (_z_ scores).
+
+1. How do the two horizontal axes tell you the size of the standard error in grams?
+
+2. How, do you think, does the location of the vertical lines on the two horizontal axes change if you change the size of the standard error? Check you expectation by using the slider. 
+
+In Figure \@ref(fig:crit-values), we approximate the sampling distribution with a theoretical probability distribution, namely the normal distribution. If we use a theoretical probability distribution, the selected probability level corresponds to a particular outcome value in the theoretical probability distribution.  
+
+### Standardization and _z_ scores  
+The most simple situation arises if we _standardize_ the sampling distribution: Subtract the average of the sampling distribution from each sample mean in this distribution and divide the result by the standard error. Thus, we transform the sampling distribution into a standardized distribution of _z_ scores. The mean of the new standardized _Z_ variable is always zero.  
+
+If we use the normal distribution for standardized scores, which is called the _standard-normal distribution_ or _z distribution_, there is a single _z_ value that marks the boundary between the top 2.5% of all samples and the bottom 97.5%. This _z_ value is 1.96. If we combine this value with -1.96, separating the bottom 2.5% of all samples from the rest, we obtain an interval [-1.96, 1.96] containing 95% of all samples that are closest to the mean of the sampling distribution.   
+
+In a standard-normal or _z_ distribution, 1.96 is called a _critical value_. It separates the 95% sample statistic outcomes that are closest to the parameter, hence that are most likely to appear, from the 5% that are furthest away and least likely to appear. There are also critical _z_ values for other probabilities, for example, 1.64 for the middle 90% of all samples and 2.58 for the middle 99%. 
+
+### Interval estimates from critical values and standard errors {#int-est-sample-mean} 
+Critical values in a theoretical probability distribution tell us the boundaries or range of the interval estimate expressed in standard errors. In a normal distribution, 95% of all sample means are situated no more that 1.96 standard errors from the population mean. 
+
+If the standard error is 0.1 and the population mean is 2.8 gram, we have 95% probability that the mean candy weight in a sample that we draw from this population lies between 2.604 gram (this is 2.8 minus 1.96 times 0.1) and 2.996 gram. 
+
+Critical values make it easy to calculate an interval estimate if we know the standard error. Just take the population value and add the critical value times the standard error to obtain the upper limit of the interval estimate. Subtract the critical value times the standard error from the population value to obtain the lower limit. 
+
+In the case of a normal distribution, it is extremely easy because there is a fixed critical value for each probability, for example 1.96 for 95% probability, which one could learn by heart.  
+
+### Degrees of freedom (_df_)  
+For other theoretical probability distributions, the situation is slightly more complicated because we have several different critical values for the same probability level. Smaller samples usually require higher critical values. More generally, critical values depend on the _degrees of freedom_ in the sample. 
+
+We need not be concerned with the exact meaning of degrees of freedom or how the degrees of freedom are calculated for a sample if we want to apply a theoretical probability distribution. Our statistical software takes care of this for us. We must, however, report the degrees of freedom according to the APA6 standard.
+
+## Confidence Interval for a Parameter
+
+Working through the preceding sections, it may have occurred to you that it is all very nice to be able to estimate the value of a statistic in a new sample with a particular precision and probability but that we are not really interested in doing that. Instead, we want to estimate the value of the statistic in the population. 
+
+For example, we don't care much about the average weight of candies in our sample bag or in the next sample bag that we may buy. We want to make a statement about the average weight of candies in the population. How can we do that?  
+
+In addition, you may have realized that we know the precise population value, for example, average candy weight, if we know the sampling distribution. After all, the average of the sampling distribution is equal to the population mean for an unbiased estimator. In the preceding paragraphs, we acted as if we knew the sampling distribution. If we know the sampling distribution, we know the population value, so why would we care about estimating an interval?  
+
+So our problem is this. We want to estimate a population value using probabilities. For probabilities we need the sampling distribution but for the sampling distribution, we must know the population. A vicious circle.
+
+In the exact approach to the sampling distribution of the proportion of yellow candies in a sample bag, for example, we must know the proportion of yellow candies in the population. If we know the population proportion, we can exactly calculate the probability of getting a sample bag with a particular proportion of yellow candies. But we don't know the population proportion of yellow candies; we want to estimate it.  
+
+```{r normal-param, fig.cap="Staisics required for using the standard normal distribution."}
+# show an X axis labeled 'sample mean' with a scale from 0 to 5 gram ; add sample mean as labelled dot at 3.4 ; add a normal curve with population mean 2.8, a standard error 0.1 (equivalent to sample standard deviation of 1.0 and a sample size of 25) ; show checkboxes for sample size, sample mean, sample standard deviation, standard error, population mean, and population standard error with their (fixed) values ; select all checkboxes ; if the user deselects a checkbox, either nothing happens or a series of 5 normal curves is shown for different values of the statistic associated with the checkbox.
+# - sample size: only needed if standard error is deselected
+# - sample mean: not necessary
+# - sample standard deviation: if population standard deviation or standard error is selected, the sample standard deviations is not needed ; if both standard deviations and the standard error are not selected, show normal curves with different standard deviations
+# - standard error: not needed if sample size and sample or population standard deviation are selected ; otherwise, show normal curves with different standard deviations
+# - population mean: if deselected, show normal curves for different values
+# - population standard deviation: see sample standard deviation
+```
+
+![Example layout](figures/CI_2.png)
+
+Figure \@ref(fig:normal-param) shows a standard normal distribution that we could use to approximate the sampling distribution of average candy weight in a sample (bag) of candies. This theoretical distribution can be used only if some of the statistics (see the check boxes) are known. Uncheck a box if you think this statistic is _not_ needed to use the standard normal distribution. If you are right, nothing happens. If you are wrong, you will see a series of normal curves for different values of the statistic. Then, check the statistic again and try another statistic.
+
+1. Which mean is required for using the standard normal distribution? Which characteristic of the distribution is fixed by this statistic?
+
+2. Do you have to know both the standard deviation of the sample and of the population?
+
+3. Which values do you have to know _only if_ you don't know the standard error? In other words, which statistics affect the standard error (you have learned on before)? Deselect the standard error and experiment with the other options.
+
+A theoretical probability distribution can only be used as an approximation of a sampling distribution if we know some characteristics of the population. We know that the sampling distribution of sample means always has the bell shape of a normal (_z_) distribution or _t_ distribution. However, knowing the shape is not sufficient for using the theoretical distribution as an approximation of the sampling distribution.
+
+We must also know the population mean because it specifies where the center of the sampling distribution is located. So, we must know the population mean to use a theoretical probability distribution to estimate the population mean. This sounds like a problem that only Baron von M&uuml;nchhausen can solve. How can we drag ourselves by the hair out of this swamp?  
+
+By the way, we also need the standard error to know how peaked or flat the bell shape is. The standard error can usually be estimated from the data in our sample. If you have carefully experimented with the options in the interactive content above, you should have some ideas. But let us not worry about how the standard error is being estimated. We want to estimate the population mean now.  
+
+### Imaginary population values  {#imag-pop-values}
+```{r pop-means-ci, fig.cap="Population means for which the sample mean is within the interval estimate."}
+# draw two horizontal lines, the top line labeled 'population' and the bottom line labeled 'sample', both lines with a numerical scale (0-5) ; generate a sample mean and standard error within a particular range, say 1-4 for the sample mean and the standard error in a range convenient to have interval estimates within the 0-5 or -1-6 range ; mark the sample mean on the lower line and show the value of the standard error somewhere in the app ; if the user clicks on the upper line, the corresponding number is shown as an (imaginary) population mean ; the 95% probability interval estimate for the sample mean is shown as a horizontal line segment on top/near the lower line (plus a light triangle starting at the population value) ; if the line segment overlaps with the sample mean, the selected population value is marked by a green dot and the line segment is green, they are red dots otherwise ; also show the z value of the sample mean for the chosen population mean ; at next click, remove old interval estimate (line segment plus triangle) but keep the prevously selected population mean ; a 'Reset' button generates new values to restart the interaction (repeat the assignment with different values for the sample mean and standard error to emphasize that the z values remain the same)
+```
+
+![Example layout](figures/CI_1.png)
+
+Figure \@ref(fig:pop-means-ci) shows the sample mean (lower scale) and a range of population means (upper scale), click somewhere on the upper scale to select a possible value for the population mean. The app will then show the interval estimate for the sample mean if this is the true population value. If the true sample mean is within this interval, the population mean is represented by a green dot. Otherwise, a red dot marks the population mean. The app will also show the _z_ value of the true sample mean if the selected population mean would be the true population mean.
+
+1. Click repeatedly on the upper line (population) to find the highest and lowest value of the population mean for which the sample mean is in the interval of sample means that have 95% probability to occur. Try to minimize the number of clicks you need. 
+
+2. How does the depicted interval estimate help you to minimize the number of clicks you need?
+
+3. How does the _z_ values of the sample mean help you to minimize the number of clicks you need?
+
+How do we solve the M&uuml;nchhausen problem that we must know the population mean to estimate the population mean? The solution is that we select a lot of imaginary population means. For each imaginary population mean, we calculate the interval within which the sample mean is expected to fall if this imaginary mean would be the true population mean. We use a fixed confidence level, usually a probability of 95 percent. 
+
+As a next step, we check if the mean of the sample that we have actually drawn falls within this interval. If it does, we conclude that this (imaginary) population mean is not at odds with the sample that we have drawn. In contrast, if our sample mean falls outside the interval, we conclude that this population mean is unlikely according to our sample. 
+
+In this way, we can find all population means that are _consistent_ with our sample. If the true population mean is any of these imaginary means, we are sufficiently likely (95% probability) to draw a sample with our actual sample mean.  
+
+While playing with Figure \@ref(fig:pop-means-ci), you may have noticed the _z_ values of the sample mean for the lowest and highest population means for which the sample mean is still within the interval. When you added the lower bound of the population means, the sample mean  had a _z_ value of about 1.96 while it had a _z_ value of about -1.96 for the highest population mean in the range. 
+
+It is not a coincidence that we find the critical values of the standard-normal distribution here. We are using the standard-normal distribution to approximate the sampling distribution of the sample mean. The critical _z_ value 1.96 marks the upper border of the interval containing 95% of all samples with means closest to the population mean and -1.96 marks the lower border. A distance of 1.96 standard errors, then, is the maximum distance between a population mean and a sample mean that belongs to the 95% sample means closest to the population mean. 
+
+As a consequence, we could simply have calculated the range of plausible population values by adding and subtracting 1.96 standard errors from the sample mean. An example to illustrate this. If average candy weight in our sample is 2.7 gram and the standard error is 0.1, the lower and upper border for plausible population means are 2.504 gram (this is 2.7 minus 1.96 times 0.1) and 2.896 gram (2.7 plus 1.96 times 0.1). 
+
+Haven't we seen this calculation before? yes we did in Section \@ref(int-est-sample-mean), where we estimated the interval for sample means. We now simply reverse the calculation, using the sample mean to estimate a range for population means instead of the other way around.
+
+### Confidence interval {#conf-interval}
+The upper and lower bounds for the population mean or, more generally, the parameter that we want to estimate, yield an interval for the parameter. We use this as the interval estimate of the parameter. 
+
+This interval is linked to a probability, for example, 95%, but we should realize very well that this is NOT the probability that the parameter has a particular value or that it falls within the interval. The parameter is _not_ a random variable because it is not affected by the random sample that we draw. For example, how could the sample that we draw change the average weight of all candies? 
+
+The parameter has one value, which is either within or outside the interval that we have constructed. We just don't know. But we do know that our sample is more likely for population values within the interval.  
+
+We use the term _confidence_ instead of probability when we use this interval to estimate a parameter. We say that we are 95% confident that the parameter falls within the interval. The interval is called a _confidence interval_ and we usually add the confidence level, for example, the 95% confidence interval (abbreviated: 95%CI) of the average weight of candies in the population ranges from 2.4 to 3.2 gram. An average candy weight between 2.4 and 3.2 gram is plausible given the sample that we have drawn. In our reports, we say that:  
+> We are 95% confident that the average candy weight in the population is between 2.4 and 3.2 gram.  
+
+```{r 95ci-simul, fig.cap="Confidence intervals and the true population value."}
+# Generate 100 samples of size 50 (or larger to obtain about 95% coverage) from a population with average (candy weight) 2.8 and a standard deviation of 0.2 ; display each 95% confidence interval (with the sample mean) as a line segment in a graph, which displays the population mean as a line perpendicular to the confidence interval line segments ; mark the confidence intervals (and their means) as red if they do not contain/cover the parameter ; initially show one confidence interval ; a button allows to create an additional confidence interval ; at the fifth use of this button, add another 95 confidence intervals to attain 100 confidence intervals.
+# Adjust https://github.com/ensley/Confidence-Interval-Shiny or https://github.com/CamilleFairbourn/ConfidenceApp or https://github.com/zkeller89/shiny_conf_int_proportions
+```
+
+Figure \@ref(fig:95ci-simul) shows a 95% confidence interval for average candy weight in the population based on a sample of candies. The vertical line indicates the true average candy weight in the population.
+
+1. Does the (first) confidence interval include the true average candy weight in the population?
+
+2. What does the dot in the middle of the confidence interval represent?
+
+3. Press the __New Sample__ button until there are 100 confidence intervals. How many of these confidence intervals contain the true population value? Can you explain this?
+
+The more precise meaning of a confidence interval is rather complicated. If we draw very many samples from the same population, 95% of the sample means would differ less from the population mean than the critical value times the standard error. This is just the definition of critical value. 
+
+Because the critical value times the standard error also defines the width of the confidence interval, we can reverse the statement. The population mean would be within the 95% confidence interval of 95% of all sample means. In other words, if we construct the 95% confidence interval for each sample mean, 95% of all samples will have confidence intervals that contain the true population mean. 
+
+Unfortunately, we have no clue whether or not our single sample belongs to the 95 percent of 'lucky' samples with confidence intervals containing the true population value. We can only hope and be confident that this is the case.  
+
+### Confidence intervals with bootstrapping
+
+If we approximate the sampling distribution with a theoretical probability distribution such as the normal (_z_) or _t_ distribution, critical values and the standard error are used to calculate the confidence interval (see Section \@ref(imag-pop-values)). 
+
+There are theoretical probability distributions that do not work with a standard error,  such as the _F_ distribution or chi-squared distribution. If we use those distributions to approximate the sampling distribution of a continuous sample statistic, for example, the quotient of two variances, we must use bootstrapping to obtain a confidence interval.
+
+As you probably remember from Section \@ref(boot-approx), we simulate an entire sampling distribution if we bootstrap a statistic, for example median candy weight in a sample bag. This simulated sampling distribution can be used to estimate the standard error, which is by definition the standard deviation of the sampling distribution. This standard error can then be combined with critical values to calculate the confidence interval. Alternatively, we can just take the values separating the bottom 2.5% and the top 2.5% of all samples in the sampling distribution as the lower and upper limits of the 95% confidence interval.
+
+Exact approaches to the sampling distribution do not yield confidence intervals. They only calculate p values.
+
+### Confidence intervals in SPSS
+
+SPSS usually displays the 95% confidence interval automatically if you use the standard-normal (_z_) or _t_ distribution. For an example, see the independent t test output in Figure \@ref(fig:bootstrap-indep). This figure also shows that bootstrapping also yields confidence intervals. If you want another confidence level than 95%, you have to change this in the _Options..._  or _Statistics..._ dialog. Figure \@ref(fig:dialog-conflevel) shows the _Options..._ dialog to a one sample t test.
+
+```{r dialog-conflevel, out.width="280px", fig.cap="SPSS dialog to change the confidence level."}
+knitr::include_graphics("/figures/SPSSconflevel.png")
+```
+
+Regression analysis is an exception (command _Analyze > Regression > Linear_). Here, you have to select the option _Confidence intervals_ in the _Statistics..._ dialog to obtain confidence intervals for the regression coefficients.
+
+### SPSS exercises
+
+1. <a href="http://82.196.4.233:3838/data/candies.sav" target="_blank"> Download the data set "candies.sav" here</a> and use SPSS to calculate the 95% and 99% confidence intervals of average candy weight. Hint: leave the test value at zero. 
+    Interpret the results and explain why the 99% confidence interval is wider than the 95% confidence interval.  
+
+2. Let SPSS calculate the 95% confidence interval for median candy weight. Interpret the result. The data are in "candies.sav". 
+    Remember the SPSS exercises in Chapter \@ref(probmodels).
+
+3. Use SPSS to determine the 95% confidence interval for a paired-samples t test on candy colour fading under sunlight (variables colour_pre and colour_post in "candies.sav"). In your interpretation of the confidence interval, clarify the meaning of the statistic for which the confidence interval was calculated.
+
+4. Use SPSS to determine if candy colourfulness after exposure to sunlight (colour_post) depends on candy weight and candy sweetness. Interpret the 95% confidence intervals for both effects. 
+    Hint: If you forgot which analysis technique you need to answer this question, use the flow chart in \@ref(@@).
+
+## Take-Home Points  
+
+* If a sample statistic is an unbiased estimator, we can use it as a point estimate for the value of the statistic in the population.  
+* A point estimate may come close to the population value but it is most certainly not correct.  
+* A 95% confidence interval is an interval estimate of the population value: We are 95% confident that the population value lies within this interval. Note that confidence is not a probability!  
+* A larger sample or a lower confidence level yields a narrower, that is, a more precise confidence interval. The sample statistic is more likely to be closer to the population value. We have less uncertainty in our results.  
+
+## Further Reading
+<table><tr><td>Jerzy Neyman introduced the concept of a confidence interval in 1937: Neyman, J. (1937). Outline of a Theory of Statistical Estimation Based on the Classical Theory of Probability. _Philosophical Transactions of the Royal Society A_. 236: 333-380. [doi:10.1098/rsta.1937.0005](https://dx.doi.org/10.1098%2Frsta.1937.0005)</td><td>  
+![Jerzy Neyman](figures/jerzyneyman.jpg)</td></tr></table>
