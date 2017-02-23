@@ -422,11 +422,11 @@ Chi-squared test on a cross tabulation
 
 3. Does word of mouth involve women rather then men? Interpret the contents, strength, and statistical significance of the association. Have a look at Section \@ref(SPSS-exact) if you forgot which significance to interpret.
 
-## The Null and Alternative Hypothesis
+## The Null and Alternative Hypothesis {#null-alt}
 
 In the preceding section, I have referred to statistical hypotheses without further qualification. There are, however, at least two different statistical hypotheses: the null hypothesis (_H_~0~) and the alternative hypothesis (_H_~1~ or _H_~A~). 
 
-For reasons that will be explained in Section \@ref(p value), the _null hypothesis_ must equate the test statistic to a single value. For example, the statistical hypothesis that the proportion of all households in the population reached by a television station is .5 equates the population proportion to .5. 
+For reasons that will be explained in Section \@ref(p-value), the _null hypothesis_ must equate the test statistic to a single value. For example, the statistical hypothesis that the proportion of all households in the population reached by a television station is .5 equates the population proportion to .5. 
 
 In contrast, the statistical hypothesis that the average media literacy score of all children in the population is below 5.5 does not equate the population mean to one particular value. It is hypothesized to be smaller than 5.5 but it can be any number below 5.5.  
 
@@ -470,9 +470,8 @@ A null hypothesis on association in the population simply assigns the value zero
 
 This also applies to the regression coefficient (_b_ or or _b*_ in the regression equation): If it is zero, the predictor variable is useless for predicting the outcome variable. In these cases, the null hypothesis is the nil. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero.  
 
-## One-Sided And Two-Sided Tests
+## One-Sided and Two-Sided Tests
 
-__interactive content: illustrating two-sided versus one-sided tests__
 ```{r 1-2sided, fig.cap="One-sided versus two-sided statistical tests."}
 # In app null-alt, replace user input for hypothesis texts by a horizontal line (x-axis, labeled with the test statistic name and a suitable scale) representing  sampling space ; let the user mark the value or range of the outcomes according to the null hypothesis and according to the alternative hypothesis with two slider range widgets. Note that a single value can be selected with a slider range. Mark the sample outcome ranges by a coloured line segment and a single sample outcome by a coloured dot.
 # Give feedback if the user presses the submit button.
@@ -507,7 +506,7 @@ Finally, you should note that scientific papers usually report the research hypo
 
 ## p value and Significance Level ($\alpha$) {#p-value}
 
-The purpose of formulating a null hypothesis is that we can use the value specified in the null hypothesis as a hypothetical population value. This saves us the trouble of looking for plausible population values, which do if we estimate a confidence interval. 
+The purpose of formulating a null hypothesis is that we can use the value specified in the null hypothesis as a hypothetical population value. This saves us the trouble of looking for plausible population values, which we do if we estimate a confidence interval. 
 
 Testing a null hypothesis, we just act as if the null hypothesis is true. We pretend that the value specified in the null hypothesis is the true population value. This allows us to create one sampling distribution that will tell us how plausible our sample is if the null hypothesis would be true.  For this reason, the null hypothesis must equate the parameter to one value. 
 
@@ -553,7 +552,7 @@ Compare it to the probability that we throw sixes with a dice. This probability 
 
 If the dice is biased, we don't know the probability of throwing sixes. In the same way, we have no clue whatsoever of the probability of drawing a sample like the one we have if the null hypothesis is not true in the population. That's why it is so imported to specify a null hypothesis.  
 
-### Significance level and Type I error  
+### Significance level and Type I error {#sig-typeI}
 The threshold value, conventionally .05, is called the _significance level_ of the test. If the null hypothesis is true, for example, average media literacy is 5.5 in the population, but we accidentally draw a sample with a mean well below 5.5, our p value is smaller than the significance level and we reject the null hypothesis.  
 
 We must reject the null hypothesis in this situation; that is the rule of the game. But our conclusion that the null hypothesis is wrong, is an error here. We don't know and don't believe that we make this error but still we do. This error is called a _Type I error_: rejecting a hypothesis that is actually true.  
@@ -613,13 +612,32 @@ In this situation, the two-sided p value can be significant but you should never
 
 ## Test Statistic and Degrees of Freedom
 
+```{r crit-df, fig.cap="Sample size and critical values in a one-sample t test."}
+# Compare app crit-values in Ch. 3.
+# Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees f freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 100], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
+```
+
+Figure \@ref(fig:crit-df) uses the t distribution to approximate the sampling distribution of average media literacy in a random sample of children.
+
+1. What is the meaning of the coloured tails?
+
+2. What is the meaning of t~c~?
+
+3. Is there a fixed relation between the t values and the values for average sample media literacy? Change the sample size to find the answer.
+
+4. What is the relation between sample size in critical t values?
+
 A theoretical probability distribution links sample outcomes such as a sample mean to probabilities by means of a _test statistic_. A test statistic is named after the theoretical probability distribution to which it belongs: _z_ for the standard-normal or _z_ distribution, _t_ for the _t_ distribution, _F_ for the _F_ distribution and, you already guessed, chi-squared for the chi-squared distribution.  
 
 A test statistic is calculated from the sample statistic that we want to test, for example, the sample proportion, mean, variance, or association but it uses the null hypothesis as well. A test statistic more or less standardizes the difference between the sample statistic and the population value that we expect under the null hypothesis. 
 
 The exact formula and calculation of a test statistic is not important to us. Just note that the larger the difference between observation (sample outcome) and expectation (hypothesized population value), the more extreme the value of the test statistic, the less likely (lower p value) to draw a sample with the observed outcome or an outcome even more different from the hypothesized value, the more likely we are to reject the null hypothesis.  
 
+Actually, we reject the null hypothesis if the test statistic is in the _rejection region_. The value of the test statistic where the rejection region starts, is called the _critical value_. In Section \@ref(crit-values), we learned that 1.96 is the critical value of z for a two-sided test at 5% significance level in a standard-normal distribution. In a z test, then, a sample z value above 1.96 or below -1.96 indicates a significant test result. 
+
 Except for the normal distribution, the probability distributions that we use depend on the degrees of freedom of the test. The degrees of freedom can depend on sample size, the number of groups that we compare, or the number of rows and columns in a cross-tabulation. We don't need to worry about that. 
+
+For example, the t distribution depends on the degrees of freedom of the test. The degrees of freedom are determined by sample size: a larger sample yields slightly lower critical values in a t distribution. For not too small samples, however, the critical values of t are near 2. You may have noticed this in Figure \@ref(fig:crit-df).
 
 However, APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header "df", you should include it between brackets after the name of the test statistic, for example: t (18) = 0.63 (see Figure \@ref(fig:bootstrap-indep)). Note that the _F_ test statistic has two degrees of freedom, both of which must be reported (separated by a comma). 
 
