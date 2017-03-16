@@ -41,7 +41,7 @@ Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both s
 
 Didn't you know all answers? Return to these question after studying this chapter.
 
-## Sample Size And Test Requirements {#size-test-req}
+## Sample Size and Test Requirements {#size-test-req}
 
 Table \@ref(tab:thumb) in Chapter \@ref(probmodels) shows the conditions that must be satisfied if we want to use a theoretical probability distribution to approximate a sampling distribution. Only if the conditions are met, the theoretical probability distribution resembles the sampling distribution sufficiently for using the theoretical probability distribution.  
 
@@ -129,7 +129,7 @@ In Figure \@ref(fig:indept-output), Cohen's d equals (2 * 1.602) / &#8730;(30.00
 knitr::include_url("Levene.htm",  height="350px")
 ```
 
-### Association as effect size  
+### Association as effect size {#assoc-size} 
 Measures of association such as Pearson's product-moment correlation coefficient or Spearman's rank correlation coefficient express effect size if the null hypothesis expects no correlation in the population. If zero correlation is expected, a correlation coefficient calculated for the sample expresses the difference between what is observed (sample correlation) and what is expected (zero correlation in the population). 
 
 Effect size is also zero in the null hypotheses used for tests on the standardized regression coefficient (Beta or, according to APA6, _b_*), _R_^2^ for the regresison model, and eta^2^ for analysis of variance. 
@@ -142,7 +142,7 @@ We can use standardized effect size to express the effects that we are intereste
 If we know the effect size in the sample for which we want statistically significant results, we can figure out the minimum sample size for which the test statistic is statistically significant. In Figure \@ref(fig:sample-size), enter several sample sizes in the table below to find the minimum sample size needed.  
 
 ```{r sample-size, fig.cap="The relation between sample size, test statistic, and p values for a t test one one mean."}
-# Interactive table with sample size as first column (initially one value: 5), effect size Cohen's d as second column (all cells are initially 'small (0.2)'), t value as calculated third column (square root of sample size times 0.2, 0.5, or 0.8), and p value (calculated, p values below .05 are printed in red) as fifth column ; after entering a new sample size (data input for integer numbers; DT:: package does not allow changing cell values?)) or a different effect size (selection list: 'small (0.2)', 'moderate (0.5)', or 'strong (0.8)'), the table is updated and sorted on sample size (can this be done with the DT:: package in Shiny?), so the resulting table shows the progression t larger samples and smaller p values
+# Responsive table with sample size as first column (initially one value: 5), effect size Cohen's d as second column (all cells are initially 'small (0.2)'), t value as calculated third column (square root of sample size times 0.2, 0.5, or 0.8), and p value (calculated, p values below .05 are printed in red) as fifth column ; after entering a new sample size (data input for integer numbers; DT:: package does not allow changing cell values?)) or a different effect size (selection list: 'small (0.2)', 'moderate (0.5)', or 'strong (0.8)'), the table is updated and sorted on sample size (can this be done with the DT:: package in Shiny?), so the resulting table shows the progression t larger samples and smaller p values
 # two-sided p value: TDist::dt(x = <t value>, df = <sample size - 1>) * 2 {add non-centrality parameter?}
 ```
 
@@ -173,7 +173,7 @@ We do not know whether average candy weight is 2.9 grams in the true population.
 Our habit of formulating a null hypothesis and an alternative hypothesis for all situations not covered by the null hypothesis is generally attributed to the statistician R.A. Fisher. This, however, is not entirely correct [see, e.g., @RefWorks:3931]. Fisher introduced the concept of a null hypothesis [@RefWorks:3932: 18] but not the concept of an alternative hypothesis.
 The statisticians Jerzy Neyman and Egon Pearson introduced the idea of working with two or more hypotheses. But the two hypotheses do not cover all possible population values and they were usually not called a null and alternative hypothesis. They specify two or more different population values. A statistical test is used to determine which of the hypotheses fits the sample best. [@RefWorks:3906]
 </td><td width="205px">  
-![R.A. Fisher](figures/epearson.jpg) Egon Pearson</td></tr></table>
+![egon Pearson](figures/egonpearson.jpg) Egon Pearson</td></tr></table>
 
 Figure \@ref(fig:TypeI-II-errors) illustrates this situation. The top graph represents the sampling distribution according to our null hypothesis. This sampling distribution is derived from our hypothetical population in which there is no effect. Our null hypothesis is true for this population. In our current example, average candy weight is 2.8 grams in this hypothetical population.  
 
@@ -181,10 +181,10 @@ The bottom graph represents the sampling distribution for an imaginary populatio
 
 By the way, average population candy weights are not depicted in the graphs but you should know by now that the average in a normal distribution is situated at the top of the bell shape and that the average of a sample mean sampling distribution is equal to the population average because a sample mean is an unbiased estimator.  
 
-```{r TypeI-II-errors, fig.cap="Simulation of Type I and Type II error."}
+```{r TypeI-II-errors, echo=FALSE,fig.cap="Simulation of Type I and Type II error."}
 #This Shiny app illustrates Type I and Type II Error. Interaction helps to understand how significance level and power are related.  
 #Source: Adapted from Tarik Gouhier, type1vs2-master, https://github.com/tgouhier/type1vs2
-knitr::include_app("http://82.196.4.233:3838/type1vs2/", height="880px")
+knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="880px")
 ```
 
 Before reading on, try to make sense of the two graphs in Figure \@ref(fig:TypeI-II-errors) and how they relate to each other:  
@@ -234,7 +234,7 @@ For each sample, the test statistic t is calculated and the right-sided p value.
 ```{r power-H0-rejections, fig.cap="The relevance of effect size and sample size to test power for a right-sided test on one sample mean ($\alpha$ = 0.05)."}
 #This Shiny app shows the relevance of effect size and sample size to the power of a test. 
 #Source: ShinyApps-spark (niet meer gevonden op GitHub)
-knitr::include_app("http://82.196.4.233:3838/ttest_simulation/", height=680)
+knitr::include_app("http://82.196.4.233:3838/apps/ttest_simulation/", height=680)
 ```
 
 First, familiarize yourself with the histograms in Figure \@ref(fig:power-H0-rejections) by figuring out the answers to the following questions:
@@ -251,7 +251,7 @@ Next, formulate for yourself how test power will change if you increase effect s
 
 Finally, think about this. There is one situation in which power is meaningless. Which value should you assign to effect size or sample size to create that situation? In this situation, what does the proportion of rejected nulls indicate?  
 
-## Sample Size And Power  
+## Sample Size and Power  
 
 Sample size, statistical significance, effect size, and test power are related. To determine the size of your sample, you have three buttons that you should adjust simultaneously. Statistical significance is the easiest button to decide on; we usually leave the significance level at .05. We do not select a smaller value because it will reduce the power of the test (with the same sample and effect size) as you may have noticed in one of the figures in the preceding section.  
 
@@ -264,7 +264,7 @@ Power is set to a lower level because the null hypothesis is usually assumed to 
 Unfortunately, test power receives little attention in several software packages for statistical analysis. Using power and effect size to calculate the required sample size is usually not provided in the package. To calculate sample size, we need dedicated software, for example A[GPower][http://www.gpower.hhu.de/].  
 
 ```{r sample-size-power}
-#add Shiny app to determine sample size for a specified (standardized) effect size, significance level, and test power fir some (simple) tests?
+#add Shiny app to determine sample size for a specified (standardized) effect size, significance level, and test power for some (simple) tests?
 #simplify PS.shiny_master (doesn't work yet?) Use R code from http://powerandsamplesize.com/Calculators/ in our own app?
 # Develop our own app, using the pwr:: package?
 ```
@@ -280,7 +280,7 @@ Second, test power and Type II errors are important in situations in which we do
 
 ## Research Hypothesis as Null Hypothesis  
 
-As noted before (Section \@ref(null-alt)), the research hypothesis usually is the alternative hypothesis. We expect something to change, to be(come) different rather than be or stay the same. We expect an association to be present rather than absent.  
+As noted before (Section \@ref(null-alt)), the research hypothesis usually is the alternative hypothesis. We expect something to change, to be(come) different rather than be or stay the same. We expect an association to be present rather than absent.
 
 In this situation, rejection of the null hypothesis supports our alternative hypothesis, hence our research hypothesis. We are glad if we reject the null hypothesis because it suports our research hypothesis. We know that we can be wrong because our null hypothesis may still be true even if the probability of drawing a sample like the one we have drawn is so small that we have to reject the null hypothesis. This is the Type I error. 
 

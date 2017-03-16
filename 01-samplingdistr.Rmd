@@ -56,7 +56,7 @@ We are usually interested in a particular characteristic of the sample rather th
 
 ```{r random-variable, fig.cap="Number of yellow candies in a sample as random variable.", echo=FALSE}
 #interactive content: a button to draw a sample from a population of points uniformly distributed over five colors, display the sample (as a set of colored circles) and the number of yellow candies with each sample ; relevant expectations: (1) number of yellow candies per sample varies (variable), (2) this number depends on chance (random variable), (3) the number may range from 0 to 10 (sampling space), (4) the most likely number of yellow candies is two (expected value, expectation).
-knitr::include_app("http://82.196.4.233:3838/random-variable/", height="400px")
+knitr::include_app("http://82.196.4.233:3838/apps/random-variable/", height="360px")
 ```
 
 Figure \@ref(fig:random-variable) shows a population of candies. The button allows you to draw a random sample of ten candies from this population. Before you press the button.  
@@ -74,15 +74,18 @@ Some outcomes occur more often than other outcomes. We can see this if we draw v
 
 ```{r sampling-distribution, fig.cap="From population to samples to sampling distribution.", echo=FALSE}
 #interactive content: three histograms: a uniformly distributed discrete population of five colors on top, a sample in the middle (initially empty), and a sampling distribution in the bottom (initially empty) ; first button allows to draw one sample, simulating drawing one sample from the population and adding the number of yellow candies to the bottom histogram (ideally, the candies 'drop' from the population to the sample, then the number of yellow candies appears below the sample and this number 'drops' from the sample to the sampling distribution) ; second button (becomes active after the first button has been used) draws 1,000 samples and adds the yellow candy counts for all samples to the sampling distribution in one go
-#simplified, discrete distribution version of https://ihstevenson.shinyapps.io/sample_means/ or https://github.com/DataScienceUWL/samplingShiny or https://github.com/jodeleeuw/shiny-stats/tree/master/populations-and-samples
-knitr::include_app("http://82.196.4.233:3838/sampling-distribution/", height="400px")
+knitr::include_app("http://82.196.4.233:3838/apps/sampling-distribution/", height="590px")
 ```
 
-Figure \@ref(fig:random-variable) displays the population of candies (candy factory's stock, top), a random sample from this population (one bag, middle), and the sampling distribution (bottom). Draw one random sample.
+Figure \@ref(fig:sampling-distribution) displays the population of candies (candy factory's stock, top), a random sample from this population (one bag, middle), and the sampling distribution (bottom). Draw one random sample.
 
 1. What do the numbers on the horizontal axis of the bottom histograms mean?  
+
 2. What are the units of observation in the three histograms? Hint: There are two different types of units.  
+
 3. Guess the most likely and most unlikely outcomes for the number of yellow candies in a sample bag containing ten candies. Check your intuitions by drawing 1,000 samples.  
+
+4. After how many samples does the shape of the sampling distribution stop changing?
 
 ### Probability and probability distribution
 The sampling distribution tells us the probabilities of obtaining each outcome, for example the probability of buying a bag with exactly five yellow candies. To this end, we must change the (absolute) frequencies into proportions (relative frequencies). We have to divide the number of times an outcome occurs in the sampling distribution by the number of samples we have drawn. A sampling space with a probability (between 0 and 1) for each outcome is called a _probability distribution_. 
@@ -122,11 +125,12 @@ Sometimes, we have to adjust the way in which we calculate a sample statistic to
 
 ### Expected value
 
-```{r expected-value, fig.cap="Exected value of a probability distribution."}
+```{r expected-value, echo=FALSE, fig.cap="Expected value of a probability distribution."}
 #Generate a binomial probability distribution for the number of yellow candies in a random sample of ten from a population with the specified proportion of yellow candies and display this as a histogram ; the user is able to change the population proportion, which is initially set to .2 ; add a button to reveal the average of the probability distribution in the histogram as a vertical line with associated value.
+knitr::include_app("http://82.196.4.233:3838/apps/expected-value/", height="420px")
 ```
 
-In Figure \@ref(fig:expected-value), what do you expect is the mean of the sampling distribution? Experiment with different values for the population proportion.
+1. In Figure \@ref(fig:expected-value), what do you expect is the mean of the sampling distribution? Experiment with different values for the population proportion.
 
 In the preceding paragraphs, we have noticed that the expectation or expected value of the proportion of yellow candies in the sample is equal to the proportion of yellow candies in the population. If you carefully inspect the sampling distribution, you will see that the expected value also equals the mean of the sampling distribution. This makes sense: Excess yellow candies in some bags must be compensated for by a shortage in other bags.  
 
@@ -165,8 +169,9 @@ If we cannot determine the probability of a single value and we have to link pro
 
 Figure \@ref(fig:p-values) shows an example of a continuous probability distribution for the average weight of candies in a sample bag. This is the familiar normal distribution so we could say that the normal function is the probability density function here. The total area under this curve is set to one, so the area belonging to a range of sample outcomes (average candy weight) is 1 or less, as probabilities should be.
 
-```{r p-values, fig.cap="p Values in a normal sampling distribution."}
+```{r p-values, fig.cap="p Values in a normal sampling distribution.", echo=FALSE}
 # Generate a normal sampling distribution representing average candy weight in a sample bag (M = 2.8, SD = 0.6) ; add a range slider to the x-axis linked to vertical lines, showing the proportions of the probabilities to left and to right and between the lines
+knitr::include_app("http://82.196.4.233:3838/apps/p-values/", height="260px")
 ```
 
 Practice understanding and reading probabilities in a continuous sampling distribution with Figure \@ref(fig:p-values). 

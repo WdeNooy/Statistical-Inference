@@ -1,4 +1,4 @@
-# Critical Discussion {#crit-discus}
+# Critical Discussion of Null Hypothesis Significance Testing {#crit-discus}
 > Key concepts: problems with null hypothesis significance testing, nil hypothesis, meta-analysis, replication, frequentist versus Bayesian inference. 
 
 Null hypothesis significance testing is widely used in the social and behavioral sciences. There are, however, problems with null hypothesis significance tests that are increasingly being recognized. Statistical significance of a null hypothesis test depends strongly on the size of the sample, so non-significance may merely mean that the sample is too small. 
@@ -9,9 +9,17 @@ Among the alternatives to null hypothesis significance testing, using a confiden
 
 ### Test your intuition or knowledge {-}
 
-```{r}
-# TBD
+```{r power-problem}
+# Use app sig-effect-power.
 ```
+
+Figure \@ref(fig:power-problem) displays the sampling distribution for candy weight under the null hypothesis that average candy weight is 2.8 in the population. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample (weak/moderate/strong). Five samples are drawn from a population with the specified average candy weight (see slider) and the samples' average candy weights are represented by dots on the horizontal axis.
+
+1. Which sample means are statistically significant (5% two-sided) and which are not?
+
+2. Is the null hypothesis true for the samples with non-significant mean scores?
+
+3. What happens to the statistical significance of the sample means and to test power if you change the sample size?
 
 ## Criticisms of Null Hypothesis Significance Testing
 
@@ -23,7 +31,7 @@ In null hypothesis significance testing, we totally rely on the test's p value. 
 
 ```{r tiny-effects, fig.cap="Any effect can be statistically significant."}
 # Illustrate that even tiny effects can yield statistically significant test results if the sample is sufficiently large.
-# Generate a normal distribution as hypothesized sampling distribution (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Add a vertical line with value for the sample average inked to a slider (range [2.82, 3.00] initial value 2.90). Add a sample size slider (range [10, 5,000], initial value 10), which is linked to the standard error of the normal curve.
+# Generate a normal distribution as hypothesized sampling distribution (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Add a vertical line with value for the sample average linked to a slider (range [2.82, 3.00] initial value 2.90). Add a sample size slider (range [10, 5,000], initial value 10), which is linked to the standard error of the normal curve.
 ```
 
 1. In Figure \@ref(fig:tiny-effects), what should you do to obtain a statistically significant result for a sample average of 3.1 gram if the null hypothesis states that average candy weight is 2.8?
@@ -43,18 +51,14 @@ It is wrong to use statistical significance as a measure of strength or importan
 ### Evaluate statistical sigificance in combination with sample size and power {#eval-sign}
 
 ```{r sig-effect-power, fig.cap="The relations between significance, effect size, sample size, and power."}
-# (As in app tiny-effects), create a normal curve for the sampling ditribution of average candy weight (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Label the x-axis "Average candy weight (gram)" and use the scale: "Strong 2.64", "Moderate 2.70", "Weak 2.76", "H0 2.8", "Weak 2.84", "Moderate 2.90", "Strong 2.96". Colour 2.5% of each tail area. Display a label with the power of the test given the current population average (slider, range [2.8, 3.0] initial value 2.9) and sample size (slider, range [5, 100] initial value 10). Draw 5 random samples from a normally distributed population with the selected population average (and population SD fixed as 0.6) and display their means as coloured dots on the x-axis. Add "Draw 5 samples" button to refresh the curve an dpower with the current slider settings and draw 5 new samples represented by their means as dots.
+# (As in app tiny-effects), create a normal curve for the sampling ditribution of average candy weight (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Label the x-axis "Average candy weight" and use the scale: "Strong 2.64", "Moderate 2.70", "Weak 2.76", "H0 2.8", "Weak 2.84", "Moderate 2.90", "Strong 2.96". Colour 2.5% of each tail area. Display a label with the power of the test given the current population average (slider, range [2.8, 3.0] initial value 2.9) and sample size (slider, range [5, 100] initial value 10). Draw 5 random samples from a normally distributed population with the selected population average (and population SD fixed as 0.6) and display their means as coloured dots on the x-axis. Add "Draw 5 samples" button to refresh the curve and power value with the current slider settings and draw 5 new samples represented by their means as dots.
 ```
 
-Figure \@ref(fig:sig-effect-power) Displays the sampling distribution for candy weight under the null hypothesis that average candy weight is 2.8 in the population. The horizontal axis shows average candy weight (in gram) and the standardized effect size (Cohen's d) in a sample with such average weight (weak/moderate/strong). Five samples are drawn from a population with the specified average candy weight (see slider) and the samples' average candy weights are represented by dots on the horizontal axis.
+Figure \@ref(fig:sig-effect-power) displays the sampling distribution for average candy weight that you have already seen at the start of this chapter. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample (weak/moderate/strong). Five samples are drawn from a population with the specified average candy weight (see slider) and the samples' average candy weights are represented by dots on the horizontal axis.
 
-1. Which sample means are statistically significant and which are not?
+1. What is the null hypothesis here?
 
-2. Is the null hypothesis true for the samples with non-significant mean scores?
-
-3. What happens to the statistical significance of the sample means and to test power if you change the sample size?
-
-4. What happens to the statistical significance of the sample means and to test power if you change average candy weight in the population?
+2. How can you ensure that sample means are statistically significant or non-signigicant given the current null hypothesis?
 
 If we want to say something about the magnitude of the effect in the population, we should use effect size. All we have is the effect size measured in our sample and a statistical test usually telling us whether or not we should reject the null hypothesis that there is no effect size in the population.  
 
@@ -152,7 +156,7 @@ Due to this more intuitive notion of probability, the _credible interval_, which
 
 Bayesian inference is intuitively appealing but it has not yet spread widely in the social and behavioral sciences. Therefore, I merely mention this strand of statistical inference and I refrain from giving details. Its popularity, however, is increasing, so you may come in contact with Bayesian inference sooner or later.
 
-## What If I Do Not Have a Random Sample?  
+## What If I Do Not Have a Random Sample? {#no-random-sample}
 
 In our approach to statistical inference, we have assumed all the time that we could have drawn a very large number of random samples from the same population. The large number of samples constitutes the sampling distribution that tells us about the probability of drawing the one random sample that we have actually drawn.
 

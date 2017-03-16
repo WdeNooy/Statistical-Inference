@@ -1,5 +1,5 @@
 ---
-title: "A Gentle but Critical Introduction to Statistical Inference"
+title: "A Gentle but Critical Introduction to Statistical Inference, Moderation, and Mediation"
 author: "Wouter de Nooy"
 date: "2016-09-20 - `r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -25,8 +25,8 @@ library(knitr)
 library(visNetwork)
 ```
 
-```{r simulation-settings, eval=FALSE, echo=FALSE}
-source("norm10.R") #function to normalize scores
+```{r example-data, include=FALSE, echo=FALSE, eval=FALSE}
+source("norm10.R") #function to normalize scores to [1-10] or [0-10]
 # SPSS data set candy colour (uniform) and weight (normal, M = 2.8, SD = 0.2), N= 50.
 set.seed(seed = 12345)
 candies <- data.frame(colour = factor(c("blue","green","yellow","orange","red")), weight = rnorm(50, mean = 2.8, sd = 0.2), sticky = factor(c(rep(c("sticky", "sticky", "not sticky", "sticky", "not sticky"), 6), rep(c("sticky", "not sticky"), 9), c("not sticky", "sticky"))), colour_pre = rnorm(50, mean = 7.3, sd = 0.5))
@@ -45,6 +45,120 @@ candies$colour_post <- labelled::labelled(candies$colour_post, labels = c(`Total
 attributes(candies$sweetness)$label <- "Candy sweetness"
 candies$sweetness <- labelled::labelled(candies$sweetness, labels = c(`Not a bit sweet` = 1, `Super sweet` = 10))
 haven::write_sav(candies, "data/candies.sav")
+
+# Households: tv station reach, region, household income.
+set.seed(2583)
+random <- runif(120)
+households <- data.frame(region = ifelse(random <= 0.2, "North", ifelse(random <= 0.45, "East", ifelse(random <= 0.75, "South", "West"))))
+set.seed(6111)
+random <- runif(120)
+households$tv_reach <- "no"
+households$tv_reach[(households$region == "North" & random < 0.2) | (households$region == "East" & random < 0.7) | (households$region == "South" & random < 0.4) | (households$region == "West" & random < 0.9)] <- "yes"
+households$tv_reach <- factor(households$tv_reach)
+households$income <- rnorm(120, mean = 40000, sd = 12000) + ifelse(households$region == "West" | households$region == "East", runif(120) * 10000, 0)
+attributes(households$region)$label <- "Region of residence"
+attributes(households$tv_reach)$label <- "Can the household receive the tv station?"
+attributes(households$income)$label <- "Household income"
+haven::write_sav(households, "data/households.sav")
+
+# Children: media literacy, sex, age, supervision.
+set.seed(2583)
+children <- data.frame(medliter = rnorm(87, mean = 4.3, sd = 1.8), sex = c(rep("girl", 47), rep("boy", 40)))
+children$medliter <- children$medliter - min(children$medliter) + 1
+set.seed(1174)
+children$age <- round((children$medliter + 22 + rnorm(87, mean = 0, sd = 5.1))/3)
+set.seed(3228)
+children$supervision <- (children$medliter + rnorm(87, mean = 0, sd = 3.6))
+children$supervision <- norm10(children$supervision) #normalize to 1-10
+# Set labels.
+attributes(children$sex)$label <- "Sex"
+attributes(children$age)$label <- "Age (in years)"
+attributes(children$medliter)$label <- "Media literacy"
+children$medliter <- labelled::labelled(children$medliter, labels = c(`No media literacy at all` = 1, `Maximum media literacy` = 10))
+attributes(children$supervision)$label <- "Parental supervision during media use"
+children$supervision <- labelled::labelled(children$supervision, labels = c(`Never supervised` = 1, `Supervised all the time` = 10))
+haven::write_sav(children, "data/children.sav")
+
+# Voters: immigrant opinion, age (class: young vs. old).
+set.seed(1324)
+voters <- data.frame(age = round(runif(66) * 70 + 17))
+voters$age_group <- factor(ifelse(voters$age < 30, "young (<30)", "old (30+)"))
+set.seed(2431)
+voters$immigrant <- ifelse(voters$age_group == "young (<30)", round(rnorm(66, mean = 5, sd = 1.4)), round(rnorm(66, mean = 5.1, sd = 1.8)))
+voters$immigrant[voters$immigrant < 1] <- 1
+voters$immigrant[voters$immigrant > 10] <- 10
+attributes(voters$age)$label <- "Age"
+attributes(voters$age_group)$label <- "Age group"
+attributes(voters$immigrant)$label <- "Attitude towards immigrants"
+voters$immigrant <- labelled::labelled(voters$immigrant, labels = c(`Very hostile towards immigrants` = 1, `Very welcoming to immigrants` = 10))
+haven::write_sav(voters, "data/voters.sav")
+
+# Donators: endorser of the campaign, remember campaign, exposure to campaign, willingness to donate to the campaign (pre and post).
+set.seed(1245)
+donators <- data.frame(willing_post = (rnorm(143, mean = 2, sd = 0.4))^2, remember = c(rep("yes", 71), rep("no", 72)))
+donators$willing_post <- norm10(donators$willing_post) 
+set.seed(24)
+donators$willing_pre <- donators$willing_post + runif(143, -1.5, 0.3)
+donators$willing_pre[donators$willing_pre < 1] <- donators$willing_pre[donators$willing_pre < 1] + 1 - min(donators$willing_pre) 
+set.seed(834)
+random <- runif(143)
+donators$endorser <- "George Clooney"
+donators$endorser[(donators$willing_post > 4 &  random > 0.4) | (random < 0.3)] <- "Angelina Jolie"
+donators$endorser[(donators$willing_post < 4 &  random < 0.3) | (random > 0.85)] <- "no endorser"
+donators$endorser <- factor(donators$endorser)
+donators$exposure <- round(norm10(sqrt(donators$willing_post) + runif(143, 0, 4.3)))
+attributes(donators$willing_post)$label <- "Respondent's willingnes to donate at the campaign end"
+attributes(donators$willing_pre)$label <- "Respondent's willingnes to donate at the campaign start"
+attributes(donators$remember)$label <- "Respondent remembers the campaign?"
+attributes(donators$endorser)$label <- "Celebrity endorsing the campaign"
+attributes(donators$exposure)$label <- "Respondent's exposure to the campaign"
+donators$willing_post <- labelled::labelled(donators$willing_post, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
+donators$willing_pre <- labelled::labelled(donators$willing_pre, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
+donators$exposure <- labelled::labelled(donators$exposure, labels = c(`No exposure` = 1, `Maximum exposure` = 10))
+haven::write_sav(donators, "data/donators.sav")
+
+#Consumers: brand awareness, ad exposure, word of mouth, gender.
+set.seed(834)
+consumers <- data.frame(ad_expo = norm10(sqrt(rnorm(62, 10, 4.8))), wom = c(rep("yes", 18), rep("no", 44)), gender = c(rep("female", 12), rep("male", 6), rep("female", 19), rep("male", 25)))
+set.seed(825)
+consumers$brand_aw <- norm10(consumers$ad_expo - as.integer(consumers$gender) * 1.2 - as.integer(consumers$wom) * 1.7 + rnorm(62, 0, 3.3))
+attributes(consumers$ad_expo)$label <- "Exposure to brand advertisements"
+attributes(consumers$wom)$label <- "Heard about the brand by word of mouth?"
+attributes(consumers$gender)$label <- "Consumer's sex"
+attributes(consumers$brand_aw)$label <- "Brand awareness"
+consumers$ad_expo <- labelled::labelled(consumers$ad_expo, labels = c(`No exposure to ads` = 1, `Maximum exposure to ads` = 10))
+consumers$brand_aw <- labelled::labelled(consumers$brand_aw, labels = c(`Does not recognize the brand at all` = 1, `Knows the brand very well` = 10))
+haven::write_sav(consumers, "data/consumers.sav")
+
+#Smokers: attitude [-5, 5], exposure [0, 10], (smoking) status [2 or 3 cat.], contact (with smokers) [0, 10].
+set.seed(4932)
+smokers <- data.frame(exposure = runif(85)*10, status2 = rbinom(85, 1, 0.2))
+smokers$status3[smokers$status2 == 1] <- 2
+set.seed(8220)
+smokers$status3[smokers$status2 != 1] <- rbinom(sum(smokers$status2 != 1), 1, 0.3)
+set.seed(4321)
+smokers$contact <- 0.26*(10 - smokers$exposure) + rnorm(85, mean = 0, sd = 2)
+smokers$contact <- norm10(smokers$contact, lbound1 = FALSE)
+set.seed(390)
+smokers$attitude <- -0.26*smokers$exposure + 
+  0.03*smokers$exposure*smokers$contact +
+  -1.2*(smokers$status3 == "formersmoker") +
+  -0.54*smokers$exposure*(smokers$status3 == "formersmoker") +
+  0.5*(smokers$status3 == "smoker") +
+  -0.20*smokers$exposure*(smokers$status3 == "smoker") +
+  rnorm(85, mean = 4.1, sd = 0.5)
+attributes(smokers$exposure)$label <- "Exposure to anti-smoking campaign"
+smokers$exposure <- labelled::labelled(smokers$exposure, labels = c(`No exposure` = 0, `Maximum exposure` = 10))
+attributes(smokers$contact)$label <- "Contact with smokers"
+smokers$contact <- labelled::labelled(smokers$contact, labels = c(`No contact` = 0, `Maximum contact` = 10))
+attributes(smokers$attitude)$label <- "Attitude towards smoking"
+smokers$attitude <- labelled::labelled(smokers$attitude, labels = c(`Very negative` = -5, `Neutral`= 0, `Very positive` = 5))
+attributes(smokers$status2)$label <- "Smoking status"
+smokers$status2 <- labelled::labelled(smokers$status2, labels = c(`Non-smoker` = 0, `Smoker` = 1))
+attributes(smokers$status3)$label <- "Smoking status"
+smokers$status3 <- labelled::labelled(smokers$status3, labels = c(`Non-smoker` = 0, `Former smoker` = 1, `Smoker` = 2))
+haven::write_sav(smokers, "data/smokers.sav")
+
 
 # Include SPSS tabular output:
 #- Right-click table, select Style Output, Select as Group (Continue), Table Look, Compact.
@@ -68,6 +182,8 @@ This book is meant for use in a flipped classroom setup. Students should read th
 
 ### Interactive Content {-}
 
-The interactive content in this book replaces simulations that used to be demonstrated in lectures. I expect that doing simulations yourself rather than watching them being done by someone else enhances understanding. I have tried to break down the simulations into small steps, confronting the student several times with basically the same simulation but with added complexity. I hope that this approach enhances understanding and remembrance and, at the same time, avoids frustration caused by complex dashboards offering all options at once. Most interactive content starts with a question regarding the student's expectations of what is going to happen in the simulation. I strongly recommend students to state their expectations before they start the simulations to see where their intuitions are right and where they are wrong.  
+The interactive content in this book replaces simulations that used to be demonstrated in lectures. I expect that doing simulations yourself rather than watching them being done by someone else enhances understanding. I have tried to break down the simulations into small steps, confronting the student several times with basically the same simulation but with added complexity. I hope that this approach enhances understanding and remembrance and, at the same time, avoids frustration caused by complex dashboards offering all options at once. 
+
+Most interactive content starts with a question regarding the student's expectations of what is going to happen in the simulation. I strongly recommend students to state their expectations before they start the simulations to see where their intuitions are right and where they are wrong. 
 
 __TBD: thank you's and sources used for text and interactive content__

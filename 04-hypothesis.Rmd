@@ -43,94 +43,6 @@ Hypothesis testing, then, amounts to a choice from two options: reject or not re
 
 ## Formulating Statistical Hypotheses
 
-```{r example-data, include=FALSE, echo=FALSE, eval=FALSE}
-source("norm10.R") #function to normalize scores
-
-# Households: tv station reach, region, household income.
-set.seed(2583)
-random <- runif(120)
-households <- data.frame(region = ifelse(random <= 0.2, "North", ifelse(random <= 0.45, "East", ifelse(random <= 0.75, "South", "West"))))
-set.seed(6111)
-random <- runif(120)
-households$tv_reach <- "no"
-households$tv_reach[(households$region == "North" & random < 0.2) | (households$region == "East" & random < 0.7) | (households$region == "South" & random < 0.4) | (households$region == "West" & random < 0.9)] <- "yes"
-households$tv_reach <- factor(households$tv_reach)
-households$income <- rnorm(120, mean = 40000, sd = 12000) + ifelse(households$region == "West" | households$region == "East", runif(120) * 10000, 0)
-attributes(households$region)$label <- "Region of residence"
-attributes(households$tv_reach)$label <- "Can the household receive the tv station?"
-attributes(households$income)$label <- "Household income"
-haven::write_sav(households, "data/households.sav")
-
-# Children: media literacy, sex, age, supervision.
-set.seed(2583)
-children <- data.frame(medliter = rnorm(87, mean = 4.3, sd = 1.8), sex = c(rep("girl", 47), rep("boy", 40)))
-children$medliter <- children$medliter - min(children$medliter) + 1
-set.seed(1174)
-children$age <- round((children$medliter + 22 + rnorm(87, mean = 0, sd = 5.1))/3)
-set.seed(3228)
-children$supervision <- (children$medliter + rnorm(87, mean = 0, sd = 3.6))
-children$supervision <- norm10(children$supervision) #normalize to 1-10
-# Set labels.
-attributes(children$sex)$label <- "Sex"
-attributes(children$age)$label <- "Age (in years)"
-attributes(children$medliter)$label <- "Media literacy"
-children$medliter <- labelled::labelled(children$medliter, labels = c(`No media literacy at all` = 1, `Maximum media literacy` = 10))
-attributes(children$supervision)$label <- "Parental supervision during media use"
-children$supervision <- labelled::labelled(children$supervision, labels = c(`Never supervised` = 1, `Supervised all the time` = 10))
-haven::write_sav(children, "data/children.sav")
-
-# Voters: immigrant opinion, age (class: young vs. old).
-set.seed(1324)
-voters <- data.frame(age = round(runif(66) * 70 + 17))
-voters$age_group <- factor(ifelse(voters$age < 30, "young (<30)", "old (30+)"))
-set.seed(2431)
-voters$immigrant <- ifelse(voters$age_group == "young (<30)", round(rnorm(66, mean = 5, sd = 1.4)), round(rnorm(66, mean = 5.1, sd = 1.8)))
-voters$immigrant[voters$immigrant < 1] <- 1
-voters$immigrant[voters$immigrant > 10] <- 10
-attributes(voters$age)$label <- "Age"
-attributes(voters$age_group)$label <- "Age group"
-attributes(voters$immigrant)$label <- "Attitude towards immigrants"
-voters$immigrant <- labelled::labelled(voters$immigrant, labels = c(`Very hostile towards immigrants` = 1, `Very welcoming to immigrants` = 10))
-haven::write_sav(voters, "data/voters.sav")
-
-# Donators: endorser of the campaign, remember campaign, exposure to campaign, willingness to donate to the campaign (pre and post).
-set.seed(1245)
-donators <- data.frame(willing_post = (rnorm(143, mean = 2, sd = 0.4))^2, remember = c(rep("yes", 71), rep("no", 72)))
-donators$willing_post <- norm10(donators$willing_post) 
-set.seed(24)
-donators$willing_pre <- donators$willing_post + runif(143, -1.5, 0.3)
-donators$willing_pre[donators$willing_pre < 1] <- donators$willing_pre[donators$willing_pre < 1] + 1 - min(donators$willing_pre) 
-set.seed(834)
-random <- runif(143)
-donators$endorser <- "George Clooney"
-donators$endorser[(donators$willing_post > 4 &  random > 0.4) | (random < 0.3)] <- "Oprah Winfrey"
-donators$endorser[(donators$willing_post < 4 &  random < 0.3) | (random > 0.85)] <- "Bill Gates"
-donators$endorser <- factor(donators$endorser)
-donators$exposure <- round(norm10(sqrt(donators$willing_post) + runif(143, 0, 4.3)))
-attributes(donators$willing_post)$label <- "Respondent's willingnes to donate at the campaign end"
-attributes(donators$willing_pre)$label <- "Respondent's willingnes to donate at the campaign start"
-attributes(donators$remember)$label <- "Respondent remembers the campaign?"
-attributes(donators$endorser)$label <- "Celebrity endorsing the campaign"
-attributes(donators$exposure)$label <- "Respondent's exposure to the campaign"
-donators$willing_post <- labelled::labelled(donators$willing_post, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
-donators$willing_pre <- labelled::labelled(donators$willing_pre, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
-donators$exposure <- labelled::labelled(donators$exposure, labels = c(`No exposure` = 1, `Maximum exposure` = 10))
-haven::write_sav(donators, "data/donators.sav")
-
-#Consumers: brand awareness, ad exposure, word of mouth, gender.
-set.seed(834)
-consumers <- data.frame(ad_expo = norm10(sqrt(rnorm(62, 10, 4.8))), wom = c(rep("yes", 18), rep("no", 44)), gender = c(rep("female", 12), rep("male", 6), rep("female", 19), rep("male", 25)))
-set.seed(825)
-consumers$brand_aw <- norm10(consumers$ad_expo - as.integer(consumers$gender) * 1.2 - as.integer(consumers$wom) * 1.7 + rnorm(62, 0, 3.3))
-attributes(consumers$ad_expo)$label <- "Exposure to brand advertisements"
-attributes(consumers$wom)$label <- "Heard about the brand by word of mouth?"
-attributes(consumers$gender)$label <- "Consumer's sex"
-attributes(consumers$brand_aw)$label <- "Brand awareness"
-consumers$ad_expo <- labelled::labelled(consumers$ad_expo, labels = c(`No exposure to ads` = 1, `Maximum exposure to ads` = 10))
-consumers$brand_aw <- labelled::labelled(consumers$brand_aw, labels = c(`Does not recognize the brand at all` = 1, `Knows the brand very well` = 10))
-haven::write_sav(consumers, "data/consumers.sav")
-```
-
 A _research hypothesis_ is a statement about the empirical world that can be tested against data. Communication scientists, for example, may hypothesize that:  
 
 * a television station reaches half of all households in a country,  
@@ -291,7 +203,7 @@ For a numeric (interval or ratio measurement level) variable such as the 10-poin
 
 #### Testing one mean in SPSS
 
-To execute a one sample t-test in SPSS, use the command _ANALYZE > COMPARE MEANS > ONE SAMPLE T TEST_. Select a numeric variable in the dialog and enter the hypothesized population mean under _Test Value_. 
+To execute a one sample t test in SPSS, use the command _ANALYZE > COMPARE MEANS > ONE SAMPLE T TEST_. Select a numeric variable in the dialog and enter the hypothesized population mean under _Test Value_. 
 
 Media literacy is measured on a ten point scale. Is average media literacy (in the population) equal to 5.5? A one sample t test tells us that average media literacy in our sample (_M_ = 4.47, _SD_ = 1.64) is statistically significantly different from 5.5, _t_ (86) = -5.87, _p_ < .001, 95%CI[-1.38, -0.68]. We are confident that the population average media literacy score is 0.68 to 1.38 below 5.5, so somewhere between 4.12 and 4.82.
 
@@ -310,7 +222,7 @@ Although rare, research hypotheses may focus on the variation in scores rather t
 
 For a numeric variable, the variance or standard deviation---the latter is just the square root of the former---is the appropriate statistic to test a hypothesis about polarization. The research hypothesis concerns the variation of scores in two groups, for example, young versus old voters. The statistical hypothesis would be that the variance in opinions in the population of young voters is different from the variance in the population of old voters.  
 
-#### Testing two variances in SPSS
+#### Testing two variances in SPSS {Levene-2groups}
 
 Levene's F test for the null hypothesis that two groups have equal population variances is part of the independent-samples t test (see \@ref(comp-means)). The output in Figure \@ref(fig:Levene-output) shows that the polarization (variation) in attitudes towards immigrants is not the same among young and old voters, _F_ = 4.99, _p_ = .029. Polarization is stronger among old voters (_SD_ = 2.06) than among young voters (_SD_ = 1.26). 
 
@@ -383,7 +295,7 @@ One-way analysis of variance
 
 3. Did willingness to donate increase in the population between the start and the end of the campaign?
 
-### Combinations of scores
+### Combinations of scores {#score-combi}
 The other flavour of association is the situation that some combinations of scores on different variables are much more common than other combinations of scores. 
 
 Think of the hypothesis that brand awareness is related to exposure to advertisements for the brand. If the hypothesis is true, people with high exposure and high brand awareness should occur much more often than people with high exposure and low brand awareness or low exposure and high brand awareness. 
@@ -432,7 +344,7 @@ In contrast, the statistical hypothesis that the average media literacy score of
 
 ```{r null-alt, fig.cap="From research hypothesis to statistical ypotheses."}
 # Let the student formulate/compose the null and alternative hypothesis for a given research hypothesis.
-# Randomly select one research hypothesis from a hard-coded list. Present it to the user andlet the user compose the null and alternative hypothesis either as a string or using list boxes. If the user presses submit, the statistical hypotheses are checked or the correct hypotheses are shown.
+# Randomly select one research hypothesis from a hard-coded list. Present it to the user and let the user compose the null and alternative hypothesis either as a string or using list boxes. If the user presses submit, the statistical hypotheses are checked or the correct hypotheses are shown.
 # The list of research hypotheses contains both one-sided and two-sided hypotheses, with and without explicit (border) values (e.g.,  "average media literacy is 5.5" versus "there is no difference") ; all sample statistics are continuous.
 # Give feedback if the student presses the Submit button.
 ```
@@ -504,7 +416,7 @@ Statistical hypotheses are important because they specify the statistic that we 
 
 Finally, you should note that scientific papers usually report the research hypothesis but not the statistical hypotheses. The statistical hypotheses of a test are supposed to be know to all researchers. Make sure you know them as well!
 
-## p value and Significance Level ($\alpha$) {#p-value}
+## p Value and Significance Level ($\alpha$) {#p-value}
 
 The purpose of formulating a null hypothesis is that we can use the value specified in the null hypothesis as a hypothetical population value. This saves us the trouble of looking for plausible population values, which we do if we estimate a confidence interval. 
 
@@ -512,7 +424,7 @@ Testing a null hypothesis, we just act as if the null hypothesis is true. We pre
 
 Let us assume that average media literacy is 3.9 in our sample. According to our null hypothesis, the population average is (at least) 5.5. If average media literacy of children in the population would really be 5.5, how plausible is it to draw a sample with 3.9 (or less) as average media literacy? We can use a hypothetical sampling distribution with 5.5 as mean value to answer this question.
 
-```{r sign-left, fig.cap="Sampling distribution of a correlation coefficient."}
+```{r sign-left, fig.cap="Sampling distribution of average media literacy."}
 # Display a normal curve (M = 5.5) representing the sampling distribution of average media literacy. Colour 5% of the area situated in the left tail, add 5% as text. Add a vertical line representing the sample mean, initially 3.9, and display the percentage of the area under the curve to the left of this line.
 # Let the user manipulate the sample mean (range 1-10) and the population mean according to the null hypothesis (range 1-10).
 ```
@@ -525,7 +437,7 @@ Let us assume that average media literacy is 3.9 in our sample. According to our
 
 4. What happens to the p value of our initial sample mean (3.9) if we change the value of our null hypothesis? Is it always possible to formulate a null hypothesis such that the sample mean is significant?
 
-### p value
+### p Value
 If our sample statistic is a continuous variable, for example, average media literacy, we know that it does not make sense to calculate the probability of finding exactly the sample mean that we obtained. In Section \@ref(cont-random-var), we have learned that we work with p values in this situation. We use, for example, the probability of finding our sample mean or a mean that is even more distant from the hypothesized population mean.
 
 The question now is: How large must the difference be between the value that we expect according to our null hypothesis (the hypothesized population value) and the value that we observe in our sample before we stop believing that the null hypothesis is true? If our null hypothesis expects average media literacy of all children to be (at least) 5.5, how small should the sample mean be before we reject the null hypothesis?  
@@ -565,7 +477,7 @@ In other words, if we draw a lot of samples and decide on the null hypothesis fo
 
 We decide on that probability when we select the confidence level of the test and we think that .05 is an acceptable probability for making this type of error. But we do not know whether our sample belongs to the five percent.  
 
-### p values in one-sided tests  
+### p Values in one-sided tests  
 
 In the example of average media literacy, we have only taken into account the left tail of the sampling distribution to calculate the p value. If we expect that average media literacy is below 5.5, we only reckon with the chance that the sample mean is below 5.5, so we do a one-sided test.  
 
@@ -587,7 +499,7 @@ What is the situation in a two-sided test, for example, if we test the null hypo
 
 What we actually do is that we divide the significance level by two and use half of the probability for the left tail and the other half for the right tail of the sampling distribution. If our significance level is .05, as it usually is, we use .025 as the maximum probability of finding a sample with a statistic that is so low that we would reject a null hypothesis that is true. We use the other .025 probability for drawing a sample with a statistic that is so high that we reject the null hypothesis.  
 
-### p values in two-sided tests  
+### p Values in two-sided tests  
 Just like the significance level, the p value in a two-sided test has to take into account that we may reject the null hypothesis in two different ways.  
 
 A p value gives us the probability of drawing a sample with the value for the sample statistic that we have found in our current sample or a more extreme value. In other words, it is the probability of drawing a sample with a statistic that is at least as distant from the hypothesized population value as our current sample result.  
@@ -601,7 +513,7 @@ However, if your software reports a one-sided p value but you need a two-sided p
 ### Unfounded one-sided null hypotheses  
 
 ```{r nonsig-1sided, fig.cap="Is the test statistically significant?"}
-# Display the sampling distribution of average media literacy as a normal curve with 5% two-sided significance areas dark red and 5% one-sided significance areas light red/pink. Generate randomly one out of six possible values for the sample mean: (from left to right) in the 0-2.5% region, 2.5%-5%, 5%-50%, 50%-95%, 95%-97.5%, 97.5%-100%. Let the user select the answers (Yes/No) to three questions: "Is a left-sided test significant at 5%?", "Is a right-sided test significant at 5%?", "Is a two-sided test significant at 5%?". Give feedback when the user presses the submit button. 
+# Display the sampling distribution of average media literacy as a normal curve with 5% two-sided significance areas dark red and 5% one-sided significance areas light red/pink. Generate randomly one out of six possible values for the sample mean: (from left to right) in the 0-2.5% region, 2.5%-5%, 5%-50%, 50%-95%, 95%-97.5%, 97.5%-100%. Let the user select the answers (Yes/No) to three questions: Is this sample mean significant at a 5% significance level? "Left-sided test?", "Right-sided test?",  "Two-sided test?". Give feedback when the user presses the submit button. 
 ```
 
 1. Practice recognizing significant test results in Figure \@ref(fig:nonsig-1sided). In which situation is a one-sided test not statistically significant whereas a two-sided test is statistically significant?
@@ -614,7 +526,7 @@ In this situation, the two-sided p value can be significant but you should never
 
 ```{r crit-df, fig.cap="Sample size and critical values in a one-sample t test."}
 # Compare app crit-values in Ch. 3.
-# Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees f freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 100], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
+# Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees of freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 100], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
 ```
 
 Figure \@ref(fig:crit-df) uses the t distribution to approximate the sampling distribution of average media literacy in a random sample of children.
