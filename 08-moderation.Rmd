@@ -9,7 +9,7 @@ Different effect sizes for different contexts require different regression coeff
 
 As a predictor in the model, an interaction variable has a confidence interval and a p value. The confidence interval tells us the plausible values for the size of the interaction effect in the population. The p value tests the null hypothesis that there is no interaction effect at all in the population.
 
-To interpret the interaction effect, we must determine the size of the effect of the predictor on the outcome variabe for several interesting values of the moderator. If the moderator is categorical, we want to know the effect (simple slope) within each category of the moderator. For example, the effect of campaign exposure on smoking attitude for smokers and the effect for non-smokers. If the moderator is a continuous variable, we may look at the effect for the mean value of the moderator (moderate score level) and one standard deviation below (low level) or above (high level) the mean.
+To interpret the interaction effect, we must determine the size of the effect of the predictor on the outcome variable for several interesting values of the moderator. If the moderator is categorical, we want to know the effect (simple slope) within each category of the moderator. For example, the effect of campaign exposure on smoking attitude for smokers and the effect for non-smokers. If the moderator is a continuous variable, we may look at the effect for the mean value of the moderator (moderate score level) and one standard deviation below (low level) or above (high level) the mean.
 
 ```{r SPSS-PROCESS, eval=FALSE, echo=FALSE}
 # TERMINOLOGY: predictor (X, cause), moderator (M, represents context), covariate (C, control), outcome (Y).
@@ -144,13 +144,13 @@ beta = round(-0.6 + sd(x) / sd(y), digits = 2)
 
 3. What does $b^*$ mean and how does it change if you increase or decrease the residuals?
 
-In a linear regression, the outcome variable ($y$) must be numeric and in principle continuous. There are regression models for other types of outcomes, for example, logistic regression for a dichotomous (0/1) outcome and poisson regression for a count outcome, but we will not discuss them.
+In a linear regression, the outcome variable ($y$) must be numeric and in principle continuous. There are regression models for other types of outcomes, for example, logistic regression for a dichotomous (0/1) outcome and Poisson regression for a count outcome, but we will not discuss them.
 
 The predictor variables must be either numeric or dichotomous. If exposure is measured as a scale, for example ranging from zero to ten, the interpretation of the effect of exposure ($b_1$) is the one that we have encountered in the preceding section: the average predicted change in the outcome for a one unit difference in exposure while all other predictor values do not change (are held constant). 
 
 Whether this predicted change is small or large depends on the practical context: Is a small decrease in attitude towards smoking worth the effort of the campaign? If we want to apply a rule of thumb for the strength of the effect, we usually look at the standardized regression coefficient ($b^*$ according to APA6, _Beta_ in SPSS output). See Section \@ref(assoc-size) for some rules of thumb for effect size interpretation.
 
-Note that the regression coefficient is calculated for the predictor values that occur within the dataset. As a consequence, we do not know the relation between exposure and anti-smoking attitude for predictor values outside the range that actually occur in the sample. For example, if sample exposure scores are within the range three to seven, we should not pretend to know the effects of exposure levels below three or above seven. It is good practice to check the actual range of predictor values.
+Note that the regression coefficient is calculated for the predictor values that occur within the data set. As a consequence, we do not know the relation between exposure and anti-smoking attitude for predictor values outside the range that actually occur in the sample. For example, if sample exposure scores are within the range three to seven, we should not pretend to know the effects of exposure levels below three or above seven. It is good practice to check the actual range of predictor values.
 
 ### Dichotomous predictors
 
@@ -231,7 +231,7 @@ If we want to include a categorical predictor in a regression model, we must use
 
 If a respondent scores 1 on one of the first two dummy variables, her score must be 0 on the third dummy variable. If someone is member of the Never Smoked Group or the Smokes No More Group, she cannot be a member of the Smoking Group. Similarly, someone who is not a member of the Never Smoked or Smokes No More Groups, must be a member of the Smoking Group. A person scoring 0 on the first two dummy variables, then, must score 1 on the third.
 
-We cannot include a predictor that is perfectly predictable from other preditors in the regression model. It is like including the same predictor twice: How can the estimation process decide which predictor is responsible for the effect? It can't decide, so the estimation process will fail and no regression coefficients are estimated. If this happens, the predictors are said to be _multicollinear_. 
+We cannot include a predictor that is perfectly predictable from other predictors in the regression model. It is like including the same predictor twice: How can the estimation process decide which predictor is responsible for the effect? It can't decide, so the estimation process will fail and no regression coefficients are estimated. If this happens, the predictors are said to be _multicollinear_. 
 
 The category or group that is left out of the regression model is the reference group. Remember that non-smokers were the reference group in the preceding section because the regression equation did not include a dichotomous predictor on which the non-smokers scored 1. The two groups were represented by only one dichotomy.
 
@@ -254,7 +254,7 @@ Which group should you use as reference category, that is, which dummy should no
 
 3. What happens if you draw samples of larger size? Think of what you learned in preceding chapters. Formulate your answer before you change sample size in Figure \@ref(fig:regression-sampling).
 
-If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the dataset that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results.
+If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results.
 
 Each regression coefficient as well as the constant may vary from sample to sample drawn from the same population, so we should devise a sampling distribution for each of them. Because the constant in a regression model is usually uninteresting, we will only discuss sampling distributions for regression coefficients. Their sampling distributions happen to have a t distribution under particular assumptions.
 
@@ -286,7 +286,7 @@ If we sample from a population where attitude towards smoking depends on exposur
 
 If our sample is truly a random sample with independent and identically distributed observations, our predictions should be equally bad or equally well for each value of the outcome variable, that is, attitude in our example. More specifically, the sizes of our errors (residuals) should be normally distributed for each attitude level (according to the central limit theorem). 
 
-So for all possible values of the outcome variable, we must collect the residuals for the observations that have this score on the outcome vriable. For example, we should select all respondents who score 4.5 on the attitude towards smoking scale. Then, we select the residuals for these respondents and see whether they are approximately normally distributed.
+So for all possible values of the outcome variable, we must collect the residuals for the observations that have this score on the outcome variable. For example, we should select all respondents who score 4.5 on the attitude towards smoking scale. Then, we select the residuals for these respondents and see whether they are approximately normally distributed.
 
 Usually, we do not have more than a few observations for each single outcome score, so we cannot practically apply this check. Instead, we use a simple and coarse approach: Are all residuals normally distributed?
 
@@ -338,7 +338,7 @@ y_lin <- -0.6*x + 3 + x^ifelse(level > 0, abs(level), 0)*(10 - x)^ifelse(level <
 
 2. At which slider position are all attitude levels predicted equally well or equally badly?
 
-The other assumption states that we can predict the outcome variable equally well at al outcome variable levels. In other words, the prediction errors (residuals) are more or less the same at all levels of the outcome variable. If we have large prediction errors of some levels of the outcome variable, we should also have large prediction errors for other levels. As a result, the vertical width of the residuals by predictions scatterplot should be more or less the same from left to right. 
+The other assumption states that we can predict the outcome variable equally well at all outcome variable levels. In other words, the prediction errors (residuals) are more or less the same at all levels of the outcome variable. If we have large prediction errors of some levels of the outcome variable, we should also have large prediction errors for other levels. As a result, the vertical width of the residuals by predictions scatterplot should be more or less the same from left to right. 
 
 If the prediction errors are not more or less equal for all levels of the predicted outcome, our model is better at predicting some values than other values. For example, low values can be predicted better than high values of the outcome variable. This may signal, among other things, that we need to include moderation in the model.
 
@@ -396,7 +396,7 @@ In contrast, the regression coefficient for _exposure_ is not corrected for the 
 
 ### SPSS exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure, smoking status (variable _status3_), and cotact with smokers. Check the assumptions and interpret the results.
+1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure, smoking status (variable _status3_), and contact with smokers. Check the assumptions and interpret the results.
 
 2. Use the same data set (Exercise 1) to estimate the effect of exposure on attitude in a simple regression model, that is, without other predictors. Compare the result with the multiple regression model estimated in the previous exercise. What is the difference and why is there a difference?
 
@@ -557,13 +557,13 @@ Smoking status is a dichotomy, so it tells us the difference in average attitude
 
 2. Interpret the regression coefficient for the moderator _status_. 
 
-3. Interpret the regression coefficient for the interaciton variable. 
+3. Interpret the regression coefficient for the interaction variable. 
 
 In the example, non-smokers are the reference group because they are coded 0 on the _status_ variable. As a consequence, the regression coefficient for exposure gives us the effect of exposure on smoking attitude for non-smokers. It's value is -@@, so an additional unit of exposure decreases the smoking attitude by @@ points. More exposure to the campaign goes together with a more negative attitude towards smoking.
 
 The effect of (smoking) status on attitude is conditional on exposure. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average @@ more positive towards smoking than non-smokers.  
 
-Smokers are coded 1 on the (smoking) status variable, so the regression coeficient for the interaction tells us that the slope of the exposure effect is @@ higher for smokers than for non-smokers. In a preceding paragraph, we have seen that the estimated slope for non-smokers is -@@. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is @@. Now we can compare the two regression lines for the two groups, which gives good insight in the nature of moderation in this example.
+Smokers are coded 1 on the (smoking) status variable, so the regression coefficient for the interaction tells us that the slope of the exposure effect is @@ higher for smokers than for non-smokers. In a preceding paragraph, we have seen that the estimated slope for non-smokers is -@@. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is @@. Now we can compare the two regression lines for the two groups, which gives good insight in the nature of moderation in this example.
 
 Let us conclude the interpretation with a warning. The standardized regression coefficients that SPSS reports must __not__ be used. They are calculated in the wrong way if the regression model includes an interaction variable. Therefore, they are meaningless.
 
@@ -582,9 +582,9 @@ Let us conclude the interpretation with a warning. The standardized regression c
 
 In a regression model with moderation, we have to interpret the effect of a predictor involved in the interaction at a particular value of the moderator (Section \@ref(conditional-effects)). The estimated effect at a particular value of the moderator can only be trusted if there are quite some observations at or near this value of the moderator. In addition, these observations should cover the full range of values on the predictor. After all, the effect that we estimate must tell us whether higher values on the predictor go together with higher (or lower) values on the outcome.
 
-For example, we need quite some observations for smokers to estimate the conditional effect of exposure on attitude for smokers. If there are hardly any smokers in our sample, we cannot estimate the effect of exposure on attitude for them in a reliable way. Even if we have quite some obervations for smokers but all smokers have low exposure, we cannot say much about the effect of exposure on attitude for them.
+For example, we need quite some observations for smokers to estimate the conditional effect of exposure on attitude for smokers. If there are hardly any smokers in our sample, we cannot estimate the effect of exposure on attitude for them in a reliable way. Even if we have quite some observations for smokers but all smokers have low exposure, we cannot say much about the effect of exposure on attitude for them.
 
-The variation of predictor scores for a particular value of the moderator is called _common support_ [@RefWorks:3838]. If common support for predictors involved in moderation is bad, we should hesitate to draw conclusions from the estimated effects. Guidelines for good comon support are hard to give. Common support is usually acceptable if there are observations over the entire range of the predictor. 
+The variation of predictor scores for a particular value of the moderator is called _common support_ [@RefWorks:3838]. If common support for predictors involved in moderation is bad, we should hesitate to draw conclusions from the estimated effects. Guidelines for good common support are hard to give. Common support is usually acceptable if there are observations over the entire range of the predictor. 
 
 It is recommended to check the number of observations per value of the moderator. For a categorical moderator, such as smoking status, a scatterplot of outcome (vertical axis) by predictor (horizontal axis) with dots coloured according to the moderator category may do the job. Check that there are observations for more or less all values of the predictor. In Figure \@ref(fig:scatter-moderated), observations in each moderator category (dot colour) range from low to high predictor values.
 
@@ -850,7 +850,7 @@ The conditional effect of the moderator, as stated above, is the effect of the m
 
 As we have seen in Section \@ref(interpret-cont-interaction), the regression coefficient of an interaction effect with a continuous moderator can be directly interpreted. It represents the change in the unstandardized effect size for a one unit increase in the moderator. For example, one more contact with a smoker increases the exposure effect by 0.04.
 
-The size of the interaction effect tells us the moderation trend, for example, people who are more around smokers tend to become less opposed to smoking if they are exposed to the anti-smoking campaign. But we do not know how much an anti-smoking attitude is fostered by exposure to a campaign and whether exposure to the campaign increases anti-smoking attitude for everyone. Perhaps, people hanging out with smokers a lot may even get a more positive attitude towards somking from campaign exposure.
+The size of the interaction effect tells us the moderation trend, for example, people who are more around smokers tend to become less opposed to smoking if they are exposed to the anti-smoking campaign. But we do not know how much an anti-smoking attitude is fostered by exposure to a campaign and whether exposure to the campaign increases anti-smoking attitude for everyone. Perhaps, people hanging out with smokers a lot may even get a more positive attitude towards smoking from campaign exposure.
 
 We can be more specific about exposure effects at different levels of contact with smokers if we pick some interesting values of the moderator and calculate the conditional effects at these levels.
 
@@ -900,7 +900,7 @@ Use this re-centered moderator in the interaction variable and in the regression
 
 In Section \@ref(commonsupportdichotomous), we checked the support of the predictor in the data for different groups of the moderator. The basic idea is that we can only sensibly estimate and interpret a conditional effect at a moderator level if we have observations over the entire range of the predictor. For each moderator group, we checked the distribution of the predictor.
 
-With a continuous moderator we can also do this if we divide moderator scores into some groups. Hainmueller et al. [-@RefWorks:3838] recommend to create three groups, each containing one third of all observations. These low, medium, and high groups correspond more or less with the minus one standard deviation - mean - plus one standard deviation values that we used for visualizing and testing conditional effects. Create a histogram for the predictor in each of these groups to check common support of moderation in the data.
+With a continuous moderator we can also do this if we divide moderator scores into some groups. Hainmueller et all. [-@RefWorks:3838] recommend to create three groups, each containing one third of all observations. These low, medium, and high groups correspond more or less with the minus one standard deviation - mean - plus one standard deviation values that we used for visualizing and testing conditional effects. Create a histogram for the predictor in each of these groups to check common support of moderation in the data.
 
 ### Assumptions
 
@@ -908,7 +908,7 @@ The general assumptions for regression analysis (Section \@ref(regr-inference)) 
 
 Note that the linearity assumption also applies to the interaction effect. If the interaction effect is positive, the exposure (predictor) effect must be higher for higher values of contact with smokers (moderator). More precisely, a unit difference on the moderator should result in a fixed increase (or decrease) of the effect of the predictor. You may have noticed this linear change in the effect size in Figure \@ref(fig:continuous-moderator) at the beginning of this section on continuous moderators.
 
-If we would estimate a separate regression model for each selected moderator group, the linearity assumption says that the regression coefficients for the predictor should only go up (or down) if we progress from lower moderator scores to higher moderator scores. For example, the exposure effect for the 33% of all people with least contacts with smokers should be below the exposure effect for the 33% of all people with medium contact scores, which should be below the effect for people with mosthighest contact scores.
+If we would estimate a separate regression model for each selected moderator group, the linearity assumption says that the regression coefficients for the predictor should only go up (or down) if we progress from lower moderator scores to higher moderator scores. For example, the exposure effect for the 33% of all people with least contacts with smokers should be below the exposure effect for the 33% of all people with medium contact scores, which should be below the effect for people with most contact scores.
 
 In principle, we can execute a separate regression analysis for each moderator group if we have a large sample, for example, over 200 observations. There are some complications, however, so let us not pursue this here.
 
@@ -951,7 +951,7 @@ An interaction variable that is the product of the predictor and two moderators 
 
 4. Estimate the regression model also for the moderator centered at one standard deviation below its average and one standard deviation above it. Is the effect of exposure statistically significant and having the same sign (direction) for all reference values of the moderator?
 
-5. Check common support of the predictor for the three values of the moderator that you have used in Execises 3 and 4.
+5. Check common support of the predictor for the three values of the moderator that you have used in Exercises 3 and 4.
 
 6. What is the reference value of the moderator if you do not center the moderator? What, do you think, is common support of the predictor for this value of the moderator?
 
@@ -1014,7 +1014,7 @@ As a second step, we interpret moderation. For a categorical moderator, we descr
 
 In Table \@ref(tab:report-moderation-table), the effect of exposure (b = `r report_n(results[2,1])`) represents the effect of exposure on attitude for the reference group on smoking status and the reference value on smoker contact. So this is the effect for non-smokers who have average contact with smokers. 
 
-Note that the moderator is mean-centered, so the reference value 0 stands for mean contact wih smokers. For this reference group, exposure has a `r ifelse(results[2,1] < 0, "negative", "positive")` effect on attitude towards smoking. An additional unit of exposure `r ifelse(results[2,1] < 0, "decreases", "increases")` the predicted attitude by `r report_n(results[2,1])` units.
+Note that the moderator is mean-centered, so the reference value 0 stands for mean contact with smokers. For this reference group, exposure has a `r ifelse(results[2,1] < 0, "negative", "positive")` effect on attitude towards smoking. An additional unit of exposure `r ifelse(results[2,1] < 0, "decreases", "increases")` the predicted attitude by `r report_n(results[2,1])` units.
 
 An interaction variable including a dummy variable, such as _`r attributes(results)$dimnames[[1]][7]`_, indicates the difference between the effect for this category and the effect for the reference category. The difference is quite sizable for non-smokers and former smokers, namely `r report_n(results[7,1])`. The exposure effect is `r report_n(results[2,1])` for non-smokers but it is more strongly negative for former smokers: `r report_n(results[2,1])` + `r report_n(results[7,1])` = `r report_n(results[2,1] + results[7,1])`.
 

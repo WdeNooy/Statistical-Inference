@@ -93,29 +93,41 @@ attributes(voters$immigrant)$label <- "Attitude towards immigrants"
 voters$immigrant <- labelled::labelled(voters$immigrant, labels = c(`Very hostile towards immigrants` = 1, `Very welcoming to immigrants` = 10))
 haven::write_sav(voters, "data/voters.sav")
 
-# Donators: endorser of the campaign, remember campaign, exposure to campaign, willingness to donate to the campaign (pre and post).
+# Donators: endorser of the campaign, remember campaign, exposure to campaign, willingness to donate to the campaign (pre and post), sex.
+# Create predictors.
 set.seed(1245)
-donators <- data.frame(willing_post = (rnorm(143, mean = 2, sd = 0.4))^2, remember = c(rep("yes", 71), rep("no", 72)))
-donators$willing_post <- norm10(donators$willing_post) 
-set.seed(24)
-donators$willing_pre <- donators$willing_post + runif(143, -1.5, 0.3)
-donators$willing_pre[donators$willing_pre < 1] <- donators$willing_pre[donators$willing_pre < 1] + 1 - min(donators$willing_pre) 
-set.seed(834)
-random <- runif(143)
-donators$endorser <- "George Clooney"
-donators$endorser[(donators$willing_post > 4 &  random > 0.4) | (random < 0.3)] <- "Angelina Jolie"
-donators$endorser[(donators$willing_post < 4 &  random < 0.3) | (random > 0.85)] <- "no endorser"
-donators$endorser <- factor(donators$endorser)
-donators$exposure <- round(norm10(sqrt(donators$willing_post) + runif(143, 0, 4.3)))
-attributes(donators$willing_post)$label <- "Respondent's willingnes to donate at the campaign end"
-attributes(donators$willing_pre)$label <- "Respondent's willingnes to donate at the campaign start"
-attributes(donators$remember)$label <- "Respondent remembers the campaign?"
-attributes(donators$endorser)$label <- "Celebrity endorsing the campaign"
-attributes(donators$exposure)$label <- "Respondent's exposure to the campaign"
+remember <- sample(c(0,1), size = 143, replace = TRUE, prob = c(0.5, 0.5))
+set.seed(320)
+exposure <- norm10(rnorm(143, 0, 1))
+sex <- c(rep(0, 71), rep(1, 72))
+endorser <- c(rep(0,22), rep(1,24), rep(2, 25), rep(0,23), rep(1,25), rep(2, 24))
+# Create outcome.
+Clooney <- ifelse(endorser==1, 1, 0)
+Jolie <- ifelse(endorser==2, 1, 0)
+set.seed(1245)
+willing_post <- 3 + 0.84*remember + 0.51*sex + 0.1*exposure + 0.03*Clooney + 1.13*Jolie + 1.23*Clooney*sex - 0.77*Jolie*sex + rnorm(143, 0, 1.48)
+# Create pre-measurement of outcome.
+set.seed(4944)
+willing_pre <- willing_post + runif(143, -0.6, 0.3)
+# Join in dataframe.
+donators <- data.frame(willing_post, willing_pre, exposure, remember, endorser, sex)
+# Cleanup.
+rm(Clooney, Jolie, willing_post, willing_pre, exposure, remember, endorser, sex)
+# Add labels.
+attributes(donators$willing_post)$label <- "Respondent's willingness to donate at the campaign end"
 donators$willing_post <- labelled::labelled(donators$willing_post, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
+attributes(donators$willing_pre)$label <- "Respondent's willingness to donate at the campaign start"
 donators$willing_pre <- labelled::labelled(donators$willing_pre, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
+attributes(donators$exposure)$label <- "Respondent's exposure to the campaign"
 donators$exposure <- labelled::labelled(donators$exposure, labels = c(`No exposure` = 1, `Maximum exposure` = 10))
+attributes(donators$remember)$label <- "Respondent remembers the campaign?"
+donators$remember <- labelled::labelled(donators$remember, labels = c(`Does not recognize the campaign` = 0, `Recognizes the campaign` = 1))
+attributes(donators$endorser)$label <- "Celebrity endorsing the campaign"
+donators$endorser <- labelled::labelled(donators$endorser, labels = c(`Nobody` = 0, `George Clooney` = 1, `Angelna Jolie` = 2))
+attributes(donators$sex)$label <- "Respondent's sex"
+donators$sex <- labelled::labelled(donators$sex, labels = c(`Male` = 0, `Female` = 1))
 haven::write_sav(donators, "data/donators.sav")
+# Note: Set factors to nominal scale in SPSS.
 
 #Consumers: brand awareness, ad exposure, word of mouth, gender.
 set.seed(834)
