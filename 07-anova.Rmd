@@ -62,7 +62,7 @@ In analysis of variance, then, we are simply interested in the differences betwe
 # Insert means plot for celebrity endorsement example.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), willingness_av = c(3, 6, 7), const = 1)
 library(ggplot2)
-ggplot(d, aes(endorser, willingness_av)) + geom_point() + geom_line(aes(group = const)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willigness to donate")
+ggplot(d, aes(endorser, willingness_av)) + geom_point() + geom_line(aes(group = const)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
 rm(d)
 
 ```
@@ -222,17 +222,70 @@ This situation illustrates the limitations of null hypothesis significance tests
 
 A statistically significant F test tells us that we may be quite confident that at least two group means are different in the population. If none of the post hoc t tests is statistically significant, we should note that it is difficult to pinpoint the differences. Nevertheless, we should report the sample means of the groups (and their standard deviations) as well as their confidence intervals. The two groups that have the most different sample means are most likely to have different population means.
 
-### SPSS and analysis of variance
+## One-Way Analysis of Variance in SPSS
+
+### Instructions
 
 Applying one-way analysis of variance in SPSS and interpreting the results is explained in Section \@ref(comp-means).
 
-### SPSS exercises
+### Exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/donators.sav" target="_blank">donators.sav</a> to test if celebrity endorsement for a fund raiser affects willingness to donate. Check the assumptions and interpret the results. Create a plot to communicate your results.
+1. Use the data in <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a> to test if celebrity endorsement for a fund raiser affects willingness to donate. Check the assumptions and interpret the results. Create a plot to communicate your results.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 2. How does celebrity endorsement affect the willingness to donate and is one celebrity more effective than the other?  
 
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
 3. {TBD: another data set}
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 ## Different Score Levels for Two Factors
 
@@ -312,6 +365,8 @@ ggplot(variables, aes(x, y)) +
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
+#Cleanup.
+rm(variables)
 ```
 
 ### Types of moderation
@@ -348,7 +403,7 @@ Different "Clooney effects" for female and male subjects imply different differe
 # Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 5, 4.5, 9, 6.5))
 library(ggplot2)
-ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willigness to donate")
+ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
 rm(d)
 ```
 
@@ -368,7 +423,7 @@ In the other type of moderation the effect in one group is the opposite of the e
 # Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(6, 3, 9, 6, 9, 3))
 library(ggplot2)
-ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willigness to donate")
+ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
 rm(d)
 ```
 
@@ -404,7 +459,61 @@ Moderation between three or more factors is possible. These are called _higher-o
 ### Assumptions for two-way analysis of variance
 The assumptions for a two-way analysis of variance are the same as for a one-way analysis of variance (Section \@ref(anova-assumpt)). Just note that equal group sizes now apply to the subgroups formed by the combination of the two factors.
 
-### SPSS and two-way analysis of variance
+## Reporting Two-Way Analysis of Variance
+
+The main purpose of reporting a two-way analysis of variance, is to show the reader the differences between average outcome scores between groups on the same factor (main effects) and different differences for groups on a second factors (interaction effect). A means plot is very suitable for this purpose. Conventionally, we place the predictor groups on the horizontal axis and we draw different lines for the moderator groups. But you can switch them if it produces a more appealing graph.
+
+```{r 2way-meansplot, echo=FALSE, fig.cap="An example of a means plot."}
+# {TBD}
+# Basic colors and layout.
+source("../apps/plottheme/styling.R")
+# Create effect sizes.
+donors <- haven::read_spss("data/donors.sav")
+donors$sex <- factor(donors$sex, labels = names(attributes(donors$sex)$labels))
+donors$endorser <- factor(donors$endorser, labels = names(attributes(donors$endorser)$labels))
+library(dplyr)
+d <- donors %>% group_by(sex, endorser) %>%
+  summarise(mean_willing = mean(willing_post))
+library(ggplot2)
+ggplot(d, aes(x = endorser, y = mean_willing, group = sex, color = sex)) + geom_path() + geom_point() + theme_general() + xlab("Endorser") + ylab("Average willingnss to donate") + scale_y_continuous(limits = c(1, 10), breaks = seq(1, 10))
+# Cleanup.
+rm(d)
+```
+
+For the statistically informed reader, you should include the following information somewhere in your report:
+
+* That you used analysis of variance and the type (one-way or two-way).
+
+* The test result for every effect, consisting of the test name (_F_), the degrees of freedom, and the significance (p value). APA6 proscribes the following format if you report the test result within your text: F (df1, df1) = F value, p = p value. 
+
+* For each effect worth interpretation, because it is sizable and/or statistically significant, report eta-squared (eta^2 or  η2) and interpret it in terms of effect size. If you have to calculate eta-squared by hand, divide the between-groups sum of squares of an effect by the total sum of squares (SPSS: corrected total).
+
+* For each effect worth interpretation, clarify which group or subgroup scores higher. Report the group means and their standard deviations or the mean difference (from the post-hoc tests) for comaprisons between groups as well as their p values here.
+
+* As always, don't forget to mention the units (observations) and the meaning of the variables (factors and outcome). They describe the topic of the analysis.
+
+* Report it if the main assumption is violated, that is, if you have (sub)groups of unequal size and the test on homogeneous variances is statistically significant. In this situation, report the test result of the latter test just like you report the F test of a main effect (see above).
+
+In a two-way analysis of analysis, the number of numeric results can be large. It is recommended to present them as a table (in the text or in an appendix). If you report the table, include the error, the sums of squares and mean squares in the way, for example, SPSS reports them. Table \@ref(tab:2way-table) presents an example.
+
+```{r 2way-table, warning=FALSE, message=FALSE, echo=FALSE}
+results <- anova(lm(willing_post ~ sex*endorser, data = donors))
+results <- cbind(round(results[,2], digits = 2), round(results[,1], digits = 0), round(results[,3:4], digits = 2), round(results[,5], digits = 3))
+row.names(results)[3] <- "endorser*sex"
+row.names(results)[4] <- "Error"
+results[5,] <- c(round(sum(results[,2]), digits = 2), sum(results[,3]), NA, NA, NA)
+row.names(results)[5] <- "Total"
+results$`round(results[, 5], digits = 3)`[results$`round(results[, 5], digits = 3)` < 0.001] <- "< 0.001"
+options(knitr.kable.NA = '')
+knitr::kable(results, caption = "An example of a table summarizing results of a two-way analysis of variance.", col.names = c("Sum of Squares", "df", "Mean Square", "F", "p"), align = rep("r", 5)) 
+# Cleanup.
+rm(results, donors)
+```
+
+    
+## Two-Way Analysis of Variance in SPSS
+
+### Instructions
 
 ```{r SPSS-2way, echo=FALSE, eval=FALSE}
 # TBD: videos to executure two-way analysis of variance in SPSS with Analyze > General Linear Model > Univariate
@@ -425,27 +534,66 @@ The assumptions for a two-way analysis of variance are the same as for a one-way
 #     De meervoudige vergelijkingen voor het interactie-effect vormen geen verplichte stof binnen het vak IS.
 #     Vul op de plaats van factor_A de naam van de variabele in die als eerste factor gebruikt wordt en op de plaats van factor_B de naam van de variabele die de tweede factor voorstelt.
 #     Lijngrafiekjes die de verschillen tussen de groepen laten zien, kun je krijgen via PLOTS. Zet de categorische variabele die je als factor gebruikt in het vakje onder ‘Horizontal axis’ en druk op ‘Add’ om straks een grafiekje te krijgen dat het hoofdeffect van deze factor weergeeft. Een grafiek met het interactie-effect van twee factoren krijg je door een van beide categorische variabelen in het vakje onder ‘Horizontal Axis’ te zetten en de andere in het vakje onder ‘Separate lines’. 
-
-# 
-# Interpretatie/Rapportage
-# 
-# Vermeld het volgende:
-# 
-#     Vermeld het soort variantieanalyse dat je hebt uitgevoerd. Hier is dat de tweewegs-variantieanalyse.
-#     De samenvattende tabel met de resultaten van de variantieanalyse (de kwadratensommen, vrijheidsgraden, gemiddelde kwadraten, F-waarde en de overschrijdingskans) hoeft niet getoond te worden maar is wel overzichtelijk bij een tweewegs- en meerwegs-variantieanalyse. Wanneer je deze tabel NIET toont, moet je het toetsresultaat voor elk effect vermelden in de interpreterende tekst: F (df1, df1) en p. Let op, je vermeldt twee vrijheidsgraden: eerst die van de teller (tussen groepen), dan die van de noemer (binnen groepen, fouten).
-#     Als een effect significant is, vermeld en interpreteer je ook eta2 (of met de Griekse letter: η2). GEEF AAN HOE ETA2 BEREKEND WORDT OP GROND VAN SPSS OUTPUT
-#     Vermeld bij elk significant effect de gemiddelde scores van de groepen met de standaarddeviaties (in een tabel of in de interpreterende tekst) en maak duidelijk wat de eenheden en variabelen in het onderzoek zijn.
-#     Wanneer een post-hoc Bonferroni-toets is uitgevoerd, vermeld je tussen welke groepsgemiddelden er significante verschillen gevonden zijn. Vermeld zowel het gemiddelde verschil (Mverschil) als de bijbehorende overschrijdingskans (p).
-#     Wanneer de groepen niet ongeveer even groot zijn, vermeld je het resultaat van de test op homogeniteit van varianties (Equal Error Variances): F (df1, df1) en p. 
 ```
 
-### SPSS exercises
+### Exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/donators.sav" target="_blank">donators.sav</a> to test if the effect of celebrity endorsement on willingness to donate differs for females and males. Check the assumptions and interpret the results. Create a plot to communicate your results.
+1. Use the data in <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a> to test if the effect of celebrity endorsement on willingness to donate differs for females and males. Check the assumptions and interpret the results. Create a plot to communicate your results.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 2. Use the same data as in Exercise 1 to test if the effect of celebrity endorsement on willingness to donate depends on remembrance of the campaign. Check the assumptions and interpret the results. Create a plot to communicate your results.
 
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
 3. {TBD: another data set}
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 ## Take-Home Points  
 

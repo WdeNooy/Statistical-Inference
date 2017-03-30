@@ -8,6 +8,9 @@ output:
     number_sections : TRUE
     split_by : "section+number"
     split_bib: FALSE
+    config:
+      toc:
+        collapse: section
 documentclass: book
 bibliography: ["RefList.bib"]
 biblio-style: "apa"
@@ -16,19 +19,23 @@ link-citations: true
 ---
 
 ```{r setup, include=FALSE}
-# Set echo=FALSE in a code chunk if its interactive content has been added.
+# All code chunks that should never be shown must have the echo=FALSE option. Chunks with answers to exercises do not have the echo option set, so their visibility is determined by the echo option set for all chunks here. Set echo=FALSE at the start of the course and set it to TRUE after the last tutorial and before the exam.
 knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval=TRUE, tidy=TRUE)
 # Libraries used.
 library(dplyr)
 library(ggplot2)
 library(knitr)
 library(visNetwork)
+# Basic colors and layout.
+source("../apps/plottheme/styling.R")
 ```
 
 ```{r example-data, include=FALSE, echo=FALSE, eval=FALSE}
 source("norm10.R") #function to normalize scores to [1-10] or [0-10]
 # SPSS data set candy colour (uniform) and weight (normal, M = 2.8, SD = 0.2), N= 50.
 set.seed(seed = 12345)
+
+# Candy bags example.
 candies <- data.frame(colour = factor(c("blue","green","yellow","orange","red")), weight = rnorm(50, mean = 2.8, sd = 0.2), sticky = factor(c(rep(c("sticky", "sticky", "not sticky", "sticky", "not sticky"), 6), rep(c("sticky", "not sticky"), 9), c("not sticky", "sticky"))), colour_pre = rnorm(50, mean = 7.3, sd = 0.5))
 set.seed(seed = 8734)
 candies$colour_post <- candies$colour_pre + ifelse(candies$colour %in% c("blue","green","orange"), rnorm(50, mean = -1.1, sd = 0.1), ifelse(candies$colour == "yellow", rnorm(50, mean = -2.4, sd = 0.2), rnorm(50, mean = -3.7, sd = 0.4)))
@@ -63,13 +70,14 @@ haven::write_sav(households, "data/households.sav")
 
 # Children: media literacy, sex, age, supervision.
 set.seed(2583)
-children <- data.frame(medliter = rnorm(87, mean = 4.3, sd = 1.8), sex = c(rep("girl", 47), rep("boy", 40)))
+children <- data.frame(medliter = rnorm(87, mean = 4.3, sd = 1.8), sex = c(rep("girl", 46), rep("boy", 40), "")) #One impossible value.
 children$medliter <- children$medliter - min(children$medliter) + 1
 set.seed(1174)
 children$age <- round((children$medliter + 22 + rnorm(87, mean = 0, sd = 5.1))/3)
 set.seed(3228)
 children$supervision <- (children$medliter + rnorm(87, mean = 0, sd = 3.6))
 children$supervision <- norm10(children$supervision) #normalize to 1-10
+children$supervision[30] <- 25 # Impossible value.
 # Set labels.
 attributes(children$sex)$label <- "Sex"
 attributes(children$age)$label <- "Age (in years)"
@@ -93,7 +101,7 @@ attributes(voters$immigrant)$label <- "Attitude towards immigrants"
 voters$immigrant <- labelled::labelled(voters$immigrant, labels = c(`Very hostile towards immigrants` = 1, `Very welcoming to immigrants` = 10))
 haven::write_sav(voters, "data/voters.sav")
 
-# Donators: endorser of the campaign, remember campaign, exposure to campaign, willingness to donate to the campaign (pre and post), sex.
+# donors: endorser of the campaign, remember campaign, exposure to campaign, willingness to donate to the campaign (pre and post), sex.
 # Create predictors.
 set.seed(1245)
 remember <- sample(c(0,1), size = 143, replace = TRUE, prob = c(0.5, 0.5))
@@ -110,23 +118,23 @@ willing_post <- 3 + 0.84*remember + 0.51*sex + 0.1*exposure + 0.03*Clooney + 1.1
 set.seed(4944)
 willing_pre <- willing_post + runif(143, -0.6, 0.3)
 # Join in dataframe.
-donators <- data.frame(willing_post, willing_pre, exposure, remember, endorser, sex)
+donors <- data.frame(willing_post, willing_pre, exposure, remember, endorser, sex)
 # Cleanup.
 rm(Clooney, Jolie, willing_post, willing_pre, exposure, remember, endorser, sex)
 # Add labels.
-attributes(donators$willing_post)$label <- "Respondent's willingness to donate at the campaign end"
-donators$willing_post <- labelled::labelled(donators$willing_post, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
-attributes(donators$willing_pre)$label <- "Respondent's willingness to donate at the campaign start"
-donators$willing_pre <- labelled::labelled(donators$willing_pre, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
-attributes(donators$exposure)$label <- "Respondent's exposure to the campaign"
-donators$exposure <- labelled::labelled(donators$exposure, labels = c(`No exposure` = 1, `Maximum exposure` = 10))
-attributes(donators$remember)$label <- "Respondent remembers the campaign?"
-donators$remember <- labelled::labelled(donators$remember, labels = c(`Does not recognize the campaign` = 0, `Recognizes the campaign` = 1))
-attributes(donators$endorser)$label <- "Celebrity endorsing the campaign"
-donators$endorser <- labelled::labelled(donators$endorser, labels = c(`Nobody` = 0, `George Clooney` = 1, `Angelna Jolie` = 2))
-attributes(donators$sex)$label <- "Respondent's sex"
-donators$sex <- labelled::labelled(donators$sex, labels = c(`Male` = 0, `Female` = 1))
-haven::write_sav(donators, "data/donators.sav")
+attributes(donors$willing_post)$label <- "Respondent's willingness to donate at the campaign end"
+donors$willing_post <- labelled::labelled(donors$willing_post, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
+attributes(donors$willing_pre)$label <- "Respondent's willingness to donate at the campaign start"
+donors$willing_pre <- labelled::labelled(donors$willing_pre, labels = c(`I am very sure not to donate` = 1, `I am very sure to donate` = 10))
+attributes(donors$exposure)$label <- "Respondent's exposure to the campaign"
+donors$exposure <- labelled::labelled(donors$exposure, labels = c(`No exposure` = 1, `Maximum exposure` = 10))
+attributes(donors$remember)$label <- "Respondent remembers the campaign?"
+donors$remember <- labelled::labelled(donors$remember, labels = c(`Does not recognize the campaign` = 0, `Recognizes the campaign` = 1))
+attributes(donors$endorser)$label <- "Celebrity endorsing the campaign"
+donors$endorser <- labelled::labelled(donors$endorser, labels = c(`Nobody` = 0, `George Clooney` = 1, `Angelina Jolie` = 2))
+attributes(donors$sex)$label <- "Respondent's sex"
+donors$sex <- labelled::labelled(donors$sex, labels = c(`Male` = 0, `Female` = 1))
+haven::write_sav(donors, "data/donors.sav")
 # Note: Set factors to nominal scale in SPSS.
 
 #Consumers: brand awareness, ad exposure, word of mouth, gender.
@@ -171,6 +179,38 @@ attributes(smokers$status3)$label <- "Smoking status"
 smokers$status3 <- labelled::labelled(smokers$status3, labels = c(`Non-smoker` = 0, `Former smoker` = 1, `Smoker` = 2))
 haven::write_sav(smokers, "data/smokers.sav")
 
+# Readers: Predicting newspaper reading time from news site use, political scepticism, political interest, education level, and age.
+# Age (in decades).
+set.seed(5554)
+readers <- data.frame(age = round(runif(n = 312, min = 1.8, max = 8.2), digits = 1))
+attributes(readers$age)$label <- "Age (in decades)"
+# Education level (in years).
+set.seed(4466)
+readers$education <- round(-readers$age + rnorm(n = 312, mean = 0, sd = 15), digits = 0)
+readers$education <- 8 + round(norm10(readers$education, lbound1 = FALSE), digits = 0)
+attributes(readers$education)$label <- "Education level (in years)"
+# Political interest (10-point scale).
+set.seed(7373)
+readers$polinterest <- round(norm10(0.3*readers$age + 1.2*readers$education + rnorm(n = 312, mean = 0, sd = 6)), digits = 1)
+attributes(readers$polinterest)$label <- "Interest in politics (scale)"
+# Political cynicism (10-point scale).
+set.seed(3737)
+readers$polcynic <- round(norm10(-0.8*readers$age - 1.4*readers$education + rnorm(n = 312, mean = 0, sd = 6)), digits = 1)
+attributes(readers$polcynic)$label <- "Political cynicism (scale)"
+# News site use (7-point scale).
+set.seed(2176)
+readers$newssite <- round(norm10(-8.6*readers$age + 1.4*readers$polinterest + rnorm(n = 312, mean = 0, sd = 6)), digits = 0)
+readers$newssite[readers$newssite == 1] <- 2
+readers$newssite[readers$newssite > 8] <- 8
+readers$newssite <- readers$newssite - 2
+attributes(readers$newssite)$label <- "News sites use"
+readers$newssite <- labelled::labelled(readers$newssite, labels = c(`Never` = 0, `At most once a week` = 1, `Twice a week` = 2, `Once a day` = 3, `Twice a day` = 4, `Three times a day` = 5, `At least four times a day` = 6))
+# Newspaper reading time (minutes per day on average).
+set.seed(3310)
+readers$readingtime <- round(4.6*readers$age + 0.3*readers$education + 0.5*readers$polinterest - 0.1*readers$polcynic - 1.3*readers$newssite + rnorm(n = 312, mean = 0, sd = 6), digits = 0) 
+readers$readingtime <- readers$readingtime - min(readers$readingtime)
+attributes(readers$readingtime)$label <- "Average newspaper reading time per day (minutes)"
+haven::write_sav(readers, "data/readers.sav")
 
 # Include SPSS tabular output:
 #- Right-click table, select Style Output, Select as Group (Continue), Table Look, Compact.

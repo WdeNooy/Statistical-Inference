@@ -299,8 +299,9 @@ As you probably remember from Section \@ref(boot-approx), we simulate an entire 
 
 Exact approaches to the sampling distribution do not yield confidence intervals. They only calculate p values.
 
-### SPSS and confidence intervals
+## Confidence Intervals in SPSS
 
+### Instruction
 SPSS usually displays the 95% confidence interval automatically if you use the standard-normal (_z_) or _t_ distribution. For an example, see the independent t test output in Figure \@ref(fig:bootstrap-indep). This figure also shows that bootstrapping also yields confidence intervals. If you want another confidence level than 95%, you have to change this in the _Options..._  or _Statistics..._ dialog. Figure \@ref(fig:dialog-conflevel) shows the _Options..._ dialog to a one sample t test.
 
 ```{r dialog-conflevel, out.width="280px", fig.cap="SPSS dialog to change the confidence level."}
@@ -309,18 +310,128 @@ knitr::include_graphics("/figures/SPSSconflevel.png")
 
 Regression analysis is an exception (command _Analyze > Regression > Linear_). Here, you have to select the option _Confidence intervals_ in the _Statistics..._ dialog to obtain confidence intervals for the regression coefficients.
 
-### SPSS exercises
+### Exercises
 
 1. <a href="http://82.196.4.233:3838/data/candies.sav" target="_blank"> Download the data set "candies.sav" here</a> and use SPSS to calculate the 95% and 99% confidence intervals of average candy weight. Hint: leave the test value at zero. 
     Interpret the results and explain why the 99% confidence interval is wider than the 95% confidence interval.  
 
+```{r eval=FALSE}
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=weight
+  /FORMAT=NOTABLE
+  /HISTOGRAM NORMAL
+  /ORDER=ANALYSIS.
+* 95% CI.
+T-TEST
+  /TESTVAL=0
+  /MISSING=ANALYSIS
+  /VARIABLES=weight
+  /CRITERIA=CI(.95).
+* 99% CI.
+T-TEST
+  /TESTVAL=0
+  /MISSING=ANALYSIS
+  /VARIABLES=weight
+  /CRITERIA=CI(.99).
+
+Check data:
+
+There are no impossible values on variable weight.
+
+Check assumptions:
+
+Sample size (N = 50) is well over 30, so we need not care about
+the normal distribution of candy weight in the population.
+
+Interpret the results:
+
+Average weight of candies in the population is between 2.77 and 
+2.90 gram with 95% confidence and between 2.75 and 2.92 gram
+with 99% confidence.
+If we want to be more confident, we must allow for a broader
+range of values, so the confidence interval is wider.
+```
+
 2. Let SPSS calculate the 95% confidence interval for median candy weight. Interpret the result. The data are in "candies.sav". 
     Remember the SPSS exercises in Chapter \@ref(probmodels).
 
+```{r eval=FALSE}
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=weight
+  /ORDER=ANALYSIS.
+* Bootstrap on median candy weight.
+BOOTSTRAP
+  /SAMPLING METHOD=SIMPLE
+  /VARIABLES INPUT=weight 
+  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000
+  /MISSING USERMISSING=EXCLUDE.
+FREQUENCIES VARIABLES=weight
+  /FORMAT=NOTABLE
+  /STATISTICS=MEDIAN
+  /ORDER=ANALYSIS.
+
+Check data:
+  
+There are no impossible values on the weight variable.
+
+Check assumptions:
+  
+The measurement level of variable weight is OK.
+    
+Interpret the results: 
+
+Median candy weight in the sample is 2.89 gram. With 
+95% confidence, we expect median candy weight to be 
+between 2.77 and 2.92 grams in the population of all candies.
+```
+
 3. Use SPSS to determine the 95% confidence interval for a paired-samples t test on candy colour fading under sunlight (variables colour_pre and colour_post in "candies.sav"). In your interpretation of the confidence interval, clarify the meaning of the statistic for which the confidence interval was calculated.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=colour_pre colour_post
+  /FORMAT=NOTABLE
+  /HISTOGRAM NORMAL
+  /ORDER=ANALYSIS.
+* Paired-samples t test.
+T-TEST PAIRS=colour_pre WITH colour_post (PAIRED)
+  /CRITERIA=CI(.9500)
+  /MISSING=ANALYSIS.
+
+Check data:
+
+There are no impossible values on variable weight.
+
+Check assumptions:
+
+Sample size (N = 50) is well over 30, so we need not care about
+the normal distribution of candy weight in the population.
+
+Interpret the results:
+
+Candy colourfulness fades under sunlight by 1.88 (or between 
+1.6 to 2.2) points in the data. This change is statistically 
+significant, t (49) = 12.86, p < 001, 95%CI[1.59; 2.17].
+```
 
 4. Use SPSS to determine if candy colourfulness after exposure to sunlight (colour_post) depends on candy weight and candy sweetness. Interpret the 95% confidence intervals for both effects. 
     Hint: If you forgot which analysis technique you need to answer this question, use the flow chart in \@ref(@@).
+
+```{r eval=FALSE}
+SPSS syntax:
+
+Check data:
+    
+Check assumptions:
+  
+Interpret the results:
+```
 
 ## Take-Home Points  
 

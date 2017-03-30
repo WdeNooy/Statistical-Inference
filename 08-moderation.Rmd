@@ -1,9 +1,9 @@
-# Moderation with Regression Analysis
+# Moderation with Regression Analysis {#moderation}
 > Key concepts: interaction variable, covariate, outcome, regression equation, dummy variables, normally distributed residuals, linearity, homoscedasticity, independent obervations, statistical diagram, common support, simple slope, conditional effect, mean-centering.
 
 The linear regression model is a powerful and very popular model for predicting a numeric outcome variable from one or more predictor variables. Predictor variables must be numeric or dichotomies. Regression coefficients show how much the outcome changes on average for a one unit difference in the predictor. 
 
-But what if this effect is not the same in all contexts? For example, exposure to an anti-smoking campaign may generally generate a more negative attitude towards smoking. The effect, however, is probably different for people who smoke than for people who do not smoke. The effect of campaign exposure on attitude towards smoking is moderated by the context: Whether or not the person exposed to the campaign is a smoker.
+But what if this predictive effect is not the same in all contexts? For example, exposure to an anti-smoking campaign may generally generate a more negative attitude towards smoking. The effect, however, is probably different for people who smoke than for people who do not smoke. The effect of campaign exposure on attitude towards smoking is moderated by the context: Whether or not the person exposed to the campaign is a smoker.
 
 Different effect sizes for different contexts require different regression coefficients, that is, regression lines with different slopes for different groups of people. We can use an interaction variable as a predictor in a regression model to accommodate for moderation as different slopes. An interaction variable is just the product of the predictor and moderator variables.
 
@@ -52,7 +52,7 @@ In the social sciences, we usually expect that a particular outcome has several 
 # Draw conceptual diagram.
 ```
 
-Figure \@ref(fig:concept-smoke) summarizes some hypothesized causes of attitude towards  smoking. A regression model translates this conceptual diagram into a statistical model. The statistical model is a mathematical function with the outcome variable (also known as the dependent variable, usually referred to with the letter $y$) as the sum of a constant (a), the effects ($b$) of predictors ($x$), and an error term ($e$), see Equation \@ref(eq:regression).
+Figure \@ref(fig:concept-smoke) summarizes some hypothesized causes of attitude towards  smoking. A regression model translates this conceptual diagram into a statistical model. The statistical model is a mathematical function with the outcome variable (also known as the dependent variable, usually referred to with the letter $y$) as the sum of a constant (a), the effects ($b$) of predictors ($x$), which are _predictive effects_, and an error term ($e$), see Equation \@ref(eq:regression).
 
 $$ 
 \small
@@ -254,7 +254,7 @@ Which group should you use as reference category, that is, which dummy should no
 
 3. What happens if you draw samples of larger size? Think of what you learned in preceding chapters. Formulate your answer before you change sample size in Figure \@ref(fig:regression-sampling).
 
-If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results.
+If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results. The confidence interval gives us bounds for the population value of the unstandardized regression coefficient. The p value is used to test the null hypothesis that the unstandardized regression coefficient is zero in the population.
 
 Each regression coefficient as well as the constant may vary from sample to sample drawn from the same population, so we should devise a sampling distribution for each of them. Because the constant in a regression model is usually uninteresting, we will only discuss sampling distributions for regression coefficients. Their sampling distributions happen to have a t distribution under particular assumptions.
 
@@ -347,7 +347,7 @@ Why do we use the residuals and predicted values instead of a scatterplot for ea
 ### Visualizing predictions 
 
 ```{r regression-predict, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?"}
-# Goal: sensitize student to the notion that predictions in a multiple regression model requires selecting one predictor and fixed values for the other predictors. Without moderation, the fixed values only change the vertical position of the line (that is, the constant) but not the slope.
+# Goal: sensitize student to the notion that prediction in a multiple regression model requires selecting one predictor and fixed values for the other predictors. Without moderation, the fixed values only change the vertical position of the line (that is, the constant) but not the slope.
 # Display a scatterplot with attitude towards smoking as Y and exposure as X with a negative more or less linear relation and a regression line for the currently selected values of the covariates (smoking status (dichotomy: smoker versus non-smoker) and (smoker)contact). Display the multiple regression equation. User can change smoking status (0 or 1) and contact (range 0-10), which triggers the app to redraw the regression line for attitude by exposure for these values of smoking status and (smoker)contact. Add button to add the regression line for a simple regression of attitude on exposure.
 # The user must discover that the regression line moves up/down the covariate's regression coefficient times the difference between the selected covariate value and the covariate mean. In addition, s/he may discover that the simple regression line need not equal any of the regression lines in the multiple regression situation because the slope is different (if predictors are correlated). 
 ```
@@ -388,17 +388,79 @@ In Figure \@ref(fig:regression-predict), you may have noticed that none of the s
 
 In contrast, the regression coefficient for _exposure_ is not corrected for the effects of other predictors. As a consequence, the regression coefficient of a predictor is usually different in a simple regression model than in a multiple regression model. We will discuss this in detail in Chapter \@ref(mediation). For now, you should understand that we cannot use the simple regression line if we work with a multiple regression model.
 
-### SPSS and regression analysis {#SPSS_regression}
+## Regression Analysis in SPSS {#SPSS_regression}
+
+### Instructions
 
 ```{r SPSSinstructregression, echo=FALSE, eval=FALSE}
-# TBD: add videos on executing regression, inspecting residuals, creating dummy variables, and adding a regression line to a scattergram for a simple regression (Chart Editor: Add fit line at total) and one predictor in multiple regression (Chart Editor: reference line from equation).
+# TBD: add videos on executing regression, inspecting residuals, creating dummy variables, adding a regression line to a scattergram for a simple regression (Chart Editor: Add fit line at total) and one predictor in multiple regression (Chart Editor: reference line from equation), interpreting resuls. (Results reporting is discussed at the end of this chapter.)
 ```
 
-### SPSS exercises
+### Exercises
 
 1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure, smoking status (variable _status3_), and contact with smokers. Check the assumptions and interpret the results.
 
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
 2. Use the same data set (Exercise 1) to estimate the effect of exposure on attitude in a simple regression model, that is, without other predictors. Compare the result with the multiple regression model estimated in the previous exercise. What is the difference and why is there a difference?
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
+3. The data set <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav</a> contains information about the media literacy of children and parental supervision of their media use. Are the two related? Check the assumptions and interpret the results.
+
+```{r eval=FALSE}
+The analysis method you choose, depends on your substantive decision 
+on the direction of the association. 
+If you assume no direction, a correlation coefficient is the most 
+appropriate choice.
+If you think one variable may depend on another, a (simple) regression 
+model is the best choice.
+
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 ## Different Lines for Different Groups
 
@@ -422,6 +484,8 @@ ggplot(variables, aes(x, y)) +
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
+# Cleanup.
+rm(variables)
 ```
 
 Analysis of variance (ANOVA), as discussed in Chapter \@ref(anova), investigates the effects of categorical variables on a numeric outcome variable. It cannot handle numeric predictors or numeric covariates. Although there are ways to include numeric covariates, for example, in the analysis of covariance (ANCOVA), we use regression analysis if we have at least one numerical predictor or covariate. 
@@ -669,7 +733,9 @@ On the other hand, we have null hypotheses about differences between a group and
 
 If we would like to know whether the exposure effect for former smokers is significantly different from zero, we have to rerun the regression model using the people who stopped smoking as reference group. This new model would also tell us whether the exposure effect for people who stopped smoking is significantly different from the exposure effect for people who are still smoking.
 
-### SPSS and a dichotomous or categorical moderator
+## A Dichotomous or Categorical Moderator in SPSS
+
+### Instructions
 
 ```{r SPSSinstructcatmoderator, echo=FALSE, eval=FALSE}
 # TBD: create and embed videos for SPSS manipulations and output interpretation ; use smokers.sav with _status2_ instead of _status3_ (the latter is used in the Exercise)
@@ -706,13 +772,64 @@ If we would like to know whether the exposure effect for former smokers is signi
 ```
 
 
-### SPSS exercises
+### Exercises
 
 1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure moderated by smoking status (variable _status3_), and use contact with smokers as covariates. Check the assumptions for a regression analysis and interpret the results.
 
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
 2. Visualize the moderated effects of exposure on attitude (Exercise 1). Create a scatterplot with three regression lines. Colour the regression lines and the dots (respondents) according to their smoking status category.
 
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
 3. Check the common support of the predictor (exposure) in all groups of the moderator (smoking status). Could you also check common support with the scatterplot you made for Exercise 2?
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 ## A Continuous Moderator {#cont-moderator-regression}
 
@@ -918,44 +1035,7 @@ An interaction effect with one moderator, albeit continuous or categorical, is c
 
 An interaction variable that is the product of the predictor and two moderators can be used to include a second-order interaction in a regression model. If you include a second-order interaction, you must also include the variables involved in the interaction in the regression model as well as all first-order interaction among these variables. All in all, these models become very complicated to interpret, so we do not pay further attention to them.
 
-### SPSS and a continuous moderator
-
-```{r SPSSinstructcontmoderator, echo=FALSE, eval=FALSE}
-# : request mean (sd, min & max) and (mean) center the predictor and moderator
-# * Mean-center numeric variables: 
-#   - determine average score on a variable: Analyze > Descriptive Statistics > Frequencies ; select Statistics > Mean (and Minimum, Maximum to check range) and unselect Display frequency tables
-#   - create a new variable with the average subtracted: Transform > Compute, select variable, give new name (indicating centering), and subtract value of average from Frequencies output
-# 
-# : calculate a continuous by continuous interaction variable with COMPUTE
-# 
-# : execute a regression analysis, request descriptives (for predictor and covariate means and standard deviations)
-# 
-# : interpret numerical output ; the problem with standardized regression weights (just for interaction effect?) in SPSS: don't interpret 
-# 
-# : graph regression lines for different moderator values in a scatterplot: 
-#   (1) using reference lines for M, M - SD, and M + SD 
-#   (2) centering on (M - SD) and (M + SD) (in addition to centering on M)
-# 
-# ; check common support: group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group
-#
-# : (for enthusiasts?) don't interpret the standardized regression coefficients (Beta) for interaction variables in SPSS because they are calulted in the wrong way ; the preitor and moderator variables are multiplied to obtain the interaction variable and aferwards they are standardized ; instead, the predictor and moderator variables should be standardized before they are multiplied ; if you want to interpret the standardized regression coefficients, you have to standardize _all_ numeric variables yourself (Analyze > Descriptive Statistics > Descriptives with option 'Save standradized values as variables' checked) before you calculate the interaction variable and include them in the regression analysis ; in this situation, the output of the regression analysis lists the standardized regression weights in the column 'Unstandardized Coefficients'. 
-```
-
-### SPSS exercises
-
-1. With the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a>, check if the effect of campaign exposure on attitude towards smoking depends on the contacts that people have with smokers. Control for the respondent's smoking status. Interpret the regression coefficients and check the assumptions of the regression model.
-
-2. Visualize moderation of the exposure effect in a scatterplot with three regression lines. Explain the information conveyed by the plot to your reader.
-
-3. Mean-center the predictor and moderator and repeat the regression analysis of Exercise 1. Explain the difference in the results.
-
-4. Estimate the regression model also for the moderator centered at one standard deviation below its average and one standard deviation above it. Is the effect of exposure statistically significant and having the same sign (direction) for all reference values of the moderator?
-
-5. Check common support of the predictor for the three values of the moderator that you have used in Exercises 3 and 4.
-
-6. What is the reference value of the moderator if you do not center the moderator? What, do you think, is common support of the predictor for this value of the moderator?
-
-## Reporting Moderation
+## Reporting Moderation {#reportmoderation}
 
 Reporting moderation, we aim to show that the effect (of the predictor) depends on the context (moderator). As a first step, we can discuss the size and statistical significance of the interaction effect. A sizable and statistically significant interaction effect signals that the effect is moderated. This seems to be the case in the example reported in Table \@ref(tab:report-moderation-table).
 
@@ -1056,6 +1136,147 @@ Check that the observations have good support in the predictor at the selected v
 Do not report if common support is good. If it is bad, try to find other reference groups or values with adequate support. If they cannot be found, warn the reader that we cannot fully trust the estimated moderation because we do not have a nice range of predictor values within each level of the moderator.
 
 Finally, discuss assumptions of the linear regression model if they are not met. Inspect the residual plots but do not include them in the report.
+
+## A Continuous Moderator in SPSS
+
+### Instructions
+
+```{r SPSSinstructcontmoderator, echo=FALSE, eval=FALSE}
+# : request mean (sd, min & max) and (mean) center the predictor and moderator
+# * Mean-center numeric variables: 
+#   - determine average score on a variable: Analyze > Descriptive Statistics > Frequencies ; select Statistics > Mean (and Minimum, Maximum to check range) and unselect Display frequency tables
+#   - create a new variable with the average subtracted: Transform > Compute, select variable, give new name (indicating centering), and subtract value of average from Frequencies output
+# 
+# : calculate a continuous by continuous interaction variable with COMPUTE
+# 
+# : execute a regression analysis, request descriptives (for predictor and covariate means and standard deviations)
+# 
+# : interpret numerical output ; the problem with standardized regression weights (just for interaction effect?) in SPSS: don't interpret 
+# 
+# : graph regression lines for different moderator values in a scatterplot: 
+#   (1) using reference lines for M, M - SD, and M + SD 
+#   (2) centering on (M - SD) and (M + SD) (in addition to centering on M)
+# 
+# ; check common support: group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group
+#
+# : (for enthusiasts?) don't interpret the standardized regression coefficients (Beta) for interaction variables in SPSS because they are calulted in the wrong way ; the preitor and moderator variables are multiplied to obtain the interaction variable and aferwards they are standardized ; instead, the predictor and moderator variables should be standardized before they are multiplied ; if you want to interpret the standardized regression coefficients, you have to standardize _all_ numeric variables yourself (Analyze > Descriptive Statistics > Descriptives with option 'Save standradized values as variables' checked) before you calculate the interaction variable and include them in the regression analysis ; in this situation, the output of the regression analysis lists the standardized regression weights in the column 'Unstandardized Coefficients'. 
+```
+
+### Exercises
+
+1. With the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a>, check if the effect of campaign exposure on attitude towards smoking depends on the contacts that people have with smokers. Control for the respondent's smoking status. Interpret the regression coefficients and check the assumptions of the regression model.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
+2. Visualize moderation of the exposure effect in a scatterplot with three regression lines. Explain the information conveyed by the plot to your reader.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
+3. Mean-center the predictor and moderator and repeat the regression analysis of Exercise 1. Explain the difference in the results.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
+4. Estimate the regression model also for the moderator centered at one standard deviation below its average and one standard deviation above it. Is the effect of exposure statistically significant and having the same sign (direction) for all reference values of the moderator?
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
+5. Check common support of the predictor for the three values of the moderator that you have used in Exercises 3 and 4.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
+
+6. What is the reference value of the moderator if you do not center the moderator? What, do you think, is common support of the predictor for this value of the moderator?
+
+```{r eval=FALSE}
+SPSS syntax:
+
+
+Check data:
+
+
+
+Check assumptions:
+
+
+
+Interpret the results:
+
+
+```
 
 ## Take-Home Points  
 
