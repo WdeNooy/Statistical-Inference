@@ -230,61 +230,88 @@ Applying one-way analysis of variance in SPSS and interpreting the results is ex
 
 ### Exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a> to test if celebrity endorsement for a fund raiser affects willingness to donate. Check the assumptions and interpret the results. Create a plot to communicate your results.
+1. How does celebrity endorsement affect the willingness to donate and is one celebrity more effective than the other? Use the data in <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a>.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser
+  /ORDER=ANALYSIS.
+* One-way analysis of variance.
+ONEWAY willing_post BY endorser
+  /STATISTICS DESCRIPTIVES HOMOGENEITY 
+  /PLOT MEANS
+  /MISSING ANALYSIS
+  /POSTHOC=BONFERRONI ALPHA(0.05).
 
 Check data:
 
-
+There are no impossible values on the variables.
 
 Check assumptions:
 
-
+The three groups are more or less of equal sizes:
+The largest difference is 4 subjects, which is less
+than ten percent of the smallest group (N = 45).
+Anyway, we may assume equal population variances,
+Levene F (2, 140) = .02, p = .978.
 
 Interpret the results:
 
+Willingness to donate depends on the endorsing celebrity. 
+There is a statistically significant difference between average
+willingness to donate for the three endorsers, F (2, 140) = 7.44, 
+p = .001.
+People are more willing to donate if they have seen Clooney 
+(M = 4.99, SD = 1.64) or Jolie (M = 4.95, SD = 1.63) endorse the 
+fund raiser than people who do not see a celebrity endorser 
+(M = 3.87, SD = 1.47). The differences between, on the one 
+hand, no celebrity endorser and, on the other hand, Clooney
+(p = .002) or Jolie (p = .004) are statistically significant.
+However, there is not a substantial or statistically 
+significant difference between Clooney and Jolie with 
+respect to their effect on willingness to donate (mean difference = 0.04, p = 1.000).
 
+Instead of reporting the F test result in the text, the 
+ANOVA table can be included.
 ```
 
-2. How does celebrity endorsement affect the willingness to donate and is one celebrity more effective than the other?  
+2. The data set <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> contains (simulated) information on smoking behaviour and attitude towards smoking for a random sample of adults. Does the attitude towards smoking differ among smokers, former smokers, and non-smokers (variable: status3)?
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=attitude status3
+  /ORDER=ANALYSIS.
+* One-way analysis of variance.
+ONEWAY attitude BY status3
+  /STATISTICS DESCRIPTIVES HOMOGENEITY 
+  /PLOT MEANS
+  /MISSING ANALYSIS
+  /POSTHOC=BONFERRONI ALPHA(0.05).
 
 Check data:
 
-
-
-Check assumptions:
-
-
-
-Interpret the results:
-
-
-```
-
-3. {TBD: another data set}
-
-```{r eval=FALSE}
-SPSS syntax:
-
-
-Check data:
-
-
+There are no impossible scores on the two variables.
 
 Check assumptions:
 
-
+The Levene test is not staistically significant, 
+F (2, 82) = 0.52, p = .595, so we may assume that
+smoking attitude for the three groups have equal 
+population variances.
 
 Interpret the results:
 
-
+Average attitude towards smoking scores are not 
+significantly different, F (2, 82) = 1.04, p = .358.
+Therefore, we have no reason to conclude that one 
+group has a more positive attitude towards smoking 
+than another group in the population of adults.
 ```
 
 ## Different Score Levels for Two Factors
@@ -538,61 +565,180 @@ rm(results, donors)
 
 ### Exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a> to test if the effect of celebrity endorsement on willingness to donate differs for females and males. Check the assumptions and interpret the results. Create a plot to communicate your results.
+1. Use the data in <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a> to test if the effect of celebrity endorsement on adults' willingness to donate differs for females and males. Check the assumptions and interpret the results. Create a plot to communicate your results.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser sex
+  /ORDER=ANALYSIS.
+* Two-way analysis of variance.
+UNIANOVA willing_post BY endorser sex
+  /METHOD=SSTYPE(3)
+  /INTERCEPT=INCLUDE
+  /POSTHOC=endorser(BONFERRONI) 
+  /PLOT=PROFILE(endorser*sex)
+  /PRINT=HOMOGENEITY DESCRIPTIVE
+  /CRITERIA=ALPHA(.05)
+  /DESIGN=endorser sex endorser*sex.
 
 Check data:
 
-
+There are no impossible values on the three variables.
 
 Check assumptions:
 
-
+All six subggroups are of nearly equal size and/or
+the Levene test on homogeneity of variances is not 
+statistically significant, F (5, 137) = 0.43, p = .825,
+so the most important assumptions are met.
 
 Interpret the results:
 
+The question is about moderation, so let us focus our
+interpretation on the interaction effect.
 
+Our two-way analysis of variance shows a statistically
+significant interaction effect of endorser and sex of
+the subject, F (2, 137) = 4.63, p = .011. We may
+conclude that the effect of the endorsing celebrity on
+an adult''s willingness to donate is different for 
+females and males.
+Females who saw George Clooney are more strongly willing 
+to donate (M = 5.84, SD = 1.48) than males (M = 4.09, 
+SD = 1.30). In contrast, there is hardly any difference 
+in willingness to donate between males (M = 4.99, 
+SD = 1.77) and females (M = 4.91, SD = 1.51) who see 
+Angelina Jolie endorse the fund raiser. 
+This result suggests that females are more sensitive
+to George Clooney as endorser than males but the opposite 
+does not apply to Angelina Jolie as endorser.
 ```
 
-2. Use the same data as in Exercise 1 to test if the effect of celebrity endorsement on willingness to donate depends on remembrance of the campaign. Check the assumptions and interpret the results. Create a plot to communicate your results.
+2. Use the same data as in Exercise 1 to test if the effect of celebrity endorsement on willingness to donate depends on remembrance of the campaign. Check the assumptions and interpret the results. Again, create a plot to communicate your results.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser remember
+  /ORDER=ANALYSIS.
+* Two-way analysis of variance.
+UNIANOVA willing_post BY endorser remember
+  /METHOD=SSTYPE(3)
+  /INTERCEPT=INCLUDE
+  /POSTHOC=endorser(BONFERRONI) 
+  /PLOT=PROFILE(endorser*remember)
+  /PRINT=HOMOGENEITY DESCRIPTIVE
+  /CRITERIA=ALPHA(.05)
+  /DESIGN=endorser remember endorser*remember.
 
 Check data:
 
-
+There are no impossible values on the three variables.
 
 Check assumptions:
 
-
+The six subggroups are not nearly of equal size but
+the Levene test on homogeneity of variances is not 
+statistically significant, F (5, 137) = 0.06, p = .997,
+so the most important assumptions are met.
 
 Interpret the results:
 
+For adults who do not remember the campaign, the effect 
+of seeing Angelina Jolie endorse the fund raiser seems 
+to be relatively low in comparison to the effect for 
+adults who do remember the campaign. This can be seen in 
+the means plot.
+However, a two-way analysis of variance tells us that the 
+interaction effect of endorser with campaign remembrance 
+on willingness to donate is very weak and not statistically 
+significant, F (2, 137) = 0.67, p = .514, eta2 = .01. 
+Both the endorsing celebrity and campaign remembrance 
+seem to have statistically significant effects on
+willingness to donate, but the effect of celebrity 
+endorser on willingness to donate is not clearly
+different for adults who remember the campaign and
+those who do not remember the campaign.
 
+Note that eta2 was calculated by hand, dividing the
+sum of squares of the interaction effect by the sum
+of squares of the corrected total.
 ```
 
-3. {TBD: another data set}
+3. Data set <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> contains information about smoking on a random sample of adults. Does the attitude towards smoking depend on the adult's smoking behaviour (smoker, former smoker, or non-smoker) and on exposure to an anti-smoking campaign? 
+  Recode exposure scores into three groups: low exposure (scores 3 or less), medium exposure (scores 3 to 7), and high exposure (scores above 7).
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=status3 exposure attitude
+  /ORDER=ANALYSIS.
+* Group exposure to anti-smoking campaign.
+RECODE exposure (Lowest thru 3=1) (3 thru 7 = 2) (ELSE=3) INTO exposure3.
+VARIABLE LABELS  exposure3 'Exposure to anti-smoking campaign'.
+EXECUTE.
+* Define Variable Properties.
+*exposure3.
+VALUE LABELS exposure3
+  1.00 'Low exposure'
+  2.00 'Medium exposure'
+  3.00 'High exposure'.
+EXECUTE.
+* Two-way analysis of variance.
+UNIANOVA attitude BY status3 exposure3
+  /METHOD=SSTYPE(3)
+  /INTERCEPT=INCLUDE
+  /POSTHOC=status3 exposure3(BONFERRONI) 
+  /PLOT=PROFILE(exposure3*status3)
+  /PRINT=HOMOGENEITY DESCRIPTIVE
+  /CRITERIA=ALPHA(.05)
+  /DESIGN=status3 exposure3 status3*exposure3.
 
 Check data:
 
-
+All values on the variables seem to be valid.
 
 Check assumptions:
 
-
+The six subgroups (defined by combinations of smoking
+status and exposure) are definitely not of equal size.
+The test on homogeneity of variances, however, is not
+statistically significant, F (8, 76) = 1.79, p = .092.
+We are not sufficiently confident to conclude that the
+variance of smoking attitude in the population is 
+unequal for all subgroups but the p value must make us 
+doubt that they are equal. We may not meet the 
+assumptions.
 
 Interpret the results:
 
-
+Because we are going to interpret all effects, it is
+recommended to present the table with between-subjects
+effects instead of reporting all F test results in the 
+text.
+  
+Exposure clearly matters to smoking attitude according to 
+our two-way analysis of variance. High exposure is associated
+with a more negative attitude towards smoking (M = 2.99,
+SD = 0.50) than medium exposure (M = 3.78, SD = 0.53, 
+difference: p < .001 ) and low exposure (M = 3.95, 
+SD = 0.62, difference: p < .001). There is no remarkable 
+difference in attitude between adults with low or
+medium exposure (difference p = .639).
+Smoking status does not seem to be related to 
+attitude towards smoking by itself. There is, however,
+a very weak (eta2 = 0.07) but statistically non-significant 
+interaction effect of smoking status with exposure on
+attitude towards smoking.
+If we inspect the means plot, we see that the effect
+of exposure on attitude is moderated by smoking status.
+Former smokers tend to be more negative about smoking
+if they have medium exposure to the campaign than 
+non-smokers or smokers.
 ```
 
 ## Take-Home Points  

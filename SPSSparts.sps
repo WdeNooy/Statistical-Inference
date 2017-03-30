@@ -258,12 +258,16 @@ ONEWAY immigrant BY age3
   /STATISTICS DESCRIPTIVES HOMOGENEITY 
   /MISSING ANALYSIS.
 
-* Section 4.2.5.
+* Section 4.2.9.2.
 
 * Load data: donors.sav.
 DATASET NAME Donors WINDOW=FRONT.
 
 *  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser
+  /ORDER=ANALYSIS.
+* One-way analysis of variance.
 ONEWAY willing_post BY endorser
   /STATISTICS DESCRIPTIVES HOMOGENEITY 
   /PLOT MEANS
@@ -271,25 +275,39 @@ ONEWAY willing_post BY endorser
   /POSTHOC=BONFERRONI ALPHA(0.05).
 
 *  Exercise 2.
-T-TEST GROUPS=remember(1 2)
+* Check data.
+FREQUENCIES VARIABLES=willing_post remember
+  /ORDER=ANALYSIS.
+* Independent-samples t test.
+T-TEST GROUPS=remember(0 1)
   /MISSING=ANALYSIS
   /VARIABLES=willing_post
   /CRITERIA=CI(.95).
 * The difference is significant but those who do NOT remember have higher average willingness.
 
 *  Exercise 3.
+* Check data.
+FREQUENCIES VARIABLES=willing_post willing_pre
+  /ORDER=ANALYSIS.
+* Paired-samples t test.
 T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)
   /CRITERIA=CI(.9500)
   /MISSING=ANALYSIS.
 
-* Section 4.2.6.
+* Section 4.2.11.2.
 
-* Load data.
-GET
-  FILE='\data\consumers.sav'.
+* Load data: consumers.sav.
 DATASET NAME Consumers WINDOW=FRONT.
 
 *  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=ad_expo brand_aw
+  /ORDER=ANALYSIS.
+* Check if the association can be linear.
+GRAPH
+  /SCATTERPLOT(BIVAR)=ad_expo WITH brand_aw
+  /MISSING=LISTWISE.
+* Correlations.
 CORRELATIONS
   /VARIABLES=ad_expo brand_aw
   /PRINT=TWOTAIL NOSIG
@@ -300,15 +318,23 @@ NONPAR CORR
   /MISSING=PAIRWISE.
 
 *  Exercise 2.
+* Check data.
+FREQUENCIES VARIABLES=ad_expo brand_aw wom gender
+  /ORDER=ANALYSIS.
+* Turn dichotomies into 0/1 variables.
+RECODE wom gender (2=1) (1=0) INTO heard male.
+EXECUTE.
+* Multiple regression.
 REGRESSION
   /MISSING LISTWISE
   /STATISTICS COEFF OUTS CI(95) R ANOVA
   /CRITERIA=PIN(.05) POUT(.10)
   /NOORIGIN 
   /DEPENDENT brand_aw
-  /METHOD=ENTER ad_expo wom gender.
+  /METHOD=ENTER ad_expo heard male.
 
 *  Exercise 3.
+* Crosstab with chi-squared test and measure of association.
 CROSSTABS
   /TABLES=wom BY gender
   /FORMAT=AVALUE TABLES
@@ -317,3 +343,91 @@ CROSSTABS
   /COUNT ROUND CELL
   /BARCHART.
 
+* Section 7.2.2.
+
+* Load data: donors.sav.
+DATASET NAME Donors WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser
+  /ORDER=ANALYSIS.
+* One-way analysis of variance.
+ONEWAY willing_post BY endorser
+  /STATISTICS DESCRIPTIVES HOMOGENEITY 
+  /PLOT MEANS
+  /MISSING ANALYSIS
+  /POSTHOC=BONFERRONI ALPHA(0.05).
+
+*  Exercise 2.
+* Load data: smokers.sav.
+DATASET NAME Smokers WINDOW=FRONT.
+* Check data.
+FREQUENCIES VARIABLES=attitude status3
+  /ORDER=ANALYSIS.
+* One-way analysis of variance.
+ONEWAY attitude BY status3
+  /STATISTICS DESCRIPTIVES HOMOGENEITY 
+  /PLOT MEANS
+  /MISSING ANALYSIS
+  /POSTHOC=BONFERRONI ALPHA(0.05).
+
+* Section 7.6.2.
+
+* Load data: donors.sav.
+DATASET NAME Donors WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser sex
+  /ORDER=ANALYSIS.
+* Two-way analysis of variance.
+UNIANOVA willing_post BY endorser sex
+  /METHOD=SSTYPE(3)
+  /INTERCEPT=INCLUDE
+  /POSTHOC=endorser(BONFERRONI) 
+  /PLOT=PROFILE(endorser*sex)
+  /PRINT=HOMOGENEITY DESCRIPTIVE
+  /CRITERIA=ALPHA(.05)
+  /DESIGN=endorser sex endorser*sex.
+
+*  Exercise 2.
+* Check data.
+FREQUENCIES VARIABLES=willing_post endorser remember
+  /ORDER=ANALYSIS.
+* Two-way analysis of variance.
+UNIANOVA willing_post BY endorser remember
+  /METHOD=SSTYPE(3)
+  /INTERCEPT=INCLUDE
+  /POSTHOC=endorser(BONFERRONI) 
+  /PLOT=PROFILE(endorser*remember)
+  /PRINT=HOMOGENEITY DESCRIPTIVE
+  /CRITERIA=ALPHA(.05)
+  /DESIGN=endorser remember endorser*remember.
+
+*  Exercise 3.
+* Load data: smokers.sav.
+DATASET NAME Smokers WINDOW=FRONT.
+* Check data.
+FREQUENCIES VARIABLES=status3 exposure attitude
+  /ORDER=ANALYSIS.
+* Group exposure to anti-smoking campaign.
+RECODE exposure (Lowest thru 3=1) (3 thru 7 = 2) (ELSE=3) INTO exposure3.
+VARIABLE LABELS  exposure3 'Exposure to anti-smoking campaign'.
+EXECUTE.
+* Define Variable Properties.
+*exposure3.
+VALUE LABELS exposure3
+  1.00 'Low exposure'
+  2.00 'Medium exposure'
+  3.00 'High exposure'.
+EXECUTE.
+* Two-way analysis of variance.
+UNIANOVA attitude BY status3 exposure3
+  /METHOD=SSTYPE(3)
+  /INTERCEPT=INCLUDE
+  /POSTHOC=status3 exposure3(BONFERRONI) 
+  /PLOT=PROFILE(exposure3*status3)
+  /PRINT=HOMOGENEITY DESCRIPTIVE
+  /CRITERIA=ALPHA(.05)
+  /DESIGN=status3 exposure3 status3*exposure3.
