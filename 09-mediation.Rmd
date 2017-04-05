@@ -84,7 +84,7 @@ In a regression model, we use the variation in scores on predictor variables to 
 For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two predictors (age and interest in politics) to predict the outcome variable (newspaper reading time). The two predictors can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which predictor is responsible for which part of the variation in outcome scores? 
 
 ### Partial effect  
-Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the reaming variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
+Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
 
 In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the outcome. It is the contribution to prediction of the outcome variable over and above the predictions that we can make with all other predictors in the model. It is called a _partial effect_.
 
@@ -194,25 +194,178 @@ Actually, the indirect correlation between a predictor and outcome via a confoun
 
 ###  Instructions
 
+```{r}
+# "stepwise" regression: Add predictors in blocks (and leave Method at Enter) if you want to specify the order in which predictors are added to the model.
+```
+
+
 ### Exercises
 
-1. The file <a href="http://82.196.4.233:3838/data/readers.sav" target="_blank">readers.sav</a> contains the (simulated) data on newspaper reading time that we have used as example in this chapter. Analyze @@
+1. The file <a href="http://82.196.4.233:3838/data/readers.sav" target="_blank">readers.sav</a> contains the (simulated) data on newspaper reading time that we have used as example in this chapter. Predict average newspaper reading time by education, interest in politics, news site use, and age. Add the predictors one by one to the regression model in the order secified in the preceding sentence. How do the partial effects change when new predictors are added?
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=age education polinterest newssite readingtime
+  /ORDER=ANALYSIS.
+* Multiple regression.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT readingtime
+  /METHOD=ENTER education
+  /METHOD=ENTER polinterest
+  /METHOD=ENTER newssite
+  /METHOD=ENTER age
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+The variabes do not have impossible values.
 
 Check assumptions:
 
-
+The residuals are quite normally distributed.
+They are centered around zero at all levels of 
+the predicted outcome, so a linear model seems
+to fit the data. The variation in residuals is
+about the same at all levels of the predicted
+outcome, so the outcome is more or less equally 
+well predicted at all levels of the outcome
+variable. As a conclusion, there are no clear
+indications that the assumptions for a linear
+regression model are violated.
 
 Interpret the results:
 
+Given the number of regression coefficients that
+are estimated, it is helpful to present them as
+a table instead of reporting all results in the
+interpretation.
 
+Education has a weak negative predictive effect
+on newspaper reading time until news site use
+is introduced as a predictor. Then its effect
+vanishes.
+Interest in politics has a weak positive predictive
+effect on newspaper reading time. This effect
+becomes weaker when news site use is added as
+a predictor and especially when age is added.
+Initially, news site use has a strong negative
+predictive effect on newspaper reading time but
+the effect is much weaker when age is added as
+a predictor.
+Age has a strong positive effect on newspaper
+reading time if we control for all other 
+predictors in the model.
+```
+
+2. In the series of models that you estimated in Exercise 1, for which predictors is age a suppressor or reinforcer? For advanced understanding: Use the correlations between the variables to justify your answers.
+
+```{r eval=FALSE}
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=age education polinterest newssite readingtime
+  /ORDER=ANALYSIS.
+* (Pearson) Correlations.
+CORRELATIONS
+  /VARIABLES=age education polinterest newssite readingtime
+  /PRINT=TWOTAIL NOSIG
+  /MISSING=PAIRWISE.
+
+Interpret the results:
+
+If the partial effect of a predictor increases (becomes
+more strongly positive or more strongly negative) when
+a new predictor is added to the regression model, the
+added predictor was a suppressor while it was not yet
+included in the model. 
+When age is added as a predictor to the model, none
+of the partial effects of other predictors increases,
+so age did not suppress any of the effects in the models
+that did not include age yet.
+
+If the partial effect of a predictor decreases (becomes
+less strongly positive or less strongly negative) or it
+changes sign when a new predictor is added to the
+regression model, the added predictor was a reinforcer
+while it was not yet included in the model.
+This happens to the partial effects of education,
+interest in politics, and news site use when age is
+added as a predictor. For these three predictors, age
+was a reinforcer. Part of their effects were spurious
+in the models without age. They seemed to be effects
+of education, political interest, and news site use
+but they are actually effects of age.
+
+The signs of the correlations between predictor,
+confounder, and outcome variable tells us if a
+confounder is a suppressor or reinforcer. 
+If the sign (direction) of the indirect correlation 
+between predictor and oucome via the confounder (age)
+is equal to the sign of the correlation between
+predictor and outcome, the confounder is a reinforcer.
+In this case, part of the predictive effect is due
+to the confounder.
+For example, Education is negatively correlated with
+newspaper reading time. The indirect correlation via age
+also is negative because age is negatively correlated
+with education but positively with newspaper reading
+time Negative times positive yields a negative.
+
+For a suppressor, the indirect correlation must be
+of the opposite sign of the correlation between
+predictor and outcome. This situation does not occur
+for age as the confounder in the models estimated in
+Exercise 1.
+```
+
+3. Now predict average newspaper reading time by education, political cynicism, news site use, and age. Add the predictors one by one to the regression model in the order secified in the preceding sentence. Does suppression occur here? If so, for which predictor and confounder and in which model(s)?
+
+```{r eval=FALSE}
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=age education polcynic newssite readingtime
+  /ORDER=ANALYSIS.
+* Multiple regression.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT readingtime
+  /METHOD=ENTER education
+  /METHOD=ENTER polcynic
+  /METHOD=ENTER newssite
+  /METHOD=ENTER age
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+Check data:
+
+In addition to the other variables (see
+Exercise 1), political cynicism does not
+have impossible values.
+
+Check assumptions:
+
+The resiuals are similarly distributed as
+in Exercise 1, so we may assume that 
+assumptions are met.
+
+Interpret the results:
+
+When political cynicism is added as a
+predictor, the negative effect of education
+becomes more strong. In the model without
+political cynicism, the latter variable
+suppressed part of the effect of education.
 ```
 
 ## Mediation as Causal Process
@@ -415,7 +568,7 @@ In its turn, interest in politics has an unstandardized effect of `r round(model
 
 Ten additional years of life only predict an increase of`r round(model_2$coefficients[2], digits=2)` in political interest, not a full unit increase. As a result, the additional ten years of life predict `r round(model_2$coefficients[2], digits=2)` * `r round(model_4$coefficients[4], digits=2)` = `r round(model_2$coefficients[2] * model_4$coefficients[4], digits=2)` minutes of additional newspaper reading time. 
 
-Note that the indirect effect is interpreted in terms of the measurement units of the initial predictor (age in tens of years) and the final outcome (reading time): a difference in years predicts a difference in reading time. 
+Note that the indirect effect is interpreted in terms of the measurement units of the initial predictor (age in tens of years) and the final outcome (reading time): a difference in years predicts a difference in reading time. As a consequence, we can directly compare unstandardized indirect effect sizes, as we will see in the next section.
 
 ### Partial and full mediation
 
@@ -443,11 +596,13 @@ results <- rbind(
 knitr::kable(results, caption = "All effects of age on newspaper reading time", col.names = c("", "Effect","", "Effect","", "Effect","", "Effect","", "Total size"), align = c("l", "c", "c", "c", "c", "c", "c", "c", "r"))
 ```
 
-Table \@ref(tab:age-indirect) lists all direct and indirect effects of age on newspaper reading time in Figure \@ref(fig:pathdiagram-unstandardized). We can trace eight different paths from age to newspaper reading time. For each path, we multiply the unstandardized effect sizes. Clearly, the relation between age and newspaper reading time is dominated by the positive direct effect (_b_ = `r round(model_4$coefficients[2], digits=2)`) and the positive indirect effect via news site use (_b_ = `r round(model_3$coefficients[2]*model_4$coefficients[5], digits=2)`). The remaining indirect effects are relatively small as indirect effects usually are. 
+Table \@ref(tab:age-indirect) lists all direct and indirect effects of age on newspaper reading time in Figure \@ref(fig:pathdiagram-unstandardized). We can trace eight different paths from age to newspaper reading time. For each path, we multiply the unstandardized effect sizes. 
+
+The unstandardized indirect effects between the same predictor and outcome can be compared directly because they are all expressed in the same measurement units, namely the predicted change in the outcome for a change of one unit in the predictor. The unstandardized direct effect is expressed in the same measurement units, so it can be compared to the indirect effect. In addition, we can sum the unstandardized direct and indirect effects to obtain the total unstandardized effect.
+
+With this in mind, we see that the relation between age and newspaper reading time is dominated by the positive direct effect (_b_ = `r round(model_4$coefficients[2], digits=2)`) and the positive indirect effect via news site use (_b_ = `r round(model_3$coefficients[2]*model_4$coefficients[5], digits=2)`). The remaining indirect effects are relatively small as indirect effects usually are. 
 
 Summing all effects, we obtain a total effect of age on newspaper reading time around `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=0)` (_b_ = `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=2)`). A person who is ten years older but in other respects the same as another person, is predicted to spend on average `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=0)` additional minutes on reading newspapers per day. 
-
-The total effect is the regression coefficient that you would get if you regress the outcome only on this predictor (a simple regression model). In the current example, the total effect of age on newspaper reading time is larger than the direct effect. The total effect is partly spurious (see Section \@ref(spuriousness)). The total effect can also be smaller than the direct effect, namely, if there are suppressors (Section \@ref(suppression)).
 
 If the direct effect of a predictor on the outcome is zero in a model with mediators, the predictor's effect is _fully mediated_. This clearly is not the case in our example: There still is a substantial direct effect of age on newspaper reading time. This is what we usually encounter; it is called _partial mediation_.
 
@@ -495,14 +650,16 @@ rm(results)
 
 In total, there is a substantive indirect effect of age on newspaper reading time in this model. We are confident that this effect is positive (95%CI[0.62, 2.25]). It is easy to see that the indirect effect of age via news site use on reading time is by far the most important indirect effect. On its own, it is responsible for almost the total indirect effect.
 
-It may happen that an indirect effect is not statistically significant whereas both direct effects are statistically significant. This sounds like a paradox but it should not upset you. The unstandardized indirect effect tends to be weaker than the direct effects, that is, closer to zero (for example, see Table \@ref(tab:age-indirect)). In this situation, it is more difficult to reject the null hypothesis that the indirect effect is zero in the population. This is all that statistical significance tells us. We need a larger sample to reject null hypotheses for smaller effects (see Chapter \@ref(power) on power).
+It may happen that an indirect effect is not statistically significant whereas both direct effects are statistically significant. This sounds like a paradox but it should not upset you. Anyway, you are only interested in statistical inference for the indirect effect, so focus on the indirect effect in your interpretation.
+
+The unstandardized indirect effect tends to be weaker than the direct effects, that is, closer to zero (for example, see Table \@ref(tab:age-indirect)). In this situation, it is more difficult to reject the null hypothesis that the indirect effect is zero in the population. This is all that statistical significance tells us. We need a larger sample to reject null hypotheses for smaller effects (see Chapter \@ref(power) on power).
 
 ## Reporting Mediation Results
-We analyse a path model as a series of regression models, so the general rules for reporting mediation are the same as for reporting regression analyses (see Section \@ref(reportmoderation)). Report:
+We analyse a path model as a series of regression models, so the general rules for reporting mediation are the same as for reporting regression analyses (see Section \@ref(reportmoderation)). Report a table containing:
 
-1. Unstandardized or standardized regression coefficients for all predictors.
+1. The unstandardized regression coefficients for all direct and indirect effects tested in the regression models.
 
-2. The confidence intervals and p values of the unstandardized effects. 
+2. The confidence intervals and p values of the unstandardized effects.
 
 3. The F test and measure of model fit ($R^2$) for each regression model.
 
@@ -510,13 +667,13 @@ We analyse a path model as a series of regression models, so the general rules f
 # Example of table summarizing regression output for direct and indirect effects (with bootstrap settings as note). Output from PROCESS (Model 4 with 1 mediator).
 results <- rbind(
   c("Outcome: News Site Use", "", "", "", ""),
-  c("$R^2$ = 0.93, $F$ (3, 308) = 617.40, $p$ < .001", "", "", "", ""),
+  c("$R^2$ = 0.86, $F$ (3, 308) = 617.40, $p$ < .001", "", "", "", ""),
   c("constant", "6.62", "0.35", "< .001", "[5.92; 7.31]"),
   c("age", "-0.93", "0.02", "< .001", "[-0.97; -0.88]"), 
   c("education", "0.06", "0.02", ".019", "[0.01; 0.11]"),
   c("pol.interest", "0.12", "0.03", "< .001", "[0.06; 0.17]"),
   c("Outcome: Newspaper Reading Time", "", "", "", ""),
-  c("$R^2$ = 0.89, $F$ (4, 307) = 290.85, $p$ < .001", "", "", "", ""),
+  c("$R^2$ = 0.79, $F$ (4, 307) = 290.85, $p$ < .001", "", "", "", ""),
   c("constant", "13.59", "4.24", ".001", "[5.26; 21.93]"), 
   c("age", "4.55", "0.47", "< .001", "[3.62; 5.47]"), 
   c("education",  "0.06", "0.20", ".782", "[-0.34; 0.46]"), 
@@ -530,7 +687,7 @@ knitr::kable(results, caption = "Bootstrap results for unstandardized effects in
 rm(results)
 ```
 
-A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the unstandardized or standardized regression coefficients as labels to the arcs. This conveniently summarizes the results for the reader, especially if (very) weak effects are excluded or de-emphasized (Figure \@ref(fig:results-pathdiagram)). Report all numerical results in a table, such as Table \@ref(tab:mediation-table), which can be placed in an appendix.
+A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arcs. Remember that we must use unstandardized regression coefficients if we have a dummy variable as predictor. A path model conveniently summarizes the results for the reader, especially if (very) weak effects are excluded or de-emphasized (Figure \@ref(fig:results-pathdiagram)). 
 
 ```{r results-pathdiagram, echo=FALSE, fig.cap="Standardized direct effects for a path model with one mediator. Small effects are represented by thin arcs."}
 # Load and stadardize data.
@@ -578,106 +735,346 @@ If effect mediation is central to your report, focus your presentation and inter
 ###  Instructions
 
 ```{r}
-# Add videos explaining how to install and use the PROCESS macro (in the simplest mediation model with one mediator and no moderator, Model 4 and Model 6 with two mediators but no moderators ; show how covariates can be added with the choice to use them as predictors for the mediator(s) and/or the outcome)
+# Show how to use SPSS for mediation.
 
-# {note: use standardized regression coefficients (multiply for indirect effect = completely standardized indirect effect in PROCESS)}
+# Add videos explaining how to install and use the PROCESS macro (in the simplest mediation model with one mediator and no moderator, Model 4 and Model 6 with two mediators but no moderators ; show how covariates can be added with the choice to use them as predictors for the mediator(s) and/or the outcome). Recommend to use PROCESS if there is only one mediator or two  serial (consecutive) mediators. Only use SPSS if there are (two or more) parallel mediators or more than two serial mediators. Note: don't paste PROCESS commands!
+
+# {note: use completely standardized indirect effect in PROCESS}
 ```
 
 ### Exercises
 
-1. Use <a href="http://82.196.4.233:3838/data/readers.sav" target="_blank">readers.sav</a> to analyze the causal model, as depicted in Figure \@ref(fig:pathdiagram-unstandardized), with a series of regression models in SPSS. Draw a path diagram to present the standardized results and interpret their sizes and statistical significance.
+1. Use <a href="http://82.196.4.233:3838/data/readers.sav" target="_blank">readers.sav</a> to analyze the causal model depicted in Figure \@ref(fig:pathdiagram-unstandardized) with a series of regression models in SPSS. Create a table and draw a path diagram to present the direct effects.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=age education polinterest newssite readingtime
+  /ORDER=ANALYSIS.
+* Multiple regression for newspaper reading time.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT readingtime
+  /METHOD=ENTER age education polinterest newssite
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Multiple regression for news site use.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT newssite
+  /METHOD=ENTER age education polinterest
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+The variabes do not have impossible values.
 
 Check assumptions:
 
+Regression model with newspaper reading time
+as outcome variable:
+The residuals are quite normally distributed.
+They are centered around zero at all levels of 
+the predicted outcome, so a linear model seems
+to fit the data. The variation in residuals is
+about the same at all levels of the predicted
+outcome, so the outcome is more or less equally 
+well predicted at all levels of the outcome
+variable. As a conclusion, there are no clear
+indications that the assumptions for a linear
+regression model are violated.
 
+Regression model with news site use as outcome
+variable:
 
-Interpret the results:
+The residuals are quite normally distributed
+but they display a pattern of down-sloping
+strips. This is the consequence of the fact
+that the outcome (news site use) is measured
+as integer scores, that is, without decimal
+places. So this pattern is nothing to worry
+about. Check that the residuals are evenly
+distributed above and below zero for all
+predicted outcome levels and that the 
+variation is more or less equal for all
+predicted utcome levels. Because the
+residuals are organized in strips, the
+variation cannot be as large at the extreme
+right or extreme left as in the middle. But
+we may assume that this results from the
+discrete (integer) outcome variable instead
+of from a problem with homoscedasticity.
 
+Results:
 
+Your table and path diagram should like like 
+the table and path diagrams reported in a
+preceding section.
 ```
 
-2. To what extent is the effect of age on newspaper reading time mediated by news site use? Use the data of Exercise 1 and PROCESS to estimate both the unstandardized and standardized indirect effect in a model containing only these three variables.
+2. To what extent is the effect of age on newspaper reading time mediated by news site use? Use the data of Exercise 1 and PROCESS to estimate both the unstandardized and standardized indirect effect in a model containing only these three variables. Interpret the results.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+We should not paste PROCESS commands because
+they contain a lot of unintelligble code.
+In the PROCESS menu:
+* Select readingtime as Outcome Varible (Y),
+* Select age as Independent Variable (X),
+* Select newssite as M variable(s),
+* Select 4 under Model Number (model with
+  only one mediator),
+* Under Options: Select Effect size and 
+  3 decimal places in output,
+* Under Long names: Select Allow long 
+  variable names.
 
 Check data:
 
-
+See Exercise 1.
 
 Check assumptions:
 
-
+Cannot be done with PROCESS.
 
 Interpret the results:
 
+The relevant results in the PROCESS output:
+  
+Indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+newssite     1.121      .411      .307     1.923 
+ 
+Completely standardized indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+newssite      .164      .060      .045      .281 
 
+An age difference of ten years (remember that age
+was measured in decades) increases the predicted
+average newspaper reading time through news site use
+with slightly more than one minute. With 95% 
+confidence, the increase is 0.3 and 1.9 additional 
+minutes.
+This indirect effect is weak to moderate, b* = .16,
+95%CI[.05; .28].
 ```
 
-3. Add interest in politics as a covariate to the model of Exercise 2. Are you going to use it as a covariate for the mediator (political interest), the outcome (newspaper reading time), or both? Motivate your choice. Present the unstandardized effects as a path diagram and add the indirect effect to it. Which direct effects are not present in this model?
+3. Add interest in politics as a covariate to the model of Exercise 2. Are you going to use it as a covariate for the mediator (news site use), the outcome (newspaper reading time), or both? Motivate your choice. Present the unstandardized effects as a path diagram and add the indirect effect to it. Which direct effects are not present in this model?
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+We should not paste PROCESS commands because
+they contain a lot of unintelligble code.
+In addition to the PROCESS menu selections
+specified in Exercise 2, you should:
+* Select newssite under Covariate(s),
+* Change the option under Covariate(s)
+  in model(s) of... if you want political
+  interest to affect either news site use
+  or newspaper reading time (and not both).
 
 Check data:
 
-
+See Exercise 1.
 
 Check assumptions:
 
-
+Cannot be done with PROCESS.
 
 Interpret the results:
 
+In this answer, political interest is
+hypothesized to affect both news site use
+(the mediator M) and newspaper reading time
+(the outcome Y), so the option under 
+Covariate(s) in model(s) of... remains at
+...both M and Y.
 
+The relevant results in the PROCESS output:
+
+Indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+newssite     1.441      .416      .589     2.225 
+ 
+Completely standardized indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+newssite      .212      .061      .087      .325   
+
+The interpretation is very much the 
+interpretation in Exercise 2. Note that
+the indirect effects have become a little 
+stronger now that we control for interest
+in politics.
 ```
 
-4. Change the model of Exercise 3 so political interest is now a second mediator in addition to news site use. Estimate the model with PROCESS. Report the indirect effects as a table and and interpret them. 
+4. Change the model of Exercise 3 so political interest is now a second mediator in addition to news site use. Estimate the model with PROCESS. Report the unstandardized indirect effects as a table and interpret them. 
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+We should not paste PROCESS commands because
+they contain a lot of unintelligble code.
+In addition to the PROCESS menu selections
+specified in Exercise 2, you should:
+* Add newssite to the list of M Variable(s)
+  ensuring that it is the first in this list,
+* Change Model Number to 6 (Model with two
+  mediators in line).
 
 Check data:
 
-
+See Exercise 1.
 
 Check assumptions:
 
-
+Cannot be done with PROCESS.
 
 Interpret the results:
 
+The main results are reported thus:
 
+Indirect effect(s) of X on Y 
+          Effect   Boot SE  BootLLCI  BootULCI 
+Total:     1.474      .418      .657     2.298 
+Ind1 :      .053      .033      .007      .146 
+Ind2 :     -.021      .013     -.057     -.003 
+Ind3 :     1.441      .417      .616     2.257
+ 
+Indirect effect key 
+ Ind1 :   age -> polinter -> readingt 
+ Ind2 :   age -> polinter -> newssite -> readingt 
+ Ind3 :   age -> newssite -> readingt 
+
+ A table could look like this:
+  
+Indirect effect(s) of X on Y 
+                                                 Effect   Boot SE  BootLLCI  BootULCI 
+age->pol. interest->reading time                  .05      .03      .01      .15 
+age->pol. interest->news site use->reading time  -.021      .01     -.06     -.003 
+age->news site use->reading time                  1.44      .42      .62     2.26 
+Total indirect effect                             1.47      .42      .66     2.30 
+
+Age has an indirect effect on newspaper reading
+time. An additional ten years of life predict 
+that newspaper reading time increases by 1.5
+minutes on average. The indirect effect mainly
+consists of an effect via news site use. Indirect
+effects including interest in politics are much
+weaker. The indirect effect through interest in
+politics is probably positive whereas the effect
+through political interest and news site use is
+probably negative.
 ```
 
-5. {TBD: similar exercises for other data sets}
+5. The data set <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav</a> contains information about the media literacy of children and parental supervision of their media use. Is the effect of age on media literacy fuly or partially mediated by parental supervision? 
+   Use PROCESS and SPSS to estimate the model and check the assumptions. Motivate your answer to the question.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=age supervision medliter
+  /ORDER=ANALYSIS.
+* Set imposible value (25) to missing.
+* Define Variable Properties.
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Indirect effect test with PROCESS.
+* Do not paste PROCESS output.
+* Regression models for checking assumptions.
+* Outcome: media literacy.
+REGRESSION
+  /MISSING LISTWISE
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER age supervision
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Outcome: parental supervision.
+REGRESSION
+  /MISSING LISTWISE
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT supervision
+  /METHOD=ENTER age
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+We should not paste PROCESS commands because
+they contain a lot of unintelligble code.
+In the PROCESS menu:
+* Select medliter as Outcome Varible (Y),
+* Select age as Independent Variable (X),
+* Select supervision as M variable(s),
+* Select 4 under Model Number (model with
+  only one mediator),
+* Under Options: Select Effect size and 
+  3 decimal places in output,
+* Under Long names: Select Allow long 
+  variable names.
 
 Check data:
 
-
+All values are plausible except score 25
+on parental supervision because the value
+labels tell us that the scale ranges from 
+1 to 10. Set 25 to missing.
 
 Check assumptions:
 
+These checks cannot be don in PROCESS, so
+use linear regressions in SPSS to produce
+plots of residuals.
 
+Regression of media literacy:
+  The residuals are quite normally distributed
+  and nicely grouped around zero at all levels 
+  of the predicted outcome.
+  The variation of residuals is perhaps smaller 
+  for low levels of the predicted outcome than
+  for high levels but there are perhaps too few 
+  observations for low predicted levels to decide.
+
+Regression of parental supervision:
+  The residuals are quite normally distributed,
+  nicely grouped around zero at all levels 
+  of the predicted outcome and with more or
+  less the samen variation at all levels of 
+  the predicted outcome. The assumptions
+  need not be violated.
 
 Interpret the results:
 
+Relevant results from PROCESS:
 
+Direct effect of X on Y 
+    Effect        SE         t         p      LLCI      ULCI 
+      .193      .083     2.327      .022      .028      .358 
+ 
+Indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+supervis      .031      .031     -.017      .110 
+ 
+The indirect effect of age on media literacy via
+parental supervision does not remove the direct 
+effect completely (b = 0.19, t = 2.33, p = .022,
+95%CI[0.03; 0.36]), so the effect is only
+partially mediated if it is mediated at all.
+Although the largest part of the 95% confidence
+interval is positive, we cannot rule out a zero
+(absent) indirect effect, b = 0.03, 95%CI[-0.02; 0.11].
 ```
 
 ## Criticisms of Mediation

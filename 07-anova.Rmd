@@ -318,7 +318,7 @@ than another group in the population of adults.
 
 ```{r anova-twoway, fig.cap="?"}
 # Goal: Illustrate that different main effects merely use means of different groupings.
-# Similar to app anova-between but with a duble classification of observations (according to endorser and sex).
+# Similar to app anova-between but with a double classification of cases (according to endorser and sex).
 # Generate 6 sets of 2 random observations from a normally distributed population with mean runif(3, 7) and sd = 1. Assign the groups to the experimental treatment factor (endorser, 3 levels) and sex factor (2 levels). Represent observations in a dotplot with treatment as dot colour and sex as dot shape, each observation with a separate value on the x axis, ordered by factor levels. Display grand mean as a horizontal line. Allow user to select (display) group means on one of the two factors. On selection, (old group means vanish and) group means are added as horizontal lines (coloured for the 3 levels factor and different line styles for 2 levels factor) with between group variation indicated by double-sided arcs between group mean and grand mean for each dot (between). Add button to draw new samples.
 ```
 
@@ -342,7 +342,7 @@ A two-way analysis of variance using a factor with three levels, for example, ex
 ### Balanced design {#balanced}
 In analysis of variance with two or more factors, it is quite nice if the factors are statistically independent from one another. In other words, it is nice if the scores on one factor are not associated with scores on another factor. This is called a balanced design. 
 
-In an experiment, we can ensure that factors are independent if we have the same number of subjects in each combination of levels on all factors. In other words, a factorial design is balanced if we have the same number of observations in each subgroup. A subgroup contains the subjects that have the same level in both factors just like a cell in a cross-tabulation. 
+In an experiment, we can ensure that factors are independent if we have the same number of subjects in each combination of levels on all factors. In other words, a factorial design is balanced if we have the same number of observations in each subgroup. A subgroup contains the subjects that have the same level in both factors just like a cell in a contingency table. 
 
 ```{r anova-balanced, echo=FALSE}
 # Table for a balanced 3x2 factorial design.
@@ -355,7 +355,7 @@ knitr::kable(df, caption = "Number of observations per subgroup in a balanced 3x
 rm(df)
 ```
 
-Table \@ref(tab:anova-balanced) shows an example of a balanced 3x2 factorial design. Each subgroup (cell) contains five subjects (observations). If you remember the principles of statistical association and independence in cross-tabulations (Section \@ref(score-combi)), you know that equal distributions of frequencies across columns or across rows indicate statistical independence. In the example, the distributions are the same across columns (and rows), so the factors are statistically independent.
+Table \@ref(tab:anova-balanced) shows an example of a balanced 3x2 factorial design. Each subgroup (cell) contains five subjects (cases). If you remember the principles of statistical association and independence in contingency tables (Section \@ref(score-combi)), you know that equal distributions of frequencies across columns or across rows indicate statistical independence. In the example, the distributions are the same across columns (and rows), so the factors are statistically independent.
 
 A balanced design is nice but not necessary. Unbalanced designs can be analyzed but estimation is more complicated (a problem for the computer, not for us) and the assumption of equal population variances for all groups is more important (a problem for us, not for the computer). With a balanced design, you are on the safe side.
 
@@ -517,7 +517,7 @@ For the statistically informed reader, you should include the following informat
 
 * For each effect worth interpretation, clarify which group or subgroup scores higher. Report the group means and their standard deviations or the mean difference (from the post-hoc tests) for comaprisons between groups as well as their p values here.
 
-* As always, don't forget to mention the units (observations) and the meaning of the variables (factors and outcome). They describe the topic of the analysis.
+* As always, don't forget to mention the units (cases) and the meaning of the variables (factors and outcome). They describe the topic of the analysis.
 
 * Report it if the main assumption is violated, that is, if you have (sub)groups of unequal size and the test on homogeneous variances is statistically significant. In this situation, report the test result of the latter test just like you report the F test of a main effect (see above).
 
@@ -693,7 +693,7 @@ UNIANOVA attitude BY status3 exposure3
   /METHOD=SSTYPE(3)
   /INTERCEPT=INCLUDE
   /POSTHOC=status3 exposure3(BONFERRONI) 
-  /PLOT=PROFILE(exposure3*status3)
+  /PLOT=PROFILE(status3*exposure3)
   /PRINT=HOMOGENEITY DESCRIPTIVE
   /CRITERIA=ALPHA(.05)
   /DESIGN=status3 exposure3 status3*exposure3.
@@ -706,13 +706,12 @@ Check assumptions:
 
 The six subgroups (defined by combinations of smoking
 status and exposure) are definitely not of equal size.
-The test on homogeneity of variances, however, is not
-statistically significant, F (8, 76) = 1.79, p = .092.
-We are not sufficiently confident to conclude that the
-variance of smoking attitude in the population is 
-unequal for all subgroups but the p value must make us 
-doubt that they are equal. We may not meet the 
-assumptions.
+The test on homogeneity of variances is statistically 
+significant, F (8, 76) = 2.17, p = .039.
+We are quite confident that the variance of smoking 
+attitude in the population is unequal for all subgroups.
+We do not meet the assumptions, so we should report
+this as a disclaimer.
 
 Interpret the results:
 
@@ -721,24 +720,36 @@ recommended to present the table with between-subjects
 effects instead of reporting all F test results in the 
 text.
   
-Exposure clearly matters to smoking attitude according to 
-our two-way analysis of variance. High exposure is associated
-with a more negative attitude towards smoking (M = 2.99,
-SD = 0.50) than medium exposure (M = 3.78, SD = 0.53, 
-difference: p < .001 ) and low exposure (M = 3.95, 
-SD = 0.62, difference: p < .001). There is no remarkable 
-difference in attitude between adults with low or
-medium exposure (difference p = .639).
-Smoking status does not seem to be related to 
-attitude towards smoking by itself. There is, however,
-a very weak (eta2 = 0.07) but statistically non-significant 
+Exposure clearly matters to smoking attitude according 
+to our two-way analysis of variance. High exposure is 
+associated with a more negative attitude towards smoking 
+(M = -0.52, SD = 1.26) than medium exposure (M = 0.18, 
+SD = 1.95, difference: p = .024), which is more negative 
+than the attitude for adults with low exposure (M = 0.99, 
+SD = 1.34, difference: p = .006). Exposure accounts for
+21 percent of the variation in attitude towards smoking.
+
+Smoking status also matters to attitude towards smoking. 
+Former smokers (M = -1.70, SD = 1.71) are significantly 
+more negative towards smoking then smokers (M = 0.80, 
+SD = 1.67, difference: p < .001) and non-smokers 
+(M = 0.64, SD = 1.17, difference: p < .001). 
+The difference between the latter two groups is not 
+statistically significant (p = 1.000). Smoking status 
+accounts for 25 percent of the differences in smoking 
+attitude.
+
+There is a weak (eta2 = 0.13) and statistically significant 
 interaction effect of smoking status with exposure on
-attitude towards smoking.
-If we inspect the means plot, we see that the effect
-of exposure on attitude is moderated by smoking status.
-Former smokers tend to be more negative about smoking
-if they have medium exposure to the campaign than 
-non-smokers or smokers.
+attitude towards smoking. If we inspect the means plot, 
+we see that the effect of exposure on attitude is moderated by smoking status. Former smokers with low exposure are much
+more positive (less negative) about smoking than we would
+expect. Or, in other words, medium and high exposure to
+the campaign decreases their attitude more than the 
+attitudes of smokers or non-smokers.
+
+Note that the proportions of explained variance (eta2)
+have been calculated manually.
 ```
 
 ## Take-Home Points  

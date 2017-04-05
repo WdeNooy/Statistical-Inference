@@ -427,7 +427,478 @@ UNIANOVA attitude BY status3 exposure3
   /METHOD=SSTYPE(3)
   /INTERCEPT=INCLUDE
   /POSTHOC=status3 exposure3(BONFERRONI) 
-  /PLOT=PROFILE(exposure3*status3)
+  /PLOT=PROFILE(status3*exposure3)
   /PRINT=HOMOGENEITY DESCRIPTIVE
   /CRITERIA=ALPHA(.05)
   /DESIGN=status3 exposure3 status3*exposure3.
+
+* Section 8.2.2.
+
+* Load data: smokers.sav.
+DATASET NAME Smokers WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=exposure attitude
+  /ORDER=ANALYSIS.
+* Simple regression analysis with assumption checks.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+*  Exercise 2.
+* Check data.
+FREQUENCIES VARIABLES=exposure status3 contact attitude
+  /ORDER=ANALYSIS.
+* Create dummy variables for status3.
+* ENSURE THAT MEASUREMENT LEVEL IS SET TO ORDINAL.
+* Define Variable Properties.
+*status3.
+VARIABLE LEVEL  status3(ORDINAL).
+EXECUTE.
+SPSSINC CREATE DUMMIES VARIABLE=status3 
+ROOTNAME1=status 
+/OPTIONS ORDER=A USEVALUELABELS=YES USEML=YES OMITFIRST=NO.
+* Multiple regression analysis with assumption checks.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure status_2 status_3 contact
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+* Exercise 3.
+* Load data: children.sav.
+DATASET NAME Children WINDOW=FRONT.
+* Check data.
+FREQUENCIES VARIABLES=medliter supervision
+  /ORDER=ANALYSIS.
+* Set supervision 25 to missing.
+* Define Variable Properties.
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Undirected: correlation (linear?).
+* Check scatterplot.
+GRAPH
+  /SCATTERPLOT(BIVAR)=supervision WITH medliter
+  /MISSING=LISTWISE.
+* Correlations.
+CORRELATIONS
+  /VARIABLES=medliter supervision
+  /PRINT=TWOTAIL NOSIG
+  /MISSING=PAIRWISE.
+* Simple regression: media literacy dependent.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER supervision
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Simple regression: parental supervision dependent.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT supervision
+  /METHOD=ENTER medliter
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+* Section 8.4.2.
+
+* Load data: smokers.sav.
+DATASET NAME Smokers WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=exposure status2 contact attitude
+  /ORDER=ANALYSIS.
+* Compute interaction variable.
+COMPUTE expo_status=exposure * status2.
+VARIABLE LABELS  expo_status 'Interaction exposure * smoker'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderaiton plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure status2 expo_status contact
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+*  Exercise 2.
+* Scatterplot with dots coloured by smoking status.
+GRAPH
+  /SCATTERPLOT(BIVAR)=exposure WITH attitude BY status2
+  /MISSING=LISTWISE.
+
+*  Exercise 3.
+* Histogram of predictor (exposure) for each smoking status.
+GRAPH
+  /HISTOGRAM=exposure
+  /PANEL ROWVAR=status2 ROWOP=CROSS.
+
+*  Exercise 4.
+* Check data.
+FREQUENCIES VARIABLES=exposure status3 contact attitude
+  /ORDER=ANALYSIS.
+* Create dummies and iteraction variables.
+* ENSURE THAT MEASUREMENT LEVEL IS SET TO ORDINAL.
+* Define Variable Properties.
+*status3.
+VARIABLE LEVEL  status3(ORDINAL).
+EXECUTE.
+SPSSINC CREATE DUMMIES VARIABLE=exposure status3 
+ROOTNAME1=exposure, status ROOTNAME2=expo_status 
+/OPTIONS ORDER=A USEVALUELABELS=YES USEML=YES OMITFIRST=NO.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderaiton plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure status_3 status_4 expo_status_2_2 expo_status_2_3 contact
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Scatterplot with dots coloured by smoking status.
+GRAPH
+  /SCATTERPLOT(BIVAR)=exposure WITH attitude BY status3
+  /MISSING=LISTWISE.
+* Histogram of predictor (exposure) for each smoking status.
+GRAPH
+  /HISTOGRAM=exposure
+  /PANEL ROWVAR=status3 ROWOP=CROSS.
+
+* Section 8.7.2.
+
+* Load data: smokers.sav.
+DATASET NAME Smokers WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=exposure status2 contact attitude
+  /ORDER=ANALYSIS.
+* Compute interaction variable.
+COMPUTE expo_contact=exposure * contact.
+VARIABLE LABELS  expo_contact 'Interaction exposure * contact'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderaiton plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure contact expo_contact status2
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+*  Exercise 2.
+* Create scatterplot.
+GRAPH
+  /SCATTERPLOT(BIVAR)=exposure WITH attitude
+  /MISSING=LISTWISE.
+* Manually add three regression lines.
+
+*  Exercise 3.
+* Check data.
+FREQUENCIES VARIABLES=exposure status2 contact attitude
+  /ORDER=ANALYSIS.
+* Mean-center predictor and moderator.
+* Ask for means of predictor and exposure.
+FREQUENCIES VARIABLES=exposure contact
+  /FORMAT=NOTABLE
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Subtract mean from variable.
+COMPUTE exposure_c=exposure - 4.866.
+VARIABLE LABELS  exposure_c 'Exposure (mean-centered)'.
+COMPUTE contact_c=contact - 5.091.
+VARIABLE LABELS  contact_c 'Contact (mean-centered)'.
+EXECUTE.
+* Compute new interaction variable.
+COMPUTE expo_contact_c=exposure_c * contact_c.
+VARIABLE LABELS  expo_contact_c 'Interaction exposure * contact  (mean-centered)'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderation plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure_c contact_c expo_contact_c status2
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+* Exercise 4.
+* Group the moderator.
+* Visual Binning.
+*contact.
+RECODE  contact (MISSING=COPY) (LO THRU 4.25076386584132=1) (LO THRU 5.83711577142397=2) (LO THRU 
+    HI=3) (ELSE=SYSMIS) INTO contact_3.
+VARIABLE LABELS  contact_3 'Contact with smokers (Binned)'.
+FORMATS  contact_3 (F5.0).
+VALUE LABELS  contact_3 1 '' 2 '' 3 ''.
+VARIABLE LEVEL  contact_3 (ORDINAL).
+EXECUTE.
+* Histograms of the predictor for each moderator group.
+GRAPH
+  /HISTOGRAM=exposure
+  /PANEL ROWVAR=contact_3 ROWOP=CROSS.
+
+* Exercise 5.
+* Load data: children.sav.
+DATASET NAME Children WINDOW=FRONT.
+* Check data.
+FREQUENCIES VARIABLES=medliter sex age supervision
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Set impossible values to missing.
+* Define Variable Properties.
+*sex.
+MISSING VALUES sex(1).
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Turn sex into a 0/1 variable.
+RECODE sex (2=0) (3=1) INTO girl.
+VARIABLE LABELS  girl 'The child is a girl.'.
+EXECUTE.
+* Mean-center predictor and moderator.
+* Ask for means of predictor and exposure.
+FREQUENCIES VARIABLES=age supervision
+  /FORMAT=NOTABLE
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Subtract mean from variable.
+COMPUTE age_c=age - 8.609.
+VARIABLE LABELS  age_c 'Age (mean-centered)'.
+COMPUTE supervision_c=supervision - 5.358.
+VARIABLE LABELS  supervision_c 'Supervision (mean-centered)'.
+EXECUTE.
+* Check mean centering.
+FREQUENCIES VARIABLES=age_c supervision_c
+  /FORMAT=NOTABLE
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Compute interaction variable.
+COMPUTE age_supervision_c=age_c * supervision_c.
+VARIABLE LABELS  age_supervision_c 'Interaction age * supervision (mean-centered)'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderation plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER girl age_c supervision_c age_supervision_c
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Create scatterplot for moderation plot.
+* Use the mean-centered variable.
+GRAPH
+  /SCATTERPLOT(BIVAR)=supervision_c WITH medliter
+  /MISSING=LISTWISE.
+* Manually add three regression lines.
+
+* Exercise 4.
+* Check data.
+FREQUENCIES VARIABLES=medliter sex age supervision
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Set impossible values to missing.
+* Define Variable Properties.
+*sex.
+MISSING VALUES sex(1).
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Turn sex into a 0/1 variable.
+RECODE sex (2=0) (3=1) INTO girl.
+VARIABLE LABELS  girl 'The child is a girl.'.
+EXECUTE.
+* Mean-center predictor and moderator.
+* Ask for means of predictor and exposure.
+FREQUENCIES VARIABLES=supervision
+  /FORMAT=NOTABLE
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Subtract mean from variable.
+COMPUTE supervision_c=supervision - 5.358.
+VARIABLE LABELS  supervision_c 'Supervision (mean-centered)'.
+EXECUTE.
+* Compute interaction variable.
+COMPUTE girl_supervision_c=girl * supervision_c.
+VARIABLE LABELS  girl_supervision_c 'Interaction girl * supervision (mean-centered)'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderation plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER girl supervision_c girl_supervision_c
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Scatterplot with dots and regression lines coloured by sex.
+* No covariate, so SPSS can draw the lines.
+* Use the mean-centered or not mean-centered predictor.
+STATS REGRESS PLOT YVARS=medliter XVARS=supervision_c COLOR=sex 
+/OPTIONS CATEGORICAL=BARS GROUP=1 INDENT=15 YSCALE=75 
+/FITLINES LINEAR APPLYTO=GROUP.
+
+* Section 9.4.2.
+
+* Load data: readers.sav.
+DATASET NAME Readers WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=age education polinterest newssite readingtime
+  /ORDER=ANALYSIS.
+* Multiple regression.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT readingtime
+  /METHOD=ENTER education
+  /METHOD=ENTER polinterest
+  /METHOD=ENTER newssite
+  /METHOD=ENTER age
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+*  Exercise 2.
+* Check data.
+FREQUENCIES VARIABLES=age education polinterest newssite readingtime
+  /ORDER=ANALYSIS.
+* (Pearson) Correlations.
+CORRELATIONS
+  /VARIABLES=age education polinterest newssite readingtime
+  /PRINT=TWOTAIL NOSIG
+  /MISSING=PAIRWISE.
+
+  Exercise 3.
+* Check data.
+FREQUENCIES VARIABLES=age education polcynic newssite readingtime
+  /ORDER=ANALYSIS.
+* Multiple regression.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT readingtime
+  /METHOD=ENTER education
+  /METHOD=ENTER polcynic
+  /METHOD=ENTER newssite
+  /METHOD=ENTER age
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+* Section 9.8.2.
+
+* Load data: readers.sav.
+DATASET NAME Readers WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=age education polinterest newssite readingtime
+  /ORDER=ANALYSIS.
+* Multiple regression for newspaper reading time.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT readingtime
+  /METHOD=ENTER age education polinterest newssite
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Multiple regression for news site use.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT newssite
+  /METHOD=ENTER age education polinterest
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+
+* Exercise 2-4.
+* Don't paste PROCESS output.
+
+* Exercise 5.
+* Load data: children.sav.
+DATASET NAME Children WINDOW=FRONT.
+* Check data.
+FREQUENCIES VARIABLES=age supervision medliter
+  /ORDER=ANALYSIS.
+* Set imposible value (25) to missing.
+* Define Variable Properties.
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Indirect effect test with PROCESS.
+* Don't paste PROCESS output.
+* Regression models for checking assumptions.
+* Outcome: media literacy.
+REGRESSION
+  /MISSING LISTWISE
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER age supervision
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Outcome: parental supervision.
+REGRESSION
+  /MISSING LISTWISE
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT supervision
+  /METHOD=ENTER age
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+

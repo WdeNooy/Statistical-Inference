@@ -245,7 +245,7 @@ Which group should you use as reference category, that is, which dummy should no
 
 ```{r regression-sampling, fig.cap="What happens to regression lines from sample to sample?"}
 # Goal: Understand that regression constant and coefficient(s) have sampling distributions.
-# Generate a population with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term (so a lot of variation in sample regression lines). Generate a sample (N = 10) and display it in a scatterplot with regression line, labelled with it's unstandardized regression coefficient value. Also plot sampling distribution for regression coefficient. Add button to allow drawing a new sample; display the new sample and new regression line but retain the existing regression lines. Add (or change sampling button) button (or change sampling button) to draw 1,000 samples: don't display samples, just update sampling distribution with normal (or t) distribution as curve.
+# Generate a population with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term (so a lot of variation in sample regression lines). Generate a sample (N = 10) and display it in a scatterplot with regression line, labelled with it's unstandardized regression coefficient value. Also plot sampling distribution for regression coefficient. Add button to allow drawing a new sample; display the new sample and new regression line but retain the existing regression lines. Add button (or change sampling button) to draw 1,000 samples: don't display samples, just update sampling distribution with normal (or t) distribution as curve.
 ```
 
 1. Which estimates can change from sample to sample: the regression constant, the regression coefficient, or both? Check your answer by drawing new samples.
@@ -263,7 +263,7 @@ Chapters \@ref(param-estim) and \@ref(hypothesis) have extensively discussed how
 #### Independent observations
 The two most important assumptions require that the observations are _independent and identically distributed_. These requirements arise from probability theory. If they are violated, the statistical results should not be trusted.
 
-Each observation, for example, respondent, must be independent of all other observations. This respondent's outcome variable score may not depend on outcome scores of other respondents. 
+Each observation, for example, a measurement a respondent, must be independent of all other observations. This respondent's outcome variable score may not depend on outcome scores of other respondents. 
 
 It is hardly possible to check that our observations are independent, the first part of the assumption. We usually have to assume that this is the case. But there are situations in which we should not make this assumption. In time series data, for example, the daily amount of political news, we usually have trends, cyclic movements, or issues that affect the amount of news over a period of time. There will be more political news while parliament is in session than during summer recess. 
 
@@ -394,72 +394,209 @@ In contrast, the regression coefficient for _exposure_ is not corrected for the 
 
 ```{r SPSSinstructregression, echo=FALSE, eval=FALSE}
 # TBD: add videos on executing regression, inspecting residuals, creating dummy variables, adding a regression line to a scattergram for a simple regression (Chart Editor: Add fit line at total) and one predictor in multiple regression (Chart Editor: reference line from equation), interpreting resuls. (Results reporting is discussed at the end of this chapter.)
+# Chart Editor of zresid * zpred plot: add reference line at 0 and perhaps at +2 and -2 to inspect shape of residual distribution.
 ```
 
 ### Exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure, smoking status (variable _status3_), and contact with smokers. Check the assumptions and interpret the results.
+1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure to an anti-smoking campaign. Check the assumptions and interpret the results.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=exposure attitude
+  /ORDER=ANALYSIS.
+* Simple regression analysis with assumption checks.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+There are no impossible values on the two variables.
 
 Check assumptions:
 
-
+The distribution of the residuals is quite in line
+with a normal distribution.
+The residuals are nicely centered around zero at all
+predicted levels of the outcome variable, so the 
+association seems to be linear.
+The residuals are evenly spread around zero at all
+predicted levels, so prediction accuracy is the same
+at all levels (homoscedasticity).
 
 Interpret the results:
 
-
+Campaign exposure predicts attitude towards smoking among 
+adults reasonably well, R2 = .17, F (1, 83) = 16.73, p < .001.
+One additional unit of exposure decreases the predicted 
+attitude by 0.12 to 0.34 points, t = -4.09, p < .001, 
+95%CI[-0.34; -0.12]. This is a moderate to strong effect 
+(b* = -.41).
 ```
 
-2. Use the same data set (Exercise 1) to estimate the effect of exposure on attitude in a simple regression model, that is, without other predictors. Compare the result with the multiple regression model estimated in the previous exercise. What is the difference and why is there a difference?
+2. Add smoking status (variable _status3_), and contact with smokers as predictors to the regression model of Exercise 1. Compare the effect of exposure between the two regression models. What is the difference and why is there a difference?
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=exposure status3 contact attitude
+  /ORDER=ANALYSIS.
+* Create dummy variables for status3.
+* ENSURE THAT MEASUREMENT LEVEL I SET TO ORDINAL.
+* Define Variable Properties.
+*status3.
+VARIABLE LEVEL  status3(ORDINAL).
+EXECUTE.
+SPSSINC CREATE DUMMIES VARIABLE=status3 
+ROOTNAME1=status 
+/OPTIONS ORDER=A USEVALUELABELS=YES USEML=YES OMITFIRST=NO.
+* Multiple regression analysis with assumption checks.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure status_2 status_3 contact
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+All values on the variables seem to be valid.
 
 Check assumptions:
 
-
+The residuals seem to be a little skewed.
+The residuals by predicted values plot is not
+as it should be. At low predicted levels, the
+residuals are below zero, so the average residual
+is not zero. The associations do not seem to be
+linear. In addition, the spread of the residuals
+is larger at higher predicted levels (right) than
+low predicted levels (left). This pattern suggests
+that the effects are moderated (see next section).
 
 Interpret the results:
 
+Include a table with regression coefficients, so
+we need not report all t test results in our 
+interpretation.
 
+The regression model predicts about sixty percent
+of the variation in attitude towards smoking, which
+is very much for a social scientific model, R2 = .62,
+F (4, 80) = 32.02, p < .001.
+Exposure to the anti-smoking campaign predicts a
+more negative attitude towards smoking, while contact
+with smokers is associated with a slightly more 
+positive attitude. Of the two, exposure (b* = -0.44)
+is a better predictor than contact with smokers 
+(b* = 0.20).
+Former smokers are on average much (2.85 points) more
+negative about smoking than non-smokers and smokers, 
+who are on average only 0.20 points below the average
+attitude of non-smokers.
+The residuals suggest that the assumptions for using
+the theoretical approximaitons of the sampling 
+distributions may not have met. The current model 
+can be mispecified.
 ```
 
 3. The data set <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav</a> contains information about the media literacy of children and parental supervision of their media use. Are the two related? Check the assumptions and interpret the results.
 
 ```{r eval=FALSE}
-The analysis method you choose, depends on your substantive decision 
-on the direction of the association. 
-If you assume no direction, a correlation coefficient is the most 
-appropriate choice.
-If you think one variable may depend on another, a (simple) regression 
-model is the best choice.
+The analysis method you choose, depends on your 
+substantive decision on the direction of the 
+association. 
+If you assume no direction, a correlation 
+coefficient is the most appropriate choice.
+If you think one variable may depend on another, 
+a (simple) regression model is the best choice.
 
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=medliter supervision
+  /ORDER=ANALYSIS.
+* Set supervision 25 to missing.
+* Define Variable Properties.
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Undirected: correlation (linear?).
+* Check scatterplot.
+GRAPH
+  /SCATTERPLOT(BIVAR)=supervision WITH medliter
+  /MISSING=LISTWISE.
+* Correlations.
+CORRELATIONS
+  /VARIABLES=medliter supervision
+  /PRINT=TWOTAIL NOSIG
+  /MISSING=PAIRWISE.
+* Simple regression: media literacy dependent.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER supervision
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Simple regression: parental supervision dependent.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT supervision
+  /METHOD=ENTER medliter
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+Score '25' for parental supervision cannot be
+right because the scale runs to 10. Define this 
+score as a missing value.
 
 Check assumptions:
 
-
+A scatterplot shows that the association can be
+linear, so a correlation (or linear regression
+model) is appropriate.
+In the regression models, the residuals are
+quite normally distributed, nicely grouped around
+zero at all levels of the predicted outcome.
+The variation of residuals is more or less the
+same at different levels of the predicted outcome
+but there are perhaps too few observations for low
+and high predicted levels to decide.
 
 Interpret the results:
 
+Parental supervision and child media literacy are
+weakly correlated (r = .36, p = .001). More supervision
+goes together with more media literacy, t = 3.54,
+p = .001, 95%CI[0.19; 0.66]. One additional unit of
+parental supervision predicts 0.31 additional units of
+media literacy. One additional unit of media literacy 
+predicts 0.42 additional units of parental supervision. 
 
+Note that the t test on the regression coefficient 
+is the same in a simple regression model if you use
+supervision or media literacy as outcome variable.
 ```
 
 ## Different Lines for Different Groups
@@ -511,7 +648,7 @@ Our moderator (smoker vs. non-smoker) is a dichotomous variable but our predicto
 
 In the context of a regression model, moderation means __different slopes for different groups__. The slope of the regression line is the regression coefficient, which expresses the effect of the predictor on the outcome variable. If we have different effects in different contexts (moderation), we must have different regression coefficients for different groups.
 
-### Interaction variable
+### Interaction variable {#interaction-variable}
 
 ```{r interaction-var-effect, fig.cap="What does an interaction variable do?"}
 # Goal: Intuitive understanding of the effect of an interaction variable.
@@ -743,7 +880,7 @@ If we would like to know whether the exposure effect for former smokers is signi
 # * Create interaction predictors (also for cont*cont interaction variables in addition to interactions with dummies) and dummies for main effects in one go: 
 #   - ensure that categorical variables are marked as Nominal or Ordinal in Variable View
 #   - command Transform > Create Dummy Variables ; select (numeric) predictor and (categorical) moderator under 'Create Dummy Variables for:'
-#   - under Create main-effec dummies (option checked by default) specify a short name for both variables, separated with a comma ; the name of the numeric variable is irrelevant but must be specified
+#   - under Create main-effect dummies (option checked by default) specify a short name for both variables, separated with a comma ; the name of the numeric variable is irrelevant but must be specified
 #   - ensure that the option _Do not create dummies for scale variables values_ is selected under Measurement Level Usage
 #   - select the _Create dummies for all two-way interactions_ option under Two-Way Interactions and give a short name, e.g., interact
 #   - Paste & Run
@@ -774,42 +911,129 @@ If we would like to know whether the exposure effect for former smokers is signi
 
 ### Exercises
 
-1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure moderated by smoking status (variable _status3_), and use contact with smokers as covariates. Check the assumptions for a regression analysis and interpret the results.
+1. Use the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a> to predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_). Use contact with smokers as a covariate. Check the assumptions for regression analysis and interpret the results.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=exposure status2 contact attitude
+  /ORDER=ANALYSIS.
+* Compute iteraction variable.
+COMPUTE expo_status=exposure * status2.
+VARIABLE LABELS  expo_status 'Interaction exposure * smoker'.
+EXECUTE.
+* Multiple regression.
+REGRESSION
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure status2 expo_status contact
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+All values seem to be valid.
 
 Check assumptions:
 
-
+The residuals are skewed (long tail to the left).
+The residuals seem to average to zero on most
+levels of the predicted outcome, so a linear model
+seems to fit. However, the lower attitude values 
+are predicted worse (more variation) than the 
+higher levels. The assumptions do not seem to be
+strongly violated but our model may not be specified
+all well.
 
 Interpret the results:
 
+Add table with regression coefficients.
 
+We can predict smoking attitude for about 26 percent
+with the regression model, R2 = .26, F (4, 80) = 7.10,
+p < .001.
+Exposure to the anti-smoking campaign has a weak,
+negative predictive effect on smoking attitude for 
+non-smokers (b* = -0.21): More exposure yields a more 
+negative attitude. For smokers, the predictive effect 
+of campaign exposure on smoking attitude is more 
+strongly negative. The moderation of the exposure
+effect by smoking status is statistically significant 
+and quite strong (b* = -0.43).
+More contact with smokers is associated with a more 
+positive attitude towards smoking. The predictive 
+effect is weak (b* = 0.18).
+Smokers have a more positive attitude than non-smokers,
+on average about 2 (0.5 to 3) points higher on the attitude 
+scale running from -5 to +5.
+
+Remember: In the presence of an interaction effect,
+the partial effect of a predictor is the effect for
+the reference group or value. It is NOT an overall or
+average effect as in analysis of variance.
 ```
 
-2. Visualize the moderated effects of exposure on attitude (Exercise 1). Create a scatterplot with three regression lines. Colour the regression lines and the dots (respondents) according to their smoking status category.
+2. Visualize the moderated effects of exposure on attitude (Exercise 1). Create a scatterplot with three regression lines. Colour the regression lines and the dots (respondents) according to their smoking status category. Interpret the moderation of the exposure effect by smoking status.
 
 ```{r eval=FALSE}
+First of all, you must write the regression equations
+for different values of the moderator. Plug in the
+estimated values of the regression coefficients and
+the means of covariates.
+
+attitude = constant + -.118*exposure + 1.982*status +
+  -.329*exposure*status + .152*contact
+attitude = -.087 + -.118*exposure + 1.982*status + 
+  -.329*exposure*status + .152*5.091
+attitude = -.087 + -.118*exposure + 1.982*status + 
+  -.329*exposure*status +.774
+attitude = .687 + -.118*exposure + 1.982*status + 
+  -.329*exposure*status
+
+Non-smokers (0):
+attitude = .687 + -.118*exposure + 1.982*0 + 
+  -.329*exposure*0
+attitude = .687 + -.118*exposure
+
+Smokers (1):
+attitude = .687 + -.118*exposure + 1.982*1 + -.329*exposure*1
+attitude = .687 + 1.982 + -.118*exposure + -.329*exposure
+attitude = 2.669 + (-.118 + -.329)*exposure
+attitude = 2.669 + -.447*exposure
+
+Create a scatterplot of attitude by exposure, 
+colouring the dots by smoking status.
+Use the calculated two equations in the SPSS Chart 
+Editor to create two lines. Use the icon "Add a
+reference line from Equation" for each line. Enter the
+the equation using x instead of exposure as the
+predictor. Colour the lines with the colours of
+the dots in the scatterplot.
+
 SPSS syntax:
 
+* Scatterplot with dots coloured by smoking status.
+GRAPH
+  /SCATTERPLOT(BIVAR)=exposure WITH attitude BY status2
+  /MISSING=LISTWISE.
 
 Check data:
 
-
+See Exercise 1.
 
 Check assumptions:
 
-
+See Exercise 1.
 
 Interpret the results:
 
-
+For smokers, the predictive effect of campaign 
+exposure on smoking attitude is more strongly 
+negative than for non-smokers.
 ```
 
 3. Check the common support of the predictor (exposure) in all groups of the moderator (smoking status). Could you also check common support with the scatterplot you made for Exercise 2?
@@ -817,18 +1041,152 @@ Interpret the results:
 ```{r eval=FALSE}
 SPSS syntax:
 
-
-Check data:
-
-
-
-Check assumptions:
-
-
+* Histogram of predictor (exposure) for each smoking status.
+GRAPH
+  /HISTOGRAM=exposure
+  /PANEL ROWVAR=status2 ROWOP=CROSS.
 
 Interpret the results:
 
+Even for smokers, the much smaller group, we have 
+exposure scores over (almost) the entire range.
+We have good coverage both for smokers and 
+non-smokers. Do not mind the gap inscores around
+6: we have plenty of observationsaround 5 and 7.
 
+We could have seen this result in the scatterplot
+becuase we had green and blue dots across the
+entire width of the plot.
+```
+
+4. Repeat the analyses of Exercises 1 thru 3 but use smoking status with three categories (_status3_).
+
+```{r eval=FALSE}
+SPSS syntax:
+
+* Check data.
+FREQUENCIES VARIABLES=exposure status3 contact attitude
+  /ORDER=ANALYSIS.
+* Create dummies and iteraction variables.
+* ENSURE THAT MEASUREMENT LEVEL IS SET TO ORDINAL.
+* Define Variable Properties.
+*status3.
+VARIABLE LEVEL  status3(ORDINAL).
+EXECUTE.
+SPSSINC CREATE DUMMIES VARIABLE=exposure status3 
+ROOTNAME1=exposure, status ROOTNAME2=expo_status 
+/OPTIONS ORDER=A USEVALUELABELS=YES USEML=YES OMITFIRST=NO.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderaiton plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure status_3 status_4 expo_status_2_2 expo_status_2_3 contact
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Scatterplot with dots coloured by smoking status.
+GRAPH
+  /SCATTERPLOT(BIVAR)=exposure WITH attitude BY status3
+  /MISSING=LISTWISE.
+* Histogram of predictor (exposure) for each smoking status.
+GRAPH
+  /HISTOGRAM=exposure
+  /PANEL ROWVAR=status3 ROWOP=CROSS.
+
+Write out the regression equations for all
+three groups of the moderator. Plug in the
+estimated values of the constant and the regression 
+coefficients .
+
+attitude = .550 + -.137*exposure + -1.139*former +
+  1.223*smoker + -.402*exposure*former + 
+  -.304*exposure*smoker + .171*contact
+
+Plug in the means of covariates and add to constant:
+  
+attitude = .550 + -.137*exposure + -1.139*former +
+  1.223*smoker + -.402*exposure*former + 
+  -.304*exposure*smoker + .171*5.091
+attitude = 1.421 + -.137*exposure + -1.139*former +
+  1.223*smoker + -.402*exposure*former + 
+  -.304*exposure*smoker
+
+Non-smokers (former = 0, smoker = 0):
+attitude = 1.421 + -.137*exposure + -1.139*0 +
+  1.223*0 + -.402*exposure*0 + 
+  -.304*exposure*0
+attitude = 1.421 + -.137*exposure
+
+Former smokers (former = 1, smoker = 0):
+attitude = 1.421 + -.137*exposure + -1.139*1 +
+  1.223*0 + -.402*exposure*1 + 
+  -.304*exposure*0
+attitude = 1.421 + -1.139 + -.137*exposure + -.402*exposure
+attitude = 0.282 + (-.137 + -.402)*exposure
+attitude = 0.282 + -.539*exposure
+
+Smokers (former = 0, smoker = 1):
+attitude = 1.421 + -.137*exposure + -1.139*0 +
+  1.223*1 + -.402*exposure*0 + 
+  -.304*exposure*1
+attitude = 1.421 + 1.223 + (-.137 + -.304)*exposure
+attitude = 2.644 + -.441*exposure
+
+Create a scatterplot of attitude by exposure, 
+colouring the dots by smoking status.
+Use the calculated two equations in the SPSS Chart 
+Editor to create two lines. Use the icon "Add a
+reference line from Equation" for each line. Enter the
+the equation using x instead of exposure as the
+predictor. Colour the lines with the colours of
+the dots in the scatterplot.
+
+Check data:
+
+All values seem to be valid.
+
+Check assumptions:
+
+The residuals seem to be skewed a little bit.
+The residuals by predicted values plot gives
+no reason to doubt the linearity of the model
+but the problem of predicting higher values
+less accurately than lower values seems to be
+worse than in Exercise 1. We should war the
+reader that the assumptions seem to be
+violated.
+
+Interpret the results:
+
+Again, summarize the tests on the regression
+coefficients in a table.
+
+With three smoking status groups, we can predict
+attitude towards smoking much better (R2 = 0.70)
+than with the two groups in Exercise 1 (R2 = .26).
+
+There is an important difference between non-smokers
+and former smokers (they were lumped together in 
+the preceding exercises). On average, former smokers
+have a more negative attitude than non-smokers,
+which may range from a tiny difference (-0.1) to a
+large difference (2 points on the scale from -5 to +5).
+In addition, exposure has a stronger negative
+predictive effect on smoking attitude among former
+smokers than among non-smokers. Exposure also has
+a stronger negative effect on attitude among smokers
+than among non-smokers. For short, exposure to the
+campaign has less impact on attitude towards smoking
+for non-smokers than for former smokers or smokers.
+
+The coverage of exposure is good for non-smokers
+and smokers but former smokers with high exposure
+are rare.
 ```
 
 ## A Continuous Moderator {#cont-moderator-regression}
@@ -885,7 +1243,7 @@ Note that positive and negative are used here in there mathematical meaning, not
 
 ### Conditional effect
 
-The regression coefficients for exposure and contact represent conditional effects (see Section \@ref(conditional-effects)). These are the effects for observations that score zero on the other variable. Plug in zero for the moderator and you see that all terms with a moderator drop from the equation and only $b_1$ is left as the effect of exposure.  
+The regression coefficients for exposure and contact represent conditional effects (see Section \@ref(conditional-effects)). These are the effects for cases that score zero on the other variable. Plug in zero for the moderator and you see that all terms with a moderator drop from the equation and only $b_1$ is left as the effect of exposure.  
 
 $$
 \small
@@ -897,7 +1255,7 @@ $$
 \normalsize
 $$
 
-Observations that score zero on the moderator are the reference value for the conditional effect of the predictor just like the group scoring zero on the dummy variables is the reference group with a categorical moderator. 
+Cases that score zero on the moderator are the reference value for the conditional effect of the predictor just like the group scoring zero on the dummy variables is the reference group with a categorical moderator. 
 
 ### Mean-centering
 
@@ -926,6 +1284,8 @@ $$
 
 With mean-centered numerical predictors, the conditional effects in the presence of interaction always make sense because a mean score always falls within the range of scores that actually occur. If we mean-center exposure, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. That makes sense.
 
+Remember that the interaction variable is the product of the predictor and moderator (Section \@ref(interaction-variable)). If any or both of these are mean-centered, you should multiply the mean-centered variable(s) toz create the interaction variable.
+
 ### Symmetry of predictor and moderator
 
 ```{r symmetry-predictor-moderator, fig.cap=""}
@@ -952,7 +1312,7 @@ $$
 
 But wait a minute, this is what we would do if contact was the predictor and exposure the moderator. That is a completely different situation, is it not? No, technically it does not make a difference which variable is the predictor and which is the moderator. The predictor and moderator are symmetric. The difference is only in our theoretical expectations and in our interpretation.
 
-The conditional effect of the moderator, as stated above, is the effect of the moderator if the predictor is zero. This interpretation makes sense only if there are observations with zero scores on the predictor. In the current example, the scores on exposure range from 0 to 10, so zero exposure is meaningful. But it represents an eccentric score with perhaps a very atypical effect of contact on attitude. For these reasons, it is recommended to mean-center both the predictor and moderator if they are numeric.
+The conditional effect of the moderator, as stated above, is the effect of the moderator if the predictor is zero. This interpretation makes sense only if there are cases with zero scores on the predictor. In the current example, the scores on exposure range from 0 to 10, so zero exposure is meaningful. But it represents an eccentric score with perhaps a very atypical effect of contact on attitude. For these reasons, it is recommended to mean-center both the predictor and moderator if they are numeric.
 
 ### Visualization of interaction effect
 
@@ -971,7 +1331,7 @@ The size of the interaction effect tells us the moderation trend, for example, p
 
 We can be more specific about exposure effects at different levels of contact with smokers if we pick some interesting values of the moderator and calculate the conditional effects at these levels.
 
-The minimum or maximum values of the moderator are usually not very interesting. We usually have few observations for these values, so our confidence in the estimated effect at that level is low. Instead, the values one standard deviation below and above the mean of the moderator are popular values to be picked. One standard deviation below the mean (M - SD) indicates a low value, the mean (M) indicates a central value, and one standard deviation above the mean (M + SD) indicates a high value. 
+The minimum or maximum values of the moderator are usually not very interesting. We tend to have few observations for these values, so our confidence in the estimated effect at that level is low. Instead, the values one standard deviation below and above the mean of the moderator are popular values to be picked. One standard deviation below the mean (M - SD) indicates a low value, the mean (M) indicates a central value, and one standard deviation above the mean (M + SD) indicates a high value. 
 
 Having picked these values, we can visualize moderation as different regression lines in a plot. We use exactly the same approach as in visualizing moderation by a categorical variable. By convention, we use different lines for different moderator scores in a scatterplot with the outcome (attitude) on the vertical axis and the predictor (exposure) on the horizontal axis.
 
@@ -992,11 +1352,11 @@ $$
 
 If contact (the moderator) is mean-centered, as in this example, we simply plug in minus the value of the standard deviation of contact to get the regression equation for people who scored one standard deviation below the mean on the moderator. The standard deviation of contact is 2.0 in this example. If the moderator is not mean-centered, we have to plug in the value of the mean minus the standard deviation. In this example, the mean is 5.1, so the mean minus one standard deviation (2.0) equals 3.1.
 
-We also have to plug in a value for each covariate. This example contains one covariate, namely (smoking) status. We plug in the score for non-smokers (0). For a numeric covariate, we usually plug in its mean score. In the end, our predictor (exposure) should be the only variable in the right hand side of the regression equation. 
+We also have to plug in a value for each covariate. This example contains one covariate, namely (smoking) status. We plug in the score for non-smokers (0). For a numeric covariate, we usually plug in its mean score. In the end, our predictor (exposure) should be the only variable in the right hand side of the regression equation.
 
 The second way to obtain equations for conditional effects at different levels of the moderator is to re-center the moderator and interaction variable, and execute a new regression analysis. 
 
-Remember that we subtracted mean (smoking) status score from the status variable, so the mean on the original moderator now scores zero on the mean-centered moderator variable. The regression coefficient for the exposure effect is the effect for observations that score zero on the moderator. With the mean-centered moderator, it gives the effect for observations that have average score on the moderator smoking status. 
+Remember that we subtracted mean (smoking) status score from the status variable, so the mean on the original moderator now scores zero on the mean-centered moderator variable. The regression coefficient for the exposure effect is the effect for cases that score zero on the moderator. With the mean-centered moderator, it gives the effect for cases that have average score on the moderator smoking status. 
 
 In this model, the statistical test for the conditional effect of exposure tests the null hypothesis that the exposure effect on attitude is zero (absent) in the population of people with average contacts with smokers. If the test's p value is below .05, we reject the null hypothesis.
 
@@ -1027,7 +1387,7 @@ Note that the linearity assumption also applies to the interaction effect. If th
 
 If we would estimate a separate regression model for each selected moderator group, the linearity assumption says that the regression coefficients for the predictor should only go up (or down) if we progress from lower moderator scores to higher moderator scores. For example, the exposure effect for the 33% of all people with least contacts with smokers should be below the exposure effect for the 33% of all people with medium contact scores, which should be below the effect for people with most contact scores.
 
-In principle, we can execute a separate regression analysis for each moderator group if we have a large sample, for example, over 200 observations. There are some complications, however, so let us not pursue this here.
+In principle, we can execute a separate regression analysis for each moderator group if we have a large sample, for example, over 200 cases. There are some complications, however, so let us not pursue this here.
 
 ### Higher-order interaction effects
 
@@ -1098,7 +1458,7 @@ Note that the moderator is mean-centered, so the reference value 0 stands for me
 
 An interaction variable including a dummy variable, such as _`r attributes(results)$dimnames[[1]][7]`_, indicates the difference between the effect for this category and the effect for the reference category. The difference is quite sizable for non-smokers and former smokers, namely `r report_n(results[7,1])`. The exposure effect is `r report_n(results[2,1])` for non-smokers but it is more strongly negative for former smokers: `r report_n(results[2,1])` + `r report_n(results[7,1])` = `r report_n(results[2,1] + results[7,1])`.
 
-For a continuous moderator, we can start by interpreting the general pattern reflected by the interaction effect. A positive interaction effect, such as `r report_n(results[6, 1])` for the interaction between exposure and smoker contact, signals that the effect of exposure is more strongly positive or less negative for observations at higher levels of contact with smokers. 
+For a continuous moderator, we can start by interpreting the general pattern reflected by the interaction effect. A positive interaction effect, such as `r report_n(results[6, 1])` for the interaction between exposure and smoker contact, signals that the effect of exposure is more strongly positive or less negative at higher levels of contact with smokers. 
 
 This interpretation remains a bit abstract, so it is recommended to select some interesting values for the moderator and report the size of the effect for each value. As argued before, the mean and one standard deviation below and above the mean are usually interesting values. The regression coefficients show whether the effect is positive, negative, or nearly zero at different values of the moderator.
 
@@ -1131,9 +1491,9 @@ ggplot(df, aes(x = exposure, y = attitude, colour = contact)) +
 
 Figure \@ref(fig:report-moderator-visual) shows clearly that the effect of exposure on attitude is more or less the same for non-smokers and smokers. The effect is only different for former smokers, for whom the exposure effect is more strongly negative. It is more complicated to draw this conclusion from the table with regression coefficients.
 
-Check that the observations have good support in the predictor at the selected values of the moderator. In Figure \@ref(fig:report-moderator-visual), the groups (colours) vary nicely over the entire range of the predictor _exposure_, so that is okay. It is more difficult to see good variation in the right-hand plot. 
+Check that the predictor has good support at the selected values of the moderator. In Figure \@ref(fig:report-moderator-visual), the groups (colours) vary nicely over the entire range of the predictor _exposure_, so that is okay. It is more difficult to see good variation in the right-hand plot. 
 
-Do not report if common support is good. If it is bad, try to find other reference groups or values with adequate support. If they cannot be found, warn the reader that we cannot fully trust the estimated moderation because we do not have a nice range of predictor values within each level of the moderator.
+Do not report that common support is good. If it is bad, try to find other reference groups or values with adequate support. If they cannot be found, warn the reader that we cannot fully trust the estimated moderation because we do not have a nice range of predictor values within each level of the moderator.
 
 Finally, discuss assumptions of the linear regression model if they are not met. Inspect the residual plots but do not include them in the report.
 
@@ -1143,7 +1503,7 @@ Finally, discuss assumptions of the linear regression model if they are not met.
 
 ```{r SPSSinstructcontmoderator, echo=FALSE, eval=FALSE}
 # : request mean (sd, min & max) and (mean) center the predictor and moderator
-# * Mean-center numeric variables: 
+# * Mean-center numeric variables (both predictor and moderator): 
 #   - determine average score on a variable: Analyze > Descriptive Statistics > Frequencies ; select Statistics > Mean (and Minimum, Maximum to check range) and unselect Display frequency tables
 #   - create a new variable with the average subtracted: Transform > Compute, select variable, give new name (indicating centering), and subtract value of average from Frequencies output
 # 
@@ -1156,126 +1516,455 @@ Finally, discuss assumptions of the linear regression model if they are not met.
 # : graph regression lines for different moderator values in a scatterplot: 
 #   (1) using reference lines for M, M - SD, and M + SD 
 #   (2) centering on (M - SD) and (M + SD) (in addition to centering on M)
-# 
-# ; check common support: group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group
+# Colour lines for cont moderator by shades of blue, add
+# annotations to explain the level of the moderator.
+
+# ; check common support: group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group ; Transform > Visual Binning
 #
-# : (for enthusiasts?) don't interpret the standardized regression coefficients (Beta) for interaction variables in SPSS because they are calulted in the wrong way ; the preitor and moderator variables are multiplied to obtain the interaction variable and aferwards they are standardized ; instead, the predictor and moderator variables should be standardized before they are multiplied ; if you want to interpret the standardized regression coefficients, you have to standardize _all_ numeric variables yourself (Analyze > Descriptive Statistics > Descriptives with option 'Save standradized values as variables' checked) before you calculate the interaction variable and include them in the regression analysis ; in this situation, the output of the regression analysis lists the standardized regression weights in the column 'Unstandardized Coefficients'. 
+# : (for enthusiasts?) don't interpret the standardized regression coefficients (Beta) for interaction variables in SPSS because they are calculated in the wrong way ; the predictor and moderator variables are multiplied to obtain the interaction variable and aferwards they are standardized ; instead, the predictor and moderator variables should be standardized before they are multiplied ; if you want to interpret the standardized regression coefficients, you have to standardize _all_ numeric variables yourself (Analyze > Descriptive Statistics > Descriptives with option 'Save standardized values as variables' checked) before you calculate the interaction variable and include them in the regression analysis ; in this situation, the output of the regression analysis lists the standardized regression weights in the column 'Unstandardized Coefficients'. 
 ```
 
 ### Exercises
 
-1. With the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a>, check if the effect of campaign exposure on attitude towards smoking depends on the contacts that people have with smokers. Control for the respondent's smoking status. Interpret the regression coefficients and check the assumptions of the regression model.
+1. With the data in <a href="http://82.196.4.233:3838/data/smokers.sav" target="_blank">smokers.sav</a>, check if the effect of campaign exposure on attitude towards smoking depends on the contacts that people have with smokers. Do not mean-center the variables. Control for the respondent's smoking status (_status2_). Interpret the regression coefficients and check the assumptions of the regression model.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=exposure status2 contact attitude
+  /ORDER=ANALYSIS.
+* Compute interaction variable.
+COMPUTE expo_contact=exposure * contact.
+VARIABLE LABELS  expo_contact 'Interaction exposure * contact'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderaiton plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure contact expo_contact status2
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+There are no impossible values on the variables.
 
 Check assumptions:
 
-
+The residuals are skewed, so the assumption of
+a normal distribution can be violated.
+The residuals seem to average to zero at all levels
+of the predicted outcome. This supports a linear
+model. Note that it is not a problem that the
+residuals end to be further from zero if they
+are below zero.
+Prediction errors seem to be more or less of
+equal size at different levels of the outcome
+variable, so the assumpion of homoscedasticity
+seems to be met.
 
 Interpret the results:
 
+The regression model predicts 21 percent of the
+Add a table with the estimated regression coefficients.
 
+The regression model predicts 21 percent of the 
+variation in the outcome variable, F (4, 80) = 5.44,
+p = .001. 
+None of the regression coefficients, however, 
+is statistically significant. We are not 
+confident that the directions of the estimated
+effects are the true directions; they may be the
+opposite in the population. But we should realize
+that the significance tests of the moderated 
+partial effects apply to the effect at one
+particular level of the moderator. Here, the 
+estimated coefficient is not sufficiently
+different from zero. At other levels of the
+moderator, however, the coefficient can be 
+sufficiently different from zero for the test
+to be statistically significance.
+
+The effects of exposure and contact with smokers 
+must be interpreted with caure due to their 
+interaction effect. 
+The estimated effect of exposure applies to adults
+who score zero on the variable contact with
+smokers. In this context, exposure makes the 
+predicted attitude towards smoking more negative,
+b = -0.27, t = -1.54, p = .128.
+Contact with smokers makes the attitude more 
+positive for adults who have no exposure to the
+anti-smoking campaign, b = 0.07, t = 0.41, p = .682.
+The interaction effect is positive, b = .02, 
+t = 0.53, p = .595, so exposure seems to be less 
+effective in making the attitude towards smoking 
+more negative if the adult has more contacts 
+with smokers.
 ```
 
-2. Visualize moderation of the exposure effect in a scatterplot with three regression lines. Explain the information conveyed by the plot to your reader.
+2. Visualize the moderating effect of contact with smokers on the exposure effect in a scatterplot with three regression lines. Explain the information conveyed by the plot to your reader.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Create scatterplot.
+GRAPH
+  /SCATTERPLOT(BIVAR)=exposure WITH attitude
+  /MISSING=LISTWISE.
+* Manually add three regression lines.
 
-Check data:
+Write out the regression equations for different 
+values of the moderator. 
+Plug in the estimated values of the regression 
+coefficients, the means of covariates, and three
+values for the moderator using its M and SD.
 
+Equation for non-smokers (status = 0).
+attitude = .648*constant + -.265*exposure + 
+  .072*contact + .018*exposure*contact + 0.533*status
+attitude = .648*1 + -.265*exposure +
+  .072*contact + .018*exposure*contact + 0.533*0
+attitude = .648 + (-.265 + .018*contact)*exposure +
+  .072*contact
 
+Contact: M - SD
+attitude = .648 + (-.265 + .018*(5.091 - 1.974))*exposure +
+  .072*(5.091 - 1.974)
+attitude = .648 + (-.265 + .018*3.117)*exposure +
+  .072*3.117
+attitude = .648 + (-.265 + .056)*exposure + .224
+attitude = .872 + -.209*exposure
 
-Check assumptions:
+Contact: M
+attitude = .648 + (-.265 + .018*5.091)*exposure +
+  .072*5.091
+attitude = .648 + (-.265 + .092)*exposure + .367
+attitude = 1.015 + -.173*exposure
 
-
+Contact: M + SD
+attitude = .648 + (-.265 + .018*(5.091 + 1.974))*exposure +
+  .072*(5.091 + 1.974)
+attitude = .648 + (-.265 + .018*7.065)*exposure +
+  .072*7.065
+attitude = .648 + (-.265 + .127)*exposure + .509
+attitude = 1.157 + -.138*exposure
 
 Interpret the results:
+  
+Note that I assigned different shades of blue to the
+three regression lines (darker = higher level of contact).
 
-
+The negative predictive effect of exposure on attitude 
+towards smoking is slightly stronger (more negative) 
+for adults with fewer contacts with smokers (lighter 
+blue) line.
 ```
 
-3. Mean-center the predictor and moderator and repeat the regression analysis of Exercise 1. Explain the difference in the results.
+3. Mean-center the predictor and moderator and repeat the regression analysis of Exercise 1. Explain the differences in the results.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=exposure status2 contact attitude
+  /ORDER=ANALYSIS.
+* Mean-center predictor and moderator.
+* Ask for means of predictor and exposure.
+FREQUENCIES VARIABLES=exposure contact
+  /FORMAT=NOTABLE
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Subtract mean from variable.
+COMPUTE exposure_c=exposure - 4.866.
+VARIABLE LABELS  exposure_c 'Exposure (mean-centered)'.
+COMPUTE contact_c=contact - 5.091.
+VARIABLE LABELS  contact_c 'Contact (mean-centered)'.
+EXECUTE.
+* Compute new interaction variable.
+COMPUTE expo_contact_c=exposure_c * contact_c.
+VARIABLE LABELS  expo_contact_c 'Interaction exposure * contact  (mean-centered)'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderaiton plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT attitude
+  /METHOD=ENTER exposure_c contact_c expo_contact_c status2
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
 
 Check data:
 
-
+See Exercise 1.
 
 Check assumptions:
 
-
+See Exercise 1.
 
 Interpret the results:
 
+The size and significance of the interaction effect
+has not changed at all. Mean-centering only changes
+the reference values for the effects of the 
+predictor and the moderator.
+The coefficient for exposure now expresses the 
+predictive effect of exposure for adults with average
+contact with smokers. They have more contact with 
+smokers than the reference group in Exercise 1, who
+had no contact with smokers. The interaction effect 
+tells us that the effect of exposure becomes less
+negative for higher levels of contact. This explains
+that we have a lower value for the exposure
+coefficient now. It still is negative, so more
+exposure to the anti-smoking campaign predicts a 
+more negative attitude towards smoking.
+In contrast, the positive effect of contact with
+smokers on attitude is stronger now (b = 0.16) than 
+in Exercise 1 (b = 0.07). The interaction effect
+tells us that contact has a more positive effect 
+on smoking attitude for higher levels of campaign
+exposure. As a result, the effect of contact at 
+average exposure is stronger than at zero exposure.
 
+Why do we have a statistical significant result for
+the effect of exposure now but not in Exercise 1?
+The size of the unstandardized effect is lower 
+(b = -0.17) now than in Exercise 1 (b = -0.27). It
+is closer to zero so we would not expect statistical
+significance. However, the standard error is much
+smaller now: SE = 0.06 against SE = 0.17. We have
+quite some observations with about average contact 
+score (the reference value if we mean center) but 
+hardly any observations with minimum (zero) contact 
+score. With fewer observations, we are less certain
+about estimates, so we have a larger standard error
+and it is more difficult to be confident that the
+value is not zero in the population.
 ```
 
-4. Estimate the regression model also for the moderator centered at one standard deviation below its average and one standard deviation above it. Is the effect of exposure statistically significant and having the same sign (direction) for all reference values of the moderator?
+4. Check common support of the predictor for the moderator. Divide the moderator into three groups.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
-
-Check data:
-
-
-
-Check assumptions:
-
-
+* Group the moderator.
+* Visual Binning.
+*contact.
+RECODE  contact (MISSING=COPY)
+  (LO THRU 4.25076386584132=1)
+  (LO THRU 5.83711577142397=2) 
+  (LO THRU HI=3) (ELSE=SYSMIS) INTO contact_3.
+VARIABLE LABELS  contact_3 'Contact with smokers (Binned)'.
+FORMATS  contact_3 (F5.0).
+VALUE LABELS  contact_3 1 '' 2 '' 3 ''.
+VARIABLE LEVEL  contact_3 (ORDINAL).
+EXECUTE.
+* Histograms of the predictor for each moderator group.
+GRAPH
+  /HISTOGRAM=exposure
+  /PANEL ROWVAR=contact_3 ROWOP=CROSS.
 
 Interpret the results:
 
-
+Coverage of the exposure predictor is poor at low
+contact levels. Especially low exposure hardly 
+occurs at low contact level. This illustrates the
+the high standard error for the exposure effect in 
+Exercise 1 as explained in Exercise 3.
 ```
 
-5. Check common support of the predictor for the three values of the moderator that you have used in Exercises 3 and 4.
+5. Let us hypothesize that children's media literacy depends on sex, age, and parental supervision. Is the effect of parental supervision moderated by the child's age? Use <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav</a> to answer this question and apply mean centering. Report the results as required in this course (APA6), include a moderation plot, and discuss coverage. 
 
 ```{r eval=FALSE}
 SPSS syntax:
 
 
+Write out the regression equations for different 
+values of the moderator. 
+Plug in the estimated values of the regression 
+coefficients, the selected category of the
+covariate, and three values for the moderator 
+using its M and SD.
+
+Equation for boys (girl = 0).
+medliter = 4.325*constant + .193*girl + .176*age +
+  .292*supervision + .025*age*supervision
+medliter = 4.325*1 + .193*0 + .176*age +
+  (.292 + .025*age)*supervision
+medliter = 4.325 + .176*age +
+  (.292 + .025*age)*supervision
+
+Age at M - SD (M = 0, SD = 1.937):
+medliter = 4.325 + .176*(0 - 1.937) +
+  (.292 + .025*(0 - 1.937))*supervision
+medliter = 4.325 + -0.341 + (.292 + -.048)*supervision
+medliter = 3.984 + .244*supervision
+  
+Age at M (M = 0):
+medliter = 4.325 + .176*(0) +
+  (.292 + .025*(0))*supervision
+medliter = 4.325 + .292*supervision
+
+Age at M + SD (M = 0, SD = 1.937):
+medliter = 4.325 + .176*(0 + 1.937) +
+  (.292 + .025*(0 + 1.937))*supervision
+medliter = 4.325 + .341 + (.292 + .048)*supervision
+medliter = 4.666 + .340*supervision
+
+Note: Age was mean-centered for all 87 cases but
+the regression model only uses the 85 cases without
+a missing value on any of the variables. As a 
+result, the mean of age scores in the regression
+model is not exactly zero. We can still use zero
+here because we merely mean to refer to an age 
+value that is in the center of the distribution.
+Both zero and nearly zero are in the center.
+
 Check data:
 
-
+Score '25' for parental supervision cannot be
+right because the scale runs to 10. Define this 
+score as a missing value.
+The sex category '1' cannot be right either.
 
 Check assumptions:
 
-
+The residuals are quite normally distributed, as
+they should.
+The residuals are centered around zero for all
+levels of the predicted outcome (linearity) but
+the variation in residuals seems to be a bit
+larger at higher predicted values (the residuals
+may not be homoscedastic).
 
 Interpret the results:
-
-
+The regression model predicts 19 percent of the
+differences in media litearcy among children,
+F (4, 80) = 4.58, p = .002.
+There is no remarkable difference between girls
+and boys, t = 0.58, p = .566, 95%CI[-0.47; 0.86].
+Girls may be upto 0.86 more media literate on 
+average than boys but we cannot rule out that
+boys have on average more media literacy (up to
+0.47).
+Age has a statistically significant positive
+effect on media literacy for children at average
+parental supervision, t = 2.02, p = .047, 
+95%CI[0.003; 0.35]. The effect is weak to moderate
+(b* = 0.21).
+The positive effect of parental supervision on
+media literacy is stronger (b* = 0.35) than the
+effect of age, t = 3.36, p = .001, 95%CI[0.12; 0.47.
+There is no statistically  significant interaction 
+effect between age and parental supervision on media
+literacy, t = .50, p =.615, 95%CI[-0.07; 0.12]. If
+there is an interaction effect in the population, 
+it can be positive or negative. 
+The regression lines in the moderation plot have 
+quite similar slopes, which illutsrates the absence of a
+substantial interaction effect.
 ```
 
-6. What is the reference value of the moderator if you do not center the moderator? What, do you think, is common support of the predictor for this value of the moderator?
+6. Is the effect of parental supervison moderated by sex? Use the data of Exercise 5 to answer this question. You may omit the age predictor from the model. Again, illustrate your answer with a moderation plot.
 
 ```{r eval=FALSE}
 SPSS syntax:
 
+* Check data.
+FREQUENCIES VARIABLES=medliter sex age supervision
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Set impossible values to missing.
+* Define Variable Properties.
+*sex.
+MISSING VALUES sex(1).
+*supervision.
+MISSING VALUES supervision(25.00).
+EXECUTE.
+* Turn sex into a 0/1 variable.
+RECODE sex (2=0) (3=1) INTO girl.
+VARIABLE LABELS  girl 'The child is a girl.'.
+EXECUTE.
+* Mean-center predictor and moderator.
+* Ask for means of predictor and exposure.
+FREQUENCIES VARIABLES=supervision
+  /FORMAT=NOTABLE
+  /STATISTICS=MEAN
+  /ORDER=ANALYSIS.
+* Subtract mean from variable.
+COMPUTE supervision_c=supervision - 5.358.
+VARIABLE LABELS  supervision_c 'Supervision (mean-centered)'.
+EXECUTE.
+* Compute interaction variable.
+COMPUTE girl_supervision_c=girl * supervision_c.
+VARIABLE LABELS  girl_supervision_c 'Interaction girl * supervision (mean-centered)'.
+EXECUTE.
+* Multiple regression.
+* Statistic Descriptives is added to get the means that we need
+* to plug into the regression equation in the moderation plot.
+REGRESSION
+  /DESCRIPTIVES MEAN STDDEV CORR SIG N
+  /MISSING LISTWISE
+  /STATISTICS COEFF OUTS CI(95) R ANOVA
+  /CRITERIA=PIN(.05) POUT(.10)
+  /NOORIGIN 
+  /DEPENDENT medliter
+  /METHOD=ENTER girl supervision_c girl_supervision_c
+  /SCATTERPLOT=(*ZRESID ,*ZPRED)
+  /RESIDUALS HISTOGRAM(ZRESID).
+* Scatterplot with dots and regression lines coloured by sex.
+* No covariate, so SPSS can draw the lines.
+* Use the mean-centered or not mean-centered predictor.
+STATS REGRESS PLOT YVARS=medliter XVARS=supervision_c COLOR=sex 
+/OPTIONS CATEGORICAL=BARS GROUP=1 INDENT=15 YSCALE=75 
+/FITLINES LINEAR APPLYTO=GROUP.
 
 Check data:
 
-
+See Exercise 5.
 
 Check assumptions:
 
-
+As with the regression model in Exercise 5, The 
+residuals are quite normally distributed and 
+centered around zero for all levels of the 
+predicted outcome (linearity). The variation 
+in residuals seems to be a bit larger at higher 
+predicted values (the residuals may not be 
+homoscedastic).
 
 Interpret the results:
 
-
+The regression model predicts 15 percent of the
+variation in outcome scores, F (3, 81) = 4.76,
+p = .004.
+There is no remarkable difference between girls
+and boys, t = 0.13, p = .711, 95%CI[-0.55; 0.80]
+for children at average supervision level.
+Girls may have up to 0.80 more media literacy on 
+average than boys but we cannot rule out that
+boys have on average more media literacy (up to
+0.55).
+Parental supervision as a stronger positive effect
+on media literacy for boys, b = 0.39, t = 2.99, 
+p = .004, 95%CI[0.13; 0.65], than for girls, 
+b = 0.26 but the difference is not statstically
+significant, t = -0.76, p = .448, 95%CI[-0.48; 0.22].
+The regression line for boys has a stronger positive 
+slope than the regression line for girls.
 ```
 
 ## Take-Home Points  
@@ -1288,7 +1977,7 @@ Interpret the results:
 
 * Statistical inference for an interaction variable is exactly the same as for "ordinary" regression predictors.
 
-* The effect of the predictor in a model with an interaction variable does _not_ represent a main or average effect. It is a conditional effect: The effect for observations that score zero on the moderator. The same applies to the effect of the moderator, which is the conditional effect for observations scoring zero on the predictor.
+* The effect of the predictor in a model with an interaction variable does _not_ represent a main or average effect. It is a conditional effect: The effect for cases that score zero on the moderator. The same applies to the effect of the moderator, which is the conditional effect for cases scoring zero on the predictor.
 
 * To interpret moderation, describe the effects (slopes, unstandardized regression coefficients) and preferably visualize the regression lines for different groups or contexts. For a numerical variable, select some interesting levels of the moderator, such as the mean and one standard deviation below or above the mean.
 
