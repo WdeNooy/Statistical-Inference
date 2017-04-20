@@ -152,7 +152,7 @@ Whether this predicted change is small or large depends on the practical context
 
 Note that the regression coefficient is calculated for the predictor values that occur within the data set. As a consequence, we do not know the relation between exposure and anti-smoking attitude for predictor values outside the range that actually occur in the sample. For example, if sample exposure scores are within the range three to seven, we should not pretend to know the effects of exposure levels below three or above seven. It is good practice to check the actual range of predictor values.
 
-### Dichotomous predictors
+### Dichotomous predictors {#dichpredictor}
 
 ```{r regression-dichotomy, eval=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?"}
 # Goal: Refresh interpretation of unstandardized regression weight for a dichotomous predictor by manipulating group averages.
@@ -176,7 +176,7 @@ lm(y~x)
 
 Apart from numeric predictors, we can use dichotomous predictors, that is, predictors with only two values which are preferably coded as 0 and 1. The interpretation of the effect of a dichotomous predictor in a regression model is quite different from the interpretation of a numeric predictor.
 
-For example, let us assume that smoking status is coded as smoker (1) versus non-smoker (0). Because this predictor can only take two values, we effectively have two versions of the regression equation. The first (Equation \@ref(eq:regdicho1)) represents all smokers, so their smoking status score is 1. This group has a fixed contribution to the predicted average attitude, namely $b_2$.
+For example, let us assume that smoking status is coded as smoker (1) versus non-smoker (0). Because this predictor can only take two values, we effectively have two versions of the regression equation. The first equation \@ref(eq:regdicho1) represents all smokers, so their smoking status score is 1. This group has a fixed contribution to the predicted average attitude, namely $b_2$.
 
 $$ 
 \small
@@ -392,9 +392,39 @@ In contrast, the regression coefficient for _exposure_ is not corrected for the 
 
 ### Instructions
 
-```{r SPSSinstructregression, echo=FALSE, eval=FALSE}
-# TBD: add videos on executing regression, inspecting residuals, creating dummy variables, adding a regression line to a scattergram for a simple regression (Chart Editor: Add fit line at total) and one predictor in multiple regression (Chart Editor: reference line from equation), interpreting resuls. (Results reporting is discussed at the end of this chapter.)
-# Chart Editor of zresid * zpred plot: add reference line at 0 and perhaps at +2 and -2 to inspect shape of residual distribution.
+```{r SPSSregdummy2, echo=FALSE, out.width="640px", fig.cap="(ref:regdummy2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/DKvt_d3GfVA", height = "360px")
+# Creating dummy variables in SPSS.
+# Goal: Understand creating dummy variables.
+# Example: smokers.sav, respondent's smoking status ( 3 categories).
+# SPSS menu: Transform > Create Dummy Variables
+# Inspect results: new variables, coded 0/1.
+```
+
+```{r SPSSregdummy, echo=FALSE, out.width="640px", fig.cap="(ref:regdummySPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/AJ88dheUieY", height = "360px")
+# Using dummy variables in a regression model in SPSS.
+# Example: smokers.sav, predict the attitude towards smoking from exposure to an anti-smoking campaign and respondent's smoking status (dummies).
+# SPSS menu: Transform > Create Dummy Variables
+# Remember: Leave one dummy variable out.
+# Interpret results: unstandardized regression coefficient as average difference with reference category. Don't interpret the standardized regression coefficient.
+```
+
+```{r SPSSreglines1, echo=FALSE, out.width="640px", fig.cap="(ref:reglines1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/OQEylRkeVzI", height = "360px")
+# Goal: Adding regression lines to a scattergram for a simple regression (Chart Editor: Add fit line at total), for one predictor in multiple regression for reference values of anther predictor - first one line, then two lines (Chart Editor: reference line from equation).
+# Example: smokers.sav, predict the attitude towards smoking from exposure to an anti-smoking campaign and respondent's smoking status.
+# SPSS menu: spell out the equation in notepad, Graph > Legacy Dialogs > Scatter/Dot, set markers by status3, Chart Editor, add a reference line from equation, just enter the equation with plugged in values, don't simplify ; color lines according to the smoking status group
+# Interpret output: vertical difference between lines is average difference between categories, equals unstandardized regression coefficient.
+```
+
+```{r SPSSregassumpt, echo=FALSE, out.width="640px", fig.cap="(ref:regassumptSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/AtzXHORzxlA", height = "360px")
+# Goal: Inspecting residuals.  (see Chapter 4 on hypothesis testing for video about regression basics.)
+# Example: smokers.sav, predict the attitude towards smoking from exposure to an anti-smoking campaign and respondent's smoking status.
+# Technique: regression analysis
+# SPSS menu: linear regression, add plots
+# Interpret output = check assumptions: Chart Editor of zresid * zpred plot: add reference line at 0 and perhaps at +2 and -2 to inspect shape of residual distribution.
 ```
 
 ### Exercises
@@ -750,23 +780,60 @@ Smoking status is a dichotomy, so it tells us the difference in average attitude
 
 ### Interpretation
 
-```{r dich-moderator-output}
-# Table of regression coefficients for exposure moderated by status. Similar to SPSS output (with standardized coefficients?). Use knitr:kable.
+```{r dich-moderator-output, echo=FALSE, message=FALSE, warning=FALSE}
+# Table of regression coefficients for exposure moderated by status. Similar to SPSS output (with standardized coefficients?).
+# Create effect sizes.
+smokers <- haven::read_spss("data/smokers.sav")
+model_1 <- lm(attitude ~ exposure*status2, data = smokers)
+# Table with results in SPSS style.
+results <- coef(summary(model_1))
+# Adjust parameter names
+attributes(results)$dimnames[[1]][1] <- "(Constant)"
+attributes(results)$dimnames[[1]][2] <- "Exposure"
+attributes(results)$dimnames[[1]][3] <- "Status (smoker)"
+attributes(results)$dimnames[[1]][4] <- "Exposure*Status (smoker)"
+# Confidence intervals
+ci <- confint.lm(model_1)
+results <- cbind(results, ci)
+# Incorrectly standardized coefficients.
+attach(smokers)
+z_exposure <- (exposure - mean(exposure)/sd(exposure))
+z_status2 <- (status2 - mean(status2)/sd(status2))
+z_expostatus2 <- (exposure * status2 - mean(exposure * status2)/sd(exposure * status2))
+z_attitude <- (attitude - mean(attitude)/sd(attitude))
+model_2 <- lm(z_attitude ~ z_exposure + z_status2 + z_expostatus2)
+results_2 <- coef(summary(model_2))
+results <- cbind(results[, 1:2], results_2[, 1], results[, 3:6])
+results[1, 3] <- NA
+# Set column names.
+attributes(results)$dimnames[[2]] <- c("B", "Std. Error", "Beta", "t", "Sig.", "Lower Bound", "Upper Bound")
+# Cleanup.
+rm(ci, results_2, model_2, z_attitude, z_status2, z_expostatus2, z_exposure)
+# Table.
+options(knitr.kable.NA = '')
+knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking: regression analysis results. Exposure and contact are mean-centered.")
+# Helper function for displaying results within the text.
+source("report_n.R")
 ```
 
-1. Interpret the regression coefficient for the predictor _exposure_ in Table \@ref(tab:dich-moderator-output).
+1. Interpret the regression coefficient for the predictor _Exposure_ in Table \@ref(tab:dich-moderator-output).
 
-2. Interpret the regression coefficient for the moderator _status_. 
+2. Interpret the regression coefficient for the moderator _Status_. 
 
 3. Interpret the regression coefficient for the interaction variable. 
 
-In the example, non-smokers are the reference group because they are coded 0 on the _status_ variable. As a consequence, the regression coefficient for exposure gives us the effect of exposure on smoking attitude for non-smokers. It's value is -@@, so an additional unit of exposure decreases the smoking attitude by @@ points. More exposure to the campaign goes together with a more negative attitude towards smoking.
+In the example, non-smokers are the reference group because they are coded 0 on the _Status_ variable. As a consequence, the regression coefficient for exposure gives us the effect of exposure on smoking attitude for non-smokers. It's value is `r report_n(results[2, 1], digits = 2)`, so an additional unit of exposure decreases the smoking attitude by `r report_n(abs(results[2, 1]), digits = 2)` points. More exposure to the campaign goes together with a more negative attitude towards smoking.
 
-The effect of (smoking) status on attitude is conditional on exposure. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average @@ more positive towards smoking than non-smokers.  
+The effect of (smoking) status on attitude is conditional on exposure. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average `r report_n(results[3, 1], digits = 2)` more positive towards smoking than non-smokers.  
 
-Smokers are coded 1 on the (smoking) status variable, so the regression coefficient for the interaction tells us that the slope of the exposure effect is @@ higher for smokers than for non-smokers. In a preceding paragraph, we have seen that the estimated slope for non-smokers is -@@. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is @@. Now we can compare the two regression lines for the two groups, which gives good insight in the nature of moderation in this example.
+Smokers are coded 1 on the (smoking) status variable, so the regression coefficient for the interaction tells us that the slope of the exposure effect is `r report_n(abs(results[4, 1]), digits = 2)` lower for smokers than for non-smokers. In a preceding paragraph, we have seen that the estimated slope of the exposure effect is `r report_n(results[2, 1], digits = 2)` for non-smokers. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is `r report_n(results[2, 1] + results[4, 1], digits = 2)`. Now we can compare the two regression lines for the two groups, which gives good insight in the nature of moderation in this example.
 
-Let us conclude the interpretation with a warning. The standardized regression coefficients that SPSS reports must __not__ be used. They are calculated in the wrong way if the regression model includes an interaction variable. Therefore, they are meaningless.
+Let us conclude the interpretation with a warning. The standardized regression coefficients that SPSS reports must __not__ be used. They are calculated in the wrong way if the regression model includes an interaction variable. As a result, they are meaningless.
+
+```{r echo=FALSE}
+# Cleanup.
+rm(results, smokers, model_1, report_n)
+```
 
 ### Common support {#commonsupportdichotomous}
 
@@ -870,31 +937,49 @@ On the other hand, we have null hypotheses about differences between a group and
 
 If we would like to know whether the exposure effect for former smokers is significantly different from zero, we have to rerun the regression model using the people who stopped smoking as reference group. This new model would also tell us whether the exposure effect for people who stopped smoking is significantly different from the exposure effect for people who are still smoking.
 
-## A Dichotomous or Categorical Moderator in SPSS
+## A Dichotomous or Categorical Moderator in SPSS {#catmodSPSS}
 
 ### Instructions
 
-```{r SPSSinstructcatmoderator, echo=FALSE, eval=FALSE}
-# TBD: create and embed videos for SPSS manipulations and output interpretation ; use smokers.sav with _status2_ instead of _status3_ (the latter is used in the Exercise)
+```{r SPSSregpred, echo=FALSE, out.width="640px", fig.cap="(ref:regpredSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/pv6JnWL4nX8", height = "360px")
+# Goal: Creating categorical by continuous interaction predictors (2 methods).
+# Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable status2 and status3), use contact with smokers as a covariate.
+# SPSS menu: Transform > Compute Variable for status2 (already 0/1 variable) ; Transform > Create Dummy Variables for status3 (3 categories)
+# Interpret output: none.
 
-# * Create interaction predictors (also for cont*cont interaction variables in addition to interactions with dummies) and dummies for main effects in one go: 
+# Create interaction predictors (also for cont*cont interaction variables in addition to interactions with dummies) and dummies for main effects in one go: 
 #   - ensure that categorical variables are marked as Nominal or Ordinal in Variable View
 #   - command Transform > Create Dummy Variables ; select (numeric) predictor and (categorical) moderator under 'Create Dummy Variables for:'
 #   - under Create main-effect dummies (option checked by default) specify a short name for both variables, separated with a comma ; the name of the numeric variable is irrelevant but must be specified
 #   - ensure that the option _Do not create dummies for scale variables values_ is selected under Measurement Level Usage
 #   - select the _Create dummies for all two-way interactions_ option under Two-Way Interactions and give a short name, e.g., interact
-#   - Paste & Run
 #   - Note: this procedure can also be used to create a numeric by numeric interaction variable
-# 
-# * Apply regression & check residuals: See Section \@ref(SPSS_regression) but include descriptives for means and standard deviations of covariates for making reference lines.
-#   - interpretation: use unstandardized regression coefficients because they show the average difference in slope (effect size)
-# 
+```
+
+```{r SPSSregcatmod, echo=FALSE, out.width="640px", fig.cap="(ref:regcatmodSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/A2VHIsYA66M", height = "360px")
+# Goal: Estimating categorical by continuous moderation with regression in SPSS.
+# Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_), use contact with smokers as a covariate.
+# SPSS menu: linear regression, include descriptives for means and standard deviations of covariates for making reference lines.
+# Interpret output: use unstandardized regression coefficients because they show the average difference in slope (effect size) ; do not use the standardized regression coefficients that SPSS reports: they are calculated in the wrong way if the regression model includes an interaction variable. As a result, they are meaningless ; better interpret the regression lines in a scatterplot, see another video
+# Check assumptions: See other video.
+``` 
+
+```{r SPSSregmodlines, echo=FALSE, out.width="640px", fig.cap="(ref:regmodlinesSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/qZbdMdNoldI", height = "360px")
+# Goal: Representing moderation by regression lines in a scatterplot in SPSS.
+# Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_), use contact with smokers as a covariate.
+# Technique: linear regression
+# SPSS menu: 
+# Interpret output: 
+
 # * Visualize categorical moderator with reference lines in scatterplot:
-#   - No covariates: Graphs > Regression Variable Plots: outcome on Y, predictor on X, categorical moderator in Color by, Options>Scatterplot Fit Lines > Linear and Grouping > Fit line for each categorical color group
+#   - {skip} No covariates: Graphs > Regression Variable Plots: outcome on Y, predictor on X, categorical moderator in Color by, Options>Scatterplot Fit Lines > Linear and Grouping > Fit line for each categorical color group
 #   - With covariates: 
 #     - create scatterplot with Graphs > Legacy Dialogs > Scatter/Dot > Simple Scatter
 #     - select outcome variable under Y Axis: and (numeric) predictor under X Axis: 
-#     - select (original) categorical moderator under Set Markers by: (colours the observations according to moderator value, useful for insecting common support)
+#     - select (original) categorical moderator under Set Markers by: (colours the observations according to moderator value, useful for inspecting common support)
 #     - Paste & Run 
 #     - display the mean values of covariates with Analyze > Descriptive Statistics > Fequencies ; select Statistics > Mean
 #     - in SPSS Output, double-click the scatterplot to open it in the Chart Editor 
@@ -903,11 +988,20 @@ If we would like to know whether the exposure effect for former smokers is signi
 #     - change type (or colour) of the line in the Properties window under the Lines tab
 #     - if you like, add label to lines describing the moderator group: Options > Text Box
 #     - close the Chart Editor
-# 
+```
+
+```{r SPSSregSupport1, echo=FALSE, out.width="640px", fig.cap="(ref:regSupport1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/d93Kvm0imio", height = "360px")
+# Goal: Check common support for a predictor at different moderator values in SPSS.
+# Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_), use contact with smokers as a covariate.
+# Technique: 
+# SPSS menu: 
+# Interpret output: 
+# Check assumptions: 
+#
 # * Check common support: 
 #   - make histograms of the predictor panelled by the categorical grouping variable ; check that there are observations for more or less all values of the predictor (on the X axis) 
 ```
-
 
 ### Exercises
 
@@ -977,7 +1071,7 @@ the reference group or value. It is NOT an overall or
 average effect as in analysis of variance.
 ```
 
-2. Visualize the moderated effects of exposure on attitude (Exercise 1). Create a scatterplot with three regression lines. Colour the regression lines and the dots (respondents) according to their smoking status category. Interpret the moderation of the exposure effect by smoking status.
+2. Visualize the moderated effects of exposure on attitude (Exercise 1). Create a scatterplot with two regression lines. Colour the regression lines and the dots (respondents) according to their smoking status category. Interpret the moderation of the exposure effect by smoking status.
 
 ```{r eval=FALSE}
 First of all, you must write the regression equations
@@ -1059,7 +1153,7 @@ becuase we had green and blue dots across the
 entire width of the plot.
 ```
 
-4. Repeat the analyses of Exercises 1 thru 3 but use smoking status with three categories (_status3_).
+4. Repeat the analyses of Exercises 1 through 3 but use smoking status with three categories (_status3_).
 
 ```{r eval=FALSE}
 SPSS syntax:
@@ -1225,7 +1319,7 @@ We need one interaction variable to include a continuous moderator in a regressi
 
 Although we have an endless umber of different moderator values or groups, we only need one interaction variable. It represents gradual (linear) changes of the effect of the predictor for higher values of the moderator. 
 
-To see this, it is helpful to inspect the regression equation with rearranged terms (Equation \@ref(eq:simplecontact)). Every little bit of extra contact with smokers adds to the slope ($(b_1 + b_3*contact)$) of the exposure effect.The addition is gradual and it is linear: the same increase in contact adds the same amount to the slope.
+To see this, it is helpful to inspect the regression equation with rearranged terms, Equation \@ref(eq:simplecontact). Every little bit of extra contact with smokers adds to the slope $(b_1 + b_3*contact)$ of the exposure effect.The addition is gradual and it is linear: the same increase in contact adds the same amount to the slope.
 
 $$
 \small
@@ -1268,7 +1362,7 @@ Cases that score zero on the moderator are the reference value for the condition
 
 2. What happens to the regression line if you mean-center (Question 1) the moderator (contact with smokers)?
 
-3, What do you think expresses the shade of the dots in the scatterplot?
+3. What do you think expresses the shade of the dots in the scatterplot?
 
 What if there are no people with zero contact? Then, the interpretation of the regression coefficient $b_1$ for exposure does not make sense. In this situation, it is better to mean-center the moderator (contact) before you add it to the regression equation and before you calculate the interaction variable. 
 
@@ -1284,7 +1378,7 @@ $$
 
 With mean-centered numerical predictors, the conditional effects in the presence of interaction always make sense because a mean score always falls within the range of scores that actually occur. If we mean-center exposure, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. That makes sense.
 
-Remember that the interaction variable is the product of the predictor and moderator (Section \@ref(interaction-variable)). If any or both of these are mean-centered, you should multiply the mean-centered variable(s) toz create the interaction variable.
+Remember that the interaction variable is the product of the predictor and moderator (Section \@ref(interaction-variable)). If any or both of these are mean-centered, you should multiply the mean-centered variable(s) to create the interaction variable.
 
 ### Symmetry of predictor and moderator
 
@@ -1456,7 +1550,7 @@ In Table \@ref(tab:report-moderation-table), the effect of exposure (b = `r repo
 
 Note that the moderator is mean-centered, so the reference value 0 stands for mean contact with smokers. For this reference group, exposure has a `r ifelse(results[2,1] < 0, "negative", "positive")` effect on attitude towards smoking. An additional unit of exposure `r ifelse(results[2,1] < 0, "decreases", "increases")` the predicted attitude by `r report_n(results[2,1])` units.
 
-An interaction variable including a dummy variable, such as _`r attributes(results)$dimnames[[1]][7]`_, indicates the difference between the effect for this category and the effect for the reference category. The difference is quite sizable for non-smokers and former smokers, namely `r report_n(results[7,1])`. The exposure effect is `r report_n(results[2,1])` for non-smokers but it is more strongly negative for former smokers: `r report_n(results[2,1])` + `r report_n(results[7,1])` = `r report_n(results[2,1] + results[7,1])`.
+An interaction variable including a dummy variable, such as `r attributes(results)$dimnames[[1]][7]`, indicates the difference between the effect for this category and the effect for the reference category. The difference is quite sizable for non-smokers and former smokers, namely `r report_n(results[7,1])`. The exposure effect is `r report_n(results[2,1])` for non-smokers but it is more strongly negative for former smokers: `r report_n(results[2,1])` + `r report_n(results[7,1])` = `r report_n(results[2,1] + results[7,1])`.
 
 For a continuous moderator, we can start by interpreting the general pattern reflected by the interaction effect. A positive interaction effect, such as `r report_n(results[6, 1])` for the interaction between exposure and smoker contact, signals that the effect of exposure is more strongly positive or less negative at higher levels of contact with smokers. 
 
@@ -1497,30 +1591,39 @@ Do not report that common support is good. If it is bad, try to find other refer
 
 Finally, discuss assumptions of the linear regression model if they are not met. Inspect the residual plots but do not include them in the report.
 
-## A Continuous Moderator in SPSS
+## A Continuous Moderator in SPSS {#RegressionContModSPSS}
 
 ### Instructions
 
-```{r SPSSinstructcontmoderator, echo=FALSE, eval=FALSE}
-# : request mean (sd, min & max) and (mean) center the predictor and moderator
-# * Mean-center numeric variables (both predictor and moderator): 
-#   - determine average score on a variable: Analyze > Descriptive Statistics > Frequencies ; select Statistics > Mean (and Minimum, Maximum to check range) and unselect Display frequency tables
-#   - create a new variable with the average subtracted: Transform > Compute, select variable, give new name (indicating centering), and subtract value of average from Frequencies output
-# 
-# : calculate a continuous by continuous interaction variable with COMPUTE
-# 
-# : execute a regression analysis, request descriptives (for predictor and covariate means and standard deviations)
-# 
-# : interpret numerical output ; the problem with standardized regression weights (just for interaction effect?) in SPSS: don't interpret 
-# 
-# : graph regression lines for different moderator values in a scatterplot: 
-#   (1) using reference lines for M, M - SD, and M + SD 
-#   (2) centering on (M - SD) and (M + SD) (in addition to centering on M)
-# Colour lines for cont moderator by shades of blue, add
-# annotations to explain the level of the moderator.
+```{r SPSSregcenter, echo=FALSE, out.width="640px", fig.cap="(ref:regcenterSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/2947blS-Dnc", height = "360px")
+# Goal: Mean-centering numeric variables (both predictor and moderator) in SPSS.
+# Example: smokers.sav, the effect of campaign exposure on attitude towards smoking moderated by contacts that people have with smokers.
+# SPSS menu: 
+#  1. determine average score on a variable: Analyze > Descriptive Statistics > Frequencies ; select Statistics > Mean (and Minimum, Maximum to check range) and unselect Display frequency tables
+#  2. create a new variable with the average subtracted: Transform > Compute, select variable, give new name (indicating centering), and subtract value of average from Frequencies output
+#  3. Calculate the interaction predictor from the two mean-centered variables.
+# Inspect output: descriptives (and unstandardized coefficients) in regression analysis ;  never mind rounding errors or differences due to listwise deletion of missing values)
+```
 
-# ; check common support: group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group ; Transform > Visual Binning
-#
+```{r SPSSreglines2, echo=FALSE, out.width="640px", fig.cap="(ref:reglines2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/xp8tFvdb2EM", height = "360px")
+# Goal: Graph regression lines for different moderator values in a scatterplot.
+# Example: smokers.sav, the effect of campaign exposure on attitude towards smoking moderated by contacts that people have with smokers (both mean-centered), smoking status as covariate.
+# Techniques: 
+#   (1) using reference lines for M, M - SD, and M + SD ; with mean-centered moderator, add SD to obtain reference line for M - SD (- (M - SD) = - M + SD)
+#   (2) {only mention} centering on (M - SD) and (M + SD) (in addition to centering on M)
+# SPSS menu: {after having applied} regression analysis with descriptives, reconstruct regression equation, calculate mean of moderator minus one SD and plug into the equation ; use mean or reference value for covariat(s) ; Graphs > Legacy Dialogs > Scatter/Dot > Simple Scatter, in the Chart Editor, add reference line (Options > Reference Line from Equation)
+# Interpret results: 
+```
+
+```{r SPSSregSupport2, echo=FALSE, out.width="640px", fig.cap="(ref:regSupport2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/_OwIfQhOAxU", height = "360px")
+# Goal: Checking common support with a continuous moderator; group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group
+# Example: smokers.sav, the effect of campaign exposure on attitude towards smoking moderated by contacts that people have with smokers.
+# SPSS menu: Transform > Visual Binning
+# Interpret output: 
+
 # : (for enthusiasts?) don't interpret the standardized regression coefficients (Beta) for interaction variables in SPSS because they are calculated in the wrong way ; the predictor and moderator variables are multiplied to obtain the interaction variable and aferwards they are standardized ; instead, the predictor and moderator variables should be standardized before they are multiplied ; if you want to interpret the standardized regression coefficients, you have to standardize _all_ numeric variables yourself (Analyze > Descriptive Statistics > Descriptives with option 'Save standardized values as variables' checked) before you calculate the interaction variable and include them in the regression analysis ; in this situation, the output of the regression analysis lists the standardized regression weights in the column 'Unstandardized Coefficients'. 
 ```
 
@@ -1878,7 +1981,7 @@ quite similar slopes, which illutsrates the absence of a
 substantial interaction effect.
 ```
 
-6. Is the effect of parental supervison moderated by sex? Use the data of Exercise 5 to answer this question. You may omit the age predictor from the model. Again, illustrate your answer with a moderation plot.
+6. Is the effect of parental supervision moderated by sex? Use the data of Exercise 5 to answer this question. You may omit the age predictor from the model. Again, illustrate your answer with a moderation plot.
 
 ```{r eval=FALSE}
 SPSS syntax:

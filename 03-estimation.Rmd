@@ -60,7 +60,7 @@ Figure \@ref(fig:point-estimates) generates random samples from a population of 
 
 If we have to name one value for the population value, our best guess is the value of the sample statistic. For example, if 18% of the candies in our sample bag are yellow, our best guess of the proportion of yellow candies in the population of all candies from which this bag was filled, is .18. What other number can we give if we only have our sample? This type of guess is called a _point estimate_ and we use it a lot.  
 
-The sample statistic is the best estimate of the population value only if the sample statistic is an unbiased estimator of the population value. As we have learned in Section \@ref(cont_sample_stat), the true population value is equal to the mean of the sampling distribution for an unbiased estimator. The mean of the sampling distribution is the expected value for the sample. In other words, an unbiased estimator neither systematically overestimates the population value nor does it systematically underestimate the population value. With an unbiased estimator, then, there is no reason to prefer a value higher or lower than the sample value as our estimate of the population value.  
+The sample statistic is the best estimate of the population value only if the sample statistic is an unbiased estimator of the population value. As we have learned in Section \@ref(cont_sample_stat), the true population value is equal to the mean of the sampling distribution for an unbiased estimator. The mean of the sampling distribution is the expected value for the sample. In other words, an unbiased estimator neither systematically overestimates the population value nor does it systematically underestimate the population value. With an unbiased estimator, then, there is no reason to prefer a value higher or lower than the sample value as our estimate of the population value.
 
 Even though the value of the statistic in the sample is our best guess, it is very unlikely that our sample statistic is exactly equal to the population value (parameter). The recurrent theme in our discussion of random samples is that a random sample differs from the population because of chance during the sampling process. The precise population value is highly unlikely to actually appear in our sample. The sample statistic value is our best point estimate but it is nearly certain that it is wrong. It may be slightly or strongly off the mark but it will hardly ever be spot on. For this reason, it is better to estimate a range within which the population value falls. Let us turn to this in the next section.  
 
@@ -90,7 +90,7 @@ We now have border values, that is, a range of sample statistic values, and a pr
 
 The width of the estimated interval represents the _precision_ of our estimate. The wider the interval, the less precise our estimate. With a less precise interval estimate, we reckon with a wider variety of outcomes in our sample. 
 
-```{r interval-level, echo=FALSE, fig.cap="How does the confidence level affect the precision of an interval estimate?", out.width="420px", screenshot.opts = list(delay = 10)}
+```{r interval-level, echo=FALSE, fig.cap="How does the confidence level affect the precision of an interval estimate?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # (as in ci-borders) Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight" ; vertical lines for borders interval estimate ; show a double-pointed arrow on top of or above/under the x-axis representing the confidence interval for the initial confidence level (95%) and sample size (30); add a slider to adjust the confidence level (50%-100%?) ; update the vertical lines (borders) and the arrow representing the precision of the confidence interval if the slider position changes.
 knitr::include_app("http://82.196.4.233:3838/apps/interval-level/", height="310px")
 ```
@@ -138,7 +138,7 @@ The concentration of sample statistic values, such as average candy weight in a 
 
 Now we start looking also at the standard deviation of the sampling distribution because it tells us how precise our interval estimate is going to be. The sampling distribution's standard deviation is so important that it has received a special name: the _standard error_.  
 
-```{r se-point-est, echo=FALSE, fig.cap="The standard error: How wrong are point estimates?", out.width="420px", screenshot.opts = list(delay = 10)}
+```{r se-point-est, echo=FALSE, fig.cap="The standard error: How wrong are point estimates?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Two goals. First, remind student of the fact that a standard deviation represents deviations from the mean. Second, show that the standard error equals the standard deviation of the sampling distribution in that it is the standard deviation calculated for many samples.
 # Use a normally distributed population with M = 2.8 and SD = 2 (candy weight) ; one button creates a random sample (N = 10?) displaying it as a dotplot with vertical lines for both the sample average and population average ; mark the difference between the two averages as a (fat red?) horizontal arrow pointing from population to sample mean ; add the sample average to a histogram (with a normal curve representing the true sampling distribution as background) also displaying the population mean as a vertical line ; show the standard deviation of the means over all preceding samples as a (double)left- and right-pointing) arrow (at such a height that it touches the normal curve when it reaches the value of the standard error) ; add a second button to add another 10 (or 100?) samples that are not shown as a dot plot but theirs means are added to the histogram and the arrow representing the standard deviation is updated
 knitr::include_app("http://82.196.4.233:3838/apps/se-point-est/", height="500px")
@@ -210,7 +210,7 @@ Figure \@ref(fig:crit-values) shows the sampling distribution over average candy
 In Figure \@ref(fig:crit-values), we approximate the sampling distribution with a theoretical probability distribution, namely the normal distribution. If we use a theoretical probability distribution, the selected probability level corresponds to a particular outcome value in the theoretical probability distribution.  
 
 ### Standardization and _z_ scores  
-The most simple situation arises if we _standardize_ the sampling distribution: Subtract the average of the sampling distribution from each sample mean in this distribution and divide the result by the standard error. Thus, we transform the sampling distribution into a standardized distribution of _z_ scores. The mean of the new standardized _Z_ variable is always zero.  
+The most simple situation arises if we _standardize_ the sampling distribution: Subtract the average of the sampling distribution from each sample mean in this distribution and divide the result by the standard error. Thus, we transform the sampling distribution into a standardized distribution of _z_ scores. The mean of the new standardized _z_ variable is always zero.  
 
 If we use the normal distribution for standardized scores, which is called the _standard-normal distribution_ or _z distribution_, there is a single _z_ value that marks the boundary between the top 2.5% of all samples and the bottom 97.5%. This _z_ value is 1.96. If we combine this value with -1.96, separating the bottom 2.5% of all samples from the rest, we obtain an interval [-1.96, 1.96] containing 95% of all samples that are closest to the mean of the sampling distribution.   
 
@@ -297,10 +297,15 @@ As a consequence, we could simply have calculated the range of plausible populat
 
 Haven't we seen this calculation before? yes we did in Section \@ref(int-est-sample-mean), where we estimated the interval for sample means. We now simply reverse the calculation, using the sample mean to estimate a range for population means instead of the other way around.
 
-<table><tr><td>Jerzy Neyman introduced the concept of a confidence interval in 1937:
+----
+<div style="column-count: 2; -moz-column-count: 2">
+Jerzy Neyman introduced the concept of a confidence interval in 1937:
 
-"In what follows, we shall consider in full detail the problem of estimation by interval. We shall show that it can be solved entirely on the ground of the theory of probability as adopted in this paper, without appealing to any new principles or measures of uncertainty in our judgements". [@RefWorks:3929: 347] </td><td width="200px>  
-![Jerzy Neyman](figures/jerzyneyman.jpg)</td></tr></table>
+"In what follows, we shall consider in full detail the problem of estimation by interval. We shall show that it can be solved entirely on the ground of the theory of probability as adopted in this paper, without appealing to any new principles or measures of uncertainty in our judgements". [@RefWorks:3929: 347] 
+
+![Jerzy Neyman](figures/jerzyneyman.png)
+</div>
+---- 
 
 ### Confidence interval {#conf-interval}
 The upper and lower bounds for the population mean or, more generally, the parameter that we want to estimate, yield an interval for the parameter. We use this as the interval estimate of the parameter. 
@@ -309,7 +314,8 @@ This interval is linked to a probability, for example, 95%, but we should realiz
 
 The parameter has one value, which is either within or outside the interval that we have constructed. We just don't know. But we do know that our sample is more likely for population values within the interval.  
 
-We use the term _confidence_ instead of probability when we use this interval to estimate a parameter. We say that we are 95% confident that the parameter falls within the interval. The interval is called a _confidence interval_ and we usually add the confidence level, for example, the 95% confidence interval (abbreviated: 95%CI) of the average weight of candies in the population ranges from 2.4 to 3.2 gram. An average candy weight between 2.4 and 3.2 gram is plausible given the sample that we have drawn. In our reports, we say that:  
+We use the term _confidence_ instead of probability when we use this interval to estimate a parameter. We say that we are 95% confident that the parameter falls within the interval. The interval is called a _confidence interval_ and we usually add the confidence level, for example, the 95% confidence interval (abbreviated: 95%CI) of the average weight of candies in the population ranges from 2.4 to 3.2 gram. An average candy weight between 2.4 and 3.2 gram is plausible given the sample that we have drawn. In our reports, we say that: 
+
 > We are 95% confident that the average candy weight in the population is between 2.4 and 3.2 gram.  
 
 ```{r 95ci-simul, fig.cap="Confidence intervals and the true population value."}
@@ -341,16 +347,23 @@ As you probably remember from Section \@ref(boot-approx), we simulate an entire 
 
 Exact approaches to the sampling distribution do not yield confidence intervals. They only calculate p values.
 
-## Confidence Intervals in SPSS
+## Confidence Intervals in SPSS {#SPSS-CI}
 
 ### Instruction
-SPSS usually displays the 95% confidence interval automatically if you use the standard-normal (_z_) or _t_ distribution. For an example, see the independent t test output in Figure \@ref(fig:bootstrap-indep). This figure also shows that bootstrapping also yields confidence intervals. If you want another confidence level than 95%, you have to change this in the _Options..._  or _Statistics..._ dialog. Figure \@ref(fig:dialog-conflevel) shows the _Options..._ dialog to a one sample t test.
 
-```{r dialog-conflevel, out.width="280px", fig.cap="SPSS dialog to change the confidence level."}
-knitr::include_graphics("/figures/SPSSconflevel.png")
+```{r SPSSconflevel, echo=FALSE, out.width="640px", fig.cap="(ref:conflevelSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/7e1gCCKYcW4", height = "360px")
+# SPSS usually displays the 95% confidence interval automatically if you use the standard-normal (_z_) or _t_ distribution.
+# * t tests on one or two means: 95% CI displayed. Adjust confidence level under options.
+# * post-hoc tests with 1WAY-ANOVA: 95% CI by default, adjust significance level (under Post-Hoc) to change confidence level (1 - significance level)
+# * post-hoc tests with 2WAY-ANOVA: 95% CI by default, adjust significance level (under Options) to change confidence level (1 - significance level)
+# * t test on regression coefficient: ask for CI under Statistics, level can be adjusted there.
+# Bootstrapping: always a confidence interval
+# * example: media with Frequencies
+# * correlation: only with bootstrapping
+# No confidence intervals:
+# * non-parametric tests (just categorical variables - irrelevant)
 ```
-
-Regression analysis is an exception (command _Analyze > Regression > Linear_). Here, you have to select the option _Confidence intervals_ in the _Statistics..._ dialog to obtain confidence intervals for the regression coefficients.
 
 ### Exercises
 
@@ -463,7 +476,7 @@ significant, t (49) = 12.86, p < 001, 95%CI[1.59; 2.17].
 ```
 
 4. Use SPSS to determine if candy colourfulness after exposure to sunlight (colour_post) depends on candy weight and candy sweetness. Interpret the 95% confidence intervals for both effects. 
-    Hint: If you forgot which analysis technique you need to answer this question, use the flow chart in \@ref(@@).
+    Hint: If you forgot which analysis technique you need to answer this question, use the flow chart in \@ref(formulating-hypotheses).
 
 ```{r eval=FALSE}
 SPSS syntax:

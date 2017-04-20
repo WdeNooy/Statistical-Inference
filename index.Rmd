@@ -11,9 +11,13 @@ output:
     config:
       toc:
         collapse: section
-  rmarkdown::pdf_document:
+  bookdown::pdf_book:
+    toc : TRUE
+    toc_depth : 3
+    toc_unnumbered : FALSE
     number_sections : TRUE
 documentclass: book
+geometry: rmargin = 2in
 bibliography: ["RefList.bib"]
 biblio-style: "apa"
 csl: apa.csl
@@ -22,14 +26,43 @@ link-citations: true
 
 ```{r setup, include=FALSE, echo=FALSE}
 # All code chunks that should never be shown must have the echo=FALSE option. Chunks with answers to exercises do not have the echo option set, so their visibility is determined by the echo option set for all chunks here. Set echo=TRUE at the start of the course and set it to TRUE after the last tutorial and before the exam.
-knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval=TRUE, tidy=TRUE)
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, eval=TRUE, tidy=TRUE)
 # Libraries used.
 library(dplyr)
 library(ggplot2)
 library(knitr)
 library(visNetwork)
+library(bookdown)
 # Basic colors and layout.
 source("../apps/plottheme/styling.R")
+```
+
+```{r include=FALSE, echo=FALSE, eval=FALSE}
+# Notes
+
+# PDF output:
+#* Embedded shiny apps: Lots of whitespace within the screenshot. Helps to define out.height in chunk - no. cliprect = 'viewport' does not work. selector = "#sampling-distribution-summary1" does not work. vwidth=420, vheight=620 does not work. Setting dev="png" works even though some whitespace remains under the app. Specify out.width (to get a caption) but don't specify out.height (increases the app size).
+#* Interactive network visualizations (flow chart in 4.2 Formulating Statistical Hypotheses, mediation models in 9.6 Path Model with Regression Analysis) badly captured (due to fig.asp="50%"?) with lots of whitespace (and of course no link to interactive version). Adding out.width and/or out.height seems to create new problems (mean-centering of consecutive text, caption rendered as LaTex...)
+#* No screen shots for videos embedded with iframe (4.2.9 Comparing Means in SPSS). Also, a separate figure caption is not numbered. Solved by embedding them with knitr::include_url and dev = "png" but this puts videos in a floating context, so they are no longer in the Instructions section in the PDF.
+#* Including a manual screen shot with screenshot.alt = "" solves the white-space problem but it does not add a link to the interactive content (shiny app). Only applicable to dynamic networks that have no link anyhow.
+
+#* Only caption to figure if out.width is set.
+#* kable tables are not adjusted to the page margins (see 2.5.2 Conditions for the use of theoretical probability distributions, 9.6.3 Partial and full mediation). out.width="100%" does not help.
+
+#* Equations: use aligned instead of align. But aligned does not work in HTML - need different package to render equations in HTML? 
+#* Equations are numbered with the section number. The number is not displayed with the equation itself.
+
+#* HTML table to arrange text and pictures does not work: 2.1 (baron), 3.5.1 (Neyman), 5.2 (metal detector), 5.3.1 (Pearson), 6.3.2 (Gauss, LaPlace). Size of picture must be made explicit. Embed with knitr::include_graphics and set output.width? Note that include_graphics makes the picture float, which is not what I want with portraits. Also, the dpi seems to matter to eventual out.width of r chunck wth include_graphics.
+
+# Links to external resources such as (SPSS) data must be absolute. They cannot be stored in the R Markdown doc root directory, so I store them in a data subdirectory of the shiny server http://82.196.4.233:3838/data. Embed links as HTML with target="_blank" to open the resource in a new window otherwise the Shiny server displays the R Markdown document in grey (must be reloaded).
+
+# Include SPSS tabular output:
+#- Right-click table, select Style Output, Select as Group (Continue), Table Look, Compact.
+#- Select tales to be exported. Don't select separate analysis titles, they are badly formatted.
+#- Right-click selected table and export as HTML, Change Options: Export visible layer only, Export without styling, Include footnotes and captions, Export visible view only.
+#- Export HTML file to R project directory.
+#- Include HTML file in R Markdown within <iframe>. Set width="100%" and experiment to find the right height.
+# Note that html content embedded in this way yields problems with webshot capturing if the document is knitted into PDF. 
 ```
 
 ```{r example-data, include=FALSE, echo=FALSE, eval=FALSE}
@@ -214,20 +247,11 @@ attributes(readers$readingtime)$label <- "Average newspaper reading time per day
 # Add value labels and export to SPSS data file.
 readers$newssite <- labelled::labelled(readers$newssite, labels = c(`Never` = 0, `At most once a week` = 1, `Twice a week` = 2, `Once a day` = 3, `Twice a day` = 4, `Three times a day` = 5, `At least four times a day` = 6))
 haven::write_sav(readers, "data/readers.sav")
-
-# Include SPSS tabular output:
-#- Right-click table, select Style Output, Select as Group (Continue), Table Look, Compact.
-#- Select tales to be exported. Don't select separate analysis titles, they are badly formatted.
-#- Right-click selected table and export as HTML, Change Options: Export visible layer only, Export without styling, Include footnotes and captions, Export visible view only.
-#- Export HTML file to R project directory.
-#- Include HTML file in R Markdown within <iframe>. Set width="100%" and experiment to find the right height.
-
-# Links to external resources such as (SPSS) data must be absolute. They cannot be stored in the R Markdown doc root directory, so I store them in a data subdirectory of the shiny server http://82.196.4.233:3838/data. Embed links as HTML with target="_blank" to open the resource in a new window otherwise the Shiny server displays the R Markdown document in grey (must be reloaded).
 ```
 
 # Introduction and Reader's Guide {-}
 
-In the years that I have been teaching inferential statistics to bachelor students in Communication Science, I have learned two things. First, it is paramount that students understand the principles of statistical inference very well before they can apply statistical inference correctly themselves. Second, formal notation, manual calculation, and estimation details distract rather than help students understand what they are doing. This book offers a non-technical but thorough introduction to statistical inference. It discusses a minimal set of concepts needed to understand both the possibilities and pitfalls of estimation and null hypothesis testing. It uses a minimum of formal notation.
+In the years that I have been teaching inferential statistics to bachelor students in Communication Science, I have learned two things. First, it is paramount that students understand the principles of statistical inference very well before they can apply statistical inference correctly themselves. Second, formal notation, manual calculation, and estimation details distract rather than help students understand what they are doing. This book offers a non-technical but thorough introduction to statistical inference. It discusses a minimal set of concepts needed to understand both the possibilities and pitfalls of estimation, null hypothesis testing, moderation, and mediation analysis. It uses a minimum of formal notation.
 
 ### Intended Audience and Setting {-}
 
@@ -240,5 +264,7 @@ This book is meant for use in a flipped classroom setup. Students should read th
 The interactive content in this book replaces simulations that used to be demonstrated in lectures. I expect that doing simulations yourself rather than watching them being done by someone else enhances understanding. I have tried to break down the simulations into small steps, confronting the student several times with basically the same simulation but with added complexity. I hope that this approach enhances understanding and remembrance and, at the same time, avoids frustration caused by complex dashboards offering all options at once. 
 
 Most interactive content starts with a question regarding the student's expectations of what is going to happen in the simulation. I strongly recommend students to state their expectations before they start the simulations to see where their intuitions are right and where they are wrong. 
+
+### Acknowledgements {-}
 
 __TBD: thank you's and sources used for text and interactive content__

@@ -9,8 +9,9 @@ Among the alternatives to null hypothesis significance testing, using a confiden
 
 ### Test your intuition or knowledge {-}
 
-```{r power-problem}
+```{r power-problem, echo=FALSE, fig.cap="The relations between significance, effect size, sample size, and power.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Use app sig-effect-power.
+knitr::include_app("http://82.196.4.233:3838/apps/sig-effect-power/", height="550px")
 ```
 
 Figure \@ref(fig:power-problem) displays the sampling distribution for candy weight under the null hypothesis that average candy weight is 2.8 in the population. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample (weak/moderate/strong). Five samples are drawn from a population with the specified average candy weight (see slider) and the samples' average candy weights are represented by dots on the horizontal axis.
@@ -25,7 +26,9 @@ Figure \@ref(fig:power-problem) displays the sampling distribution for candy wei
 
 In null hypothesis significance testing, we totally rely on the test's p value. If this value is below .05 or another significance level, we reject the null hypothesis and we accept it otherwise. Is this a wise thing to do? Watch the video.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ez4DgdurRPg" frameborder="0" allowfullscreen></iframe>
+```{r echo=FALSE, fig.cap='The dance of the p values by Geoff Cumming.'}
+knitr::include_url("https://www.youtube.com/embed/ez4DgdurRPg", height = "315px")
+```
 
 ### Statistical significance depends primarily on sample size  
 
@@ -38,7 +41,7 @@ In null hypothesis significance testing, we totally rely on the test's p value. 
 
 2. Can you get statistically significant results for the smallest effect size, that is, for the smallest difference between the observed sample average and the hypothesized population average?
 
-Perhaps, Chapter \@ref(hypothesis) on null hypothesis testing should have been titled _Am I Lucky or Unlucky?_ instead of _Am I Right or Am I Wrong?_. When our sample is small, the power to reject a null hypothesis is rather small, so it may occur often that we retain the null hypothesis even if it is wrong. There is a lot of insecurity about the population if our sample is small. So we must be lucky to draw a sample that is sufficiently at odds with the null hypothesis to reject it.
+Perhaps, Chapter \@ref(hypothesis) on null hypothesis testing should have been titled _Am I Lucky or Unlucky?_ instead of _Am I Right or Am I Wrong?_ When our sample is small, the power to reject a null hypothesis is rather small, so it may occur often that we retain the null hypothesis even if it is wrong. There is a lot of insecurity about the population if our sample is small. So we must be lucky to draw a sample that is sufficiently at odds with the null hypothesis to reject it.
 
 If our sample is large or very large, small differences between what we expect according to our null hypothesis can be statistically significant even if the differences are too small to be of any practical value to us. A statistically significant result need not be practically relevant.  
 
@@ -50,8 +53,9 @@ It is wrong to use statistical significance as a measure of strength or importan
 
 ### Evaluate statistical sigificance in combination with sample size and power {#eval-sign}
 
-```{r sig-effect-power, fig.cap="The relations between significance, effect size, sample size, and power."}
-# (As in app tiny-effects), create a normal curve for the sampling ditribution of average candy weight (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Label the x-axis "Average candy weight" and use the scale: "Strong 2.64", "Moderate 2.70", "Weak 2.76", "H0 2.8", "Weak 2.84", "Moderate 2.90", "Strong 2.96". Colour 2.5% of each tail area. Display a label with the power of the test given the current population average (slider, range [2.8, 3.0] initial value 2.9) and sample size (slider, range [5, 100] initial value 10). Draw 5 random samples from a normally distributed population with the selected population average (and population SD fixed as 0.6) and display their means as coloured dots on the x-axis. Add "Draw 5 samples" button to refresh the curve and power value with the current slider settings and draw 5 new samples represented by their means as dots.
+```{r sig-effect-power, echo=FALSE, fig.cap="The relations between significance, effect size, sample size, and power.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# (As in app tiny-effects), create a normal curve for the sampling distribution of average candy weight (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Label the x-axis "Average candy weight" and use the scale: "Strong 2.64", "Moderate 2.70", "Weak 2.76", "H0 2.8", "Weak 2.84", "Moderate 2.90", "Strong 2.96". Colour 2.5% of each tail area. Display a label with the power of the test given the current population average (slider, range [2.8, 3.0] initial value 2.9) and sample size (slider, range [5, 100] initial value 10). Draw 5 random samples from a normally distributed population with the selected population average (and population SD fixed as 0.6) and display their means as coloured dots on the x-axis. Add "Draw 5 samples" button to refresh the curve and power value with the current slider settings and draw 5 new samples represented by their means as dots.
+knitr::include_app("http://82.196.4.233:3838/apps/sig-effect-power/", height="550px")
 ```
 
 Figure \@ref(fig:sig-effect-power) displays the sampling distribution for average candy weight that you have already seen at the start of this chapter. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample (weak/moderate/strong). Five samples are drawn from a population with the specified average candy weight (see slider) and the samples' average candy weights are represented by dots on the horizontal axis.
@@ -110,7 +114,9 @@ At the same time, however, confidence intervals allow us to draw a more nuanced 
 
 We should report that the population value seems to be larger (smaller) than specified in the null hypothesis but that we have inconclusive evidence because the test is not statistically significant. This is better than reporting that there is no difference because the statistical test is not significant.  
 
-<table><tr><td>The fashion of speaking of a null hypothesis as "accepted when false", whenever a test of significance gives us no strong reason for rejecting it, and when in fact it is in some way imperfect, shows real ignorance of the research workers' attitude, by suggesting that in such a case he has come to an irreversible decision.
+----
+<div style="column-count: 2; -moz-column-count: 2">
+The fashion of speaking of a null hypothesis as "accepted when false", whenever a test of significance gives us no strong reason for rejecting it, and when in fact it is in some way imperfect, shows real ignorance of the research workers' attitude, by suggesting that in such a case he has come to an irreversible decision.
 
 The worker's real attitude in such a case might be, according to the circumstances:
 
@@ -118,10 +124,11 @@ The worker's real attitude in such a case might be, according to the circumstanc
 
 Or it might be:
 
-(b) "The deviation is in the direction expected for certain influences which seemed to me not improbable, and to this extent my suspicion has been confirmed; but the body of data available so far is not by itself sufficient to demonstrate their reality." [@RefWorks:3907: 73]</td><td width="205px">  
-![R.A. Fisher](figures/fisher.jpg)
-R.A. Fisher</td></tr></table>
+(b) "The deviation is in the direction expected for certain influences which seemed to me not improbable, and to this extent my suspicion has been confirmed; but the body of data available so far is not by itself sufficient to demonstrate their reality." [@RefWorks:3907: 73]
 
+![Ronald Ayler Fisher.](figures/fisher.png)
+</div>
+---- 
 
 In a similar way, a very narrow confidence interval including the null hypothesis and a very narrow confidence interval near the null hypothesis but excluding it should not yield opposite conclusions because the statistical test is significant in the first but not in the second situation. After all, even for the non-significant situation, we know with high confidence (narrow confidence interval) that the population value is close to the hypothesized value.  
 
@@ -136,7 +143,7 @@ Meta-analysis is a good example of combining research efforts to increase our un
 
 Consider, for example, the effect of advertisement exposure on brand awareness. Usually, a research project focuses on one brand and consumers in one country. If we have a collection of previous research projects, we may compare the effect among brands and countries. Thus, we can discover whether the effect depends on the type of brand or country.
 
-Meta-analysis is strongly recommended as a research strategy by Geoff Cumming, who coined the concept _New Statistics_. See Cumming's book [-@RefWorks:3883], website (http://www.latrobe.edu.au/psychology/research/research-areas/cognitive-and-developmental-psychology/esci), or YouTube channel https://www.youtube.com/channel/UCwRbwVb6mRKuyXtV1td-vig@) if you are curious to learn more. The video at the start of this chapter is made by Geoff Cumming.
+Meta-analysis is strongly recommended as a research strategy by Geoff Cumming, who coined the concept _New Statistics_. See Cumming's book [-@RefWorks:3883], [website](http://www.latrobe.edu.au/psychology/research/research-areas/cognitive-and-developmental-psychology/esci), or [YouTube channel](https://www.youtube.com/channel/UCwRbwVb6mRKuyXtV1td-vig@) if you are curious to learn more. The video at the start of this chapter is made by Geoff Cumming.
 
 ### Replication
 Another approach that builds upon previous results is _replication_. If we collect new data including the variables that are central in prior research and we execute the same analyses, we _replicate_ previous research.
@@ -195,13 +202,14 @@ So we should give examples of unobserved independent causes that are likely to a
 
 This is an example of an argument that can be made to justify the application of t tests in tests on means, correlations, or regression coefficients to data that is not a random sample. The argument can be more or less convincing. The chosen probability distribution can be right or wrong and we will probably never know which of the two it is. 
 
-<table><tr><td width="200px">
-![Gauss](figures/cfgauss.jpg)
-Carl Friedrich Gauss</td><td>
-The normal distribution is usually attributed to Carl Friedrich Gauss [-@RefWorks:3936]. Pierre-Simon Laplace [-@RefWorks:3937], among others, proved the central limit theorem, which states that under certain conditions the mean of a large number of independent random variables are approximately normally distributed. Based on this theorem, we expect that the overall (average) effect of a large number of independent causes (random variables) produces a variation that is normally distributed.</td><td width="200px">
-![Laplace](figures/pslaplace.jpg)
-Pierre-Simon Laplace
-</td></tr></table>
+----
+<div style="column-count: 3; -moz-column-count: 3">
+The normal distribution is usually attributed to Carl Friedrich Gauss [-@RefWorks:3936]. Pierre-Simon Laplace [-@RefWorks:3937], among others, proved the central limit theorem, which states that under certain conditions the mean of a large number of independent random variables are approximately normally distributed. Based on this theorem, we expect that the overall (average) effect of a large number of independent causes (random variables) produces a variation that is normally distributed.
+
+![Carl Friedrich Gauss.](figures/cfgauss.png)
+![Pierre-Simon Laplace.](figures/pslaplace.png)
+</div>
+---- 
 
 ## Take-Home Points  
 

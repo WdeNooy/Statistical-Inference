@@ -1,5 +1,5 @@
 # Testing a Null Hypothesis: Am I Right or Am I Wrong? {#hypothesis}
-> key concepts: research hypothesis, statistical null and alternative hypothesis, nil hypothesis, test statistic, p value, significance level (Type I error rate), Type I error, inflated Type I error, capitalization on chance, one-sided and two-sided tests and tests to which this distinction does not apply, rejection region.  
+> Key concepts: research hypothesis, statistical null and alternative hypothesis, nil hypothesis, test statistic, p value, significance level (Type I error rate), Type I error, inflated Type I error, capitalization on chance, one-sided and two-sided tests and tests to which this distinction does not apply, rejection region.  
 
 In the preceding chapter, we have learned that a confidence interval contains the population values that are plausible given the sample that we have drawn. In the current chapter, we narrow this down to the question whether the expectation of the researcher about the population is plausible. 
 
@@ -33,7 +33,7 @@ Return to these question after studying this chapter.
 
 ## A Binary Decision
 
-The overall goal of statistical inference is to increase our knowledge about a population if we only have a random sample from the population. In Chapter \@ref(param_estim), we estimated population values that are plausible considering the sample that we have drawn. For example, we looked for all plausible average weights of candies in the population using information about the weight of candies in our sample bag. This is what we do when we estimate a population value.  
+The overall goal of statistical inference is to increase our knowledge about a population if we only have a random sample from the population. In Chapter \@ref(param-estim), we estimated population values that are plausible considering the sample that we have drawn. For example, we looked for all plausible average weights of candies in the population using information about the weight of candies in our sample bag. This is what we do when we estimate a population value.  
 
 Estimation is one of the two types of statistical inference, the other is null hypothesis testing. When we estimate a population value, we do not use our previous knowledge about the world of candies or whatever other subject we are investigating. We can be completely ignorant about the phenomenon that we are investigating. This approach is not entirely in line with a conception of scientific progress going by the name of _empirical cycle_, in which scientists develop theories about the empirical world, test these theories against data collected from this world, and improve their theories if they are contradicted by the data.  
 
@@ -41,7 +41,7 @@ Hypothesis testing is more in line with such a conception of scientific progress
 
 Hypothesis testing, then, amounts to a choice from two options: reject or not reject, that is, for the time being accept, the hypothesis. This is a binary decision between believing that the population is as it is described in the hypothesis or believing that it is not. This is quite a different outcome than the range of plausible population values that we obtain when we estimate a confidence interval. Nevertheless, hypothesis testing and confidence intervals are tightly related as we will see later on in this chapter (Section \@ref(null-ci)).
 
-## Formulating Statistical Hypotheses
+## Formulating Statistical Hypotheses {#formulating-hypotheses}
 
 A _research hypothesis_ is a statement about the empirical world that can be tested against data. Communication scientists, for example, may hypothesize that:  
 
@@ -61,11 +61,11 @@ As these examples illustrate, research hypotheses seldom refer to statistics suc
 
 Translating the research hypothesis into a statistical hypothesis is perhaps the most creative part of statistical analysis. This is just a fancy way of saying that it is difficult to give general guidelines stating which statistic fits which research hypothesis. All we can do is give some hints.  
 
-```{r choice-diagram, echo=FALSE, fig.cap="Flow chart for selecting the appropriate statistical test."}
+```{r choice-diagram, echo=FALSE, fig.cap="Flow chart for selecting the appropriate statistical test.", screenshot.alt = "figures/choice-diagram.png"}
 # Overview of tests with conditions/requirements and SPSS commands ; interactive decision/flow chart - show complete diagram and pressing a button or clicking a cell hides all choices/cells that are not up- and downstream from this cell.
 # Use visNetwork:: package (visHierarchicalLayout()) or networkD3:: package (diagonalNetwork()).
 library(visNetwork)
-nodes <- data.frame(id = 1:27, level = c(1, rep(2, 7), rep(3, 6), rep(4, 13)), 
+nodes <- data.frame(id = 1:26, level = c(1, rep(2, 7), rep(3, 6), rep(4, 12)), 
   label = c("Research Question", 
             "Category Share", 
             "Overall Score Level", 
@@ -84,7 +84,6 @@ nodes <- data.frame(id = 1:27, level = c(1, rep(2, 7), rep(3, 6), rep(4, 13)),
             "one-sample chi-squared test", 
             "one-sample t test", 
             "bootstrap test on one median", 
-            "(no test available)", 
             "Levene's F test", 
             "paired-samples t test", 
             "independent-samples t test", 
@@ -95,8 +94,8 @@ nodes <- data.frame(id = 1:27, level = c(1, rep(2, 7), rep(3, 6), rep(4, 13)),
             "test on Spearman's rho"), 
   title = c("What characteristics of your subjects<br>are you interested in?", 
             "How many have ...?, Which part is ...?<br><b>Variables</b>: 1 dichotomy", 
-            "How low/high is ...?<br><b>Variables</b>: 1 categorical", 
-            "How much (dis)agreement ...? <br>Are scores more/less spread ...?<br><b>Variables</b>: 2 numeric", 
+            "How low/high is ...?<br><b>Variables</b>: 1 numeric", 
+            "More (dis)agreement among ... than among ...? <br>Are scores more spread among ... than among ...?<br><b>Variables</b>: 1 categorical, 1 numeric", 
             "Does the score level increase/decrease ...?<br><b>Variables</b>: 1 numeric repeated", 
             "Does one group score higher than another group...?<br><b>Variables</b>: 1 categorical, 1 numeric", 
             "Do categories occur more/less <br>in one group than in another group...?<br><b>Variables</b>: 2 categorical", 
@@ -111,17 +110,16 @@ nodes <- data.frame(id = 1:27, level = c(1, rep(2, 7), rep(3, 6), rep(4, 13)),
             "<b>Visual:</b> bar chart, pie chart<br><b>Measure:</b> relative frequencies<br><b>Interpretation:</b> ... percent of the ... have/are ...<br>and/but ... percent have/are ...<br><b>Assumptions:</b> expected frequencies<br>never below 1 and max 20% below 5", 
             "<b>Visual:</b> histogram<br><b>Measure:</b> one mean,<br>Cohen's <i>d</i><br><b>Interpretation:</b> the subjects'<br>/respondents' average score<br>on ... is ... (M = ..., SD = ...)<br><b>Assumptions:</b> sample size above 30<br>or population normally<br>distributed; otherwise: bootstrap", 
             "<b>Visual:</b> boxplot<br><b>Measure:</b> one median<br><b>Interpretation:</b> half of the ...<br>have a score below/above ...<br><b>Assumptions:</b> none", 
-            "<b>Visual:</b> bar chart (pie chart)<br><b>Measure:</b> one mode<br><b>Interpretation:</b> the most frequent/<br>prevalent score/category is ...<br><b>Assumptions:</b> none", 
             "<b>Visual:</b> error bar<br>chart, boxplot<br><b>Measure:</b> two variances<br>or standard deviations<br><b>Interpretation:</b> the scores on ... vary<BR>more/less among ... (SD/variance = ...) than<BR>among ... (SD/variance = ...)<br><b>Assumptions:</b> none", 
-            "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> the average<br>score on ... increases/<br>decreases between ... (M = ..., SD = ...)<br>and ... (M = ..., SD = ...), this change is small/medium/large<br><b>Assumptions:</b> sample size above 30<br>or population normally distributed;<br>otherwise: bootstrap", 
+            "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> the average<br>score on ... increases/<br>decreases between ... (M = ..., SD = ...)<br>and ... (M = ..., SD = ...), this change is<br>small/medium/large<br><b>Assumptions:</b> sample size above 30<br>or population normally distributed;<br>otherwise: bootstrap", 
             "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> there is a small/<br>medium/large difference between<br>the average score on ...<br>among ... (M = ..., SD = ...)<br>and among ... (M = ..., SD = ...)<br><b>Assumptions:</b> sample size above<br>30 or population normally<br>distributed; otherwise: bootstrap", 
             "<b>Visual:</b> means plot<b><br>Measure:</b> variance in means,<br>eta or eta<sup2</sup>, differences<br>between pairs of means<br><b>Interpretation:</b> there are<BR>no/small/medium/large differences<br>among the average scores on ... .<br>Group ... (M = ..., SD = ...)<br>has a lower/higher score than<br>group ... (M = ..., SD = ...)<br><b>Assumptions:</b> groups of equal<br>size or groups with equal<br>population variances (Levene's F test)", 
             "<b>Visual:</b> stacked or<br>clustered bar chart<br><b>Measure:</b> Phi, Cramer's V,<br>Goodman & Kruskals tau,<br>Kendalls tau-b<br><b>Interpretation:</b> the association<BR>between ... and ... is weak/medium/<br>strong. ... occurs relatively<BR>frequently among group ... but ...<br>is relatively rare with group ...<br><b>Assumptions:</b> expected<BR> frequencies never below 1<br>and max 20% below 5, otherwise<br>exact test; in a 2x2 table,<br>use Fisher's exact test", 
             "<b>Visual:</b> scatterplot (with regression<br>line)<br><b>Measure:</b> (Pearson) correlation<br><b>Interpretation:</b> There is a weak/medium/<br>strong correlation between ... and ...:<br>the higher the score on ..., the<br>higher/lower the score on ... .<br><b>Assumptions:</b> none.", 
-            "<b>Visual:</b> scatterplots (with regression line)<br><b>Measures</b> for multiple regression:<BR><I>R</I><sup>2</sup>, regression coefficients (b or b*)<br><b>Interpretation:</b> When ... increases by<BR>one unit, the predicted value of ...<BR>increases/decreases with ... .<BR>This effect is weak/medium/strong.<BR>The variance in ... and ... (and ...)<BR>accounts for ...% of the variance<BR>in ... .<br><b>Assumptions:</b> residuals normally<BR>distributed and homoscedastic", 
+            "<b>Visual:</b> scatterplots (with regression line)<br><b>Measures</b> for multiple regression:<BR><I>R</I><sup>2</sup>, regression coefficients (b or b*)<br><b>Interpretation:</b> When ... increases by<BR>one unit, the predicted value of ...<BR>increases/decreases with ... .<BR>This effect is weak/medium/strong.<BR>The variance in ... and ... (and ...)<BR>accounts for ...% of the variance in ... .<br><b>Assumptions:</b> residuals normally<BR>distributed and homoscedastic", 
             "<b>Visual:</b> scatterplot (with regression line)<br><b>Measure:</b> (Spearman's) rho<br><b>Interpretation:</b> There is a weak/<BR>medium/strong rank correlation between ...<BR>and ...: The higher the score on ..., the<BR>higher/lower the score on ... .<br><b>Assumptions:</b> not relevant (SPSS uses<BR>t aproximation if applicable)"), 
   shape = "dot", size = 20, font.size = 42, shadow = "FALSE")
-edges <- data.frame(from = c(1, 1, 1, 1, 1, 1, 1, 2, 2, 6, 6, 8, 8, 9, 10, 3, 3, 3, 4, 7, 5, 11, 12, 13, 13, 14), to = c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 24, 21, 22, 23, 25, 26, 27), shadow = "TRUE")
+edges <- data.frame(from = c(1, 1, 1, 1, 1, 1, 1, 2, 2, 6, 6, 8, 8, 9, 10, 3, 3, 4, 7, 5, 11, 12, 13, 13, 14), to = c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 20, 21, 22, 24, 25, 26), shadow = "TRUE")
 visNetwork(nodes, edges, width = "100%") %>% 
   visEdges(arrows = "to") %>% 
   visHierarchicalLayout(direction = "LR", levelSeparation = 600) %>%
@@ -150,40 +148,34 @@ A test for this type of statistical hypothesis is called a one-sample chi-square
 
 The test is mainly used if the researcher has information on the proportions of the categories in the population. If we draw a sample from all citizens of a country, we usually know the frequency distribution of sex, age, educational level, and so on of all citizens from the national bureau of statistics. We can now test if the respondents in our sample have the same distribution with respect to sex, age, or educational level as the population; just use the population proportions in the hypothesis. If they do, the sample is _representative_ of the population with respect to sex, age, or educational level. This is an important check on the representativeness of our sample.
 
-### Testing Proportions in SPSS
+### Testing proportions in SPSS {#SPSSprops}
 
 #### Instructions
-A binomial test on a single proportion can be executed in SPSS with the command _Analyze > Nonparametric Tests > Binomial_. In the dialog (Figure \@ref(fig:spss-binom)), you have to enter a variable. 
 
-```{r spss-binom, echo=FALSE, out.width="475px", fig.cap="SPSS dialog for a binomial test on one proportion."}
-knitr::include_graphics("figures/SPSSbinomial.png")
+```{r SPSSbinomial, echo=FALSE, out.width="640px", fig.cap="(ref:binomialSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/cA0idFxW-J4", height = "360px")
+# A binomial test on a single proportion can be executed in SPSS with the command _Analyze > Nonparametric Tests > Binomial_. In the dialog , you have to enter a variable. 
+# 
+# If this variable is a dichotomy (it has only two values), you can leave the _Define Dichotomy_ option at "Get from data". SPSS will use the first category score that it encounters in the data set the test category. This is tricky. It will test the sample proportion of this value against the test proportion that you specify elsewhere in this dialog.
+# 
+# If the variable has more than two categories or you want to be sure about the category that you use for the test, use the "Cut point" option under _Define Dichotomy_ to divide all scores into two groups. The lowest score up to and including the cut point are used as the test category.
+# 
+# The statistics under Options are not interesting if you just want to test a proportion.
+#
+# Figure shows the output. The sample proportion does not differ significantly from 0.5. In this example, we would report: "We cannot reject the hypothesis that the TV station reaches half of all households, _p_ = .784."
 ```
 
-If this variable is a dichotomy (it has only two values), you can leave the _Define Dichotomy_ option at "Get from data". SPSS will use the category with the lowest value as the reference category. It will test the sample proportion of this value against the test proportion that you specify elsewhere in this dialog.
+```{r SPSSchisq1, echo=FALSE, out.width="640px", fig.cap="(ref:chisq1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/S8I5o_3p6ro", height = "360px")
+# If we want to test a frequency distribution against a known or hypothesized population distribution, we must use a one-sample chi-squared test. This test is available in SPSS with the command _ANALYZE > NONPARAMETRIC TESTS > LEGACY DIALOGS > CHI SQUARE_. Select the categorical variable for which you want to test the distribution under _Test variable List_.
+# 
+# Select the option _All categories equal_ under _Expected Values_ if you hypothesize that all categories have the same proportions in the population. In the example, we hypothesize that households are equally distributed over the four regions. This is a plausible hypothesis if the four regions are known to contain a quarter of all households in the country or if the sample was stratified by region, that is, every region was meant to deliver the same number of households to the sample.
+# 
+# If the hypothesized distribution is not equal over all categories, specify the expected proportions, percentages, or sample frequencies under _Values_. You must specify an expected value for each category in the exact order in which the categories are coded. Be careful not to make mistakes. 
+# 
+# Although the frequencies of the four regions are not exactly the same in the sample, the hypothesis of equal population frequencies cannot be rejected, Chi-square (3) = 3.27, _p_ = .352.
 
-If the variable has more than two categories or is not a dichotomy, use the "Cut point" option under _Define Dichotomy_ to divide all scores into two groups. The lowest score up to and including the cut point are used as the test category.
-
-Figure \@ref(fig:binom-output) shows the output. The sample proportion does not differ significantly from 0.5. In this example, we would report: "We cannot reject the hypothesis that the TV station reaches half of all households, _p_ = .784."
-
-```{r binom-output, echo=FALSE, fig.cap="SPSS output for a binomial test on one proportion."}
-knitr::include_url("binomial.htm",  height="180px")
 ```
-
-If we want to test a frequency distribution against a known or hypothesized population distribution, we must use a one-sample chi-squared test. This test is available in SPSS with the command _ANALYZE > NONPARAMETRIC TESTS > LEGACY DIALOGS > CHI SQUARE_. Select the categorical variable for which you want to test the distribution under _Test variable List_.
-
-```{r spss-1chisq, echo=FALSE, out.width="475px", fig.cap="SPSS dialog for a chi-squared test on a frequency distribution."}
-knitr::include_graphics("figures/SPSS1chisq.png")
-```
-
-Select the option _All categories equal_ under _Expected Values_ if you hypothesize that all categories have the same proportions in the population. In the example, we hypothesize that households are equally distributed over the four regions. This is a plausible hypothesis if the four regions are known to contain a quarter of all households in the country or if the sample was stratified by region, that is, every region was meant to deliver the same number of households to the sample.
-
-If the hypothesized distribution is not equal over all categories, specify the expected proportions, percentages, or sample frequencies under _Values_. You must specify an expected value for each category in the exact order in which the categories are coded. Be careful not to make mistakes. 
-
-```{r 1chisq-output, echo=FALSE, fig.cap="SPSS output for a chi-squared test on a frequency distribution."}
-knitr::include_url("1chisq.htm",  height="360px")
-```
-
-Although the frequencies of the four regions are not exactly the same in the sample, the hypothesis of equal population frequencies cannot be rejected, Chi-square (3) = 3.27, _p_ = .352.
 
 #### Exercises
 
@@ -315,16 +307,16 @@ The hypothesis probably does not argue that all children have a media literacy s
 
 For a numeric (interval or ratio measurement level) variable such as the 10-point scale in the example, the mean is a good measure of the distribution's center. In this example, our statistical hypothesis would be that average media literacy score of all children in the population is (below) 5.5.  
 
-### Testing One Mean in SPSS
+### Testing one mean in SPSS  {#SPSS1mean}
 
 #### Instructions
 
-To execute a one sample t test in SPSS, use the command _ANALYZE > COMPARE MEANS > ONE SAMPLE T TEST_. Select a numeric variable in the dialog and enter the hypothesized population mean under _Test Value_. 
+```{r SPSS1mean, echo=FALSE, out.width="640px", fig.cap="(ref:1meanSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/Bx0eiqfVfaw", height = "360px")
+# To execute a one sample t test in SPSS, use the command _ANALYZE > COMPARE MEANS > ONE SAMPLE T TEST_. Select a numeric variable in the dialog and enter the hypothesized population mean under _Test Value_. 
+# 
+# Media literacy is measured on a ten point scale. Is average media literacy (in the population) equal to 5.5? A one sample t test tells us that average media literacy in our sample (_M_ = 4.47, _SD_ = 1.64) is statistically significantly different from 5.5, _t_ (86) = -5.87, _p_ < .001, 95%CI[-1.38, -0.68]. We are confident that the population average media literacy score is 0.68 to 1.38 below 5.5, so somewhere between 4.12 and 4.82.
 
-Media literacy is measured on a ten point scale. Is average media literacy (in the population) equal to 5.5? A one sample t test tells us that average media literacy in our sample (_M_ = 4.47, _SD_ = 1.64) is statistically significantly different from 5.5, _t_ (86) = -5.87, _p_ < .001, 95%CI[-1.38, -0.68]. We are confident that the population average media literacy score is 0.68 to 1.38 below 5.5, so somewhere between 4.12 and 4.82.
-
-```{r 1mean-output, echo=FALSE, fig.cap="SPSS output for a t test on one mean."}
-knitr::include_url("1mean.htm",  height="270px")
 ```
 
 #### Exercises
@@ -419,17 +411,19 @@ Although rare, research hypotheses may focus on the variation in scores rather t
 
 For a numeric variable, the variance or standard deviation---the latter is just the square root of the former---is the appropriate statistic to test a hypothesis about polarization. The research hypothesis concerns the variation of scores in two groups, for example, young versus old voters. The statistical hypothesis would be that the variance in opinions in the population of young voters is different from the variance in the population of old voters.  
 
-### Testing Two Variances in SPSS {Levene-2groups}
+### Testing two variances in SPSS {#Levene-2groups}
 
 #### Instructions
 
-Levene's F test for the null hypothesis that two groups have equal population variances is part of the independent-samples t test (see \@ref(comp-means)). The output in Figure \@ref(fig:Levene-output) shows that the polarization (variation) in attitudes towards immigrants is not the same among young and old voters, _F_ = 4.99, _p_ = .029. Polarization is stronger among old voters (_SD_ = 2.06) than among young voters (_SD_ = 1.26). 
+```{r SPSSLevene, echo=FALSE, out.width="640px", fig.cap="(ref:LeveneSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px")
+# Levene's F test for the null hypothesis that two groups have equal population variances is part of the independent-samples t test. 
 
-```{r Levene-output, echo=FALSE, fig.cap="SPSS output for Levene's test as part of an independent-samples t test."}
-knitr::include_url("Levene.htm",  height="400px")
+# The output in Figure \@ref(fig:Levene-output) shows that the polarization (variation) in attitudes towards immigrants is not the same among young and old voters, _F_ = 4.99, _p_ = .029. Polarization is stronger among old voters (_SD_ = 2.06) than among young voters (_SD_ = 1.26). 
+# 
+# In a similar way, we can test if three or more groups have equal population variances with Levene's F test using the option _Homogeneity of variance test_ in a one-way analysis of variance (command _Analyze >  COMPARE MEANS > ONE-WAY ANOVA_).
+
 ```
-
-In a similar way, we can test if three or more groups have equal population variances with Levene's F test using the option _Homogeneity of variance test_ in a one-way analysis of variance (command _Analyze >  COMPARE MEANS > ONE-WAY ANOVA_).
 
 #### Exercise
 
@@ -549,31 +543,43 @@ Thus, we return to statistics needed to test research hypotheses about score lev
 
 If you closely inspect Figure \@ref(fig:choice-diagram), you will see that we prefer to use a _t_ distribution if we compare two different groups (independent-samples t test) or two repeated observations for the same group (paired-samples t test). In contrast, we use analysis of variance with an _F_ distribution if we have three or more groups. 
 
-### Comparing Means in SPSS {#comp-means}
+### Comparing means in SPSS {#comp-means}
 
 #### Instructions
 
-Independent-samples t test
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/7_W2x7ut2wI" frameborder="0" allowfullscreen></iframe>
-
-------------
-
-Paired samples t test
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/h5pF8qlIIwk" frameborder="0" allowfullscreen></iframe>
-
-------------
-
-One-way analysis of variance
-
-```{r}
-# TBD: instruction & interpretation videos, use Fam's videos?
-# Execute one-way analysis of variance in SPSS with Analyze > Compare Means > One-Way ANOVA {or use general Linear Model also for one-way? (MCRS probably uses COmpare Means because it only disucsses one-way ANOVA) - between & within variance not labeled as such!}.
-# Interpret results. Including reporting analysis of variance results?
+```{r SPSSTindep, echo=FALSE, out.width="640px", fig.cap="(ref:TindepSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/g4O0oTVm-Tk", height = "360px")
+# Goal: association as level differences between groups: are females more wiling to donate to a fund raiser than males?
+# Example: donors.sav, outcome is willingness to donate (post), predictor (grouping variable) is sex (0, 1).
+# Technique: independent-samples t test.
+# SPSS menu: Compare Means ; options: check level of confidence interval.
+# Paste & Run.
+# Interpret output: choose right row in test table depending on Levene's F test ; test result and significance, confidence interval.
+# Check assumptions: each group more than 30 observations or normally distributed (histogram panelled by sex).
 ```
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/fnnUmvrIJgw" frameborder="0" allowfullscreen></iframe>
+```{r SPSSTpaired, echo=FALSE, out.width="640px", fig.cap="(ref:TpairedSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/7mGKG3mLqN0", height = "360px")
+# Goal: Association as score level change (due to intermediary treatment).
+# Example: donors.sav, outcome is willingness to donate post and prior exposure to a fund raiser campaign.
+# Technique: paired-samples t test ; repeated measurements.
+# SPSS menu: Compare Means ; second selected variable will be subtracted form the first, so post-pre is better combination; options: check level of confidence interval.
+# Paste & Run.
+# Interpret output: test result and significance, confidence interval.
+# Check assumptions: each measurement more than 30 observations or normally distributed (histogram per variable).
+```
+
+```{r SPSS1way, echo=FALSE, out.width="640px", fig.cap="(ref:1waySPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/1-kh9_pGI9k", height = "360px")
+# Execute one-way analysis of variance in SPSS with Analyze > Compare Means > One-Way ANOVA {or use general Linear Model also for one-way? (MCRS probably uses Compare Means because it only disucsses one-way ANOVA) - between & within variance not labeled as such!).
+# Goal: association as level differences between three or more groups: Does the endorser matter to the level of willingness to donate to a fund raiser?
+# Example: donors.sav, outcome is willingness to donate (post), predictor (grouping variable) is endorser (0, 1).
+# Technique: one-way ANOVA.
+# SPSS menu: Compare Means ; post hoc: Bonferroni ; options: descriptives, homogeneity of variance test, means plot.
+# Paste & Run.
+# Check assumptions: F test homogeneous popualtion variances or groups of equal size ; post-hoc t tests: each group more than 30 observations or normally distributed.
+# Interpret output: F test on the null hypothesis that all groups have equal population means - point out between groups sum of squares? ; post-hoc t test for pairwise comparison of (population) means ; test result and significance, confidence interval.
+```
 
 #### Exercises
 
@@ -696,29 +702,47 @@ The two variables here are exposure and brand awareness. One combination of scor
 
 Measures of association are statistics that put a number to the pattern of group score levels or combinations of scores. The exact statistic that we use depends on the measurement level of the variables. For numerical variables, measured at the interval or ratio level, we use Pearson's correlation coefficient or the regression coefficient. For ordinal variables with quite a lot of different scores, we use Spearman's rank correlation. 
 
-For categorical variables, measured at the nominal or ordinal level, chi-squared indicates whether variables are statistically associated. The larger chi-squared, the less probable it is that the variables are not associated in the population. If variables are not associated, they are said to be _statistically independent_.  
+For categorical variables, measured at the nominal or ordinal level, chi-squared indicates whether variables are statistically associated. The larger chi-squared, the less probable it is that the variables are not associated in the population. If variables are not associated, they are said to be _statistically independent_.
 
 Several measures exist that express the strength of the association between two categorical variables. We use Phi and Cramer's V (two nominal variables, symmetric association), Goodman & Kruskals tau (two nominal variables, asymmetric association), Kendalls tau-b (two categorical ordinal variables, symmetric association), and Somers' d (two categorical ordinal variables, symmetric association).
 
-### Testing Associations in SPSS
+### Testing associations in SPSS {#associationSPSS}
 
 #### Instructions
 
-Correlations
+```{r SPSScorrelation, echo=FALSE, out.width="640px", fig.cap="(ref:correlationSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/2g3Oyfe76h0", height = "360px")
+# Goal: association as combinations of scores
+# Example: consumers.sav, brand awareness by advertisement exposure
+# Technique: Pearson and Spearman correlations for two numeric variables
+# Check data: check linearity in scatterplot, add lines for means to explain combinations of scores that determine the correlation, add regression line to point out the influence of a bivariate outlier ; Spearman's rank correlation is less sensative to bivariate outliers
+# SPSS menu: Correlate > Bivariate
+# Paste & Run.
+# Interpret output: size and statistical significance, no confidence interval  ; use bootstrapping for a confidence interval (see other video)
+# Check assumptions: for using t distribution, Pearson: histograms with normal distribution (mention don't show), Spearman: samples size over 30 
+```
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/Kis6IwuqKjc" frameborder="0" allowfullscreen></iframe>
+```{r SPSSregsimple, echo=FALSE, out.width="640px", fig.cap="(ref:regsimpleSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/qgOLWulSERs", height = "360px")
+# Goal: asymmetric association as prediction
+# Example: consumers.sav, brand awareness by advertisement exposure
+# Technique: regression with confidence intervals
+# SPSS menu: regression>linear with CI under Statistics.
+# Paste & Run.
+# Interpret output: R2, F test, predictive effect strength (b*) and change (b) with 95% confidence interval.
+# Check assumptions: in chapter on moderation with regression analysis?
+```
 
--------------
-
-Regression
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/L9yFGtscyL8" frameborder="0" allowfullscreen></iframe>
-
--------------
-
-Chi-squared test on a contingency table
-
-<iframe width="640" height="360" src="https://www.youtube.com/embed/GgA2EE9wML4" frameborder="0" allowfullscreen></iframe>
+```{r chisqcrossSPSS, echo=FALSE, out.width="640px", fig.cap="(ref:chisqcrossSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/Nqtg8q-S0k8", height = "360px")
+# Goal: association as relatively frequent/infrequent category combinations
+# Example: consumers.sav, word of mouth and sex
+# Technique: cross-tabulation
+# SPSS menu: Descriptive Statistics > Crosstabs with option Display clustered bar charts ; Statistics: chi square ; Phi and Cramer's V (two nominal variables, symmetric association), Goodman & Kruskals tau (two nominal variables, asymmetric association), Kendalls tau-b (with lambda: two categorical ordinal variables, symmetric association), and Somers' d (two categorical ordinal variables, symmetric association) ; Cells: column percentages and expected frequencies
+# Paste & Run.
+# Check assumptions: 2x2 table so Fisher's exact test ; larger tables: sufficient number of expected observations in each cell, a minimum of one and at least 80% above five
+# Interpret output: statistical test ; association size ; association contents
+```
 
 #### Exercises
 
@@ -768,25 +792,22 @@ p < .001. More exposure tends to go together with more
 brand awareness.
 ```
 
-2. How well can we predict brand awareness with ad exposure, having heard through word of mouth, and consumer's sex?
+2. How well can we predict brand awareness with ad exposure?
 
 ```{r eval=FALSE}
 SPSS syntax:
 
 * Check data.
-FREQUENCIES VARIABLES=ad_expo brand_aw wom gender
+FREQUENCIES VARIABLES=ad_expo brand_aw
   /ORDER=ANALYSIS.
-* Turn dichotomies into 0/1 variables.
-RECODE wom gender (2=1) (1=0) INTO heard male.
-EXECUTE.
-* Multiple regression.
+* Simple regression.
 REGRESSION
   /MISSING LISTWISE
   /STATISTICS COEFF OUTS CI(95) R ANOVA
   /CRITERIA=PIN(.05) POUT(.10)
   /NOORIGIN 
   /DEPENDENT brand_aw
-  /METHOD=ENTER ad_expo heard male.
+  /METHOD=ENTER ad_expo.
 
 Check data:
 
@@ -800,22 +821,13 @@ attention to the assumptions yet.
 
 Interpret the results:
 
-Ad exposure, having heard through word of mouth, and 
-consumer sex help to predict about a quarter of the 
-variation in brand awareness scores, R2 = .28, 
-F (3, 58) = 7.51, p < .001.
+Ad exposure predicts about one fifth of the 
+variation in brand awareness scores, R2 = .21, 
+F (1, 60) = 15.87, p < .001.
 The predictive effect of exposure to brand advertisements 
-is moderately strong (b* = 0.42). An additional
+is moderately strong (b* = 0.46). An additional
 unit of exposure increases the predicted brand awareness
-with 0.4 points, t = 3.72, p < .001, 95%[0.19; 0.63].
-Word of mouth, against expectations, reduces brand 
-awareness. People with word of mouth information have on
-average 1 point less brand awareness, t = -2.37, p = .021, 
-95%CI[-1.83; -0.15] if we control for exposure.
-Finally, there is hardly a difference between females and
-males, t = -0.75, p = .456, 95%CI[-1.04; 0.47]. Males
-have on average 0.28 points less brand awareness than 
-females.
+with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].
 ```
 
 3. Does word of mouth involve women rather then men? Interpret the contents, strength, and statistical significance of the association. Have a look at Section \@ref(SPSS-exact) if you forgot which significance to interpret.
@@ -890,9 +902,10 @@ It is not a coincidence that most of the research hypotheses in the examples are
 
 If the research hypothesis is the alternative hypothesis, we have to formulate the null hypothesis ourselves. This is very important, because it is this hypothesis that is actually tested as we will see in a later section. Some examples:  
 
-* An research hypothesis stating that average media literacy of children is below 5.5 is an alternative hypothesis. The associated null hypothesis would be that average media literacy is at least 5.5.
+* A research hypothesis stating that average media literacy of children is below 5.5 is an alternative hypothesis. The associated null hypothesis would be that average media literacy is at least 5.5.
 
 * If the alternative hypothesis states that variances or group means are unequal in the population, the null hypothesis would be that they are equal in the population.  
+
 * An alternative hypothesis expecting a correlation between exposure and brand awareness requires the null hypothesis that there is no such association in the population.  
 
 ### Nil hypothesis
@@ -900,7 +913,7 @@ Null hypotheses are quite often stating that there is no difference or no associ
 
 A null hypothesis on association in the population simply assigns the value zero to the measure of association in the population. For example, Spearman's rho or Pearson's correlation between exposure and brand awareness are hypothesized to be zero in the population. For a measure of association, zero always means that there is no association.  
 
-This also applies to the regression coefficient (_b_ or or _b*_ in the regression equation): If it is zero, the predictor variable is useless for predicting the outcome variable. In these cases, the null hypothesis is the nil. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero.  
+This also applies to the regression coefficient ($b$ or or $b^*$ in the regression equation): If it is zero, the predictor variable is useless for predicting the outcome variable. In these cases, the null hypothesis is the nil. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero.  
 
 ## One-Sided and Two-Sided Tests
 
@@ -1103,7 +1116,7 @@ The ultimate goal of the test is to increase our knowledge. To this end, we have
 ### Reporting to fellow scientists
 Fellow scientists must be able to see the exact statistical test results. According to APA6, we should report the test statistic, the associated degrees of freedom (if any), the value of the test statistic, the p value of the test statistic, and the confidence interval (if any). The APA6 requires a particular format for presenting statistical results and it demands that the results are included at the end of a sentence.  
 
-The statistical results for a _t_-test on one mean, for example, would be:  
+The statistical results for a _t_ test on one mean, for example, would be:  
 
 <center>_t_ (67) = 2.73, p = .004, 95%CI[4.13, 4.87]</center>  
 
@@ -1200,16 +1213,16 @@ The situation becomes even worse if we do three or more tests on the same sample
 The phenomenon that we are dealing with probabilities of making Type I errors that are higher (_inflated Type I errors_) than the significance level that we want to use, is called _capitalization on chance_. Applying more than one test to the same data is one way to capitalize on chance. If you do a lot of tests on the same data, it is very rare not to find some statistically significant results even if all null hypotheses are true.  
 
 ### Capitalization on chance in post-hoc tests  
-This type of capitalization on chance may occur, for example, in analysis of variance. To test the research hypothesis that the celebrity endorsing a fundraising campaign makes a difference to people's willingness to donate, we may organize an experiment using four versions of a video clip as the treatment, each clip featuring a different celebrity endorsing the campaign. This results in four groups of subjects, each group having an average score on their willingness to donate. As a first step, we test the null hypothesis that all groups have equal population means using an _F_-test (analysis of variance).  
+This type of capitalization on chance may occur, for example, in analysis of variance. To test the research hypothesis that the celebrity endorsing a fundraising campaign makes a difference to people's willingness to donate, we may organize an experiment using four versions of a video clip as the treatment, each clip featuring a different celebrity endorsing the campaign. This results in four groups of subjects, each group having an average score on their willingness to donate. As a first step, we test the null hypothesis that all groups have equal population means using an _F_ test (analysis of variance).  
 
-If this test is statistically significant, we reject the null hypothesis and conclude that at least two groups have different population means. The next question is: Which groups, that is, endorsement by which celebrities, display a different willingness to donate? To answer this question, we must do post-hoc _t_-tests on pairs of groups. With four groups, we have six pairs of groups, so we have six _t_-tests on independent means. The probability of rejecting at least one true null hypothesis of no difference is much higher than five percent if we use a significance level of five percent for each single _t_-test.  
+If this test is statistically significant, we reject the null hypothesis and conclude that at least two groups have different population means. The next question is: Which groups, that is, endorsement by which celebrities, display a different willingness to donate? To answer this question, we must do post-hoc _t_ tests on pairs of groups. With four groups, we have six pairs of groups, so we have six _t_ tests on independent means. The probability of rejecting at least one true null hypothesis of no difference is much higher than five percent if we use a significance level of five percent for each single _t_ test.  
 
 ### Correcting for capitalization on chance  
-We can correct in several ways for this type of capitalization on chance, for example, the Bonferroni correction. It merely divides the significance level that we use for each test by the number of tests that we do. In our example, we do six _t_-tests, so we divide the significance level of five percent by six. The resulting significance level for each _t_-test is .008. If a_t_-test's p value is below .008, we reject the null hypothesis but we do not reject it otherwise.  
+We can correct in several ways for this type of capitalization on chance, for example, the Bonferroni correction. It merely divides the significance level that we use for each test by the number of tests that we do. In our example, we do six _t_ tests, so we divide the significance level of five percent by six. The resulting significance level for each _t_ test is .008. If a_t_ test's p value is below .008, we reject the null hypothesis but we do not reject it otherwise.  
 
 The Bonferroni correction is a rather coarse correction, which is not entirely correct. But it has a simple logic that directly links to the problem of capitalization on chance. Therefore, it is a good correction to understand the problem, which is the main goal we want to attain here. We skip better but more complicated alternatives to Bonferroni correction.  
 
-Note that we need not apply a correction if we specify a hypothesis beforehand about the two groups that we expect to differ. In the example of celebrity endorsement, we would not have to apply the Bonferroni correction to the _t_-test on the mean difference between subjects confronted to Celebrity A and Celebrity C if we had hypothesized that the willingness to donate differs here. Of course, we could have skipped the analysis of variance and gone straight to the _t_-test with such a hypothesis.
+Note that we need not apply a correction if we specify a hypothesis beforehand about the two groups that we expect to differ. In the example of celebrity endorsement, we would not have to apply the Bonferroni correction to the _t_ test on the mean difference between subjects confronted to Celebrity A and Celebrity C if we had hypothesized that the willingness to donate differs here. Of course, we could have skipped the analysis of variance and gone straight to the _t_ test with such a hypothesis.
 
 ### Specifying hypotheses afterwards  
 Capitalization on chance occurs if we apply different tests to the same variables in the same sample. This occurs in exploratory research in which we do not specify hypotheses beforehand but try out different predictors or different outcome variables. It occurs more strongly if we first have a look at our sample data and then formulate an hypothesis. Knowing the sample outcome, it is easy to specify a null hypothesis that will be rejected. This is plain cheating and it should be avoided at all times.

@@ -1,5 +1,5 @@
 # Probability Models: How Do I Get a Sampling Distribution? {#probmodels}
-> Key concepts: bootstrapping, sampling with replacement, exact approach, modelling, approximation with a theoretical probability distribution, binomial distribution, (standard) normal distribution, (Student) _t_ distribution, _F_ distribution, chi-squared distribution, condition checks, in/dependent samples, sample size, homogeneity of variance, expected values, independent samples, dependent samples, paired samples, matched samples.
+> Key concepts: bootstrapping, sampling with replacement, exact approach, modelling, approximation with a theoretical probability distribution, binomial distribution, (standard) normal distribution, (Student) _t_ distribution, _F_ distribution, chi-squared distribution, condition checks, sample size, homogeneity of variance, expected values, independent samples, dependent samples, paired samples, matched samples.
 
 In the previous chapter, we have drawn very many samples from a population to obtain the sampling distribution of a sample statistic. The procedure is quite simple: Draw a sample, calculate the desired sample statistic, for example, the proportion of yellow candies or the average candy weight in the sample, add the sample statistic value to the sampling distribution, and repeat this thousands of times.  
 
@@ -7,8 +7,8 @@ Although this procedure is simple, it is not practical. In our research project,
 
 ### Test your intuition or knowledge {-}
 
-```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 10)}
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="500px")
+```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
 ```
 
 1. Why does Figure \@ref(fig:models-summary1) not show a population? 
@@ -17,7 +17,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="500px
 With bootstrapping, we create a sampling
 distribution by sampling ("bootstrapping")
 from our initial sample. Therefore, we do not
-need the oroginal population for bootstrapping.
+need the original population for bootstrapping.
 ```
 
 2. Which type of sampling is better here: with or without replacement? Justify your answer. 
@@ -55,14 +55,14 @@ bootstrapped sampling distribution (yellow) is very
 similar to the true sampling distribution (grey).
 ```
 
-```{r }
+```{r models-summary-3}
 ####Exact approach.
 d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
                 Combinations = c("tail-tail-tail", "tail-tail-head", "head-tail-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"))
 knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Number of heads", "Combination"), align = c("l", "l"))
 ```
 
-4. Calculate the exact probability distribution of the number of heads in a toss of three fair coins (Figure \@ref(fig:)).
+4. Calculate the exact probability distribution of the number of heads in a toss of three fair coins (Table \@ref(tab:models-summary-3)).
 
 ```{r eval=FALSE}
 For the answer, see Section Exact Approaches
@@ -81,7 +81,7 @@ catgeorical variables, such as proportions and
 associations. 
 ```
 
-```{r models-summary2, echo=FALSE, out.width="420px", fig.cap="How do we approximate a sampling distribution with a theoretical probability distribution?", screenshot.opts = list(delay = 10)}
+```{r models-summary2, echo=FALSE, out.width="420px", fig.cap="How do we approximate a sampling distribution with a theoretical probability distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
 ```
 
@@ -137,10 +137,10 @@ On first reading, you may not know all answers. Try again after you have studied
 
 The first way to obtain a sampling distribution is still based on the idea of drawing very many samples. However, we only draw one sample from the population for which we collect data. As a next step, we draw a large number of samples from our initial sample. The samples drawn in the second step are called _bootstrap samples_. For each bootstrap sample, we calculate the sample statistic of interest and we collect them into the sampling distribution. We usually want about 5,000 bootstrap samples for our sampling distribution.  
 
-```{r bootstrapping, echo=FALSE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 10)}
+```{r bootstrapping, echo=FALSE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Variant of app random-variable (Ch. 1).
 # Generate and display a not too small (N = 50?) representative sample from a uniformly distributed population of five colours (don't show the population). Add a button to draw one bootstrap sample with replacement at a time, showing the distribution of colours in the sample (dotplot with coloured dots) and adding the proportion of yellow candies to the histogram of the sampling distribution (y-axis percentage of cases?), which already shows the true sampling distribution (binomial distribution) as a light histogram in the background. Allow the user to draw one thousand bootstrap samples and add the results to the histogram. Finally, allow the user to draw a new random initial sample.
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="500px")
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
 ```
 
 In Figure \@ref(fig:bootstrapping), an initial sample has been drawn from a population containing five candy colours in equal proportions.
@@ -190,14 +190,13 @@ distribution may still be nearly the same.
 See the answer to Exercise 3.
 ```
 
-<table>
-<tr><td>
-The _bootstrap_ concept refers to the story in which Baron von M&uuml;nchhausen saves himself by pulling himself and his horse by his bootstraps (or hair) out of a swamp. In a similar miraculous way, the bootstrap samples resemble the sampling distribution even though they are drawn from a sample instead of the population. This miracle requires some explanation and it need not work always as we will discuss in the remainder of this section.  
-</td><td width="216px">
-![Baron von M&uuml;nchhausen pulls himself and his horse out of a swamp.](figures/Munchhausen.png)
-</td></tr>
-</table>
+----
+<div style="column-count: 2; -moz-column-count: 2">
+The _bootstrap_ concept refers to the story in which Baron von M&uuml;nchhausen saves himself by pulling himself and his horse by his bootstraps (or hair) out of a swamp. In a similar miraculous way, the bootstrap samples resemble the sampling distribution even though they are drawn from a sample instead of the population. This miracle requires some explanation and it need not work always as we will discuss in the remainder of this section. 
 
+![Baron von M&uuml;nchhausen pulls himself and his horse out of a swamp.](figures/Munchhausen.png)
+</div>
+----
 
 ### Sampling with and without replacement  
 
@@ -231,7 +230,7 @@ In contrast, is it _not_ OK to sample without replacement as we normally do in r
 
 ### Limitations to bootstrapping  
 
-```{r bootstrap-lim, echo=FALSE, fig.cap="How is bootstrapping influenced by sample size?", screenshot.opts = list(delay = 10)}
+```{r bootstrap-lim, echo=FALSE, fig.cap="How is bootstrapping influenced by sample size?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # variant of app sampling-distribution.
 # Draw a sample of the user-specified size (slider) from a uniformly distributed population (five candy colors) ; show the sample (as dot plot) and collect the proportion of yellow candies for 1,000 bootstrap samples into a histogram (bin width = 0.1?), which already shows the true sampling distribution (binomial distribution) as a light histogram in the background.
 knitr::include_app("http://82.196.4.233:3838/apps/bootstrap-lim/", height="560px")
@@ -282,29 +281,32 @@ Bootstrapping is more or less the only way to get a sampling distribution for th
 ## Bootstrapping in SPSS {#boot-spss}
 
 ### Instructions
-In SPSS, several statistics can be bootstrapped. If so, the SPSS dialog for the statistic contains a button labelled _Bootstrap..._. A new menu opens, where you can select the bootstrapping option _Perform bootstrapping_ and set the number of bootstraps. It is recommended to use 5,000 bootstraps but you might try a lower number first to check computing time if your computer is not too fast. 
 
-```{r bootstrap-dialog, echo=FALSE, out.width= "450px", fig.cap="Screen shot of the SPSS bootstrap dialog."}
-knitr::include_graphics("figures/SPSSbootstrap.png")
+```{r SPSSbootstrap1, echo=FALSE, out.width="640px", fig.cap="(ref:bootstrap1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/6-MtiMhuuIg", height = "360px")
+# Perform bootstrapping in SPSS.
+# Example: candies.sav, independent-samples t test, average weight of red (colour = 4) and yellow (colour = 4) candies.
+# 
+# In SPSS, several statistics can be bootstrapped. If so, the SPSS dialog for the statistic contains a button labelled _Bootstrap..._. A new menu opens, where you can select the bootstrapping option _Perform bootstrapping_ and set the number of bootstraps. It is recommended to use 5,000 bootstraps but you might try a lower number first to check computing time if your computer is not too fast. 
+# 
+# You can set some more bootstrapping options. The Mersenne Twister seed is a number that starts the randomizer used to draw random sample. If run the bootstrap with  the same seed number (any number will do) as the previous time, SPSS will yield exactly the same results as the preceding time. If this number is not set, applying bootstrap at different times will produce slightly different results because different random bootstrap samples are drawn. These differences, however, are usually too small to be of importance. Only set the seed number if you want to replicate your exact results when you rerun the bootstrap.
+# 
+# The confidence level of the confidence interval can be changed. We will discuss confidence levels in Section \@ref(conf-interval). For now, never mind this option because the default (95%) is most widely used. There are two ways of calculating the confidence interval from the bootstraps. _Bias corrected accelerated (BCa)_ is the better option. Finally, it is possible to stratify the bootstrap sample. If you select a variable here, for example, candy colour, each bootstrap sample with have the same distribution of colours as the original sample. Usually, this is not necessary.
 ```
 
-You can set some more bootstrapping options. The Mersenne Twister seed is a number that starts the randomizer used to draw random sample. If run the bootstrap with  the same seed number (any number will do) as the previous time, SPSS will yield exactly the same results as the preceding time. If this number is not set, applying bootstrap at different times will produce slightly different results because different random bootstrap samples are drawn. These differences, however, are usually too small to be of importance. Only set the seed number if you want to replicate your exact results when you rerun the bootstrap.
-
-The confidence level of the confidence interval can be changed. We will discuss confidence levels in Section \@ref(conf-interval). For now, never mind this option because the default (95%) is most widely used. There are two ways of calculating the confidence interval from the bootstraps. _Bias corrected accelerated (BCa)_ is the better option. Finally, it is possible to stratify the bootstrap sample. If you select a variable here, for example, candy colour, each bootstrap sample with have the same distribution of colours as the original sample. Usually, this is not necessary.
-
-There is one thing you should be aware of. If you select the _Perform bootstrapping_ option, all subsequent analyses in SPSS that allow for bootstrapping will be bootstrapped as well. This is usually not what you want and it can be very time-consuming to the computer. Don't forget to deselect this option if you run a new analysis that can be bootstrapped.
-
-SPSS generates the sampling distribution in the background, so you cannot see it. SPSS just provides new p values ( _Sig._ ) and confidence intervals marked as _Bootstrap_. Report these values instead of the "ordinary" p value and confidence interval. For example, a bootstrapped independent-samples t test on the difference between the average weight of yellow and red candies produces the following output in SPSS (Figure \@ref(fig:bootstrap-indep)).
-
-```{r bootstrap-indep, echo=FALSE, fig.cap="SPSS output for a bootstrapped independent samples t test."}
-knitr::include_url("bootstrap.htm",  height="940px")
+```{r SPSSbootstrap2, echo=FALSE, out.width="640px", fig.cap="(ref:bootstrap2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/-HCEstRwsmU", height = "360px")
+# Interpret bootstrap results in SPSS.
+# SPSS generates the sampling distribution in the background, so you cannot see it. SPSS just provides new p values ( _Sig._ ) and confidence intervals marked as _Bootstrap_. Report these values instead of the "ordinary" p value and confidence interval. For example, a bootstrapped independent-samples t test on the difference between the average weight of yellow and red candies produces the following output in SPSS.
+# 
+# The first table in the output merely tells us the options we selected for bootstrapping. The table __Group Statistics__ gives us the group means, standard deviations, and standard error of the mean (to be discussed in Section \@ref(standard-error)). Each of these has a bootstrap confidence interval, illustrating that we can bootstrap any sample statistic. 
+# 
+# Then we get the usual summary of the t test without bootstrapping in the __Independent Samples Test__ table and, finally, the bootstrap results for the t test. If we compare test significance (p value) and confidence intervals between the regular t test and the bootstrapped t test, we see very similar results. The bootstrap confidence interval is slightly narrower than the regular confidence interval. Both confidence intervals suggest that the weight difference between yellow and red candies can be both positive (red candies are on average heavier) and negative (yellow candies are heavier), so we best conclude that there is no difference in average weight.
+# 
+# The tables with bootstrap results include a column headed __Bias__. This is the difference between the value of the statistic in the original sample and its average value over all bootstrap samples. Bias should be small, as it is here. We do not care about small bias values because we use a bias-corrected bootstrapping method.
+# 
+# There is one thing you should be aware of. If you select the _Perform bootstrapping_ option, all subsequent analyses in SPSS that allow for bootstrapping will be bootstrapped as well. This is usually not what you want and it can be very time-consuming to the computer. Don't forget to deselect this option if you run a new analysis that can be bootstrapped.
 ```
-
-The first table in the output merely tells us the options we selected for bootstrapping. The table __Group Statistics__ gives us the group means, standard deviations, and standard error of the mean (to be discussed in Section \@ref(standard-error)). Each of these has a bootstrap confidence interval, illustrating that we can bootstrap any sample statistic. 
-
-Then we get the usual summary of the t test without bootstrapping in the __Independent Samples Test__ table and, finally, the bootstrap results for the t test. If we compare test significance (p value) and confidence intervals between the regular t test and the bootstrapped t test, we see very similar results. The bootstrap confidence interval is slightly narrower than the regular confidence interval. Both confidence intervals suggest that the weight difference between yellow and red candies can be both positive (red candies are on average heavier) and negative (yellow candies are heavier), so we best conclude that there is no difference in average weight.
-
-The tables with bootstrap results include a column headed __Bias__. This is the difference between the value of the statistic in the original sample and its average value over all bootstrap samples. Bias should be small, as it is here. We do not care about small bias values because we use a bias-corrected bootstrapping method.
 
 ### Exercises 
 
@@ -433,7 +435,7 @@ heads i a throw (p = .125), one head (p = .375),
 and so on.
 ```
 
-A second approach to constructing a sampling distribution has implicitly been demonstrated in the preceding section on bootstrapping (Section ref\@(boot-approx)) and the section on probability distributions (Section \@ref(probdistribution)). In these sections, we calculated the true sampling distribution of the proportion of yellow candies in a sample from the probabilities of the colors. If we know or think we know the proportion of yellow candies in the population, we can exactly calculate the probability that a sample of ten candies includes one, two, three, or ten yellow candies. See the section on discrete random variables for details.  
+A second approach to constructing a sampling distribution has implicitly been demonstrated in the preceding section on bootstrapping (Section \@ref(boot-approx)) and the section on probability distributions (Section \@ref(probdistribution)). In these sections, we calculated the true sampling distribution of the proportion of yellow candies in a sample from the probabilities of the colors. If we know or think we know the proportion of yellow candies in the population, we can exactly calculate the probability that a sample of ten candies includes one, two, three, or ten yellow candies. See the section on discrete random variables for details.  
 
 The calculated probabilities of all possible sample statistic outcomes give us an exact approach to the sampling distribution. Note that I use the word _approach_ instead of _approximation_ here because the obtained sampling distribution is no longer an approximation, that is, more or less similar to the true sampling distribution. No, it is the true sampling distribution itself.  
 
@@ -453,23 +455,27 @@ It is usually wise to set a limit to the time you allow your computer to work on
 
 ### Instructions
 
-If SPSS offers an exact approach of the sampling distribution, the test dialog window contains an _Exact_ button. You will find it in the dialog for contingency tables (_Analyze>Descriptive Statistics>Crosstabs_) and in several legacy dialogs for non-parametric tests (_Analyze>Nonparametric Tests>Legacy Dialogs_). 
+```{r SPSSExact1, echo=FALSE, out.width="640px", fig.cap="(ref:Exact1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/7cZKqrlofAs", height = "360px")
+# Perform an exact test in SPSS.
+# Example: exact test on crosstab of candy colour and candy stickiness.
+# If SPSS offers an exact approach of the sampling distribution, the test dialog window contains an _Exact_ button. You will find it in the dialog for contingency tables (_Analyze>Descriptive Statistics>Crosstabs_) and in several legacy dialogs for non-parametric tests (_Analyze>Nonparametric Tests>Legacy Dialogs_). 
+# 
+# In the _Exact_ dialog, you only need to check the _Exact_ option. SPSS sets an upper limit of five minutes to the execution of the command. If this happens to be too short, increase it and run the test again.  
+# 
+# Are some candy colours more sticky? An exact approach calculates and reports only a p value. We need a contingency table of the two categorical variables and a Fisher-exact test. This test is obtained if both the option _Chi-square_ is selected in the _Statistics..._ dialog and the option _Exact_ is selected in the _Exact..._ dialog. 
+# 
+# Note that SPSS automatically executes a Fisher-exact test on a 2x2 table, that is, a table containing two rows and two columns. For larger tables, the _Exact_ option must be selected to get the exact test.
+```
 
-In the _Exact_ dialog, you only need to check the _Exact_ option. SPSS sets an upper limit of five minutes to the execution of the command. If this happens to be too short, increase it and run the test again.  
-
-![Screen shot of SPSS exact approach dialog](figures/SPSSexact.png)
-
-Are some candy colours more sticky? An exact approach calculates and reports only a p value. We need a contingency table of the two categorical variables and a Fisher-exact test. This test is obtained if both the option _Chi-square_ is selected in the _Statistics..._ dialog and the option _Exact_ is selected in the _Exact..._ dialog. 
-
-Note that SPSS automatically executes a Fisher-exact test on a 2x2 table, that is, a table containing two rows and two columns. For larger tables, the _Exact_ option must be selected to get the exact test.
-
-The output of a Fisher-exact test on the relation between candy colour and candy stickiness is shown below. We included column percentages in the cells and a symmetric measure of association (Phi and Cramer's V). 
-
-<iframe width="100%" height="925" src="fisher.htm" frameborder="0" allowfullscreen></iframe>
-
-For the test result, you should interpret the p value reported in the table __Chi-Square Tests__. This value is clearly below .05 so we conclude that the test is statistically significant. It is unlikely that all colours are equally sticky in the population (_p_ = .010). According to the percentages in the contingency table, blue, red, and yellow candies are more often sticky than orange and green candies and the association is strong (Phi = .52). 
-
-In Section \@ref(cond-probdistr), we will learn that we should use the exact p value instead of the default asymptotic p value in a table such as the current one because of the low expected cell values.
+```{r  SPSSExact2, echo=FALSE, out.width="640px", fig.cap="(ref:Exact2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/B-I6T4gCdsM", height = "360px")
+# Interpret exact test results in SPSS.
+# Example: exact test on crosstab of candy colour and candy stickiness.
+# The output of a Fisher-exact test on the relation between candy colour and candy stickiness is shown below. We included column percentages in the cells and a symmetric measure of association (Phi and Cramer's V). 
+# 
+# For the test result, you should interpret the p value reported in the table __Chi-Square Tests__. This value is clearly below .05 so we conclude that the test is statistically significant. It is unlikely that all colours are equally sticky in the population (_p_ = .010). According to the percentages in the contingency table, blue, red, and yellow candies are more often sticky than orange and green candies and the association is strong (Phi = .52). 
+```
 
 ### Exercises 
 
@@ -536,7 +542,7 @@ sticky, p = .480.
 
 Because bootstrapping and exact approaches to the sampling distribution require quite a lot of computing power, these methods were not practical in the not so very distant pre-computer age. In those days, mathematicians and statisticians discovered that many sampling distributions look a lot like known mathematical functions. For example, the sampling distribution of the sample mean can be quite similar to the well-known bell-shape of the _normal distribution_ or the closely related _(Student) t distribution_. The mathematical functions are called _theoretical probability distributions_.  
 
-```{r normal-approximation, echo=FALSE, fig.cap="Normal function as theoretical approximation of a sampling distribution.", screenshot.opts = list(delay = 10)}
+```{r normal-approximation, echo=FALSE, fig.cap="Normal function as theoretical approximation of a sampling distribution.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Variant of app: p-values.
 # Let a button generate a normal sampling distribution (with mean 2.8 and a random SD between 0.2 and 0.8) representing average candy weight in a sample bag ; represent it as a histogram (with fixed x-axis, so distributions with different SD have different widths, and number of bins such that the outer (2) bin(s) contain(s) 2.5% of the area under the normal curve) ; colour the bars for the upper and lower 2.5% of cases in the histogram (to draw attention to the tails as important areas) ; project the normal function on top of it ; add two vertical lines to the graph demarcating the outer 2.5% of the area under the normal curve (display the probabilities to left and to right)
 knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
@@ -626,8 +632,8 @@ Apart from the normal distribution, there are several other theoretical probabil
 
 For most of these theoretical probability distributions, sample size is important. The larger the sample, the better. There are additional conditions that must be satisfied such as the distribution of the variable in the population. The rules of thumb are summarized in Table \@ref(tab:thumb). Bootstrapping and exact tests can be used if conditions for theoretical probability distributions have not been met. Special conditions apply to regression analysis (see Chapters \@ref(moderation) and \@ref(mediation)).
 
-```{r thumb, echo=FALSE, screenshot.opts = list(delay = 5)}
-knitr::kable(rbind(c("Normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", " "), c("Normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known"), c("_t_ distribution", "one or two means", "> 30", "OR variable is normally distributed in each group's population"), c("_t_ distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("_t_ distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("_t_ distribution", "regression coefficient", "-", "-"), c("_F_ distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("_F_ distribution", "two variances", "-", "no conditions for Levene's _F_ test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." )
+```{r thumb, echo=FALSE, screenshot.opts=list(delay = 2)}
+knitr::kable(rbind(c("Normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", " "), c("Normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known"), c("t distribution", "one or two means", "> 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "-", "-"), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." )
 ```
 
 ### Checking conditions  
@@ -645,7 +651,7 @@ Up to this point, we have focused on rather simple sample statistics such as the
 
 If we compare two or more groups, for example, the average weight of yellow and red candies, the sample statistic for which we want to have a sampling distribution must take into account both the average weight of yellow candies and the average weight of red candies. The sample statistic must be the difference between the averages of the two samples. 
 
-```{r mean-independent, echo=FALSE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="540px", screenshot.opts = list(delay = 10)}
+```{r mean-independent, echo=FALSE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="540px", screenshot.opts = list(delay = 5), dev="png"}
 # Demonstrate the construction of a sampling distribution of mean differences for independent samples; generate more or less normal dotplots for two populations (normal distributions): weight of red candies and yellow candies; a button allows to draw a random sample from each population, showing a dotplot for each sample (first draw the reds, then the yellows) with the mean added as vertical line with value ; then calculate the difference of the two means and store this difference in a sampling distribution, which is also shown as a histogram. Add a button to draw 1,000 samples and show the resulting sampling distribution.
 knitr::include_app("http://82.196.4.233:3838/apps/mean-independent/", height="580px")
 ```

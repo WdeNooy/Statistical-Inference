@@ -15,8 +15,9 @@ However, if we do _not_ reject the null hypothesis, we cannot make a Type I erro
 
 ### Test your intuition or knowledge {-}
 
-```{r test-power, fig.cap="Effect size, power, Type I and Type II error."}
+```{r test-power, echo=FALSE, fig.cap="Effect size, power, Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
 # Use app TypeI-II-errors.
+knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="735px")
 ```
 
 Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both sampling distributions are approximated with a t distribution. At the top is the hypothetical world of the researcher. In this hypothetical world, the researcher's null hypothesis is true, namely that average candy weight is 2.8 gram. At the bottom is the real world in which average candy weight is 2.9 gram. The standard deviation of candy weights is 0.5.  
@@ -57,7 +58,11 @@ We have learned that larger samples have smaller standard errors (Section \@ref(
 
 A larger sample offers more precision, so we will more often be convinced that the difference between our sample outcome and the hypothesized value is sufficient to reject the null hypothesis. For example, we would reject the null hypothesis that average candy weight is 2.8 gram in the population if the average weight in our sample bag is 2.75 gram and our sample bag is very big. But we may not reject the null hypothesis if we have the same outcome in a small sample bag.  
 
-<img src="figures/metaldetector.png" alt="security metal detector." align="right"> Of course, the size of the difference between our sample outcome and the hypothesized value matters as well. If average candy weight in our sample bag deviates more from the average weight that we expect according to the null hypothesis, we are more likely to reject the latter. If we think of our statistical test as a security metal detector, our test will pick up smaller amounts of metal if the sample is larger.
+<div style="column-count: 2; -moz-column-count: 2">
+Of course, the size of the difference between our sample outcome and the hypothesized value matters as well. If average candy weight in our sample bag deviates more from the average weight that we expect according to the null hypothesis, we are more likely to reject the latter. If we think of our statistical test as a security metal detector, our test will pick up smaller amounts of metal if the sample is larger.
+
+![Security metal detector](figures/metaldetector.png)
+</div>
 
 The probability to reject a null hypothesis, then, depends both on sample size and the difference between what we expect null hypothesis) and what we find (sample outcome). With a larger sample, a smaller difference between outcome and expectation rejects the null hypothesis. 
 
@@ -107,32 +112,32 @@ Note that Cohen's d can take values above one. These are to be considered strong
 ### How to calculate Cohen's d from SPSS output 
 Unfortunately, the t test commands in SPSS have no option to calculate Cohen's d. It is, however, relatively easy to calculate Cohen's d by hand from SPSS output. Remember that we must divide the unstandardized effect by the standard deviation.
  
-For a t test on one mean, the unstandardized effect is the difference between the sample mean and the hypothesized mean. SPSS reports this value in the column __Mean Difference__ of the table with test results. Drop any negative signs! Divide it by the standard deviaiton of the variable as given in Table __One-Sample Statistics__.
+For a t test on one mean, the unstandardized effect is the difference between the sample mean and the hypothesized mean. SPSS reports this value in the column __Mean Difference__ of the table with test results. Drop any negative signs! Divide it by the standard deviation of the variable as given in Table __One-Sample Statistics__.
 
 In the example of Figure \@ref(fig:1mean-output), Cohen's d is 1.034 / 1.643 = 0.63. This is a moderate effect.
 
-```{r 1mean-output2, echo=FALSE, fig.cap="SPSS output for a t test on one mean."}
+```{r 1mean-output2, eval=FALSE, echo=FALSE, fig.cap="SPSS output for a t test on one mean."}
 knitr::include_url("1mean.htm",  height="270px")
 ```
 
 For a paired-samples t test, the unstandardized effect size is reported in the column __Mean__ in the Table __Paired Samples Test__. The standard deviation of the difference can be found in column __Std. Deviation__ in the same table. Divide the first by the second, for example, 1.880 / 1.033 = 1.82 in Figure \@ref(fig:pairedt-output). This is a strong effect.
 
-```{r pairedt-output, echo=FALSE, fig.cap="SPSS output for a paired-samples t test."}
+```{r pairedt-output, eval=FALSE, echo=FALSE, fig.cap="SPSS output for a paired-samples t test."}
 knitr::include_url("paired_t.htm",  height="380px")
 ```
 
-For an independent-samples t test, the situation is less fortuitous because SPSS does not report the pooled sample standard deviation that we need. The pooled sample standard deviation takes sort of an average of the outcome variable's standard deviations in the two groups. As an approximation, we can calculate Cohen's d as follows: Dobule the t value and divide it by the square root of the degrees of freedom.
+For an independent-samples t test, the situation is less fortuitous because SPSS does not report the pooled sample standard deviation that we need. The pooled sample standard deviation takes sort of an average of the outcome variable's standard deviations in the two groups. As an approximation, we can calculate Cohen's d as follows: Double the t value and divide it by the square root of the degrees of freedom.
 
-In Figure \@ref(fig:indept-output), Cohen's d equals (2 * 1.602) / &#8730;(30.009) = 3.204 / 5.478 = 0.58. This is a moderate effect size.
+In Figure \@ref(fig:indept-output), Cohen's d equals $(2 * 1.602) / \surd(30.009) = 3.204 / 5.478 = 0.58$. This is a moderate effect size.
 
-```{r indept-output, echo=FALSE, fig.cap="SPSS output for an independent-samples t test."}
+```{r indept-output, eval=FALSE, echo=FALSE, fig.cap="SPSS output for an independent-samples t test."}
 knitr::include_url("Levene.htm",  height="350px")
 ```
 
 ### Association as effect size {#assoc-size} 
 Measures of association such as Pearson's product-moment correlation coefficient or Spearman's rank correlation coefficient express effect size if the null hypothesis expects no correlation in the population. If zero correlation is expected, a correlation coefficient calculated for the sample expresses the difference between what is observed (sample correlation) and what is expected (zero correlation in the population). 
 
-Effect size is also zero in the null hypotheses used for tests on the standardized regression coefficient (Beta or, according to APA6, _b_*), _R_^2^ for the regresison model, and eta^2^ for analysis of variance. 
+Effect size is also zero in the null hypotheses used for tests on the standardized regression coefficient (Beta or, according to APA6, _b_*), _R_^2^ for the regression model, and eta^2^ for analysis of variance. 
 
 Measures of association and standardized regression coefficients are standardized, so effect size can be interpreted using rules of thumb, e.g., an association between 0 and .10 is interpreted as no or a very weak association, between .10 and .30 is weak, between .30 and .50 is moderate, .50 to .80 is strong, and .80 to 1.00 is very strong, while exactly 1.00 is a perfect association (if 1.00 is the maximum value). Note that we ignore the sign (plus or minus) of the effect if we interpret its size. 
 
@@ -169,11 +174,14 @@ Our null hypothesis states that average candy weight in the population is 2.8 gr
 
 We do not know whether average candy weight is 2.9 grams in the true population. So we may regard this as another hypothesis. Let us call this the alternative hypothesis _H_~1~. Note that this is not an ordinary alternative hypothesis because it does not include all outcomes not covered by the null hypothesis (_H_~0~). Instead, it represents only one value, which is an important value to us because it represents a population with a small but interesting effect size. 
 
-<table><tr><td>
+----
+<div style="column-count: 2; -moz-column-count: 2">
 Our habit of formulating a null hypothesis and an alternative hypothesis for all situations not covered by the null hypothesis is generally attributed to the statistician R.A. Fisher. This, however, is not entirely correct [see, e.g., @RefWorks:3931]. Fisher introduced the concept of a null hypothesis [@RefWorks:3932: 18] but not the concept of an alternative hypothesis.
 The statisticians Jerzy Neyman and Egon Pearson introduced the idea of working with two or more hypotheses. But the two hypotheses do not cover all possible population values and they were usually not called a null and alternative hypothesis. They specify two or more different population values. A statistical test is used to determine which of the hypotheses fits the sample best. [@RefWorks:3906]
-</td><td width="205px">  
-![egon Pearson](figures/egonpearson.jpg) Egon Pearson</td></tr></table>
+
+![Egon Pearson.](figures/egonpearson.png)
+</div>
+---- 
 
 Figure \@ref(fig:TypeI-II-errors) illustrates this situation. The top graph represents the sampling distribution according to our null hypothesis. This sampling distribution is derived from our hypothetical population in which there is no effect. Our null hypothesis is true for this population. In our current example, average candy weight is 2.8 grams in this hypothetical population.  
 
@@ -181,10 +189,10 @@ The bottom graph represents the sampling distribution for an imaginary populatio
 
 By the way, average population candy weights are not depicted in the graphs but you should know by now that the average in a normal distribution is situated at the top of the bell shape and that the average of a sample mean sampling distribution is equal to the population average because a sample mean is an unbiased estimator.  
 
-```{r TypeI-II-errors, echo=FALSE,fig.cap="Simulation of Type I and Type II error."}
+```{r TypeI-II-errors, echo=FALSE,fig.cap="Simulation of Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
 #This Shiny app illustrates Type I and Type II Error. Interaction helps to understand how significance level and power are related.  
 #Source: Adapted from Tarik Gouhier, type1vs2-master, https://github.com/tgouhier/type1vs2
-knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="880px")
+knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="735px")
 ```
 
 Before reading on, try to make sense of the two graphs in Figure \@ref(fig:TypeI-II-errors) and how they relate to each other:  
@@ -215,7 +223,7 @@ Now that we know the true sampling distribution if there is a small effect in th
 ### Type II error  
 If there is a (small) effect in the population, the null hypothesis is not true. For example, average candy weight is not 2.8 gram, it is 2.9 gram. If our sample mean is close to 2.8 gram, we may not reject the null hypothesis even if it is not true. This is a _Type II error_: not rejecting a false null hypothesis.  
 
-The probability that we make a Type II error if there is a small effect is expressed by the blue section in the bottom graph. It is usually denoted by the Greek letter beta ($/beta$). The blue section represents the probability of drawing a sample from this population with a small effect size that has a t value that is NOT in the rejection region, so the null hypothesis is NOT rejected. See the top graph.  
+The probability that we make a Type II error if there is a small effect is expressed by the blue section in the bottom graph. It is usually denoted by the Greek letter beta ($\beta$). The blue section represents the probability of drawing a sample from this population with a small effect size that has a t value that is NOT in the rejection region, so the null hypothesis is NOT rejected. See the top graph.  
 
 ### Power of the test  
 The probability of NOT making a Type II error is called the _power of the test_. It is of course equal to one minus the probability of making a Type II error, that is, 1 - $\beta$. The power of the test is represented by the orange sections in the bottom graph. They represent the probability of getting a sample t value that makes the researcher reject the null hypothesis. So a false null hypothesis is rejected and we do not make an error.  
@@ -231,10 +239,10 @@ Figure \@ref(fig:power-H0-rejections) illustrates the concept of test power. It 
 
 For each sample, the test statistic t is calculated and the right-sided p value. The 1,000 t values are shown in the blue histogram and the p values are collected in the red histogram. If the test is significant, the null hypothesis is rejected. Test power and the proportion of samples for which the null hypothesis is rejected are shown above the blue histogram.  
 
-```{r power-H0-rejections, fig.cap="The relevance of effect size and sample size to test power for a right-sided test on one sample mean ($\alpha$ = 0.05)."}
+```{r power-H0-rejections, echo=FALSE, fig.cap="The relevance of effect size and sample size to test power for a right-sided test on one sample mean (alpha = 0.05).", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 #This Shiny app shows the relevance of effect size and sample size to the power of a test. 
 #Source: ShinyApps-spark (niet meer gevonden op GitHub)
-knitr::include_app("http://82.196.4.233:3838/apps/ttest_simulation/", height=680)
+knitr::include_app("http://82.196.4.233:3838/apps/ttest_simulation/", height=720)
 ```
 
 First, familiarize yourself with the histograms in Figure \@ref(fig:power-H0-rejections) by figuring out the answers to the following questions:
@@ -261,7 +269,7 @@ For power, the conventional rule of thumb is that we like to have at least 80% p
 
 Power is set to a lower level because the null hypothesis is usually assumed to reflect our best knowledge about the world. From this perspective, we are keener on avoiding the error of falsely rejecting the null hypothesis (our current best knowledge) than falsely accepting it. This approach, however, is not without criticisms as we will discuss in Chapter 6. Anyway, if you want to raise the power to the same level of .95, you can do so; it will require a larger sample.  
 
-Unfortunately, test power receives little attention in several software packages for statistical analysis. Using power and effect size to calculate the required sample size is usually not provided in the package. To calculate sample size, we need dedicated software, for example A[GPower][http://www.gpower.hhu.de/].  
+Unfortunately, test power receives little attention in several software packages for statistical analysis. Using power and effect size to calculate the required sample size is usually not provided in the package. To calculate sample size, we need dedicated software, for example [GPower](http://www.gpower.hhu.de/).  
 
 ```{r sample-size-power}
 #add Shiny app to determine sample size for a specified (standardized) effect size, significance level, and test power for some (simple) tests?
@@ -282,7 +290,7 @@ Second, test power and Type II errors are important in situations in which we do
 
 As noted before (Section \@ref(null-alt)), the research hypothesis usually is the alternative hypothesis. We expect something to change, to be(come) different rather than be or stay the same. We expect an association to be present rather than absent.
 
-In this situation, rejection of the null hypothesis supports our alternative hypothesis, hence our research hypothesis. We are glad if we reject the null hypothesis because it suports our research hypothesis. We know that we can be wrong because our null hypothesis may still be true even if the probability of drawing a sample like the one we have drawn is so small that we have to reject the null hypothesis. This is the Type I error. 
+In this situation, rejection of the null hypothesis supports our alternative hypothesis, hence our research hypothesis. We are glad if we reject the null hypothesis because it supports our research hypothesis. We know that we can be wrong because our null hypothesis may still be true even if the probability of drawing a sample like the one we have drawn is so small that we have to reject the null hypothesis. This is the Type I error. 
 
 Fortunately, we know the probability of making this error because it is the significance level that we have chosen, usually, five percent. We can live with this probability of making an error if we reject the null hypothesis. So we are doubly glad: We found support for our research hypothesis _and_ we know how confident we are about this support.  
 
@@ -299,7 +307,7 @@ What if our research hypothesis is our null hypothesis? For example, we have a s
 
 3. How large must be the difference between true and hypothesized average candy weight to obtain a power of .80?
 
-If the research hypothesis is the null hypothesis because it contains a single value for the populaiton parameter, we find support for our research hypothesis if we do _not_ reject the null hypothesis. We can be wrong in not rejecting the null hypothesis. If we do not reject a null hypothesis that is actually false, we make a Type II error. 
+If the research hypothesis is the null hypothesis because it contains a single value for the population parameter, we find support for our research hypothesis if we do _not_ reject the null hypothesis. We can be wrong in not rejecting the null hypothesis. If we do not reject a null hypothesis that is actually false, we make a Type II error. 
 
 The significance level is irrelevant now because the significance level is the probability of making a Type I error. But if we do not reject the null hypothesis, we can never reject a true null hypothesis (Type I error). Instead, the probability of making a Type II error is important, or rather, the probability of not making this error. This is the power of the test.  
 

@@ -123,7 +123,7 @@ When is a variable a confounder and when is it a strong confounder, changing the
 The size of the indirect correlation is equal to the product of the correlation between confounder and predictor and the correlation between confounder and outcome variable. For example, if the correlation between age and interest in politics is .12 and the correlation between age and newspaper reading time is .88, the indirect correlation between interest in politics and reading time established by age is .12 * .88 = .11.
 
 ### Multiplication of correlations
-Multiplication makes intuitively sense. If two predictors are perfectly correlated ($r = 1$), the first predictor can exactly predict the second predictor. As a consequence it can predict the outcome via the second predictor (indirect correlation) just as well as the second predictor can predict it directly. For example, if age is perfectly correlated with interest in politics ($r = 1$) and the correlation between age and newspaper reading time is .88, the latter correlation is exactly the same as the indirect correlation that we get through multiplication ($1.00 * .88 = .88$).
+Multiplication makes intuitively sense. If two predictors are perfectly correlated ($r = 1$), the first predictor can exactly predict the second predictor. As a consequence it can predict the outcome via the second predictor (indirect correlation) just as well as the second predictor can predict it directly. For example, if age is perfectly correlated with interest in politics ($r = 1$) and the correlation between age and newspaper reading time is .88, the latter correlation is exactly the same as the indirect correlation that we get through multiplication (1.00 * .88 = .88).
 
 If the correlation between the two predictors is below one (disregarding the sign of the correlation), the first predictor can only predict a proportion of the second predictor. As a consequence, the first predictor can also predict only a proportion of the outcome via the second predictor. This is a proportion of what the second predictor can predict itself of the outcome variable. A correlation below one (and above minus one) is a proportion, so multiplying the second predictor's correlation by the correlation between the two predictors again does the job.
 
@@ -190,18 +190,26 @@ As with suppression, spuriousness can have surprising results. It may happen tha
 
 Actually, the indirect correlation between a predictor and outcome via a confounding variable can be so strong that a positive effect in a model without the confounder changes into a negative effect in a model that includes the variable. The opposite may happen as well: A formerly negative effect may become positive if a strong positive reinforcer variable is added to the model. We can only trust the results if all important confounders are included in the model.
 
-## Multiple Regression in SPSS
+## Comparing Regression Models in SPSS {#compmodelSSPSS}
 
 ###  Instructions
 
-```{r}
+```{r SPSSregconfound, echo=FALSE, out.width="640px", fig.cap="(ref:regconfoundSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/8dY7KmeFHN8", height = "360px")
 # "stepwise" regression: Add predictors in blocks (and leave Method at Enter) if you want to specify the order in which predictors are added to the model.
+# Note: basic regression video in Ch. 4, checking assumptions (and plotting regression line) video in Ch. 8.
+
+# Goal: Add predictors one by one to a regression model, to identify confounders.
+# Example: readers.sav, predict average newspaper reading time by news site use, education, and age.
+# SPSS menu: linear regression, method Enter
+# Interpret output: compare R2 and regression coefficients between models.
+# Check assumptions: See other video.
 ```
 
 
 ### Exercises
 
-1. The file <a href="http://82.196.4.233:3838/data/readers.sav" target="_blank">readers.sav</a> contains the (simulated) data on newspaper reading time that we have used as example in this chapter. Predict average newspaper reading time by education, interest in politics, news site use, and age. Add the predictors one by one to the regression model in the order secified in the preceding sentence. How do the partial effects change when new predictors are added?
+1. The file <a href="http://82.196.4.233:3838/data/readers.sav" target="_blank">readers.sav</a> contains the (simulated) data on newspaper reading time that we have used as example in this chapter. Predict average newspaper reading time by education, interest in politics, news site use, and age. Add the predictors one by one to the regression model in the order specified in the preceding sentence. How do the partial effects change when new predictors are added?
 
 ```{r eval=FALSE}
 SPSS syntax:
@@ -230,14 +238,12 @@ The variabes do not have impossible values.
 Check assumptions:
 
 The residuals are quite normally distributed.
-They are centered around zero at all levels of 
-the predicted outcome, so a linear model seems
-to fit the data. The variation in residuals is
-about the same at all levels of the predicted
-outcome, so the outcome is more or less equally 
-well predicted at all levels of the outcome
-variable. As a conclusion, there are no clear
-indications that the assumptions for a linear
+They are centered around zero at all levels of the predicted 
+outcome, so a linear model seems to fit the data. The variation
+in residuals is about the same at all levels of the predicted
+outcome, so the outcome is more or less equally well predicted
+at all levels of the outcome variable. As a conclusion, there
+are no clear indications that the assumptions for a linear
 regression model are violated.
 
 Interpret the results:
@@ -325,7 +331,7 @@ for age as the confounder in the models estimated in
 Exercise 1.
 ```
 
-3. Now predict average newspaper reading time by education, political cynicism, news site use, and age. Add the predictors one by one to the regression model in the order secified in the preceding sentence. Does suppression occur here? If so, for which predictor and confounder and in which model(s)?
+3. Predict average newspaper reading time from education, political cynicism, news site use, and age. Add the predictors one by one to the regression model in the order specified in the preceding sentence. Does suppression occur here? If so, for which predictor and confounder and in which model(s)?
 
 ```{r eval=FALSE}
 SPSS syntax:
@@ -422,14 +428,14 @@ Not all people become more interested in politics as they age and their interest
 
 If we include both age and interest in politics as predictors in a regression model for newspaper reading time, the partial effect of interest in politics is corrected for the spurious correlation between interest in politics and newspaper reading caused by age as their common cause. The partial effect of political interest can be interpreted as causal if current interest in politics was attained before the newspaper readings that we count (very plausible) and age is the only common cause of interest in politics and newspaper reading (highly questionable).
 
-```{r causaldiagram, , echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time.", fig.asp=0.3}
+```{r causaldiagram, echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.5, 0.7), 
                         y = c(.1, .3, .1),
                         label = c("Age", "Pol.Interest", "Reading Time"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.04, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
@@ -457,7 +463,7 @@ Our second discovery is that we usually look for mediators if we want to underst
 
 ## Path Model with Regression Analysis
 
-```{r mediation-regression, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", fig.asp=0.5}
+```{r mediation-regression, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/mediation-regression.png"}
 # Goal: Exemplify the different regression models required to estimate the direct effects in a path model.
 # Image of path model with age, education level (in years), political interest, news site use, and (current) newspaper reading time. Distinguish between hypothesized direct effects and non-hypothesized direct effects. Display the unstandardized regression coefficients with their 95% confidence intervals for the direct effects of all antecedent variables.
 # Basic colors and layout.
@@ -553,7 +559,7 @@ The regression results tell us the sizes and statistical significance of all dir
 
 The size of an indirect effect is calculated in exactly the same way as the size of indirect correlations (Section \@ref(indirectcorrelation)): Just multiply the size of direct effects. This can be done with either the standardized regression coefficients, as we do for indirect correlations, or the unstandardized regression coefficients.
 
-```{r pathdiagram-unstandardized, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", fig.asp=0.5}
+```{r pathdiagram-unstandardized, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/pathdiagram-unstandardized.png"}
 # Causal model/path diagram with unstandardized effect sizes (and 95% confidence intervals). All effects.
 # Display network.
 visNetwork(nodes, edges, width = "100%") %>% 
@@ -566,7 +572,7 @@ It may sound weird that we can multiply the unstandardized regression coefficien
 
 In its turn, interest in politics has an unstandardized effect of `r round(model_4$coefficients[4], digits=2)` on reading time. An additional unit of interest in politics predicts an average increase in reading time of `r round(model_4$coefficients[4], digits=2)` minutes.
 
-Ten additional years of life only predict an increase of`r round(model_2$coefficients[2], digits=2)` in political interest, not a full unit increase. As a result, the additional ten years of life predict `r round(model_2$coefficients[2], digits=2)` * `r round(model_4$coefficients[4], digits=2)` = `r round(model_2$coefficients[2] * model_4$coefficients[4], digits=2)` minutes of additional newspaper reading time. 
+Ten additional years of life only predict an increase of `r round(model_2$coefficients[2], digits=2)` in political interest, not a full unit increase. As a result, the additional ten years of life predict `r round(model_2$coefficients[2], digits=2)` * `r round(model_4$coefficients[4], digits=2)` = `r round(model_2$coefficients[2] * model_4$coefficients[4], digits=2)` minutes of additional newspaper reading time. 
 
 Note that the indirect effect is interpreted in terms of the measurement units of the initial predictor (age in tens of years) and the final outcome (reading time): a difference in years predicts a difference in reading time. As a consequence, we can directly compare unstandardized indirect effect sizes, as we will see in the next section.
 
@@ -633,8 +639,6 @@ For statistical inference on the indirect effect, we need the sampling distribut
 
 We use bootstrapping to create the sampling distribution of indirect effect size. We have learned the principles and limitations of bootstrapping in Section \@ref(boot-approx)), so we need not go into details here. Suffice it to repeat that our original sample must not be too small and it must be quite representative of the population if we apply bootstrapping.
 
-Both the confidence interval and p value of an indirect effect can be calculated from its bootstrapped sampling distribution. The p value tests the null hypothesis that the unstandardized indirect effect is zero in the population from which the sample was drawn. Table \@ref(tab:indirect-sim) shows bootstrap results for the indirect effects in a model with age as predictor, newspaper reading time as outcome, and interest in politics and news site use as mediators.
-
 ```{r indirect-sim, echo=FALSE}
 # Example of bootstrapped CI and p value for the indirect effects of age via political interest and/or news site use on reading time, similar to output from PROCESS (Model 6 with 2 mediators).
 results <- rbind(
@@ -643,16 +647,47 @@ results <- rbind(
   c("Age->Pol. Interest->News Site Use->Reading Time", "-.02", ".01", "-.05", ".00"), 
   c("Age->News Site Use->Reading Time", "1.44", ".42", ".60", "2.23")
 )
-knitr::kable(results, caption = "Bootstrap results for unstandardized indirect effects in a model with two mediators. Effect size (__Effect__), standard error (__Boot SE__), lower and upper levels of the 95% confidence interval (__BootLLCI__ and __BootULCI__).", col.names = c("", "Effect", "Boot SE", "BootLLCI", "BootULCI"), align = c("l", "r", "r", "r", "r")) 
+
+knitr::kable(results, caption = "Bootstrap results for unstandardized indirect effects in a model with two mediators. Effect size, standard error, lower and upper levels of the 95% confidence interval.", col.names = c("", "Effect", "Boot SE", "BootLLCI", "BootULCI"), align = c("l", "r", "r", "r", "r")) 
+
  # Cleanup.
 rm(results)
 ```
+ 
+Both the confidence interval and p value of an indirect effect can be calculated from its bootstrapped sampling distribution. The p value tests the null hypothesis that the unstandardized indirect effect is zero in the population from which the sample was drawn. Table \@ref(tab:indirect-sim) shows bootstrap results for the indirect effects in a model with age as predictor, newspaper reading time as outcome, and interest in politics and news site use as mediators. 
 
 In total, there is a substantive indirect effect of age on newspaper reading time in this model. We are confident that this effect is positive (95%CI[0.62, 2.25]). It is easy to see that the indirect effect of age via news site use on reading time is by far the most important indirect effect. On its own, it is responsible for almost the total indirect effect.
 
 It may happen that an indirect effect is not statistically significant whereas both direct effects are statistically significant. This sounds like a paradox but it should not upset you. Anyway, you are only interested in statistical inference for the indirect effect, so focus on the indirect effect in your interpretation.
 
 The unstandardized indirect effect tends to be weaker than the direct effects, that is, closer to zero (for example, see Table \@ref(tab:age-indirect)). In this situation, it is more difficult to reject the null hypothesis that the indirect effect is zero in the population. This is all that statistical significance tells us. We need a larger sample to reject null hypotheses for smaller effects (see Chapter \@ref(power) on power).
+
+## Controlling for Covariates
+
+In the preceding sections, all variables were included in one path model. In practice, however, we usually have theoretical reasons for expecting mediation between one pair of variables, for example, political interest mediating between age and newspaper reading time. At the same time, we know that our outcome variable and perhaps our mediator may depend on other variables. Newspaper reading time, for example, may also depend on education. In this situation, we would use the other variables as covariates for which we want to control statistically.
+
+```{r causaldiagram2, echo=FALSE, fig.cap="Causal diagram for  interest in politics as mediator between age and newspaper reading time with education as covariate.", fig.asp=0.3}
+library(ggplot2)
+# Create coordinates for the variable names.
+variables <- data.frame(x = c(0.3, 0.5, 0.7, 0.3), 
+                        y = c(.1, .3, .1, .3),
+                        label = c("Age", "Pol.Interest", "Reading Time", "Education"))
+ggplot(variables, aes(x, y)) + 
+  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$x[2] - 0.04, yend = variables$y[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$x[3] - 0.06, yend = variables$y[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_label(aes(label=label)) + 
+  coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
+  theme_void()
+# Cleanup.
+rm(variables)
+```
+
+Figure \@ref(fig:causaldiagram2) represents a model in which education is used as a covariate in a model with political interest mediating the effect of age on newspaper reading time. Education is probably causally antecedent to both political interest and newspaper reading time, so it is allowed to have an effect on both variables. In this way, we control for education and remove spurious correlation between political interest and newspaper reading time due to education as a common cause.
+
+Note that covariates should only be allowed to have an effect on variables that can be caused by the covariate. We should not include effects of a covariate on a variable that is causally antecedent to the covariate. If a control is a consequence rather than a cause of the mediator, it had better be used as another mediator in the model. If, for example, political cynicism may affect newspaper reading time but it is a consequence of political interest, it should be included as a second (serial) moderator instead of a covariate.
 
 ## Reporting Mediation Results
 We analyse a path model as a series of regression models, so the general rules for reporting mediation are the same as for reporting regression analyses (see Section \@ref(reportmoderation)). Report a table containing:
@@ -667,13 +702,13 @@ We analyse a path model as a series of regression models, so the general rules f
 # Example of table summarizing regression output for direct and indirect effects (with bootstrap settings as note). Output from PROCESS (Model 4 with 1 mediator).
 results <- rbind(
   c("Outcome: News Site Use", "", "", "", ""),
-  c("$R^2$ = 0.86, $F$ (3, 308) = 617.40, $p$ < .001", "", "", "", ""),
+  c("R^2^ = 0.86, F (3, 308) = 617.40, p < .001", "", "", "", ""),
   c("constant", "6.62", "0.35", "< .001", "[5.92; 7.31]"),
   c("age", "-0.93", "0.02", "< .001", "[-0.97; -0.88]"), 
   c("education", "0.06", "0.02", ".019", "[0.01; 0.11]"),
   c("pol.interest", "0.12", "0.03", "< .001", "[0.06; 0.17]"),
   c("Outcome: Newspaper Reading Time", "", "", "", ""),
-  c("$R^2$ = 0.79, $F$ (4, 307) = 290.85, $p$ < .001", "", "", "", ""),
+  c("R^2^ = 0.79, F (4, 307) = 290.85, p < .001", "", "", "", ""),
   c("constant", "13.59", "4.24", ".001", "[5.26; 21.93]"), 
   c("age", "4.55", "0.47", "< .001", "[3.62; 5.47]"), 
   c("education",  "0.06", "0.20", ".782", "[-0.34; 0.46]"), 
@@ -687,16 +722,11 @@ knitr::kable(results, caption = "Bootstrap results for unstandardized effects in
 rm(results)
 ```
 
-A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arcs. Remember that we must use unstandardized regression coefficients if we have a dummy variable as predictor. A path model conveniently summarizes the results for the reader, especially if (very) weak effects are excluded or de-emphasized (Figure \@ref(fig:results-pathdiagram)). 
+A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arcs. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous or a set of dummy variables (see Section \@ref(dichpredictor)).
 
-```{r results-pathdiagram, echo=FALSE, fig.cap="Standardized direct effects for a path model with one mediator. Small effects are represented by thin arcs."}
-# Load and stadardize data.
+```{r results-pathdiagram, echo=FALSE, fig.cap="Unstandardized direct effects for a path model with one mediator.", screenshot.alt = "figures/results-pathdiagram.png"}
+# Load data.
 readers <- haven::read_spss("data/readers.sav")
-readers$age <- (readers$age - mean(readers$age))/sd(readers$age)
-readers$education <- (readers$education - mean(readers$education))/sd(readers$education)
-readers$polinterest <- (readers$polinterest - mean(readers$polinterest))/sd(readers$polinterest)
-readers$newssite <- (readers$newssite - mean(readers$newssite))/sd(readers$newssite)
-readers$readingtime <- (readers$readingtime - mean(readers$readingtime))/sd(readers$readingtime)
 # Create effect sizes.
 model_3 <- lm(newssite ~ age + education + polinterest, data = readers)
 model_4 <- lm(readingtime ~ age + education + polinterest + newssite, data = readers)
@@ -714,9 +744,8 @@ edges <- data.frame(from = c(seq(1, 3), seq(1, 4)),
                     shadow = FALSE,
                     label = c(  round(model_3$coefficients[2], digits = 2), round(model_3$coefficients[3], digits = 2), round(model_3$coefficients[4], digits = 2), round(model_4$coefficients[2], digits = 2), round(model_4$coefficients[3], digits = 2), round(model_4$coefficients[4], digits = 2), round(model_4$coefficients[5], digits = 2)
                     ))
-edges$width <- ifelse(abs(edges$label) > 0.05, 4, 1)
 edges$font.color <- ifelse(edges$label >= 0, brewercolors[[5]], brewercolors[[1]])
-edges$font.size <- ifelse(abs(edges$label) > 0.05, 45, 30)
+edges$font.size <- 40
 
 # Display network.
 visNetwork(nodes, edges, width = "100%") %>% 
@@ -726,20 +755,73 @@ visNetwork(nodes, edges, width = "100%") %>%
   visInteraction(dragNodes = TRUE)
 ```
 
-It is recommended to report standardized coefficients in your path diagram. Standardized regression coefficients are more easily compared. Remember, however, that we don't use standardized regression coefficients if the predictor is dichotomous or a set of dummy variables. 
-
 If effect mediation is central to your report, focus your presentation and interpretation on the indirect effects. Report the sizes, confidence intervals, and p values of the indirect effects estimated with PROCESS. Inform the reader that you bootstrapped the indirect effect and report the settings in PROCESS that you have used for bootstrapping: the number of bootstrap samples and the method used for the confidence intervals. For a more elaborate discussion of reporting mediation, see [@RefWorks:3873: 198-202].
 
 ## Mediation with SPSS and PROCESS {#SPSSPROCESS}
 
 ###  Instructions
 
-```{r}
-# Show how to use SPSS for mediation.
+SPSS cannot apply statistical inference to indirect effects, so we use the PROCESS macro developed for this purpose [@RefWorks:3873]. If correctly installed (see below), the macro can be used from within the SPSS Regression menu. Please note that you had better not paste the PROCESS commands because it produces a lot of code that is difficult to understand. Instead, run the PROCESS command directly from the menu and manually add a comment to your SPSS syntax file reminding yourself of the model that you estimated with PROCESS.  
 
-# Add videos explaining how to install and use the PROCESS macro (in the simplest mediation model with one mediator and no moderator, Model 4 and Model 6 with two mediators but no moderators ; show how covariates can be added with the choice to use them as predictors for the mediator(s) and/or the outcome). Recommend to use PROCESS if there is only one mediator or two  serial (consecutive) mediators. Only use SPSS if there are (two or more) parallel mediators or more than two serial mediators. Note: don't paste PROCESS commands!
+[Download the PROCESS macro](http://processmacro.org/download.html) and [install the SPSS custom dialog file](http://www.processmacro.org/uploads/3/4/8/5/34858384/dialoginstall.pdf). Check the [FAQ at the PROCESS website](http://processmacro.org/faq.html) if installation is not successful. If PROCESS is successfully installed, it can be found in the Analyse > Regression menu.
 
-# {note: use completely standardized indirect effect in PROCESS}
+```{r SPSSmediatpar, echo=FALSE, out.width="640px", fig.cap="(ref:mediatparSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/nyPkW0cRoFI", height = "360px")
+# Goal: Estimating a single or parallel mediation model with PROCESS (Model 4).
+# Example: readers.sav, the effect of age on newspaper reading time mediated by political interest and news site use (in parallel). 
+# SPSS menu: Regression > PROCESS, Model 4 ; order of (parrallel) mediators is irrelevant ; Model 4 can handle up to 10 parallel mediators ; OPTIONS OLS/ML confidence intervals (for separate regression models), Effect size, Decimals: 3 ; LONG NAMES: Allow long variable names (first 8 characters must be unique!)
+# Note: don't paste PROCESS commands but add comment to syntax file!
+# Interpret output: 
+# - unstandardized direct effects for the regression models (add to path diagram),
+# - statistical significance (and confidence interval) of (separate and total) indirect effect(s) 
+# - and their effect size (use completely standardized indirect effect in PROCESS unless the predictor is a dichotomy)
+# - and the ratio of indirect to total or direct effect: how much of the total effect is indirect (as a proportion) or how large/small is the indirect effect in comparison to the direct effect?
+# - double-click textual output if you want to copy/paste it
+# Note: for standardized effect output in PROCESS, first standardize all variables before applying PROCESS.
+# Check assumptions: must be done in SPSS, see video on path models in SPSS.
+
+```
+
+```{r SPSSmediatserial, echo=FALSE, out.width="640px", fig.cap="(ref:mediatserialSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/_HTDkZC3k1k", height = "360px")
+# Goal: Estimating a serial mediation model with PROCESS (Model 6).
+# Example: readers.sav, the effect of age on newspaper reading time mediated by political interest and news site use (in serial). 
+# SPSS menu: Regression > PROCESS ; Model 6, order of mediators matters ; Model 6 can handle up to four serial mediators ; OPTIONS OLS/ML confidence intervals (for separate regression models), Effect size, Decimals: 3 ; LONG NAMES: Allow long variable names (first 8 characters must be unique!)
+# Note: don't paste PROCESS commands but add comment to syntax file!
+# Interpret output: 
+# - unstandardized direct effects for the regression models (add to path diagram, show that effects on/from mediators are added),
+# - statistical significance (and confidence interval) of all (separate and total) indirect effects (see Indirect effect key at the end of the output)
+# - and their effect size (use completely standardized indirect effect in PROCESS unless the predictor is a dichotomy)
+# - and the ratio of indirect and total or direct effect: how much of the total effect is indirect (as a proportion) or how large/small is the indirect effect in comparison to the direct effect? ; note the negative sign of some ratios: works in opposite direction (can be absolutely larger than the total effect in extreme situations?)
+# - double-click textual output if you want to copy/paste it
+# Check assumptions: must be done in SPSS, see video on path models in SPSS
+
+# Note: don't paste PROCESS commands but add comment to syntax file!
+# Note: use completely standardized indirect effect in PROCESS (unless the predictor is a dichotomy.)
+```
+
+```{r SPSSmediatcov, echo=FALSE, out.width="640px", fig.cap="(ref:mediatcovSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/63kSn8GGcuk", height = "360px")
+# Goal: Estimating a (single mediator) mediation model including covariates with PROCESS.
+# Example: readers.sav, the effect of age on newspaper reading time mediated by news site use with education and political interest as covariates. Note that we cannot specify effects on the mediator for one covariate but not the other.
+# SPSS menu: Regression > PROCESS ; Model 4, show how covariates can be added with the choice to use them as predictors for the mediator(s) and/or the outcome (both if covariate is antecedent)
+# Interpret output: inspect regression equations to see that the covariates are included in both the mediator and outcome model, focus on direct effects of covariates and te absence of estimated indirect effects for the covariates
+# Check assumptions: must be done in SPSS, see video on path models in SPSS
+
+# Note: don't paste PROCESS commands but add comment to syntax file!
+# Note: use completely standardized indirect effect in PROCESS (unless the predictor is a dichotomy.)
+```
+
+```{r SPSSpath, echo=FALSE, out.width="640px", fig.cap="(ref:pathSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/SsurWx_SGKI", height = "360px")
+# Goal: Getting standardized direct effects and checking assumptions in SPSS, estimating a path model with both parallel and serial mediators in SPSS that cannot be estimated in PROCESS (two models with covariates)?.
+# Example: readers.sav, the effect of age on newspaper reading time mediated by news site use and the effect of education mediated by both political interest (age -> educ -> pol.interest -> reading).
+# SPSS menu: linear regression (multiple times).
+# Interpret output: standardized regression coefficients as direct effect sizes (not in PROCESS).
+# Check assumptions: for each regression model separately.
+
+# Show how to use SPSS for mediation. Only use SPSS if there is both parallel and serial mediation. (Videos on regression in SPSS in CH. 4, 8, and previously in Ch. 9.)
+# (Windows) Paint does not have arcs that can be rotated. 
 ```
 
 ### Exercises
@@ -1081,18 +1163,22 @@ interval is positive, we cannot rule out a zero
 
 If we think of causality, we usually think of a process in which one thing leads to another thing, which leads to something else, and so on. This is apparent if we want to explain why we think that one phenomenon causes another (see Section \@ref(indirecteffect)). Mediation, however, is difficult to establish with regression analysis and, as some argue, perhaps impossible to establish.
 
+### Causal order assumed
 It is paramount to note that the regression approach to mediation and path models does not tell us anything about the causal order of the variables. The causal order is purely an assumption that we make. The plausibility of the assumptions depends on how well we can argue the time order of the variables and the absence of common causes for cause-consequence pairs (see \@ref(causalcriteria)).
 
+### Time order
 To establish the time order of variables, we must think about the time at which the behaviours or opinions that we measure took place. This is what matters, not the time at which we make the measurement. After all, we can collect information on behaviour a long time after the fact, for example by asking respondents when they started using news sites or checking internet use logs.
 
 The more time has passed between the occurrence of the behaviour or opinion that we think is the cause and the occurrence of the one we think is the consequence, the more plausible the causal order. If cause and consequence appear very close in time, it may be difficult to argue that one precedes the other. 
 
+### Causality or underlying construct?
 For causes and consequences that appear nearly simultaneously, we should take into account that the two measurements may measure the same underlying construct. Think of the way we construct a scale from items: We assume that the items measure the same underlying attitude, for example, interest in politics. 
 
 The indicators of a scale are correlated because they have a common cause, namely, the underlying attitude. But it does not make sense to interpret the correlation as a sign of mediation. One item does not trigger another item, and so on. A mediator must be theoretically and conceptually different from both the predictor and outcome. We have to provide arguments that they are really different.
 
 An underlying construct such as an attitude is just one example of a common cause that undermines the conclusion that an effect is mediated. Any common cause of predictor and mediator or of mediator and outcome that is not included in the model renders all or part of the correlations spurious, that is, non-causal. If we doubt the causality of any effect in the path constituting the indirect effect, we must doubt the causality of the indirect effect as well. Without causality, there is no mediation. So we should think hard of common causes and include them in our model.
 
+### Statistical control is not experimental control
 In a strict interpretation, mediation cannot be established with regression models. To understand this, let us look very carefully at the statistical meaning of direct and indirect effects. 
 
 A direct effect of age on newspaper reading time refers to changes in reading time that depend on changes in age but not on changes in the mediator, for example, interest in politics. Strictly speaking, age should change and interest in politics should not change for a person to detect the direct effect of age on reading time. But interest in politics depends on age if it mediates the effect of age, so it tends to change if age changes. That is a problem.
@@ -1101,6 +1187,7 @@ In an experiment, we would manipulate the value of the mediator to ensure that i
 
 Controlling the effect of a predictor on an outcome for the mediator in a regression model, however, is not the same as experimental control as described above. In a regression model, the mediator values vary among persons. The statistical trick is that we only compare people who have the same mediator score when we calculate the direct effect. But even for these people, the effect of the predictor on the mediator may have done it's work. In our example, their actual interest in politics is affected by their age. As a result, the effect of age on newspaper reading time includes an effect of age on interest in politics, so the mediator (interest in politics) is not completely excluded from the direct effect.
 
+### Recommendations
 All in all, mediation is an intuitively simple and appealing concept. Unfortunately, it is very difficult to substantiate the claim that indirect effects in path models represent mediation. Mediation assumes causal effects and causality is difficult to establish. 
 
 If you plan to investigate mediation:

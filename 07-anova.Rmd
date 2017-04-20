@@ -13,8 +13,9 @@ With two or more factors, we can have interaction effects in addition to main ef
 
 ### Test your intuition or knowledge {-}
 
-```{r anova-overview}
+```{r anova-overview, echo=FALSE, fig.cap="Main effects and interaction effect in two-way analysis of variance.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Use app anova-interaction. Manipulate group means in a a means plotsof a 3x2 design. Create main and interaction effects and inspect effect size and statistical significance.
+knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="650px")
 ```
 
 1. what is or are the main effects in Figure \@ref(fig:anova-overview)? Explain how you can recognize main effects both in the means plot and in the reported numbers.
@@ -58,13 +59,12 @@ Analysis of variance was developed for the analysis of experiments, where effect
 
 In analysis of variance, then, we are simply interested in the differences between group means. The conclusion for a sample is easy: Which groups have higher average score on the outcome variable and for which are they lower? A simple means plot, such as Figure \@ref(fig:anova-meansplot), aids interpretation and helps communicating results to the reader. 
 
-```{r anova-meansplot, echo=FALSE}
+```{r anova-meansplot, echo=FALSE, fig.cap="A means plot showing that average willingness to donate is higher with a celebrity endorser than without a celebrity endorser.", out.width="70%"}
 # Insert means plot for celebrity endorsement example.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), willingness_av = c(3, 6, 7), const = 1)
 library(ggplot2)
-ggplot(d, aes(endorser, willingness_av)) + geom_point() + geom_line(aes(group = const)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
+ggplot(d, aes(endorser, willingness_av)) + geom_point() + geom_line(aes(group = const)) + theme_general() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
 rm(d)
-
 ```
 
 Effect size in an analysis of variance refers to the overall differences between group means. We use eta^2^ as effect size, which gives the proportion of variance in the outcome (willingness to donate) explained or predicted by the group variable (experimental condition).
@@ -226,7 +226,7 @@ A statistically significant F test tells us that we may be quite confident that 
 
 ### Instructions
 
-Applying one-way analysis of variance in SPSS and interpreting the results is explained in Section \@ref(comp-means).
+Applying one-way analysis of variance in SPSS and interpreting the results is explained in Section \@ref(comp-means), see Video \@ref(fig:SPSS1way).
 
 ### Exercises
 
@@ -387,7 +387,7 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7),
                         y = c(.1, .3, .1),
                         label = c("Endorser", "Sex", "Willingness"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.04, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.05, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[2], yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
@@ -400,7 +400,7 @@ rm(variables)
 
 ```{r anova-moderation, fig.cap="How can we recognize main effects and moderation in a means plot?"}
 # Goals: Learn to recognize different types of moderation, visually distinguishing between main effects (differences) and moderation (different differences.
-# Create a means plot with 3x2 means, willingness on Y axis, endorser (nobody, Clooney, Jolie) on X axis, and different colours for sex. Initial means have main effects but no interaction effect.Connect the means per sex by line segments. Link the female & male mean for the same group by a vertical double-sided arc. Allow user to change all six means (if possible, by dragging them vertically?). Display marginal (total) means for each sex and exh endorser.
+# Create a means plot with 3x2 means, willingness on Y axis, endorser (nobody, Clooney, Jolie) on X axis, and different colours for sex. Initial means have main effects but no interaction effect.Connect the means per sex by line segments. Link the female & male mean for the same group by a vertical double-sided arc. Allow user to change all six means (if possible, by dragging them vertically?). Display marginal (total) means for each sex and endorser.
 # Initial means.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
 ```
@@ -415,7 +415,7 @@ d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney
 
 5. Adjust the means in such a way that the effect of endorser is the opposite for males than it is for females.
 
-6. Adjust the means in such a way that there is no main effect of endorser but still the effect is moderated: there are effects for males and for females.
+6. Adjust the means in such a way that there is no main effect of endorser but still the effect is moderated: There are effects for males and for females.
 
 Moderation happens a lot in communication science for the simple reason that the effects of messages are stronger for people who are more susceptible to the message. If you know more people who have adopted a new product or a healthy/risky lifestyle, you are more likely to be persuaded by media campaigns to also adopt that product or lifestyle. If you are more impressionable, media messages are more effective.
 
@@ -426,11 +426,11 @@ In analysis of variance, effects are differences between average outcome scores.
 
 Different "Clooney effects" for female and male subjects imply different differences! The difference in average willingness scores between females exposed to Clooney and females who are not exposed to an endorser is different from the difference in average scores for males. We have four subgroups with average willingness scores that we have to compare. We have six subgroups if we also include endorsement by Angelina Jolie. 
 
-```{r anova-effectstrengthmod, echo=FALSE, fig.cap="Moderation as a stronger effect within a particular context. The difference between the average score of males who saw  Clooney and males who did not see a celebrity endorser is represented by the slope of the blue line segment at the left. The same effect for females is expressed by the red line segment at the left. The red line segment at the left is steeper than the blue line segment, so the Clooney effect is stronger among females than males. The red and blue line segments to the right are parallel, so the Jolie effect is the same for females and males."}
+```{r anova-effectstrengthmod, echo=FALSE, out.width="70%", fig.cap="Moderation as a stronger effect within a particular context. The difference between the average score of males who saw  Clooney and males who did not see a celebrity endorser is represented by the slope of the blue line segment at the left. The same effect for females is expressed by the red line segment at the left. The red line segment at the left is steeper than the blue line segment, so the Clooney effect is stronger among females than males. The red and blue line segments to the right are parallel, so the Jolie effect is the same for females and males."}
 # Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 5, 4.5, 9, 6.5))
 library(ggplot2)
-ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
+ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_general() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate") + scale_color_manual(values=c(brewercolors[[1]], brewercolors[[5]]))
 rm(d)
 ```
 
@@ -446,11 +446,11 @@ Except for trivial cases such as the effect of anti-smoking campaigns on non-smo
 
 In the other type of moderation the effect in one group is the opposite of the effect in another group. For example, Clooney is a more effective endorser among females than males whereas Jolie is more effective among males than females. Let us call this _effect direction moderation_. Females strengthen the Clooney effect but males strengthen the Jolie effect. 
 
-```{r anova-effectdirmod, echo=FALSE, fig.cap="Moderation as opposite effects in different contexts. The Clooney effect is positive for female subjects: The red line segment at the left shows that females exposed to Clooney are much more willing to donate than females who did not see a celebrity endorser. In contrast, Clooney as endorser reduces the willingness among males (blue line segment at the left). The Jolie effect is the opposite: positive for males, negative for females. In this special situation the effect for females and males cancel out, so there is no main effect of endorser."}
+```{r anova-effectdirmod, echo=FALSE, out.width="70%", fig.cap="Moderation as opposite effects in different contexts. The Clooney effect is positive for female subjects: The red line segment at the left shows that females exposed to Clooney are much more willing to donate than females who did not see a celebrity endorser. In contrast, Clooney as endorser reduces the willingness among males (blue line segment at the left). The Jolie effect is the opposite: positive for males, negative for females. In this special situation the effect for females and males cancel out, so there is no main effect of endorser."}
 # Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(6, 3, 9, 6, 9, 3))
 library(ggplot2)
-ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_classic() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
+ggplot(d, aes(endorser, willingness_av, colour = sex)) + geom_point() + geom_line(aes(group = sex)) + theme_general() + scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate") + scale_color_manual(values=c(brewercolors[[1]], brewercolors[[5]]))
 rm(d)
 ```
 
@@ -460,11 +460,12 @@ In this situation, the main effect of endorser on willingness to donate is (near
 
 ### Testing main and interaction effects
 
-```{r anova-interaction, fig.cap="How can we recognize main effects and moderation in a means plot?"}
+```{r anova-interaction, echo=FALSE, fig.cap="How can we recognize main effects and moderation in a means plot?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goals: Recognize effect size and statistical significance of interaction effects.
-# Exactly the same app as anova-moderatio but now add Eta^2 and the F value plus p value of the interaction effect.
+# Exactly the same app as anova-moderation but now add Eta^2 and the F value plus p value of the interaction effect.
 # Initial means.
-d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
+# d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
+knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="650px")
 ```
 
 1. Adjust the means in Figure \@ref(fig:anova-interaction) in such a way that the mean effect of endorser and the interaction effect of endorser and sex are statistically significant.
@@ -490,7 +491,7 @@ The assumptions for a two-way analysis of variance are the same as for a one-way
 
 The main purpose of reporting a two-way analysis of variance, is to show the reader the differences between average outcome scores between groups on the same factor (main effects) and different differences for groups on a second factors (interaction effect). A means plot is very suitable for this purpose. Conventionally, we place the predictor groups on the horizontal axis and we draw different lines for the moderator groups. But you can switch them if it produces a more appealing graph.
 
-```{r 2way-meansplot, echo=FALSE, fig.cap="An example of a means plot."}
+```{r 2way-meansplot, echo=FALSE, message=FALSE, warning=FALSE, out.width="70%", fig.cap="An example of a means plot."}
 # {TBD}
 # Basic colors and layout.
 source("../apps/plottheme/styling.R")
@@ -502,7 +503,7 @@ library(dplyr)
 d <- donors %>% group_by(sex, endorser) %>%
   summarise(mean_willing = mean(willing_post))
 library(ggplot2)
-ggplot(d, aes(x = endorser, y = mean_willing, group = sex, color = sex)) + geom_path() + geom_point() + theme_general() + xlab("Endorser") + ylab("Average willingnss to donate") + scale_y_continuous(limits = c(1, 10), breaks = seq(1, 10))
+ggplot(d, aes(x = endorser, y = mean_willing, group = sex, color = sex)) + geom_path() + geom_point() + theme_general() + xlab("Endorser") + ylab("Average willingnss to donate") + scale_y_continuous(limits = c(1, 10), breaks = seq(1, 10)) + scale_color_manual(values=c(brewercolors[[1]], brewercolors[[5]]))
 # Cleanup.
 rm(d)
 ```
@@ -513,7 +514,7 @@ For the statistically informed reader, you should include the following informat
 
 * The test result for every effect, consisting of the test name (_F_), the degrees of freedom, and the significance (p value). APA6 proscribes the following format if you report the test result within your text: F (df1, df1) = F value, p = p value. 
 
-* For each effect worth interpretation, because it is sizable and/or statistically significant, report eta-squared (eta^2 or  η2) and interpret it in terms of effect size. If you have to calculate eta-squared by hand, divide the between-groups sum of squares of an effect by the total sum of squares (SPSS: corrected total).
+* For each effect worth interpretation, because it is sizable and/or statistically significant, report eta-squared (eta^2^ or  eta^2^) and interpret it in terms of effect size. If you have to calculate eta-squared by hand, divide the between-groups sum of squares of an effect by the total sum of squares (SPSS: corrected total).
 
 * For each effect worth interpretation, clarify which group or subgroup scores higher. Report the group means and their standard deviations or the mean difference (from the post-hoc tests) for comaprisons between groups as well as their p values here.
 
@@ -538,29 +539,24 @@ rm(results, donors)
 ```
 
     
-## Two-Way Analysis of Variance in SPSS
+## Two-Way Analysis of Variance in SPSS {#twowaySPSS}
 
 ### Instructions
 
-```{r SPSS-2way, echo=FALSE, eval=FALSE}
-# TBD: videos to executure two-way analysis of variance in SPSS with Analyze > General Linear Model > Univariate
-# Uit werkboek IS: 
-#     Om een variantieanalyse uit te voeren met twee of meer onafhankelijke variabelen, kies je: ANALYZE-GENERAL LINEAR MODEL-UNIVARIATE.
-#     Het menu bevat een keur aan mogelijkheden om een model te specificeren. De meeste van deze opties vereisen meer kennis van analysemethoden dan we in deze cursus leren.
-#     Voor het uitvoeren van variantieanalyse met meer dan één categorische onafhankelijke variabele en één afhankelijke (die minimaal op intervalniveau gemeten is), doe je het volgende. Je selecteert de interval variabele waarvan je de groepsgemiddelden wilt vergelijken voor verschillende groepen respondenten. Deze zet je in het vakje Dependent Variable. Selecteer vervolgens de variabelen die de groepen definiëren waarvan je de gemiddelden wilt vergelijken. Deze zet je in het vakje Fixed Factor(s).
-#     Het is handig om onder de button OPTIONS ‘Descriptive Statistics’ aan te vinken, zodat je de groepsgemiddelden en hun standaarddeviaties krijgt.
-#     Kies hier ook de optie 'Homogeneity tests' om Levene's toets op homogene varianties te laten uitvoeren.
-#     In tegenstelling tot Van Peet et al. gebruiken we de partiële η2 niet als maat voor de effectgrootte. Vink dus de optie Estimates of effect size NIET aan. Deze maat is omstreden: een hoofdeffect heeft in een eenwegs-variantieanalyse bijvoorbeeld een andere partiële η2 dan in een tweewegs-variantieanalyse ook al blijft de tussengroepen en totale kwadratensom exact gelijk. In plaats daarvan gebruiken we de gewone η2, die je echter met de hand moet uitrekenen.
-#     Als je twee onafhankelijke variabelen selecteert, wordt automatisch een analyse uitgevoerd met de hoofdeffecten van beide variabelen en het interactie-effect.
-#     Via de button MODEL kun je dit desgewenst wijzigen, bijvoorbeeld het interactie-effect weglaten. Kies bij Model voor Custom, selecteer 'Main effects' onder Build Term(s) Type, selecteer de onafhankelijke variabelen in het linker lijstje waarvoor je de hoofdeffecten wilt laten schatten en kopieer ze met de pijl-knop naar de rechter lijst.
-#     Interactie-effecten kun je samenstellen door twee onafhankelijke variabelen in het linker lijstje te selecteren, Interaction te kiezen onder Build Term(s) Type en vervolgens op de pijl-knop te klikken. Wanneer je meer dan twee onafhankelijke variabelen selecteert in het linker lijstje, krijg je een interactie-effect van meer dan twee variabelen.
-#     Bij een variantieanalyse met meer dan twee factoren is het handig om interactie-effecten van meer dan twee variabelen uit het model weg te laten via Custom.
-#     Laat de optie 'Type III' staan achter 'Sum of Squares' en laat de optie ‘Include intercept in model’ aangevinkt staan in het MODEL dialoogscherm.
-#     Klik op de knop POST HOC. Als je wilt weten welke gemiddelden significant van elkaar verschillen en welke niet, dan gebruik je deze optie. Er zijn meerdere post-hoc toetsen beschikbaar, waaronder die van Bonferroni.
-#     Op deze manier krijg je alleen paarsgewijze vergelijkingen voor de hoofdeffecten. Wanneer je die ook wilt krijgen voor het interactie-effect, moet je in de syntax file de volgende regel toevoegen onder de /POSTHOC regel: /EMMEANS=TABLES(factor_A BY factor_B) COMPARE(factor_B) ADJ(BONFERRONI)
-#     De meervoudige vergelijkingen voor het interactie-effect vormen geen verplichte stof binnen het vak IS.
-#     Vul op de plaats van factor_A de naam van de variabele in die als eerste factor gebruikt wordt en op de plaats van factor_B de naam van de variabele die de tweede factor voorstelt.
-#     Lijngrafiekjes die de verschillen tussen de groepen laten zien, kun je krijgen via PLOTS. Zet de categorische variabele die je als factor gebruikt in het vakje onder ‘Horizontal axis’ en druk op ‘Add’ om straks een grafiekje te krijgen dat het hoofdeffect van deze factor weergeeft. Een grafiek met het interactie-effect van twee factoren krijg je door een van beide categorische variabelen in het vakje onder ‘Horizontal Axis’ te zetten en de andere in het vakje onder ‘Separate lines’. 
+```{r SPSS2way, echo=FALSE, out.width="640px", fig.cap="(ref:2waySPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/w--5GoJ-sQ8", height = "360px")
+# TBD: videos to executure two-way analysis of variance in SPSS
+# Goal: Test for moderation with categorical predictors (and a numerical outcome variable) 
+# Example: donors.sav, does the effect of celebrity endorsement on adults' willingness to donate differ for females and males?
+# Technique: 2-way analysis of variance
+# SPSS menu: GENERAL LINEAR MODEL > UNIVARIATE ; variables under Dependent Variable and Fixed Factor(s) ; PLOTS predictor under ‘Horizontal Axis’ and  under ‘Separate lines’ ; POST HOC Bonferroni ; OPTIONS ‘Descriptive Statistics’ and 'Homogeneity tests'. 
+# Paste & Run.
+# Check assumptions: F test homogeneous population variances or groups of equal size ; post-hoc t tests: each group more than 30 observations or normally distributed.
+# Interpret output: F tests for main effects and interaction effect, statistical significance, effect sizes: manual calculation of eta2, plot for interaction effect.
+```
+
+```{r SPSSeta2, echo=FALSE, out.width="640px", fig.cap="(ref:eta2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/yOZW9tQgzFk", height = "360px")
 ```
 
 ### Exercises
