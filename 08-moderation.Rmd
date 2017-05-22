@@ -33,8 +33,9 @@ To interpret the interaction effect, we must determine the size of the effect of
 
 ### Test your intuition or knowledge {-}
 
-```{r moderator-overview, fig.cap="How does moderation work in a regression model?"}
+```{r moderator-overview, fig.cap="How does moderation work in a regression model?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
 # Use app continuous-moderator.
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height="550px")
 ```
 
 1. What does the line in Figure \@ref(fig:moderator-overview) mean?
@@ -294,24 +295,49 @@ A histogram with an added normal curve helps us to evaluate the distribution of 
 
 #### Linearity and prediction errors
 
-```{r pred-linearity, eval=FALSE, fig.cap="How residuals tell us whether the relation is linear"}
+```{r pred-linearity, fig.cap="How do residuals tell us whether the relation is linear?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating the shape of the association.
-# Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate either a sample with (1) linear, (2) curved, (3) U-shaped association. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a button to select a different association shape. Upon selection of a shape, generate & display new sample data.
-# Number of observations.
-n <- 20
-# Generate predictor.
-x <- seq(from = 0, to = 10, length.out = n)
-# Generate linear association.
-y_lin <- -0.6*x + rnorm(n = n, mean = 3, sd = 1)
-# Generate curved association.
-y_quad <- .08*x^2 - rnorm(n = n, mean = 4, sd = 0.4)
-# Generate U-shaped association.
-y_u <- .3*(x-5)^2 - rnorm(n = n, mean = 3, sd = 1)
+# Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on attitude, with a sizable error term to have residuals that are clearly visible. Generate either a sample with (1) linear, (2) curved, (3) U-shaped association. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a button to select a different association shape. Upon selection of a shape, generate & display new sample data.
+knitr::include_app("http://82.196.4.233:3838/apps/pred-linearity/", height="550px")
 ```
 
-1. For the left-most observations (dots) in the scatterplot (Figure \@ref(fig:pred-linearity)), find the corresponding dot in the plot of residuals. Repeat for more dots until you understand the relation between the two plots.
+1. Think up which dot in the plot of residuals (Figure \@ref(fig:pred-linearity) bottom) corresponds with the left-most observation (dot) in the scatterplot of attitude by exposure (Figure \@ref(fig:pred-linearity) top). Drag your mouse around the left-most dot while pressing the left mouse button to check your choice. Repeat for more dots until you understand the relation between the two plots.
+```{r eval=FALSE}
+1. The blue regression line in the top graph represents the predicted 
+values on the attitude variable from exposure scores. The predicted 
+attitude value for the left-most observation is the value at which 
+the blue line intersects with the vertical red line dropping down 
+from that observation. The predicted value is above zero. 
+It is the highest predicted value because the regression line slopes
+down to the right. The highest predicted value is at the far right 
+of the residuals by predicted attitude graph (bottom graph) because
+the predicted values are on the horizontal axis of this graph. The
+left-most observation in the top grpah, then, must correspond with 
+the right-most observation in the bottom graph.
+Note that this is not always true. If the regression slope is 
+positive, that is, the regression line goes up from left to right,
+the left-most observation in the top graph has the lowest predicted
+value, so it corresponds to the left-most observation in the
+residuals plot.
+```
 
 2. Select a U-shaped curve in Figure \@ref(fig:pred-linearity). Explain how the plot of residuals tells you that the association is not linear. Do the same for a curved association.
+```{r eval=FALSE}
+2. If the association between two variables is U-shaped, the regression
+line underestimates the attitude for observations with low exposure, 
+overestimates the attitude for medium values of exposure, and 
+underestimates the attitude for high exposure values. As a result,
+the residuals have a marked pattern from left to right: a set of
+positive residuals, followed by a set of negative residuals, 
+followed by a set of positive residuals.
+The same phenomenon occurs for a curved association.
+In contrast, a linear association yields residuals without a clear
+pattern. At all levels of exposure and, hence, at all predicted 
+levels of attitude, we may encounter both positive and negative
+residuals. In the residuals by predicted values plot, we have
+positive and negative residuals everywhere. We may underestimate
+as well as overestimate the outcome variable everywhere.
+```
 
 The other two assumptions that we use tell us about problems in our model rather than problems in our statistical inferences. Our linear regression model assumes a linear effect of the predictors on the outcome variable (_linearity_) and it assumes that we can predict the outcome equally well or equally badly for all levels of the outcome variable (_homoscedasticity_). 
 
@@ -321,22 +347,48 @@ This indicates that our linear model does not fit the data. If it would fit, the
 
 #### Homoscedasticity and prediction errors
 
-```{r pred-homoscedasticity, eval=FALSE, fig.cap="How residuals tell us that we predict all values equally well."}
+```{r pred-homoscedasticity, fig.cap="How do residuals tell us that we predict all values equally well?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating homoscedasticity.
 # Generate a sample (N = 20) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate error terms with a dependency on the predictor ranging from -1 to +1. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a slider (range [-@, 0], initial value 0) to set the levl of heteroscedasticity. Upon slider change, generate & display new sample data.
-# Set level of heteroscedasticity.
-level <- 1
-# Number of observations.
-n <- 20
-# Generate predictor.
-x <- seq(from = 0, to = 10, length.out = n)
-# Generate linear association with level heteroscedasticity.
-y_lin <- -0.6*x + 3 + x^ifelse(level > 0, abs(level), 0)*(10 - x)^ifelse(level < 0, abs(level), 0)*5^ifelse(level == 0, 1, 0)*rnorm(n = n, mean = 0, sd = 0.2)
+knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", height="550px")
+
 ```
 
-1. What happens if you move the slider to the left? And what if you move it to the right?
+1. What strikes you about the residuals in Figure \@ref(fig:pred-homoscedasticity)?
+```{r, eval=FALSE}
+1. The residuals are higher for higher values of exposure.
+In the top graph, the residuals tend to become larger from
+left to right.
+As a consequence, the residuals are larger at one side
+of the residuals by predicted values plot (bottom graph) then
+at the other side. Because the regression line has a negative
+slope, we can predict high attitude levels better than low
+attitude levels.
+The regression model seems to predict attitude better for 
+subjects with low exposure scores than for subjects with high
+exposure scores.
+```
 
-2. At which slider position are all attitude levels predicted equally well or equally badly?
+2. What happens if you move the slider to the far left?
+```{r, eval=FALSE}
+2. The pattern reverses. Now, residuals are larger for low
+values of exposure or, equivalently in this model with a 
+negative slope, for higher predicted values of attitude.
+Now, we are better at predicting low attitude levels than
+high attitude levels.
+```
+
+3. At which slider position are all attitude levels predicted equally well or equally badly?
+```{r eval=FALSE}
+3. If the slider is positioned at or around zero, the residuals
+are more or less equally large for low, medium, or high
+predicted values of attitude. Here, we can predict all levels
+of attitude equally well or equally badly.
+This is best seen in the bottom graph: The vertical spread of
+observations is more or less the same at the left, middle,
+and right of the graph. The vertical diameter of the dot
+cloud is more or less equal from left to right.
+```
 
 The other assumption states that we can predict the outcome variable equally well at all outcome variable levels. In other words, the prediction errors (residuals) are more or less the same at all levels of the outcome variable. If we have large prediction errors of some levels of the outcome variable, we should also have large prediction errors for other levels. As a result, the vertical width of the residuals by predictions scatterplot should be more or less the same from left to right. 
 
@@ -1285,20 +1337,22 @@ are rare.
 
 ## A Continuous Moderator {#cont-moderator-regression}
 
-```{r continuous-moderator, eval=FALSE, fig.cap="How do contact values affect the conditional effect of exposure on attitude?"}
+```{r continuous-moderator, fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
+# Use app continuous-moderator.
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height="550px")
 # Goal: Understand that there is a conditional effect for each value of the moderator by gradually changing the moderator value & understanding the linearity of the effect: a fixed slope change for a fixed difference in moderator values.
 # Generate a data set with a linear interaction (attitude ~ exposure*contact). Display a scattergram with a regression line for the current value of the moderator (contact). Display regression equation as y = a + (b_1 + b_3*contact(5))*exposure + b_2*contact(5) with values for coefficients and for contact. Add slider allowing the user to change the moderator value (range [0, 10], initial value 0). Replace the previous regression line by a grey line, remove older regression lines, and add new regression line in black; also update regression equation.
-# Number of observations.
-n <- 85
-# Create predictor.
-set.seed(4932)
-exposure <- runif(n)*10
-# Create moderator.
-set.seed(4321)
-contact <- 0.12*(10 - exposure) + rnorm(n, mean = 4.5, sd = 2)
-# Create outcome.
-set.seed(390)
-attitude <- -0.26*exposure + 0.15*contact + 0.04*exposure*contact + rnorm(n, mean = 2, sd = 0.5)
+# # Number of observations.
+# n <- 85
+# # Create predictor.
+# set.seed(4932)
+# exposure <- runif(n)*10
+# # Create moderator.
+# set.seed(4321)
+# contact <- 0.12*(10 - exposure) + rnorm(n, mean = 4.5, sd = 2)
+# # Create outcome.
+# set.seed(390)
+# attitude <- -0.26*exposure + 0.15*contact + 0.04*exposure*contact + rnorm(n, mean = 2, sd = 0.5)
 ```
 
 1. The regression line depicted in Figure \@ref(fig:continuous-moderator) represents the conditional effect of exposure on attitude for the value of contact with smokers selected with the slider. How many different conditional effects are there?

@@ -13,25 +13,24 @@ We can estimate a path model as a series of regression models. With additional s
 
 ### Test your intuition or knowledge {-}
 
-```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arcs in the diagram are standardized regression coefficients."}
+```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arcs in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Use app mediation-commoncause.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
 ```
 
-1. In Figure \@ref(fig:mediation-selftest), which variable is a mediator?
+1. In Figure \@ref(fig:mediation-selftest), what does the curved arc represent? How is its value calculated?
 
-2. What does the curved arc represent? How is its value calculated?
+2. How do the numbers tell you that the effect of political interest on newspaper reading time is controlled for age? Hint: Compare standardized regression coefficients to the correlations.
 
-3. How do the numbers tell you that the effect of political interest on newspaper reading time is controlled for age? Hint: Also take into account the correlation values.
+3. When is the standardized effect of political interest on newspaper reading time equal to the correlation between these two variables? Use the sliders to check your answer.
 
-4. When is the standardized effect of political interest on newspaper reading time equal to the correlation between these two variables? Use the sliders to check your answer.
+4. When does political interest have no (standardized) effect on reading time in this model? Use the sliders to check your answer.
 
-5. When does political interest have no (standardized) effect on reading time in this model? Use the sliders to check your answer.
+5. Change the correlations in such a way that the partial effect of political interest on reading time is larger than the correlation between the two variables. In this situation, would political interest be a suppressor or reinforcer if it would be excluded from the model?
 
-6. Change the correlations in such a way that the partial effect of political interest on reading time is larger than the correlation between the two variables. In this situation, would political interest be a suppressor or reinforcer if it would be excluded from the model?
+6. Change the correlations in such a way that the effect of political interest on reading time is completely spurious if age would be excluded from the model.
 
-7. Change the correlations in such a way that the part of the effect of political interest on reading time is spurious if age would be excluded from the model.
-
-8. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not? Use the sliders to check your answer.
+7. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not? Use the sliders to check your answer.
 
 ## Controlling for Effects of Other Predictors {#controlling}
 
@@ -100,7 +99,7 @@ With non-experimental data, we must include all confounders to ensure that the e
 
 ## Indirect Correlation {#indirectcorrelation}
 
-```{r mediation-indirectcorrelation, fig.cap="How does the change of a regression coefficient relate to the correlations between, on the one hand, confounder and, on the other hand, the predictor and outcome? The width of lines and arc represent the size of the correlation or regression effect."}
+```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or regression coefficients (arc).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and outcome variable, hence, the indirect correlation is stronger.
 # Display the simple (standardized) regression coefficient as a black arc from Pol.Interest to Reading Time with the width of the arc corresponding to the size of the effect. Label arc with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arc from Pol.Interest to reading Time on top of the black arc with its width corresponding to the partial effect when controlling for the selected confounder.
 # Correlations and standardized coefficients that are in line with the example data file readers.sav:
@@ -114,9 +113,23 @@ With non-experimental data, we must include all confounders to ensure that the e
 # Pol. Interest -> Reading Time with Age: 0.04
 # Pol. Interest -> Reading Time with Educ: 0.19
 # Pol. Interest -> Reading Time with News: 0.15
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-indirectcorrelation/", height="370px")
 ```
 
 1. Which variable confounds the effect of political interest on newspaper reading time most? And why is that so? After formulating your answer, add confounders to the model in Figure \@ref(fig:mediation-indirectcorrelation) to check if you are right. 
+```{r eval=FALSE}
+1. Age is the strongest confounder in this example. If we 
+add age as a predictor to the model, the partial effect of
+political interest on reading time is 0.04. The (simple)
+effect of this predictor is 0.14 if we do not control for
+age, so the effect difference is 0.10.
+The difference between the simple and partial effect of
+political interest on reading time is smaller for news site
+use and education.
+Because age is most strongly related to both political 
+interest and reading time, it affects the effect of political
+interest on reading time most strongly.
+```
 
 When is a variable a confounder and when is it a strong confounder, changing the effect of another predictor a lot? The answer to the first part of this question is easy: A confounder is a variable that is correlated with both the predictor and outcome but it is not (yet) included itself in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and outcome variable.
 
@@ -127,7 +140,7 @@ Multiplication makes intuitively sense. If two predictors are perfectly correlat
 
 If the correlation between the two predictors is below one (disregarding the sign of the correlation), the first predictor can only predict a proportion of the second predictor. As a consequence, the first predictor can also predict only a proportion of the outcome via the second predictor. This is a proportion of what the second predictor can predict itself of the outcome variable. A correlation below one (and above minus one) is a proportion, so multiplying the second predictor's correlation by the correlation between the two predictors again does the job.
 
-### Indirect correlation and confounding size
+### Indirect correlation and size of confounding
 As long as the confounder is not included in the regression model, the model believes that the predictions due to the indirect correlation are due to the predictor that is correlated with the confounder. It includes the predictions erroneously in the partial effect of the predictor, that is, in the predictor's regression coefficient. This coefficient expresses both the effect of the predictor itself and the effect of the confounder.
 
 Once we add the confounder as a new predictor to the regression model, the predictions due to the indirect correlation are removed from the effect of the old predictor. The predictions are now correctly assigned to the effect of the new predictor. As a result, the value of the old predictor's regression coefficient will change if we add the confounder as a new predictor.
@@ -145,7 +158,7 @@ Once the confounder is added to the regression model, however, the estimated eff
 
 ```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?"}
 # Goal: Intuitive understanding of how the pattern of correlation/effect directions (signs) relates to decrease or increase of partial effect sizes.
-# Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth confounder (r is -0.18 with political interest and -0.14 with reading time). Colour negative correlations red instead of blue if the associated confouder is selected. This helps to discover that a positive indirect correlation (blue-blue) decreases the partial effect whereas a negative indirect correlation (blue-red) increases it.
+# Adjust app mediation-indirectcorrelation: Replace News site use by Pol.Cynicism as a fourth confounder (r is -0.18 with political interest and -0.14 with reading time). Colour negative correlations red instead of blue if the associated confouder is selected. This helps to discover that a positive indirect correlation (blue-blue or red-red) decreases the partial effect whereas a negative indirect correlation (blue-red) increases it.
 ```
 
 1. When is a partial regression effect smaller than the simple regression effect and when is it larger? Formulate a general rule and check it in Figure \@ref(fig:mediation-confoundertypes).
@@ -376,34 +389,33 @@ suppressed part of the effect of education.
 
 ## Mediation as Causal Process
 
-```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients."}
+```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize students to the concept of a common cause creating a spurious effect and mediation as indirect effect.
 # Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arc representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arcs to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
-# Initial correlations.
-#correlation between Predictor and mediator.
-r_PM <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
-#correlation between mediator and Outcome.
-r_MO <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
-#correlation between Predictor and Outcome.
-r_PO <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
-# Partial standardized regression coefficients.
-b_PM <- r_PM
-b_PO <- r_PO
-b_MO <- round((r_MO - r_PM*r_PO)/(1 - r_PM^2), digits = 2)
-b_indirect <- round(b_PM * b_MO, digits = 2)
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
+# # Initial correlations.
+# #correlation between Predictor and mediator.
+# r_PM <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
+# #correlation between mediator and Outcome.
+# r_MO <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
+# #correlation between Predictor and Outcome.
+# r_PO <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
+# # Partial standardized regression coefficients.
+# b_PM <- r_PM
+# b_PO <- r_PO
+# b_MO <- round((r_MO - r_PM*r_PO)/(1 - r_PM^2), digits = 2)
+# b_indirect <- round(b_PM * b_MO, digits = 2)
 ```
 
-1. In Figure \@ref(fig:mediation-commoncause), which variable is a common cause and which is a mediator?
+1. In Figure \@ref(fig:mediation-commoncause), what does the long, curved arc represent? Can you motivate your answer with the values that are linked to the arcs?
 
-2. What does the long, curved arc represent? Can you motivate your answer with the values that are linked to the arcs?
+2. Why is the standardized effect of political interest on newspaper reading time not always equal to the correlation between these two variables? When is this standardized effect equal to the correlation? Use the sliders to check your answer.
 
-3. Why is the standardized effect of political interest on newspaper reading time not always equal to the correlation between these two variables? When is this standardized effect equal to the correlation? Use the sliders to check your answer.
+3. When does political interest have no (standardized) effect on reading time in this model? Use the sliders to check your answer.
 
-4. When does political interest have no (standardized) effect on reading time in this model? Use the sliders to check your answer.
+4. Change the correlations in such a way that the partial effect of political interest on reading time is larger than the correlation between the two variables. In this situation, would political interest be a suppressor or reinforcer if it would be excluded from the model?
 
-5. Change the correlations in such a way that the partial effect of political interest on reading time is larger than the correlation between the two variables. In this situation, would political interest be a suppressor or reinforcer if it would be excluded from the model?
-
-6. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not?
+5. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not?
 
 ### Criteria for a causal relation {#causalcriteria}
 Researchers are usually interested in causal effects, so let us theorize a causal order between age and reading newspapers. From previous research and personal experience, we strongly suspect that older people spend more time on reading newspapers than young people. In statistical language, we expect a positive correlation between age and newspaper reading time. Can age be a cause of current newspaper reading?

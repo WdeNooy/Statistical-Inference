@@ -39,7 +39,7 @@ Estimation is one of the two types of statistical inference, the other is null h
 
 Hypothesis testing is more in line with such a conception of scientific progress. It requires the researcher to formulate an expectation about the population, usually called a _hypothesis_. If the hypothesis is based on theory and previous research, the scientist uses previous knowledge. As a next step, the researcher tests the hypothesis against data collected for this purpose. If the data contradict the hypothesis, the hypothesis is rejected and the researcher has to improve theory. If the data does not contradict the hypothesis, it is not rejected and, for the time being, the hypothesis is accepted and we need not change our theory.  
 
-Hypothesis testing, then, amounts to a choice from two options: reject or not reject, that is, for the time being accept, the hypothesis. This is a binary decision between believing that the population is as it is described in the hypothesis or believing that it is not. This is quite a different outcome than the range of plausible population values that we obtain when we estimate a confidence interval. Nevertheless, hypothesis testing and confidence intervals are tightly related as we will see later on in this chapter (Section \@ref(null-ci)).
+Hypothesis testing, then, amounts to a choice from two options: reject or not reject, that is, for the time being accept, the hypothesis. This is a binary decision between believing that the population is as it is described in the hypothesis or believing that it is not. This is quite a different outcome than the range of plausible population values that we obtain when we estimate a confidence interval. Nevertheless, hypothesis testing and confidence intervals are tightly related as we will see later on in this chapter (Section \@ref(null-ci0)).
 
 ## Formulating Statistical Hypotheses {#formulating-hypotheses}
 
@@ -131,6 +131,8 @@ rm(nodes, edges)
 
 1. For each of the research hypothesis examples (above), find the appropriate statistical test using Figure \@ref(fig:choice-diagram). Hint: Hover your mouse pointer over a node, click on a dot, drag with your left mouse button, and zoom with your mouse wheel.
 
+
+
 ### Proportions: shares  
 This book covers tests for four types of statistics: proportions, means, variance/standard deviations, and associations. A proportion is the statistic best suited to test research hypotheses addressing the share of a category or entity in the population. The hypothesis that a television station reaches half of all households in a country provides an example. All households in the country constitute the population. The share of the television station is the proportion or percentage of all households watching this television station.  
 
@@ -154,6 +156,7 @@ The test is mainly used if the researcher has information on the proportions of 
 
 ```{r SPSSbinomial, echo=FALSE, out.width="640px", fig.cap="(ref:binomialSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/cA0idFxW-J4", height = "360px")
+
 # A binomial test on a single proportion can be executed in SPSS with the command _Analyze > Nonparametric Tests > Binomial_. In the dialog , you have to enter a variable. 
 # 
 # If this variable is a dichotomy (it has only two values), you can leave the _Define Dichotomy_ option at "Get from data". SPSS will use the first category score that it encounters in the data set the test category. This is tricky. It will test the sample proportion of this value against the test proportion that you specify elsewhere in this dialog.
@@ -425,7 +428,7 @@ knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px"
 
 ```
 
-#### Exercise
+#### Exercises
 
 1. Data set <a href="http://82.196.4.233:3838/data/voters.sav" target="_blank">"voters.sav"</a> contains information about the age and attitude towards immigration among a random sample of voters. Is the attitude towards immigrants equally polarized among young (under 30) and old (30+) voters? Justify your answer with a statistical test.
 
@@ -1057,9 +1060,10 @@ In this situation, the two-sided p value can be significant but you should never
 
 ## Test Statistic and Degrees of Freedom
 
-```{r crit-df, fig.cap="Sample size and critical values in a one-sample t test."}
+```{r crit-df, fig.cap="Sample size and critical values in a one-sample t test.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Compare app crit-values in Ch. 3.
-# Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees of freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 100], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
+# Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees of freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 50], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
+knitr::include_app("http://82.196.4.233:3838/apps/crit-df/", height="405px")
 ```
 
 Figure \@ref(fig:crit-df) uses the t distribution to approximate the sampling distribution of average media literacy in a random sample of children.
@@ -1068,9 +1072,11 @@ Figure \@ref(fig:crit-df) uses the t distribution to approximate the sampling di
 
 2. What is the meaning of t~c~?
 
-3. Is there a fixed relation between the t values and the values for average sample media literacy? Change the sample size to find the answer.
+3. Why does the distribution become more pointed when sample size increa
 
-4. What is the relation between sample size in critical t values?
+4. Is there a fixed relation between the t values and the values for average sample media literacy? Change the sample size to find the answer.
+
+5. What is the relation between sample size and critical t values?
 
 A theoretical probability distribution links sample outcomes such as a sample mean to probabilities by means of a _test statistic_. A test statistic is named after the theoretical probability distribution to which it belongs: _z_ for the standard-normal or _z_ distribution, _t_ for the _t_ distribution, _F_ for the _F_ distribution and, you already guessed, chi-squared for the chi-squared distribution.  
 
@@ -1078,7 +1084,7 @@ A test statistic is calculated from the sample statistic that we want to test, f
 
 The exact formula and calculation of a test statistic is not important to us. Just note that the larger the difference between observation (sample outcome) and expectation (hypothesized population value), the more extreme the value of the test statistic, the less likely (lower p value) to draw a sample with the observed outcome or an outcome even more different from the hypothesized value, the more likely we are to reject the null hypothesis.  
 
-Actually, we reject the null hypothesis if the test statistic is in the _rejection region_. The value of the test statistic where the rejection region starts, is called the _critical value_. In Section \@ref(crit-values), we learned that 1.96 is the critical value of z for a two-sided test at 5% significance level in a standard-normal distribution. In a z test, then, a sample z value above 1.96 or below -1.96 indicates a significant test result. 
+Actually, we reject the null hypothesis if the test statistic is in the _rejection region_. The value of the test statistic where the rejection region starts, is called the _critical value_. In Section \@ref(crit-values), we learned that 1.96 is the critical value of z for a two-sided test at 5% significance level in a standard-normal distribution. In a z test, then, a sample z value above 1.96 or below -1.96 indicates a significant test result.
 
 Except for the normal distribution, the probability distributions that we use depend on the degrees of freedom of the test. The degrees of freedom can depend on sample size, the number of groups that we compare, or the number of rows and columns in a contingency table. We don't need to worry about that. 
 
@@ -1157,13 +1163,13 @@ Finally, the interpretation tells us that the difference from .5 is substantial.
 
 If you have the value of the test statistic but not the p value, you may report the significance level of the test instead of the p value. In this case, you either report "p < .05" if the test is significant or "n.s." if the test is <i>n</i>ot <i>s</i>ignificant.  
 
-## Relation Between Null Hypothesis Test and Confidence Interval {#null-ci}
+## Relation Between Null Hypothesis Test and Confidence Interval {#null-ci0}
 
 Null hypothesis testing and confidence interval estimation are related. The long and the short of it is that a 95% confidence interval contains all null hypotheses that would _not_ be rejected with the current sample at the 5% significance level, two-sided.  
 
 ```{r null-ci}
 # Variant of app pop-means-ci in Ch. 3.
-# Draw three horizontal lines, the top line labeled 'population', the middle one labeled 'sampling distribution', and the bottom line labeled 'sample'. All lines have a numerical scale (1-10). Add a normal curve to the sampling distribution axis with 2.5% of each tail area coloured and the mean indicated by a vertical line extending o the population axis and labeled there by 'Mean = ,number>'. Generate a sample mean within the range [4.5, 6.5] and mark it with a number on the lower line and a vertical line from the sample to well above the sampling distribution line (so it cuts through the normal curve). Add a slider to adjust the hypothesized population mean (range [3, 7]). The slider adjusts the horizontal position of the normal curve and population mean.
+# Draw three horizontal lines, the top line labeled 'population', the middle one labeled 'sampling distribution', and the bottom line labeled 'sample'. All lines have a numerical scale (1-10). Add a normal curve to the sampling distribution axis with 2.5% of each tail area coloured and the mean indicated by a vertical line extending to the population axis and labeled there by 'Mean = <number>'. Generate a sample mean within the range [4.5, 6.5] and mark it with a number on the lower line and a vertical line from the sample to well above the sampling distribution line (so it cuts through the normal curve). Add a slider to adjust the hypothesized population mean (range [3, 7]). The slider adjusts the horizontal position of the normal curve and population mean.
 ```
 
 Figure \@ref(fig:null-ci) shows a population with a hypothesized population mean, for example, average media literacy. Below, you see a sampling distribution and the bottom line shows the average media literacy in our sample. The coloured areas under the normal curve each represent 2.5% of the total area. 
@@ -1172,7 +1178,9 @@ Figure \@ref(fig:null-ci) shows a population with a hypothesized population mean
 
 2. What are the lowest and highest population means for which the null hypothesis is _not_ rejected?
 
-3. What is the 95% confidence interval for the population mean? How does it relate to the null hypotheses that are not rejected?
+3. Use the slider to find the 95% confidence interval for the population mean given the sample mean.
+
+4. How does the 95% confidence interval for the population mean relate to the null hypotheses that are not rejected?
 
 Remember that the probability involved in a 95% confidence interval is not the probability that the population value is within the interval. The population value is a fixed number, not a random variable with a probability distribution. At least not in the approach to statistical inference that we follow here. For this reason, we say that we are 95% confident that the parameter lies within the 95% confidence interval but not that the population value is included in the interval with 95% probability.  
 

@@ -13,8 +13,9 @@ With two or more factors, we can have interaction effects in addition to main ef
 
 ### Test your intuition or knowledge {-}
 
-```{r anova-overview, echo=FALSE, fig.cap="Main effects and interaction effect in two-way analysis of variance.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r anova-overview, fig.cap="Main effects and interaction effect in two-way analysis of variance.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Use app anova-interaction. Manipulate group means in a a means plotsof a 3x2 design. Create main and interaction effects and inspect effect size and statistical significance.
+source("../apps/plottheme/styling.R")
 knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="650px")
 ```
 
@@ -77,34 +78,69 @@ Rules of thumb for the interpretation of eta^2^:
 *	0,25 = large or strong effect; matches r = 0,50.
 
 ### Between groups variance {#between-variance}
-```{r anova-between}
+```{r anova-between, fig.cap="Which part of score differences tell us about the differences between groups?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="540px"}
 # Goal: Illustrate that between groups variance represents differences between group means and the grand mean. And that it is a (smaller or larger) proportion of total variance.
 # App anova-means: Generate 4 random observations from a normally distributed population with mean 6.4, sd = 1 (Clooney), 4 observations from a population N(m = 6.8, sd = 1) (Jolie), and 4 observations from N(m = 3.3, sd = 1) (no endorser). Use colour for the treatment factor (3 levels). Represent observations in a dotplot, each with a separate value on the x axis, clustered by factor level (experimental condition). Display group means as horizontal line segments (coloured by factor level). Display eta^2 for the data. Allow user to change the group means and update the plot, mean (difference) lines, and eta^2.
 # Extension/replacement: Add horizontal line for grand mean, vertical red solid double-sided arcs between each observation and the grand mean (total variance), vertical black solid double-sided arcs for each observation between its group mean and the grand mean (between variance), and vertical black dotted double-sided arcs for each observation between the dot and its group mean (within variance). 
+knitr::include_app("http://82.196.4.233:3838/apps/anova-between/", height="530px")
 ```
 
-1. In Figure \@ref(fig:anova-between), what do the solid red double-sided arcs represent?
+1. In Figure \@ref(fig:anova-between), what do the solid red arcs represent?
+```{r, eval=FALSE}
+1. The solid red arcs represent the difference between an individual score 
+and the average score of the group to which the individual belongs.
+For example, the left-most orange dot represents the willigness score of
+a subject who was exposed to Clooney as endorser. The orange line
+represents the average willignness score of the subjects who were
+exposed to Clooney. The dotted red arc is the difference between the
+individual's willingness score and the mean score of it's group.
+```
 
-2. What do the solid black double-sided arcs represent?
+2. What do the solid black arcs represent?
+```{r, eval=FALSE}
+2. The solid black arcs represent the difference between an individual's
+group score, for example, the average willingness score of all subjects
+who were exposed to Clooney, and the average score of all subjects (the
+grand or overall mean).
+```
 
-3. Which double-sided arcs relate to effect size eta^2^? Change group means to verify your expectation.
+3. What do the dotted black arcs in Figure \@ref(fig:anova-between) represent?
+```{r eval=FALSE}
+3. The dotted black arcs represent the difference between individual
+willingness scores and the average willingness scores of all subjects.
+The represent the overall variance (or standard devation).
+```
 
-4. What do the dotted black double-sided arcs in Figure \@ref(fig:anova-between) represent?
+4. Which arcs relate directly to effect size eta^2^? Change group means (and press the _Update graph_ button) to verify your expectation.
+```{r, eval=FALSE}
+4. The solid black arcs relate to eta2. Eta2 is larger if the
+differences between the group means are larger. The solid black
+arcs express these differences.
+If you decrease the differences between the group means, eta2
+decreases and the solid black arcs become smaller. The red arcs
+(differences between scores and their group means) remain the
+same (but note that the vertical scale of the graph may change,
+so the red arcs may seem to increase or decrease a little). 
+The dotted black arcs change but some become longer (and others
+become shorter) if you decrease the differences between the 
+group means, so the dotted black arcs are not so clearly 
+related to eta2.
+```
 
-What does it mean if we say that a percentage of the variance is explained when we interpret eta^2^? The variance that we want to explain consists of the differences between the scores of the subjects on the outcome variable and the overall or grand mean of all outcome scores. The red double-sided arcs Figure \@ref(fig:anova-between) express the distances between outcome scores and the grand average. Squaring and averaging these distances over all observations gives us the variance in outcome scores.
+What does it mean if we say that a percentage of the variance is explained when we interpret eta^2^? The variance that we want to explain consists of the differences between the scores of the subjects on the outcome variable and the overall or grand mean of all outcome scores. The dotted black arcs Figure \@ref(fig:anova-between) express the distances between outcome scores and the grand average. Squaring and averaging these distances over all observations gives us the variance in outcome scores.
 
 Why do some subjects have above average willingness to donate and other subjects below average willingness? We want to explain the variation in willingness from the experimental treatment of the subjects: Which endorser are the subjects exposed to? If an endorser is more effective, the overall level of willingness should be higher. In other words, the average willingness should be higher for subjects confronted with this endorser.
 
 So group average willingness is what we can predict from the experimental treatment. If we know the group to which a subject belongs---which celebrity she saw endorsing the fundraising campaign---we can use the average outcome score for the group as the predicted outcome for each group member---her willingness to donate. The predicted group scores are represented by the horizontal lines for group means in Figure \@ref(fig:anova-between).
 
-Now what part of the variance in outcome scores (red double-sided arcs in Figure \@ref(fig:anova-between)) is explained by the predicted values, that is, group means? It is the variance of the predicted scores, which is the average (squared) distance between the group mean and the grand mean for all observations. This is called the _between groups variance_ and it is represented by the solid black double-sided arcs in Figure \@ref(fig:anova-between).
+Now what part of the variance in outcome scores (dotted black arcs in Figure \@ref(fig:anova-between)) is explained by the predicted values, that is, group means? It is the variance of the predicted scores, which is the average (squared) distance between the group mean and the grand mean for all observations. This is called the _between groups variance_ and it is represented by the solid black arcs in Figure \@ref(fig:anova-between).
 
-Playing with the group means in Figure \@ref(fig:anova-between), you may have noticed that eta^2^ is high if there are large differences between group means. In this situation we have high between groups variance, so we can predict a lot of the variation in outcome scores between subjects. 
+Playing with the group means in Figure \@ref(fig:anova-between), you may have noticed that eta^2^ is high if there are large differences between group means. In this situation we have high between groups variance---large black arcs in Figure  \@ref(fig:anova-between)---so we can predict a lot of the variation in outcome scores between subjects. 
 
 In contrast, small differences between group averages allow us to predict only a small part of the variation in outcome scores. If all group means are equal, we can predict none of the variation in outcome scores because the between groups variance is zero. As we will see in Section \@ref(anova-model), zero between groups variance is central to the null hypothesis in analysis of variance.
 
 ### Within groups variance {#within-variance}
-```{r anova-within, fig.cap="How does within group variance reate to between groups variance?"}
+```{r anova-within, fig.cap="How does within group variance relate to between groups variance?"}
 # Goal: Sensitize students to the fact that larger population variance creates larger random variance of sample means.
 # 3 populations (of willingness to donate scores; arranged vertically, so means can easily be compared) with equal means and variances (N(5.2, 2)?) ; add button to draw a random sample from all three populations (N = 10 per sample) and display as (3 vertically arranged) dotplots ; display the mean (vertical line) and the variance as a number within each plot ; calculate and display the between groups variance of the three sample means ; allow user to change the population variance (range: [0, 8], initially 2) to see how it relates to random between groups variance
 ```
@@ -368,8 +404,9 @@ We could have used two separate one-way analyses of variance to test the same ef
 
 ## Moderation: Score Level Differences that Depend on Context
 
-```{r}
-# TBD: the concept of moderation ; picture (sketch as video) as icon for moderation
+```{r echo=FALSE}
+# TBD: the concept of moderation ; picture (sketch as video) as icon
+# for moderation
 ```
 
 In the preceding section, we have analyzed the effects both of endorser and sex on willingness to donate to a fund raiser. The two main effects isolate the influence of endorser on willingness from the effect of sex and the other way around. These effect assume that endorser and sex have an effect on their own, a general effect.
