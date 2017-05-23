@@ -49,8 +49,22 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height
 
 In the social sciences, we usually expect that a particular outcome has several causes. Investigating the effects of an anti-smoking campaign, for example, we would not assume that a person's attitude towards smoking depends only on exposure to a particular anti-smoking campaign. It is easy to think of other and perhaps more influential causes such as personal smoking status, contact with people who do or do not smoke, susceptibility to addiction, and so on.
 
-```{r concept-smoke}
-# Draw conceptual diagram.
+```{r concept-smoke, echo=FALSE, fig.asp=0.4, fig.cap="A conceptual model with some hypothesized causes of attitude towards smoking."}
+# Draw conceptual diagram: Attitude towards smoking predicted by Exposure, Smoking status, and Contact with smokers.
+library(ggplot2)
+# Create coordinates for the variable names.
+variables <- data.frame(x = c(0.3, 0.3, 0.3, 0.7), 
+                        y = c(.1, .3, .5, .3),
+                        label = c("Exposure", "Smoking Status", "Contact with Smokers", "Attitude"))
+ggplot(variables, aes(x, y)) + 
+  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[4] - 0.04, yend = variables$y[4] - 0.02), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[4] - 0.04, yend = variables$y[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[3], y = variables$y[3], xend = variables$x[4] - 0.04, yend = variables$y[4] + 0.02), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_label(aes(label=label)) + 
+  coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0.05, 0.55)) +
+  theme_void()
+# Cleanup.
+rm(variables)
 ```
 
 Figure \@ref(fig:concept-smoke) summarizes some hypothesized causes of attitude towards  smoking. A regression model translates this conceptual diagram into a statistical model. The statistical model is a mathematical function with the outcome variable (also known as the dependent variable, usually referred to with the letter $y$) as the sum of a constant (a), the effects ($b$) of predictors ($x$), which are _predictive effects_, and an error term ($e$), see Equation \@ref(eq:regression).
@@ -351,7 +365,6 @@ This indicates that our linear model does not fit the data. If it would fit, the
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating homoscedasticity.
 # Generate a sample (N = 20) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate error terms with a dependency on the predictor ranging from -1 to +1. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a slider (range [-@, 0], initial value 0) to set the levl of heteroscedasticity. Upon slider change, generate & display new sample data.
 knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", height="550px")
-
 ```
 
 1. What strikes you about the residuals in Figure \@ref(fig:pred-homoscedasticity)?
