@@ -1,0 +1,216 @@
+---
+title: "Shiny apps overview"
+author: "Wouter de Nooy"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Chapter 1
+
+```{r random-variable, fig.cap="How many yellow candies will our sample bag contain?", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+#interactive content: a button to draw a sample from a population of points uniformly distributed over five colors, display the sample (as a set of colored circles) and the number of yellow candies with each sample ; relevant expectations: (1) number of yellow candies per sample varies (variable), (2) this number depends on chance (random variable), (3) the number may range from 0 to 10 (sampling space), (4) the most likely number of yellow candies is two (expected value, expectation).
+knitr::include_app("http://82.196.4.233:3838/apps/random-variable/", height="360px")
+```
+
+```{r sampling-distribution, fig.cap="What is a sampling distribution?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+#interactive content: three histograms: a uniformly distributed discrete population of five colors on top, a sample in the middle (initially empty), and a sampling distribution in the bottom (initially empty) ; first button allows to draw one sample, simulating drawing one sample from the population and adding the number of yellow candies to the bottom histogram (ideally, the candies 'drop' from the population to the sample, then the number of yellow candies appears below the sample and this number 'drops' from the sample to the sampling distribution) ; second button (becomes active after the first button has been used) draws 1,000 samples and adds the yellow candy counts for all samples to the sampling distribution in one go
+knitr::include_app("http://82.196.4.233:3838/apps/sampling-distribution/", height="620px")
+```
+
+```{r probability-distribution, echo=TRUE, fig.cap="How does the probability of drawing a sample bag with two out of ten candies yellow depend on the proportion of yellow candies in the population?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+#Generate a binomial probability distribution for the number of yellow candies in a random sample of ten from a population with the specified proportion of yellow candies and display this as a table ; the user is able to change the population proportion (range [0.0 - 1.0]), which is initially set to .2.
+knitr::include_app("http://82.196.4.233:3838/apps/probability-distribution/", height="590px")
+```
+
+```{r expected-value, echo=TRUE, out.width="420px", fig.cap="What is the expected value of a probability distribution?", screenshot.opts = list(delay = 5), dev="png"}
+#Generate a binomial probability distribution for the number of yellow candies in a random sample of ten from a population with the specified proportion of yellow candies and display this as a histogram ; the user is able to change the population proportion, which is initially set to .2 ; add a button to reveal the average of the probability distribution in the histogram as a vertical line with associated value.
+knitr::include_app("http://82.196.4.233:3838/apps/expected-value/", height="420px")
+```
+
+```{r p-values, fig.cap="How do we display p values in a continuous sampling distribution?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Generate a normal sampling distribution representing average candy weight in a sample bag (M = 2.8, SD = 0.6) ; add a range slider to the x-axis linked to vertical lines, showing the proportions of the probabilities to left and to right and between the lines ; initial setting is 2.8 for the rigth-hand slider
+knitr::include_app("http://82.196.4.233:3838/apps/p-values/", height="260px")
+```
+
+```{r three-means, echo=TRUE, out.width="420px", fig.cap="What is the relation between the three distributions?", screenshot.opts = list(delay = 5), dev="png"}
+#Generate a population and sample distribution of candy weight, and (in the middle)  sampling distribution of average candy weight. Add the average of each distribution as a vertical line. Add two sliders, one for adjusting the population mean (also adjusts mean of sampling distribution) and one for the sample mean.
+knitr::include_app("http://82.196.4.233:3838/apps/three-means/", height="560px")
+```
+
+## Chapter 2
+
+```{r bootstrapping, echo=TRUE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Variant of app random-variable (Ch. 1).
+# Generate and display a not too small (N = 50?) representative sample from a uniformly distributed population of five colours (don't show the population). Add a button to draw one bootstrap sample with replacement at a time, showing the distribution of colours in the sample (dotplot with coloured dots) and adding the proportion of yellow candies to the histogram of the sampling distribution (y-axis percentage of cases?), which already shows the true sampling distribution (binomial distribution) as a light histogram in the background. Allow the user to draw one thousand bootstrap samples and add the results to the histogram. Finally, allow the user to draw a new random initial sample.
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
+```
+
+```{r bootstrap-lim, echo=TRUE, fig.cap="How is bootstrapping influenced by sample size?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# variant of app sampling-distribution.
+# Draw a sample of the user-specified size (slider) from a uniformly distributed population (five candy colors) ; show the sample (as dot plot) and collect the proportion of yellow candies for 1,000 bootstrap samples into a histogram (bin width = 0.1?), which already shows the true sampling distribution (binomial distribution) as a light histogram in the background.
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrap-lim/", height="560px")
+```
+
+```{r normal-approximation, echo=TRUE, fig.cap="Normal function as theoretical approximation of a sampling distribution.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Variant of app: p-values.
+# Let a button generate a normal sampling distribution (with mean 2.8 and a random SD between 0.2 and 0.8) representing average candy weight in a sample bag ; represent it as a histogram (with fixed x-axis, so distributions with different SD have different widths, and number of bins such that the outer (2) bin(s) contain(s) 2.5% of the area under the normal curve) ; colour the bars for the upper and lower 2.5% of cases in the histogram (to draw attention to the tails as important areas) ; project the normal function on top of it ; add two vertical lines to the graph demarcating the outer 2.5% of the area under the normal curve (display the probabilities to left and to right)
+knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
+```
+
+```{r mean-independent, echo=TRUE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="540px", screenshot.opts = list(delay = 5), dev="png"}
+# Demonstrate the construction of a sampling distribution of mean differences for independent samples; generate more or less normal dotplots for two populations (normal distributions): weight of red candies and yellow candies; a button allows to draw a random sample from each population, showing a dotplot for each sample (first draw the reds, then the yellows) with the mean added as vertical line with value ; then calculate the difference of the two means and store this difference in a sampling distribution, which is also shown as a histogram. Add a button to draw 1,000 samples and show the resulting sampling distribution.
+knitr::include_app("http://82.196.4.233:3838/apps/mean-independent/", height="580px")
+```
+
+## Chapter 3
+
+```{r estimation, fig.cap="Point and interval estimates, confidence intervals.", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Combination of apps interval-level, interval-size, and crit-values: A normal curve (M = 2.8, SE = 0.1 (SD population = 0.5 and sample size = 25)) as sampling distribution with two vertical lines marking interval limits (initially set at 2.5%/95%/2.5%) ; percentages indicating the area under the curve within and outside the limits ; double arrow from mean to interval limits indicating the interval estimate ; double x-axis: the first in grams and the second in standard errors, both axes labelled ; 2 sliders: confidence level and sample size ; any slider change will change the position of the interval limits (to represent the selected confidence level) ; changing confidence level also changes the percentages ; changing sample size also changes the scale of the x-axis in standard errors ; the value of the standard error is shown to highlight its relation with sample size.
+knitr::include_app("http://82.196.4.233:3838/apps/estimation/", height="460px")
+```
+
+```{r interval-level, echo=TRUE, fig.cap="How does the confidence level affect the precision of an interval estimate?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# (as in ci-borders) Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight" ; vertical lines for borders interval estimate ; show a double-pointed arrow on top of or above/under the x-axis representing the confidence interval for the initial confidence level (95%) and sample size (30); add a slider to adjust the confidence level (50%-100%?) ; update the vertical lines (borders) and the arrow representing the precision of the confidence interval if the slider position changes.
+knitr::include_app("http://82.196.4.233:3838/apps/interval-level/", height="310px")
+```
+
+```{r interval-size, fig.cap="How does sample size affect the precision of an interval estimate?", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# same as interval-level but the slider adjusts sample size (N between 5 and 100, steps of 5) ; update the line/arc representing the precision of the confidence interval if the slider position changes ; also update the normal curve and ensure that the scale of the x-axis remains the same, so it is clear that the sampling distribution becomes more peaked for larger samples. 
+knitr::include_app("http://82.196.4.233:3838/apps/interval-size/", height="310px")
+```
+
+```{r crit-values, fig.cap="How do critical values relate to the standard error in a normal distribution?", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# same as interval-size but the slider adjusts the standard error (start value = 0.1, so one standard error aligns with 0.1 gram above or below average; slider range 0.05 and 0.15?) ; the vertical lines are fixed at 2.5% and 97.5% of the cumulative area under the normal curve ; first x-axis has fixed scale in grams (population mean is 2.8) ; add a second x-axis representing z scores with values -1.96, -1.0, 0, 1.0, 1.96 ; if the standard error is adjusted, the normal curve changes as well as the scale of the second x-axis and the two vertical lines at -1.96 and 1.96. 
+knitr::include_app("http://82.196.4.233:3838/apps/crit-values/", height="360px")
+```
+
+```{r ci-borders, fig.cap="Within which interval do we find the sample results that are closest to the population value?", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight"; add two vertical lines, one to the extreme left, one to the extreme right with their values on the x-axis displayed and the percentage of observations (area) between the two lines displayed (initially near 50%) ; slider moves right line and left line (in opposite directions) and adjusts percentage of area between lines ; note that the lines cannot be moved across the center of the distribution
+knitr::include_app("http://82.196.4.233:3838/apps/ci-borders/", height="290px")
+```
+
+```{r se-point-est, echo=TRUE, fig.cap="The standard error: How wrong are point estimates?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Two goals. First, remind student of the fact that a standard deviation represents deviations from the mean. Second, show that the standard error equals the standard deviation of the sampling distribution in that it is the standard deviation calculated for many samples.
+# Use a normally distributed population with M = 2.8 and SD = 2 (candy weight) ; one button creates a random sample (N = 10?) displaying it as a dotplot with vertical lines for both the sample average and population average ; mark the difference between the two averages as a (fat red?) horizontal arrow pointing from population to sample mean ; add the sample average to a histogram (with a normal curve representing the true sampling distribution as background) also displaying the population mean as a vertical line ; show the standard deviation of the means over all preceding samples as a (double)left- and right-pointing) arrow (at such a height that it touches the normal curve when it reaches the value of the standard error) ; add a second button to add another 10 (or 100?) samples that are not shown as a dot plot but theirs means are added to the histogram and the arrow representing the standard deviation is updated
+knitr::include_app("http://82.196.4.233:3838/apps/se-point-est/", height="500px")
+```
+
+## Chapter 4
+
+```{r crit-df, fig.cap="Sample size and critical values in a one-sample t test.", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Compare app crit-values in Ch. 3.
+# Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees of freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 50], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
+knitr::include_app("http://82.196.4.233:3838/apps/crit-df/", height="405px")
+```
+
+## Chapter 5
+
+```{r TypeI-II-errors, echo=TRUE,fig.cap="Simulation of Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
+#This Shiny app illustrates Type I and Type II Error. Interaction helps to understand how significance level and power are related.  
+#Source: Adapted from Tarik Gouhier, type1vs2-master, https://github.com/tgouhier/type1vs2
+knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="735px")
+```
+
+```{r power-H0-rejections, echo=TRUE, fig.cap="The relevance of effect size and sample size to test power for a right-sided test on one sample mean (alpha = 0.05).", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+#This Shiny app shows the relevance of effect size and sample size to the power of a test. 
+#Source: ShinyApps-spark (niet meer gevonden op GitHub)
+knitr::include_app("http://82.196.4.233:3838/apps/ttest_simulation/", height=720)
+```
+
+## Chapter 6
+
+```{r sig-effect-power, echo=TRUE, fig.cap="The relations between significance, effect size, sample size, and power.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# (As in app tiny-effects), create a normal curve for the sampling distribution of average candy weight (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Label the x-axis "Average candy weight" and use the scale: "Strong 2.64", "Moderate 2.70", "Weak 2.76", "H0 2.8", "Weak 2.84", "Moderate 2.90", "Strong 2.96". Colour 2.5% of each tail area. Display a label with the power of the test given the current population average (slider, range [2.8, 3.0] initial value 2.9) and sample size (slider, range [5, 100] initial value 10). Draw 5 random samples from a normally distributed population with the selected population average (and population SD fixed as 0.6) and display their means as coloured dots on the x-axis. Add "Draw 5 samples" button to refresh the curve and power value with the current slider settings and draw 5 new samples represented by their means as dots.
+knitr::include_app("http://82.196.4.233:3838/apps/sig-effect-power/", height="550px")
+```
+
+## Chapter 7
+
+```{r anova-between, fig.cap="Which part of score differences tell us about the differences between groups?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="540px"}
+# Goal: Illustrate that between groups variance represents differences between group means and the grand mean. And that it is a (smaller or larger) proportion of total variance.
+# App anova-means: Generate 4 random observations from a normally distributed population with mean 6.4, sd = 1 (Clooney), 4 observations from a population N(m = 6.8, sd = 1) (Jolie), and 4 observations from N(m = 3.3, sd = 1) (no endorser). Use colour for the treatment factor (3 levels). Represent observations in a dotplot, each with a separate value on the x axis, clustered by factor level (experimental condition). Display group means as horizontal line segments (coloured by factor level). Display eta^2 for the data. Allow user to change the group means and update the plot, mean (difference) lines, and eta^2.
+# Extension/replacement: Add horizontal line for grand mean, vertical red solid double-sided arcs between each observation and the grand mean (total variance), vertical black solid double-sided arcs for each observation between its group mean and the grand mean (between variance), and vertical black dotted double-sided arcs for each observation between the dot and its group mean (within variance). 
+knitr::include_app("http://82.196.4.233:3838/apps/anova-between/", height="530px")
+```
+
+```{r anova-interaction, echo=TRUE, fig.cap="How can we recognize main effects and moderation in a means plot?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goals: Recognize effect size and statistical significance of interaction effects.
+# Exactly the same app as anova-moderation but now add Eta^2 and the F value plus p value of the interaction effect.
+# Initial means.
+# d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
+knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="650px")
+```
+
+## Chapter 8
+
+```{r pred-linearity, fig.cap="How do residuals tell us whether the relation is linear?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
+# Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating the shape of the association.
+# Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on attitude, with a sizable error term to have residuals that are clearly visible. Generate either a sample with (1) linear, (2) curved, (3) U-shaped association. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a button to select a different association shape. Upon selection of a shape, generate & display new sample data.
+knitr::include_app("http://82.196.4.233:3838/apps/pred-linearity/", height="550px")
+```
+
+```{r pred-homoscedasticity, fig.cap="How do residuals tell us that we predict all values equally well?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
+# Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating homoscedasticity.
+# Generate a sample (N = 20) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate error terms with a dependency on the predictor ranging from -1 to +1. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a slider (range [-@, 0], initial value 0) to set the levl of heteroscedasticity. Upon slider change, generate & display new sample data.
+knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", height="550px")
+```
+
+```{r continuous-moderator, fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
+# Use app continuous-moderator.
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height="550px")
+# Goal: Understand that there is a conditional effect for each value of the moderator by gradually changing the moderator value & understanding the linearity of the effect: a fixed slope change for a fixed difference in moderator values.
+# Generate a data set with a linear interaction (attitude ~ exposure*contact). Display a scattergram with a regression line for the current value of the moderator (contact). Display regression equation as y = a + (b_1 + b_3*contact(5))*exposure + b_2*contact(5) with values for coefficients and for contact. Add slider allowing the user to change the moderator value (range [0, 10], initial value 0). Replace the previous regression line by a grey line, remove older regression lines, and add new regression line in black; also update regression equation.
+# # Number of observations.
+# n <- 85
+# # Create predictor.
+# set.seed(4932)
+# exposure <- runif(n)*10
+# # Create moderator.
+# set.seed(4321)
+# contact <- 0.12*(10 - exposure) + rnorm(n, mean = 4.5, sd = 2)
+# # Create outcome.
+# set.seed(390)
+# attitude <- -0.26*exposure + 0.15*contact + 0.04*exposure*contact + rnorm(n, mean = 2, sd = 0.5)
+```
+
+## Chapter 9
+
+```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or regression coefficients (arc).", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and outcome variable, hence, the indirect correlation is stronger.
+# Display the simple (standardized) regression coefficient as a black arc from Pol.Interest to Reading Time with the width of the arc corresponding to the size of the effect. Label arc with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arc from Pol.Interest to reading Time on top of the black arc with its width corresponding to the partial effect when controlling for the selected confounder.
+# Correlations and standardized coefficients that are in line with the example data file readers.sav:
+# Pol. Interest - Age: 0.12
+# Pol. Interest - Educ: 0.28
+# Pol. Interest - News: 0.01
+# Reading Time - Age: 0.88
+# Reading Time - Educ: -0.12
+# Reading Time - News: -0.84
+# Pol. Interest -> Reading Time (simple): 0.14
+# Pol. Interest -> Reading Time with Age: 0.04
+# Pol. Interest -> Reading Time with Educ: 0.19
+# Pol. Interest -> Reading Time with News: 0.15
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-indirectcorrelation/", height="370px")
+```
+
+```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Sensitize students to the concept of a common cause creating a spurious effect and mediation as indirect effect.
+# Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arc representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arcs to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
+# # Initial correlations.
+# #correlation between Predictor and mediator.
+# r_PM <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
+# #correlation between mediator and Outcome.
+# r_MO <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
+# #correlation between Predictor and Outcome.
+# r_PO <- round(runif(n = 1, min = -.7, max = .7), digits = 2)
+# # Partial standardized regression coefficients.
+# b_PM <- r_PM
+# b_PO <- r_PO
+# b_MO <- round((r_MO - r_PM*r_PO)/(1 - r_PM^2), digits = 2)
+# b_indirect <- round(b_PM * b_MO, digits = 2)
+```
+
