@@ -11,23 +11,86 @@ Then we calculate the probability of drawing a sample such as the one we have dr
 
 ### Test your intuition or knowledge {-}
 
-```{r hypo-testing, fig.cap="Testing null hypotheses."}
+```{r hypo-testing, fig.cap="Testing null hypotheses., echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Use app null-ci.
+knitr::include_app("http://82.196.4.233:3838/apps/null-ci/", height="410px")
 ```
 
-Figure \@ref(fig:hypo-testing) shows a population with a hypothesized population mean, for example, average media literacy. Below, you see a sampling distribution and the bottom line shows the average media literacy in our sample. The coloured areas under the normal curve each represent 2.5% of the total area. 
+Figure \@ref(fig:hypo-testing) displays a random sample of media literacy scores (red) and a sampling distribution if the null hypothesis is true.
 
 1. What are the null and alternative hypotheses in Figure \@ref(fig:hypo-testing)? Is the null hypothesis a nil hypothesis here?
+```{r eval=FALSE}
+1. The null hypothesis is that average media literacy
+score in the population is 5.5. This is not a nil
+hypothesis because the value is not zero.
+The significance level is split between the two tails
+of the sampling distribution, so a two-sided test is
+intended. The alternative hypothesis of this two-sided
+significance test is that the population mean is NOT
+5.5; it is either higher or lower than 5.5.
+```
 
 2. What represents the p value of the sample mean that we have found in Figure \@ref(fig:hypo-testing)? Does the p value depend on the type of null hypothesis: one-sided or two-sided?
+```{r eval=FALSE}
+2. The p value of the test is the surface of the tail
+of the sampling distribution that is further away from
+the hypothesized value than the sample mean. Graphically
+speaking, it is the surface of the tail that is cut of
+by the red line.
+In a one-sided test, the p value is just the surface of
+this tail. In a two-sided test, it is the twice this
+surface because it also includes the same part of the tail
+at the other side of the distribution.
+So yes, it makes a difference to the p value whether you
+test one-sided or two-sided. That is, if it is makes
+sense to distinguish between a one-sided and two-sided test.
+```
 
 3. What represents the significance level and rejection region in Figure \@ref(fig:hypo-testing)?
+```{r eval=FALSE}
+3. The surface of the blue tails represent the
+significance level of the test. Each tail contains
+2.5% of the surface, so the significane level is 5%.
+The rejection region are the population values under
+the blue tails. These are the sample average media
+literacy scores that differ too much from the
+hypothesized population mean to believe that the
+hypothesized mean is the true population mean.
+```
 
 4. Is the test statistically significant? How do you decide?
+```{r eval=FALSE}
+4. If the sample mean (red line) is in the blue tails
+(rejection region) of the sampling distribution, the null hypothesis must be rejected.
+Note that the blue tails extend infinitely away from the
+hypothesized value but the density becomes quickly so small
+that you can't see the blue surface everywhere.
+```
 
 5. What happens if you change the hypothesized population mean? Check your answer by using the slider.
+```{r eval=FALSE}
+5. The curve moves horizontally because it represents the
+sampling distribution if the null hypothesis is true. It assumes
+that the true population mean is equal to the hypothesized
+population mean. 
+The population mean is the expected value of the 
+sampling distribution, so it is the center of this
+distribution. If we change the hypothesized mean, we
+change the center of the distribution, so it moves
+to the left or right.
+```
 
 6. Is it OK to change your null hypothesis when you know your sample mean? Why is it OK or not OK? 
+```{r eval=FALSE}
+6. It is NOT OK to change your null hypothesis when you
+know your sample mean because you can always find
+a null hypothesis that is statistically significant. Just
+move you null hypothesis so your sample mean (red) ends
+up in the (blue) region outside the critical values.
+You don't offer the data a chance to proof that your
+null hypothesis is wrong when you (re)formulate the
+null hypothesis when you know your sample.
+```
 
 Return to these question after studying this chapter.
 
@@ -45,7 +108,7 @@ Hypothesis testing, then, amounts to a choice from two options: reject or not re
 
 A _research hypothesis_ is a statement about the empirical world that can be tested against data. Communication scientists, for example, may hypothesize that:  
 
-* a television station reaches half of all households in a country,  
+* a television station reaches half of all households in a country,
 
 * media literacy is below a particular standard (5.5 on a 10-point scale) among children,  
 
@@ -53,7 +116,7 @@ A _research hypothesis_ is a statement about the empirical world that can be tes
 
 * the celebrity endorsing a fundraising campaign makes a difference to people's willingness to donate,  
 
-* more exposure to brand advertisements increases brand awareness,  
+* more exposure to brand advertisements increases brand awareness,
 
 * and so on.  
 
@@ -1069,14 +1132,64 @@ knitr::include_app("http://82.196.4.233:3838/apps/crit-df/", height="405px")
 Figure \@ref(fig:crit-df) uses the t distribution to approximate the sampling distribution of average media literacy in a random sample of children.
 
 1. What is the meaning of the coloured tails?
+```{r eval=FALSE}
+1. The coloured tails represent the probabilities of
+drawing a sample with a (sample) mean that differs a
+lot from the (true or hypothesized) population mean.
+The (true or hypothesized) population mean is represented
+by the center of the distribution.
+In this case, the probabilities of the two coloured
+tails sum to 5%, so the tails represent the top five
+percent of samples that are most different from the
+hypothesized or true population mean.
+```
 
 2. What is the meaning of t~c~?
+```{r eval=FALSE}
+2. t~c~ is the value of the test statistic t that
+separates the most unlikely or most extreme samples
+from the most likely samples.
+It is called the critical value (of the test
+statistic).
+```
 
-3. Why does the distribution become more pointed when sample size increa
+3. Why does the distribution become more pointed when sample size increases?
+```{r eval=FALSE}
+3. With a larger sample, we have more information,
+so we have more precise results. More sample means
+are close to the true population mean. 
+In technical terms, the variation of sample means
+decreases with larger sample size; sample means are
+more alike. The standard deviation of the sampling
+distribution is called the standard error. A 
+distribution of larger samples has a smaller standard
+error.
+```
 
 4. Is there a fixed relation between the t values and the values for average sample media literacy? Change the sample size to find the answer.
+```{r eval=FALSE}
+4. No, there is not a fixed relation. A particular
+average media literacy score, for example, 4.0 on the
+bottom scale, does not always correspond to the same
+test statistic (t) value on the top scale. Just change
+sample size to see this.
+The t statistic expresses the difference between the
+(true or hypothesized) population value and the sample
+value in standard errors. It translates, for example,
+the difference between 5.5 (population average of
+media literacy) and 4.0 (media literacy in our sample)
+into standard errors, for example, 0.5, which yields
+a test statstic value of 1.5 / 0.5 = 3.0.
+A larger sample yields a smaller standard error. As
+a result, we divide the difference in raw scores,
+1.5 in the example, by a smaller number, so the
+resulting test statistic is larger.
+```
 
 5. What is the relation between sample size and critical t values?
+```{r eval=FALSE}
+5. Smaller samples have slightly larger critical t values.
+```
 
 A theoretical probability distribution links sample outcomes such as a sample mean to probabilities by means of a _test statistic_. A test statistic is named after the theoretical probability distribution to which it belongs: _z_ for the standard-normal or _z_ distribution, _t_ for the _t_ distribution, _F_ for the _F_ distribution and, you already guessed, chi-squared for the chi-squared distribution.  
 
@@ -1165,22 +1278,67 @@ If you have the value of the test statistic but not the p value, you may report 
 
 ## Relation Between Null Hypothesis Test and Confidence Interval {#null-ci0}
 
-Null hypothesis testing and confidence interval estimation are related. The long and the short of it is that a 95% confidence interval contains all null hypotheses that would _not_ be rejected with the current sample at the 5% significance level, two-sided.  
-
-```{r null-ci}
-# Variant of app pop-means-ci in Ch. 3.
+```{r null-ci, fig.cap="How does null hypothesis significance relate to confidence intervals?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Draw three horizontal lines, the top line labeled 'population', the middle one labeled 'sampling distribution', and the bottom line labeled 'sample'. All lines have a numerical scale (1-10). Add a normal curve to the sampling distribution axis with 2.5% of each tail area coloured and the mean indicated by a vertical line extending to the population axis and labeled there by 'Mean = <number>'. Generate a sample mean within the range [4.5, 6.5] and mark it with a number on the lower line and a vertical line from the sample to well above the sampling distribution line (so it cuts through the normal curve). Add a slider to adjust the hypothesized population mean (range [3, 7]). The slider adjusts the horizontal position of the normal curve and population mean.
+knitr::include_app("http://82.196.4.233:3838/apps/null-ci/", height="410px")
 ```
 
-Figure \@ref(fig:null-ci) shows a population with a hypothesized population mean, for example, average media literacy. Below, you see a sampling distribution and the bottom line shows the average media literacy in our sample. The coloured areas under the normal curve each represent 2.5% of the total area. 
+The top of Figure \@ref(fig:null-ci) shows media literacy scores in a random sample of children and their average media literacy score (red). The hypothesized average media literacy in the population of children is shown on the bottom axis. The curve represents the sampling distribution if the null hypothesis is true. The coloured areas under the curve represent 2.5% of the total area each.
 
-1. Why does the sampling distribution (normal curve) move horizontally if you change the hypothesized population mean?
+1. Would you reject the current null hypothesis with this sample?
+```{r eval=FALSE}
+1. If the sample mean (red line) is in the blue tails of
+the sampling distribution, the null hypothesis must be
+rejected.
+Note that the blue tails extend infinitely away from the
+hypothesized value but the density becomes quickly so small
+that you can't see the blue surface everywhere.
+```
 
-2. What are the lowest and highest population means for which the null hypothesis is _not_ rejected?
+2. What are the lowest and highest sample means for which the null hypothesis is _not_ rejected?
+```{r eval=FALSE}
+2. If the sample mean (red line) is between the blue
+tails, the null hypothesis is not rejected.
+So imagine that the inner borders of the tails extend
+down to the x axis. At which mean media literacy scores
+do these borders intersect with the x axis?
+In the initial situation with the hypothesized population
+mean at 5.5, the border scores are just above four and
+just below seven.
+```
 
-3. Use the slider to find the 95% confidence interval for the population mean given the sample mean.
+3. Why does the sampling distribution (curve) move horizontally if you change the hypothesized population mean?
+```{r eval=FALSE}
+3. The curve moves because it represents the sampling
+distribution if the null hypothesis is true. It assumes
+that the true population mean is equal to the hypothesized
+population mean. 
+The population mean is the expected value of the 
+sampling distribution, so it is the center of this
+distribution. If we change the hypothesized mean, we
+change the center of the distribution, so it moves
+to the left or right.
+```
 
-4. How does the 95% confidence interval for the population mean relate to the null hypotheses that are not rejected?
+4. Use the slider to find the 95% confidence interval for the population mean given the sample mean.
+```{r eval=FALSE}
+4. A confidence interval contains all (hypothetical)
+values of the population parameter---here: the
+population mean---for which we do not reject the
+null hypothesis. So all hypothesized population means
+that create a sampling distribution such that the sample
+mean is between the critical borders of the tails are
+part of the confidence interval.
+Change the slider such that the border of the right tail
+coincides with the red line of the sample mean. This
+hypothesized population value is the lower bound of the
+95% confidence interval.
+Make the border of the left tail meet the sample mean
+(red line): this population value is the upper bound
+of the confidence interval.
+```
+
+Null hypothesis testing and confidence interval estimation are related. The long and the short of it is that a 95% confidence interval contains all null hypotheses that would _not_ be rejected with the current sample at the 5% significance level, two-sided.  
 
 Remember that the probability involved in a 95% confidence interval is not the probability that the population value is within the interval. The population value is a fixed number, not a random variable with a probability distribution. At least not in the approach to statistical inference that we follow here. For this reason, we say that we are 95% confident that the parameter lies within the 95% confidence interval but not that the population value is included in the interval with 95% probability.  
 
