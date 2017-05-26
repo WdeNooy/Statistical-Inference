@@ -389,19 +389,82 @@ We must also know the population mean because it specifies where the center of t
 By the way, we also need the standard error to know how peaked or flat the bell shape is. The standard error can usually be estimated from the data in our sample. If you have carefully experimented with the options in the interactive content above, you should have some ideas. But let us not worry about how the standard error is being estimated. We want to estimate the population mean now.  
 
 ### Imaginary population values  {#imag-pop-values}
-```{r pop-means-ci, fig.cap="Population means for which the sample mean is within the interval estimate."}
+```{r pop-means-ci, fig.cap="For which population means is our sample mean plausible?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # draw two horizontal lines, the top line labeled 'population' and the bottom line labeled 'sample', both lines with a numerical scale (0-5) ; generate a sample mean and standard error within a particular range, say 1-4 for the sample mean and the standard error in a range convenient to have interval estimates within the 0-5 or -1-6 range ; mark the sample mean on the lower line and show the value of the standard error somewhere in the app ; if the user clicks on the upper line, the corresponding number is shown as an (imaginary) population mean ; the 95% probability interval estimate for the sample mean is shown as a horizontal line segment on top/near the lower line (plus a light triangle starting at the population value) ; if the line segment overlaps with the sample mean, the selected population value is marked by a green dot and the line segment is green, they are red dots otherwise ; also show the z value of the sample mean for the chosen population mean ; at next click, remove old interval estimate (line segment plus triangle) but keep the prevously selected population mean ; a 'Reset' button generates new values to restart the interaction (repeat the assignment with different values for the sample mean and standard error to emphasize that the z values remain the same)
+knitr::include_app("http://82.196.4.233:3838/apps/pop-means-ci/", height="210px")
 ```
 
-![Example layout](figures/CI_1.png)
+Figure \@ref(fig:pop-means-ci) shows average candy weight in a random sample (lower scale). Click somewhere under the top axis to select a possible value for the population mean. The app will then display the interval of most plausible sample means (green if it contains the actual sample means, red otherwise) and the actual sample mean's _z_ value as if this is the true population value.
 
-Figure \@ref(fig:pop-means-ci) shows the sample mean (lower scale) and a range of population means (upper scale), click somewhere on the upper scale to select a possible value for the population mean. The app will then show the interval estimate for the sample mean if this is the true population value. If the true sample mean is within this interval, the population mean is represented by a green dot. Otherwise, a red dot marks the population mean. The app will also show the _z_ value of the true sample mean if the selected population mean would be the true population mean.
+1. Click repeatedly on Figure \@ref(fig:pop-means-ci) to find the highest and lowest value of the population mean for which the sample mean is in the interval of sample means that have 95% probability to occur. 
+```{r eval=FALSE}
+1. The closer the sample mean is to the population mean,
+the higher the probability to draw a sample with more or
+less this mean. Population means close to the sample
+mean will turn up as green dots and their intervals will
+include the sample mean.
+The more we move away from the sample mean, the less
+likely to draw a sample with a mean that differs at least
+this much with the populaiton mean. At some point, the
+population mean is too far away from the sample mean, so
+the sample eman is no longer in the range of the 95%
+most likely sample means to be drawn from a population
+with the selected population mean.
+```
 
-1. Click repeatedly on the upper line (population) to find the highest and lowest value of the population mean for which the sample mean is in the interval of sample means that have 95% probability to occur. Try to minimize the number of clicks you need. 
+2. How does the _z_ value of the sample mean help you to minimize the number of clicks you need?
+```{r eval=FALSE}
+3. In a normal distribution, z is the test statistic.
+In a normal distribution, 95% of all observations differ
+no more than 1.96 z scores from the mean. The lowest and
+highest population means for which the current sample mean
+is among the 95% most plausible samples, then, are reached
+if the z value of the sample mean is (almost) 1.96 or
+-1.96.
+The z value tells us how close we are to the limit.
+```
 
-2. How does the depicted interval estimate help you to minimize the number of clicks you need?
+3. How does the depicted interval estimate help you to minimize the number of clicks you need?
+```{r eval=FALSE}
+3. The interval estimate shows the width of the interval
+between the lowest and highest population average for
+which the current sample mean is among the 95% most
+plausible samples.
+If the current sample mean is at the left border of the
+interval, we reach the highest population mean for
+which the sample mean is in the interval. Increase the
+population mean and the interval will no longer include
+the current sample mean. In a similar way, the lowest
+population mean for which the interval includes the
+sample mean is found if the sample mean is on the right
+border of the interval.
+```
 
-3. How does the _z_ values of the sample mean help you to minimize the number of clicks you need?
+4. What is the most efficient strategy (minimum number of clicks) to determine the lower and upper limits of the population means for which the sample mean is among the 95% most likely samples? Explain why this is the most efficient strategy.
+```{r eval=FALSE}
+4. Using the answer to Question 3, we may use the
+following steps to find the lower and upper limits.
+a. click in the middle of the sample mean. This selects
+the population mean that is equal to the sample mean.
+b. Click on the left edge of the interval. This should
+be (very near to) the lowest population mean, the interval
+of which still includes the sample mean.
+c. Repeat Step a to display again the interval for the
+populaiton mean that is equal to the sample mean.
+d. Click the right end of this interval to find the
+highest population mean such that the current sample
+mean is still among the 95% most plausible samples.
+You may not hit the nail spot-on with every click but 
+the procedure itself is efficient. You can only do
+better by gambling the values of the two limits
+directly and being very very lucky.
+
+The important lesson here: Instead of constructing
+the interval around the population mean, we can 
+construct it around the sample mean to obtain the
+range of population means that are plausible given
+this sample. We flip the procedure!
+```
 
 How do we solve the M&uuml;nchhausen problem that we must know the population mean to estimate the population mean? The solution is that we select a lot of imaginary population means. For each imaginary population mean, we calculate the interval within which the sample mean is expected to fall if this imaginary mean would be the true population mean. We use a fixed confidence level, usually a probability of 95 percent. 
 
