@@ -20,25 +20,117 @@ However, if we do _not_ reject the null hypothesis, we cannot make a Type I erro
 knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="735px")
 ```
 
-Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both sampling distributions are approximated with a t distribution. At the top is the hypothetical world of the researcher. In this hypothetical world, the researcher's null hypothesis is true, namely that average candy weight is 2.8 gram. At the bottom is the real world in which average candy weight is 2.9 gram. The standard deviation of candy weights is 0.5.  
+Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both sampling distributions are approximated with a t distribution. At the top is the hypothetical world of the researcher. In this hypothetical world, the researcher's null hypothesis is true, namely that average candy weight is 2.8 gram in the population. At the bottom is the real world in which average candy weight is 2.9 gram. The standard deviation of candy weights is 0.5.  
 
 1. What do the values on the horizontal axes mean?  
+```{r eval=FALSE}
+* The values on the horizontal axes are t values, that
+is, the value of the sample statistic, for example, the
+sample mean, transformed into a t test statistic.
+```
 
 2. What does t~c~ mean?  
+```{r eval=FALSE}
+* t~c~ is the value of the test statistic t that
+separates the most unlikely or most extreme samples
+from the most likely samples.
+* It is called the critical value (of the test
+statistic). If the test statistic for our sample
+is beyond this value, we reject the null hypothesis.
+```
 
 3. Why are the t values and t~c~values exactly the same on both horizontal axes?  
+```{r eval=FALSE}
+* The researcher only knows the hypothetical world:
+What does the sampling distribution look like if my
+null hypothesis is true? She uses the critical values
+of this hypothetical world. 
+* The other graph represents the true sampling distribution.
+This distribution actually produced the sample that the
+researcher has drawn. This sampling distribution is
+evaluated with the critical values from the hypothetical
+distribution.
+```
 
-4. What is the unstandardized and standardized effect size here?
+4. What is the unstandardized and standardized effect size if average candy weight is 2.83 gram in our sample?
+```{r eval=FALSE}
+* The effect size is the difference between the
+hypothesized population value and the value found
+in the sample. According to the text accompanying
+the Figure, the hypothesized population mean of
+candy weight is 2.8 gram. 
+* If our sample mean is 2.83 gram, the effect size
+is the difference, that is, (-)0.03 gram. This is the
+unstandardized effect size. We usually do not care
+about the sign of the difference.
+* For the standardized effect size, we divide the
+unstandardized effect size by the standard deviation
+of the original variable. The standard deviation
+of candy weight (in the sample) is given as 0.5, so
+the unstandardized effect size is 0.03 / 0.5 = 0.06.
+* Provided that we drop a minus sign if it appears, this
+value is Cohen's d. 
+* According to the rules of thumb for interpreting
+Cohen's d, the effect is very weak because it is
+much less than 0.20.
+```
 
 5. What do the double-sided horizontal red arcs represent in the top graph?  
+```{r eval=FALSE}
+* They represent the values of the t statistic for
+which we reject the null hypothesis. This is called
+the rejection region of the test.
+```
 
 6. Why are the double-sided horizontal arcs red in the top graph and black in the bottom graph (and the other way around)?  
+```{r eval=FALSE}
+* The red double-sided arcs represent errors.
+* In the top graph, they represent the situation
+that we reject a null hypothesis if it is true.
+This is a Type I error.
+* In the bottom graph, they represent the situation
+that we do not reject a null hypothesis that is 
+false. This is a Type II error.
+```
 
 7. Why are the orange sections in the top graph labelled Type I error?  
+```{r eval=FALSE}
+* The orange sections represent the probability
+to reject a null hypothesis if it is true. This
+is a Type I error. 
+* Note that a more accurate labelling of the graph
+would have said: "Probability of a Type I error."
+```
 
-8. What happens to the probability of Type II error (the blue section in the bottom graph) if you change the significance level with the slider?  
+8. What happens to the probability of Type II error (the blue section in the bottom graph) if you change the significance level with the slider? 
+```{r eval=FALSE}
+* With a higher significance level (alpha goes up),
+we take a larger risk to reject the null hypothesis if
+it is true. The orange tails in the top graph become
+bigger and the critical values move towards zero.
+* If we take a larger risk to reject a true null
+hypothesis, we reject the null hypothesis more easily.
+* If we reject the null hypothesis more easily, we are
+more likely to reject the null hypothesis if it is
+not true. The probability to reject a false null
+hypothesis is the power of the test. This probability
+is expressed by the orange tail in the bottom graph.
+* If we are more likely to reject a false null hypothesis,
+we are less likely to make the Type II error of not
+rejecting a false null hypothesis. This is the blue
+section in the bottom graph. 
+* Note that the critical t values move closer to zero
+both in the top and bottom graph if we take a larger risk 
+to reject a false null hypothesis. The critical t values
+also demarcate the blue area in the bottom graph. Moving
+towards zero, they decrease the size of the blue area.
+```
 
 9. What do you think Type II error means in the bottom graph?  
+```{r eval=FALSE}
+* Type II error is the situation that we do not
+reject a null hypothesis that is false.
+```
 
 Didn't you know all answers? Return to these question after studying this chapter.
 
@@ -52,7 +144,7 @@ Chi-squared tests require a minimum of five expected frequencies per category in
 
 The variation of sample size across groups is important to the analysis of variance. If the number of cases is more or less the same across all groups, we need not worry about the variances of the outcome variable in the population for the groups. To be on the safe side, then, it is recommended to design your sampling strategy in such a way that you end up with more or less equal group sizes if you plan to use analysis of variance (ANOVA).  
 
-## Effect Size  
+## Effect Size {#effectsize}
 
 We have learned that larger samples have smaller standard errors (Section \@ref(sample-size)). Smaller standard errors yield (absolutely) larger test statistic values and larger test statistics have smaller p values. In other words, a test on a larger sample is more often statistically significant. 
 
@@ -93,7 +185,7 @@ In scientific research, we rarely have precise norms for differences that are pr
 
 If candy weights vary a lot, we will not be very impressed by a relatively small difference between observed and expected (hypothesized) average candy weight. In contrast, if candy weight is quite constant, a small average difference is important. 
 
-For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on means is known as _Cohen's d_. 
+For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the hypothesized population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on means is known as _Cohen's d_. 
 
 The sample outcome can be a single mean, for example the average weight of candies, but it can also be the difference between two means, for example, the difference between average weight of yellow candies and average weight of red candies. In the latter case, the difference is divided by a combined (_pooled_) standard deviation for yellow and red candy weight.  
 
@@ -198,10 +290,46 @@ knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="735px")
 Before reading on, try to make sense of the two graphs in Figure \@ref(fig:TypeI-II-errors) and how they relate to each other:  
 
 1. What is the relation between significance level and Type I error? Formulate your answer very precisely: Details matter now! Check your answer by changing the significance level.
+```{r eval=FALSE}
+* With a higher significance level (alpha goes up),
+we take a larger risk to reject the null hypothesis if
+it is true. The probability of a Type I error, which
+we make if we reject a true null hypothesis, goes up.
+* The orange tails in the top graph become
+bigger and the critical values move towards zero.
+```
 
 2. What exactly is Type II error? 
+```{r eval=FALSE}
+* We make a Type II error if we do not reject a false
+null hypothesis. 
+* The situations in which we make a Type II error are
+depicted by the red double-sided arc in the bottom graph.
+```
 
 3. How does the probability of a Type II error relate to the probability of a Type I error? Try to explain the relation in your own words.
+```{r eval=FALSE}
+* If the probability of a Type I error goes up, the
+probability of a Type I error goes down, and the other
+way around.
+* With a higher significance level (alpha goes up),
+we take a larger risk to reject the null hypothesis if
+it is true. We have a larger probability of making a
+Type I error, which is depicted by the orange tails 
+in the top graph.
+* If we take a larger risk to reject a true null
+hypothesis, we reject the null hypothesis more easily.
+* If we reject the null hypothesis more easily, we are
+more likely to reject the null hypothesis if it is
+not true. The probability to reject a false null
+hypothesis is the power of the test. This probability
+is expressed by the orange tail in the bottom graph.
+* Note that the critical t values move closer to zero
+both in the top and bottom graph if we take a larger risk 
+to reject a false null hypothesis. The critical t values
+also demarcate the blue area in the bottom graph. Moving
+towards zero, they decrease the size of the blue area.
+```
 
 ### Type I error  
 We have two populations, a hypothetical population and an imaginary true population. Once we have drawn our sample, we only deal with the hypothetical population, for example, the top graph in Figure \@ref(fig:TypeI-II-errors), as we have done in all preceding chapters. 
@@ -235,7 +363,7 @@ However, a little bit of power is situated in the left tail. It is so small that
 The probability that this happens is very small and usually negligible. In the interactive content, you may encounter power values in the left tail that are so small that they have to be written in scientific notation, e.g., 1.0E-10, which means 1 at the tenth decimal place: 0.0000000001. Anyway, the important thing is that we reject a false null hypothesis even if it is for the 'wrong' reason. Rejecting a false null hypothesis, our conclusion is not erroneous.  
 
 ### Effect size, sample size, and power  
-Figure \@ref(fig:power-H0-rejections) illustrates the concept of test power. It draws 1,000 samples from a population in which the true population mean is equal or larger than the population mean according to the null hypothesis. _Effect size_ reflects how much the true population mean is larger than the hypothesized mean. 
+Figure \@ref(fig:power-H0-rejections) illustrates the concept of test power. It draws 1,000 samples from a population in which the true population mean is equal or larger than the population mean according to the null hypothesis. _True effect size_ reflects how much the true population mean is larger than the hypothesized mean. (Note that this is different from effect size based on the sample value that we discussed in Section \@ref(effectsize).)
 
 For each sample, the test statistic t is calculated and the right-sided p value. The 1,000 t values are shown in the blue histogram and the p values are collected in the red histogram. If the test is significant, the null hypothesis is rejected. Test power and the proportion of samples for which the null hypothesis is rejected are shown above the blue histogram.  
 
@@ -248,16 +376,87 @@ knitr::include_app("http://82.196.4.233:3838/apps/ttest_simulation/", height=720
 First, familiarize yourself with the histograms in Figure \@ref(fig:power-H0-rejections) by figuring out the answers to the following questions:
 
 1. What does the vertical black line in the blue histogram represent?  
+```{r eval=FALSE}
+* A null hypothesis is rejected if the sample t value
+exceeds the critical t value(s). The vertical black
+lines probably represents the critical t value. It
+separates the (20%) samples with t values larger than
+the critical value---here we reject the null hypothesis---
+from the samples with t values below the critical value.
+* In this example, a right-sided test is executed because
+the population mean can only be larger than the 
+hypothesized mean according to the accompanying text.
+The critical t value of a one sided test is a bit
+below zero (remember that the critical z value for a
+one-dosed test is 1.64). This is in line with the
+position of the black line in the blue graph.
+```
 
 2. Which blue bars in the histogram represent the samples with statistically significant test results, that is, samples for which the null hypothesis is rejected?
+```{r eval=FALSE}
+* If the black line is the critical t value and
+the test is right-sided (see Question 1), the blue
+bars to the right of the black line represent samples
+for which the null hypothesis is rejected.
+```
 
 3. What does the vertical black line in the red histogram represent?
+```{r eval=FALSE}
+* If we evaluate p values, we compare them to the
+significance level of our test. The black line in
+the red graph, then, probably represents the
+significance level.
+* The black line represents a value somewhere around
+.05. This is a very common significance level value.
+```
 
 4. Which red bars in the histogram represent the samples with statistically significant test results, that is, samples for which the null hypothesis is rejected?
+```{r eval=FALSE}
+* A null hypothesis test is significant if the
+p value is below the significance level.
+* If the black line in the red graph represents
+the significance level (see Question 4), the bars
+to its left represent tests with p values below
+the significance level. These are the tests that
+are statistically significant.
+```
 
-Next, formulate for yourself how test power will change if you increase effect size or sample size. Check your expectations by adjusting the values in the interactive content.  
+5. Next, formulate for yourself how test power will change if you increase true effect size or sample size. Check your expectations by adjusting the values in the interactive content.  
+```{r eval=FALSE}
+* True effect size: The larger the difference between the
+observed sample result and the hypothesized population
+value, the larger the effect size and the larger the
+probability to reject the null hypothesis if it is
+not true. A larger effect size should yield higher
+test power.
+* Sample size: With larger sample size, we have more
+precise results, that is, our sample outcome is more
+likely to be close to the population value. If the
+population value differs from the null hypothesis,
+our sample outcome is more likely to be different
+from our hypothesis, and we are more likely to
+reject the (false) null hypothesis. A larger sample
+should yield higher test power.
+* technically speaking, both a larger effect size
+and a larger sample size decrease the standard error.
+A lower standard error gives higher t test values,
+and higher t test values give significant results
+more easily. Significant results means rejecting
+the null hypothesis, which contributes to test power
+if the null hypothesis is not true.
+```
 
-Finally, think about this. There is one situation in which power is meaningless. Which value should you assign to effect size or sample size to create that situation? In this situation, what does the proportion of rejected nulls indicate?  
+6. Finally, think about this. There is one situation in which power is meaningless. Which value should you assign to true effect size or sample size to create that situation? In this situation, what does the proportion of rejected nulls indicate?  
+```{r eval=FALSE}
+* If true effect size is zero, test power is meaningless.
+* If true effect size is zero, the true population mean
+is equal to the hypothesized population mean. In other
+words, the hypothesis is true. In this situation, we
+cannot make a Type II error, that is, fail to reject a
+false null hypothesis. There cannot be a probability to
+avoid this error and reject a false null hypothesis, so
+test power is meaningless in this situation.
+```
 
 ## Sample Size and Power  
 

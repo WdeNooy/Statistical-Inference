@@ -7,7 +7,7 @@ shinyServer(function(input, output) {
   #Source styling file for plots
   source("../plottheme/styling.R", local = TRUE)
 
-  mean <- 2.8 #Population moean
+  mean <- 2.8 #Population mean
   sdpop <- 0.6 #Population SD 
   
   #Container for reactive values
@@ -27,12 +27,17 @@ shinyServer(function(input, output) {
     #Calculate the standard error and store 
     sample$SE <<- sdpop/sqrt(input$ssizeslider)
     #calculate power and store
-    sample$power <<- round(power.t.test(n = input$ssizeslider,
-                                  delta = (input$savslider - mean)/sdpop,
-                                  sd = sdpop,
-                                  sig.level = 0.05,
-                                  type = "one.sample",
-                                  alternative = "two.sided")$power, 2)
+    sample$power <<- ifelse(
+      input$savslider == mean, NA, round(
+        power.t.test(n = input$ssizeslider,
+          delta = (input$savslider - mean),
+          sd = sdpop,
+          sig.level = 0.05,
+          type = "one.sample",
+          alternative = "two.sided")$power,
+        2)
+    )
+      
   })
   
 
@@ -112,10 +117,10 @@ shinyServer(function(input, output) {
       #X axis breaks definition
       scale_x_continuous(breaks = ticks, labels = strengthlab) + 
       #Defining x axis zoom
-      coord_cartesian(xlim = c(mean - 1.5 * sdpop,mean + 1.5*sdpop)) +
+      coord_cartesian(xlim = c(2.15, 3.45)) +
       #Title and labels for axes
       ggtitle("Sampling distribution") + 
-      xlab("Candy Weight") + 
+      xlab("Average candy weight") + 
       ylab("Denisty") +
       #Theme specification
       theme_general() + 

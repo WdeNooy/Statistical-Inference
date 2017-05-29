@@ -17,7 +17,7 @@ shinyUI(fluidPage(
     ),
     fluidRow(align = "center",
              sliderInput("effect.size", 
-                         "Effect size:", 
+                         "True effect size:", 
                          value = 0.2,
                          min = 0, 
                          max = 1,

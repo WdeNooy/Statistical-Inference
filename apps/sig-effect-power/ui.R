@@ -15,11 +15,11 @@ shinyUI(fluidPage(
                           min = 2.8,
                           max = 3.2,
                           value = 2.9,
-                          step = .1),
+                          step = .05),
               sliderInput("ssizeslider",
                           label = "Sample size",
-                          min = 5,
-                          max = 50,
+                          min = 10,
+                          max = 100,
                           value = 10,
                           step = 5
                           )
