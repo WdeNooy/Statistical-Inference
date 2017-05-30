@@ -16,58 +16,6 @@ shinyServer(function(input, output) {
                                                  input$wonobody,
                                                  input$woclooney,
                                                  input$wojolie)))
-  #Calculations for p value, f value and eta^2
-  stats <- reactive({df <- data()
-                    n <- 10 # size of each group
-                    # Generate within subgroup deviations with sd = 1.66
-                    dev <- qnorm(seq(from = 1/11, to = 10/11, length.out = 10), mean = 0, sd = 2)
-                    # Generate full dataset with current subgroup averages
-                    dfull <- data.frame(endorser = factor(c(rep("Nobody", times = 2*n),
-                                                            rep("Clooney", times = 2*n),
-                                                            rep("Jolie", times = 2*n)),
-                                                          levels = c("Nobody","Clooney","Jolie")),
-                                        sex = as.factor(rep(c(rep("male", n), rep("female", n)), 3)),
-                                        willingness = c(df$willingness_av[1] + dev,
-                                                        df$willingness_av[4] + dev,
-                                                        df$willingness_av[2] + dev,
-                                                        df$willingness_av[5] + dev,
-                                                        df$willingness_av[3] + dev,
-                                                        df$willingness_av[6] + dev)
-                                        )
-                    # Execute ANOVA (via lm)
-                    anova_out <- anova(lm(willingness ~ endorser * sex, data = dfull,
-                                 contrasts = list(endorser = contr.sum, sex = contr.sum)))
-                    # Calculate eta2
-                    ss_total <- sum(anova_out$`Sum Sq`)
-                    # Return results as extended anova data.frame
-                    cbind(anova_out, eta2 = c(anova_out[,2]/ss_total))
-                    })
-  
-  #Output of results (p,f,eta) in HTML format
-  output$fvaltext <- renderUI({
-      helpText(
-        div(HTML(paste0(
-            "<b>Endorser effect:</b> F(2, 54) = ",
-              rprint(stats()[1,4]), ", ",
-              pprint(stats()[1,5]),
-              ", eta<sup>2</sup> = ",
-              rprint(stats()[1,6]),
-            "<br><b>Sex effect:</b> F(1, 54) = ",
-              rprint(stats()[2,4]), ", ",
-              pprint(stats()[2,5]),
-              ", eta<sup>2</sup> = ",
-              rprint(stats()[2,6]),
-            "<br><b>Interaction effect:</b> F(2, 54) = ",
-              rprint(stats()[3,4]), ", ",
-              pprint(stats()[3,5]),
-              ", eta<sup>2</sup> = ",
-              rprint(stats()[3,6])
-        )
-        )
-        )
-      )
-  })
-  
   ##MAIN PLOT##
   output$mainplot <- renderPlot({
     #Load data

@@ -14,18 +14,82 @@ With two or more factors, we can have interaction effects in addition to main ef
 ### Test your intuition or knowledge {-}
 
 ```{r anova-overview, fig.cap="Main effects and interaction effect in two-way analysis of variance.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-# Use app anova-interaction. Manipulate group means in a a means plotsof a 3x2 design. Create main and interaction effects and inspect effect size and statistical significance.
+# Use app anova-interaction. Manipulate group means in a a means plot of a 3x2 design. Create main and interaction effects and inspect effect size and statistical significance.
 source("../apps/plottheme/styling.R")
 knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="650px")
 ```
 
 1. what is or are the main effects in Figure \@ref(fig:anova-overview)? Explain how you can recognize main effects both in the means plot and in the reported numbers.
+```{r eval=FALSE}
+* There are two factors as we can see in the table:
+endorser (columns) and sex (rows). Each factor has a
+main effect, so there are two main effects in this example.
+* A main effect exists if the groups on one predictor
+(factor) have unequal means.
+* In right-most column of the table, it is easy to see 
+that females have a higher average willingness score than
+males, so there is a main effect of sex.
+* The average scores for the three endorsers are also
+quite clearly different (bottom row of the table).
+* In the plot, the difference is more difficult to see.
+You have to guess the average score of females over all
+endorsers (the average of the red line) and the average
+score of all males (average of the blue line), to see
+that females score higher than males on average.
+* In addition, we have to guess the average score for an
+endorser from the plot. This is somewhere in the middle
+of the green arc linking the score of females to the score
+of males. The average score with Clooney as endorser seems
+to be higher than the average score without a celebrity
+endorser, and the average score for Angelina Jolie is highest.
+These differences indicate a main effect for endorser.
+```
 
 2. Change some group means to create substantial and statistically significant moderation of the effect of endorser (Nobody, Clooney, or Jolie) on willingness.
+```{r eval=FALSE}
+* Moderation means different differences. This is best
+seen in the plot. The green arcs represent the differences
+between average willingness of males and females. If the
+green arcs are not equally long or point in opposite
+directions, the differences between females and males are
+not the same for all endorsers.
+* In this case, sex moderates the effect of endorser on
+willingness or, equivalently, endorser moderates the effect
+of sex on willingness.
+```
 
-3. What is the null hypothesis of the F test reported in Figure \@ref(fig:anova-overview)?
+3. What is the null hypothesis of the F tests reported in Figure \@ref(fig:anova-overview)?
+```{r eval=FALSE}
+* The substantive null hypothesis of an F test in analysis
+of variance is that all groups have the same average outcome
+scores in the populations from which the samples were drawn.
+* For the main effect of sex, the null hypotheses
+are that females and males have the same average willingness
+in the population
+* The null hypothesis for the main effect of endorser is that
+subjects exposed to Clooney, Jolie, or no celebrity endorser
+have the same average willingness in the population.
+* The null hypothesis of an F test on an interaction effect
+states that the subgroups have the same population averages
+if we correct for the main effects. In this example, the
+null hypothesis is that all combinations of sex and 
+endorser have the same average willingness in the population
+if we correct for the main effects.
+* This can also be expressed as: The differences in average
+population willingness between females and males are the same
+for all endorsers.
+```
 
-4. How should we interpret eta^2^ in Figure \@ref(fig:anova-overview)?
+4. How should we interpret the eta^2^ values in Figure \@ref(fig:anova-overview)?
+```{r eval=FALSE}
+* Eta^2 gives the proportion of variance in the outcome
+variable that is predicted or explained by the factor
+(categorical predictor variable).
+* When the app is just loaded, eta^2 for the endorser
+effect is 0.47. The differences between subjects'
+willingness scores in the sample can be predicted for
+47 percent by the endorser that they were exposed to.
+```
 
 ## Different Score Levels for Three or More Groups
 
@@ -439,25 +503,96 @@ rm(variables)
 # Goals: Learn to recognize different types of moderation, visually distinguishing between main effects (differences) and moderation (different differences.
 # Create a means plot with 3x2 means, willingness on Y axis, endorser (nobody, Clooney, Jolie) on X axis, and different colours for sex. Initial means have main effects but no interaction effect.Connect the means per sex by line segments. Link the female & male mean for the same group by a vertical double-sided arc. Allow user to change all six means (if possible, by dragging them vertically?). Display marginal (total) means for each sex and endorser.
 # Initial means.
-d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
+# d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
+knitr::include_app("http://82.196.4.233:3838/apps/anova-moderation/", height="650px")
 ```
 
 1. Does the plot in Figure \@ref(fig:anova-moderation) display a main effect of the factor sex? Motivate your answer.
+```{r eval=FALSE}
+* A main effect exists if the groups on one predictor
+(factor) have unequal means.
+* In right-most column of the table, it is easy to see 
+that females have a higher average willingness score than
+males, so there is a main effect of sex.
+* In the plot, the difference is more difficult to see.
+You have to guess the average score of females over all
+endorsers (the average of the red line) and the average
+score of all males (average of the blue line), to see
+that females score higher than males on average.
+* In this particular plot, the red line is everywhere
+above the blue line, so it is relatively easy to see
+that females score on average higher than males. But if
+the lines cross, that will be more difficult to see.
+```
 
 2. Is there a main effect of endorser? Again, motivate your answer.
+```{r eval=FALSE}
+* Now we have to look at the average scores for the three
+endorsers, which are quite clearly different (bottom row
+of the table). So yes, there is a main effect of endorser
+on willingness.
+* In the plot, we have to guess the average score for an
+endorser, which is somewhere in the middle of the green
+arc linking the score of females to the score of males.
+The average score with Clooney as endorser seems to be
+higher than the average score without a celebrity endorser,
+and the average score for Angelina Jolie is highest.
+These differences indicate a main effect for endorser.
+```
 
 3. Does subject's sex moderate the effect of endorser? If so, interpret the difference between the effects. If not, explain why there is no moderation.
+```{r eval=FALSE}
+* In this example, moderation implies that the differences
+between endorsers for females are different from the
+differences between endorsers for males. Different
+differences!
+* The red line visualizes the differences between
+endorsers for females. The blue line shows the
+differences between endorsers for males. If the two
+lines have the same shape, that is, if they are 
+parallel, the differences are the same for males and
+females and there is NO moderation.
+* In the example, the red and blue lines are parallel,
+so the effect of endorser on willingness is not moderated
+by sex.
+* Another way to see this is focusing on the green arcs
+in the graph. If these arcs have the same length and
+the same direction, the differences between males (arc
+origin) and females (arc end) are the same for all endorsers.
+This indicates that the effect of sex (difference between
+male and female within an endorser) is the same for all
+endorsers, so endorser does not moderate the effect of sex. 
+This also implies the reverse conclusion that sex does not
+moderate the effect of endorser because moderation is
+symmetrical. 
+```
 
 4. Adjust the means in such a way that the effect of endorser is stronger for males than females.
+```{r eval=FALSE}
+* An effect is stronger if the group averages vary
+more strongly.
+* Change the means for the males such that there is
+more variation between the three blue triangles (male
+average scores per endorser) than among the red dots
+(female average scores per endorser).
+```
 
-5. Adjust the means in such a way that the effect of endorser is the opposite for males than it is for females.
-
-6. Adjust the means in such a way that there is no main effect of endorser but still the effect is moderated: There are effects for males and for females.
+5. Adjust the means in such a way that the effects of Clooney and the effects of Jolie cancel out, so there is an interaction effect of endorser with sex but no main effect of endorser.
+```{r eval=FALSE}
+* For effects to cancel out, the difference between females
+and males in willingness if they are exposed to Clooney should
+have opposite signs. If males score higher than females
+if they are exposed to Clooney, females should score higher
+than men if they are exposed to Jolie.
+* If you ensure that the average score for Clooney, Jolie,
+and subjects not exposed to a celebrity endorser are the same,
+there is no main effect of endorser.
+```
 
 Moderation happens a lot in communication science for the simple reason that the effects of messages are stronger for people who are more susceptible to the message. If you know more people who have adopted a new product or a healthy/risky lifestyle, you are more likely to be persuaded by media campaigns to also adopt that product or lifestyle. If you are more impressionable, media messages are more effective.
 
 #### Effect strength moderation
-Here, moderation refers to contexts that strengthen or diminish the effect of, for example, a media campaign. Let us refer to this type of mediation as _effect strength moderation_. In our current example, we would hypothesize that the effect of George Clooney as an endorser is stronger for female subjects than male subjects.
+Moderation refers to contexts that strengthen or diminish the effect of, for example, a media campaign. Let us refer to this type of mediation as _effect strength moderation_. In our current example, we would hypothesize that the effect of George Clooney as an endorser is stronger for female subjects than male subjects.
 
 In analysis of variance, effects are differences between average outcome scores. The effect of Clooney on willingness to donate, for example, is the difference between the average willingness score of subjects exposed to Clooney and the average score of subjects who were not exposed to a celebrity endorser. 
 
@@ -498,22 +633,81 @@ In this situation, the main effect of endorser on willingness to donate is (near
 ### Testing main and interaction effects
 
 ```{r anova-interaction, echo=FALSE, fig.cap="How can we recognize main effects and moderation in a means plot?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-# Goals: Recognize effect size and statistical significance of interaction effects.
-# Exactly the same app as anova-moderation but now add Eta^2 and the F value plus p value of the interaction effect.
+# Goals: Recognize effect size and statistical significance of main and interaction effects.
+# Exactly the same app as anova-moderation but now add Eta^2 and the F value plus p value of the main and interaction effects.
 # Initial means.
 # d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
 knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="650px")
 ```
 
 1. Adjust the means in Figure \@ref(fig:anova-interaction) in such a way that the mean effect of endorser and the interaction effect of endorser and sex are statistically significant.
+```{r eval=FALSE}
+* If the app loads, there is a main effect of endorser.
+The effect size expressed by eta2 is clearly larger than
+zero and the F test on the endorser main effect is highly
+significant (p < .001).
+* The main effect indicates that the
+endorser group means (bottom row of the table) are
+(clearly) different. We should maintain these differences
+if we want to maintain the main effect.
+* The interaction effect is initially zero and not
+statistically significant. This means that the differences
+between females and males (expressed by the green arcs)
+do not vary (sufficiently) between the endorsers. In the
+initial situation, the difference between females and
+males is exactly the same for all endorsers, namely 1.5.
+* Change the difference between males and females within
+one or more endorser categories to create a sizable and
+statistically significant interaction effect. 
+* But ensure that the total differences between the
+endorser remain. For example, increase the female scores
+for one endorser and lower the male scores for that endorser
+such that the average for the endorser remains the
+same.
+```
 
 2. Adjust the means in such a way that the mean effect of endorser is _not_ statistically significant but the interaction effect of endorser and sex is statistically significant.
+```{r eval=FALSE}
+* To obtain a non-significant main effect of endorser,
+the mean scores for the endorsers (bottom row of the table)
+must be more or less the same. So lower the scores for
+females and males for endorsers with high average scores and
+increase the scores for endorsers with low scores until
+the means in the bottom row are equal.
+* If you want to have an interaction effect, you must ensure
+that the difference between females and males is clearly
+different for different endorsers. For example, increase
+the male scores for one endorser and decrease the female
+scores with the same amount.
+```
+
+3. Is it possible to have a statistically significant interaction effect but no statistically significant main effects? If so, adjust the scores in Figure \@ref(fig:anova-interaction) to prove your case.
+```{r eval=FALSE}
+* Yes, it is possible to have a statistically significant
+interaction effect but no statistically significant main
+effects. 
+* Adjust the scores in the table such that both the row
+totals (average per endorser) and the column totals
+(average per sex) are equal. To get the same averages for
+males and females (rows) while preserving equal averages for
+endorsers, you must increase or decrease the female (or
+male) scores equally for all endorsers (columns).
+* Of course, if you start with a table with equal
+average scores for all subgroup, you have a situation
+with no main effects.
+* You can obtain an interaction effect in this
+situation by changing the average scores for females and
+males for one endorser, such that the endorser average score
+remains the same and applying the opposite change to females
+and males for another endorser.
+* You will see that red and blue lines cross.
+```
 
 For main effects we compare average scores among groups within one factor. A two-way analysis of variance includes two main effects, one for each factor (see Section \@ref(anova2way)). Females are on average more willing to donate than males in Figure \@ref(fig:anova-effectstrengthmod). 
 
 For moderation, however, we compare average scores of subgroups, that is, groups that combine a level on one factor and a level on another factor. In Figure \@ref(fig:anova-effectstrengthmod), for example, we compare average willingness to donate for combinations of endorser and subject's sex. Interpretation of moderation requires some training because we must abstract from main effects. The fact that females score on average higher than males is irrelevant to moderation but it does affect all subgroup mean scores. 
 
-Moderation concerns the differences between subgroups that remain if we remove the overall differences between groups, that is , the differences that are captured by the main effects. The remaining differences between subgroup average scores provide us with a between groups variance. In addition the variation of  outcome scores within subgroups yield a within groups variance. 
+Moderation concerns the differences between subgroups that remain if we remove the overall differences between groups, that is, the differences that are captured by the main effects. The remaining differences between subgroup average scores provide us with a between groups variance. In addition, the variation of outcome scores within subgroups yield a within groups variance. 
 
 We can use the between groups and within group variances to execute an F test just like we do with main effects. The effect of subgroups on the outcome variable is called _interaction effect_. The null hypothesis of an F test on an interaction effect states that the subgroups have the same population averages if we correct for the main effects. In other words, the null hypothesis is that there is no moderation. 
 

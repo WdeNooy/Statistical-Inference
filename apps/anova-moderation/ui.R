@@ -23,9 +23,6 @@ shinyUI(
                    width = fig.width,
                    height = fig.height)
       ),
-      fluidRow(align = "center",
-               uiOutput("fvaltext")
-      ),
       fluidRow(
         align = "center",
         

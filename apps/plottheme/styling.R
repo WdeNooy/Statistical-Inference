@@ -13,3 +13,14 @@ theme_general <- function() {
 brewercolors <- brewer.pal( 5, name =  "Spectral")
 brewercolors[3] <- "#ffff00"
 names(brewercolors) <- c("Red", "Orange", "Yellow", "Green", "Blue")
+
+# Function to print p values.
+pprint <- function(pvalue) {
+  ifelse(pvalue < .0005,
+         "p < .001",
+         paste0("p = ", format(round(pvalue,3), nsmall = 3)))
+}
+# Function to print (numeric) results except p values.
+rprint <- function(value) {
+  format(round(value,2), nsmall = 2)
+}
