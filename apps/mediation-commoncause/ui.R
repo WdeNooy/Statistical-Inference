@@ -17,21 +17,21 @@ shinyUI(
                            label = "Correlation Age with Pol. interest",
                            min = -0.9,
                            max = 0.9,
-                           step = .1,
+                           step = .05,
                            value = 0
                            ),
                sliderInput("agereadslider",
                            label = "Correlation Age with Readingtime",
                            min = -0.9,
                            max = 0.9,
-                           step = .1,
+                           step = .05,
                            value = 0
                            ),
                sliderInput("polreadslider",
                            label ="Correlation Pol. interest with Readingtime",
                            min = -0.9,
                            max = 0.9,
-                           step = .1,
+                           step = .05,
                            value = 0
                            )
                )

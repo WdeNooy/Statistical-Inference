@@ -39,11 +39,82 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height
 ```
 
 1. What does the line in Figure \@ref(fig:moderator-overview) mean?
+```{r eval=FALSE}
+* The (red) regression line represents the (estimated) predictive
+effect of exposure on attitude for a particular value of contact
+(with smokers).
+*Contact is a moderator of the effect of exposure on attitude.
+In the initial plot after loading the app, the value of contact
+is zero, so the regression line expresses the predictive effect
+of exposure on attitude for respondents who have no contact with
+smokers.
+* It is both a conditional (and partial) effect. It is a
+conditional effect because it is the effect for a particular
+value of the moderator (contact). It is a partial effect because
+the multiple regression model controls the effect of 
+```
 
 2. What happens if you change the position on the slider? Explain you answer.
+```{r eval=FALSE}
+* A change of the slider changes the moderator value, so
+the regression line is re-estimated for respondents with
+another number of contacts with smokers. As a result, the
+regression line is redrawn (the previous regression line
+is shown in grey).
+* Because the regression line represents respondents with
+a different moderator score, the regression line is
+based on other observations (dots in the plot). The
+observations with score most near the selected moderator
+value are coloured blue. Changing the moderator value
+changes the relevant observations.
+* If the moderator value increases, the regression line's
+decrease is less steep and at some point changes into
+an increase from left to right.
+```
 
-3. Why does _contact_ (with smokers) appear as part of the regression coefficient for exposure in the regression equation?
+3. Why does _contact_ (with smokers) appear in between brackets together with the regression coefficient for exposure in the regression equation?
+```{r eval=FALSE}
+* Due to the interaction effect between exposure and contact
+in the model, the predictive effect of exposure depends on
+the respondent's contact score. For this reason, the
+respondent's contact score and its interaction regression
+coefficient is included in the (conditional) predictive
+effect of exposure. Thus, contact adds to (or subtracts from)
+the predictive effect of exposure.
+* The slope of the regression line becomes less negative
+or more positive for higher moderator (contact) values
+because the interaction effect is positive (0.04).
+Every addition unit on the moderator adds 0.04 to the
+regression slope of the conditional effect of exposure.
+```
 
+4. Which of the regression coefficients represent a partial effect and which a conditional effect? Explain your answer.
+```{r eval=FALSE}
+* In this regression equation, all regression coefficients
+represent a partial and a conditional effect.
+* The effects are partial because the multiple regression
+model controls each effect for all other effects.
+* The effects are conditional because the effect of
+exposure on attitude represent the effect for one
+value of the moderator contact. But moderation is
+symmetrical in the sense that we can also see exposure
+as moderator of the effect of contact (join the
+interaction effect between brackets with the contact
+effect), so the contact effect (b2) is the predictive
+effect of contact for respondents scoring zero on the
+exposure predictor.
+```
+
+5. What is the null hypothesis of a significance test on the interaction effect ($b_3$)? 
+```{r eval=FALSE}
+* The null hypothesis of an interaction effect in a
+(multiple) regression model is that there is no interaction
+(between these predictors) effect at all in the population.
+* In other words, the null hypothesis states that the
+effect of a predictor is the same at all levels of the other
+predictor(s) (included in the interaction effect) in the
+population.
+```
 
 ## The Regression Equation {#regression-equation}
 
@@ -317,18 +388,18 @@ knitr::include_app("http://82.196.4.233:3838/apps/pred-linearity/", height="550p
 
 1. Think up which dot in the plot of residuals (Figure \@ref(fig:pred-linearity) bottom) corresponds with the left-most observation (dot) in the scatterplot of attitude by exposure (Figure \@ref(fig:pred-linearity) top). Drag your mouse around the left-most dot while pressing the left mouse button to check your choice. Repeat for more dots until you understand the relation between the two plots.
 ```{r eval=FALSE}
-1. The blue regression line in the top graph represents the predicted 
+* The blue regression line in the top graph represents the predicted 
 values on the attitude variable from exposure scores. The predicted 
 attitude value for the left-most observation is the value at which 
 the blue line intersects with the vertical red line dropping down 
 from that observation. The predicted value is above zero. 
-It is the highest predicted value because the regression line slopes
+* It is the highest predicted value because the regression line slopes
 down to the right. The highest predicted value is at the far right 
 of the residuals by predicted attitude graph (bottom graph) because
 the predicted values are on the horizontal axis of this graph. The
 left-most observation in the top grpah, then, must correspond with 
 the right-most observation in the bottom graph.
-Note that this is not always true. If the regression slope is 
+* Note that this is not always true. If the regression slope is 
 positive, that is, the regression line goes up from left to right,
 the left-most observation in the top graph has the lowest predicted
 value, so it corresponds to the left-most observation in the
@@ -337,15 +408,15 @@ residuals plot.
 
 2. Select a U-shaped curve in Figure \@ref(fig:pred-linearity). Explain how the plot of residuals tells you that the association is not linear. Do the same for a curved association.
 ```{r eval=FALSE}
-2. If the association between two variables is U-shaped, the regression
+* If the association between two variables is U-shaped, the regression
 line underestimates the attitude for observations with low exposure, 
 overestimates the attitude for medium values of exposure, and 
 underestimates the attitude for high exposure values. As a result,
 the residuals have a marked pattern from left to right: a set of
 positive residuals, followed by a set of negative residuals, 
 followed by a set of positive residuals.
-The same phenomenon occurs for a curved association.
-In contrast, a linear association yields residuals without a clear
+* The same phenomenon occurs for a curved association.
+* In contrast, a linear association yields residuals without a clear
 pattern. At all levels of exposure and, hence, at all predicted 
 levels of attitude, we may encounter both positive and negative
 residuals. In the residuals by predicted values plot, we have
@@ -369,35 +440,36 @@ knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", heigh
 
 1. What strikes you about the residuals in Figure \@ref(fig:pred-homoscedasticity)?
 ```{r, eval=FALSE}
-1. The residuals are higher for higher values of exposure.
-In the top graph, the residuals tend to become larger from
+* The residuals are higher for higher values of exposure.
+* In the top graph, the residuals tend to become larger from
 left to right.
-As a consequence, the residuals are larger at one side
+* As a consequence, the residuals are larger at one side
 of the residuals by predicted values plot (bottom graph) then
 at the other side. Because the regression line has a negative
 slope, we can predict high attitude levels better than low
 attitude levels.
-The regression model seems to predict attitude better for 
+* The regression model seems to predict attitude better for 
 subjects with low exposure scores than for subjects with high
 exposure scores.
 ```
 
 2. What happens if you move the slider to the far left?
 ```{r, eval=FALSE}
-2. The pattern reverses. Now, residuals are larger for low
+* The pattern reverses. Now, residuals are larger for low
 values of exposure or, equivalently in this model with a 
 negative slope, for higher predicted values of attitude.
-Now, we are better at predicting low attitude levels than
-high attitude levels.
+* In this situatio, we are better at predicting low attitude
+levels than high attitude levels. Note that we prefer to
+predict all attitude levels equally well.
 ```
 
 3. At which slider position are all attitude levels predicted equally well or equally badly?
 ```{r eval=FALSE}
-3. If the slider is positioned at or around zero, the residuals
+* If the slider is positioned at or around zero, the residuals
 are more or less equally large for low, medium, or high
 predicted values of attitude. Here, we can predict all levels
 of attitude equally well or equally badly.
-This is best seen in the bottom graph: The vertical spread of
+* This is best seen in the bottom graph: The vertical spread of
 observations is more or less the same at the left, middle,
 and right of the graph. The vertical diameter of the dot
 cloud is more or less equal from left to right.
@@ -1351,8 +1423,6 @@ are rare.
 ## A Continuous Moderator {#cont-moderator-regression}
 
 ```{r continuous-moderator, fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
-# Use app continuous-moderator.
-knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height="550px")
 # Goal: Understand that there is a conditional effect for each value of the moderator by gradually changing the moderator value & understanding the linearity of the effect: a fixed slope change for a fixed difference in moderator values.
 # Generate a data set with a linear interaction (attitude ~ exposure*contact). Display a scattergram with a regression line for the current value of the moderator (contact). Display regression equation as y = a + (b_1 + b_3*contact(5))*exposure + b_2*contact(5) with values for coefficients and for contact. Add slider allowing the user to change the moderator value (range [0, 10], initial value 0). Replace the previous regression line by a grey line, remove older regression lines, and add new regression line in black; also update regression equation.
 # # Number of observations.
@@ -1366,13 +1436,53 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height
 # # Create outcome.
 # set.seed(390)
 # attitude <- -0.26*exposure + 0.15*contact + 0.04*exposure*contact + rnorm(n, mean = 2, sd = 0.5)
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height="550px")
 ```
 
 1. The regression line depicted in Figure \@ref(fig:continuous-moderator) represents the conditional effect of exposure on attitude for the value of contact with smokers selected with the slider. How many different conditional effects are there?
+```{r eval=FALSE}
+* In principle, there is an unlimited number of conditional
+effects because (or if) the moderator is a continuous variable.
+* In the app, however, the slider allows you to increase or
+decrease contact score by 0.5. In the app, there are effectively
+21 moderator values that you can select, so there are 21
+different regression lines that can be depicted.
+```
 
-2. Is the effect of campaign exposure on attitude towards smoking always negative? Or does exposure lead to a more positive attitude (higher score) in some cases? If so, in which cases?
+2. Is the effect of campaign exposure on attitude towards smoking always negative? Or does more exposure lead to a more positive attitude (higher score) in some cases? If so, in which cases?
+```{r eval=FALSE}
+* Move the slider from left to right to find the
+moderator value at which the regression line is
+horizontal. For higher moderator values, the slope
+of the regression line is positive. Here, more
+exposure leads to a more positive attitude.
+* Or have a close look at the equations. The
+regression coefficient of the (simple) slope of the
+exposure effect is zero if the part between brackets
+(b1 + b3*contact) is zero. We know b1 and b3, so
+we must solve the equation:
+> -0.26 + 0.04 * contact = 0
+Your high-school algebra may help you:
+> 0.04 * contact = 0.26
+> contact = 0.26 / 0.04
+> contact = 0.26 / 0.04 = 6.5
+```
 
-3. How much does the slope increase if the moderator value is changed from 0 to 1? And how much if it changes from 6 to 7? Use the slider or the regression equation to answer this question. 
+3. How much does the slope increase if the moderator value is changed from 0 to 1? And how much if it changes from 6 to 7? 
+```{r eval=FALSE}
+* Each increment of 1 unit of contact increases the
+(simple) slope of the exposure effect on attitude by
+0.04, that is, by the value of the interaction effect.
+* This is easy to see in the equation for the effect
+of exposure:
+> (-0.26 + 0.04 * contact) * exposure
+* Plug in 0 for contact: The simple slope is -0.26.
+* Plug in 1 for contact: The simple slope is -0.26 + 0.04 * 1.
+* The difference is 0.04. This difference is the
+same for every increase of 1 unit in contact, so it is
+also the difference between the slopes at contact levels
+six and seven.
+```
 
 People hanging around a lot with smokers are likely to have a more positive attitude towards smokers than people who have little contact with smokers. After all, people who really hate smoking will avoid meeting smokers. This is a main effect of contact with smokers on attitude towards smoking.
 

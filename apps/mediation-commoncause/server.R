@@ -30,7 +30,7 @@ shinyServer(function(input, output, session) {
     r_PO <- input$agereadslider
     # Partial standardized regression coefficients.
     b_PM <- r_PM
-    b_PO <- r_PO
+    b_PO <- round((r_PO - r_PM*r_MO)/(1 - r_PM^2), digits = 2)
     b_MO <- round((r_MO - r_PM*r_PO)/(1 - r_PM^2), digits = 2)
     b_indirect <- round(b_PM * b_MO, digits = 2)
     
@@ -71,16 +71,16 @@ shinyServer(function(input, output, session) {
                  size = lwdfunc(b_indirect)) + 
       geom_label(aes(x = x, y = y), label = labels, colour = "black", fill = "white") +
       annotate("text", x = .15, y = .5,
-               label = deparse(bquote(beta[PM] == .(b_PM))),
+               label = deparse(bquote("b*"[PM] == .(b_PM))),
                parse = TRUE) +
       annotate("text", x = .5, y = .1,
-               label = deparse(bquote(beta[PO] == .(b_PO))),
+               label = deparse(bquote("b*"[PO] == .(b_PO))),
                parse = TRUE) +
       annotate("text", x = .85, y = .5,
-               label = deparse(bquote(beta[MO] == .(b_MO))),
+               label = deparse(bquote("b*"[MO] == .(b_MO))),
                parse = TRUE) +
       annotate("text", x = .5, y = .5,
-               label = deparse(bquote(beta[indirect] == .(b_indirect))),
+               label = deparse(bquote("b*"[indirect] == .(b_indirect))),
                parse = TRUE,
                colour = "red") +
       coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
