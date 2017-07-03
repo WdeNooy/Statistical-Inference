@@ -7,12 +7,14 @@ shinyServer(function(input, output) {
    
   #load standard colors
   source("../plottheme/styling.R",local = TRUE)
+  #setting
+  m = 2.8
   
   #Generate data for plotting
   df <- data.frame(x = seq(0, 6, by = 0.01),
                    prob.dens = dnorm(
                      x = seq(0, 6, by = 0.01),
-                     mean = 2.8,
+                     mean = m,
                      sd = 0.6
                    ))
   
@@ -47,7 +49,7 @@ shinyServer(function(input, output) {
       geom_polygon(data = shadecenter, aes(x, y = prob.dens), fill = brewercolors["Blue"]) +
       stat_function(fun = dnorm,
                     n = 101,
-                    args = list(mean = 2.8, sd = 0.6)) + ylab("Probability density") +
+                    args = list(mean = m, sd = 0.6)) + ylab("Probability density") +
       xlab("") + 
       ggtitle("Sampling Distribution") +
       theme_classic() +
@@ -58,7 +60,7 @@ shinyServer(function(input, output) {
         colour = "white",
         fill = brewercolors["Red"],
         label = paste("Probability:", format(round(
-          pnorm(input$rangeslider[1], mean = 2.8, sd = 0.6), digits = 3
+          pnorm(input$rangeslider[1], mean = m, sd = 0.6), digits = 3
         ), nsmall = 3
         ))
       ) +
@@ -70,12 +72,12 @@ shinyServer(function(input, output) {
         label = paste("Probability:", format(round((
           1 - pnorm(
             input$rangeslider[2],
-            mean = 2.8,
+            mean = m,
             sd = .6,
             lower.tail = FALSE
           ) - pnorm(
             input$rangeslider[1],
-            mean = 2.8,
+            mean = m,
             sd = 0.6,
             lower.tail = TRUE
           )
@@ -91,7 +93,7 @@ shinyServer(function(input, output) {
         label = paste("Probability:", format(round(
           pnorm(
             input$rangeslider[2],
-            mean = 2.8,
+            mean = m,
             sd = 0.6,
             lower.tail = FALSE
           ),

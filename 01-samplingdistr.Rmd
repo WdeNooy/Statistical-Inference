@@ -1,37 +1,45 @@
 # Sampling Distribution: How Different Could My Sample Have Been? {#samp-dist}
 
-> Key concepts: scope, population, random sample, generalization, representative sample, parameter, sample statistic, random variable, sampling distribution, expected value, unbiased estimator, probability, probability distribution, sampling space, discrete probability distribution, continuous probability distribution, probability density, p-value.  
+> Key concepts: inferential statistics, generalization, population, random sample, sample statistic, sampling space, random variable, sampling distribution, probability, probability distribution, discrete probability distribution, expected value/expectation, unbiased estimator, parameter, (downward) biased, representative sample, continuous variable, continuous probability distribution, probability density, (left-hand/right-hand) p value.
 
-Statistical inference is about estimation and null hypothesis testing. Sampling distributions are the central element in estimation and null hypothesis testing. In this chapter, we simulate sampling distributions to understand what they are. Here, _simulation_ means that we let a computer draw many random samples.
+Statistical inference is about estimation and null hypothesis testing. We have collected data on a random sample and we want to draw conclusions (make inferences) about the population from which the sample was drawn. From the proportion of yellow candies in our sample bag, for example, we want to estimate a plausible range of values for the proportion of yellow candies in a factory's stock (confidence interval). Alternatively, we may want to test the null hypothesis that one fifth of the candies in a factory's stock is yellow.
 
-### Test your intuition or knowledge {-}
+The sample does not offer a perfect miniature image of the population. If we would draw another random sample, it would have different characteristics. For example, it would contain more or less yellow candies than the previous sample. To make an informed decision on the confidence interval or null hypothesis, we must compare the characteristic of the sample that we have drawn to the characteristics of the samples that we could have drawn.
+
+The characteristics of the samples that we could have draw is called the sampling distribution. Sampling distributions are the central element in estimation and null hypothesis testing. In this chapter, we simulate sampling distributions to understand what they are. Here, _simulation_ means that we let a computer draw many random samples from a population.
+
+In Communication Science, we usually work with samples of human beings, for example, users of social media, people looking for health information or entertainment, citizens preparing to cast a political vote, and an organization's stakeholders, or samples of media content such as tweets, tv advertisements, or newspaper articles. In the current and two subsequent chapters, however, we avoid the complexities of these samples. 
+
+We focus on a very tangible kind of sample, namely a bag of candies, which helps us understand the basic concepts of statistical inference: sampling distributions (the current chapter), probability distributions (Chapter \@ref(probmodels)), and estimation Chapter \@ref(param-estim)). Once we thoroughly understand these concepts, we turn to Communication Science examples.
+
+### Test your intuition and understanding {-}
+
+Figure \@ref(fig:sampling-distribution-summary1) simulates drawing random samples from a candy factory's stock of candies. We are interested in the colour of the candies in our sample.
+The histogram shows the distribution of candies according to colour. Draw some samples and have a look at the number of yellow candies in each sample as well as the average number of yellow candies over all samples.
 
 ```{r sampling-distribution-summary1, echo=FALSE, fig.cap="A discrete sampling distribution.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # App sampling-distribution.
 knitr::include_app("http://82.196.4.233:3838/apps/sampling-distribution/", height="620px")
 ```
 
-Figure \@ref(fig:sampling-distribution-summary1) simulates drawing random samples from a candy factory's stock of candies. We are interested in the colour of the candies in our sample.
-The histogram shows the distribution of candies according to colour. Draw some samples and have a look at the number of yellow candies in each sample as well as the average number of yellow candies over all samples.
-
 1. Figure \@ref(fig:sampling-distribution-summary1) shows a simulated population distribution. If we would do this research in reality, what would be the population?
 
 ```{r eval=FALSE}
-If we would really sample candies, the population
+* If we would really sample candies, the population
 could be a candy factory's stock of candies or the
 factory's machine producing the candies from which
 we sample.
 ```
 
-2. Use the button in Figure \@ref(fig:sampling-distribution-summary1) to draw one random sample of ten candies from the population. What do the numbers on the horizontal axis of the bottom histogram represent? What is the statistical name of the characteristic (variable)? What is the unit of analysis for this characteristic?
+2. Use the button in Figure \@ref(fig:sampling-distribution-summary1) to draw one random sample of ten candies from the population. What do the numbers on the horizontal axis of the bottom histogram represent? What is the statistical name of the variable Number of yellow candies? What is the unit of analysis for this characteristic?
 
 ```{r eval=FALSE}
-The numbers on the horizontal axis of the bottom
+* The numbers on the horizontal axis of the bottom
 histogram represent the number of yellow candies
 in the sample(s) that we have drawn.
 The variable for which these numbers are values is
 called a sample statistic.
-A sample statistic is a characteristic of a sample;
+* A sample statistic is a characteristic of a sample;
 we have a sample statistic score for each sample
 that we draw. The sample, then, is the unit of
 analysis or case for this variable and this histogram.
@@ -40,7 +48,7 @@ analysis or case for this variable and this histogram.
 3. Which values can the sample characteristic take here and what is the statistical name for this set of values?
 
 ```{r eval=FALSE}
-The sample characteristic is the number of yellow
+* The sample characteristic is the number of yellow
 candies in our sample. because our sample contains
 ten candies, this number can vary between zero and ten.
 This range of values is called the sampling space.
@@ -49,7 +57,7 @@ This range of values is called the sampling space.
 4. If you would draw many samples from this population each containing ten candies, what is the number of yellow candies per sample that appears most frequently? Draw 1,000 samples to verify your answer.
 
 ```{r eval=FALSE}
-If the proportion of yellow candies is .2 in the
+* If the proportion of yellow candies is .2 in the
 population, we expect that this is the proportion
 of yellow candies that is most likely in our sample
 and therefore samples with this proportion of yellow
@@ -61,7 +69,8 @@ of .2 equals two yellow candies in a sample.
 5. Is the colour distribution in each sample that you draw representative of the colour distribution in the stock of candies?  
 
 ```{r eval=FALSE}
-No. A sample is representative with respect to the
+* No. 
+* A sample is representative with respect to the
 proportion of yellow candies if this proportion is
 equal to the proportion in the population. A sample
 with two yellow candies in a bag of ten candies has
@@ -75,7 +84,7 @@ population proportion.
 6. Why, do you think, is the sample characteristic called a _random variable_?  
 
 ```{r eval=FALSE}
-As we see when we draw several samples, the number
+* As we see when we draw several samples, the number
 of yellow candies varies across samples. This
 variation arises because we draw samples at random.
 So the scores of samples on the sample statistic is
@@ -84,37 +93,37 @@ this a random variable.
 ```
 
 ```{r sampling-distribution-summary2, echo=FALSE, fig.cap="A continuous sampling distribution.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-# App p-values.
-knitr::include_app("http://82.196.4.233:3838/apps/p-values/", height="260px")
+# App p values.
+knitr::include_app("http://82.196.4.233:3838/apps/p values/", height="260px")
 ```
 
 7. Use your own words to explain what the sampling distribution in Figure \@ref(fig:sampling-distribution-summary2) represents.  
 
 ```{r eval=FALSE}
-Ths sampling distribution in this figure shows
+* This sampling distribution in this figure shows
 average candy weights for a very large number of
 random samples drawn from a population of candies,
-for exmple, a factory's stock.
+for example, a factory's stock.
 ```
 
 8. What do you think is the average weight of all candies in the population? Justify your answer using the concepts _expected value_ and _unbiased estimator_.
 
 ```{r eval=FALSE}
-The population is not depicted here, so we must
-infer average candy weight in the populaiton from
+* The population is not depicted here, so we must
+infer average candy weight in the population from
 the sampling distribution. If the sample statistic
 is an unbiased estimator of the population statistic
 ---this is the case for a sample mean---the average
 of the sampling distribution---this is called the
 expected value---is equal to the population statistic.
-In the current example, the average of the sampling
+* In the current example, the average of the sampling
 distribution of average sample candy weights is equal
 to average candy weight in the population.
-The sampling distribution depicted here is symmetrical,
+* The sampling distribution depicted here is symmetrical,
 so the average equals the median value, so half of the
 observed average sample candy weights are below this
 value and the other half is above this value. 
-If one of the slider handles demarcates half of the
+* If one of the slider handles demarcates half of the
 probability from the other half, this handle indicates
 the average of the sampling distribution. In this
 example, the average is 2.8 (grams).
@@ -123,7 +132,7 @@ example, the average is 2.8 (grams).
 9. Use the sliders to find the probability of drawing a sample with average candy weight between 2.0 and 2.9 grams.
 
 ```{r eval=FALSE}
-If you set the left-hand slider handle to 2.0 and
+* If you set the left-hand slider handle to 2.0 and
 the right-hand handle to 2.9, the blue area
 represents the probability of drawing a sample
 with average candy weight between 2.0 and 2.9 grams.
@@ -134,7 +143,7 @@ blue box within the graph. It is .409.
 10. What, do you expect, is the probability of drawing a sample with average candy weight of exactly 2.9 grams? Use the sliders to check your expectation.  
 
 ```{r eval=FALSE}
-This probability is (virtually) zero. If we would
+* This probability is (virtually) zero. If we would
 measure weight with very high precision, no candy
 bag would have average candy weigth of exactly 2.9
 grams, that is, 2.90000000000000000000000000(and so
@@ -144,7 +153,7 @@ on) grams.
 11. Why is this graph an example of a continuous probability distribution?  
 
 ```{r eval=FALSE}
-See the answer to Exercise 10. A variable is
+* See the answer to Exercise 10. A variable is
 continuous if we can, in principle, always find
 a new value between two values. This applies to
 weight as a variable, because we can in principle
@@ -152,7 +161,7 @@ always use more decimal places in our measurement
 to find a weight that is between two other weights.
 For example, between 2.90000 and 2.90001 we can
 think of the weight 2.900005.
-If the sample statistic is a continuous variable,
+* If the sample statistic is a continuous variable,
 such as average candy weight in the sample, the
 probability distribution for this sample statistic
 is continuous.
@@ -161,7 +170,7 @@ is continuous.
 12. Why is the vertical axis labeled with "Probability density" instead of "Probability"?  
 
 ```{r eval=FALSE}
-It makes no sense to speak of the probability
+* It makes no sense to speak of the probability
 (vertical axis) that average candy weight in a
 sample (horizontal axis) has one particular value.
 Because average weight is a continuous variable
@@ -170,7 +179,7 @@ particular outcome value is (virtually) zero
 (see Exercise 9). If we would draw the
 probabilities on the vertical axis, we would have
 a flat line (at zero) instead of a curve.
-Instead of probabilities of single outcome values,
+* Instead of probabilities of single outcome values,
 we are interested in probabilities of ranges or
 intervals of outcome values if we have a continuous
 random variable. For example, the probability of
@@ -193,7 +202,7 @@ Collecting data, however, is expensive, so we would like to collect as little da
 
 _Inferential statistics_ offers techniques for making statements about a larger set of observations from data collected for a smaller set of observations. The large set of observations about which we want to make a statement is called the _population_. The smaller set is called a _sample_ and we want to _generalize_ a statement about the sample to a statement about the population from which the sample was drawn.  
 
-Traditionally, statistical inference is generalization from the data collected in a _random sample_ to the population from which the sample was drawn. This approach is the focus of the present book because it is currently the most widely used type of statistical inference in the social sciences. We will, however, point out other approaches in the concluding chapter.  
+Traditionally, statistical inference is generalization from the data collected in a _random sample_ to the population from which the sample was drawn. This approach is the focus of the present book because it is currently the most widely used type of statistical inference in the social sciences. We will, however, point out other approaches in Chapter \@ref(crit-discus).  
 
 Statistical inference is conceptually complicated and for that reason quite often used incorrectly. We will therefore spend quite some time on the principles of statistical inference. Good understanding of the principles should help you to recognize and avoid incorrect use of statistical inference. In addition, it should help you to understand the controversies surrounding statistical inference and developments in the practice of applying statistical inference that are taking place. Investing time and energy in fully understanding the principles of statistical inference really pays off later.  
 
@@ -212,12 +221,12 @@ knitr::include_app("http://82.196.4.233:3838/apps/random-variable/", height="360
 1. Figure \@ref(fig:random-variable) shows a population of candies. What do you expect is the number of yellow candies in a random sample of ten candies from this population? Draw several samples and check whether your expectation comes true.  
 
 ```{r eval=FALSE}
-The colours are equally distributed in the
+* The colours are equally distributed in the
 population, so one out of each five candies
 in the population is yellow. In other words,
 the proportion of yellow candies in the
 population is .2.
-This is the proportion that we would also expect
+* This is the proportion that we would also expect
 in the sample. A sample contains ten candies, so
 two out of these ten are expected to be yellow.
 If we draw several samples, we notice that only
@@ -228,19 +237,19 @@ yellow candies.
 2. What are all possible outcomes for the number of yellow candies. This collection of all possible outcome scores is called the _sampling space_.
 
 ```{r eval=FALSE}
-In a sample of ten candies, zero to ten candies
+* In a sample of ten candies, zero to ten candies
 can be yellow.
-The numbers 0, 1, 2, ..., 9, 10 constitute all
+* The numbers 0, 1, 2, ..., 9, 10 constitute all
 possible outcomes for the sample statistic 'Number
 of yellow candies'. This is called the sampling space.
 ```
 
-The number of yellow candies in a bag is an example of a _sample statistic_: a number describing a property of the sample. Each bag, that is, each sample, has one score on the sample statistic. For example, one bag contains four yellow candies, another bag contains seven, and so on.
+The number of yellow candies in a bag is an example of a _sample statistic_: a number describing a property of the sample. Each bag, that is, each sample, has one outcome score on the sample statistic. For example, one bag contains four yellow candies, another bag contains seven, and so on.
 
-The sample statistic is called a _random variable_. It is a variable because it assigns a score to a sample and different samples can have different scores. The value of a random variable may vary from sample to sample. It is a random variable because the score depends on chance, namely the chance that particular elements are drawn during random sampling.
+The sample statistic is called a _random variable_. It is a variable because it assigns an outcome score to a sample and different samples can have different scores. The value of a random variable may vary from sample to sample. It is a random variable because the score depends on chance, namely the chance that particular elements are drawn during random sampling.
 
 ### Sampling distribution  
-Some outcomes occur more often than other outcomes. We can see this if we draw very many random samples from a population and collect the frequencies of all outcomes in a table or chart. We call the distribution of the outcomes of very many samples a _sampling distribution_.  
+Some sample statistic outcomes occur more often than other outcomes. We can see this if we draw very many random samples from a population and collect the frequencies of all outcome scores in a table or chart. We call the distribution of the outcome scores of very many samples a _sampling distribution_.  
 
 ```{r sampling-distribution, fig.cap="What is a sampling distribution?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 #interactive content: three histograms: a uniformly distributed discrete population of five colors on top, a sample in the middle (initially empty), and a sampling distribution in the bottom (initially empty) ; first button allows to draw one sample, simulating drawing one sample from the population and adding the number of yellow candies to the bottom histogram (ideally, the candies 'drop' from the population to the sample, then the number of yellow candies appears below the sample and this number 'drops' from the sample to the sampling distribution) ; second button (becomes active after the first button has been used) draws 1,000 samples and adds the yellow candy counts for all samples to the sampling distribution in one go
@@ -250,10 +259,10 @@ knitr::include_app("http://82.196.4.233:3838/apps/sampling-distribution/", heigh
 1. Draw a random sample of ten candies in Figure \@ref(fig:sampling-distribution). What do the numbers on the horizontal axis of the bottom histograms mean? And what does the vertical axis of this histogram represent?
 
 ```{r eval=FALSE}
-The numbers on the horizontal axis specify the
+* The numbers on the horizontal axis specify the
 sampling space, that is, all values that the sample
 statistic "Number of yellow candies" can take. 
-The vertical axis shows the number of samples that
+* The vertical axis shows the number of samples that
 have been drawn with a particular value for the
 sample statistic, that is, with a particular
 number of yellow candies in the sample.
@@ -262,26 +271,26 @@ number of yellow candies in the sample.
 2. What are the cases (units of analysis) in the three histograms? Hint: There are two different types of cases.
 
 ```{r eval=FALSE}
-In the upper two graphs, candies are the cases.
+* In the upper two graphs, candies are the cases.
 A candy has a particular colour, not a (sample)
 bag of candies.
-In the bottom graph showing the sampling
+* In the bottom graph showing the sampling
 distribution, samples (candy bags) are the cases.
 A sample (bag) contains a particular nmber of
 yellow candies.
 ```
 
-3. Guess the most likely and most unlikely outcomes for the number of yellow candies in a sample bag containing ten candies in Figure \@ref(fig:sampling-distribution). Check your intuitions by drawing 1,000 samples.
+3. Guess the most likely and most unlikely outcome scores for the number of yellow candies in a sample bag containing ten candies in Figure \@ref(fig:sampling-distribution). Check your intuitions by drawing 1,000 samples.
 
 ```{r eval=FALSE}
-If twenty percent of candies in the population
+* If twenty percent of candies in the population
 are yellow, we expect about twenty percent of
 candies in our sample to be yellow. Our sample
 contains ten candies, so we expect two yellow
 candies in our sample. Indeed, samples with two
 yellow candies are most frequent if we draw
 1,000 random samples.
-If we expect two candies, samples are more unlikely
+* If we expect two candies, samples are more unlikely
 if they contain a number of yellow candies that is
 further away from two. So we expect the sample
 counts to decrease if we move away from two in the
@@ -293,24 +302,27 @@ sample bag with ten yellow candies is most unlikely.
 4. After how many samples does the shape of the sampling distribution stop changing?
 
 ```{r eval=FALSE}
-In this example, the sampling distribution usually has its final shape already after drawing 1,000 or 2,000 samples. But you can be unlucky, of course, and need more samples to arrive at a stable distribution.
+* In this example, the sampling distribution usually 
+has its final shape already after drawing 1,000 or 
+2,000 samples. But you can be unlucky, of course, and
+need more samples to arrive at a stable distribution.
 ```
 
 ### Probability and probability distribution {#probdistribution}
-The sampling distribution tells us the probabilities of obtaining each outcome, for example the probability of buying a bag with exactly five yellow candies. To this end, we must change the (absolute) frequencies into proportions (relative frequencies). We have to divide the number of times an outcome occurs in the sampling distribution by the number of samples we have drawn. A sampling space with a probability (between 0 and 1) for each outcome is called a _probability distribution_. 
 
 ```{r probability-distribution, echo=FALSE, fig.cap="How does the probability of drawing a sample bag with two out of ten candies yellow depend on the proportion of yellow candies in the population?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 #Generate a binomial probability distribution for the number of yellow candies in a random sample of ten from a population with the specified proportion of yellow candies and display this as a table ; the user is able to change the population proportion (range [0.0 - 1.0]), which is initially set to .2.
 knitr::include_app("http://82.196.4.233:3838/apps/probability-distribution/", height="590px")
 ```
 
-1. In Figure \@ref(fig:probability-distribution), what is the outcome and what is the sampling space? 
+1. In Figure \@ref(fig:probability-distribution), what is the sample statistic and what is the sampling space? 
 
 ```{r eval=FALSE}
-The number of yellow candies in the sample (bag) is the
-outcome. This is the characteristic of the sample (bag)
-that we are interested in.
-The set of all possible outcomes is the sampling space. 
+* The number of yellow candies in the sample (bag) is the
+sample statistic. This is the characteristic of the sample
+(bag) that we are interested in.
+* The set of all possible outcomes of the sample statistic
+is the sampling space. 
 In this example, the sampling space is the set of (integer) 
 numbers from 0 to 10.
 ```
@@ -318,13 +330,13 @@ numbers from 0 to 10.
 2. Which number of yellow candies is most likely to be found in a sample bag of ten candies? How does this relate to the proportion of candies in the population?
 
 ```{r eval=FALSE}
-The numbers and horizontal bars in the Probability column
+* The numbers and horizontal bars in the Probability column
 represent the probabilities of outcomes. In the initial
 situation, the highest probability is found for a sample
 bag containing two yellow candies (p = .302). This amounts
 to two out of the ten candies in the sample bag, that is,
 twenty percent.
-This percentage is equal to the precentage of yellow
+* This percentage is equal to the precentage of yellow
 candies in the population. We are most likely to draw
 a sample with a percentage or proportion that is equal
 to the population percentage, here p = .302, even though
@@ -335,7 +347,7 @@ percentage of yellow candies is higher (p = 1 - .302 = .698).
 3. What is the probability that a sample bag of ten candies contains at most three yellow candies if the proportion in the population is .2?
 
 ```{r eval=FALSE}
-At most three out of ten candies means that we have to
+* At most three out of ten candies means that we have to
 sum the probabilities of zero, one, two, and three
 yellow candies. This probability equals .107 + .268 +
 .302 + .201 = .878. That is a fair chance.
@@ -344,88 +356,131 @@ yellow candies. This probability equals .107 + .268 +
 4. What do you expect to happen to the probabilities if you increase the proportion of yellow candies in the population (factory stock)? Use the slider to check your answer.
 
 ```{r eval=FALSE}
-If a larger part of the candies is yellow in the
+* If a larger part of the candies is yellow in the
 population, we should expect more yellow candies in
 our sample bag. The probabilities of small numbers
 of yellow candies (low outcome values) should go
 down whereas the probabilities of large numbers
 (high outcome scores) should go up.
-If you move the slider to the right, you will see
+* If you move the slider to the right, you will see
 that the distribution shifts down in the table.
 ```
 
 5. What is special about the distribution if the proportion of yellow candies in the population is .5?
 
 ```{r eval=FALSE}
-If the population proportion is .5, the probability
+* If the population proportion is .5, the probability
 distribution is symmetric. The probability of a
 sample bag with four candies is equal to the
 probability of a sample bag with six candies.
 Probabilities are equal for three and seven yellow
 candies, two and eight, one and nine, zero and ten
 yellow candies.
-The distribution has the classic bell shape of a
+* The distribution has the classic bell shape of a
 normal distribution that we will encounter when
 we discuss continuous probability distributions.
 ```
 
-Figure \@ref(fig:probability-distribution) displays the probability distribution of the number of yellow candies per bag of ten candies. This is an example of a _discrete probability distribution_ because only a limited number of outcomes are possible. It is feasible to list the probability of each outcome separately.
+What is the probability of buying a bag with exactly five yellow candies? In statistical terminology, what is the probability of drawing a sample with five yellow candies as sample statistic outcome? This probability is the proportion of all possible samples that we could have drawn that happen to contain five yellow candies.
 
-We may refer to probabilities both as a proportion, that is, a number between 0 and 1, and as a percentage: a number between 0% and 100%. Proportions are commonly supposed to be the right way to express probabilities. When we talk about probabilities, however, we tend to use percentages, for example, if we say that the probabilities are fifty-fifty.  
+The sampling distribution tells us all possible samples that we could have drawn, that is, if we have drawn very many samples. So we can get the the probability of buying a bag with exactly five yellow candies from the sampling distribution: We merely divide the number of samples with five yellow candies by the total number of samples we have drawn. 
+
+If we change the (absolute) frequencies in the sampling distribution into proportions (relative frequencies), we obtain the _probability distribution_ of the sample statistic: A sampling space with a probability (between 0 and 1) for each outcome of the sample statistic. Because we are usually interested in probabilities, sampling distributions tend to have proportions, that is probabilities, instead of frequencies on the vertical axis. See Figure \@ref(fig:expected-value) for an example. In this case, the sampling distribution is a probablity distribution.
+
+Figure \@ref(fig:probability-distribution) displays the probability distribution of the number of yellow candies per bag of ten candies. This is an example of a _discrete probability distribution_ because only a limited number of outcomes are possible. It is feasible to list the probability of each outcome separately.
 
 The sampling distribution as a probability distribution conveys very important information. It tells us which outcomes we may expect, for example, how many yellow candies we may find in our bag of ten candies. Moreover, it tells us the probability that a particular outcome may occur. If the sample is drawn from a population in which twenty percent of candies are yellow, we are quite likely to find no, one, two, three, or four yellow candies in our bag. A bag with five yellow candies would be rare, six or seven candies would be very rare, and a bag with more than seven yellow candies is extremely unlikely even though it is not impossible. If we buy such a bag, we know that we have been extremely lucky.  
 
-### Expectation  
-We haven't yet thought about the value that we are most likely to encounter in the sample that we are going to draw. Intuitively, it must be related to the distribution of colors in the population of candies from which the sample was drawn. In other words, the share of yellow candies in the factory's stock from which the bag was filled or in the machine that produces the candies, seems to be relevant to what we may expect to find in our sample.  
+We may refer to probabilities both as a proportion, that is, a number between 0 and 1, and as a percentage: a number between 0% and 100%. Proportions are commonly supposed to be the right way to express probabilities. When we talk about probabilities, however, we tend to use percentages, for example, if we say that the probabilities are fifty-fifty.  
 
-If the share of yellow candies in the population is 0.20 or, equivalently, 20%, we expect one out of each five candies in a bag (sample) to be yellow. In a bag with 10 candies, we would expect two candies to be yellow: one out of each five candies or the population proportion times the total number of candies in the sample = 0.20 * 10 = 2.0.  
-
-### Representative sample  
-Because the share of yellow candies in the population represents the probability of drawing a yellow candy, we expect also 20% of the candies in our bag to be yellow. For the same reason we expect the shares of all other colors in our sample bag to be equal to their shares in the population. As a consequence, we expect a random sample to be in principle representative of the population from which it is drawn. 
-
-A sample is _representative_ of a population if variables in the sample are distributed in the same way as in the population. Of course, we know that a random samples is likely to differ from the population due to chance, so the actual sample that we have drawn is usually not representative of the population. But we should expect it to be representative, so we say that it is _in principle representative_ of the population. We can use the theory of probability to account for the misrepresentation in the actual sample that we draw.
-
-### Unbiased estimator {#unbiased_est}
-Note that the expected value of the proportion of yellow candies in the bag (sample statistic) equals the true proportion of yellow candies in the candy factory (population statistic). This is always, that is, by definition, true for all sample statistics that are _unbiased estimators_ of the population statistic. By the way, we usually refer to the population statistic as a _parameter_.  
-
-Most but not all sample statistics are unbiased estimators of the population statistic. Think, for example, of the number of yellow candies in the sample. This is surely not an unbiased estimator of the number of yellow candies in the population. Because the population is so much larger than the sample, the population must contain many more yellow candies than the sample. If we estimate the number in the population (the parameter) from the number in the sample---for example, we estimate that there are two yellow candies in the population of all candies because we have two in our sample of ten---we are going to vastly underestimate the number in the population. This estimate is _downward biased_: It is too low.
-
-In contrast, the proportion in the sample is an unbiased estimator of the population proportion. That is why we do not use the number of yellow candies to generalize from our sample to the population but we use the proportion of yellow candies instead. You probably already did this intuitively.  
-
-Sometimes, we have to adjust the way in which we calculate a sample statistic to get an unbiased estimator. For example, we must calculate the standard deviation and variance in the sample in a special way to obtain an unbiased estimate of the population standard deviation and variance. The exact calculation need not bother us because our statistical software will take care of that.  
-
-### Expected value
+### Expected value or expectation
 
 ```{r expected-value, echo=FALSE, out.width="420px", fig.cap="What is the expected value of a probability distribution?", screenshot.opts = list(delay = 5), dev="png"}
 #Generate a binomial probability distribution for the number of yellow candies in a random sample of ten from a population with the specified proportion of yellow candies and display this as a histogram ; the user is able to change the population proportion, which is initially set to .2 ; add a button to reveal the average of the probability distribution in the histogram as a vertical line with associated value.
 knitr::include_app("http://82.196.4.233:3838/apps/expected-value/", height="420px")
 ```
 
-1. In Figure \@ref(fig:expected-value), what do you expect is the mean of the sampling distribution? Experiment with different values for the population proportion.
+1. In Figure \@ref(fig:expected-value), which number of yellow candies is most likely to occur in a sample bag of ten candies? How does this number change if you change the proportion of yellow candies in the population?
 
 ```{r eval=FALSE}
-Sample proportion is an unbiased estimate of the
-population proportion. This implies that the
-population proportion is equal to the average of
-the sampling distribution. 
-We should expect, then, that the average proportion
-of yellow candies in the sample equals the
-population proportion, which initially is .2. In
-a sample of ten candies, then, the average number
-of yellow candies per sample is 2. 
-The average of the sampling distribution is also
-called the expected value. So we should expect
-two yellow candies in a random sample of ten
-candies if the population proportion is .2.
+* We expect that the proportion of yellow candies
+in the sample equals the population proportion, 
+which initially is .2. In a sample of ten candies,
+then, the expected number of yellow candies is two.
+* Note that two is the outcome with the highest
+probability in the sampling distribution.
+* The expected number of yellow candies in a sample
+bag of ten candies is ten times the population
+proportion, so the expected number of candies in
+the sample changes in accordance with changes in
+the population proportion.
 ```
 
-In the preceding paragraphs, we have noticed that the expectation or expected value of the proportion of yellow candies in the sample is equal to the proportion of yellow candies in the population. If you carefully inspect the sampling distribution, you will see that the expected value also equals the mean of the sampling distribution. This makes sense: Excess yellow candies in some bags must be compensated for by a shortage in other bags.  
+2. How does the mean of the sampling distribution relate to the expected value? Experiment with different values for the population proportion.
+
+```{r eval=FALSE}
+* The mean of the sampling distribution is equal
+to the expected value of the sample statistic. In the
+initial example, both are two.
+* This makes sense: We are equally likely to draw
+a sample with less yellow candies than the expected
+number as a sample with more yellow candies. Samples
+with less yellow candies than expected should balance
+sample with more yellow candies than expected. The mean
+represents the "balance point" of a distribution.
+```
+
+3. How does the mean of the sampling distribution relate to the population proportion? Experiment with different values for the population proportion.
+
+```{r eval=FALSE}
+* The mean of the sampling distribution is equal to
+the population proportion if the sample statistic is
+the sample proportion. If we would have created the
+sampling distribution of the proportion of yellow
+candies in our sample, the mean of the sampling
+distribution would be equal to the proportion of
+yellow candies in the population.
+* Again, we are equally likely to draw a sample with
+less yellow candies than the expected proportion as
+a sample with more yellow candies. Samples
+with less yellow candies than expected should balance
+sample with more yellow candies than expected. The mean
+represents the "balance point" of a distribution.
+* Note that the expected value (mean of the sampling
+distribution) only equals the population value if
+the sample statistic is an unbiased estimate of the
+population value (parameter). See the next section.
+```
+
+We haven't yet thought about the value that we are most likely to encounter in the sample that we are going to draw. Intuitively, it must be related to the distribution of colors in the population of candies from which the sample was drawn. In other words, the share of yellow candies in the factory's stock from which the bag was filled or in the machine that produces the candies, seems to be relevant to what we may expect to find in our sample.  
+
+If the share of yellow candies in the population is 0.20 or, equivalently, 20%, we expect one out of each five candies in a bag (sample) to be yellow. In a bag with 10 candies, we would expect two candies to be yellow: one out of each five candies or the population proportion times the total number of candies in the sample = 0.20 * 10 = 2.0. This is the expected value. 
+
+The expected value of the proportion of yellow candies in the sample is equal to the proportion of yellow candies in the population. If you carefully inspect a sampling distribution (Figure \@ref(fig:expected-value)), you will see that the expected value also equals the mean of the sampling distribution. This makes sense: Excess yellow candies in some bags must be compensated for by a shortage in other bags.  
 
 Thus we arrive at the definition of the _expected value_ of a random variable:
 
 > The expected value is the average of the sampling distribution of a random variable. 
 
+In our example, the random variable is a sample statistic, more sepcifically, the number of yellow candies in a sample.
+
 The sampling distribution is an example of a probability distribution, so, more generally, the expected value is the average of a probability distribution. The expected value is also called the _expectation_ of a probability distribution.  
+
+### Unbiased estimator {#unbiased_est}
+Note that the expected value of the proportion of yellow candies in the bag (sample statistic) equals the true proportion of yellow candies in the candy factory (population statistic). This is always, that is, by definition, true for all sample statistics that are _unbiased estimators_ of the population statistic. By the way, we usually refer to the population statistic as a _parameter_.  
+
+Most but not all sample statistics are unbiased estimators of the population statistic. Think, for example, of the number of yellow candies in the sample. This is surely not an unbiased estimator of the number of yellow candies in the population. Because the population is so much larger than the sample, the population must contain many more yellow candies than the sample. If we estimate the number in the population (the parameter) from the number in the sample---for example, we estimate that there are two yellow candies in the population of all candies because we have two in our sample of ten---we are going to vastly underestimate the number in the population. This estimate is _downward biased_: It is too low.
+
+In contrast, the proportion in the sample is an unbiased estimator of the population proportion. That is why we do not use the number of yellow candies to generalize from our sample to the population. Instead, we use the proportion of yellow candies instead. You probably already did this intuitively.
+
+Sometimes, we have to adjust the way in which we calculate a sample statistic to get an unbiased estimator. For example, we must calculate the standard deviation and variance in the sample in a special way to obtain an unbiased estimate of the population standard deviation and variance. The exact calculation need not bother us because our statistical software will take care of that.
+
+### Representative sample  
+Because the share of yellow candies in the population represents the probability of drawing a yellow candy, we expect also 20% of the candies in our bag to be yellow. For the same reason we expect the shares of all other colors in our sample bag to be equal to their shares in the population. As a consequence, we expect a random sample to resemble the population from which it is drawn. 
+
+A sample is _representative_ of a population if variables in the sample are distributed in the same way as in the population. Of course, we know that a random samples is likely to differ from the population due to chance, so the actual sample that we have drawn is usually not representative of the population. 
+
+But we should expect it to be representative, so we say that it is _in principle representative_ of the population. We can use probability theory to account for the misrepresentation in the actual sample that we draw. This is what we do when we use statistical inference to construct confidence intervals and test null hypotheses.
 
 ## A Continuous Random Variable: Overweight And Underweight. {#cont-random-var}
 
@@ -435,19 +490,21 @@ Let us now look at another variable: the weight of candies in a bag. The weight 
 Weight is a _continuous variable_ because we can always think of a new weight between two other weights. For example, consider two candy weights: 2.8 and 2.81 gram. It is easy to see that there can be a weight in between these two values, for example, 2.803 gram. Between 2.8 and 2.803 we can discern an intermediate value such as 2.802. In principle, we could endlessly continue in this way, e.g., a weight between 2.80195661 and 2.80195662 gram even if our scales may not be sufficiently precise to measure any further differences. It is the principle that counts. If we can always think of a new value in between two values, the variable is continuous.  
 
 ### Continuous sample statistic {#cont_sample_stat}
-We are not interested in the weight of a single candy. If a relatively light candy is compensated for by a relatively heavy candy in the same bag, we still get the calories that we want. We are interested in the average weight of all candies in our sample bag, so the average candy weight in our sample bag is our key sample statistic. We want to use this sample statistic to say something about average candy weight in the population of all candies. Can we do that?
+We are not interested in the weight of a single candy. If a relatively light candy is compensated for by a relatively heavy candy in the same bag, we still get the calories that we want. We are interested in the average weight of all candies in our sample bag, so average candy weight in our sample bag is our key sample statistic. We want to use this sample statistic to say something about average candy weight in the population of all candies. Can we do that?
 
 The sample mean is an unbiased estimator of the population mean, so the average weight of all candies in the population (at the factory) is the average of the (candy weights in the) sampling distribution. And this is the average weight that we expect in a sample drawn from this population (the expected value or expectation). So far, everything is the same as in the case of the proportion of yellow candies, which was a discrete random variable because it could take only a limited set of values: yellow, blue, green, red, and orange.  
 
 ### Continuous probabilities  
 
-```{r cont-prob, fig.cap="A continuous sampling distribution."}
+```{r cont-prob, fig.cap="A continuous sampling distribution.", eval=FALSE, echo=FALSE}
+#SKIP: Histogram assumes binning but binning principle is explained later.
+
 #Generate a continuous normally distributed sampling distribution representing average candy weight (using a fixed y scale) ; display it as a histogram with average candy weight in a sample bag on the x-axis and probability on the y-axis ; allow the user to decrease histogram bin width to see how smaller bins reduce the probabilities and with very narrow bins, the probabilities approach zero ("negligible probabilities") 
+
+# Figure \@ref(fig:cont-prob) shows a typical probability distribution of average candy weight.
+# 
+# 1. What do you expect to happen if you decrease the bin width of the histogram? Use the slider to check your expectations.  
 ```
-
-Figure \@ref(fig:cont-prob) shows a typical probability distribution of average candy weight.
-
-1. What do you expect to happen if you decrease the bin width of the histogram? Use the slider to check your expectations.  
 
 When we turn to the probabilities of getting samples with a particular average candy weight, we run into problems with a continuous sample statistic. If we would want to know the probability of drawing a sample bag with an average candy weight of 2.8 gram, we should exclude sample bags with an average candy weight of 2.81 gram, or 2.801 gram, or 2.8000000001 gram, and so on. In fact, we are very unlikely to draw a sample bag with an average candy weight of exactly 2.8 gram, that is, with an infinite number of zeros trailing 2.8. In other words, the probability of such a sample bag is for all practical purposes zero and negligible.  
 
@@ -456,19 +513,19 @@ This applies to every average candy weight, so all probabilities are virtually z
 ### p Values
 We can solve this problem by looking at a range of values instead of a single value. We can sensibly talk about the probability of having a sample bag with an average candy weight of at least 2.8 gram or at most 2.8 gram. We choose a threshold, in this example 2.8 gram, and determine the probability of values above or below this threshold. We can also use two thresholds, for example the probability of an average candy weight between 2.75 and 2.85 gram. This is probably what you were thinking of when I referred to a bag with 2.8 gram as average candy weight.  
 
-If we cannot determine the probability of a single value and we have to link probabilities to a range of values (average candy weight above/below 2.8 gram), how can we display probabilities? We have to display a probability as an area between the horizontal axis and a curve. This curve is called a _probability density function_, so if there is a label to the vertical axis of a continuous probability distribution, it usually is "Probability density" instead of "Probability".
+If we cannot determine the probability of a single value, which we used to depict on the vertical axis, and we have to link probabilities to a range of values on the x axis, for example, average candy weight above/below 2.8 gram, how can we display probabilities? We have to display a probability as an area between the horizontal axis and a curve. This curve is called a _probability density function_, so if there is a label to the vertical axis of a continuous probability distribution, it usually is "Probability density" instead of "Probability".
 
-Figure \@ref(fig:p-values) shows an example of a continuous probability distribution for the average weight of candies in a sample bag. This is the familiar normal distribution so we could say that the normal function is the probability density function here. The total area under this curve is set to one, so the area belonging to a range of sample outcomes (average candy weight) is 1 or less, as probabilities should be.
+Figure \@ref(fig:p values) shows an example of a continuous probability distribution for the average weight of candies in a sample bag. This is the familiar normal distribution so we could say that the normal function is the probability density function here. The total area under this curve is set to one, so the area belonging to a range of sample outcomes (average candy weight) is 1 or less, as probabilities should be.
 
-```{r p-values, fig.cap="How do we display p values in a continuous sampling distribution?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r p values, fig.cap="How do we display probabilities in a continuous sampling distribution?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Generate a normal sampling distribution representing average candy weight in a sample bag (M = 2.8, SD = 0.6) ; add a range slider to the x-axis linked to vertical lines, showing the proportions of the probabilities to left and to right and between the lines ; initial setting is 2.8 for the rigth-hand slider
-knitr::include_app("http://82.196.4.233:3838/apps/p-values/", height="260px")
+knitr::include_app("http://82.196.4.233:3838/apps/p values/", height="260px")
 ```
 
-1. In Figure \@ref(fig:p-values), what is the probability of buying a bag with average candy weight of 2.8 gram or more?
+1. In Figure \@ref(fig:p values), what is the probability of buying a bag with average candy weight of 2.8 gram or more?
 
 ```{r eval=FALSE}
-The probability is .5. It is represented by the
+* The probability is .5. It is represented by the
 green surface under the curve. This is exactly
 half of the total surface under the curve because
 2.8 gram is the average candy weight in the
@@ -477,32 +534,32 @@ of the sampling distribution of average sample
 candy weight.
 ```
 
-2. Is this a left-hand p value, a right-hand p value or neither?  
+2. Is this a left-hand probability, a right-hand probability, or neither?  
 
 ```{r eval=FALSE}
-This is a right-hand p value because it
+* This is a right-hand probability because it
 specifies a threshold value (2.8) and all
 values that are larger. It concerns the
 right-hand tail of the sampling distribution.
 ```
 
-3. Use the sliders to find the probability of buying a bag with average candy weight between 2.6 and 3.7 gram.  Is this a left-hand p-value, a right-hand p-value or neither?
+3. Use the sliders to find the probability of buying a bag with average candy weight between 2.6 and 3.7 gram.  Is this a left-hand probability, a right-hand probability, or neither?
 
 ```{r eval=FALSE}
-If you set the slider handles to 2.6 and 3.7,
+* If you set the slider handles to 2.6 and 3.7,
 the blue area represents the probability that
 you are looking for. Its value is reported
 as .564.
-This is neither a left-hand or right-hand
-p value because it does not include the
-left-hand or right-hand tail of the sampling
+* This is neither a left-hand or right-hand
+probability because it does not include either
+the left-hand or right-hand tail of the sampling
 distribution.
 ```
 
 4. What is the minimum average weight of the 10% heaviest candy bags?  
 
 ```{r eval=FALSE}
-Drag the rigth-hand slider handle to the
+* Drag the rigth-hand slider handle to the
 maximum value (6) and then adjust the left-hand
 slider handle so the (blue) area in the
 right-tail of the sampling distribution
@@ -513,30 +570,27 @@ with the left-hand slider is the minimum average
 candy weight for these samples.
 ```
 
-The probability of values up to (and including) the threshold value or the threshold value and higher are called _p-values_. The probability of values up to (and including) the threshold value is known as the _left-hand p-value_ and the probability of values above (and including) the threshold value is called the _right-hand p-value_. 
+The probability of values up to (and including) the threshold value or the threshold value and higher are called _p values_. The probability of values up to (and including) the threshold value is known as the _left-hand p value_ and the probability of values above (and including) the threshold value is called the _right-hand p value_. 
 
 Why did I put _(and including)_ between parentheses? It does not really matter whether we add the exact boundary value (2.8 gram) to the probability on the left or on the right because the probability of getting a bag with average candy weight at exactly 2.8 gram (with a very long trail of zero decimals) is negligible.  
 
-Are you struggling with the idea of areas instead of heights (values on the vertical axis) as probabilities? Just realize that we may use the area of a bar in a histogram instead of the height as indication of the probability in Figure \@ref(fig:cont-prob). After all, the bars in a histogram are all equally wide, so differences between bar areas are proportional to differences in bar height. 
+Are you struggling with the idea of areas instead of heights (values on the vertical axis) as probabilities? Just realize that we may use the area of a bar in a histogram instead of the height as indication of the probability in discrete probability distrbutions, for example, Figure \@ref(fig:expected-value). After all, the bars in a histogram are all equally wide, so differences between bar areas are proportional to differences in bar height. 
 
 ### Probabilities always sum to 1
-While you were playing with Figure \@ref(fig:p-values), you may have noticed that displayed probabilities always add up to one. This is true for every probability distribution as you have learned before. In addition, you may have realized that the probabilities can also be interpreted as proportions or percentages. The probability that a sample bag contains candies with average weight over 2.9 gram is equal to the proportion of samples in the sampling distribution with average candy weight over 2.9 gram. Thus, we can use probabilities to find the threshold values that separate the top ten percent or the bottom five percent in a distribution.  
+While you were playing with Figure \@ref(fig:p values), you may have noticed that displayed probabilities always add up to one. This is true for every probability distribution as you have learned before. In addition, you may have realized that the probabilities can also be interpreted as proportions or percentages. The probability that a sample bag contains candies with average weight over 2.9 gram is equal to the proportion of samples in the sampling distribution with average candy weight over 2.9 gram. Thus, we can use probabilities to find the threshold values that separate the top ten percent or the bottom five percent in a distribution.  
 
 ## Concluding Remarks
 
+A communication scientist may want to know whether children are sufficiently aware of the dangers of media use. On a media literacy scale from one to ten, an average score of 5.5 or higher is assumed to be sufficient. Figure \@ref(fig:regression-sample) shows media literacy scores in a random sample of children.
 
-For example, a communication scientist may want to know whether an anti-smoking campaign makes people more aware of the risks of smoking. For a random sample of people, exposure to the campaign and awareness of risks associated with smoking are measured. Using simple regression analysis, we can see that exposure is positively related to risk awareness in the sample. But may we conclude that it is also positively related with risk awareness in the population?  
-
-```{r regression-sample, fig.cap="Regression line in the population and in a sample."}
-# Generate a population with two variables (exposure and awareness of risks) with a randomly generated small positive or negative slope ; add a button to sample 10 cases from this population ; depict as scatter plot with a regression line and the value of the regression slope.
+```{r literacy-sample, fig.cap="Are children sufficiently aware of the dangers of media use?"}
+# Generate a population with normally distributed media literacy scores with mean 5.8 and sd 1.4. Sample 20 observations and depict their scores as dots and the average score as a line with a label. Add a button to draw a new sample.
 # goal: to sensitize the student to the risks of fully trusting the sample result
 ```
 
-Figure \@ref(fig:regression-sample) shows a random sample with the regression line and equation predicting risk awareness from campaign exposure.
+1. Would you draw a correct conclusion about sufficient media literacy in the population of children from the sample? Draw several samples to check if you would always draw the same conclusion.
 
-1. Would you draw a correct conclusion about the regression slope in the population from the sample? Draw several samples to check how well or badly the regression slope in the sample matches the slope in the population.
-
-If we translate this to the simple candy bag example, we realize that the outcome in our sample need not be the true population value. After all, we could very well draw a bag with less or more than twenty percent of yellow candies. The regression coefficient, then, can be positive in our sample even if there is no relation or a negative relation in the population. How we decide on this, is discussed in later chapters.  
+If we translate this to the simple candy bag example, we realize that the outcome in our sample need not be the true population value. After all, we could very well draw a bag with less or more than twenty percent yellow candies. Average media literacy, then, can exceed 5.5 in our sample of children even if avergae media literacy is below 5.5 in the population or the other way around. How we decide on this, is discussed in later chapters.
 
 ### Samples characteristics as observations
 Perhaps the most confusing aspect of sampling distributions is the fact that samples are our cases (units of analysis) and sample characterstics are our observations. We are accustomed to think of observations as measurements on empirical _things_ such as people or candies. We perceive each person or each candy as a case and we observe a characteristic that may change across cases (a variable), for example the color of a candy or the weight of a candy. 
@@ -556,15 +610,19 @@ knitr::include_app("http://82.196.4.233:3838/apps/three-means/", height="560px")
 1. In Figure \@ref(fig:three-means), explain the meaning of the three means (dotted red lines). Which mean is a mean of means?
 
 ```{r eval=FALSE}
-The dotted red line in the top graph represents the average of candy weights in the population.
-The dotted red line in the middle graph represents the average of sampling means. So it is the average of average candy weight in a sample. It is a mean of means.
-The dotted red line in the bottom graph represents the average of candy weights in the sample.
+* The dotted red line in the top graph represents
+the average of candy weights in the population.
+* The dotted red line in the middle graph represents
+the average of sampling means. So it is the average
+of average candy weight in a sample. It is a mean of means.
+* The dotted red line in the bottom graph represents
+the average of candy weights in the sample.
 ```
 
 2. Is it a coincidence that the mean of the population and sampling distribution are the same? Use a slider to check if these means are the same.
 
 ```{r eval=FALSE}
-This is not a coincidence because the population
+* This is not a coincidence because the population
 mean is the expected value of the sampling
 distribution and the expected value of the
 sampling distribution is the average of the
@@ -574,18 +632,18 @@ sampling distribution.
 3. How does the sample mean relate to the population mean and the mean of the sampling distribution?
 
 ```{r eval=FALSE}
-The sample mean is one of the sample means
+* The sample mean is one of the sample means
 included in the sampling distribution. The
 sample is, so to speak, one of the possible
 samples that are listed in the sampling
 distribution.
-The sampling distribution depends on the
+* The sampling distribution depends on the
 population distribution. For example, the
 mean or center of the sampling distribution
 of sample means equals the population mean
 (because the sample mean is an unbiased
 estimator of the population mean).
-If the population changes, the sampling 
+* If the population changes, the sampling 
 distribution changes, so the list of
 possible samples (better: the probabilities
 of sample outcomes) changes, so we expect a 
@@ -599,13 +657,13 @@ but it can be quite different from it.
 
 The sampling distribution, here, is a distribution of sample means but the sampling distribution itself also has a mean, which is called the expected value or expectation of the sampling distribution. Don't get confused! The mean of the sampling distribution is the average of the average weight of candies across all possible samples. This mean of means has the same value as our first mean, namely the average weight of the candies in the population because a sample mean is an unbiased estimator of the population mean.  
 
-Think of the three means as a hamburger. The top and bottom part of a hamburger are both made of bread. They represent the same type of thing, for example, candies and their weight. The middle part of the hamburger, however, is a completely different type of food. The meat holds the two halves of the bun together. In a similar way, the sampling distribution connects the population to the sample but it is of a very different nature. It consists of observations on samples, for example, bags of candies instead of single candies.
+Think of the three distributions as a hamburger. The top and bottom part of a hamburger are both made of bread. They represent the population and the sample, which consist if the same substance: candies and their weight in our example. The middle part of the hamburger, however, is a completely different type of food. The meat holds the two halves of the bun together. In a similar way, the sampling distribution connects the population to the sample but it is of a very different substance. It consists of samples, for example, bags of candies instead of single candies.
 
 The sampling distribution sticks to the population because the population statistic (parameter), for example, the average weight of all candies, is equal to the mean of the sampling distribution. The sampling distribution sticks to the sample because it tells us which sample means we will find with what probabilities. The sampling distribution is the vital link connecting the sample to the population. We need it to make statements about the population based on our sample.  
 
 ## Take-Home Points  
 
-* Values of a sample statistic vary across random samples from the same population. But some values are more probable than other valuess.  
+* Values of a sample statistic vary across random samples from the same population. But some values are more probable than other value  s.  
 
 * The sampling distribution of a sample statistic tells us the probability of drawing a sample with a particular value of the sample statistic or a particular minimum/maximum value.  
 

@@ -10,7 +10,7 @@ source("../plottheme/styling.R",local = TRUE)
 shinyServer(function(input, output) {
   # Handy candy variables
   candy <- list(
-    proportions = rep(0.2, 5),
+    proportions = rep(0.2, 5), #c(0.15, 0.15, 0.3, 0.2, 0.2),
     colornames = c("Red", "Orange", "Yellow", "Green", "Blue")
   )
   
@@ -28,7 +28,7 @@ shinyServer(function(input, output) {
         breaks = seq(0, 1, by = 0.2),
         limits = c(0, 1)
       ) +
-      scale_x_discrete(name = "Candy" , breaks = candy$colornames) +
+      scale_x_discrete(name = "Candy color" , breaks = candy$colornames) +
       scale_fill_manual(values = brewercolors) +
       ggtitle("Candy proportions in the population") +
       theme_general() + 
@@ -103,7 +103,7 @@ shinyServer(function(input, output) {
       
       ggplot(candy.sample.history.df, aes(x = Freq)) +
         geom_bar(fill = brewercolors["Yellow"]) +
-        scale_x_continuous(name = "",
+        scale_x_continuous(name = "Number of yellow candies",
                            breaks = 0:10,
                            limits = c(-1, 10)) +
         scale_y_continuous(
@@ -177,7 +177,7 @@ shinyServer(function(input, output) {
       
       ggplot(candy.sample.history.df, aes(x = Freq)) +
         geom_bar(fill = brewercolors["Yellow"]) +
-        scale_x_continuous(name = "",
+        scale_x_continuous(name = "Number of yellow candies",
                            breaks = 0:10,
                            limits = c(-1, 10)) +
         scale_y_continuous(

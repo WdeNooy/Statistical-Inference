@@ -24,8 +24,8 @@ shinyUI(fluidPage(verticalLayout(
       10,
       align = "center",
       
-      actionButton("smallsample", "Take a random sample of 10"),
-      actionButton("largesample", "Take 1000 random samples of 10"),
+      actionButton("smallsample", "Take a random sample of 10 candies"),
+      actionButton("largesample", "Take 1000 random samples of 10 candies"),
       actionButton("reset", "Reset")
       
     ),

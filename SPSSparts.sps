@@ -121,6 +121,11 @@ T-TEST PAIRS=colour_pre WITH colour_post (PAIRED)
   /MISSING=ANALYSIS.
 
 *  Exercise 4.
+* Check data: Assumption checks in Chapter 8.
+* CHeck for impossible values.
+FREQUENCIES VARIABLES=weight sweetness colour_post
+  /ORDER=ANALYSIS.
+* Regression of colour_post on weight and sweetness. 
 REGRESSION
   /MISSING LISTWISE
   /STATISTICS COEFF OUTS CI(95) R ANOVA
