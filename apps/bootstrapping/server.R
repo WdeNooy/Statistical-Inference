@@ -196,16 +196,19 @@ shinyServer(function(input, output) {
                        fill = "Grey",
                        alpha = .4,
                        data = theoreticalsample,
+                       binwidth = .02,
                        aes(x = prop,
                            y = ..count../sum(..count..)
                        ))+
       geom_histogram(fill = brewercolors["Yellow"],
                      color = "Grey",
                      alpha = .6,
+                     binwidth = .02,
                      aes(y = ..count../sum(..count..))) + 
       ggtitle("Proportions of yellow candies in all samples") +
       scale_x_continuous(name = "Proportion of yellow candies",
-                        limits = c(-0.2,1))+
+                        limits = c(0,0.45),
+                        breaks = seq(0, 0.45, by = 0.05))+
         scale_y_continuous(name = "Density",
                            limits = c(0,1.1),
                            breaks = seq(0,1,by = 0.2))+
