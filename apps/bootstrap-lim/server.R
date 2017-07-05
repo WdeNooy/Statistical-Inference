@@ -163,14 +163,16 @@ shinyServer(function(input, output) {
                      fill = "Grey",
                      alpha = .4,
                      data = theoreticalsample,
+                     bins = 30,
                      aes(x = prop,
                          y = ..count../sum(..count..)
                      ))+
       geom_histogram(fill = brewercolors["Yellow"],
                      color = "Grey",
                      alpha = .6,
+                     bins = 30,
                      aes(y = ..count../sum(..count..))) + 
-      ggtitle("Proportions of yellow candies in 1000 bts samples") +
+      ggtitle("1000 bootstrap samples from the initial sample") +
       scale_x_continuous(name = "Proportion of yellow candies",
                          limits = c(-0.2,1))+
       scale_y_continuous(name = "Probability",

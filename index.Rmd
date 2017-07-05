@@ -81,10 +81,15 @@ candies$colour_post <- candies$colour_pre + ifelse(candies$colour %in% c("blue",
 set.seed(seed = 3295)
 candies$sweetness <- 12 - candies$colour_post + rnorm(50, mean = 0, sd = 1.7)
 candies$sweetness <- norm10(candies$sweetness) #normalize to 1-10
+set.seed(seed = 9501)
+candies$help <- runif(50, 0, 1)
+candies$spotted <- factor(ifelse((candies$colour %in% c("blue", "green", "red") & candies$help > 0.3) | (candies$colour %in% c("yellow", "orange") & candies$help > 0.7), "spotted", "not-spotted")) 
+candies$help <- NULL
 attributes(candies$colour)$label <- "Candy colour"
 attributes(candies$weight)$label <- "Candy weight (grams)"
 attributes(candies$sticky)$label <- "Candy is sticky"
 attributes(candies$colour_pre)$label <- "Candy colourfulness before exposure to sun light"
+attributes(candies$spotted)$label <- "Candy is spotted"
 candies$colour_pre <- labelled::labelled(candies$colour_pre, labels = c(`Totally faded` = 1, `Maximum colourfulness` = 10)) #Set value labels for export to SPSS
 attributes(candies$colour_post)$label <- "Candy colourfulness after exposure to sun light"
 candies$colour_post <- labelled::labelled(candies$colour_post, labels = c(`Totally faded` = 1, `Maximum colourfulness` = 10))

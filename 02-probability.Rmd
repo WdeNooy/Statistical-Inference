@@ -1,9 +1,9 @@
 # Probability Models: How Do I Get a Sampling Distribution? {#probmodels}
-> Key concepts: bootstrapping, sampling with replacement, exact approach, modelling, approximation with a theoretical probability distribution, binomial distribution, (standard) normal distribution, (Student) _t_ distribution, _F_ distribution, chi-squared distribution, condition checks, sample size, homogeneity of variance, expected values, independent samples, dependent samples, paired samples, matched samples.
+> Key concepts: bootstrapping/bootstrap sample, sampling with replacement, exact approach, approximation with a theoretical probability distribution, binomial distribution, (standard) normal distribution, (Student) _t_ distribution, _F_ distribution, chi-squared distribution, condition checks for theoretical probability distributions, sample size, equal population variances, expected values, independent samples, dependent/paired samples.
 
-In the previous chapter, we have drawn very many samples from a population to obtain the sampling distribution of a sample statistic. The procedure is quite simple: Draw a sample, calculate the desired sample statistic, for example, the proportion of yellow candies or the average candy weight in the sample, add the sample statistic value to the sampling distribution, and repeat this thousands of times.  
+In the previous chapter, we have drawn very many samples from a population to obtain the sampling distribution of a sample statistic, for example, the proportion of yellow candies or average candy weight in the sample. The procedure is quite simple: Draw a sample, calculate the desired sample statistic, add the sample statistic value to the sampling distribution, and repeat this thousands of times.  
 
-Although this procedure is simple, it is not practical. In our research project, we would have to draw thousands of samples and administer a survey to each sample or collect data on the sample in some other way. This requires too much time and money to be of any practical value. So how do we create a sampling distribution if we only collect data for one sample? This chapter presents three ways of doing this: bootstrapping, exact approaches, and theoretical approximations.
+Although this procedure is simple, it is not practical. In a research project, we would have to draw thousands of samples and administer a survey to each sample or collect data on the sample in some other way. This requires too much time and money to be of any practical value. So how do we create a sampling distribution if we only collect data for one sample? This chapter presents three ways of doing this: bootstrapping, exact approaches, and theoretical approximations.
 
 ### Test your intuition and understanding {-}
 
@@ -69,7 +69,7 @@ knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.name
 to the Sampling Distribution.
 ```
 
-5. In which situations can we use the exact probabilities as approach to the sampling distribution?
+5. In which situations can we use exact probabilities as a sampling distribution?
 
 ```{r eval=FALSE}
 * We must be able to list and count all combinations.
@@ -135,7 +135,7 @@ On first reading, you may not know all answers. Try again after you have studied
 
 ## The Bootstrap Approximation of the Sampling Distribution {#boot-approx}
 
-The first way to obtain a sampling distribution is still based on the idea of drawing very many samples. However, we only draw one sample from the population for which we collect data. As a next step, we draw a large number of samples from our initial sample. The samples drawn in the second step are called _bootstrap samples_. For each bootstrap sample, we calculate the sample statistic of interest and we collect them into the sampling distribution. We usually want about 5,000 bootstrap samples for our sampling distribution.  
+The first way to obtain a sampling distribution is still based on the idea of drawing very many samples. However, we only draw one sample from the population for which we collect data. As a next step, we draw a large number of samples from our initial sample. The samples drawn in the second step are called _bootstrap samples_. For each bootstrap sample, we calculate the sample statistic of interest and we collect them in a sampling distribution. We usually want about 5,000 bootstrap samples for our sampling distribution.  
 
 ```{r bootstrapping, echo=FALSE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Variant of app random-variable (Ch. 1).
@@ -217,16 +217,16 @@ By the way, we are accustomed to this type of sampling, which is called _samplin
 If we do allow the same person to be sampled more than once, we sample _with replacement_. The same person can occur more than once in a sample. Bootstrap samples that are sampled with replacement from the original sample can vary because they need not contain all cases in the original sample. Some cases may not be sampled while other cases are sampled several times. You probably have noticed this in Figure \@ref(fig:replacement). Sampling with replacement, we can obtain different bootstrap samples from the the original sample and still have bootstrap samples of the same size as the original sample.  
 
 ### Calculating probabilities with replacement  
-You may wonder whether it is OK to sample with replacement. The short answer: Yes it is. We usually calculate probabilities as if we sampled with replacement. Suppose we want to calculate the probability sampling two yellow candies from a population in which 20% of the candies are yellow. The probability of drawing two yellow candies is then calculated as .200 * .200: twice the probability of drawing a yellow candy.  
+You may wonder whether it is OK to sample with replacement. The short answer: Yes it is. We usually calculate probabilities as if we sampled with replacement. Suppose we want to calculate the probability of sampling two yellow candies from a population in which 20% of the candies are yellow. The probability of drawing two yellow candies is then calculated as .200 * .200: twice the probability of drawing a yellow candy.  
 
 In this calculation, we assume that the probability to draw a yellow candy remains the same while we are sampling. The probability of sampling a yellow candy is assumed to be .200 whether we sample the first or the second candy. We act as if the proportion of yellow candies in the population remains the same, namely 20%. This assumption is very convenient because it simplifies the calculation of probabilities.
 
 ### Calculating probabilities without replacement  
-However, the number of yellow candies is reduced by one after we have drawn the first yellow candy (unless it is immediately replaced by a new yellow candy in the factory). The probability of drawing a second yellow candy should then be less than 20%. If the population is large, the decrease in the probability is too small to be in any way relevant. For example, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992 ; the difference between the two probabilities (0,0000008) is negligible. 
+However, the number of yellow candies is reduced by one after we have drawn the first yellow candy unless it is immediately replaced by a new yellow candy in the factory. The probability of drawing a second yellow candy should then be less than 20%. If the population is large, the decrease in the probability is too small to be in any way relevant. For example, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992 ; the difference between the two probabilities (0,0000008) is negligible. 
 
-So is it OK to sample with replacement? From the point of view of probabilities, it is OK because we usually calculate probabilities as if we sampled with replacement. In practice, however, we never want the same respondent to participate twice in our research because this does not yield new information (unless the respondent cheats).
+So is it OK to sample with replacement? From the point of view of probabilities, it is OK because we usually calculate probabilities as if we sampled with replacement. In practice, however, we never want the same respondent to participate twice in our research because this does not yield new information.
 
-In contrast, is it _not_ OK to sample without replacement as we normally do in research? It is OK to sample with replacement as long as the population is much larger than the sample. If the population is much larger, the probabilities more or less remain the same during the sampling process, so calculating probabilities as if the probabilities do not change is not a problem.
+In contrast, is it _not_ OK to sample without replacement as we normally do in research? It is OK to sample without replacement as long as the population is much larger than the sample. If the population is much larger, the probabilities more or less remain the same during the sampling process, so calculating probabilities as if the probabilities do not change is not a problem.
 
 ### Limitations to bootstrapping  
 
@@ -255,7 +255,7 @@ sampling distribution more. But even then, it can
 sometimes be quite of the mark. 
 ```
 
-2. How does sample size relate to representativeness of the sample? Twentye percent of the candies in the proportion are yellow.
+2. How does sample size relate to representativeness of the sample? Twenty percent of the candies in the proportion are yellow.
 
 ```{r eval=FALSE}
 * The proportion of yellow candies in larger samples
@@ -263,6 +263,17 @@ is more often close to the proportion in the
 population: 0.2. This is the reason that the
 bootstrapped sampling distribution usually
 resembles the true sampling distribution. 
+```
+
+3. If you use a very small sample size, it may happen that there is no yellow histogram in the bottom graph. What is the matter if that happens?
+
+```{r eval=FALSE}
+* If we draw an initial sample without any yellow
+candies, none of the bootstrap samples can include 
+yellow candies. As a result, the count of samples
+with yellow candies is always zero.
+* The smaller the initial sample, the greater the
+chance of having a sample without yellow candies.
 ```
 
 We can create a sampling distribution by sampling from our original sample with replacement. It is hardly a miracle that we obtain different samples with different sample statistics if we sample with replacement. The real miracle is that this bootstrap distribution resembles the true sampling distribution that we would get if we draw lots of samples directly from the population.  
@@ -276,7 +287,7 @@ A sample is more likely to be representative of the population if the sample is 
 ### Any sample statistic can be bootstrapped  
 The big advantage of the bootstrap approach (_bootstrapping_), however, is that we can get a sampling distribution for any sample statistic that we are interested in. Every statistic that we can calculate for our original sample can also be calculated for each bootstrap sample. The sampling distribution is just the collection of the sample statistics calculated for all bootstrap samples.  
 
-Bootstrapping is more or less the only way to get a sampling distribution for the sample median, for example, the median weight of candies in a sample bag. We may create sampling distributions for the wildest sample statistics, for example the difference between sample mean and sample median squared. I would not know why you would be interested in the squared difference of sample mean and median but there are very interesting statistics that we can only get at through bootstrapping. A case in point is the strength of an indirect effect in a mediation model.  
+Bootstrapping is more or less the only way to get a sampling distribution for the sample median, for example, the median weight of candies in a sample bag. We may create sampling distributions for the wildest sample statistics, for example the difference between sample mean and sample median squared. I would not know why you would be interested in the squared difference of sample mean and median but there are very interesting statistics that we can only get at through bootstrapping. A case in point is the strength of an indirect effect in a mediation model (Chapter \@ref(mediation)).  
 
 ## Bootstrapping in SPSS {#boot-spss}
 
@@ -307,6 +318,8 @@ knitr::include_url("https://www.youtube.com/embed/-HCEstRwsmU", height = "360px"
 # 
 # There is one thing you should be aware of. If you select the _Perform bootstrapping_ option, all subsequent analyses in SPSS that allow for bootstrapping will be bootstrapped as well. This is usually not what you want and it can be very time-consuming to the computer. Don't forget to deselect this option if you run a new analysis that can be bootstrapped.
 ```
+
+In principle, any sample statistic can be bootstrapped. SPSS, however, does not bootstrap all sample statistics. For example, SPSS does not bootstrap the minimum value, maximum value or the range between minimum and maximum value of a variable. 
 
 ### Exercises 
 
@@ -442,9 +455,9 @@ The calculated probabilities of all possible sample statistic outcomes give us a
 ### Exact approaches for categorical data
 An exact approach lists and counts all possible combinations. This can only be done if we work with discrete or categorical variables. If there is not a limited number of categories, we cannot list all possible combinations.
 
-A proportion is based on frequencies and frequencies are discrete (integer values), so we can use an exact approach to create a sampling distribution for one proportion such as the proportion of yellow candies in the example above. Exact approaches are also available for the association between two categorical (nominal or ordinal) variables in a contingency table: Do some combinations of values on the two variables occur relatively frequently?
+A proportion is based on frequencies and frequencies are discrete (integer values), so we can use an exact approach to create a sampling distribution for one proportion such as the proportion of yellow candies in the example above. The exact approach uses the binomial probability formula to calculate probabilities. Consult the internet if you want to know this formula; we are not going to use it here.
 
-For example, are yellow candies more often sticky than red candies? If candies are either sticky or not sticky and they have one out of a limited set of colours, we have two categorical variables. We can create an exact probability distribution for the combination of color and stickiness. The _Fisher-exact test_ is an example of an exact approach to the sampling distribution of the association between two categorical variables.
+Exact approaches are also available for the association between two categorical (nominal or ordinal) variables in a contingency table: Do some combinations of values on the two variables occur relatively frequently? For example, are yellow candies more often sticky than red candies? If candies are either sticky or not sticky and they have one out of a limited set of colours, we have two categorical variables. We can create an exact probability distribution for the combination of color and stickiness. The _Fisher-exact test_ is an example of an exact approach to the sampling distribution of the association between two categorical variables.
 
 ### Computer-intensive
 The exact approach can be applied to discrete variables because they have a limited number of values. Discrete variables are usually measured at the nominal or ordinal level. If the number of categories becomes large, a lot of computing time can be needed to calculate the probabilities of all possible sample statistic outcomes. Exact approaches are said to be _computer-intensive_. 
@@ -508,34 +521,42 @@ Interpret the results:
 
 There is a strong association (Phi = .52) between 
 candy colour and candy stickiness, which is 
-statistically significant, chi-squared (4) = 13.47,
-p = .010. 
+statistically significant, p = .010 (exact). 
 Yellow and red candies are less often sticky than 
 blue, green, and orange candies.
 ```
 
-2. With the same data, use an exact approach to test if half of the candies are sticky. Hint: Use the binomial test in the _Analyze>Nonparametric Tests>Legacy Dialogs_ menu.  
+2. With the same data, apply a Fisher-exact test to the association between candy colour and candy spottiness.  
 
 ```{r eval=FALSE}
 SPSS syntax:
 
-* Binomial test.
-NPAR TESTS
-  /BINOMIAL (0.50)=sticky
-  /MISSING ANALYSIS
+* Exact test on the relation between candy colour
+* and candy spottiness.
+* Do not forget to deselect bootstrapping.
+CROSSTABS
+  /TABLES=colour BY spotted
+  /FORMAT=AVALUE TABLES
+  /STATISTICS=CHISQ PHI 
+  /CELLS=COUNT COLUMN 
+  /COUNT ROUND CELL
   /METHOD=EXACT TIMER(5).
 
-Check data and assumptions:
+Check data:
 
-Candy stickiness is a dichotomy as it should be
-in a binomial test. There are no further
-assumptions.
-  
+The contingency table does not show any impossible values for
+the two categorical variables.
+
+Check assumptions:
+
+There are no assumptions for a Fisher-exact test.
+
 Interpret the results:
-  
-A binomial test gives us no reason to believe 
-that more or less than half of all candies is 
-sticky, p = .480.
+
+There is a moderate association (Cramer's V = .27) between 
+candy colour and candy stickiness, which is 
+not statistically significant, p = .480 (exact). 
+Candy colour does not seem relevant to having spots.
 ```
 
 ## Theoretical Approximations of the Sampling Distribution
@@ -563,7 +584,7 @@ represents the sampling distribution very
 accurately.
 ```
 
-2. While checking the distribution, pay special attention to the tails because these are used for significance tests (see Chapter \@ref(hypothesis)). The red and green bars represent the 2.5 percent of samples with minimum or maximum average weigth. The vertical lines mark the outer 2.5 percent according to the normal function.
+2. While checking the distribution, pay special attention to the tails because these are used for significance tests (see Chapter \@ref(hypothesis)). The red and green bars represent the 2.5 percent samples with minimum or maximum average weigth. The vertical lines mark the outer 2.5 percent according to the normal function.
 
 ```{r eval=FALSE}
 * The borders demarcating the lowest and highest
@@ -575,20 +596,16 @@ the sampling distributions that we generate with
 this app. 
 ```
 
-3. Generate some new sampling distirbutions to see if the normal function always yields a good approximation. What changes in the distribution: the mean, the standard deviation, or both?
+3. Generate some new sampling distributions to see if the normal function always yields a good approximation. What changes in the distribution: the mean, the standard deviation, or both?
 
 ```{r eval=FALSE}
-* The mean of the sampling disitrbution does not
-change. It is equal to the population mean (mean
-candy weight in the population), so the population
-mean seems not to be changed when we generate
-a new sampling distribution.
-* The width/peakedness of the sampling distribution
-changes. This suggests that the variation (standard
-devation) in the population changes if we draw a
-new sampling distribution. But regardless of the
-amount of variation, the normal curve fits the
-distribution equally well.
+* The mean of the sampling distribution does not change. It is equal to the
+population mean (mean candy weight in the population), so the population mean
+seems not to be changed when we generate a new sampling distribution. 
+* The width/peakedness of the sampling distribution changes. This suggests
+that the variation (standard devation) in the population changes if we draw a
+new sampling distribution. But regardless of the amount of variation, the
+normal curve fits the distribution equally well.
 ```
 
 The normal distribution is a mathematical function linking continuous scores, e.g., a sample statistic such as the average weight in the sample, to p values, that is, to the probability of finding at least or at most this score. Such a function is called a _probability density function_, Section \@ref(cont-random-var).  
@@ -602,12 +619,12 @@ In addition, we are more likely to sample a bag with an average weight that is n
 
 From this argumentation, we conclude that the normal distribution is a reasonable model for the probability distribution of sample means. Actually, it has been proven that the normal distribution exactly represents the sampling distribution in particular cases, for example the sampling distribution of the mean of a large sample.
 
-As a model, the theoretical probability distribution may actually give a better approximation of the sampling distribution than a sampling distribution created by drawing many samples from the population (as you have done in Figure \@ref(fig:normal-approximation) or from the initial sample as in bootstrapping. Sampling is always subjected to chance, so we may have accidentally drawn samples that do not cover the sampling distribution well.  
+As a model, the theoretical probability distribution may actually give a better approximation of the sampling distribution than a sampling distribution created by drawing many samples from the population (as you have done in Figure \@ref(fig:normal-approximation)) or from the initial sample as in bootstrapping. Sampling is always subjected to chance, so we may have accidentally drawn samples that do not cover the sampling distribution well.  
 
 ### Conditions for the use of theoretical probability distributions {#cond-probdistr}
 Theoretical probability distributions, then, are plausible models for sampling distributions. They are known or likely to have the same shape as the true sampling distributions under particular circumstances or conditions. 
 
-If we use a theoretical probability distribution, we must assume that the conditions for its use are met. We have to check the conditions and decide whether they are close enough to the ideal conditions. _Close enough_ is of course a matter of judgement. In practice, rules of thumb have been developed to decide if the theoretical probability distribution can be used.  
+If we use a theoretical probability distribution, we must assume that the conditions for its use are met. We have to check the conditions and decide whether they are close enough to the ideal conditions. _Close enough_ is of course a matter of judgement. In practice, rules of thumb have been developed to decide if the theoretical probability distribution can be used.
 
 Figure \@ref(fig:normal-approx-proportion) shows an example in which the normal distribution is a good approximation for the sampling distribution of a proportion in some situations but not in all situations.
 
@@ -620,43 +637,43 @@ Figure \@ref(fig:normal-approx-proportion) shows an example in which the normal 
 
 2. How do you expect that the value of the proportion in the population affects the shape of the sampling distribution? State your expectation and then check it in the interactive content by changing the population proportion.
 
-Do theoretical probability distributions fit the true sampling distribution? As you may have noticed with the interactive content, this is not always the case. In general, theoretical probability distributions fit sampling distribution better if the sample is larger. In addition, the value of the parameter may be relevant to the fit of the theoretical probability distribution. The sampling distribution of a sample proportion is more symmetrical like the normal distribution if the proportion in the population is nearer .5.  
+Do theoretical probability distributions fit the true sampling distribution? As you may have noticed with the interactive content, this is not always the case. In general, theoretical probability distributions fit sampling distribution better if the sample is larger. In addition, the value of the parameter may be relevant to the fit of the theoretical probability distribution. The sampling distribution of a sample proportion is more symmetrical like the normal distribution if the proportion in the population is nearer .5.
 
-This illustrates that we often have several conditions for a theoretical probability distribution to fit the sampling distribution that we should evaluate together. In the example of proportions, a large sample is less important if the true proportion is closer to .5 but it is more important for true proportions that are more distant from .5. 
+This illustrates that we often have several conditions for a theoretical probability distribution to fit the sampling distribution that we should evaluate together. In the example of proportions, a large sample is less important if the true proportion is closer to .5 but it is more important for true proportions that are more distant from .5.
 
-The rule of thumb for using the normal distribution as the sampling distribution of a sample proportion combines the two aspects by multiplying them and requiring the resulting product to be larger than five.  If the probability of sampling a yellow candy is .2 and our sample size is 30, the product is .2 * 30 = 6, which is larger than five. So we may use the normal distribution as approximation of the sampling distribution.  
+The rule of thumb for using the normal distribution as the sampling distribution of a sample proportion combines the two aspects by multiplying them and requiring the resulting product to be larger than five.  If the probability of sampling a yellow candy is .2 and our sample size is 30, the product is .2 * 30 = 6, which is larger than five. So we may use the normal distribution as approximation of the sampling distribution.
 
-Note that this rule of thumb uses one minus the probability if the probability is larger than .5. For example, if we want to test the probability of sampling a candy that is not yellow, the probability is .8 and we use 1 - 0.8 = 0.2 in the rule of thumb.  
+Note that this rule of thumb uses one minus the probability if the probability is larger than .5. In other words, it uses the smaller of two probabilities: the probability that an observation has the characteristic and the probability that it has not. For example, if we want to test the probability of sampling a candy that is not yellow, the probability is .8 and we use 1 - 0.8 = 0.2 in the rule of thumb.
 
-Apart from the normal distribution, there are several other theoretical probability distributions. We have the _t distribution_ for one or two sample means, regression coefficients, and correlation coefficients, the _F distribution_ for comparison of variances and comparing means for three or more groups (analysis of variance, ANOVA), and the _chi-squared distribution_ for frequency tables and contingency tables.  
+Apart from the normal distribution, there are several other theoretical probability distributions. We have the _binomial distribution_ for a proportion, the _t distribution_ for one or two sample means, regression coefficients, and correlation coefficients, the _F distribution_ for comparison of variances and comparing means for three or more groups (analysis of variance, ANOVA), and the _chi-squared distribution_ for frequency tables and contingency tables.
 
-For most of these theoretical probability distributions, sample size is important. The larger the sample, the better. There are additional conditions that must be satisfied such as the distribution of the variable in the population. The rules of thumb are summarized in Table \@ref(tab:thumb). Bootstrapping and exact tests can be used if conditions for theoretical probability distributions have not been met. Special conditions apply to regression analysis (see Chapters \@ref(moderation) and \@ref(mediation)).
+For most of these theoretical probability distributions, sample size is important. The larger the sample, the better. There are additional conditions that must be satisfied such as the distribution of the variable in the population. The rules of thumb are summarized in Table \@ref(tab:thumb). Bootstrapping and exact tests can be used if conditions for theoretical probability distributions have not been met. Special conditions apply to regression analysis (see Chapter \@ref(moderation), Section \@ref(regr-inference)).
 
 ```{r thumb, echo=FALSE, screenshot.opts=list(delay = 2)}
-knitr::kable(rbind(c("Normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", " "), c("Normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known"), c("t distribution", "one or two means", "> 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "-", "-"), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." )
+knitr::kable(rbind(c("Binomial distribution", "proportion", "-", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", "-"), c("(Standard) normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known (for each group)"), c("t distribution", "one or two means", "> 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "20+ per predictor variable", "See Chapter 8."), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." )
 ```
 
 ### Checking conditions  
 
-Rules of thumb about sample size are easy to check once we have collected our sample. In contrast, rules of thumb that concern the scores in the population cannot be easily checked because we do not have information on the population. If we already know the population, why would we draw a sample and and do the research in the first place?  
+Rules of thumb about sample size are easy to check once we have collected our sample. In contrast, rules of thumb that concern the scores in the population cannot be easily checked because we do not have information on the population. If we already know the population, why would we draw a sample and do the research in the first place?  
 
 We can only use the data in our sample to make an educated guess about the distribution of the variable in the population. For example, if the scores in our sample are clearly normally distributed, it is plausible that the scores in the population are normally distributed. 
 
 In this situation, we do not _know_ that the population distribution is normal but we _assume_ it is. If the sample distribution is clearly not normally distributed, we had better not assume that the population is normally distributed. In short, we sometimes have to make assumptions when we decide on using a theoretical probability distribution.
 
-We could use a histogram of the scores in our sample with a normal distribution curve added to evaluate whether a normal distribution applies. Sometimes, we have statistical tests to draw inferences about the population from a sample that we can use to check the conditions. We discuss tests in a later chapter.  
+We could use a histogram of the scores in our sample with a normal distribution curve added to evaluate whether a normal distribution applies. Sometimes, we have statistical tests to draw inferences about the population from a sample that we can use to check the conditions. We discuss these tests in a later chapter.  
 
 ### More complicated sample statistics: differences {#complicatedsampling}
 Up to this point, we have focused on rather simple sample statistics such as the proportion of yellow candies or the average weight of candies in a sample. Table \@ref(tab:thumb), however, contains more complicated sample statistics. 
 
-If we compare two or more groups, for example, the average weight of yellow and red candies, the sample statistic for which we want to have a sampling distribution must take into account both the average weight of yellow candies and the average weight of red candies. The sample statistic must be the difference between the averages of the two samples. 
+If we compare two groups, for example, the average weight of yellow and red candies, the sample statistic for which we want to have a sampling distribution must take into account both the average weight of yellow candies and the average weight of red candies. The sample statistic that we are interested in is the difference between the averages of the two samples.
 
-```{r mean-independent, echo=FALSE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="540px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mean-independent, echo=FALSE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="550px", screenshot.opts = list(delay = 5), dev="png"}
 # Demonstrate the construction of a sampling distribution of mean differences for independent samples; generate more or less normal dotplots for two populations (normal distributions): weight of red candies and yellow candies; a button allows to draw a random sample from each population, showing a dotplot for each sample (first draw the reds, then the yellows) with the mean added as vertical line with value ; then calculate the difference of the two means and store this difference in a sampling distribution, which is also shown as a histogram. Add a button to draw 1,000 samples and show the resulting sampling distribution.
 knitr::include_app("http://82.196.4.233:3838/apps/mean-independent/", height="580px")
 ```
 
-1. Press the button once. why are these samples called independent?  
+1. Press the button once. Why are these samples called independent?  
 
 ```{r eval=FALSE}
 * It is in principle possible to draw a random sample
@@ -676,7 +693,7 @@ from the average weight of red candies (in red typeface).
 The result is added to the sampling distribution.
 ```
 
-3. Press the button to draw one thousand samples once or mor often. Does the sampling distribution look familiar to you?
+3. Press the button to draw one thousand samples once or more often. Does the sampling distribution look familiar to you?
 
 ```{r eval=FALSE}
 * The sampling distribution has a bell shape like the normal or (Student) t distribution.
@@ -694,7 +711,7 @@ If we draw a sample from both the yellow and the red candies in the population, 
 
 The sampling distribution of the difference between two means is similar to a _t_-distribution, so we may use the latter to approximate the former. Of course, the conditions for using the _t_ distribution must be met.  
 
-It is important to note that we do not create separate sampling distributions for the average weight of yellow candies and for the average weight of red candies and then look at the difference between the two sampling distributions. Instead, we create _one sampling distribution for the statistic of interest_, namely the difference between means. We cannot combine different sampling distributions into a new sampling distribution. We will see the importance of this when we discuss mediation.  
+It is important to note that we do not create separate sampling distributions for the average weight of yellow candies and for the average weight of red candies and then look at the difference between the two sampling distributions. Instead, we create _one sampling distribution for the statistic of interest_, namely the difference between means. We cannot combine different sampling distributions into a new sampling distribution. We will see the importance of this when we discuss mediation (Chapter \@ref(mediation)).  
 
 ### Independent samples  
 If we compare two means, there are two fundamentally different situations that are sometimes difficult to distinguish. Comparing the average weight of yellow candies to the average weight of red candies, we are comparing two samples that are _statistically independent_ (see Figure \@ref(fig:mean-independent)), which means that we could have drawn the samples separately.  
@@ -733,7 +750,7 @@ We are not going to exercise with theoretical approximations in SPSS now. Becaus
 
 ## Take-Home Points  
 
-* We may simulate/create an exact or bootstrap sampling distribution in simple situations or if we have a lot of computing power.  
+* We may create an exact sampling distribution or simulate a bootstrap sampling distribution in simple situations or if we have a lot of computing power.  
 
 * For a bootstrap sampling distribution, we need about 5,000 bootstrap samples from our original sample.  
 
@@ -743,4 +760,4 @@ We are not going to exercise with theoretical approximations in SPSS now. Becaus
 
 * Conditions usually involve the size of the sample, sample type (independent vs. dependent/paired), and the shape or variance of the population distribution.  
 
-* Samples are independent if, in principle, we can drawn a sample for one group without taking into account the sample for another group of cases. Otherwise, the samples are dependent or paired.
+* Samples are independent if, in principle, we can draw a sample for one group without taking into account the sample for another group of cases. Otherwise, the samples are dependent or paired.
