@@ -1,121 +1,114 @@
 library(shiny)
 library(ggplot2)
+library(RColorBrewer)
 
-shinyServer(function(input, output,session) {
+shinyServer(function(input, output) {
+  source("../plottheme/styling.R",local = TRUE)
+  n = 30 # sample size
+  mean = 2.8 #population mean
+  sd = runif(n = 1, min = 2, max = 4) #Population standard deviation
 
-  source("../plottheme/styling.R", local = TRUE)
-  
-  mean <- 2.8 #Population mean
-  sd <- 0.5 #Population sd
-  nmax = 30 # Maximal n value
-  nmin = 1 # Minimal n value
-  
-  ###### CONNECTION BETWEEN BOTH SLIDERS#########
-  
-  #If nslider moves, change seslider
-  observeEvent(input$nslider,{
-        updateSliderInput(session, inputId = "seslider",
-                          value = input$nslider - 1
-                          )
-  })
-  
-  #If seslider moves, change nslider
-  observeEvent(input$seslider,{
-    updateSliderInput(session,
-                      inputId = "nslider",
-                      value = input$seslider + 1
-                     )
-  })
-
-  #######################   MAIN PLOT #############################
-    output$mainplot <- renderPlot({
-      #Validations
-      validate(
-        need(
-          input$cfintslider != 100,
-          "Selecting 100% leads to an infinitely wide confidence interval"
-        )
-      )
-      
-      tailarea <-
-        (1 - input$cfintslider / 100) / 2 #calculates value for qnorm
-      
-      
-      posvalues <- sd / sqrt(nmin:nmax) #possible values standard error can take
-      stderr <- posvalues[input$seslider + 1] #stderror
-      
-
+  output$mainplot <- renderPlot({
+    n <- input$nslider # sets sample size
+    se <- sd/sqrt(n) # calculates standard error
+    tailarea <- (1 - input$cislider / 100) / 2 #calculates value for qnorm
+    error <- qnorm(1 - tailarea) * se # Distance from mean
+    left <- mean - error #Left confidence interval border
+    right <- mean + error #Right confidence interval border
+ 
+    validate(
+      need(input$cislider != 100,
+            "Selecting 100% leads to an infinitely wide confidence interval")
+    )
     
-    dist <- qnorm(1 - tailarea) * stderr #Distance for interval  
-    left <- mean - dist #Left confidence interval border
-    right <- mean + dist #Right confidence interval border
-    ##### PLOT ######
-    ggplot(data.frame(x = c(0,6)), aes(x = x)) + 
-      #Normal distribution
-      stat_function(fun = dnorm, args = list(mean = mean, sd = stderr)) + 
-
-      #X scale definition and generation of z score scale on top
-      scale_x_continuous(breaks = seq(0,6,by = .1),limits = c(2.4,3.2),
-                        
-                         sec.axis = sec_axis((~./stderr - mean/stderr),
-                                              breaks = -4:4,
-                                              name = "Standard error (z)")) +
+    ggplot(data.frame(x = c(0, 6)), aes(x = x)) +
+       #Left area under curve
+       stat_function(fun = dnorm,xlim = c(-10,left),
+                    geom = "area",
+                    fill = brewercolors["Blue"],
+                    args = list(mean = mean, sd = se)) + 
+      #Center area under curve
+      stat_function(fun = dnorm,
+                    xlim = c(left,right),
+                    geom = "area",
+                    fill = "white",
+                    args = list(mean = mean, sd = se)) +
+      #Right area under curve
+      stat_function(fun = dnorm,
+                    xlim = c(right,10),
+                    geom = "area",
+                    fill = brewercolors["Blue"],
+                    args = list(mean = mean, sd = se)) +
+      #Normal function line 
+      stat_function(fun = dnorm,
+                     args = list(mean = mean, sd = se)) +
       #Left vline
       geom_vline(aes(xintercept = left,
-                     linetype = "left margin")) +
+                 linetype = "left critical value")) +
       #Right vline
       geom_vline(aes(xintercept = right,
-                     linetype = "right margin")) +
+                 linetype = "right critical value")) +
       #Mean vline
       geom_vline(aes(xintercept = mean,
                      linetype = "mean")) + 
-      #Defining legend of lines
+      #Defining types of lines
       scale_linetype_manual(name = "",
-                            values = c("left margin" = "dashed",
-                                       "right margin" = "dashed",
+                            values = c("left critical value" = "dashed",
+                                       "right critical value" = "dashed",
                                        "mean" = "solid")) + 
+      # Scale x breaks definition
+      scale_x_continuous(breaks = seq(0, 6 ,by = .4), limits = c(0, 6),
+                         sec.axis = sec_axis(~ (. - mean) / se,
+                                             breaks = c(-1.96, 0, 1.96),
+                                             name = "Average candy weight per sample in standard errors (z score)")
+      ) +
       #Center text label
-      geom_text(label = paste(input$cfintslider, "%", sep = ""),
+      geom_text(label = paste(input$cislider, "%", sep = ""),
                 aes(x=mean,
-                    y = dnorm(mean, mean = mean, sd = sd)/2,
+                    y = dnorm(mean, mean = mean, sd = se)/2,
                     vjust = .5
-                )) +
+                    )) +
       #Left text label
-      geom_text(label = paste((100 - input$cfintslider)/2, "%", sep = ""),
+      geom_text(label = paste((100 - input$cislider)/2, "%", sep = ""),
                 aes(x=left,
-                    y = dnorm(mean, mean = mean, sd = sd)/3,
-                    hjust = 1)) +
+                    y = dnorm(mean, mean = mean, sd = se)/3,
+                    hjust = 1
+                )) +
       #Right text label
-      geom_text(label = paste((100 - input$cfintslider)/2, "%", sep = ""),
+      geom_text(label = paste((100 - input$cislider)/2, "%", sep = ""),
                 aes(x=right,
-                    y = dnorm(mean, mean = mean, sd = sd)/3,
-                    hjust = 0)) +
+                    y = dnorm(mean, mean = mean, sd = se)/3,
+                    hjust = 0
+                )) +
+      
+      #SE text label
+      geom_text(label = paste("standard error = ", round(se, digits = 2), sep = ""),
+                aes(x=6,
+                    y = dnorm(mean, mean = mean, sd = se)* .8,
+                    hjust = 1
+                )) +
       #Left arrow
-      geom_segment(aes(x = mean,
-                       xend = left,
-                       y = dnorm(mean, mean = mean, sd = sd) * .8,
-                       yend = dnorm(mean, mean = mean, sd = sd) * .8,
-                       colour = "Interval estimate"), 
-                   size = 1,
+      geom_segment(x = mean,
+                    xend = left,
+                   y = dnorm(mean, mean = mean, sd = se) * .1,
+                   yend = dnorm(mean, mean = mean, sd = se) * .1,
                    arrow = arrow(length = unit(.3,"cm"))) + 
       #Right arrow
-      geom_segment(aes(x = mean,
-                       xend = right,
-                       y = dnorm(mean, mean = mean, sd = sd) * .8,
-                       yend = dnorm(mean, mean = mean, sd = sd) * .8,
-                       colour =  "Interval estimate"), 
-                   size = 1,
+      geom_segment(x = mean,
+                   xend = right,
+                   y = dnorm(mean, mean = mean, sd = se) * .1,
+                   yend = dnorm(mean, mean = mean, sd = se) * .1,
                    arrow = arrow(length = unit(.3,"cm"))) +
-      
-      #Specifing legend for colour/arrow
-      scale_colour_manual(guide = guide_legend(title = ""),
-                          values = c("Interval estimate" = unname(brewercolors["Red"]))) + 
+      #Title and labels for axes
       ggtitle("Sampling distribution") + 
-      ylab("Density") +
-      xlab("Candy weight") +
-      #general theme
+      xlab("Average candy weight per sample") +
+      ylab("Density") + 
+      #General theme
       theme_general() +
-      theme(legend.position = "bottom")
-  })
-
+      #Legend positioning
+      theme(legend.position = "bottom",
+            legend.direction = "horizontal")
+      
+      
+    })
 })
