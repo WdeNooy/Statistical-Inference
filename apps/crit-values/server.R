@@ -57,7 +57,7 @@ shinyServer(function(input, output) {
       scale_x_continuous(breaks = seq(0, 6, by = .4), limits = c(0, 6),
                          sec.axis = sec_axis(~ (. - mean) / se,
                                              breaks = c(-1.96, -1, 0 , 1, 1.96),
-                                             name = "Standard error (z)")
+                                             name = "Average candy weight per sample in standard errors (z scores)")
                          ) +
       #Center text label
       geom_text(label = paste(cilevel * 100, "%", sep = ""),
