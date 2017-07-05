@@ -72,7 +72,7 @@ shinyServer(function(input, output) {
                 label = paste("N =",N,sep = ""))) +
       #Arrow
       geom_segment(aes(x = mean,
-                       xend = mean(cweight),
+                       xend = mean(cweight, na.rm = TRUE),
                        y = .5,
                        yend = .5,
                        colour = "Deviation from mean"),
@@ -89,15 +89,16 @@ shinyServer(function(input, output) {
       coord_cartesian(xlim = c(0,6)) +
       #Setting breaks
       scale_x_continuous(breaks = c(seq(0,6,by = .5))) + 
+      scale_y_continuous(breaks = NULL) + 
       #Title and axis labels
       ggtitle("Last sample") +
-      ylab("Count") + 
+      ylab("") + 
       xlab("Candy weight") +
       #General theme
       theme_general() +
       #Adjusting legend
       theme(legend.position = "top",
-            legend.margin = unit(.1,"cm"),
+            legend.margin = margin(.1, .1, .1, .1, unit = "cm"),
             legend.text = element_text(size = 9))
     })
   #PLOT OF SAMPLING DISTRIBUTION
@@ -149,23 +150,23 @@ shinyServer(function(input, output) {
                  size = .5
       ) +
       #Arrow left
-      geom_segment(aes(x = mean(df$mns),
-                       xend = mean(df$mns) - sd(df$mns),
+      geom_segment(aes(x = mean(df$mns, na.rm = TRUE),
+                       xend = mean(df$mns, na.rm = TRUE) - sd(df$mns, na.rm = TRUE),
                        y = 0.5 + .01 * length(df$mns),
                        yend = 0.5 + .01 * length(df$mns),
                        colour = "± 1 Standard deviation (data)"),
                    size = 1,
                    arrow = arrow(length = unit(.2,"cm"))) +
       #Arrow right
-      geom_segment(aes(x = mean(df$mns),
-                       xend = mean(df$mns) + sd(df$mns),
+      geom_segment(aes(x = mean(df$mns, na.rm = TRUE),
+                       xend = mean(df$mns, na.rm = TRUE) + sd(df$mns, na.rm = TRUE),
                        y = 0.5 + .01 * length(df$mns),
                        yend = 0.5 + .01 * length(df$mns),
                        colour = "± 1 Standard deviation (data)"),
                    size = 1,
                    arrow = arrow(length = unit(.2,"cm"))) +
       #Mean (data)
-      geom_point(aes(x = mean(df$mns),
+      geom_point(aes(x = mean(df$mns, na.rm = TRUE),
                      y = 0.5 + .01 * length(df$mns),
                      colour = "± 1 Standard deviation (data)"),
                  size = 3) +
@@ -187,7 +188,7 @@ shinyServer(function(input, output) {
       #Legend position adjustment
       guides(linetype = guide_legend(nrow = 2,reverse = TRUE)) + 
       theme(legend.position = "top",
-            legend.margin = unit(0,"cm"),
+            legend.margin = margin(0, 0, 0, 0, unit = "cm"),
             legend.direction = "horizontal",
             legend.text = element_text(size = 8))
   })
