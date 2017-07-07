@@ -965,7 +965,7 @@ For reasons that will be explained in Section \@ref(p-value), the _null hypothes
 
 In contrast, the statistical hypothesis that the average media literacy score of all children in the population is below 5.5 does not equate the population mean to one particular value. It is hypothesized to be smaller than 5.5 but it can be any number below 5.5.  
 
-```{r null-alt, eval=FALSE, ech0=FALSE, fig.cap="From research hypothesis to statistical ypotheses."}
+```{r null-alt, eval=FALSE, echo=FALSE, fig.cap="From research hypothesis to statistical ypotheses."}
 # Let the student formulate/compose the null and alternative hypothesis for a given research hypothesis.
 # Randomly select one research hypothesis from a hard-coded list. Present it to the user and let the user compose the null and alternative hypothesis either as a string or using list boxes. If the user presses submit, the statistical hypotheses are checked or the correct hypotheses are shown.
 # The list of research hypotheses contains both one-sided and two-sided hypotheses, with and without explicit (border) values (e.g.,  "average media literacy is 5.5" versus "there is no difference") ; all sample statistics are continuous.
@@ -1048,18 +1048,53 @@ Testing a null hypothesis, we just act as if the null hypothesis is true. We pre
 
 Let us assume that average media literacy is 3.9 in our sample. According to our null hypothesis, the population average is (at least) 5.5. If average media literacy of children in the population would really be 5.5, how plausible is it to draw a sample with 3.9 (or less) as average media literacy? We can use a hypothetical sampling distribution with 5.5 as mean value to answer this question.
 
-```{r sign-left, fig.cap="Sampling distribution of average media literacy."}
+```{r sign-left, fig.cap="Sampling distribution of average media literacy.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Display a normal curve (M = 5.5) representing the sampling distribution of average media literacy. Colour 5% of the area situated in the left tail, add 5% as text. Add a vertical line representing the sample mean, initially 3.9, and display the percentage of the area under the curve to the left of this line.
 # Let the user manipulate the sample mean (range 1-10) and the population mean according to the null hypothesis (range 1-10).
+knitr::include_app("http://82.196.4.233:3838/apps/sign-left/", height="400px")
 ```
 
-1. Figure \@ref(fig:sign-left) shows the sampling distribution of average media literacy as well as the mean found in our sample. What does the percentage directly to the left of the sample mean line mean?
+1. Figure \@ref(fig:sign-left) shows the hypothesized population mean, the associated sampling distribution, and the sample scores (red dots) with their mean. What does the red number directly to the left of the sample mean line mean?
 
-2. The significance level is 5% here. What does the area marked with 5% mean?
+```{r eval=FALSE}
+* It is the probability of drawing a sample with average media literacy cores
+below 3.9 from a population with 5.5 as average media literacy scores. 
+* This is called a (left-sided) p value.
+```
+
+2. The significance level is 5% here. Why is it marked by the blue tail in Figure \@ref(fig:sign-left)?
+
+```{r eval=FALSE}
+* The significance level is the maximum risk that we want to take to reject a
+null hypothesis that is true (Type I error). This risk is a probability, so it
+is expressed by a surface under the (probability density) curve.
+* Here, we are only interested in sample averages that are to low, so the
+entire risk is situated in the left tail.
+```
 
 3. How low must the sample mean be to have a p value below 5% (a statistically significant test result)?
 
-4. What happens to the p value of our initial sample mean (3.9) if we change the value of our null hypothesis? Is it always possible to formulate a null hypothesis such that the sample mean is statistically significant?
+```{r eval=FALSE}
+* The limit(s) of the tail that repesent the significance level mark the
+rejection region. The limit is called a critical value.
+* In the initial example, with average population media literacy hypothesized
+to be 5.5, the rejection region contains all sample mean scores below 4.31.
+Any sample with average media literacy below 4.31 has a (left-sided) p value
+below 5%, so it is statistically significantly different from the hypothesized
+population value.
+```
+
+4. What happens to the p value of our initial sample mean (3.9) if we change the value of our null hypothesis? Is it always possible to formulate a null hypothesis such that the sample mean is statistically significant? Take some new samples to check your answer.
+
+```{r eval=FALSE}
+* If the null hypothesis changes, the average, hence the center of the
+sampling distribution moves left or right. And so does the critical value.
+* If the sample mean is outside the rejection region, that is, it is larger
+than the critical value, choose a higher population mean as your null
+hypothesis. If it is sufficiently higher than the sampe mean, the sample mean
+ends up in the rejection region under the blue tail. Then, the test is
+statistically significant.
+```
 
 ### p Value
 If our sample statistic is a continuous variable, for example, average media literacy, we know that it does not make sense to calculate the probability of finding exactly the sample mean that we obtained. In Section \@ref(cont-random-var), we have learned that we work with p values in this situation. We use, for example, the probability of finding our sample mean or a mean that is even more distant from the hypothesized population mean.
@@ -1136,11 +1171,30 @@ However, if your software reports a one-sided p value but you need a two-sided p
 
 ### Unfounded one-sided null hypotheses  
 
-```{r nonsig-1sided, fig.cap="Is the test statistically significant?"}
-# Display the sampling distribution of average media literacy as a normal curve with 5% two-sided significance areas dark red and 5% one-sided significance areas light red/pink. Generate randomly one out of six possible values for the sample mean: (from left to right) in the 0-2.5% region, 2.5%-5%, 5%-50%, 50%-95%, 95%-97.5%, 97.5%-100%. Let the user select the answers (Yes/No) to three questions: Is this sample mean significant at a 5% significance level? "Left-sided test?", "Right-sided test?",  "Two-sided test?". Give feedback when the user presses the submit button. 
+```{r nonsig-1sided, fig.cap="Is the test statistically significant?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Display the sampling distribution of average media literacy as a normal curve with 5% two-sided significance areas dark blue and 5% one-sided significance areas light blue. Generate randomly one out of six possible values for the sample mean: (from left to right) in the 0-2.5% region, 2.5%-5%, 5%-50%, 50%-95%, 95%-97.5%, 97.5%-100%. Let the user select the answers (Yes/No) to three questions: Is this sample mean significant at a 5% significance level? "Left-sided test?", "Right-sided test?",  "Two-sided test?". Give feedback when the user presses the submit button. 
+knitr::include_app("http://82.196.4.233:3838/apps/nonsig-1sided/", height="310px")
 ```
 
-1. Practice recognizing significant test results in Figure \@ref(fig:nonsig-1sided). In which situation is a one-sided test not statistically significant whereas a two-sided test is statistically significant?
+1. Practice recognizing significant test results in Figure \@ref(fig:nonsig-1sided). Draw some samples and decide if a two-sided, right-sided, and left-sided test is statistically significant at 5% significance level.
+
+```{r eval=FALSE}
+* If the sample mean is in a dark blue tail, a two-sided test is statistically
+significant.
+* If the sample mean is in the light or dark blue tail at the right, a
+right-sided test is statistically significant but a left-sided test is not.
+* If the sample mean is in the light or dark blue tail at the left, a
+left-sided test is statistically significant but a right-sided test is not.
+```
+
+2. In which situation is a one-sided test not statistically significant whereas a two-sided test is statistically significant at the 5% significance level?
+
+```{r eval=FALSE}
+* If the sample mean is in the dark blue tail at the right, a two-sided test
+is statistically significant but a left-sided test is not.
+* If the sample mean is in the dark blue tail at the left, a two-sided test is
+statistically significant but a right-sided test is not.
+```
 
 But be careful. If your left-sided test hypothesizes that average media literacy is below 5.5 but your sample mean is above 5.5, your left-sided test can never be significant. After all, your sample result is fully in line with the null hypothesis.  
 
