@@ -348,6 +348,32 @@ CROSSTABS
   /COUNT ROUND CELL
   /BARCHART.
 
+* Section 5.2.4.
+
+* Load data: voters.sav.
+DATASET NAME Voters WINDOW=FRONT.
+
+*  Exercise 1.
+* Check data.
+FREQUENCIES VARIABLES=immigrant 
+  /ORDER=ANALYSIS.
+* One-sample t test.
+T-TEST 
+  /TESTVAL=6.0 
+  /MISSING=ANALYSIS 
+  /VARIABLES=immigrant 
+  /CRITERIA=CI(.95).
+
+*  Exercise 3.
+* Check data.
+FREQUENCIES VARIABLES=age_group 
+  /ORDER=ANALYSIS.
+* Independent-samples t test.
+T-TEST GROUPS=age_group(1 2) 
+  /MISSING=ANALYSIS 
+  /VARIABLES=immigrant 
+  /CRITERIA=CI(.95).
+
 * Section 7.2.2.
 
 * Load data: donors.sav.
