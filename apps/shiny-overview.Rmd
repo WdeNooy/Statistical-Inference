@@ -2,7 +2,7 @@
 title: "Shiny apps overview"
 author: "Wouter de Nooy"
 date: "`r Sys.Date()`"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -68,6 +68,11 @@ knitr::include_app("http://82.196.4.233:3838/apps/mean-independent/", height="58
 
 ## Chapter 3
 
+```{r ci-borders, fig.cap="Within which interval do we find the sample results that are closest to the population value?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight"; add two vertical lines, one to the extreme left, one to the extreme right with their values on the x-axis displayed and the percentage of observations (area) between the two lines displayed (initially near 50%) ; slider moves right line and left line (in opposite directions) and adjusts percentage of area between lines ; note that the lines cannot be moved across the center of the distribution
+knitr::include_app("http://82.196.4.233:3838/apps/ci-borders/", height="290px")
+```
+
 ```{r estimation, fig.cap="Point and interval estimates, confidence intervals.", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Combination of apps interval-level, interval-size, and crit-values: A normal curve (M = 2.8, SE = 0.1 (SD population = 0.5 and sample size = 25)) as sampling distribution with two vertical lines marking interval limits (initially set at 2.5%/95%/2.5%) ; percentages indicating the area under the curve within and outside the limits ; double arrow from mean to interval limits indicating the interval estimate ; double x-axis: the first in grams and the second in standard errors, both axes labelled ; 2 sliders: confidence level and sample size ; any slider change will change the position of the interval limits (to represent the selected confidence level) ; changing confidence level also changes the percentages ; changing sample size also changes the scale of the x-axis in standard errors ; the value of the standard error is shown to highlight its relation with sample size.
 knitr::include_app("http://82.196.4.233:3838/apps/estimation/", height="460px")
@@ -88,18 +93,41 @@ knitr::include_app("http://82.196.4.233:3838/apps/interval-size/", height="310px
 knitr::include_app("http://82.196.4.233:3838/apps/crit-values/", height="360px")
 ```
 
-```{r ci-borders, fig.cap="Within which interval do we find the sample results that are closest to the population value?", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
-# Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight"; add two vertical lines, one to the extreme left, one to the extreme right with their values on the x-axis displayed and the percentage of observations (area) between the two lines displayed (initially near 50%) ; slider moves right line and left line (in opposite directions) and adjusts percentage of area between lines ; note that the lines cannot be moved across the center of the distribution
-knitr::include_app("http://82.196.4.233:3838/apps/ci-borders/", height="290px")
-```
-
 ```{r se-point-est, echo=TRUE, fig.cap="The standard error: How wrong are point estimates?", out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Two goals. First, remind student of the fact that a standard deviation represents deviations from the mean. Second, show that the standard error equals the standard deviation of the sampling distribution in that it is the standard deviation calculated for many samples.
 # Use a normally distributed population with M = 2.8 and SD = 2 (candy weight) ; one button creates a random sample (N = 10?) displaying it as a dotplot with vertical lines for both the sample average and population average ; mark the difference between the two averages as a (fat red?) horizontal arrow pointing from population to sample mean ; add the sample average to a histogram (with a normal curve representing the true sampling distribution as background) also displaying the population mean as a vertical line ; show the standard deviation of the means over all preceding samples as a (double)left- and right-pointing) arrow (at such a height that it touches the normal curve when it reaches the value of the standard error) ; add a second button to add another 10 (or 100?) samples that are not shown as a dot plot but theirs means are added to the histogram and the arrow representing the standard deviation is updated
 knitr::include_app("http://82.196.4.233:3838/apps/se-point-est/", height="500px")
 ```
 
+```{r pop-means-ci, fig.cap="For which population means is our sample mean plausible?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# draw two horizontal lines, the top line labeled 'population' and the bottom line labeled 'sample', both lines with a numerical scale (0-5) ; generate a sample mean and standard error within a particular range, say 1-4 for the sample mean and the standard error in a range convenient to have interval estimates within the 0-5 or -1-6 range ; mark the sample mean on the lower line and show the value of the standard error somewhere in the app ; if the user clicks on the upper line, the corresponding number is shown as an (imaginary) population mean ; the 95% probability interval estimate for the sample mean is shown as a horizontal line segment on top/near the lower line (plus a light triangle starting at the population value) ; if the line segment overlaps with the sample mean, the selected population value is marked by a green dot and the line segment is green, they are red dots otherwise ; also show the z value of the sample mean for the chosen population mean ; at next click, remove old interval estimate (line segment plus triangle) but keep the prevously selected population mean ; a 'Reset' button generates new values to restart the interaction (repeat the assignment with different values for the sample mean and standard error to emphasize that the z values remain the same)
+knitr::include_app("http://82.196.4.233:3838/apps/pop-means-ci/", height="210px")
+```
+
 ## Chapter 4
+
+```{r anova-between-simple, fig.cap="How do group level differences express association?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="540px"}
+# Goal: Illustrate that between groups variance represents differences between group means and the grand mean. And that it is a (smaller or larger) proportion of total variance.
+# App anova-means: Generate 4 random observations from a normally distributed population with mean 6.4, sd = 1 (Clooney), 4 observations from a population N(m = 6.8, sd = 1) (Jolie), and 4 observations from N(m = 3.3, sd = 1) (no endorser). Use colour for the treatment factor (3 levels). Represent observations in a dotplot, each with a separate value on the x axis, clustered by factor level (experimental condition). Display group means as horizontal line segments (coloured by factor level). Display eta^2 for the data. Allow user to change the group means and update the plot, mean (difference) lines, and eta^2.
+# Extension/replacement: Add horizontal line for grand mean, vertical red solid double-sided arcs between each observation and the grand mean (total variance), vertical black solid double-sided arcs for each observation between its group mean and the grand mean (between variance), and vertical black dotted double-sided arcs for each observation between the dot and its group mean (within variance). 
+knitr::include_app("http://82.196.4.233:3838/apps/anova-between-simple/", height="530px")
+```
+
+```{r sign-left, fig.cap="Sampling distribution of average media literacy.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Display a normal curve (M = 5.5) representing the sampling distribution of average media literacy. Colour 5% of the area situated in the left tail, add 5% as text. Add a vertical line representing the sample mean, initially 3.9, and display the percentage of the area under the curve to the left of this line.
+# Let the user manipulate the sample mean (range 1-10) and the population mean according to the null hypothesis (range 1-10).
+knitr::include_app("http://82.196.4.233:3838/apps/sign-left/", height="400px")
+```
+
+```{r sign-two, fig.cap="How do we obtain two-sided significance evels and p values?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Display a normal curve (M = 5.5, range [1, 10]) representing the sampling distribution of average media literacy. Add one range slider (initial settings such that it cuts of 5% in the left tail and 0% at the right tail) and colour the areas under the curve to the left of the lower limit and the right of the upper limit. Add a button to draw a new sample; display the samples scores and sample mean in red. Display the significance level and the total p value if one of the critical values is set to the minimum (1) or maximum (10) value (one-sided) or if the critical values are symmetrical around the hypothesized poulation mean.
+knitr::include_app("http://82.196.4.233:3838/apps/sign-two/", height="400px")
+```
+
+```{r nonsig-1sided, fig.cap="Is the test statistically significant?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Display the sampling distribution of average media literacy as a normal curve with 5% two-sided significance areas dark blue and 5% one-sided significance areas light blue. Generate randomly one out of six possible values for the sample mean: (from left to right) in the 0-2.5% region, 2.5%-5%, 5%-50%, 50%-95%, 95%-97.5%, 97.5%-100%. Let the user select the answers (Yes/No) to three questions: Is this sample mean significant at a 5% significance level? "Left-sided test?", "Right-sided test?",  "Two-sided test?". Give feedback when the user presses the submit button. 
+knitr::include_app("http://82.196.4.233:3838/apps/nonsig-1sided/", height="310px")
+```
 
 ```{r crit-df, fig.cap="Sample size and critical values in a one-sample t test.", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Compare app crit-values in Ch. 3.
@@ -107,7 +135,17 @@ knitr::include_app("http://82.196.4.233:3838/apps/se-point-est/", height="500px"
 knitr::include_app("http://82.196.4.233:3838/apps/crit-df/", height="405px")
 ```
 
+```{r null-ci, fig.cap="How does null hypothesis significance relate to confidence intervals?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Draw three horizontal lines, the top line labeled 'population', the middle one labeled 'sampling distribution', and the bottom line labeled 'sample'. All lines have a numerical scale (1-10). Add a normal curve to the sampling distribution axis with 2.5% of each tail area coloured and the mean indicated by a vertical line extending to the population axis and labeled there by 'Mean = <number>'. Generate a sample mean within the range [4.5, 6.5] and mark it with a number on the lower line and a vertical line from the sample to well above the sampling distribution line (so it cuts through the normal curve). Add a slider to adjust the hypothesized population mean (range [3, 7]). The slider adjusts the horizontal position of the normal curve and population mean.
+knitr::include_app("http://82.196.4.233:3838/apps/null-ci/", height="410px")
+```
+
 ## Chapter 5
+
+```{r sample-size, fig.cap="What is the minimum sample size required for a significant test result if the sample mean has a particular effect size?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Average candy weight sampling distribution approximated by a t distribution with two-sided 5% significance tails. Weak, moderate, and strong effect sizes (under null hypothesis that average candy weight is 2.8 in the population) marked by vertical red lines with two-sided p values for a smaple with this average.
+knitr::include_app("http://82.196.4.233:3838/apps/sample-size/", height="410px")
+```
 
 ```{r TypeI-II-errors, echo=TRUE,fig.cap="Simulation of Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
 #This Shiny app illustrates Type I and Type II Error. Interaction helps to understand how significance level and power are related.  
@@ -123,12 +161,24 @@ knitr::include_app("http://82.196.4.233:3838/apps/ttest_simulation/", height=720
 
 ## Chapter 6
 
+```{r tiny-effects, fig.cap="Any effect can be statistically significant.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Illustrate that even tiny effects can yield statistically significant test results if the sample is sufficiently large.
+# Generate a normal distribution as hypothesized sampling distribution (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Add a vertical line with value for the sample average linked to a slider (range [2.82, 3.00] initial value 2.90). Add a sample size slider (range [10, 5,000], initial value 10), which is linked to the standard error of the normal curve.
+knitr::include_app("http://82.196.4.233:3838/apps/tiny-effects/", height="510px")
+```
+
 ```{r sig-effect-power, echo=TRUE, fig.cap="The relations between significance, effect size, sample size, and power.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # (As in app tiny-effects), create a normal curve for the sampling distribution of average candy weight (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Label the x-axis "Average candy weight" and use the scale: "Strong 2.64", "Moderate 2.70", "Weak 2.76", "H0 2.8", "Weak 2.84", "Moderate 2.90", "Strong 2.96". Colour 2.5% of each tail area. Display a label with the power of the test given the current population average (slider, range [2.8, 3.0] initial value 2.9) and sample size (slider, range [5, 100] initial value 10). Draw 5 random samples from a normally distributed population with the selected population average (and population SD fixed as 0.6) and display their means as coloured dots on the x-axis. Add "Draw 5 samples" button to refresh the curve and power value with the current slider settings and draw 5 new samples represented by their means as dots.
 knitr::include_app("http://82.196.4.233:3838/apps/sig-effect-power/", height="550px")
 ```
 
 ## Chapter 7
+
+```{r anova-means, fig.cap="How do group means relate to effect size?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="540px"}
+# Goal: Illustrate that differences between group means represent effects (effect size given by eta^2).
+# Generate 4 randomobservations with mean 6.4 (Clooney), 4 observations with mean 6.8 (Jolie), and 4 observations with mean 3.3 (no endorser). Use colour for the treatment factor (3 levels). Represent observations in a dotplot, each with a separate value on the x axis, clustered by factor level (experimental condition). Display group means as horizontal line segments (coloured by factor level). Add vertical double-sided arcs between each pair of group means to illustrate group differences. Display eta^2 for the data. Allow user to change the group means and update the plot, mean (difference) lines, and eta^2.
+knitr::include_app("http://82.196.4.233:3838/apps/anova-means/", height="490px")
+```
 
 ```{r anova-between, fig.cap="Which part of score differences tell us about the differences between groups?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="540px"}
 # Goal: Illustrate that between groups variance represents differences between group means and the grand mean. And that it is a (smaller or larger) proportion of total variance.
