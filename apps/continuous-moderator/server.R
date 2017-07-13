@@ -15,13 +15,13 @@ shinyServer(function(input, output) {
   set.seed(4321)
   contact <- 0.12 * (10 - exposure) + rnorm(n, mean = 4.5, sd = 2)
   # Create outcome.
-  set.seed(390)
+  set.seed(391)
   attitude <-
-    -0.26 * exposure + 0.15 * contact + 0.04 * exposure * contact + rnorm(n, mean = 2, sd = 0.5) 
+    -0.26 * exposure + 0.15 * contact + 0.04 * exposure * contact + rnorm(n, mean = 0.4, sd = 0.9) 
   
   #Function for calculating attitude line
   attfun <- function(exposure,contact){
-    -0.26*exposure + 0.15*contact + 0.04*exposure*contact + 2
+    -0.26*exposure + 0.15*contact + 0.04*exposure*contact + 0.4
   }
   
   ##OUTPUT OF HEADER 
@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
     
     slidertemp <<- c(input$modvalueslider,slidertemp[1])
     #Create data frames for plotting
-    df <- data.frame(x = c(-1, 6)) #Limits for line
+    df <- data.frame(x = c(0, 6)) #Limits for line
     scatter <- data.frame(attitude = attitude, exposure = exposure)
     scatter$plane <- dnorm(contact, input$modvalueslider, sd = .5)
     #Plot
@@ -69,7 +69,7 @@ shinyServer(function(input, output) {
                          values = c("Previous line" = "#A9A9A9",
                                     "Current line" = unname(brewercolors["Red"])
                                     )) + 
-      coord_cartesian(xlim = c(0, 10), ylim = c(0, 5)) +
+      coord_cartesian(xlim = c(0, 10), ylim = c(-5, 5)) +
       ylab("Attitude") +
       xlab("Exposure") +
       theme_general() + 
@@ -80,7 +80,7 @@ shinyServer(function(input, output) {
   output$formulaui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude = 2 + (-0.26 + 0.04 * }\\color{blue}{",
+        paste("$$\\color{black}{attitude = 0.4 + (-0.26 + 0.04 * }\\color{blue}{",
               input$modvalueslider,
               "}\\color{black}{)*exposure + 0.15*}\\color{blue}{",
               input$modvalueslider,
