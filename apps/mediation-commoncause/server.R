@@ -49,7 +49,7 @@ shinyServer(function(input, output, session) {
                    arrow = arrow(length = unit(0.03, "npc")),
                    size = lwdfunc(b_PM)) + 
       #Arrow Age to Reading
-      geom_segment(aes(x = x[2], y= y[2], xend = .75, yend = y[3]),
+      geom_segment(aes(x = x[2], y= y[2], xend = .72, yend = y[3]),
                        arrow = arrow(length = unit(0.03, "npc")),
                    size = lwdfunc(b_PO)) + 
       #Arrow Pol interest to Reading
