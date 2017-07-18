@@ -766,9 +766,9 @@ GRAPH
   /MISSING=LISTWISE.
 * Manually add three regression lines.
 
-* Exercise 4.
+* Exercise 6.
 * Check data.
-FREQUENCIES VARIABLES=medliter sex age supervision
+FREQUENCIES VARIABLES=medliter sex supervision
   /STATISTICS=MEAN
   /ORDER=ANALYSIS.
 * Set impossible values to missing.
@@ -782,8 +782,8 @@ EXECUTE.
 RECODE sex (2=0) (3=1) INTO girl.
 VARIABLE LABELS  girl 'The child is a girl.'.
 EXECUTE.
-* Mean-center predictor and moderator.
-* Ask for means of predictor and exposure.
+* Mean-center the predictor.
+* Ask for means of parental supervision.
 FREQUENCIES VARIABLES=supervision
   /FORMAT=NOTABLE
   /STATISTICS=MEAN
@@ -809,8 +809,14 @@ REGRESSION
   /METHOD=ENTER girl supervision_c girl_supervision_c
   /SCATTERPLOT=(*ZRESID ,*ZPRED)
   /RESIDUALS HISTOGRAM(ZRESID).
-* Scatterplot with dots and regression lines coloured by sex.
-* No covariate, so SPSS can draw the lines.
+* Scatterplot with dots coloured by sex.
+* Use the mean-centered predictor.
+GRAPH
+  /SCATTERPLOT(BIVAR)=supervision_c WITH medliter BY girl
+  /MISSING=LISTWISE.
+* Note: This model does not contain a covariate, so SPSS can draw the lines.
+* Command: Graphs > Regression Variable Plots; Color by: sex..
+* With options: Scatterplot Fit Lines: Linear, Grouping: Fit Line for each categorical colour group.
 * Use the mean-centered or not mean-centered predictor.
 STATS REGRESS PLOT YVARS=medliter XVARS=supervision_c COLOR=sex 
 /OPTIONS CATEGORICAL=BARS GROUP=1 INDENT=15 YSCALE=75 
