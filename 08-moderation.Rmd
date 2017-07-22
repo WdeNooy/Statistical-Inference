@@ -127,14 +127,12 @@ rm(variables)
 
 Figure \@ref(fig:concept-smoke) summarizes some hypothesized causes of the attitude towards  smoking. A regression model translates this conceptual diagram into a statistical model. The statistical regression model is a mathematical function with the outcome variable (also known as the dependent variable, usually referred to with the letter $y$) as the sum of a constant ($a$), the effects ($b$) of predictors ($x$), which are _predictive effects_, and an error term ($e$), which is also called the _residuals_, see Equation \@ref(eq:regression).
 
-$$ 
+\begin{equation} 
 \small
-\begin{align}
   y = a + b_1*x_1 + b_2*x_2 + b_3*x_3 + e 
   (\#eq:regression) 
-\end{align}
 \normalsize
-$$
+\end{equation} 
 
 ### Interpretion of a regression equation
 
@@ -149,7 +147,7 @@ $$
 2. What does a regression weight ($b$) mean and how does the regression line change if you change its value? Again, explain your answer.
 ```
 
-```{r regression-coefficients, eval=FALSE, fig.cap="What is the meaning of the regression equation?"}
+```{r regression-coefficients, eval=TRUE, echo=FALSE, fig.cap="What is the meaning of the regression equation?"}
 # REPLACED BY STATIC IMAGE
 
 # Goal: Refresh interpretation of the unstandardized and standardized regression coefficient by manipulating the standard deviation of the outcome variable (minimum value is sd(x) * |b|).
@@ -228,44 +226,42 @@ segments.
 
 Good understanding of the regression equation is necessary for understanding moderation in regression models. So let us have a close look at an example equation (Eq. \@ref(eq:regrexample)). The outcome variable attitude towards smoking is predicted from a constant and three predictor variables.
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
   attitude = constant + b_1*exposure + b_2*status + b_3*contact + e 
   (\#eq:regrexample) 
-\end{align}
 \normalsize
-$$
+\end{equation}
 
 The constant adds a fixed quantity to the predicted attitude for all subjects. It adjusts the overall level of the predicted attitude. As such, the constant is usually not interesting. 
 
 More precisely, the constant is the predicted attitude if a person scores zero on all predictor variables. To see this, plug in zero for all predictors in the equation (Eq. \@ref(eq:regsmokedummy)) and remember that zero times something is zero. This reduces the equation to the constant and the _error term_ $e$. The error term is the error of our prediction, also known as the _residual_. It does not help to predict the outcome, so the constant is the only remaining predictor.
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude &= constant + b_1*0 + b_2*0 + b_3*0 + e \\ 
   attitude &= constant + 0 + 0 + 0 + e \\
   attidude &= constant + e
+\end{split}
   (\#eq:regsmokedummy) 
-\end{align}
 \normalsize
-$$
+\end{equation}
 
 For all persons scoring zero on exposure, smoking status, and contact with smokers, the predicted attitude equals the value of the regression constant. This interpretation only makes sense if the predictors can be zero. If they include, for example, scales ranging from one to seven, there are no persons with zero scores on all predictors and the constant has no meaning.
 
 The regression coefficients $b$ represent the predicted difference in the outcome for a difference of one unit in the predictor. For example, plug in the values 5 and 4 for the _status_ predictor in the equation. If we take the difference of the two equations, we are left with $b_1$. All other terms in the two equations cancel out (except, perhaps, the error term $e$).
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = constant + b_1*5 + b_2*status + b_3*contact + e \\ 
   \underline{- \mspace{20mu} attitude = constant + b_1*4 + b_2*status + b_3*contact + e} \\
   attitude \mspace{4mu} difference = b_1*5 - b_1*4 = b_1*(5-4) =b_1
-   (\#eq:regweight) 
-\end{align}
+\end{split}
+(\#eq:regweight) 
 \normalsize
-$$
+\end{equation}
 
 We will be plugging in values for predictors in the regression equation a lot in this chapter. It is necessary for understanding and interpreting moderation.
 
@@ -305,29 +301,29 @@ Apart from numeric predictors, we can use dichotomous predictors, that is, predi
 
 For example, let us assume that smoking status is coded as smoker (1) versus non-smoker (0). Because this predictor can only take two values, we effectively have two versions of the regression equation. The first equation \@ref(eq:regdicho1) represents all smokers, so their smoking status score is 1. This group has a fixed contribution to the predicted average attitude, namely $b_2$.
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude &= constant + b_1*exposure + b_2*status + b_3*contact + e \\
   attitude &= constant + b_1*exposure + b_2*1 + b_3*contact + e \\
   attitude &= constant + b_1*exposure + b_2 + b_3*contact + e 
-  (\#eq:regdicho1) 
-\end{align}
+\end{split}
+(\#eq:regdicho1) 
 \normalsize
-$$
+\end{equation}
 
 Regression equation \@ref(eq:regdicho0) represents all non-smokers. Their smoking status score is 0, so the smoking status effect drops from the model. 
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude &= constant + b_1*exposure + b_2*status + b_3*contact + e \\
   attitude &= constant + b_1*exposure + b_2*0 + b_3*contact + e \\
   attitude &= constant + b_1*exposure + b_3*contact + e 
+\end{split}
   (\#eq:regdicho0) 
-\end{align}
 \normalsize
-$$
+\end{equation}
 
 It makes no sense to interpret the regression coefficient of smoking status ($b_2$) as predicted difference in attitude for a difference of one in smoking status. After all, the 0 and 1 scores do not mean that there is a one unit difference. Instead, the coefficient indicates that we are dealing with different groups: smokers versus non-smokers. We have to interpret the effect as a difference between two groups. More specifically, as the difference between the group represented by the score 1 and the _reference group_ represented by score 0.
 
@@ -557,17 +553,17 @@ Note that the distinction between predictor and covariates is temporary. As soon
 
 To draw the regression line for the effect of exposure on attitude towards smoking, we must select a value for the covariates. If we would not do so, we have more than one variable that is allowed to vary but we can only display one predictor on the horizontal axis of our scatterplot.
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude &= 0.25 + -0.20*exposure + 0.5*status + 0.15*contact \\ 
   attitude &= 0.25 + -0.20*exposure + 0.5*0 + 0.15*3 \\ 
   attitude &= 0.25 + -0.20*exposure + 0 + 0.45 \\ 
   attitude &= 0.70 + -0.20*exposure 
+\end{split}
   (\#eq:regsimpleslope) 
-\end{align}
 \normalsize
-$$
+\end{equation}
 
 Let us select non-smokers (_status_ equals 0) who score 3 on _contact_. If we plug in these values in the regression equation, we obtain a simple regression---just one predictor, namely _exposure_---with a higher constant: 0.70 instead of 0.25. The constant is the intercept of the regression line, that is, the value of the vertical axis where the regression line crosses it. 
 
@@ -863,15 +859,15 @@ In the context of a regression model, moderation means __different slopes for di
 
 How do we obtain different regression coefficients and lines for smokers and non-smokers? The statistical trick is quite easy: Include a new predictor in the model that is the product of the predictor (exposure) and the moderator (smoking status). This new predictor is the _interaction variable_. It must be included together with the original predictor and moderator variables, see Equation \@ref(eq:intvar). This is also visible in the statistical model (Figure \@ref(fig:moderator-statistical)) for moderation in a regression model.
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + b_1*exposure + b_2*smoker + b_3*contact\\
   &+ b_4*exposure*smoker + e 
-  (\#eq:intvar) 
-\end{align}
+\end{split}
+(\#eq:intvar) 
 \normalsize
-$$
+\end{equation}
 
 ```{r moderator-statistical, fig.cap="Statistical diagram of moderation.", echo=FALSE, fig.asp=0.4}
 library(ggplot2)
@@ -896,34 +892,34 @@ ggplot(variables, aes(x, y)) +
 
 The smoking status variable is coded 1 for smokers and 0 for non-smokers. For clarity, we name this variable smoker with score 1 for Yes and score 0 for No. Remember that we have two different regression equations, one for each group on the dichotomous predictor _status_. Just plug in the two possible values (1 and 0) for this variable. For non-smokers, the interaction variable drops from the model because multiplying with zero yields zero. For non-smokers, our reference group, $b_1$ represents the effect of exposure on attitude. It is called the _simple slope_ of exposure for non-smokers.
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + b_1*exposure + b_2*smoker + b_3*contact\\
     &+ b_4*exposure*smoker + e \\
   attitude = &\ constant + b_1*exposure + b_2*0 + b_3*contact\\
     &+ b_4*exposure*0 + e \\
   attitude = &\ constant + b_1*exposure + b_3*contact + e
-  (\#eq:intvarnonsmoker) 
-\end{align}
+\end{split}
+(\#eq:intvarnonsmoker) 
 \normalsize
-$$
+\end{equation}
 
 In contrast, the interaction variable remains in the model for the smokers, who score 1 on smoking status. Note what happens with the coefficient of the exposure effect if we rearrange the terms a little: The exposure effect equals the effect for the reference group of non-smokers ($b_1$) plus the effect of the interaction variable ($b_4$). The simple slope for smokers, then, is $b_1 + b_4$.
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + b_1*exposure + b_2*smoker + b_3*contact\\
   &+ b_4*exposure*smoker + e \\
   attitude = &\ constant + b_1*exposure + b_2*1 + b_3*contact\\
   &+ b_4*exposure*1 + e \\
   attitude = &\ constant + b_1*exposure + b_4*exposure + b_2 + b_3*contact + e \\
   attitude = &\ constant + (b_1 + b_4)*exposure + b_2 + b_3*contact + e 
-  (\#eq:intvarsmoker) 
-\end{align}
+\end{split}
+(\#eq:intvarsmoker) 
 \normalsize
-$$
+\end{equation}
 
 The interaction effect ($b_4$) shows the difference between the simple slope of the exposure effect for smokers ($b_1+b_4$) and the simple slope for non-smokers ($b_1$). This is the interpretation of the regression coefficient for a dichotomous interaction variable.
 
@@ -933,18 +929,18 @@ It is very important to note that the effects of exposure and smoking status in 
 
 In a similar way, the regression coefficient $b_2$ for smoking status expresses the effect for persons who score zero on the exposure predictor. Simply plug in the value 0 for exposure in the regression equation (Equation \@ref(eq:simplestatus)).
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + b_1*exposure + b_2*smoker + b_3*contact\\
     &+ b_4*exposure*smoker + e \\
   attitude = &\ constant + b_1*0 + b_2*smoker + b_3*contact\\
     &+ b_4*0*smoker + e \\
   attitude = &\ constant + b_2*smoker + b_3*contact + e
-  (\#eq:simplestatus) 
-\end{align}
+\end{split}
+(\#eq:simplestatus) 
 \normalsize
-$$
+\end{equation}
 
 Smoking status is a dichotomy, so it tells us the average difference in attitude between smokers and non-smokers. Due to the inclusion of the interaction variable, it now tells us the difference in average attitude between smokers and non-smokers who have zero exposure to the anti-smoking campaign. AS you see again, this is a conditional effect, not a main effect.
 
@@ -1584,15 +1580,15 @@ Although we have an endless number of different moderator values or groups, we o
 
 To see this, it is helpful to inspect the regression equation with rearranged terms (Equation \@ref(eq:simplecontact)). Every little bit of extra contact with smokers adds to the slope $(b_1 + b_3*contact)$ of the exposure effect. The addition is gradual---a little bit of additional contact with smokers changes the exposure effect a little bit---and it is linear: A unit increase in contact adds the same amount to the effect whether the effect is at a low or a high level.
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + b_1*exposure + b_2*contact + b_3*exposure*contact + e \\
   attitude = &\ constant + (b_1 + b_3*contact)*exposure + b_2*contact + e 
-  (\#eq:simplecontact) 
-\end{align}
+\end{split}
+(\#eq:simplecontact) 
 \normalsize
-$$
+\end{equation}
 
 We can interpret the regression coefficient of the interaction effect ($b_3$) here as the predicted difference of the exposure effect (slope) for a one unit difference in contact (the moderator). A positive coefficient indicates that the exposure effect is more positive for higher levels of contact with smokers. A negative coefficient indicates that the effect is more negative for people with more contacts with smokers. 
 
@@ -1602,15 +1598,16 @@ Note that positive and negative are used here in there mathematical meaning, not
 
 The regression coefficients for exposure and contact represent conditional effects (see Section \@ref(conditional-effects)). These are the effects for cases that score zero on the other variable. Plug in zero for the moderator and you see that all terms with a moderator drop from the equation and only $b_1$ is left as the effect of exposure.  
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + (b_1 + b_3*contact)*exposure + b_2*contact + e\\
   attitude = &\ constant + (b_1 + b_3*0)*exposure + b_2*0 + e\\
   attitude = &\ constant + b_1*exposure + e 
-\end{align}
+\end{split}
+(\#eq:conditionaleffect) 
 \normalsize
-$$
+\end{equation}
 
 The zero score on the moderator is the _reference value_ for the conditional effect of the predictor. Cases that score zero on the moderator are the _reference group_ just like cases scoring zero on the dummy variables are the reference group in a model with a categorical moderator (Section \@ref(dichpredictor)). 
 
@@ -1631,13 +1628,11 @@ What if there are no people with zero contact? Then, the interpretation of the r
 
 To _mean-center_ a variable, you subtract the variable's mean from all scores on the variable. As a result, a mean score on the original variable becomes a zero score on the mean-centered variable. 
 
-$$
+\begin{equation*}
 \small
-\begin{align}
   contactcentered = contact - mean(contact)
-\end{align}
 \normalsize
-$$
+\end{equation*}
 
 With mean-centered numerical moderators, a conditional effect in the presence of interaction always makes sense. It is the effect of the predictor for average score on the moderator. An average score always falls within the range of scores that actually occur. If we mean-center the contact with smokers moderator, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. This makes sense.
 
@@ -1656,16 +1651,16 @@ Remember that the interaction variable is the product of the predictor and moder
 
 If we want to interpret the conditional effect of contact on attitude ($b_2$), we must realize that this is the effect for people who score zero on the exposure variable. This is clear if we rearrange the regression equation as in Equation \@ref(eq:contactbyexposure).
 
-$$
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude = &\ constant + b_1*exposure + b_2*contact + b_3*exposure*contact + e\\
   attitude = &\ constant + b_1*exposure + (b_2 + b_3*exposure)*contact + e\\
   attitude = &\ constant + b_1*0 + (b_2 + b_3*0)*contact + e\\
-  attitude = &\ constant + b_2*contact + e(\#eq:contactbyexposure) 
-\end{align}
+  attitude = &\ constant + b_2*contact + e\end{split}
+(\#eq:contactbyexposure) 
 \normalsize
-$$
+\end{equation}
 
 But wait a minute, this is what we would do if contact was the predictor and exposure the moderator. That is a completely different situation, is it not? No, technically it does not make a difference which variable is the predictor and which is the moderator. The predictor and moderator are symmetric. The difference is only in our theoretical expectations and in our interpretation.
 
@@ -1698,16 +1693,17 @@ If contact (the moderator) is mean-centered, as in the current example, we simpl
 
 We also have to plug in a value for each covariate. This example contains one covariate, namely (smoking) status. We plug in the score for non-smokers (0). In the end, our predictor (exposure) should be the only variable in the right hand side of the regression equation (the last line in Equation \@ref(eq:regsimpleslopemoderated)). Note that we do not include the error term ($e$) in the equation if we predict values; the error term captures prediction errors.
 
-$$ 
+\begin{equation}
 \small
-\begin{align}
+\begin{split}
   attitude &= 3.6 + -0.1*exposure + 0.1*status + 0.1*contact \\
   &\ + 0.03*contact*exposure \\
   attitude &= 3.6 + -0.1*exposure + 0.1*(0) + 0.1*(2.0) + 0.03*(2.0)*exposure \\
-    attitude &= 3.4 + -0.04*exposure (\#eq:regsimpleslopemoderated) 
-\end{align}
+    attitude &= 3.4 + -0.04*exposure 
+\end{split}
+(\#eq:regsimpleslopemoderated) 
 \normalsize
-$$
+\end{equation}
 
 If the moderator is not mean-centered, we have to plug in the value of the mean of the moderator and the value of the mean plus or minus the standard deviation of the moderator. In this example, the mean score of contact with smokers is 5.1, so the moderator mean minus one standard deviation (2.0) equals 3.1 and the mean plus one standard deviation is 7.1.
 
@@ -1757,16 +1753,18 @@ rm(smokers, model_1, smokers, ci, results_2, model_2, z_attitude, z_contact, z_s
 
 The regression model yields a p value and confidence interval for the predictor at the reference value of the moderator. In the model estimated in Table \@ref(tab:cont-moderator-output), for example, we obtain a p value of `r report_n(results[2,5], 3)` and a 95% confidence interval of [`r report_n(results[2,6],2)`, `r report_n(results[2,7],2)`] for the effect of exposure on attitude. This is the conditional effect of exposure on attitude for cases that score zero on the moderator variable (contact with smokers) as we can verify in Equation \@ref(eq:statinfconditional).
 
-$$
+\begin{equation}
 \small
-\begin{align}
-  attitude = &\ constant + b_1*exposure + b_2*contact + b_3*status + b_4*exposure*contact + e\\
+\begin{split}
+  attitude = &\ constant + b_1*exposure + b_2*contact + b_3*status +\\
+  &\ + b_4*exposure*contact + e\\
     attitude = &\ constant + (b_1 + b_3*contact)*exposure + b_2*contact + e\\
         attitude = &\ constant + (b_1 + b_4*0)*exposure + b_2*0 + b_3*status + e\\
-        attitude = &\ constant + b_1*exposure + b_3*status + e(\#eq:statinfconditional) 
-\end{align}
+        attitude = &\ constant + b_1*exposure + b_3*status + e
+\end{split}
+(\#eq:statinfconditional) 
 \normalsize
-$$
+\end{equation}
 
 If the variable contact is mean-centered, the p value tests the null hypothesis that the effect of exposure is zero for people who have average contact with smokers. The confidence interval tells us that the effect of exposure on attitude for people with average contacts with smokers ranges between `r report_n(results[2,6],2)` and `r report_n(results[2,7],2)` with 95% confidence. If the moderator is not mean-centered, the results apply to people who have no contact with smokers.
 
