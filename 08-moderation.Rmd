@@ -278,8 +278,15 @@ Note that the regression coefficient is calculated for the predictor values that
 ### Dichotomous predictors {#dichpredictor}
 
 ```{r regression-dichotomy, eval=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?"}
-# Goal: Refresh interpretation of unstandardized regression weight for a dichotomous predictor by manipulating group averages.
-# Generate attitude scores  with average values -0.6 for non-smokers and 1.0 for smokers (N = 20 per group). Draw horizontal and vertical lines from the axes to the group means and add a regression line (line through the two group means). Display the current regression equation beneath or in the plot. Allow user to change the average score per group. Update the scatterplot, regression line and equation, and the horizontal/vertical lines.
+# Goal: Refresh interpretation of unstandardized regression weight for a
+# dichotomous predictor by manipulating group averages.
+# Generate attitude scores  with average values -0.6 for non-smokers and 1.0 for
+# smokers (N = 20 per group).
+# Draw horizontal and vertical lines from the axes to the group means and add a
+# regression line (line through the two group means).
+# Display the current regression equation beneath or in the plot. 
+# Allow the user to change the average score per group. Update the scatterplot,
+# regression line and equation, and the horizontal/vertical lines.
 # Generate predictor.
 x <- c(rep(0, 20), rep(1, 20))
 # Generate random errors per group.
@@ -336,8 +343,22 @@ Therefore, it is recommended to interpret only the unstandardized regression coe
 ### A categorical predictor and dummy variables {#categorical-predictor}
 
 ```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?"}
-# Goal: Understanding effects of dummy variables by manipulating the reference group.
-# Generate data for a categorical predictor (3 categories: (1) never smoked, (2) have smoked, (3) currently smoking) and a numerical outcome (attitude) in a random choice of one of the following scenarios: (1) < (2) = (3) {initial situation}, (1) = (2) < (3), (2) < (1) = (3) (1) < (2) < (3). Display scatterplot containing all three groups with group means indicated (line segment & value), regression lines through reference group mean and dummy group mean. Display b and p value of regression weights with the regression lines. Add input to select the reference group, initially set to group (1). Update regression lines and their p values on selection of a reference group. Add button to generate a new plot (with a new scenario).
+# Goal: Understanding effects of dummy variables by manipulating the reference
+# group.
+# Generate numerical outcome data (attitude, range [-5, 5]) for a categorical
+# predictor with 3 categories: (1) non-smoker, (2) former smoker, (3) smoker,
+# and a random choice of one of the following scenarios:
+#* (1 M = -1.7, SD = 1) < (2) = (3 M = 0.75, SD = 1) {initial situation},
+#* (1 M = -1.7, SD = 1) = (2) < (3 M = 0.75, SD = 1), 
+#* (2  M = -1.7, SD = 1) < (1) = (3 M = 0.75, SD = 1),
+#* (1 M = -1.7, SD = 1) < (2 M = 0.75, SD = 1) < (3 M = 1.8, SD = 1). 
+# Display jittered scatterplot containing the three groups with group means
+# indicated by a line segment and value, regression lines through the reference
+# group mean and each of the other group means. Display b and p value of
+# regression weights with the regression lines.
+# Add input to select the reference group, initially set to group (1). Update
+# regression lines and their p values on selection of a new reference group.
+# Add button to generate a new plot (with a new scenario).
 ```
 
 1. Interpret the effects of smoking status in Figure \@ref(fig:regression-categorical).
@@ -374,8 +395,19 @@ Which group should we use as reference category, that is, which dummy should not
 ### Sampling distributions and assumptions {#regr-inference}
 
 ```{r regression-sampling, fig.cap="What happens to regression lines from sample to sample?"}
-# Goal: Understand that regression constant and coefficient(s) have sampling distributions.
-# Generate a population with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term (so a lot of variation in sample regression lines). Generate a sample (N = 10) and display it in a scatterplot with regression line, labelled with it's unstandardized regression coefficient value. Also plot sampling distribution for regression coefficient. Add button to allow drawing a new sample; display the new sample and new regression line but retain the existing regression lines. Add button (or change sampling button) to draw 1,000 samples: don't display samples, just update sampling distribution with normal (or t) distribution as superimposed curve.
+# Goal: Understand that regression constant and coefficient(s) have sampling
+# distributions.
+# Generate a population with a weak negative effect (-0.6) of exposure on
+# attitude and exposure, with a sizable error term (so a lot of variation in
+# sample regression lines).
+# Generate a sample (N = 10) and display it in a scatterplot with regression
+# line, labelled with it's unstandardized regression coefficient value. Also
+# plot the sampling distribution for the regression coefficient.
+# Add a button to allow drawing a new sample; display the new sample and new
+# regression line but retain the existing regression lines.
+# Add button (or change sampling button) to draw 1,000 samples: don't display
+# samples, just update sampling distribution with normal (or t) distribution as
+# superimposed curve.
 ```
 
 1. Which estimates can change from sample to sample: the regression constant, the regression coefficient, or both? Check your answer by drawing new samples.
@@ -531,15 +563,21 @@ Why do we use the residuals and predicted values instead of a scatterplot for ea
 ### Visualizing predictions 
 
 ```{r regression-predict, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?"}
-# Goal: sensitize student to the notion that prediction in a multiple regression model requires selecting one predictor and fixed values for the other predictors. Without moderation, the fixed values only change the vertical position of the line (that is, the constant) but not the slope.
-# Display a scatterplot with attitude towards smoking as Y and exposure as X with a negative more or less linear relation and a regression line for the currently selected values of the covariates (smoking status (dichotomy: smoker versus non-smoker) and (smoker)contact). Display the multiple regression equation: attitude = 0.25 - 0.20 * exposure + 0.50 * smoker +  0.15 * contact. 
-# User can change smoking status (0 or 1) and contact (range 0-10), which triggers the app to redraw the regression line for attitude by exposure for these values of smoking status and (smoker)contact.
-# The user must discover that the regression line moves up/down the covariate's regression coefficient times the difference between the selected covariate value and the covariate mean. 
+# Goal: sensitize student to the notion that prediction in a multiple regression
+# model requires selecting one predictor and fixed values for the other
+# predictors. Without moderation, the fixed values only change the vertical
+# position of the line (that is, the constant) but not the slope.
+# Generate a data set with attitude towards smoking as Y and exposure as X with a negative (b = -0.6) more or less linear relation and a regression line for the currently selected values of the covariates (smoking status, initial value is 0) and contact (initial value is 3)): attitude = 0.25 - 0.6 * exposure + 0.50 * smoker +  0.15 * contact
+# Display the scatterplot.
+# Add the line of a simple regression of attitude on exposure for the generated data in grey.
+# Add the multiple regression line.
+# Display the multiple regression equation: (see above). 'smoker' is a selection box with two options: 0 = non-smoker, 1 = smoker. 'contact' is followed by a numerical input that accepts values between 0 and 10.
+# A change to the smoker selection or contact value triggers the app to redraw the regression line for attitude by exposure for these values of smoking status and (smoker)contact.
 ```
 
 1. What happens in Figure \@ref(fig:regression-predict) if you change smoking status and smoking contact score? Can you explain the size of changes?
 
-2. Add the line for a simple regression of attitude on exposure (without covariates). Can you fit the original (multiple) regression line to the simple regression line? If so, at what covariate values? If not, why?
+2. The line for a simple regression of attitude on exposure (without covariates) is displayed in grey in Figure \@ref(fig:regression-predict). Can you fit the original (multiple) regression line to the simple regression line? If so, at what covariate values? If not, why not?
 
 The regression equation without the error term $e$ predicts the outcome variable scores from the predictor scores. Plug in values for the predictor variables and you can calculate the predicted outcome score. Figure \@ref(fig:regression-predict), for example, shows a regression equation for the effects of exposure and contact with smokers on attitude towards smoking. If you plug in a score of 4 for exposure, 0 for smoking status (non-smoker), and 6 for contact with smokers, the predicted attitude is 0.25 + -0.20 * 4 + 0.50 * 0 + 0.15 * 6 = 0.41.
 
@@ -828,8 +866,15 @@ In the current section, we discuss regression models with a numerical predictor 
 ### A dichotomous moderator and continuous predictor
 
 ```{r dichotomous-moderator, fig.cap="Is the effect of exposure on attitude moderated by smoking status?"}
-# Goal: Sensitize the student to the notion that moderation in a regression model means different slopes for different groups.
-# In a graph with attitude as Y axis and exposure as X axis, generate two regression lines, one for smokers and one for non-smokers. Show the regression equation for each line (preferably in the plot). Systematically vary the slopes (the same, one more negative than the other, opposite signs) and the intercept difference (positive, nearly zero, negative). Add a Generate New button to replace the regression lines by a new pair of lines.
+# Goal: Sensitize the student to the notion that moderation in a regression
+# model means different slopes for different groups.
+# In a graph with attitude as Y axis and exposure as X axis, generate two regression lines, one for smokers and one for non-smokers. 
+# Plot the regression lines in a scatterplot. 
+# Show the regression equation for each line (preferably in the plot). 
+# Systematically vary the slopes (the same, one more negative than the other,
+# opposite signs) and the intercept difference (positive, nearly zero,
+# negative).
+# Add a Generate New button to replace the regression lines by a new pair of lines.
 ```
 
 1. Is the effect of exposure on attitude moderated by the smoking status of respondents (smokers versus non-smokers) in Figure \@ref(fig:dichotomous-moderator)? Motivate your answer.
@@ -848,7 +893,22 @@ In the context of a regression model, moderation means __different slopes for di
 
 ```{r interaction-var-effect, fig.cap="What does an interaction variable do?"}
 # Goal: Intuitive understanding of the effect of an interaction variable.
-# Generate a dataset with 30 observations for the regression model y = 3 - 0.5x_1 + 1.5x_2 + 0.3x_1*x_2 with x_1 in the range [0, 10] and x_2 a dummy (0 or 1) with a random uniform component to each parameter in the range [-.1, .1]. In a scatterplot of attitude (Y) versus exposure (X), display the regression line (fat, grey) for the equation with x_2 = 0, labelled with the regression equation without the interaction variable. Display smokers and non-smokers with different colours/shapes. Add a select list labeled 'Add product of exposure and smoking status' with the values '--', '0 - Non-smokers', and '1 - Smokers'. Selection of a value adds the corresponding regression line to the plot with the category name and regression equation. (The line for non-smokers is parallel to the fat gray line.) Clicking/hovering over the newly created line shows the slope as a sum of the conditional and interaction effect, e.g., "Slope: 0.5 * exposure + 0.3 * 1 * exposure".
+# Generate a dataset with 30 observations for the regression model y = 3 -
+# 0.5x_1 + 1.5x_2 + 0.3x_1*x_2 with x_1 in the range [0, 10] and x_2 a dummy (0
+# or 1) with a random uniform component to each parameter in the range [-.1,
+# .1].
+# In a scatterplot of attitude (Y) versus exposure (X), display the regression
+# line (fat, grey) for the equation with x_2 = 0, labelled with the regression
+# equation without the interaction variable. Display smokers and non-smokers
+# with different colours/shapes.
+# Add a select list labeled 'Add product of exposure and smoking status' with
+# the values '--', '0 - Non-smokers', and '1 - Smokers'. Selection of a value
+# adds the corresponding regression line to the plot with the category name and
+# regression equation. (The line for non-smokers is parallel to the fat gray
+# line.)
+# Clicking/hovering over the newly created line shows the slope as a sum of the
+# conditional and interaction effect, e.g., "Slope: 0.5 * exposure + 0.3 * 1 *
+# exposure".
 ```
 
 1. In Figure \@ref(fig:interaction-var-effect), does the fat grey line represent the effect of exposure on attitude in a simple regression model, a multiple regression model, or both?
@@ -1614,13 +1674,18 @@ The zero score on the moderator is the _reference value_ for the conditional eff
 ### Mean-centering
 
 ```{r mean-centering-moderator, fig.cap="What happens if you mean-center the moderator variable?"}
-# Goal: Understand how mean-centering affects the interpretion of the conditional effect of the predictor by seeing how the reference value changes with mean-centering (and centering on another value, e.g., M plus/minus 1 SD).
-# Use same data set as in app continuous-moderator. Display scatterplot with conditional regression effect for predictor at moderator value = 0. Shade dots in scatterplot in accordance with distance of their moderator score to the moderator reference value. Add slider 'Status - x' (equal length as two x axes, range [0, 10], initial value 0), labeled with values M - SD, M, and M + SD. Adjusting the slider updates the regression line in the scatterplot.
+# Goal: Understand how mean-centering affects the interpretion of the
+# conditional effect of the predictor by seeing how the reference value changes
+# with mean-centering (and centering on another value, e.g., M plus/minus 1 SD).
+# Use same data set as in app continuous-moderator. 
+# Display a scatterplot with a line representing the conditional regression line for exposure at moderator (contact) value = 0. Shade dots in scatterplot in accordance with distance of their moderator score to the moderator reference value. 
+# Display the current reference value of the moderator: "Line for contact = 0"
+# Add a slider 'Contact - x' (equal length as x axis, range [0, 10], initial value 0), labeled with values 0, M - SD, M, M + SD, and 10 (use nice round numbers for SD and M, not exactly the true values). Adjusting the slider updates the regression line in the scatterplot and the reference value label.
 ```
 
 1. What happens to the reference value of the moderator if you subtract mean (*M*) contact with smokers from the respondents' contact scores? Use the slider in Figure \@ref(fig:mean-centering-moderator) to check your answer.
 
-2. What happens to the regression line if you mean-center (Question 1) the moderator (contact with smokers)?
+2. What happens to the regression line if you mean-center (Question 1) the moderator contact with smokers?
 
 3. What do you think expresses the shade of the dots in the scatterplot?
 
@@ -1641,8 +1706,20 @@ Remember that the interaction variable is the product of the predictor and moder
 ### Symmetry of predictor and moderator
 
 ```{r symmetry-predictor-moderator, fig.cap=""}
-# Goal: Understand the advantages of mean-centering the predictor by seeing how the reference value changes with mean-centering (and centering on another value, e.g., M plus/minus 1 SD).
-# Use same data set as in app continuous-moderator. Display scatterplot (x axis not labelled) with conditional regression effect for predictor (blue) at moderator value = 0 and conditional effect of moderator (red) for predictor = 0. Show two additional x axes marking the reference values of the predictor (blue) and moderator (red) (range [0, 10], initial value 0) that is currently the reference value. Add sliders 'Exposure - x' and 'Status - x' (equal length as two x axes, range [0, 10], initial value 0), labeled with values M - SD, M, and M + SD. Adjusting the sliders update the scale of the appropriate x axis (the marked point zero moves) and the regression lines in the scatterplot.
+# Goal: Understand the advantages of mean-centering the predictor by seeing how
+# the reference value changes with mean-centering (and centering on another
+# value, e.g., M plus/minus 1 SD).
+# Use same data set as in app continuous-moderator: predictor = exposure,
+# moderator = contact.
+# Display scatterplot (x axis not labelled) with conditional regression effect
+# for predictor (blue) at moderator value = 0 and conditional effect of
+# moderator (red) for predictor = 0.
+# Show two additional x axes marking the reference values of the predictor
+# (blue) and moderator (red) (range [0, 10], initial value 0).
+# Add sliders 'Exposure - x' and 'Contact - x' (equal length as two x axes,
+# range [0, 10], initial value 0), labeled with values M - SD, M, and M + SD.
+# Adjusting the sliders update the scale of the appropriate x axis (the marked
+# point zero moves) and the regression lines in the scatterplot.
 ```
 
 1. If you change the value on the slider 'Exposure - x', which regression line in the plot changes? Why this line?

@@ -199,28 +199,68 @@ Following up on a report commissioned by the American Psychological Association 
 
 Estimation is becoming more important: Assessing the precision of our statements about the population rather than deciding pro or con our hypothesis about the population. This is an important step forward and it is easy to accomplish if your statistical software reports confidence intervals.  
 
-```{r ci-nullhyp, fig.cap="Decision on the null hypothesis and confidence intervals."}
-# Simpler version: see tutorial test question.
+```{r ci-nullhyp, fig.cap="What is the most sensible interpretation of the result represented by the confidence interval ?"}
+#REPLACED BY STATIC IMAGE
 
-# Display an x-axis labeled "Effect size" with values "none (H0)"/"tiny"/"small"/"moderate"/"large" with a vertical line (unlabeled) at "none (H0)". Generate a confidence interval and represent it by a horizontal errorbar with the sample value (point estimate) as a fat dot. Successive confidence intervals should differ on one or two of the following characteristics: 
+# Display an x-axis labeled "Effect size" with values "none
+# (H0)"/"tiny"/"small"/"moderate"/"large" with a vertical line (unlabeled) at
+# "none (H0)". As in app sig-effect-power.
+# Generate a confidence interval for a positive effect and represent it by a
+# horizontal errorbar with the sample value (point estimate) as a fat dot.
+# Successive confidence intervals should differ on one or two of the following characteristics: 
 # (1) includes/excludes H0, 
 # (2) small/wide, 
-# (3) none to tiny versus size/small-large effect size. 
+# (3) tiny versus moderate-large effect size. 
 # Add a slider to adjust sample size (range [10, 250], initial setting 30), which changes the width of the confidence interval. 
-# Add a selection list with answers to the question "Must H0 be rejected?" (""/"No"/"Yes" with "" as initial setting). 
-# Add a selection list with answers to the question "Do you think H0 is true?" (""/"I have no clue, because the confidence interval is wide"/"No, because the confidence interval does not include H0"/"No, because the point estimate is distant from H0"/"Yes, because the confidence interval includes H0"/"Yes, because the point estimate is close to H0" with "" as initial setting). 
-# Add a "Submit Answer" button (active when a selection has been made in all four lists), which evaluates the answers and gives textual feedback.
-# If the interval includes H0, "Yes, because the confidence interval includes H0" is the second best option. The best options take into account the width of the interval and how close the effect is to H0: "I have no clue..." is the best option if the interval is wide and the point estimate is close to H0, "Yes, because the point estimate is close to H0" is the best option if the interval is narrow and the point estimate is close to H0, "No, because the point estimate is distant from H0" is (always) the choice if the point estimate is distant from H0.
-# If the interval does not include H0, "No, because the confidence interval does not include H0" is the best answer if the interval is narrow and the point estimate is close to H0 but it is the second best option if the point estimate is distant from H0 (with wide or narrow interval) in which cases "No, because the point estimate is distant from H0" is the best option.
-# Feedback example: "The null hypothesis must <not> be rejected for the simple reason that the confidence interval <includes/does not include> the null hypothesis. <The null hypothesis in the confidence interval should not automatically make you think that the null hypothesis is true. <Here, the effect in the sample (point estimate) is distant from the null hypothesis, so the test may just have too low power to reject the null hypothesis/Here, the interval is very wide, so substantial effects are likely>./<The effect in the sample (point estimate) is quite close to the null hypothesis but the confidence interval is so narrow that we are confident that the population value differs from the null hypothesis./It is more important to note that the effect in the sample (point estimate) differs a lot from the null hypothesis than the fact that the null hypothesis must be rejected.>")
-# Finally, add a button to generate a new confidence interval, which also clears the selected answers.
+# Finally, add a button to generate a new confidence interval.
+d <- data.frame(x = c(6, 5, 4, 3, 2, 1),
+                 lb95 = c(-2, -0.1, 0.1, -0.1, 0.1, 2), 
+                 ub95 = c(2.6, 0.7, 0.5, 3.2, 3.0, 3.0),
+                 lab = c("A", "B", "C", "D", "E", "F"))
+d$point <- (d$ub95 + d$lb95)/2
+ggplot2::ggplot(d) +
+  geom_errorbar(aes(x = x, ymin = lb95, ymax = ub95), colour = brewercolors["Blue"]) + 
+  geom_point(aes(x = x, y = point), size = 3, colour = brewercolors["Blue"]) +
+  geom_hline(yintercept = 0, colour = brewercolors["Red"]) +
+  geom_text(aes(x = x, y = ub95, label = lab), nudge_y = 0.15) +
+  scale_x_continuous(name = "", breaks = NULL) +
+  scale_y_continuous(name = "Standardized effect size", 
+                     breaks = c(-3, -2, -1, -0.3, 0, 0.3, 1, 2, 3),
+                     labels = c("-0.8\nstrong", "-0.5\nmoderate", "-0.2\nweak", "\ntiny", "0\nH0", "\ntiny", "0.2\nweak", "0.5\nmoderate", "0.8\nstrong")) +
+  coord_flip() +
+  theme_general()
+rm(d)
 ```
 
-Figure \@ref(fig:ci-nullhyp) shows a confidence interval for a population value, for example, average candy weight and the sample result as point estimate (dot). The horizontal axis is labeled by the size of the effect, for example, the difference between average candy weight in the sample or population and average candy weight according to the null hypothesis. 
+Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population value, for example, the effect of exposure to advertisements on brand awareness, and the sample result as point estimate (dot). The horizontal axis is labeled by the size of the effect: the difference between the effect in the sample and the absence of an effect according to the null hypothesis. 
 
-1. Answer the two questions in Figure \@ref(fig:ci-nullhyp), submit your answer, and see if you were right. Repeat this several times. What is the more important argument for thinking that the null hypothesis is true or not true?
+1. Would you advise the company to use the advertisement based on a null hypothesis significance test?
 
-2. How does changing sample size help you to justify your opinion about the truth of the null hypothesis?
+```{r eval=FALSE}
+If the 95% confidence interval does not include Ho (the vertical line), we
+must reject the null hypothesis at the 5% significance level. That is the rule
+of the game called null hypothesis significance testing.
+This is the case for confidence intervals C, E, and F.
+If we can reject the null hypothesis, we would be confident that there is an
+effect of exposure on brand awareness in the population. But this can be a
+tiny effect (intervals B and C) or a large effect (interval F). In case of a
+tiny effect, would we recommend to use the advertisement?
+```
+
+2. Would you advise the company to use the advertisement based on the confidence interval in Figure \@ref(fig:ci-nullhyp)?
+
+```{r eval=FALSE}
+If less of the confidence interval extends to the left of H0 (negative effect)
+and more of it is situated to the right (positive effect), we are more
+confident that the efect is positive in the population.
+If the range of plausible population values is more strongly positive, we are
+more certain that there is a substantial positive effect in the population.
+This is the most important reason to recommend using the advertisement.
+Interval F ofers the most convincing evidence for a substantial positive
+effect. Intervals D and E also suggest a positive effect but we are not so
+sure about the size of the effect: it may be tiny or perhaps even absent but
+it can also be moderate to strong.
+```
 
 A confidence interval shows us whether or not our null hypothesis must be rejected (see \@ref(null-ci0)). The rule is simple: If the value of the null hypothesis is within the confidence interval, the null hypothesis must not be rejected. By the way, note that a confidence interval allows us to test a null hypothesis other than the nil. If we hypothesize that the effect of exposure on brand awareness is 0.1, we reject the hypothesis if the confidence interval of the regression coefficient does not include 0.1.
 

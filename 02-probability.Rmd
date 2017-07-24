@@ -203,7 +203,11 @@ The _bootstrap_ concept refers to the story in which Baron von M&uuml;nchhausen 
 ### Sampling with and without replacement  
 
 ```{r replacement, fig.cap="Sampling with and without replacement."}
-#Create a sample consisting of 10 candies (dots), coloured (5 colours) and numbered ; one button to create three (bootstrap) samples with replacement and one button without replacement ; show the three samples: coloured dots with their ID numbers
+#Create a sample consisting of 10 candies (dots) that are coloured (5 colours)
+#and numbered. Display this sample as a dotplot.
+# Add a button to create three (bootstrap) samples with replacement and a button
+# to create three (bootstrap) samples without replacement.
+# Show the three samples: coloured dots with their ID numbers.
 ```
 
 In Figure \@ref(fig:replacement), draw some samples with replacement and some samples without replacement.
@@ -630,9 +634,15 @@ If we use a theoretical probability distribution, we must assume that the condit
 
 Figure \@ref(fig:normal-approx-proportion) shows an example in which the normal distribution is a good approximation for the sampling distribution of a proportion in some situations but not in all situations.
 
-```{r normal-approx-proportion, fig.cap="Normal approximation of the distribution of sample proportions."}
-#Generate a binomial sampling distribution with population proportion 0.5 and a large sample size and display it as a histogram ; project the normal distribution (with population proportion p as mean and sqrt of p(1 - p)/N as standard deviation) ; allow the user to change sample size and population proportion 
-#perhaps adapt/simplify CLT_prop from Shiny-Ed on GitHub, https://github.com/ShinyEd/ShinyEd/tree/master/CLT_prop
+```{r normal-approx-proportion, fig.cap="How does the shape of the distribution of sample proportions change with sample size and proportion value?"}
+#Generate a binomial sampling distribution with population proportion 0.5 and a
+#large sample size and display it as a histogram.
+# Project the normal distribution with population proportion p as mean and sqrt
+# of p(1 - p)/N as standard deviation. Allow the user to change sample size and
+# population proportion and update both the sampling distribution and the normal
+# curve.
+#perhaps adapt/simplify CLT_prop from Shiny-Ed on GitHub,
+#https://github.com/ShinyEd/ShinyEd/tree/master/CLT_prop
 ```
 
 1. How do you expect that sample size affects the shape of the sampling distribution? State your expectation and then check it in the interactive content by changing sample size.
@@ -729,12 +739,30 @@ Imagine that a magnetic field is activated if the first coin lands with heads up
 The example of a manipulated second toss is applicable to repeated measurements. If we are interested in how quickly the yellow color fades when yellow candies are exposed to sun light, we may draw a sample of yellow candies once and measure the colorfulness of each candy at least twice: at the start and after some time interval. Then, we compare the average colorfulness of the second set of measurements to the average in the first set of measurements.  
 
 ```{r mean-dependent, fig.cap="Dependent samples."}
-# Demonstrate the construction of a sampling distribution for mean differences for paired/dependent samples; two (very small) populations (normal distributions) represented as dotplots with columns of dots shaded from dark yellow to pale yellow, the second population (repeated measurement) is more pale on average ; button "Sample 1" highlights a random dot in the dotplot of the BEFORE population, shows its ID number and highlights the dot with the same ID in the AFTER population (note that ID can be random number and selected dot in second population can also be random as long as its color is paler) ; show the difference score for the selected dots and store it as value in the sample ; display the sample mean as a vertical line with a value ; if a sample of five (difference scores) has been created, store the sample mean in the sampling distribution (bottom histogram); add button to add/animate many more samples, with results stored in the sampling distribution
+# Demonstrate the construction of a sampling distribution for mean differences
+# for paired/dependent samples. Variant of mean-independent.
+# Simulate a small (N = 100)) population with a normal distribution (M = 5, SD =
+# 1.3). This are the before colourfulness scores. Create the after colourfulness
+# scores by subtracting a random uniform score between 0 and 2.
+# Represent both populations as dotplots labeled BEFORE and AFTER in the top ro
+# of the app. Have the dots shaded from dark yellow (low score) to pale yellow
+# (high score).
+# Add button "Sample 1", to sample one observation: highlight/circle the
+# observation both in the BEFORE and AFTER plots. Show the difference score for
+# the selected dots and store it as value in the sample (histogram in the 2nd
+# row of the app). Display the sample mean as a vertical line with a value.
+# If a sample of five (difference scores) has been created, store the sample
+# mean in the sampling distribution (bottom histogram).
+# Add button to draw 1,00 samples, with results displayed in the sampling
+# distribution (histogram in 3rd ro wof the app). Only store the totals of the
+# bars in the histogram, get rid of the original samples to save on memory?
 ```
 
-1. In Figure \@ref(fig:mean-dependent), use the __Sample 1__ button repeatedly to draw a sample with five cases. What is the precise meaning of the numbers on the horizontal axis in the Sample histogram?
+1. In Figure \@ref(fig:mean-dependent), use the __Sample 1__ button repeatedly to draw a sample of five observations. What is the precise meaning of the numbers on the horizontal axis in the sample histogram?
 
 2. Why is the sample called dependent or paired?
+
+3. Draw 1,000 samples to obtain a sampling distribution. What is the precise meaning of the numbers on the horizontal axis in the histogram of the sampling distribution?
 
 In this example, we are comparing two means, just like the yellow versus red candy weight example, but now the samples for both measurements are the same. It is impossible to draw the sample for the second measurement independently from the sample for the first measurement if we want to compare repeated measurements. Here, the second sample is fixed once we have drawn the first sample. The samples are _statistically dependent_; they create _paired samples_. Even if the second sample depends only partly upon the first sample, the samples are statistically dependent.
 
