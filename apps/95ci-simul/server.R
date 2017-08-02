@@ -34,9 +34,10 @@ shinyServer(function(input, output, session) {
       ses <- qt(1 - ( 1 - alpha ) / 2, df = (n - 1))*sds/sqrt(n)
       lower <- means - ses
       upper <- means + ses
-      contained <- ifelse(mean > lower & mean < upper, TRUE, FALSE)
-      plotdf <<- data.frame(y = 1:N, means,lower,upper,contained) 
-      validate(
+      contained <- as.factor(ifelse(mean > lower & mean < upper, "TRUE", "FALSE"))
+      plotdf <<- data.frame(y = 1:N, means,lower,upper,contained = as.factor(contained))
+     
+       validate(
         need(FALSE, "Please take a sample")
       )
     }
@@ -59,8 +60,8 @@ shinyServer(function(input, output, session) {
       counter(0)
     }
     
-    
-    
+
+    #MAIN PLOT
     ggplot(df,aes(x = means,y = y, colour = contained)) +
       geom_point() +
       geom_vline(xintercept = mean) + 
@@ -74,8 +75,10 @@ shinyServer(function(input, output, session) {
       xlab("Mean") + 
       coord_cartesian(xlim = c(2,4),
                       ylim = c(0, 100)) + 
-      scale_colour_manual(values = c("FALSE" = unname(brewercolors["Red"]),"TRUE" = unname(brewercolors["Blue"]))) +
-      theme_general()
+      scale_colour_manual(values = c("FALSE" = unname(brewercolors["Red"]),"TRUE" = unname(brewercolors["Blue"])),
+                          breaks = c("FALSE", "TRUE"), labels = c("FALSE", "TRUE"), name = "True mean in interval?", drop = FALSE) +
+      theme_general() + 
+      theme(legend.position = "bottom")
     
   })
   
