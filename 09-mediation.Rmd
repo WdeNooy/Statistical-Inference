@@ -15,14 +15,14 @@ We can estimate a path model as a series of regression models. With additional s
 
 ### Test your intuition and understanding {-}
 
-```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arcs in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Use app mediation-commoncause.
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
 ```
 
-1. In Figure \@ref(fig:mediation-selftest), what does the curved arc represent? How is its value calculated?
+1. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated?
 ```{r eval=FALSE}
-* The curved arc is the standardized indirect (predictive) effect of age on
+* The curved arrow is the standardized indirect (predictive) effect of age on
 reading time. It represents the predicted change (in standard deviations) of
 reading time that results from a change in political interest that results
 from a change of one standard deviation in age.
@@ -64,7 +64,7 @@ reinforced.
 time, age is neither a suppressor nor a reinfocer, so it does not confound the
 effect of political interest on newspaper reading time.
 * Age is not a common cause if it has no effect on political interest or on
-reading time in this model. In other words, if at least one of the two arcs
+reading time in this model. In other words, if at least one of the two arrows
 emanating from age is zero (absent).
 * It is easy to set the effect of age on political interest to zero: Just set
 this correlation to zero. Now, there is no indirect effect of the predictor on
@@ -208,9 +208,9 @@ With non-experimental data, we must include all confounders to ensure that the e
 
 ## Indirect Correlation {#indirectcorrelation}
 
-```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or regression coefficients (arc).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or regression coefficients (arrow).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and outcome variable, hence, the indirect correlation is stronger.
-# Display the simple (standardized) regression coefficient as a black arc from Pol.Interest to Reading Time with the width of the arc corresponding to the size of the effect. Label arc with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arc from Pol.Interest to reading Time on top of the black arc with its width corresponding to the partial effect when controlling for the selected confounder.
+# Display the simple (standardized) regression coefficient as a black arrow from Pol.Interest to Reading Time with the width of the arrow corresponding to the size of the effect. Label arrow with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arrow from Pol.Interest to reading Time on top of the black arrow with its width corresponding to the partial effect when controlling for the selected confounder.
 # Correlations and standardized coefficients that are in line with the example data file readers.sav:
 # Pol. Interest - Age: 0.12
 # Pol. Interest - Educ: 0.28
@@ -547,7 +547,7 @@ latter variable suppressed part of the effect of education.
 
 ```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize students to the concept of a common cause creating a spurious effect and mediation as indirect effect.
-# Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arc representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arcs to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
+# Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arrow representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arrows to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
 # # Initial correlations.
 # #correlation between Predictor and mediator.
@@ -563,9 +563,9 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", heigh
 # b_indirect <- round(b_PM * b_MO, digits = 2)
 ```
 
-1. In Figure \@ref(fig:mediation-commoncause), what does the long, curved arc represent? Can you motivate your answer with the values that are linked to the arcs?
+1. In Figure \@ref(fig:mediation-commoncause), what does the long, curved arrow represent? Can you motivate your answer with the values that are linked to the arrows?
 ```{r eval=FALSE}
-* The curved arc is the standardized indirect (predictive) effect of age on
+* The curved arrow is the standardized indirect (predictive) effect of age on
 reading time.
 * It summarizes the assumed causal process that age influences political
 interest, which influences reading time. For example, older people are more
@@ -673,11 +673,11 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-Now let us draw the _causal diagram_ for this simple example (Figure \@ref(fig:causaldiagram)). A causal diagram contains the names of the variables with arcs pointing from causes to consequences. The causal order of variables is represented from left to right. In Figure \@ref(fig:causaldiagram), the very first cause (age) is at the left, the final consequence (newspaper reading time) is at the right, and interest in politics is placed in the middle. In this layout, the arcs always point to the right.
+Now let us draw the _causal diagram_ for this simple example (Figure \@ref(fig:causaldiagram)). A causal diagram contains the names of the variables with arrows pointing from causes to consequences. The causal order of variables is represented from left to right. In Figure \@ref(fig:causaldiagram), the very first cause (age) is at the left, the final consequence (newspaper reading time) is at the right, and interest in politics is placed in the middle. In this layout, the arrows always point to the right.
 
 In the causal order that we theorize, age is causally prior or _antecedent_ to interest in politics, which is antecedent to current newspaper reading time. We have an _indirect effect_ of age on newspaper reading by way of interest in politics. When adults grow older, they tend to be more interested in politics and because of this, they tend to spend more time on reading newspapers. We say that interest in politics _mediates_ the effect of age on newspaper reading time. Interest in politics is a _mediator_, an _intermediary variable_, or an _intervening variable_ in this causal diagram.
 
-A causal diagram like Figure \@ref(fig:causaldiagram) is also called a _path diagram_. Each indirect effect is a sequence of direct effects. Each direct effect is a "step" from one variable to another variable, represented by an arc. An indirect effect, then, can be regarded as a _path_ that we can follow to "travel" from one variable to another variable. 
+A causal diagram like Figure \@ref(fig:causaldiagram) is also called a _path diagram_. Each indirect effect is a sequence of direct effects. Each direct effect is a "step" from one variable to another variable, represented by an arrow. An indirect effect, then, can be regarded as a _path_ that we can follow to "travel" from one variable to another variable. 
 
 ```{r causaldiagram2, echo=FALSE, fig.cap="Causal diagram for the effect of age on newspaper reading time mediated by interest in politics and news site use.", fig.asp=0.3}
 library(ggplot2)
@@ -714,7 +714,7 @@ Our second discovery is that we usually look for mediators if we want to underst
 ```{r mediation-regression, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/mediation-regression.png"}
 # Goal: Exemplify the different regression models required to estimate the direct effects in a path model.
 # Image of path model with age, education level (in years), political interest, news site use, and (current) newspaper reading time. Distinguish between hypothesized direct effects and non-hypothesized direct effects. Display the unstandardized regression coefficients with their 95% confidence intervals for the direct effects of all antecedent variables.
-# Basic colors and layout.
+# Basic colours and layout.
 source("../apps/plottheme/styling.R")
 # Create effect sizes.
 readers <- haven::read_spss("data/readers.sav")
@@ -778,7 +778,7 @@ visNetwork(nodes, edges, width = "100%") %>%
 
 1. In the causal diagram depicted in Figure \@ref(fig:mediation-regression), click on a variable name to highlight the effects in a regression analysis with this variable as the outcome. How many regression analyses can you execute and what do the results mean?
 ```{r eval=FALSE}
-* There are four variables with incoming arcs in this model. Each of them can
+* There are four variables with incoming arrows in this model. Each of them can
 be an outcome variable in a regression model, so we can estimate four
 regression models.
 * The unstandardized and standardized regression coefficients tell us the
@@ -787,11 +787,11 @@ model.
 * For example, news site use has an unstandardized effect of -1.55 on
 newspaper reading time in the sample. A difference of one unit of news site
 use predicts a decrease in newspaper reading time of 1.55 units. We are 95
-percent confident that this decrease is in between 0.6 and 2.5 units in the
+per cent confident that this decrease is in between 0.6 and 2.5 units in the
 population.
 ```
 
-2. The fat arcs were hypothesized whereas the thin ones were not. Why are the thin ones included in the regression analyses (they have coefficient estimates too)?
+2. The fat arrows were hypothesized whereas the thin ones were not. Why are the thin ones included in the regression analyses (they have coefficient estimates too)?
 ```{r eval=FALSE}
 * If we do not include effects between variables that were not hypothesized in
 our regression model, we actually assume that the effects are zero.
@@ -814,11 +814,11 @@ coefficients of all effects that make up the indirect effect.
 calculated from the regression results. We use bootstrapping to this end.
 ```
 
-Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arc) is an outcome variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the outcome variable. In other words, all variables that are causally antecedent to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are antecedent to it.
+Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is an outcome variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the outcome variable. In other words, all variables that are causally antecedent to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are antecedent to it.
 
 In the path diagram displayed in Figure \@ref(fig:mediation-regression), we would regress newspaper reading time, the final outcome variable, on all other variables. As a next step, we would predict news site use as outcome using all variables except reading time. 
 
-Note that we include education level as predictor of news site use and newspaper reading even if we did not draw a direct arc. Education level is theorized to be causally prior to news use site, so it can have a direct effect. We hypothesized that it did not have a direct effect on news site us and reading time, so we omitted arcs in our hypothesized model. We must include education as a predictor to check that it does not have these direct effects.
+Note that we include education level as predictor of news site use and newspaper reading even if we did not draw a direct arrow. Education level is theorized to be causally prior to news use site, so it can have a direct effect. We hypothesized that it did not have a direct effect on news site us and reading time, so we omitted arrows in our hypothesized model. We must include education as a predictor to check that it does not have these direct effects.
 
 A third regression model would predict political interest from education level and age. The final regression model predicts education level from age .
 
@@ -827,11 +827,11 @@ We can estimate mediation and path models with regression analysis if we meet th
 
 1. Each variable used as an outcome is numeric. This is a general requirement of a linear regression model. In a path diagram, it means that all mediators and outcome variables must be numeric.
 
-    For detail lovers: Variables with only incoming arcs may be dichotomous but that requires logistic regression, which we do not discuss.
+    For detail lovers: Variables with only incoming arrows may be dichotomous but that requires logistic regression, which we do not discuss.
 
 2. Each variable used as predictor must be a numeric or dichotomous (dummy) variable. Again, a general requirement of regression models.
 
-3. There are no causal feedback loops. Causality must work in one direction. It must be impossible to travel from a variable back to it while following the direction of the arcs. Note that it can be difficult to assign a causal order. For example, does political interest cause (low) political cynicism or the other way around? Or are they not causally related?
+3. There are no causal feedback loops. Causality must work in one direction. It must be impossible to travel from a variable back to it while following the direction of the arrows. Note that it can be difficult to assign a causal order. For example, does political interest cause (low) political cynicism or the other way around? Or are they not causally related?
 
 4. All regression models meet the assumptions for regression analysis. Check if the residuals are normally distributed, centered around zero for all levels of the predicted outcome, and that all outcome levels are predicted equally well (see Section \@ref(regr-inference)).
 
@@ -1080,7 +1080,7 @@ knitr::kable(results, caption = "Unstandardized effects in a model regressing ne
 rm(results)
 ```
 
-A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arcs. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous or a set of dummy variables (see Section \@ref(dichpredictor)).
+A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arrows. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous or a set of dummy variables (see Section \@ref(dichpredictor)).
 
 ```{r results-pathdiagram, echo=FALSE, fig.cap="Unstandardized direct effects for a path model with one mediator.", screenshot.alt = "figures/results-pathdiagram.png"}
 # Load data.
@@ -1202,7 +1202,7 @@ knitr::include_url("https://www.youtube.com/embed/SsurWx_SGKI", height = "360px"
 # Check assumptions: for each regression model separately.
 
 # Show how to use SPSS for mediation. Only use SPSS if there is both parallel and serial mediation. (Videos on regression in SPSS in CH. 4, 8, and previously in Ch. 9.)
-# (Windows) Paint does not have arcs that can be rotated. 
+# (Windows) Paint does not have arrows that can be rotated. 
 ```
 
 ### Exercises
