@@ -14,7 +14,7 @@ shinyServer(function(input, output, session) {
   n = 50 #Sample size
   
   #Counter for action button etc
-  counter <- reactiveVal(value = 0)
+  counter <- reactiveVal(value = 1)
 
   #Heighten counter at button press
   observeEvent(input$onesamplebtn,ignoreInit = TRUE,{
@@ -26,8 +26,8 @@ shinyServer(function(input, output, session) {
   plotdf <- numeric()
   
   output$mainplot <- renderPlot({
-    # Take a sample if counter is zero and store in plotdf
-    if(counter() == 0){
+    # Take 100 samples if counter is one and store in plotdf
+    if(counter() == 1){
       samples <- replicate(N,rnorm(n,mean,sd))
       means <- apply(samples,MARGIN = 2, mean)
       sds <- apply(samples, MARGIN = 2, sd)
@@ -36,13 +36,9 @@ shinyServer(function(input, output, session) {
       upper <- means + ses
       contained <- as.factor(ifelse(mean > lower & mean < upper, "TRUE", "FALSE"))
       plotdf <<- data.frame(y = 1:N, means,lower,upper,contained = as.factor(contained))
-     
-       validate(
-        need(FALSE, "Please take a sample")
-      )
     }
     # Show the samples of the data frame by counter
-    if(counter() > 0 && counter() <= 5){
+    if(counter() >= 1 && counter() <= 5){
       df <- plotdf[1:counter(), ] 
     } 
     #Switch button to take 95 samples at 5
@@ -54,10 +50,10 @@ shinyServer(function(input, output, session) {
       df <- plotdf
       updateActionButton(session,"onesamplebtn", label = "Reset")
     } 
-    #Return to Take one sample and set counter to 0
+    #Return to Take another sample and reset counter to 1
     if(counter() == 7) {
-      updateActionButton(session,"onesamplebtn", label = "Take one sample")
-      counter(0)
+      updateActionButton(session,"onesamplebtn", label = "Take another sample")
+      counter(1)
     }
     
 

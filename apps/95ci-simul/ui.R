@@ -13,7 +13,7 @@ shinyUI(
     ),
     fluidRow(align = "center",
              actionButton("onesamplebtn",
-                          "Take one sample"
+                          "Take another sample"
              )
     )
   
