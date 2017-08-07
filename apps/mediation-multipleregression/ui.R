@@ -16,10 +16,10 @@ shinyUI(
                div(
                  checkboxGroupInput("predcheckbox",
                                   label = "Predictors",
-                                  choices = c("Age",
-                                              "Education",
-                                              "Pol. Interest",
-                                              "News site use"),
+                                  choices = c("Age" = "age",
+                                              "Education" = "education",
+                                              "Pol. Interest" = "polinterest",
+                                              "News site use" = "newssite"),
                                   inline = TRUE
                                   )
                  ,align = "center"
