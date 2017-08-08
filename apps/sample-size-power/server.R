@@ -64,7 +64,7 @@ output$mainplot <- renderPlot({
                   alpha = 0.5,
                   n = 1000) +
     #Label with sample size
-    geom_label(x = 2.5, y = 0.35, label = paste0("Required sample size: ", n), size = 5) +
+   # geom_label(x = 2.5, y = 0.35, label = paste0("Required sample size: ", n), size = 5) +
     theme_general() +
     scale_x_continuous(name = "Population means", limits = c(-5, 10), breaks = c(0, meanha), labels = c("H0", "H1")) +
     scale_y_continuous(name = "Probability density", breaks = NULL)
@@ -99,6 +99,10 @@ if(input$onetwoselect == "Two-sided"){
  }
     
 })
+output$ssizeuiout <- renderText({
+  n <-  ceiling(pwr.t.test(d = input$efsizeslider,sig.level = 1 - (input$siglevslider/100), power = input$powerslider/100)$n) 
+  paste(paste0("Required sample size: ", n))
   
+  }) 
   
 })

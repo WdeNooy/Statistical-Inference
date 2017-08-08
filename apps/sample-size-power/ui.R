@@ -1,13 +1,16 @@
 library(shiny)
 fig.width = 400
 fig.height = 300
-# Define UI for application that draws a histogram
+
 shinyUI(
   fluidPage(
     fluidRow(align = "center",
              plotOutput("mainplot",
                         width = fig.width,
                         height = fig.height)
+    ),
+    fluidRow(align = "center",
+             textOutput("ssizeuiout",container = strong)
     ),
     fluidRow(align = "center",
              sliderInput("efsizeslider",
@@ -42,10 +45,7 @@ shinyUI(
                         step = 1,
                         post = "%"
             )
-  ),
-  fluidRow(align = "center",
-           uiOutput("ssizeuiout")
-           )
+  )
             
  
   )
