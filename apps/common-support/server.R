@@ -11,34 +11,40 @@ shinyServer(function(input, output) {
   data <- reactive({
     input$samplebtn
     
-    exposurelow <- seq(from = 1, to = 3, length.out = n)
-    exposurehigh <- seq(from = 5, to = 10, length.out = n)
-    exposurecomp <- seq(from = 0, to = 10, length.out = n)
-    
-    smokers <- sample(c(0.3,-0.6,0.7 ), size = 1 )*exposurehigh + rnorm(n = n, mean = 3, sd = 1)
-    non_smokers <- sample(c(.2,-0.3,0.6 ), size = 1 )*exposurecomp + rnorm(n = n, mean = 3, sd = 1)
-    former_smokers <- sample(c(-0.2,-0.6,0.5 ), size = 1 )*exposurecomp + rnorm(n = n, mean = 3, sd = 1)
+    exposmokers <- seq(from = sample(c(0, 0, 2, 4), size = 1), 
+                       to = sample(c(8, 10, 10), size = 1), length.out = n)
+    expononsmokers <- seq(from = sample(c(0.5, 0.5, 2.5, 4.5), size = 1), 
+                       to = sample(c(8, 10, 10), size = 1), length.out = n)
+    expoformersmokers <- seq(from = sample(c(0, 3.2, 5.2), size = 1), 
+                       to = sample(c(7.5, 8.5, 10, 10), size = 1), length.out = n)
+
+    smokers <- sample(c(0.3,-0.6,0.7 ), size = 1 )*exposmokers + rnorm(n = n, mean = 3, sd = 1)
+    non_smokers <- sample(c(.2,-0.3,0.6 ), size = 1 )*expononsmokers + rnorm(n = n, mean = 3, sd = 1)
+    former_smokers <- sample(c(-0.2,-0.6,0.5 ), size = 1 )*expoformersmokers + rnorm(n = n, mean = 3, sd = 1)
     
     df <- 
-      data.frame(exposure = c(exposurehigh,exposurecomp,exposurecomp),
-                     attitude = c(smokers, non_smokers, former_smokers),
-                     group = c(rep("Smoker",n), rep("Non-smoker",n),rep("Former smoker",n))
+      data.frame(Exposure = c(exposmokers,expononsmokers,expoformersmokers),
+                     Attitude = c(smokers, non_smokers, former_smokers),
+                     Group = c(rep("Smoker",n), rep("Non-smoker",n),rep("Former smoker",n))
       )
     
     df
   })
-  exposurelow <- seq(from = 1, to = 3, length.out = n)
-  exposurehigh <- seq(from = 6, to = 10, length.out = n)
-  exposurecomp <- seq(from = 0, to = 10, length.out = n)
+  exposmokers <- seq(from = sample(c(0, 0, 2, 4), size = 1), 
+                     to = sample(c(4, 8, 10, 10), size = 1), length.out = n)
+  expononsmokers <- seq(from = sample(c(0.5, 0.5, 2.5, 4.5), size = 1), 
+                        to = sample(c(4, 8, 10, 10), size = 1), length.out = n)
+  expoformersmokers <- seq(from = sample(c(0, 3.2, 5.2), size = 1), 
+                           to = sample(c(4.5, 8.5, 10, 10), size = 1), length.out = n)
   
-  smokers <- sample(c(0,-0.6,0.7 ), size = 1 )*exposurehigh + rnorm(n = n, mean = 3, sd = 1)
-  non_smokers <- sample(c(0,-0.6,0.7 ), size = 1 )*exposurelow + rnorm(n = n, mean = 3, sd = 1)
-  former_smokers <- sample(c(0,-0.6,0.7 ), size = 1 )*exposurehigh + rnorm(n = n, mean = 3, sd = 1)
+  smokers <- sample(c(0.3,-0.6,0.7 ), size = 1 )*exposmokers + rnorm(n = n, mean = 3, sd = 1)
+  non_smokers <- sample(c(.2,-0.3,0.6 ), size = 1 )*expononsmokers + rnorm(n = n, mean = 3, sd = 1)
+  former_smokers <- sample(c(-0.2,-0.6,0.5 ), size = 1 )*expoformersmokers + rnorm(n = n, mean = 3, sd = 1)
   
   output$scatterplot <- renderPlot({
     df <- data()
     
-    ggplot(df, aes(x = exposure, y = attitude, colour = group)) +
+    ggplot(df, aes(x = Exposure, y = Attitude, colour = Group)) +
       geom_point() +
       geom_smooth(method="lm", fill=NA, n = 1000) +
       {if(input$selectinput == "All") scale_colour_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
@@ -54,7 +60,8 @@ shinyServer(function(input, output) {
                                                                       "Smoker" = "grey",
                                                                       "Non-smoker" = "grey"))} + 
       
-      theme_general()
+      theme_general() +
+      xlim(c(0,10))
       
   })
   
@@ -62,10 +69,10 @@ shinyServer(function(input, output) {
     
     df <- data()
     if(input$selectinput != "All"){
-     df <- subset(df,group == input$selectinput) 
+     df <- subset(df,Group == input$selectinput) 
     }
-    ggplot(df, aes(x = exposure, fill = group)) +
-     geom_histogram(colour = "black", binwidth = .5) +
+    ggplot(df, aes(x = Exposure, fill = Group)) +
+     geom_histogram(color = "black", binwidth = .5) +
      {if(input$selectinput == "All") scale_fill_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
                                                                     "Smoker" = unname(brewercolors["Green"]),
                                                                     "Non-smoker" = unname(brewercolors["Red"])))} + 
@@ -78,7 +85,8 @@ shinyServer(function(input, output) {
     {if(input$selectinput == "Former smoker") scale_fill_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
                                                                              "Smoker" = "grey",
                                                                              "Non-smoker" = "grey"))} + 
-    xlim(c(0,10)) + 
+    xlim(c(0,10)) +
+    ylab("Count") +
     theme_general()
     
   })
