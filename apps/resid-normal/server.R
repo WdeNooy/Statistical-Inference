@@ -59,6 +59,7 @@ shinyServer(function(input, output) {
                         limits = c("TRUE", "FALSE"),
                         breaks = c("TRUE","FALSE")) + 
       xlab("Residuals") + 
+      ylab("Count") +
       theme_general() +
       theme(legend.position = "none")
   })
