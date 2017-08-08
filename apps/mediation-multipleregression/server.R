@@ -83,11 +83,13 @@ if(length(input$predcheckbox) > 0){
                   alpha = 0.5) + 
      {if(length(input$predcheckbox)>0) geom_point(aes(x = mucoef,
                                                       color = "b* and 95% CI in multiple regression"),
+                                                  na.rm = TRUE,
                                                   size = 3)} + 
      {if(length(input$predcheckbox)>0) geom_segment(aes(y = Predictor,
                                                         yend = Predictor,
                                                         x = muleft, xend = muright,
-                                                        color = "b* and 95% CI in multiple regression"))} +
+                                                        color = "b* and 95% CI in multiple regression"),
+                                                    na.rm = TRUE)} +
      scale_color_manual(values = c("b* and 95% CI in simple regression" = "grey" ,
                                    "b* and 95% CI in multiple regression" = unname(brewercolors["Blue"])),
                         limits = c("b* and 95% CI in simple regression",
@@ -96,7 +98,7 @@ if(length(input$predcheckbox) > 0){
      geom_vline(xintercept = 0) +
      coord_cartesian(xlim = c(-1,1)) + 
      theme_general() + 
-      
+     xlab("Standardized regression coefficient") +
      theme(legend.position = "bottom")
   
 })
