@@ -68,7 +68,7 @@ if(length(input$predcheckbox) > 0){
   mudf$muleft[filter] <- muleft
   mudf$muright[filter] <- muright
   
-  plotdf <-  cbind(bidftemp,mudf)
+  plotdf <-  cbind(bidf,mudf)
   
 }
      #MAIN PLOT
