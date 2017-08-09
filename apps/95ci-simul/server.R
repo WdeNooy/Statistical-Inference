@@ -67,12 +67,10 @@ shinyServer(function(input, output, session) {
                        yend = y,
                        colour = contained)
                    ) + 
-      ylab("Sample") + 
-      xlab("Mean") + 
-      coord_cartesian(xlim = c(2,4),
-                      ylim = c(0, 100)) + 
+      scale_x_continuous(name = "True mean", limits = c(2.4,3.2), breaks = 2.8) +
+      scale_y_continuous(name = "Sample", limits = c(0,100), breaks = c(1, 5, 25, 50, 75, 100)) +
       scale_colour_manual(values = c("FALSE" = unname(brewercolors["Red"]),"TRUE" = unname(brewercolors["Blue"])),
-                          breaks = c("FALSE", "TRUE"), labels = c("FALSE", "TRUE"), name = "True mean in interval?", drop = FALSE) +
+                          breaks = c("FALSE", "TRUE"), labels = c("FALSE", "TRUE"), name = "True mean in confidence interval?", drop = FALSE) +
       theme_general() + 
       theme(legend.position = "bottom")
     
