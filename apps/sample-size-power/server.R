@@ -13,7 +13,7 @@ output$mainplot <- renderPlot({
   
   # Calculate necessary n for given power
   n <-  ceiling(pwr.t.test(d = input$efsizeslider,
-                           sig.level = (1 - (input$siglevslider/100)),
+                           sig.level = (input$siglevslider/100),
                            alternative = ifelse(input$onetwoselect == "Two-sided", "two.sided", "greater"),
                            power = input$powerslider/100)$n) 
   # calculate df for n with given power
@@ -23,13 +23,13 @@ output$mainplot <- renderPlot({
   se <- sd / sqrt(n) # SE of sampling distribution
 
   # calculate 95 % confidence interval on left side
-  lefth0 <- meanh0 - se*qt((1-(1-input$siglevslider/100)/2),df = df)
+  lefth0 <- meanh0 - se*qt((1-(input$siglevslider/100)/2),df = df)
   # if two sided, calculate right limit dependent on one or two sided selection:
   if(input$onetwoselect == "Two-sided"){
-    righth0 <- meanh0 + se*qt((1-(1-input$siglevslider/100)/2),df = df)
+    righth0 <- meanh0 + se*qt((1-(input$siglevslider/100)/2),df = df)
   }
   else{
-    righth0 <- meanh0 + se*qt(input$siglevslider/100,df = df)
+    righth0 <- meanh0 + se*qt(1-input$siglevslider/100,df = df)
   }
   
   # True mean
@@ -105,7 +105,7 @@ if(input$onetwoselect == "Two-sided"){
 output$ssizeuiout <- renderText({
   # Calculate necessary n for given power
   n <-  ceiling(pwr.t.test(d = input$efsizeslider,
-                           sig.level = (1 - (input$siglevslider/100)),
+                           sig.level = (input$siglevslider/100),
                            alternative = ifelse(input$onetwoselect == "Two-sided", "two.sided", "greater"),
                            power = input$powerslider/100)$n) 
   paste(paste0("Required sample size: ", n))
