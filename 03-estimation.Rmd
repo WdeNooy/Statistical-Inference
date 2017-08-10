@@ -472,18 +472,63 @@ We use the term _confidence_ instead of probability when we use this interval to
 
 > We are 95% confident that the average candy weight in the population is between 2.4 and 3.2 gram.  
 
-```{r 95ci-simul, fig.cap="Confidence intervals and the true population value."}
-# Generate 100 samples of size 50 (or larger to obtain about 95% coverage) from a population with average (candy weight) 2.8 and a standard deviation of 0.5 ; display each 95% confidence interval (with the sample mean) as a line segment in a graph, which displays the population mean as a line perpendicular to the confidence interval line segments ; mark the confidence intervals (and their means) as red if they do not contain/cover the parameter ; initially show one confidence interval ; a button allows to create an additional confidence interval ; at the fifth use of this button, add another 95 confidence intervals to attain 100 confidence intervals.
-# Adjust https://github.com/ensley/Confidence-Interval-Shiny or https://github.com/CamilleFairbourn/ConfidenceApp or https://github.com/zkeller89/shiny_conf_int_proportions
+```{r 95ci-simul, fig.cap="How often does a confidence interval include the true population value?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Generate 100 samples of size 50 (or larger to obtain about 95% coverage) from
+# a population with average (candy weight) 2.8 and a standard deviation of 0.5 ;
+# display each 95% confidence interval (with the sample mean) as a line segment
+# in a graph, which displays the population mean as a line perpendicular to the
+# confidence interval line segments ; mark the confidence intervals (and their
+# means) as red if they do not contain/cover the parameter ; initially show one
+# confidence interval ; a button allows to create an additional confidence
+# interval ; at the fifth use of this button, add another 95 confidence
+# intervals to attain 100 confidence intervals. Adjust
+# https://github.com/ensley/Confidence-Interval-Shiny or
+# https://github.com/CamilleFairbourn/ConfidenceApp or
+# https://github.com/zkeller89/shiny_conf_int_proportions
+knitr::include_app("http://82.196.4.233:3838/apps/95ci-simul/", height="450px")
 ```
 
 Figure \@ref(fig:95ci-simul) shows a 95% confidence interval for average candy weight in the population based on a sample of candies. The vertical line indicates the true average candy weight in the population.
 
 1. Does the (first) confidence interval include the true average candy weight in the population?
 
+```{r eval=FALSE}
+* The first confidence interval may (blue) and may not (red) include the true
+population mean (2.8).
+* The sample mean can be close enough to the true population mean for the
+confidence interval to include the true population mean. But it can also be too
+far from the true population mean.
+* A confidence interval, however, is much more likely to include the true
+population mean than not.
+```
+
 2. What does the dot in the middle of the confidence interval represent?
 
-3. Press the __New Sample__ button until there are 100 confidence intervals. How many of these confidence intervals contain the true population value? Can you explain this?
+```{r eval=FALSE}
+* The centre of a confidence interval represents the point estimate, that is,
+if the standard error is used to calculate the confidence interval. In this
+case, the upper and lower boundaries of a confidence interval are situated one
+standard error times the critical value below or above the point estimate.
+* In the current example, the population mean is estimated, so the point
+estimate is the sample mean. A sample mean is an unbiased estimator of the
+population mean.
+```
+
+3. If you would draw a hundred random samples from the same population and calculate the 95% confidence interval for the mean of each sample, how many confidence intervals do you expect to contain the true population mean? Press the __New Sample__ button until there are one hundred confidence intervals. Does your expectation come true? If not, why not?
+
+```{r eval=FALSE}
+* The confidence level is the probability that our confidence interval includes
+the true population value. If the confidence level is 95%, the probability that
+a confidence interval includes the true population value is .95, so we expect
+that 95 out of 100 confidence intervals include the population mean.
+* With probabilities, the expected value is only certain to be found in an
+infinitively large number of draws (samples). One hundred samples are quite few
+in the light of infinity, so the number of samples including the true
+population value may well be smaller or larger than 95.
+* This is easier to see if we focus on the number of red confidence intervals
+that do not include the true population value. This number is usually
+(slightly) larger or smaller than five.
+```
 
 The more precise meaning of a confidence interval is rather complicated. If we draw a very large number of samples from the same population, 95% of the sample means would differ less from the population mean than the critical value times the standard error. This is just the definition of critical value. 
 

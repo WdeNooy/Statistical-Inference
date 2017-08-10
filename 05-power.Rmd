@@ -518,9 +518,82 @@ make a Type I error, in other words, it is the significance level.
 
 ## Sample Size and Power  
 
-```{r sample-size-power}
-#add Shiny app to determine sample size for a specified (standardized) effect size, significance level, and test power for a (simple) one-sample t test, using the pwr:: package.
-#simplify PS.shiny_master (doesn't work yet?) Use R code from http://powerandsamplesize.com/Calculators/ in our own app?
+```{r sample-size-power, fig.cap="How does sample size depend on test power, significance, and effect size?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+# Shiny app to determine sample size for a specified (standardized) effect size,
+# significance level, and test power for a (simple) one-sample t test, using the
+# pwr:: package. Illustrate power with hypothesized and true sampling
+# distributions as t distributions (as in app reshyp-althyp) with effect size on
+# x axis. SLiders or inputs vor standardized effect size (0.2 - small, 0.5 -
+# medium, 0.8 -large), significance level (90% two-sided, 90% one-sided, 95%
+# two-sided, 95% one-sided, 99% two-sided, 99% one-sided), and test power {50%,
+# 80%, 90%, 95%, 99%}.
+# simplify PS.shiny_master (doesn't work yet?) Use R code from
+# http://powerandsamplesize.com/Calculators/ in our own app?
+knitr::include_app("http://82.196.4.233:3838/apps/sample-size-power/", height="380px")
+```
+
+1. Figure \@ref(fig:sample-size-power) shows the sampling distributions of the sample mean under the null hypothesis (H~0~, left-hand curve) and under the assumed true value of the population mean (H~1~, right-hand curve). Explain the meaning of the red, yellow, and blue surfaces in the graph.
+
+```{r eval=FALSE}
+* The red area represents the significance level of the null hypothesis test,
+namely the total probability of rejecting the null hypothesis if it is true.
+* The yellow are gives the probability that we draw a sample from a population
+with true mean H~1~ which does not reject the null hypothesis. with such
+samples, we do not reject the null hypothesis, which is false, so we make a
+Type II error. The yellow area is the probability of making a Type II error.
+* The blue area is the probability that we draw a sample from a population with
+true mean H~1~ that rejects the null hypothesis, which is false. It is the
+probability that we reject a false null hypothesis, which is the power of the
+test.
+```
+
+2. What happens to the red, yellow, and blue surfaces if you set power to 50%? And what happens to the minimum sample size? Adjust the power slider to check your answers.
+
+```{r eval=FALSE}
+* If we set power to 50%, the yellow and blue areas each should occupy half of
+the sampling distribution that is centred at H~1~.
+* A smaller power implies that we run a larger risk of not rejecting a false
+null hypothesis, so we need a smaller sample.
+```
+
+3. Do we need a smaller or a larger sample to achieve the specified test power for a larger effect size? Move the effect size slider to check your answer.
+
+```{r eval=FALSE}
+* With larger effect size, the difference between the true population mean
+(H~1~) and the population mean according to the null hypothesis (H~0~) is
+larger, and it will be more easily spotted in a smaller sample. In other words,
+we have higher power with a larger effect size. We need a smaller sample to
+achieve the original test power.
+```
+
+4. Do we need a smaller or a larger sample to achieve the specified test power for a one-sided test instead of a two-sided test? Change the test type to check your answer.
+
+```{r eval=FALSE}
+* With a one-sided test, the total significance level (red area) is situated in
+one tail. If this tail is at the right side, namely, at the side of the true
+population mean, we are more likely to reject the null hypothesis with a sample
+from the true population (the blue area becomes larger), so test power
+increases if we keep the same sample size. To achieve the original test power,
+we may draw a smaller sample.
+```
+
+5. Do we need a smaller or a larger sample to achieve the specified test power for a higher significance level? Move the significance level slider to check your answer.
+
+```{r eval=FALSE}
+* A higher significance level, for example, 10% instead 5%, has the same effect
+of a change from a two-sided test to a one-sided test. We are more likely to
+reject the null hypothesis, so we are more likely to reject a false null
+hypothesis, so we have higher test power. To achieve the original test power,
+we may draw a smaller sample.
+```
+
+6. Why do the sampling distributions become wider if we increase effect size or significance level, or if we decrease test power? 
+
+```{r eval=FALSE}
+* With larger effect size or significance level and with smaller test power,
+the (required) sample size decreases. Lower sample sizes produce larger
+standard errors, which produce a wider distribution because sample results are
+on average further away from the mean of the distribution.
 ```
 
 Sample size, statistical significance, effect size, and test power are related. To determine the size of your sample, you have three buttons that you should adjust simultaneously. Statistical significance is the easiest button to decide on; we usually leave the significance level at .05. We do not select a smaller value because it will reduce the power of the test (with the same sample and effect size) as you may have noticed in one of the figures in the preceding section.  
