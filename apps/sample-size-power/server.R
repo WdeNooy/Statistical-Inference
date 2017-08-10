@@ -12,8 +12,11 @@ shinyServer(function(input, output) {
 output$mainplot <- renderPlot({
   
   # Calculate necessary n for given power
-  n <-  ceiling(pwr.t.test(d = input$efsizeslider,sig.level = 1 - (input$siglevslider/100), power = input$powerslider/100)$n) 
-  # calculate df for given power
+  n <-  ceiling(pwr.t.test(d = input$efsizeslider,
+                           sig.level = (1 - (input$siglevslider/100)),
+                           alternative = ifelse(input$onetwoselect == "Two-sided", "two.sided", "greater"),
+                           power = input$powerslider/100)$n) 
+  # calculate df for n with given power
   df <- n - 1 
   meanh0 = 0 # Mean of h0
   sd <- 6 # SD of population
@@ -100,7 +103,11 @@ if(input$onetwoselect == "Two-sided"){
     
 })
 output$ssizeuiout <- renderText({
-  n <-  ceiling(pwr.t.test(d = input$efsizeslider,sig.level = 1 - (input$siglevslider/100), power = input$powerslider/100)$n) 
+  # Calculate necessary n for given power
+  n <-  ceiling(pwr.t.test(d = input$efsizeslider,
+                           sig.level = (1 - (input$siglevslider/100)),
+                           alternative = ifelse(input$onetwoselect == "Two-sided", "two.sided", "greater"),
+                           power = input$powerslider/100)$n) 
   paste(paste0("Required sample size: ", n))
   
   }) 
