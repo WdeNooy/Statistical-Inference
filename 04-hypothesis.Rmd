@@ -98,7 +98,7 @@ Return to these question after studying this chapter.
 
 ## A Binary Decision
 
-The overall goal of statistical inference is to increase our knowledge about a population, when we only have a random sample from that population. In Chapter \@ref(param-estim), we estimated population values that are plausible considering the sample that we drew. For example, we looked for all plausible average weights of candies in the population using information about the weight of candies in our sample bag. This is what we do when we estimate a population value.  
+The overall goal of statistical inference is to increase our knowledge about a population, when we only have a random sample from that population. In Chapter \@ref(param-estim), we estimated population values that are plausible considering the sample that we drew. For instance, we looked for all plausible average weights of candies in the population using information about the weight of candies in our sample bag. This is what we do when we estimate a population value.  
 
 Estimation is one of two types of statistical inference, the other being null hypothesis testing. When we estimate a population value, we do not use our previous knowledge about the world of candies or whatever other subject we are investigating. We can be completely ignorant about the phenomenon that we are investigating. This approach is not entirely in line with the conceptualisation of scientific progress as an _empirical cycle_, in which scientists develop theories about the empirical world, test these theories against data collected from this world, and improve their theories if they are contradicted by the data.  
 
@@ -108,11 +108,11 @@ Hypothesis testing, then, amounts to choosing one of two options: reject or not 
 
 ## Formulating Statistical Hypotheses {#formulating-hypotheses}
 
-A _research hypothesis_ is a statement about the empirical world that can be tested against data. Communication scientists, for example, may hypothesize that:  
+A _research hypothesis_ is a statement about the empirical world that can be tested against data. Communication scientists, for instance, may hypothesize that:  
 
 * a television station reaches half of all households in a country,
 
-* media literacy is below a particular standard (for example, 5.5 on a 10-point scale) among children,  
+* media literacy is below a particular standard (for instance, 5.5 on a 10-point scale) among children,  
 
 * opinions about immigrants are not equally polarized among young and old voters,  
 
@@ -127,71 +127,9 @@ As these examples illustrate, research hypotheses seldom refer to statistics suc
 Translating the research hypothesis into a statistical hypothesis is perhaps the most creative part of statistical analysis, which is just a fancy way of saying that it is difficult to give general guidelines stating which statistic fits which research hypothesis. All we can do is give some hints.  
 
 ```{r choice-diagram, echo=FALSE, fig.cap="Flow chart for selecting the appropriate statistical test.", screenshot.alt = "figures/choice-diagram.png"}
-# Overview of tests with conditions/requirements and SPSS commands ; interactive decision/flow chart - show complete diagram and pressing a button or clicking a cell hides all choices/cells that are not up- and downstream from this cell.
-# Use visNetwork:: package (visHierarchicalLayout()) or networkD3:: package (diagonalNetwork()).
-library(visNetwork)
-nodes <- data.frame(id = 1:26, level = c(1, rep(2, 7), rep(3, 6), rep(4, 12)), 
-  label = c("Research Question", 
-            "Category Share", 
-            "Overall Score Level", 
-            "Score Variation", 
-            "Score Level Change", 
-            "Different Group Score Levels", 
-            "Different Group Shares", 
-            "Concurrent Score Levels", 
-            "1 Category", 
-            "3+ Categories", 
-            "2 Groups", 
-            "3+ Groups", 
-            "Linear", 
-            "Bend", 
-            "binomial test", 
-            "one-sample chi-squared test", 
-            "one-sample t test", 
-            "bootstrap test on one median", 
-            "Levene's F test", 
-            "paired-samples t test", 
-            "independent-samples t test", 
-            "analysis of variance: F test", 
-            "chi-squared test", 
-            "t test on Pearson correlation", 
-            "Regression: F (model) & t test (coefficient)", 
-            "test on Spearman's rho"), 
-  title = c("What characteristics of your participants<br>are you interested in?", 
-            "How many have ...?, Which part is ...?<br><b>Variables</b>: 1 dichotomy", 
-            "How low/high is ...?<br><b>Variables</b>: 1 numeric", 
-            "More (dis)agreement among ... than among ...? <br>Are scores more spread among ... than among ...?<br><b>Variables</b>: 1 categorical, 1 numeric", 
-            "Does the score level increase/decrease ...?<br><b>Variables</b>: 1 numeric repeated", 
-            "Does one group score higher than another group...?<br><b>Variables</b>: 1 categorical, 1 numeric", 
-            "Do categories occur more/less <br>in one group than in another group...?<br><b>Variables</b>: 2 categorical", 
-            "Does a score increase/decrease <br>if another score changes?<br><b>Variables</b>: 2+ numeric", 
-            "What is the share of ...", 
-            "Which categories occur<br>relatively frequently?", 
-            "Does group ... score higher/<br>lower than group ...?", 
-            "Do some groups score higher/<br>lower than other groups?", 
-            "Can a straight line <br>represent the relation<br>between scores?", 
-            "Is the relation between <br>scores clearly bend?", 
-            "<b>Visual:</b> bar chart, pie chart<br><b>Measure:</b> proportion or percentage<br><b>Interpretation:</b> ... per cent of the ... have/are ... <br><b>Assumptions</b>: none", 
-            "<b>Visual:</b> bar chart, pie chart<br><b>Measure:</b> relative frequencies<br><b>Interpretation:</b> ... per cent of the ... have/are ...<br>and/but ... per cent have/are ...<br><b>Assumptions:</b> expected frequencies<br>never below 1 and max 20% below 5", 
-            "<b>Visual:</b> histogram<br><b>Measure:</b> one mean,<br>Cohen's <i>d</i><br><b>Interpretation:</b> the participants'<br>/respondents' average score<br>on ... is ... (M = ..., SD = ...)<br><b>Assumptions:</b> sample size above 30<br>or population normally<br>distributed; otherwise: bootstrap", 
-            "<b>Visual:</b> boxplot<br><b>Measure:</b> one median<br><b>Interpretation:</b> half of the ...<br>have a score below/above ...<br><b>Assumptions:</b> none", 
-            "<b>Visual:</b> error bar<br>chart, boxplot<br><b>Measure:</b> two variances<br>or standard deviations<br><b>Interpretation:</b> the scores on ... vary<BR>more/less among ... (SD/variance = ...) than<BR>among ... (SD/variance = ...)<br><b>Assumptions:</b> none", 
-            "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> the average<br>score on ... increases/<br>decreases between ... (M = ..., SD = ...)<br>and ... (M = ..., SD = ...), this change is<br>small/medium/large<br><b>Assumptions:</b> sample size above 30<br>or population normally distributed;<br>otherwise: bootstrap", 
-            "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> there is a small/<br>medium/large difference between<br>the average score on ...<br>among ... (M = ..., SD = ...)<br>and among ... (M = ..., SD = ...)<br><b>Assumptions:</b> sample size above<br>30 or population normally<br>distributed; otherwise: bootstrap", 
-            "<b>Visual:</b> means plot<b><br>Measure:</b> variance in means,<br>eta or eta<sup2</sup>, differences<br>between pairs of means<br><b>Interpretation:</b> there are<BR>no/small/medium/large differences<br>among the average scores on ... .<br>Group ... (M = ..., SD = ...)<br>has a lower/higher score than<br>group ... (M = ..., SD = ...)<br><b>Assumptions:</b> groups of equal<br>size or groups with equal<br>population variances (Levene's F test)", 
-            "<b>Visual:</b> stacked or<br>clustered bar chart<br><b>Measure:</b> Phi, Cramer's V,<br>Goodman & Kruskals tau,<br>Kendalls tau-b<br><b>Interpretation:</b> the association<BR>between ... and ... is weak/medium/<br>strong. ... occurs relatively<BR>frequently among group ... but ...<br>is relatively rare with group ...<br><b>Assumptions:</b> expected<BR> frequencies never below 1<br>and max 20% below 5, otherwise<br>exact test; in a 2x2 table,<br>use Fisher's exact test", 
-            "<b>Visual:</b> scatterplot (with regression<br>line)<br><b>Measure:</b> (Pearson) correlation<br><b>Interpretation:</b> There is a weak/medium/<br>strong correlation between ... and ...:<br>the higher the score on ..., the<br>higher/lower the score on ... .<br><b>Assumptions:</b> none.", 
-            "<b>Visual:</b> scatterplots (with regression line)<br><b>Measures</b> for multiple regression:<BR><I>R</I><sup>2</sup>, regression coefficients (b or b*)<br><b>Interpretation:</b> When ... increases by<BR>one unit, the predicted value of ...<BR>increases/decreases with ... .<BR>This effect is weak/medium/strong.<BR>The variance in ... and ... (and ...)<BR>accounts for ...% of the variance in ... .<br><b>Assumptions:</b> residuals normally<BR>distributed and homoscedastic", 
-            "<b>Visual:</b> scatterplot (with regression line)<br><b>Measure:</b> (Spearman's) rho<br><b>Interpretation:</b> There is a weak/<BR>medium/strong rank correlation between ...<BR>and ...: The higher the score on ..., the<BR>higher/lower the score on ... .<br><b>Assumptions:</b> not relevant (SPSS uses<BR>t aproximation if applicable)"), 
-  shape = "dot", size = 20, font.size = 42, shadow = "FALSE")
-edges <- data.frame(from = c(1, 1, 1, 1, 1, 1, 1, 2, 2, 6, 6, 8, 8, 9, 10, 3, 3, 4, 7, 5, 11, 12, 13, 13, 14), to = c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 20, 21, 22, 24, 25, 26), shadow = "TRUE")
-visNetwork(nodes, edges, width = "100%") %>% 
-  visEdges(arrows = "to") %>% 
-  visHierarchicalLayout(direction = "LR", levelSeparation = 600) %>%
-  visOptions(highlightNearest = list(enabled = TRUE, algorithm = "hierarchical", 
-   degree = list(from = 3, to = 1))) %>%
-  visInteraction(dragNodes = FALSE)
-rm(nodes, edges)
+source("flowchart.R")
+p
+rm(p)
 ```
 
 1. For each of the research hypothesis examples (above), find the appropriate statistical test using Figure \@ref(fig:choice-diagram). Hint: Hover your mouse pointer over a node, click on a dot, drag with your (left) mouse button, and zoom with your mouse wheel.
@@ -205,7 +143,7 @@ If we want to use a statistic, we need to know the variable and cases for which 
 
 Each household provides an observation, namely either the score 0 or the score 1 on this variable or no score if there are missing values. To test the research hypothesis that a television station reaches half of all households in a country, we have to formulate a statistical hypothesis about the proportion---of households viewing this television station---in the population---all households in this country. For example, the researcher's statistical hypothesis could be that the proportion in the population is 0.5.  
 
-We can also be interested in more than two categories, for example, does the television station reach half of all households in the north, east, south, and west of the country? This translates into a statistical hypothesis containing three or more proportions in the population: The proportion of households viewing this station is 0.5 in the north, it is 0.5 in the east, it is 0.5 in the south, and it is 0.5 in the west. Our statistical hypothesis is actually a relative frequency distribution, such as, for example, in Table \@ref(tab:hypo-freq).
+We can also be interested in more than two categories, for instance, does the television station reach half of all households in the north, east, south, and west of the country? This translates into a statistical hypothesis containing three or more proportions in the population: The proportion of households viewing this station is 0.5 in the north, it is 0.5 in the east, it is 0.5 in the south, and it is 0.5 in the west. Our statistical hypothesis is actually a relative frequency distribution, such as, for instance, in Table \@ref(tab:hypo-freq).
 
 ```{r hypo-freq, echo=FALSE}
 knitr::kable(data.frame(Region = c("North", "East", "South", "West"), HP = c(0.5, 0.5, 0.5, 0.5)), digits = 1, caption = "Statistical hypothesis about four proportions as a frequency table.", col.names = c("Region", "Hypothesized Proportion"))
@@ -479,7 +417,7 @@ the null hypothesis, whereas the significance test does.
 ### Variance: (dis)agreement
 Although rare, research hypotheses may focus on the variation in scores rather than on score level. The hypothesis about polarization provides an example. Polarization means that we have scores well above the centre and well below the centre rather than all scores concentrated in the middle. If voters' opinions about immigrants are strongly polarized, we have a lot of voters strongly in favour of admitting immigrants as well as many voters strongly opposed to admitting immigrants.  
 
-For a numeric variable, the variance or standard deviation---the latter is just the square root of the former---is the appropriate statistic to test a hypothesis about polarization. The research hypothesis concerns the variation of scores in two groups, for example, young versus old voters. The statistical hypothesis would be that the variance in opinions in the population of young voters is different from the variance in the population of old voters.  
+For a numeric variable, the variance or standard deviation---the latter is just the square root of the former---is the appropriate statistic to test a hypothesis about polarization. The research hypothesis concerns the variation of scores in two groups, for instance, young versus old voters. The statistical hypothesis would be that the variance in opinions in the population of young voters is different from the variance in the population of old voters.  
 
 ### Testing two variances in SPSS {#Levene-2groups}
 
@@ -1026,7 +964,7 @@ This null hypothesis is slightly different from the ones we have encountered so 
 
 By contrast, the null hypothesis stating that the population mean is 5.5 or higher is a _one-sided_ or one-tailed hypothesis. It can only be rejected if the sample statistic is at one side of the spectrum: only below (left-sided) or only above (right-sided) a particular value. A test of a one-sided null hypothesis is called a _one-sided test_. 
 
-In a left-sided test of the media literacy hypothesis, the researcher is not interested in demonstrating that average media literacy among children can be larger than 5.5. Usually, she is not interested because she rules out the possibility. For example, she beliefs that average media literacy among children cannot be substantially higher than 5.5. The researcher brings prior knowledge about the world to bear that has convinced her that average media literacy among children can only be lower than 5.5 on average in the population. 
+In a left-sided test of the media literacy hypothesis, the researcher is not interested in demonstrating that average media literacy among children can be larger than 5.5. Usually, she is not interested because she rules out the possibility. For instance, she beliefs that average media literacy among children cannot be substantially higher than 5.5. The researcher brings prior knowledge about the world to bear that has convinced her that average media literacy among children can only be lower than 5.5 on average in the population. 
 
 If there is a possibility that the score may also be higher than 5.5 and it is deemed important to note values well over 5.5 and values well below 5.5, the research and null hypotheses should be two-sided. Then, a sample average  well above 5.5 would also have resulted in a rejection of the null hypothesis. In a left-sided test, however, a high sample outcome cannot reject the null hypothesis. 
 
@@ -1102,7 +1040,7 @@ statistically significant.
 ```
 
 ### p Value
-If our sample statistic is a continuous variable, for example, average media literacy, we know that it does not make sense to calculate the probability of finding the exact sample mean that we obtained. In Section \@ref(cont-random-var), we have learned that we work with p values in this situation. For example, we use the probability of finding our sample mean or a mean that is even more distant from the hypothesized population mean.
+If our sample statistic is a continuous variable, for instance, average media literacy, we know that it does not make sense to calculate the probability of finding the exact sample mean that we obtained. In Section \@ref(cont-random-var), we have learned that we work with p values in this situation. For example, we use the probability of finding our sample mean or a mean that is even more distant from the hypothesized population mean.
 
 The question now is: How large must the difference be between the value that we expect according to our null hypothesis (the hypothesized population value), and the value that we observe in our sample, before we stop believing that the null hypothesis is true? If our null hypothesis expects the average media literacy of all children to be (at least) 5.5, how small should the sample mean be before we reject the null hypothesis?  
 
@@ -1129,7 +1067,7 @@ Compare it to the probability that we throw sixes with a dice. This probability 
 If the dice is biased, we don't know the probability of throwing sixes. In the same way, we have no clue whatsoever of the probability of drawing a sample like the one we have if the null hypothesis is not true in the population. This is why specifying a null hypothesis  is so important.
 
 ### Significance level and Type I error {#sig-typeI}
-The threshold value, conventionally .05, is called the _significance level_ of the test. If the null hypothesis---for example, average media literacy is 5.5 in the population---is true, but we accidentally draw a sample with a mean well below 5.5, our p value is smaller than the significance level and we reject the null hypothesis.  
+The threshold value, conventionally .05, is called the _significance level_ of the test. If the null hypothesis---for instance, average media literacy is 5.5 in the population---is true, but we accidentally draw a sample with a mean well below 5.5, our p value is smaller than the significance level and we reject the null hypothesis.  
 
 We have to reject the null hypothesis in this situation; those are the rules of the game. However, in concluding that the null hypothesis is wrong, we made a mistake. We don’t know and don’t believe that we make this error, but we still do. This error is called a _Type I error_: rejecting a hypothesis that is actually true.  
 
@@ -1214,7 +1152,7 @@ Nothing is special about a significance level of .05. We could have used any
 other cutoff value.
 ```
 
-What is the situation in a two-sided test, for example, if we hypothesize that average media literacy is not 5.5 in the population? Now, there are two ways in which we may reject the null hypothesis of 5.5 average media literacy: If the sample average media literacy is sufficiently larger than 5.5 or if it is sufficiently smaller. Each way of rejecting the null hypothesis has an associated probability if the null hypothesis is true (Type I error). Their sum is the significance level.
+What is the situation in a two-sided test, for instance, if we hypothesize that average media literacy is not 5.5 in the population? Now, there are two ways in which we may reject the null hypothesis of 5.5 average media literacy: If the sample average media literacy is sufficiently larger than 5.5 or if it is sufficiently smaller. Each way of rejecting the null hypothesis has an associated probability if the null hypothesis is true (Type I error). Their sum is the significance level.
 
 In practice, we divide the significance level by two and use half of the probability for the left tail and the other half for the right tail of the sampling distribution. If our significance level is .05, as it usually is, we use .025 as the maximum probability of finding a sample with a statistic that is so low that we would reject a null hypothesis that is true. We use the other .025 probability for drawing a sample with a statistic that is so high that we reject the null hypothesis.
 
@@ -1307,7 +1245,7 @@ this.
 * The t statistic expresses the difference between the (true or hypothesized)
 population value and the sample value in standard errors. It translates, for
 example, the difference between 5.5 (population average of media literacy) and
-4.0 (media literacy in our sample) into standard errors, for example, 0.5,
+4.0 (media literacy in our sample) into standard errors, for instance, 0.5,
 which yields a test statstic value of 1.5 / 0.5 = 3.0.
 * A larger sample yields a smaller standard error. As a result, we divide the
 difference in raw scores, 1.5 in the example, by a smaller number, so the
@@ -1321,7 +1259,7 @@ resulting test statistic is larger.
 
 A theoretical probability distribution links sample outcomes such as a sample mean to probabilities by means of a _test statistic_. A test statistic is named after the theoretical probability distribution to which it belongs: _z_ for the standard-normal or _z_ distribution, _t_ for the _t_ distribution, _F_ for the _F_ distribution and, you guessed it, chi-squared for the chi-squared distribution.  
 
-A test statistic is calculated from the sample statistic that we want to test, for example, the sample proportion, mean, variance, or association, but it uses the null hypothesis as well. A test statistic more or less standardizes the difference between the sample statistic and the population value that we expect under the null hypothesis. 
+A test statistic is calculated from the sample statistic that we want to test, for instance, the sample proportion, mean, variance, or association, but it uses the null hypothesis as well. A test statistic more or less standardizes the difference between the sample statistic and the population value that we expect under the null hypothesis. 
 
 The exact formula and calculation of a test statistic is not important to us. Just note that the larger the difference between observation (sample outcome) and expectation (hypothesized population value), the more extreme the value of the test statistic, the less likely (lower p value) it is that we draw a sample with the observed outcome or an outcome even more different from the hypothesized value, and, finally, the more likely we are to reject the null hypothesis.
 
@@ -1331,7 +1269,7 @@ Except for the normal distribution, the probability distributions that we use de
 
 The t distribution depends on the degrees of freedom of the test, for example. The degrees of freedom are determined by sample size: a larger sample yields slightly lower critical values in a t distribution. For samples that are not too small, however, the critical values of t are near 2. You may have noticed this in Figure \@ref(fig:crit-df).
 
-APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header "df". You should include it between brackets after the name of the test statistic, for example: t (18) = 0.63 (see Figure \@ref(fig:bootstrap-indep)). Note that the _F_ test statistic has two degrees of freedom, both of which should be reported (separated by a comma). 
+APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header "df". You should include it between brackets after the name of the test statistic, for instance: t (18) = 0.63 (see Figure \@ref(fig:bootstrap-indep)). Note that the _F_ test statistic has two degrees of freedom, both of which should be reported (separated by a comma). 
 
 ## Test Recipe and Rules for Reporting
 Testing a null hypothesis consists of several steps, which are summarized below, much like a recipe in a cookbook.
@@ -1342,7 +1280,7 @@ In the first step, translate the research hypothesis into a null and alternative
 
 2. Select the significance level of the test.  
 
-Before we execute the test, we have to choose the maximum probability of rejecting the null hypothesis if it is actually true. This, as we know now, is the significance level. We almost always select .05 (5%) as the significance level. If we have a very large sample, e.g., several thousands of cases, we may select a lower significance level, for example, 0.01. See Chapter \@ref(power) for more details.  
+Before we execute the test, we have to choose the maximum probability of rejecting the null hypothesis if it is actually true. This, as we know now, is the significance level. We almost always select .05 (5%) as the significance level. If we have a very large sample, e.g., several thousands of cases, we may select a lower significance level, for instance, 0.01. See Chapter \@ref(power) for more details.  
 
 3. Select how the sampling distribution is going to be created.  
 
@@ -1367,7 +1305,7 @@ The statistical results for a _t_ test on one mean, for example, would be:
 
 <center>_t_ (67) = 2.73, p = .004, 95%CI[4.13, 4.87]</center>  
 
-* The degrees of freedom are between parentheses directly after the name of the test statistic. Chi-squared tests add sample size to the degrees of freedom, for example: chi-squared (12, N = 89) = 23.14, p = .027.
+* The degrees of freedom are between parentheses directly after the name of the test statistic. Chi-squared tests add sample size to the degrees of freedom, for instance: chi-squared (12, N = 89) = 23.14, p = .027.
 
 * The value of the test statistic is 2.73 in this example.
 
@@ -1392,7 +1330,7 @@ For fellow scientists and especially for the general reader, it is important to 
 
 * If the results are significant, how large are the differences or associations?  
 
-A test on one proportion, for example, the proportion of all households reached by a television station, could be reported as follows:  
+A test on one proportion, for instance, the proportion of all households reached by a television station, could be reported as follows:  
 
 > "The television station reaches significantly and substantially (_p_ = .61) more than half of all households in Greece, _z_ = 4.01, p < .001."  
 
@@ -1475,7 +1413,7 @@ The probability refers to the sample that we have drawn. If the population value
 ### Testing a null hypothesis with a confidence interval  
 It is easy to execute a null hypothesis test if you know the confidence interval. If the population value specified in the null hypothesis is within the confidence interval, do not reject the null hypothesis. Otherwise, reject the null hypothesis.
 
-Let us imagine, for example, that the 95% confidence interval for average media literacy among children is 4.11 to 4.87. Our initial null hypothesis states that the average is at least 5.5. An average of 5.5 is clearly outside this 95% confidence interval, so this sample rejects the null hypothesis at the 5% significance level. 
+Let us imagine, for instance, that the 95% confidence interval for average media literacy among children is 4.11 to 4.87. Our initial null hypothesis states that the average is at least 5.5. An average of 5.5 is clearly outside this 95% confidence interval, so this sample rejects the null hypothesis at the 5% significance level. 
 
 We have already encountered this result in a previous section. Note, however, that our original test was one-sided but a confidence interval corresponds always to a two-sided test because it allows the parameter to be both smaller and larger than the sample value.  
 
@@ -1483,7 +1421,7 @@ It is also clear that any null hypothesis specifying a population mean above 5.5
 
 ### Testing a null hypothesis with bootstrapping  
 
-Using the confidence interval is the easiest and sometimes the only way of testing a null hypothesis if we create the sampling distribution with bootstrapping. For example, we may use the median as the preferred measure of central tendency rather than the mean, if the distribution of scores is quite skewed and the sample is not very large. In this situation, a theoretical probability distribution for the sample median is not known, so we resort to bootstrapping.
+Using the confidence interval is the easiest and sometimes the only way of testing a null hypothesis if we create the sampling distribution with bootstrapping. for instance, we may use the median as the preferred measure of central tendency rather than the mean, if the distribution of scores is quite skewed and the sample is not very large. In this situation, a theoretical probability distribution for the sample median is not known, so we resort to bootstrapping.
 
 ```{r null-bootstrap, eval=FALSE, echo=FALSE}
 # Create a (left) skewed sample of media literacy scores (N = 30, such that the sampling dsitribution is skewed?). Generate a sampling distribution of median media literacy scores and display it as a histogram (with narrow bins). Show to vertical lines for the lower and upper limit of the confidence interval and display the percentage of cases to left/middle/right of these lines. Add a range slider, so the user can set the lower and upper limits of the 95% confidence interval for the sample median.
@@ -1497,7 +1435,7 @@ Bootstrapping creates an empirical sampling distribution: a lot of samples with 
 
 ## Capitalization on Chance {#cap-chance}
 
-The relation between null hypothesis testing and confidence intervals may have given the impression that one could test a range of null hypotheses using just one sample and one confidence interval. For example, we could simultaneously test the null hypotheses that average media literacy among children is 5.5, 4.5, or 3.5. Just check if these values are inside or outside the confidence interval and you are done?  
+The relation between null hypothesis testing and confidence intervals may have given the impression that one could test a range of null hypotheses using just one sample and one confidence interval. for instance, we could simultaneously test the null hypotheses that average media literacy among children is 5.5, 4.5, or 3.5. Just check if these values are inside or outside the confidence interval and you are done?  
 
 This impression is wrong. The probabilities that we calculate using one sample assume that we only apply one test to the data. If we test the original null hypothesis that average media literacy is 5.5, we run a risk of five per cent to reject the null hypothesis if the null hypothesis is true.  
 
@@ -1527,7 +1465,7 @@ It occurs more strongly if we first have a look at our sample data and then form
 ### Advantages of using confidence intervals  
 If we cannot use the confidence interval to test a range of null hypotheses, what, then, is the added value of a confidence interval over a single null hypothesis test? The confidence interval tells us the plausible values of the parameter rather than whether or not it is one particular value. Putting it simply, we just know more from a confidence interval than from a null hypothesis test.
 
-We could use the additional information, if we were to do a new null hypothesis test on a new sample. We would have a better idea of plausible null hypotheses. We could, for example, test whether media literacy is 4.49, the middle of the confidence interval in our previous research project. A confidence interval helps us to be more specific in the next study addressing our topic, whether this study is carried out by ourselves or by our colleagues.
+We could use the additional information, if we were to do a new null hypothesis test on a new sample. We would have a better idea of plausible null hypotheses. We could, for instance, test whether media literacy is 4.49, the middle of the confidence interval in our previous research project. A confidence interval helps us to be more specific in the next study addressing our topic, whether this study is carried out by ourselves or by our colleagues.
 
 ## Take-Home Points  
 
