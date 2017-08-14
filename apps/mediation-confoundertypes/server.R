@@ -93,9 +93,9 @@ shinyServer(function(input, output) {
     # Hardcode of partial label/size
     partialsize <- switch(input$confradbut,
                           none = NA,
-                          news = 0.27,
-                          age =  0.09,
-                          edu = 0.18,
+                          news = 0.15,
+                          age =  0.04,
+                          edu = 0.19,
                           polcyn = 0.12)
     
     #MAIN PLOT                      
