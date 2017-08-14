@@ -140,13 +140,22 @@ predictor in the model.
 variable and the other with political interest as outcome variable.
 ```
 
-
 ## Controlling for Effects of Other Predictors {#controlling}
 
-```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors are added to the model? The light dots and lines represent the simple regression coefficients and their 95% confidence intervals. Dark dots and lines represent results in a regression model including all selected predictors."}
-# Goal: Show that regression coefficients change if new predictors are added to the regression model.
-# For outcome Newspaper Reading Time, display the standardized simple (=bivariate) regression coefficients and their 95% confidence intervals of predictors Age, Education, Pol. Interest, and News Site Use as gray fat lines and dots. Allow the user to add (and remove) predictors to a multiple regression model (if possible, by clicking on the predictor's name; if too complicated to program, add list of predictors with checkboxes). On selection, display and update the standardized regression coefficients of the predictors that are included in the model, which are represented as thin blue lines and dots.
-# Standardized coefficients that are in line with the example data file readers.sav:
+```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors are added to the model? The gray dots and lines represent the simple regression coefficients and their 95% confidence intervals in a model predicting nespaper reading time. Blue dots and lines represent results in a regression model including all selected predictors.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
+# Goal: Show that regression coefficients change if new predictors are added to
+# the regression model.
+# For outcome Newspaper Reading Time, display the standardized simple
+# (=bivariate) regression coefficients and their 95% confidence intervals of
+# predictors Age, Education, Pol. Interest, and News Site Use as gray fat lines
+# and dots. Allow the user to add (and remove) predictors to a multiple
+# regression model (if possible, by clicking on the predictor's name; if too
+# complicated to program, add list of predictors with checkboxes). On selection,
+# display and update the standardized regression coefficients of the predictors
+# that are included in the model, which are represented as thin blue lines and
+# dots.
+# Standardized coefficients that are in line with the example data file
+# readers.sav:
 # Age (simple): 0.88 [0.83; 0.94]
 # Age with Educ: 0.89 [0.83; 0.94]
 # Age with PolInt: 0.88 [0.83; 0.93]
@@ -179,13 +188,47 @@ variable and the other with political interest as outcome variable.
 # News Site Use with Age, PolInt: -0.23 [-0.36; -0.09]
 # News Site Use with Educ, PolInt: -0.85 [-0.91; -0.79]
 # News Site Use with Age, Educ, PolInt: -0.23 [-0.37; -0.09]
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/", height="465px")
 ```
 
-1. Select Age and another predictor in Figure \@ref(fig:mediation-multipleregression). Compare the regression coefficients and their confidence intervals for the multiple regression model including the selected predictors (dark dots and lines) to the results for the simple regression models including only one predictor (light dots and lines). 
+1. Select Age and Education in Figure \@ref(fig:mediation-multipleregression). Compare the regression coefficients and their confidence intervals for the multiple regression model including the selected predictors (blue dots and lines) to the results for the simple regression models including only one predictor (gray dots and lines).
 
-2. Try other combinations of Age and a second predictor. When do the coefficients change a lot. Can you explain why they change as they do?
+```{r eval=FALSE}
+* The effect of age remains more or less the same, around 0.9, if we control
+for education.
+* The negative effect of education if we do not control for age (gray),
+disappears if we control for age (blue). The blue dot for education is near
+zero (and positive rather than negative) and the confidence interval includes
+zero.
+```
+
+2. Try other combinations of Age and a second predictor. When does the regression coefficient of Age change markedly? Can you explain why it changes as it does?
+
+```{r eval=FALSE}
+* The regression coefficient of Age changes most when we add News site use as a
+predictor to the model. The effect of age becomes weaker (around 0.7).
+* Using internet as news source probably reduces newspaper reading time because
+news can be retrieved from the internet. Older people are less likely to use
+the internet as news source, so part of the positive effect of age on newspaper
+reading time is actually due to the fact that older people use news sites less
+instead of their age. That part of the age effect disappears if we add News
+site use as predictor to the model.
+```
 
 3. Interpret the meaning of the simple regression models and explain why they do not change if predictors are added. In which situation are the light and dark results equal?
+
+```{r eval=FALSE}
+* A simple regression model contains only one predictor. The regression
+coefficient represents the effect of this predictor without controlling for the
+effects of other predictors.
+* These effects are positive for Age and Political interest in the example:
+Older people and people who are more interested in politics are predicted to
+spend more time on reading newspapers. The effects are negative for Education
+and News site use: People with more (years of) education or more frequently
+using news sites are predicted to spend less time on reading newspapers.
+* If we select only one confounder, we have a simple regression model, so the
+predictor's blue effect must be equal to its gray effect.
+```
 
 In a regression model, we use the variation in scores on predictor variables to predict the variation of scores in the outcome variable: Does a person with a higher score on a predictor also have a higher score or, on the contrary, a lower score on the outcome variable? A simple regression model contains only one predictor but a multiple regression model includes more than one.
 

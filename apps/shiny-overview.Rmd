@@ -235,6 +235,19 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="6
 
 ## Chapter 8
 
+```{r resid-normal, fig.cap="What are the residuals and how are they distributed?"}
+# Goal: Understand the meaning of residuals by linking residuals in a
+# scatterplot to the x values in a histogram.
+# Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on
+# attitude and exposure, with a sizable error term to have residuals that are
+# clearly visible. Generate a sample with uniformly distributed residuals.
+# Display the sample as a scatterplot with the regression line and (red) line
+# segments linking the dots vertically to the regression line. Display the
+# residuals also as a histogram with normal curve. Hovering over/clicking a line
+# segment (residual) in the scatterplot should highlight the corresponding bar
+# in the histogram. Add a button to draw a new sample.
+```
+
 ```{r pred-linearity, fig.cap="How do residuals tell us whether the relation is linear?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating the shape of the association.
 # Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on attitude, with a sizable error term to have residuals that are clearly visible. Generate either a sample with (1) linear, (2) curved, (3) U-shaped association. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a button to select a different association shape. Upon selection of a shape, generate & display new sample data.
@@ -245,6 +258,27 @@ knitr::include_app("http://82.196.4.233:3838/apps/pred-linearity/", height="550p
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating homoscedasticity.
 # Generate a sample (N = 20) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate error terms with a dependency on the predictor ranging from -1 to +1. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a slider (range [-@, 0], initial value 0) to set the levl of heteroscedasticity. Upon slider change, generate & display new sample data.
 knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", height="550px")
+```
+
+```{r common-support, fig.cap="How well do the observations cover the predictor within each category of smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Sensitize students to the problem of lacking support for conditional
+# effects by inspecting the coverage of the predictor for each moderator group.
+# Generate a sample for smokers, for former smokers, and for non-smokers each of
+# size 30. Give one or two randomly selected groups exposure values in the
+# entire range [0, 10], but the remaining group(s) a restricted exposure range
+# of 4 to 6 or 1 to 3 score points.
+# Randomly assign a neutral, slightly negative, or moderately negative effect of
+# exposure on attitude to the group. Display the three groups in a scatterplot
+# (attitude by exposure) with different dot colours and their regression lines
+# (coloured and labeled).
+# Directly below the scatterplot, add a histogram of exposure, showing coverage.
+# Allow the user to select groups 'All' (initial value), 'Smokers', 'Former
+# smokers', or 'Non-smokers'. On selection, display the appropriate regression
+# line and observations in the scatterplot and show their exposure scores in the
+# histogram. Note that the scale of the histogram and the x axisof the
+# scatterplot must be fixed to [0, 10].
+# Add a Generate New button to generate a new dataset.
+knitr::include_app("http://82.196.4.233:3838/apps/common-support/", height="580px")
 ```
 
 ```{r continuous-moderator, fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
@@ -263,6 +297,18 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height
 # # Create outcome.
 # set.seed(390)
 # attitude <- -0.26*exposure + 0.15*contact + 0.04*exposure*contact + rnorm(n, mean = 2, sd = 0.5)
+```
+
+```{r continuous-interaction-visualization, fig.cap="Which moderator values are helpful for visualizing moderation?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
+# Goal: Clarify the interpretation of the (unstandardized) interaction effect by
+# showing regression lines at different (interesting) moderator scores (display
+# slope value).
+# Variant of the app continuous-moderator; ensure that there are few predictor
+# values at the minimum and maximum values of the moderator. Allow user to pick
+# several values for the moderator from a list containing: minimum, maximum,
+# first tercile, second tercile, M - 2SD, M - 1SD, M, M + 1SD, M
+# + 2SD. Display the selected lines in different colours.
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-interaction-visualization/", height="390px")
 ```
 
 ## Chapter 9

@@ -433,16 +433,45 @@ Clustered data should also not be considered as independent observations. Think,
 
 #### Identically distributed observations
 
-```{r resid-normal, fig.cap="What are the residuals and how are they distributed?"}
-# Goal: Understand the meaning of residuals by linking residuals in a scatterplot to the x values in a histogram.
-# Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate either a sample with normally distributed residuals or uniformly distributed residuals. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also as a histogram with normal curve. Hovering over/clicking a line segment (residual) in the scatterplot should highlight the corresponding bar in the histogram. Add a button to draw a new sample.
+```{r resid-normal, fig.cap="What are the residuals and how are they distributed?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Understand the meaning of residuals by linking residuals in a
+# scatterplot to the x values in a histogram.
+# Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on
+# attitude and exposure, with a sizable error term to have residuals that are
+# clearly visible. Generate a sample with uniformly distributed residuals.
+# Display the sample as a scatterplot with the regression line and (red) line
+# segments linking the dots vertically to the regression line. Display the
+# residuals also as a histogram with normal curve. Hovering over/clicking a line
+# segment (residual) in the scatterplot should highlight the corresponding bar
+# in the histogram. Add a button to draw a new sample.
+knitr::include_app("http://82.196.4.233:3838/apps/resid-normal/", height="480px")
 ```
 
 1. What do the lines between dots and regression line represent in the scatterplot of Figure \@ref(fig:resid-normal)?
 
-2. What is the relation between the scatterplot and the histogram?
+```{r eval=FALSE}
+* A red line depicts the residual or prediction error: The difference between
+the actual outcome score (attitude) for a respondent (dot) and the outcome
+score predicted by the regression line (blue) for the predictor score
+(exposure) of the respondent.
+```
+
+2. What is the relation between the scatterplot and the histogram? Can you point out the dot in the scatterplot that belongs to the leftmost bar in the histogram?
+
+```{r eval=FALSE}
+* The residuals represented by the red lines in the scatterplot are counted in
+the histogram.
+* Drag the mouse pointer around one or more dots in the scatterplot and you
+will see where they are featured in the histogram (blue). The dot that is
+furthest below the regression line is counted in the left-most bar of the
+histogram.
+```
 
 3. Draw some new samples. Are the residuals always normally distributed?
+
+```{r eval=FALSE}
+* No, sometimes the histogram is clearly skewed (asymmetrical).
+```
 
 If we sample from a population where attitude towards smoking depends on exposure, smoking status, and contact with smokers, we will be able to predict attitude from the predictors in our sample. Our predictions will not be perfect, sometimes too high and sometimes to low. These are the residuals. 
 
@@ -1093,16 +1122,58 @@ Let us conclude the interpretation with a warning. The standardized regression c
 
 ### Common support {#commonsupportdichotomous}
 
-```{r common-support, fig.cap="Common support for the exposure predictor in each category of smoking status."}
-# Goal: Sensitize students to the problem of lacking support for conditional effects by inspecting the coverage of the predictor for each moderator group.
-# Generate a sample for smokers, for former smokers, and for non-smokers each of size 20. Give one or two randomly selected groups exposure values in the entire range [0, 10], but the remaining group(s) a restricted exposure range of 4 to 6 or 1 to 3 score points. Randomly assign a neutral, slightly negative, or moderately negative effect of exposure on attitude to the group. Display the three groups in a scatterplot (attitude by exposure) with different dot colours and their regression lines (coloured and labeled). Directly below the scatterplot, add a histogram of exposure, showing coverage. Allow the user to select groups 'All' (initial value), 'Smokers', 'Former smokers', or 'Non-smokers'. On selection, display the appropriate regression line and observations in the scatterplot and show their exposure scores in the histogram. Note that the scale of the histogram and the x axisof the scatterplot must be fixed to [0, 10]. Add a Generate New button to generate a new dataset.
+```{r common-support, fig.cap="How well do the observations cover the predictor within each category of smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Sensitize students to the problem of lacking support for conditional
+# effects by inspecting the coverage of the predictor for each moderator group.
+# Generate a sample for smokers, for former smokers, and for non-smokers each of
+# size 30. Give one or two randomly selected groups exposure values in the
+# entire range [0, 10], but the remaining group(s) a restricted exposure range
+# of 4 to 6 or 1 to 3 score points.
+# Randomly assign a neutral, slightly negative, or moderately negative effect of
+# exposure on attitude to the group. Display the three groups in a scatterplot
+# (attitude by exposure) with different dot colours and their regression lines
+# (coloured and labeled).
+# Directly below the scatterplot, add a histogram of exposure, showing coverage.
+# Allow the user to select groups 'All' (initial value), 'Smokers', 'Former
+# smokers', or 'Non-smokers'. On selection, display the appropriate regression
+# line and observations in the scatterplot and show their exposure scores in the
+# histogram. Note that the scale of the histogram and the x axisof the
+# scatterplot must be fixed to [0, 10].
+# Add a Generate New button to generate a new dataset.
+knitr::include_app("http://82.196.4.233:3838/apps/common-support/", height="580px")
 ```
 
 1. What does the histogram represent in Figure \@ref(fig:common-support)?
 
+```{r eval=FALSE}
+* The histogram shows the counts of cases with particular exposure values.
+* The counts are subdivided (coloured) by their score on the moderator variable
+(smoking status).
+```
+
 2. Are the exposure values nicely spread for each smoke status group? Inspect each smoke status group separately with the "Show groups" option. 
 
-3. What is the problem if exposure scores are not nicely spread within each smoke status group?
+```{r eval=FALSE}
+* The answer depends on the sample that was drawn.
+* A moderator (smoking status) group may have scores for the entire range of
+the predictor exposure, that is, from 0 to 10. But scores may also be available
+only for part of this range, for example, from 1 to 6 or from 4 to 8.
+```
+
+3. What is the problem if exposure scores are not nicely spread over the same range for all smoke status groups?
+
+```{r eval=FALSE}
+* We may erroneously believe that the moderation effect applies to the entire
+range of scores. For example, we may conclude that there is a negative effect
+for smokers versus a positive effect for non-smokers. However, the effect for
+smokers may be based on a range of exposure values that is different and
+perhaps hardly overlapping with the range of exposure values for non-smokers.
+In this case, the effect difference may be due to the level of predictor scores
+instead of to the moderator.
+* In extreme cases, we may have only very few observations for a moderator
+group, for example, only a handful of smokers. In this situation, the
+regression effect for this group is not to be trusted.
+```
 
 In a regression model with moderation, we have to interpret the effect of a predictor involved in the interaction at a particular value of the moderator (Section \@ref(conditional-effects)). The estimated effect at a particular value of the moderator can only be trusted if there are quite some observations at or near this value of the moderator. In addition, these observations should cover the full range of values on the predictor. After all, the effect that we estimate must tell us whether higher values on the predictor go together with higher (or lower) values on the outcome.
 
@@ -1747,14 +1818,40 @@ Mean centering does not change the interpretation of regression coefficients. An
 
 ### Visualization of the interaction effect
 
-```{r continuous-interaction-visualization, fig.cap="Which moderator values are helpful for visualizing moderation?"}
-# Goal: Clarify the interpretation of the (unstandardized) interaction effect by showing regression lines at different (interesting) moderator scores (display slope value).
-# Variant of the app continuous-moderator; ensure that there are few prdictor values at the minimum and maximum values of the moderator. Allow user to pick several values for the moderator from a list containing: minimum, maximum, 33% percentile, 67% percentile, M - 2SD, M - 1SD, M, M + 1SD, M + 2SD. Display the selected lines in different colours.
+```{r continuous-interaction-visualization, fig.cap="Which moderator values are helpful for visualizing moderation?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
+# Goal: Clarify the interpretation of the (unstandardized) interaction effect by
+# showing regression lines at different (interesting) moderator scores (display
+# slope value).
+# Variant of the app continuous-moderator; ensure that there are few predictor
+# values at the minimum and maximum values of the moderator. Allow user to pick
+# several values for the moderator from a list containing: minimum, maximum,
+# first tercile, second tercile, M - 2SD, M - 1SD, M, M + 1SD, M
+# + 2SD. Display the selected lines in different colours.
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-interaction-visualization/", height="390px")
 ```
 
-1. Which moderator values would you pick to communicate the results of moderation? Motivate your answer.
+1. Select one or more options in Figure \@ref(fig:continuous-interaction-visualization) to represent regression lines predicting attitude from exposure at different values of the moderator (contact with smokers). Respondents with moderator values close to the selected value are coloured. Which moderator values would you pick to communicate the results of moderation? Motivate your answer.
 
-2. Which sets of options give similar results?
+```{r eval=FALSE}
+* The important thing is to understand that a regression line that depends on
+few observations is not very trustworthy. The line usually does not represent
+the observations well. In addition, these few observations may have different
+predictor and outcome values in a new sample, so the regression line may be
+quite different at these moderator value in a new sample.
+* The minimum and maximum value observed in the current sample represent
+regression lines that are quite outside of the dot cloud. They repesent very
+few observations, so they are not very trustworthy.
+* Observations with moderator values at two standard deviations away from the
+mean (options: M - 2SD and M + 2SD), are still quite rare.
+* Observations with moderator values at one standard deviations away from the
+mean (options: M - 1SD and M + 1SD), are quite common. These regression
+lines are nicely embedded in the dot cloud. They are good candidates for
+interpreting moderation.
+* Of course, moderator values even closer to the mean, such as moderator values
+below or above which we fine one third of all scores (the first and third
+terciles) are also well supported by observations, as is the moderator mean
+itself.
+```
 
 As we have seen in Section \@ref(interpret-cont-interaction), the regression coefficient of an interaction effect with a continuous moderator can be directly interpreted. It represents the predicted difference in the unstandardized effect size for a one unit increase in the moderator. For example, one more contact with a smoker increases the exposure effect by 0.04.
 
