@@ -190,122 +190,122 @@ knitr::include_url("https://www.youtube.com/embed/S8I5o_3p6ro", height = "360px"
 1. Use <a href="http://82.196.4.233:3838/data/households.sav" target="_blank">the data set "households.sav"</a> to test the hypothesis that the TV station does not reach 40 per cent of all households in the population.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=tv_reach
-  /ORDER=ANALYSIS.
-* Binomial test.
-* Note: The test is one-sided if the test proprtion is not 0.50.
-NPAR TESTS
-  /BINOMIAL (0.40)=tv_reach
-  /MISSING ANALYSIS.
-
-Check data & assumptions: 
-
-Variable tv_reach is a dichotomy as it should be for this test.
+SPSS syntax:  
   
-Interpret the results:
-
-The TV station reaches less than sixty per cent of all households, 
-p = .039 (one-sided).
+\* Check data.  
+FREQUENCIES VARIABLES=tv_reach  
+  /ORDER=ANALYSIS.  
+\* Binomial test.  
+\* Note: The test is one-sided if the test proprtion is not 0.50.  
+NPAR TESTS  
+  /BINOMIAL (0.40)=tv_reach  
+  /MISSING ANALYSIS.  
+  
+Check data & assumptions:   
+  
+Variable tv_reach is a dichotomy as it should be for this test.  
+    
+Interpret the results:  
+  
+The TV station reaches less than sixty per cent of all households,   
+p = .039 (one-sided).  
 ```
 
 2. Test the hypothesis that the TV station reaches 55 per cent of all households in the population.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=tv_reach
-  /ORDER=ANALYSIS.
-* Binomial test.
-* Hint: Test the proportion of households not reached because 
-  this is the first category: 1 - 0.55 = 0.45.
-NPAR TESTS
-  /BINOMIAL (0.45)=tv_reach
-  /MISSING ANALYSIS.
-
-Check data & assumptions: 
-
-Variable tv_reach is a dichotomy as it should be for this test.
+SPSS syntax:  
   
-Interpret the results:
-
-We cannot reject the null hypothesis that the TV station reaches 
-at least 55 per cent of all households, p = .260 (one-sided).
-```
-
-3. Does half of the households have an income of at most 40,000? 
-
-```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=income
-  /ORDER=ANALYSIS.
-* Binomial test.
-* Use the cut of option in the binomial test.
-NPAR TESTS
-  /BINOMIAL (0.50)=income (40000)
-  /MISSING ANALYSIS.
-
-Check data:
-
-There are no apparent impossible income values.
-
-Check assumptions:
-
-There are no assumptions for the binomial test.
-
-Interpret the results:
-
-The proportion of households with an income of at most 40,000 
-is significantly less than fifty per cent, p = .022. It is 
-39 per cent in the sample.
+\* Check data.  
+FREQUENCIES VARIABLES=tv_reach  
+  /ORDER=ANALYSIS.  
+\* Binomial test.  
+\* Hint: Test the proportion of households not reached because   
+  this is the first category: 1 - 0.55 = 0.45.  
+NPAR TESTS  
+  /BINOMIAL (0.45)=tv_reach  
+  /MISSING ANALYSIS.  
+  
+Check data & assumptions:   
+  
+Variable tv_reach is a dichotomy as it should be for this test.  
+    
+Interpret the results:  
+  
+We cannot reject the null hypothesis that the TV station reaches   
+at least 55 per cent of all households, p = .260 (one-sided).  
+```  
+  
+3. Does half of the households have an income of at most 40,000?   
+  
+```{r eval=FALSE}  
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=income  
+  /ORDER=ANALYSIS.  
+\* Binomial test.  
+\* Use the cut of option in the binomial test.  
+NPAR TESTS  
+  /BINOMIAL (0.50)=income (40000)  
+  /MISSING ANALYSIS.  
+  
+Check data:  
+  
+* There are no apparent impossible income values.  
+  
+Check assumptions:  
+  
+There are no assumptions for the binomial test.  
+  
+Interpret the results:  
+  
+The proportion of households with an income of at most 40,000   
+is significantly less than fifty per cent, p = .022. It is   
+39 per cent in the sample.  
 ```
 
 4. According information from the National Bureau of Statistics, 20 per cent of all households have incomes up to 30,000, 50 per cent have incomes between 30,000 and 50,000, and 30 per cent has incomes over 50,000. Use a test to decide if our sample is representative with respect to income. Hint: recode income first.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=income
-  /ORDER=ANALYSIS.
-* Recoding income into groups.
-RECODE income (Lowest thru 30000=1) (30000  thru 50000=2)
-  (50000 thru Highest=3) INTO income_group.
-VARIABLE LABELS  income_group 'Grouped income'.
-EXECUTE.
-* Define Variable Properties.
-*income_group.
-VALUE LABELS income_group
-  1.00 'low'
-  2.00 'medium'
-  3.00 'high'.
-EXECUTE.
-* one-sample chi-squared test.
-NPAR TESTS
-  /CHISQUARE=income_group
-  /EXPECTED=20 50 30
-  /MISSING ANALYSIS.
-
-There are no apparent impossible income values.
-
-Check assumptions:
-
-There are no assumptions for the binomial test.
+SPSS syntax:  
   
-Interpret the results:
-
-The distribution of incomes over income groups in the sample 
-does not differ in a statistically significant way from the 
-distribution in the population according to the National
-Bureau of Statistics, chi-squared (2) = 3.40, p = .182.
-In other words, we have no reason to believe that our 
-sample is not representative of the population with 
-regards to income.
+\* Check data.  
+FREQUENCIES VARIABLES=income  
+  /ORDER=ANALYSIS.  
+\* Recoding income into groups.  
+RECODE income (Lowest thru 30000=1) (30000  thru 50000=2)  
+  (50000 thru Highest=3) INTO income_group.  
+VARIABLE LABELS  income_group 'Grouped income'.  
+EXECUTE.  
+\* Define Variable Properties.  
+\*income_group.  
+VALUE LABELS income_group  
+  1.00 'low'  
+  2.00 'medium'  
+  3.00 'high'.  
+EXECUTE.  
+\* one-sample chi-squared test.  
+NPAR TESTS  
+  /CHISQUARE=income_group  
+  /EXPECTED=20 50 30  
+  /MISSING ANALYSIS.  
+  
+There are no apparent impossible income values.  
+  
+Check assumptions:  
+  
+There are no assumptions for the binomial test.  
+    
+Interpret the results:  
+  
+The distribution of incomes over income groups in the sample   
+does not differ in a statistically significant way from the   
+distribution in the population according to the National  
+Bureau of Statistics, chi-squared (2) = 3.40, p = .182.  
+In other words, we have no reason to believe that our   
+sample is not representative of the population with   
+regards to income.  
 ```
 
 ### Mean and median: level
@@ -332,86 +332,86 @@ knitr::include_url("https://www.youtube.com/embed/Bx0eiqfVfaw", height = "360px"
 1. Use the <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav data set</a> to test the hypothesis that average parental supervision of the child's media use is 5.5 (on a scale from 1 to 10) in the population.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=supervision
-  /ORDER=ANALYSIS.
-* Set imposible value (25) to missing.
-* Define Variable Properties.
-*supervision.
-MISSING VALUES supervision(25.00).
-EXECUTE.
-* One-sample t test.
-T-TEST
-  /TESTVAL=5.5
-  /MISSING=ANALYSIS
-  /VARIABLES=supervision
-  /CRITERIA=CI(.95).
-
-Check data:
-    
-There is one impossible value for parental supervision,
-namely 25. This value must be made missing.
-
-Check assumptions:
-
-Sample size (N = 86) is well over 30, so we need no worry
-about the shape of the variable distribution in the
-population.
+SPSS syntax:  
   
-Interpret the results:
-
-We are rather confident that the true average supervision 
-score in the population is around 5.5, more specifically, 
-between 4.94 and 5.77, t (85) = -0.68, p = .498, 95%CI[4.94; 5.77].
-
-Note that we have to add the confidence interval limits
-to the test value (here: 5.5) to obtain the confidence
-interval for the population mean.
+\* Check data.  
+FREQUENCIES VARIABLES=supervision  
+  /ORDER=ANALYSIS.  
+\* Set imposible value (25) to missing.  
+\* Define Variable Properties.  
+\*supervision.  
+MISSING VALUES supervision(25.00).  
+EXECUTE.  
+\* One-sample t test.  
+T-TEST  
+  /TESTVAL=5.5  
+  /MISSING=ANALYSIS  
+  /VARIABLES=supervision  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+      
+There is one impossible value for parental supervision,  
+namely 25. This value must be made missing.  
+  
+Check assumptions:  
+  
+Sample size (N = 86) is well over 30, so we need no worry  
+about the shape of the variable distribution in the  
+population.  
+    
+Interpret the results:  
+  
+We are rather confident that the true average supervision   
+score in the population is around 5.5, more specifically,   
+between 4.94 and 5.77, t (85) = -0.68, p = .498, 95%CI[4.94; 5.77].  
+  
+Note that we have to add the confidence interval limits  
+to the test value (here: 5.5) to obtain the confidence  
+interval for the population mean.  
 ```
 
 2. Have a look at the confidence interval reported for Exercise 1. If you would test the hypothesis that average media literacy in the population is 4.5, would the test be statistically significant? Check your answer by carrying out this test.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=supervision
-  /ORDER=ANALYSIS.
-* Set imposible value (25) to missing.
-* Define Variable Properties.
-*supervision.
-MISSING VALUES supervision(25.00).
-EXECUTE.
-* One-sample t test.
-T-TEST
-  /TESTVAL=4.5
-  /MISSING=ANALYSIS
-  /VARIABLES=supervision
-  /CRITERIA=CI(.95).
-
-Check data:
-
-There is one impossible value for parental supervision,
-namely 25. This value must be made missing.
-
-Check assumptions:
-
-Sample size (N = 86) is well over 30, so we need no worry
-about the shape of the variable distribution in the
-population.
-
-Interpret the results:
-
-The average parental supervision score in the sample 
-(M = 5.39, SD = 1.95) makes us doubt that the true
-average supervision score in the population is 4.5 or
-thereabouts, t (85) = 4.10, p < .001, 95%CI[4.94; 5.77].
-
-Note that we obtain the same confidence interval as in
-Exercise 1. The confidence interval does not depend on 
-the null hypothesis, whereas the significance test does.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=supervision  
+  /ORDER=ANALYSIS.  
+\* Set imposible value (25) to missing.  
+\* Define Variable Properties.  
+\*supervision.  
+MISSING VALUES supervision(25.00).  
+EXECUTE.  
+\* One-sample t test.  
+T-TEST  
+  /TESTVAL=4.5  
+  /MISSING=ANALYSIS  
+  /VARIABLES=supervision  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There is one impossible value for parental supervision,  
+namely 25. This value must be made missing.  
+  
+Check assumptions:  
+  
+Sample size (N = 86) is well over 30, so we need no worry  
+about the shape of the variable distribution in the  
+population.  
+  
+Interpret the results:  
+  
+The average parental supervision score in the sample   
+(M = 5.39, SD = 1.95) makes us doubt that the true  
+average supervision score in the population is 4.5 or  
+thereabouts, t (85) = 4.10, p < .001, 95%CI[4.94; 5.77].  
+  
+Note that we obtain the same confidence interval as in  
+Exercise 1. The confidence interval does not depend on   
+the null hypothesis, whereas the significance test does.  
 ```
 
 ### Variance: (dis)agreement
@@ -438,84 +438,84 @@ knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px"
 1. Data set <a href="http://82.196.4.233:3838/data/voters.sav" target="_blank">"voters.sav"</a> contains information about the age and attitude towards immigration among a random sample of voters. Is the attitude towards immigrants equally polarized among young (under 30) and old (30+) voters? Justify your answer with a statistical test.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=age_group immigrant
-  /ORDER=ANALYSIS.
-* Independent-samples t test with Levene s test.
-T-TEST GROUPS=age_group(1 2)
-  /MISSING=ANALYSIS
-  /VARIABLES=immigrant
-  /CRITERIA=CI(.95).
-
-Check data:
-
-There are no impossible values on the variables.
-
-Check assumptions:
-
-There are no assumptions that we have to check for
-the Levene test.
-
-Interpret the results:
-
-The attitude towards immigrants is more polarized among
-older voters (SD = 2.06) than among young voters (SD = 1.26).
-The difference in variation is statistically significant,
-F = 4.99, p = .029.
-Note that SPSS does not report the (two) degrees of freedom
-of the F test, so we cannot report them either. 
-SPSS reports the degrees of freedom in a one-way analysis of 
-variance. We could have used that approach here as well.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=age_group immigrant  
+  /ORDER=ANALYSIS.  
+\* Independent-samples t test with Levene s test.  
+T-TEST GROUPS=age_group(1 2)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=immigrant  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants is more polarized among  
+older voters (SD = 2.06) than among young voters (SD = 1.26).  
+The difference in variation is statistically significant,  
+F = 4.99, p = .029.  
+Note that SPSS does not report the (two) degrees of freedom  
+of the F test, so we cannot report them either.   
+SPSS reports the degrees of freedom in a one-way analysis of   
+variance. We could have used that approach here as well.  
 ```
 
 2. Use the data of Exercise 1. Create a new variable grouping voter's age with classes 18-35, 36-65, and 66+ years. Is the attitude towards immigrants equally polarized among these three age groups in the population? Justify your answer with a statistical test.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=age immigrant
-  /ORDER=ANALYSIS.
-* Group age.
-RECODE age (Lowest thru 35=1) (36 thru 65=2)
-  (66 thru Highest=3) INTO age3.
-VARIABLE LABELS  age3 'Voter ages in three groups'.
-EXECUTE.
-* Define Variable Properties.
-*age3.
-VALUE LABELS age3
-  1.00 '18-35'
-  2.00 '36-65'
-  3.00 '66+'.
-EXECUTE.
-* ANOVA with descriptives.
-ONEWAY immigrant BY age3
-  /STATISTICS DESCRIPTIVES HOMOGENEITY 
-  /MISSING ANALYSIS.
-
-Check data:
-
-There are no impossible values on the variables.
-
-Check assumptions:
-
-There are no assumptions that we have to check for
-the Levene test.
-
-Interpret the results:
-
-The attitude towards immigrants seems to be more polarized 
-among middle-aged (SD = 2.17) and aged voters (SD = 2.06) 
-than among young voters (SD = 1.37). 
-The difference in variation, however, is not statistically 
-significant, F (2, 63) = 2.77, p = .070.
-This result seems to contradict the statistically significant
-test result that we found in Exercise 1, comparing only young 
-to old voters. There is no contradiction, however. We merely
-see that the classification into groups can matter to the 
-significance of results.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=age immigrant  
+  /ORDER=ANALYSIS.  
+\* Group age.  
+RECODE age (Lowest thru 35=1) (36 thru 65=2)  
+  (66 thru Highest=3) INTO age3.  
+VARIABLE LABELS  age3 'Voter ages in three groups'.  
+EXECUTE.  
+\* Define Variable Properties.  
+\*age3.  
+VALUE LABELS age3  
+  1.00 '18-35'  
+  2.00 '36-65'  
+  3.00 '66+'.  
+EXECUTE.  
+\* ANOVA with descriptives.  
+ONEWAY immigrant BY age3  
+  /STATISTICS DESCRIPTIVES HOMOGENEITY   
+  /MISSING ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants seems to be more polarized   
+among middle-aged (SD = 2.17) and aged voters (SD = 2.06)   
+than among young voters (SD = 1.37).   
+The difference in variation, however, is not statistically   
+significant, F (2, 63) = 2.77, p = .070.  
+This result seems to contradict the statistically significant  
+test result that we found in Exercise 1, comparing only young   
+to old voters. There is no contradiction, however. We merely  
+see that the classification into groups can matter to the   
+significance of results.  
 ```
 
 ### Association: relations between characteristics  
@@ -623,111 +623,111 @@ knitr::include_url("https://www.youtube.com/embed/1-kh9_pGI9k", height = "360px"
 1. Use <a href="http://82.196.4.233:3838/data/donors.sav" target="_blank">donors.sav</a> to test if people's willingness to donate at the end of the campaign depends on the celebrity endorsing the campaign.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=willing_post endorser
-  /ORDER=ANALYSIS.
-* One-way analysis of variance.
-ONEWAY willing_post BY endorser
-  /STATISTICS DESCRIPTIVES HOMOGENEITY 
-  /PLOT MEANS
-  /MISSING ANALYSIS
-  /POSTHOC=BONFERRONI ALPHA(0.05).
-
-Check data:
-
-There are no impossible values on the variables.
-
-Check assumptions:
-
-The three groups are more or less of equal sizes:
-The largest difference is 4 participants, which is less
-than ten per cent of the smallest group (N = 45).
-Anyway, we may assume equal population variances,
-Levene F (2, 140) = .02, p = .978.
-
-Interpret the results:
-
-Willingness to donate depends on the endorsing celebrity. 
-There is a statistically significant difference between average
-willingness to donate for the three endorsers, F (2, 140) = 7.44, 
-p = .001.
-People are more willing to donate if they have seen Clooney 
-(M = 4.99, SD = 1.64) or Jolie (M = 4.95, SD = 1.63) endorse the 
-fund raiser than people who do not see a celebrity endorser 
-(M = 3.87, SD = 1.47). The differences between, on the one 
-hand, no celebrity endorser and, on the other hand, Clooney
-(p = .002) or Jolie (p = .004) are statistically significant.
-
-Instead of reporting the F test result in the text, the 
-ANOVA table can be included.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=willing_post endorser  
+  /ORDER=ANALYSIS.  
+\* One-way analysis of variance.  
+ONEWAY willing_post BY endorser  
+  /STATISTICS DESCRIPTIVES HOMOGENEITY   
+  /PLOT MEANS  
+  /MISSING ANALYSIS  
+  /POSTHOC=BONFERRONI ALPHA(0.05).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+The three groups are more or less of equal sizes:  
+The largest difference is 4 participants, which is less  
+than ten per cent of the smallest group (N = 45).  
+Anyway, we may assume equal population variances,  
+Levene F (2, 140) = .02, p = .978.  
+  
+Interpret the results:  
+  
+Willingness to donate depends on the endorsing celebrity.   
+There is a statistically significant difference between average  
+willingness to donate for the three endorsers, F (2, 140) = 7.44,   
+p = .001.  
+People are more willing to donate if they have seen Clooney   
+(M = 4.99, SD = 1.64) or Jolie (M = 4.95, SD = 1.63) endorse the   
+fund raiser than people who do not see a celebrity endorser   
+(M = 3.87, SD = 1.47). The differences between, on the one   
+hand, no celebrity endorser and, on the other hand, Clooney  
+(p = .002) or Jolie (p = .004) are statistically significant.  
+  
+Instead of reporting the F test result in the text, the   
+ANOVA table can be included.  
 ```
 
 2. Is willingness to donate at the end of the campaign higher for those who remember the campaign than for those who do not remember it?
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=willing_post remember
-  /ORDER=ANALYSIS.
-* Independent-samples t test.
-T-TEST GROUPS=remember(0 1)
-  /MISSING=ANALYSIS
-  /VARIABLES=willing_post
-  /CRITERIA=CI(.95).
-
-Check data:
-
-There are no impossible values on the variables.
-
-Check assumptions:
-
-Sample sizes (N = 66 and N = 77) are of sufficient
-size not to worry about the shape of the distribution
-of willingness in the population.
-
-Interpret the results:
-
-Willingness to donate at the end of the campaign is significantly 
-higher for those who remember the campaign (M = 4.94, SD = 1.60) 
-than for those who do not remember it (M = 4.24, SD = 1.65), 
-t (141) = -2.57, p = .011, 95%CI[-1.24, -0.16]. 
-Willingness is 0.16 to 1.24 points higher on a 10-point scale for 
-those who remember the campaign. Considering the range of the 
-scale, this is quite a small difference.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=willing_post remember  
+  /ORDER=ANALYSIS.  
+\* Independent-samples t test.  
+T-TEST GROUPS=remember(0 1)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=willing_post  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+Sample sizes (N = 66 and N = 77) are of sufficient  
+size not to worry about the shape of the distribution  
+of willingness in the population.  
+  
+Interpret the results:  
+  
+Willingness to donate at the end of the campaign is significantly   
+higher for those who remember the campaign (M = 4.94, SD = 1.60)   
+than for those who do not remember it (M = 4.24, SD = 1.65),   
+t (141) = -2.57, p = .011, 95%CI[-1.24, -0.16].   
+Willingness is 0.16 to 1.24 points higher on a 10-point scale for   
+those who remember the campaign. Considering the range of the   
+scale, this is quite a small difference.  
 ```
 
 3. Did willingness to donate increase in the population between the start and the end of the campaign?
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=willing_post willing_pre
-  /ORDER=ANALYSIS.
-* Paired-samples t test.
-T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)
-  /CRITERIA=CI(.9500)
-  /MISSING=ANALYSIS.
-
-Check data:
-
-There are no impossible values on the two variables.
-
-Check assumptions:
-
-Sample size is sufficiently large (N = 143).
-
-Interpret the results:
-
-There is a small but statistically significant increase in
-the willingness to donate over the duration of the experiment,
-t (142) = 5.74, p < .001, 95%CI[0.08; 0.17].
-Average willingness to donate is 0.08 to 0.17 units higher
-at the end of the experiment than at the start. This is a 
-very small difference on a 10-point scale.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=willing_post willing_pre  
+  /ORDER=ANALYSIS.  
+\* Paired-samples t test.  
+T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
+  /CRITERIA=CI(.9500)  
+  /MISSING=ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the two variables.  
+  
+Check assumptions:  
+  
+Sample size is sufficiently large (N = 143).  
+  
+Interpret the results:  
+  
+There is a small but statistically significant increase in  
+the willingness to donate over the duration of the experiment,  
+t (142) = 5.74, p < .001, 95%CI[0.08; 0.17].  
+Average willingness to donate is 0.08 to 0.17 units higher  
+at the end of the experiment than at the start. This is a   
+very small difference on a 10-point scale.  
 ```
 
 ### Combinations of scores {#score-combi}
@@ -790,121 +790,121 @@ knitr::include_url("https://www.youtube.com/embed/Nqtg8q-S0k8", height = "360px"
 1. In the population of all consumers, is brand awareness linked to exposure to advertisements for the brand? Use <a href="http://82.196.4.233:3838/data/consumers.sav" target="_blank">"consumers.sav"</a> to answer this question.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=ad_expo brand_aw
-  /ORDER=ANALYSIS.
-* Check if the association can be linear.
-GRAPH
-  /SCATTERPLOT(BIVAR)=ad_expo WITH brand_aw
-  /MISSING=LISTWISE.
-* Correlations.
-CORRELATIONS
-  /VARIABLES=ad_expo brand_aw
-  /PRINT=TWOTAIL NOSIG
-  /MISSING=PAIRWISE.
-NONPAR CORR
-  /VARIABLES=ad_expo brand_aw
-  /PRINT=SPEARMAN TWOTAIL NOSIG
-  /MISSING=PAIRWISE.
-
-Check data:
-
-There are no impossible values that must be changed
-into missing values.
-
-Check assumptions:
-
-Can the association be linear? If we check a scatterplot
-of the two variables, the pints do not clearly display
-a curved shape. But there is one point that may distort
-a linear association because it is far away from the 
-other points, namely a consumer with an exposure score
-near one. If the rank correlation is substantially
-higher than the Pearson correlation, this single
-observatin may be responsible.
-
-Interpret the results:
-
-Brand awareness is statistically signficantly associated
-with exposure to advertisements for the brand, r = .46,
-p < .001. More exposure tends to go together with more
-brand awareness.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=ad_expo brand_aw  
+  /ORDER=ANALYSIS.  
+\* Check if the association can be linear.  
+GRAPH  
+  /SCATTERPLOT(BIVAR)=ad_expo WITH brand_aw  
+  /MISSING=LISTWISE.  
+\* Correlations.  
+CORRELATIONS  
+  /VARIABLES=ad_expo brand_aw  
+  /PRINT=TWOTAIL NOSIG  
+  /MISSING=PAIRWISE.  
+NONPAR CORR  
+  /VARIABLES=ad_expo brand_aw  
+  /PRINT=SPEARMAN TWOTAIL NOSIG  
+  /MISSING=PAIRWISE.  
+  
+Check data:  
+  
+There are no impossible values that must be changed  
+into missing values.  
+  
+Check assumptions:  
+  
+Can the association be linear? If we check a scatterplot  
+of the two variables, the pints do not clearly display  
+a curved shape. But there is one point that may distort  
+a linear association because it is far away from the   
+other points, namely a consumer with an exposure score  
+near one. If the rank correlation is substantially  
+higher than the Pearson correlation, this single  
+observatin may be responsible.  
+  
+Interpret the results:  
+  
+Brand awareness is statistically signficantly associated  
+with exposure to advertisements for the brand, r = .46,  
+p < .001. More exposure tends to go together with more  
+brand awareness.  
 ```
 
 2. How well can we predict brand awareness with ad exposure?
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=ad_expo brand_aw
-  /ORDER=ANALYSIS.
-* Simple regression.
-REGRESSION
-  /MISSING LISTWISE
-  /STATISTICS COEFF OUTS CI(95) R ANOVA
-  /CRITERIA=PIN(.05) POUT(.10)
-  /NOORIGIN 
-  /DEPENDENT brand_aw
-  /METHOD=ENTER ad_expo.
-
-Check data:
-
-There are no impossible values.
-
-Check assumptions:
-
-The assumptions will be explained in the chapter on
-moderation with regression analysis, so let us not pay
-attention to the assumptions yet.
-
-Interpret the results:
-
-Ad exposure predicts about one fifth of the 
-variation in brand awareness scores, R2 = .21, 
-F (1, 60) = 15.87, p < .001.
-The predictive effect of exposure to brand advertisements 
-is moderately strong (b* = 0.46). An additional
-unit of exposure increases the predicted brand awareness
-with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=ad_expo brand_aw  
+  /ORDER=ANALYSIS.  
+\* Simple regression.  
+REGRESSION  
+  /MISSING LISTWISE  
+  /STATISTICS COEFF OUTS CI(95) R ANOVA  
+  /CRITERIA=PIN(.05) POUT(.10)  
+  /NOORIGIN   
+  /DEPENDENT brand_aw  
+  /METHOD=ENTER ad_expo.  
+  
+Check data:  
+  
+There are no impossible values.  
+  
+Check assumptions:  
+  
+The assumptions will be explained in the chapter on  
+moderation with regression analysis, so let us not pay  
+attention to the assumptions yet.  
+  
+Interpret the results:  
+  
+Ad exposure predicts about one fifth of the   
+variation in brand awareness scores, R2 = .21,   
+F (1, 60) = 15.87, p < .001.  
+The predictive effect of exposure to brand advertisements   
+is moderately strong (b\* = 0.46). An additional  
+unit of exposure increases the predicted brand awareness  
+with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].  
 ```
 
 3. Does word of mouth involve women rather than men? Interpret the contents, strength, and statistical significance of the association. Have a look at Section \@ref(SPSS-exact) if you forgot which p value to interpret.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Contingency table with chi-squared test and measure of association.
-CROSSTABS
-  /TABLES=wom BY gender
-  /FORMAT=AVALUE TABLES
-  /STATISTICS=CHISQ PHI LAMBDA 
-  /CELLS=COUNT COLUMN 
-  /COUNT ROUND CELL
-  /BARCHART.
-
-Check data:
-
-There are no impossible values on the two categorical 
-variables.
-
-Check assumptions:
-
-This is a 2x2 contingency table so we have to use (Fisher)
-exact test. This test makes no assumptions.
-
-Interpret the results:
-
-There is no statistically significant association between
-word of mouth and sex, p = .161 (Fisher exact), Goodman &
-Kruskal tau = .05. We cannot confidently conclude that
-either females or males experience word of mouth more
-frequently.
-
-Note that a one-sided test is possible too. The p value
-of a one-sided exact test is .080 here.
+SPSS syntax:  
+  
+\* Contingency table with chi-squared test and measure of association.  
+CROSSTABS  
+  /TABLES=wom BY gender  
+  /FORMAT=AVALUE TABLES  
+  /STATISTICS=CHISQ PHI LAMBDA   
+  /CELLS=COUNT COLUMN   
+  /COUNT ROUND CELL  
+  /BARCHART.  
+  
+Check data:  
+  
+There are no impossible values on the two categorical   
+variables.  
+  
+Check assumptions:  
+  
+This is a 2x2 contingency table so we have to use (Fisher)  
+exact test. This test makes no assumptions.  
+  
+Interpret the results:  
+  
+There is no statistically significant association between  
+word of mouth and sex, p = .161 (Fisher exact), Goodman &  
+Kruskal tau = .05. We cannot confidently conclude that  
+either females or males experience word of mouth more  
+frequently.  
+  
+Note that a one-sided test is possible too. The p value  
+of a one-sided exact test is .080 here.  
 ```
 
 ## The Null and Alternative Hypothesis {#null-alt}
