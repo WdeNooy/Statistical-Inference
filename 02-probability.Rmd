@@ -738,31 +738,47 @@ Imagine that a magnetic field is activated if the first coin lands with heads up
 
 The example of a manipulated second toss is applicable to repeated measurements. If we want to know how quickly the yellow colour fades when yellow candies are exposed to sun light, we may draw a sample of yellow candies once and measure the colourfulness of each candy at least twice: at the start and after some time interval. Subsequently, we compare the average colourfulness of the second set of measurements to the average in the first set of measurements.  
 
-```{r mean-dependent, fig.cap="Dependent samples."}
-# Demonstrate the construction of a sampling distribution for mean differences
-# for paired/dependent samples. Variant of mean-independent.
-# Simulate a small (N = 100)) population with a normal distribution (M = 5, SD =
-# 1.3). This are the before colourfulness scores. Create the after colourfulness
-# scores by subtracting a random uniform score between 0 and 2.
-# Represent both populations as dotplots labeled BEFORE and AFTER in the top ro
-# of the app. Have the dots shaded from dark yellow (low score) to pale yellow
-# (high score).
-# Add button "Sample 1", to sample one observation: highlight/circle the
-# observation both in the BEFORE and AFTER plots. Show the difference score for
-# the selected dots and store it as value in the sample (histogram in the 2nd
-# row of the app). Display the sample mean as a vertical line with a value.
-# If a sample of five (difference scores) has been created, store the sample
-# mean in the sampling distribution (bottom histogram).
-# Add button to draw 1,00 samples, with results displayed in the sampling
-# distribution (histogram in 3rd ro wof the app). Only store the totals of the
-# bars in the histogram, get rid of the original samples to save on memory?
+```{r mean-dependent, fig.cap="Dependent samples.", echo=FALSE, out.width="560px", screenshot.opts = list(delay = 5), dev="png"}
+ # Demonstrate the construction of a sampling distribution for mean differences
+ # for paired/dependent samples. Variant of mean-independent.
+ # Simulate a small (N = 100)) population with a normal distribution (M = 5, SD = @).
+ # The example of a manipulated second toss is applicable to repeated measurements.
+ # Add button to draw 1,00 samples, with results displayed in the sampling
+ # distribution (histogram in 3rd ro wof the app). Only store the totals of the
+ # bars in the histogram, get rid of the original samples to save on memory?
+knitr::include_app("http://82.196.4.233:3838/apps/mean-dependent/", height="580px")
+```
+ 
+1. In Figure \@ref(fig:mean-dependent), use the __Sample 1 case__ button repeatedly to draw a sample of five observations. What is the precise meaning of the numbers on the horizontal axis in the sample histogram?
+
+```{r eval=FALSE}
+* The numbers on the horizontal axis in the sample histogram represent the
+difference in colour intensity for each pair of cases that is drawn.
+* In each draw, one case in the before population (red) and the same case in
+the after population (orange) is selected. The difference in colour intensity
+between the before and after measurement is calculated in the equation below
+the population dot plots. The calculated difference for this pair is
+represented by a dot in the figure in the middle.
+```
+ 
+2. Why is the sample called dependent or paired?
+ 
+```{r eval=FALSE}
+* A case appears both in the before and after population: We have a before and
+after measurement of colour intensity for each case (candy). These two
+measurements are related or paired because they refer to the same candy.
+* As a consequence, if we draw candies for our before measurement, we also draw
+the candies for our after measurement. The after sample depends on the before
+sample.
 ```
 
-1. In Figure \@ref(fig:mean-dependent), use the __Sample 1__ button repeatedly to draw a sample of five observations. What is the precise meaning of the numbers on the horizontal axis in the sample histogram?
-
-2. Why is the sample called dependent or paired?
-
-3. Draw 1,000 samples to obtain a sampling distribution. What is the precise meaning of the numbers on the horizontal axis in the histogram of the sampling distribution?
+ 3. Draw 1,000 samples to obtain a sampling distribution. What is the precise meaning of the numbers on the horizontal axis in the histogram of the sampling distribution?
+ 
+```{r eval=FALSE}
+* The numbers on the horizontal axis in the histogram of the sampling
+distribution signify the average difference in colour intensity of the candies
+in a sample (of five candies).
+```
 
 In this example, we are comparing two means, just like the yellow versus red candy weight example, but now the samples for both measurements are the same. It is impossible to draw the sample for the second measurement independently from the sample for the first measurement if we want to compare repeated measurements. Here, the second sample is fixed once we have drawn the first sample. The samples are _statistically dependent_; they create _paired samples_. Even if the second sample depends only partly upon the first sample, the samples are statistically dependent.
 
