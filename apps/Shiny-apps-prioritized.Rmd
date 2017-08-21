@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
 
 # mediation-multipleregression
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 Section 9.1, Controlling for Effects of Other Predictors
 Sketch was labelled: mediation-regression
 
-```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors are added to the model? The light dots and lines represent the simple regression coefficients and their 95% confidence intervals. Dark dots and lines represent results in a regression model including all selected predictors."}
+```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors are added to the model? The light dots and lines represent the simple regression coefficients and their 95% confidence intervals. Dark dots and lines represent results in a regression model including all selected predictors.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Show that regression coefficients change if new predictors are added to
 # the regression model.
 # For outcome Newspaper Reading Time, display the standardized simple
@@ -62,6 +62,7 @@ Sketch was labelled: mediation-regression
 # News Site Use with Age, PolInt: -0.23 [-0.36; -0.09]
 # News Site Use with Educ, PolInt: -0.85 [-0.91; -0.79]
 # News Site Use with Age, Educ, PolInt: -0.23 [-0.37; -0.09]
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/", height="465px")
 ```
 
 # resid-normal
@@ -69,7 +70,7 @@ Sketch was labelled: mediation-regression
 Section 8.1.5.2, Identically distributed observations. 
 Adapt app pred-linearity.
 
-```{r resid-normal, fig.cap="What are the residuals and how are they distributed?"}
+```{r resid-normal, fig.cap="What are the residuals and how are they distributed?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand the meaning of residuals by linking residuals in a
 # scatterplot to the x values in a histogram.
 # Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on
@@ -80,13 +81,14 @@ Adapt app pred-linearity.
 # residuals also as a histogram with normal curve. Hovering over/clicking a line
 # segment (residual) in the scatterplot should highlight the corresponding bar
 # in the histogram. Add a button to draw a new sample.
+knitr::include_app("http://82.196.4.233:3838/apps/resid-normal/", height="485px")
 ```
 
 # common-support
 
 Section 8.3.5, Common support
 
-```{r common-support, fig.cap="Common support for the exposure predictor in each category of smoking status."}
+```{r common-support, fig.cap="Common support for the exposure predictor in each category of smoking status.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Sensitize students to the problem of lacking support for conditional
 # effects by inspecting the coverage of the predictor for each moderator group.
 # Generate a sample for smokers, for former smokers, and for non-smokers each of
@@ -104,6 +106,7 @@ Section 8.3.5, Common support
 # histogram. Note that the scale of the histogram and the x axisof the
 # scatterplot must be fixed to [0, 10].
 # Add a Generate New button to generate a new dataset.
+knitr::include_app("http://82.196.4.233:3838/apps/common-support/", height="565px")
 ```
 
 # continuous-interaction-visualization
@@ -111,7 +114,7 @@ Section 8.3.5, Common support
 Section 8.5.5, Visualization of the interaction effect.
 Variant of the app continuous-moderator.
 
-```{r continuous-interaction-visualization, fig.cap="Which moderator values are helpful for visualizing moderation?"}
+```{r continuous-interaction-visualization, fig.cap="Which moderator values are helpful for visualizing moderation?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Clarify the interpretation of the (unstandardized) interaction effect by
 # showing regression lines at different (interesting) moderator scores (display
 # slope value).
@@ -120,90 +123,7 @@ Variant of the app continuous-moderator.
 # several values for the moderator from a list containing: minimum, maximum,
 # first tercile, second tercile, M - 2SD, M - 1SD, M, M + 1SD, M
 # + 2SD. Display the selected lines in different colours.
-```
-
-#	mediation-confoundertypes
-
-Section 9.3, Two Types of Confounders.
-Relatively simple extension of app mediation-indirectcorrelation. 
-
-```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?"}
-# Goal: Intuitive understanding of how the pattern of correlation/effect
-# directions (signs) relates to decrease or increase of partial effect sizes.
-# Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth
-# confounder (r is -0.18 with political interest and -0.14 with reading time).
-# Colour negative correlations red instead of blue if the associated confouder
-# is selected. This helps to discover that a positive indirect correlation
-# (blue-blue or red-red) decreases the partial effect whereas a negative
-# indirect correlation (blue-red) increases it.
-```
-
-#	mediation-inference
-
-Section 9.6.6, Significance of indirect effects.
-Starting point: app mediation-commoncause.
-
-```{r mediation-inference, fig.cap="Does the sampling dsitribution of an indirect effect resemble the sampling distributions of its direct effects?"}
-# Goal: Understand that each sample yields a size of the indirect effect, that
-# is added to the sampling distribution. Compare this sampling distribution with
-# the sampling distributions of the direct effects, to show that the sampling
-# distribution of the indirect effect is skewed.
-# Sample and display correlations between Age (predictor), Pol.Interest
-# (mediator), and Reading Time (outcome) as in app mediation-commoncause but
-# sample the correlations from a normal distribution rnorm(mean = 0.5, sd =
-# 0.05) for Age->Pol.Interest, rnorm(mean = 0.2, sd = 0.05) for
-# Age->ReadingTime, and rnorm(mean = 0.4, sd = 0.05) for
-# Pol.Interest->ReadingTime.
-# Display standardized regression coefficients for Age->Pol.Interest in blue,
-# for Pol.Interest->ReadingTime in green, and for the indirect effect in black.
-# In a second row, add three histograms with counts for values of the
-# standardized regression coefficients for the direct effect of
-# Age->Pol.Interest (blue bars), Pol.Interest->ReadingTime (green bars), and the
-# indirect effect (gray bars).
-# Add buttons to draw 1 sample, 1,000 samples (if used, superimpose normal curve
-# over each histogram), and to reset.
-```
-
-#	regression-predict *
-
-Section 8.1.6, Visualizing predictions 
-Add parameter coefficients directly in the equations? 
-
-```{r regression-predict, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?"}
-# Goal: sensitize student to the notion that prediction in a multiple regression
-# model requires selecting one predictor and fixed values for the other
-# predictors. Without moderation, the fixed values only change the vertical
-# position of the line (that is, the constant) but not the slope.
-# Generate a data set with attitude towards smoking as Y and exposure as X with a negative (b = -0.6) more or less linear relation and a regression line for the currently selected values of the covariates (smoking status, initial value is 0) and contact (initial value is 3)): attitude = 0.25 - 0.6 * exposure + 0.50 * smoker +  0.15 * contact
-# Display the scatterplot.
-# Add the line of a simple regression of attitude on exposure for the generated data in grey.
-# Add the multiple regression line.
-# Display the multiple regression equation: (see above). 'smoker' is a selection box with two options: 0 = non-smoker, 1 = smoker. 'contact' is followed by a numerical input that accepts values between 0 and 10.
-# A change to the smoker selection or contact value triggers the app to redraw the regression line for attitude by exposure for these values of smoking status and (smoker)contact.
-```
-
-#	mean-dependent *
-
-Section 2.5.6 Variant of mean-independent. 
-
-```{r mean-dependent, fig.cap="Dependent samples."}
-# Demonstrate the construction of a sampling distribution for mean differences
-# for paired/dependent samples. Variant of mean-independent.
-# Simulate a small (N = 100)) population with a normal distribution (M = 5, SD =
-# 1.3). This are the before colourfulness scores. Create the after colourfulness
-# scores by subtracting a random uniform score between 0 and 2.
-# Represent both populations as dotplots labeled BEFORE and AFTER in the top ro
-# of the app. Have the dots shaded from dark yellow (low score) to pale yellow
-# (high score).
-# Add button "Sample 1", to sample one observation: highlight/circle the
-# observation both in the BEFORE and AFTER plots. Show the difference score for
-# the selected dots and store it as value in the sample (histogram in the 2nd
-# row of the app). Display the sample mean as a vertical line with a value.
-# If a sample of five (difference scores) has been created, store the sample
-# mean in the sampling distribution (bottom histogram).
-# Add button to draw 1,00 samples, with results displayed in the sampling
-# distribution (histogram in 3rd ro wof the app). Only store the totals of the
-# bars in the histogram, get rid of the original samples to save on memory?
+knitr::include_app("http://82.196.4.233:3838/apps/continuous-interaction-visualization/", height="390px")
 ```
 
 #	mean-centering-moderator
