@@ -41,7 +41,8 @@ shinyServer(function(input, output) {
                  aes(x = exposure,
                      y = attitude)) +
       geom_segment(aes(x = 0, y = 0.65 - 0.6 * 0 + 0.5 * 0.5 + 0.15 * contact_mean, 
-                       xend = 10, yend = 0.65 - 0.6 * 10 + 0.5 * 0.5 + 0.15 * contact_mean)) +
+                       xend = 10, yend = 0.65 - 0.6 * 10 + 0.5 * 0.5 + 0.15 * contact_mean,
+                   colour = "Simple regression line"), size = .8) +
     stat_function(data= df,inherit.aes = FALSE,
         fun = attfun,
         args = list(contact = input$contactvalueslider, smoker =  as.numeric(input$smokeselector)),
@@ -49,7 +50,7 @@ shinyServer(function(input, output) {
         alpha = 1,
         size = .8, aes(colour = "Multiple regression line")) + 
        scale_color_manual(name = "", 
-                         values = c("Simple regression line" = "darkgrey",
+                         values = c("Simple regression line" = unname(brewercolors["Blue"]),
                                     "Multiple regression line" = unname(brewercolors["Red"])
                          )) +
       coord_cartesian(xlim = c(0, 10), ylim = c(-5, 5)) +

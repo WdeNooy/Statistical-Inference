@@ -15,7 +15,7 @@ shinyUI(fluidPage(verticalLayout(
            div(strong("Simple regression equation:")),
            withMathJax(helpText(
              paste(
-               "$$\\color{darkgrey}{attitude = 1.575 - 0.6 * exposure}$$"
+               "$$\\color{blue}{attitude = 1.575 - 0.6 * exposure}$$"
              )
            ))
   ),
