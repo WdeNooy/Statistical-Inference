@@ -65,7 +65,7 @@ shinyServer(function(input, output) {
   output$formulaui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{red}{attitude = 0.25 - 0.6 * exposure + 0.5 * }\\color{red}{Smoker(",
+        paste("$$\\color{red}{attitude = 0.65 - 0.6 * exposure + 0.5 * }\\color{red}{Smoker(",
               as.numeric(input$smokeselector),
               ")}\\color{red}{ + 0.15 * contact(",input$contactvalueslider,")}$$")
       )
