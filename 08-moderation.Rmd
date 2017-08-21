@@ -1664,11 +1664,26 @@ The zero score on the moderator is the _reference value_ for the conditional eff
 # Add a slider 'Contact - x' (equal length as x axis, range [0, 10], initial value 0), labeled with values 0, M - SD, M, M + SD, and 10 (use nice round numbers for SD and M, not exactly the true values). Adjusting the slider updates the regression line in the scatterplot and the reference value label.
 ```
 
-1. What happens to the reference value of the moderator if you subtract mean (*M*) contact with smokers from the respondents' contact scores? Use the slider in Figure \@ref(fig:mean-centering-moderator) to check your answer.
+1. What is the correct interpretation of the estimated regression coefficient of exposure in Figure \@ref(fig:mean-centering-moderator)?
 
-2. What happens to the regression line if you mean-center (Question 1) the moderator contact with smokers?
+```{r eval=FALSE}
+#* In the initial situation, the regression line in this figure represents the predictive effect of exposure on attitude for respondents who score zero on the moderator (Contact with smokers). 
+#* If the moderator score is zero, the conditional effect of the predictor equals the estimated regression coefficient of the predictor because the contribution of the moderator to the slope is zero.
+#* In the regression model here, the regression coefficient of exposure is -0.26, so an additional unit of exposure decreases the predicted attitude by 0.26 for respondents who have no (zero) contacts with smokers.
+```
 
-3. What do you think expresses the shade of the dots in the scatterplot?
+2. What happens to the (thin) regression line and the regression equation if you subtract the mean (*M*) from the respondents' contact with smokers scores? Thus, you mean-center the moderator Contact. Use the slider **Center Contact. Subtract from Contract:** in Figure \@ref(fig:mean-centering-moderator) to check your answer.
+
+```{r eval=FALSE}
+#* Mean Contact score is 5. The regression coefficient of exposure changes to -0.06, namely -0.26 + 0.04 * 5. Accordingly, the (thin) regression line becomes almost horizontal.
+```
+
+3. If Contact is mean-centered, the regression coefficient of exposure represents the effect of exposure on attitude for respondents with a particular score on the original Contact variable. What is this original Contact score (reference value of the moderator)? Use the slider **Adjust the value of Contact (Moderator)** to check your answer.
+
+```{r eval=FALSE}
+#* The regression line of the mean-centered Contact moderator coincides with the (fat) regression line if we select 5 as Contact moderator value. The reference group for the regression coefficient of exposure in case of a mean-centered moderator, consists of repsondents who score 5 on the Contact with smokers moderator.
+#* The value at which we center the moderator (Contact) is the value of the reference group for which we must interpret the effect of the predictor (Exposure). This may seem logical, but there is a little catch. If we mean-center a variable, we subtract the mean from all scores. Why, then, does the value of the reference group go up? Without mean-centering, the reference group has zero contacts with smokers (Question 1). After mean-centering, the reference group has five contacts with smokers. The trick is that if we subtract the mean from all scores, the new mean-centered variable has score zero for respondents who have a mean score on the original Contact variable. The regression coefficient estimated for exposure in a model with mean-centered Contact, is the effect for respondents with zero score on the mean-centered moderator. They are the respondents with average score on the original Contact variable.
+```
 
 What if there are no people with zero contact? Then, the interpretation of the regression coefficient $b_1$ for exposure does not make sense. In this situation, it is better to mean-center the moderator (contact) before you add it to the regression equation and before you calculate the interaction variable. 
 
