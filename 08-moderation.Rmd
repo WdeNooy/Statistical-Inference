@@ -590,8 +590,7 @@ Why do we use the residuals and predicted values instead of a scatterplot for ea
 ```
 
 ### Visualizing predictions 
-
-```{r regression-predict, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?"}
+```{r regression-predict, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?", echo=FALSE, out.width="580px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: sensitize student to the notion that prediction in a multiple regression
 # model requires selecting one predictor and fixed values for the other
 # predictors. Without moderation, the fixed values only change the vertical
@@ -602,11 +601,43 @@ Why do we use the residuals and predicted values instead of a scatterplot for ea
 # Add the multiple regression line.
 # Display the multiple regression equation: (see above). 'smoker' is a selection box with two options: 0 = non-smoker, 1 = smoker. 'contact' is followed by a numerical input that accepts values between 0 and 10.
 # A change to the smoker selection or contact value triggers the app to redraw the regression line for attitude by exposure for these values of smoking status and (smoker)contact.
+knitr::include_app("http://82.196.4.233:3838/apps/regression-predict/", height="620px")
 ```
 
-1. What happens in Figure \@ref(fig:regression-predict) if you change smoking status and smoking contact score? Can you explain the size of changes?
+1. What happens in Figure \@ref(fig:regression-predict) if you change smoking status or smoking contact score? Can you explain the size of changes?
 
-2. The line for a simple regression of attitude on exposure (without covariates) is displayed in grey in Figure \@ref(fig:regression-predict). Can you fit the original (multiple) regression line to the simple regression line? If so, at what covariate values? If not, why not?
+```{r eval=FALSE}
+* The (red) multiple regression line moves up or down.
+* The change from non-smoker to smoker adds 0.5 to the predicted values. The
+red line moves up 0.5 points on the attitude scale.
+* An additional unit of contact adds 0.15 to the predicted values. The red line
+moves up 0.15 points on the attitude scale.
+```
+
+2. The line for a simple regression of attitude on exposure (without covariates) is displayed in blue in Figure \@ref(fig:regression-predict). Can you make the multiple regression line equal to the simple regression line? If so, at what covariate values? If not, why not?
+
+```{r eval=FALSE}
+* It is possible to have the red regression line fully overlap the blue
+regression line because they have the same slope, namely -0.6. For this reason,
+the multiple and simple regression lines are parallel. If we adjust the values
+of smoking status or contact with smokers, we can move the red line on top of
+the blue line.
+* For non-smokers, we have to set contact near six for the red line to overlap
+the blue one. The contact value for smokers is near 3.
+* If you like, you can calculate the exact values for contact at which the
+multiple and simple regression lines are equal. Link the two equations and plug
+in the values that you know. For smokers:
+* 1.575 - 0.6 * Exposure = 0.65 - 0.6 * Exposure + 0.5 * Smoker + 0.15 * Contact
+* Exposure drops from the equation because it occurs both left and right. The
+value for smokers is 1 on Smoker.
+* 1.575 = 0.65  + 0.5 * 1 + 0.15 * Contact
+* Rearrange:
+* 1.575 - 0.65 - 0.5 = 0.15 * Contact
+* Divide left and right by 0.15:
+* (1.575 - 0.65 - 0.5) / 0.15 = Contact
+* 0.425 / 0.15 = Contact
+* Contact = 2.833.
+```
 
 The regression equation without the error term $e$ predicts the outcome variable scores from the predictor scores. Plug in values for the predictor variables and you can calculate the predicted outcome score. Figure \@ref(fig:regression-predict), for instance, shows a regression equation for the effects of exposure and contact with smokers on attitude towards smoking. If you plug in a score of 4 for exposure, 0 for smoking status (non-smoker), and 6 for contact with smokers, the predicted attitude is 0.25 + -0.20 * 4 + 0.50 * 0 + 0.15 * 6 = 0.41.
 

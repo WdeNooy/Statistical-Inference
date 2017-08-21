@@ -306,14 +306,41 @@ Once the confounder is added to the regression model, however, the estimated eff
 
 ## Two Types of Confounders {#confounders}
 
-```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?"}
-# Goal: Intuitive understanding of how the pattern of correlation/effect directions (signs) relates to decrease or increase of partial effect sizes.
-# Adjust app mediation-indirectcorrelation: Replace News site use by Pol.Cynicism as a fourth confounder (r is -0.18 with political interest and -0.14 with reading time). Colour negative correlations red instead of blue if the associated confouder is selected. This helps to discover that a positive indirect correlation (blue-blue or red-red) decreases the partial effect whereas a negative indirect correlation (blue-red) increases it.
+```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Goal: Intuitive understanding of how the pattern of correlation/effect
+# directions (signs) relates to decrease or increase of partial effect sizes.
+# Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth
+# confounder (r is -0.18 with political interest and -0.14 with reading time).
+# Colour negative correlations red instead of blue if the associated confouder
+# is selected. This helps to discover that a positive indirect correlation
+# (blue-blue or red-red) decreases the partial effect whereas a negative
+# indirect correlation (blue-red) increases it.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-confoundertypes/", height="390px")
 ```
 
-1. When is a partial regression effect smaller than the simple regression effect and when is it larger? Formulate a general rule and check it in Figure \@ref(fig:mediation-confoundertypes).
+1. When is a partial regression effect weaker than the simple regression effect and when is it stronger? Formulate a general rule and check it in Figure \@ref(fig:mediation-confoundertypes).
 
-2. According to your general rule, what happens to the partial regression effect if we add interest in sports as a predictor, which is negatively correlated with interest in politics but positively correlated with newspaper reading time?
+```{r eval=FALSE}
+* If the indirect correlation is negative, that is, of the opposite sign of the
+positive direct effect of Political interest on Reading time, the partial
+effect is stronger than the simple effect.
+* If the indirect correlation is positive, that is, of the same sign as the
+direct effect of Political interest on Reading time, the partial effect is
+weaker than the simple effect.
+* Note that the simple effect is the regression coefficient if we do not
+control for any confounders, so Political interest is the only predictor. The
+partial effect is the regression coefficient for the effect of Political
+interest on Reading time if we control for (at least) one confounde. Political
+interest is not the only predictor in the regression model.
+```
+
+2. According to your general rule, what happens to the partial regression effect if we would add interest in sports as a predictor, which is negatively correlated with interest in politics but positively correlated with newspaper reading time?
+
+```{r eval=FALSE}
+* The indirect correlation between Political interest and Reading time created
+by Interest in sports would be negative. It would be the opposite of the sign
+of the direct effect, so the partial effect would be stronger.
+```
 
 In the preceding section, we learned that a partial effect expressed by a regression coefficient may change if a new predictor is added to the regression model. The partial effect of a predictor changes if the added variable is a confounder: It is correlated both with the predictor and outcome variable. In other words, there is an indirect correlation between the predictor and outcome via the confounding variable.
 
@@ -970,7 +997,7 @@ The distinction between full and partial mediation is a little bit problematic. 
 
 ### Significance of indirect effects
 
-```{r mediation-inference, fig.cap="Does the sampling dsitribution of an indirect effect resemble the sampling distributions of its direct effects?"}
+```{r mediation-inference, fig.cap="Does the sampling dsitribution of an indirect effect resemble the sampling distributions of its direct effects?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand that each sample yields a size of the indirect effect, that
 # is added to the sampling distribution. Compare this sampling distribution with
 # the sampling distributions of the direct effects, to show that the sampling
@@ -989,11 +1016,26 @@ The distinction between full and partial mediation is a little bit problematic. 
 # indirect effect (gray bars).
 # Add buttons to draw 1 sample, 1,000 samples (if used, superimpose normal curve
 # over each histogram), and to reset.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-inference/", height="525px")
 ```
 
-1. How is the sampling distribution of indirect effect size created? Before, simultaneously, or after the sampling distributions of direct effect sizes are created? Check your answer using the __Draw a single sample__ button in Figure \@ref(fig:mediation-inference).
+1. How is the sampling distribution of indirect effect size created? Before, simultaneously, or after the sampling distributions of direct effect sizes are created? Check your answer using the __Draw a single sample__ button in Figure \@ref(fig:mediation-inference) repeatedly.
+
+```{r eval=FALSE}
+* For every sample, the indirect effect size is calculated as the product of
+the effects of the predictor (Age) on the moderator (Political interest) and of
+the moderator on the outcome (Reading time). The indirect effect is added to
+the sampling distribution.
+```
 
 2. Do all three sampling distributions have the same shape?
+
+```{r eval=FALSE}
+* Take a few thousand samples. If you look carefully, you will see that the
+sampling distribution of the regression coefficient of the indirect effect is
+skewed, asymmetrical. The left tail is badly populated and the maximum is to
+the left of the maximum of the normal curve.
+```
 
 SPSS does not calculate the size of indirect effects for us or their confidence intervals and p values. It is easy to calculate the sizes of indirect effects, as we have seen in a preceding section: just take the product of direct effects. In contrast, it is not possible to calculate the confidence interval or p value of an indirect effect in a reliable way from the confidence intervals or p values of the direct effects [see @RefWorks:3873: Section 4.4 for a detailed discussion of different approaches].
 

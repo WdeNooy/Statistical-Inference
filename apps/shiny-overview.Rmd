@@ -260,6 +260,20 @@ knitr::include_app("http://82.196.4.233:3838/apps/pred-linearity/", height="550p
 knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", height="550px")
 ```
 
+```{r regression-predict, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?", echo=FALSE, out.width="580px", screenshot.opts = list(delay = 5), dev="png"}
+# Goal: sensitize student to the notion that prediction in a multiple regression
+# model requires selecting one predictor and fixed values for the other
+# predictors. Without moderation, the fixed values only change the vertical
+# position of the line (that is, the constant) but not the slope.
+# Generate a data set with attitude towards smoking as Y and exposure as X with a negative (b = -0.6) more or less linear relation and a regression line for the currently selected values of the covariates (smoking status, initial value is 0) and contact (initial value is 3)): attitude = 0.25 - 0.6 * exposure + 0.50 * smoker +  0.15 * contact
+# Display the scatterplot.
+# Add the line of a simple regression of attitude on exposure for the generated data in grey.
+# Add the multiple regression line.
+# Display the multiple regression equation: (see above). 'smoker' is a selection box with two options: 0 = non-smoker, 1 = smoker. 'contact' is followed by a numerical input that accepts values between 0 and 10.
+# A change to the smoker selection or contact value triggers the app to redraw the regression line for attitude by exposure for these values of smoking status and (smoker)contact.
+knitr::include_app("http://82.196.4.233:3838/apps/regression-predict/", height="620px")
+```
+
 ```{r common-support, fig.cap="How well do the observations cover the predictor within each category of smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize students to the problem of lacking support for conditional
 # effects by inspecting the coverage of the predictor for each moderator group.
@@ -330,6 +344,18 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-interaction-visuali
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-indirectcorrelation/", height="370px")
 ```
 
+```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Goal: Intuitive understanding of how the pattern of correlation/effect
+# directions (signs) relates to decrease or increase of partial effect sizes.
+# Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth
+# confounder (r is -0.18 with political interest and -0.14 with reading time).
+# Colour negative correlations red instead of blue if the associated confouder
+# is selected. This helps to discover that a positive indirect correlation
+# (blue-blue or red-red) decreases the partial effect whereas a negative
+# indirect correlation (blue-red) increases it.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-confoundertypes/", height="390px")
+```
+
 ```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize students to the concept of a common cause creating a spurious effect and mediation as indirect effect.
 # Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arc representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arcs to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
@@ -348,3 +374,24 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", heigh
 # b_indirect <- round(b_PM * b_MO, digits = 2)
 ```
 
+```{r mediation-inference, fig.cap="Does the sampling dsitribution of an indirect effect resemble the sampling distributions of its direct effects?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+# Goal: Understand that each sample yields a size of the indirect effect, that
+# is added to the sampling distribution. Compare this sampling distribution with
+# the sampling distributions of the direct effects, to show that the sampling
+# distribution of the indirect effect is skewed.
+# Sample and display correlations between Age (predictor), Pol.Interest
+# (mediator), and Reading Time (outcome) as in app mediation-commoncause but
+# sample the correlations from a normal distribution rnorm(mean = 0.5, sd =
+# 0.05) for Age->Pol.Interest, rnorm(mean = 0.2, sd = 0.05) for
+# Age->ReadingTime, and rnorm(mean = 0.4, sd = 0.05) for
+# Pol.Interest->ReadingTime.
+# Display standardized regression coefficients for Age->Pol.Interest in blue,
+# for Pol.Interest->ReadingTime in green, and for the indirect effect in black.
+# In a second row, add three histograms with counts for values of the
+# standardized regression coefficients for the direct effect of
+# Age->Pol.Interest (blue bars), Pol.Interest->ReadingTime (green bars), and the
+# indirect effect (gray bars).
+# Add buttons to draw 1 sample, 1,000 samples (if used, superimpose normal curve
+# over each histogram), and to reset.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-inference/", height="525px")
+```
