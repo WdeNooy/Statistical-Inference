@@ -15,7 +15,7 @@ shinyUI(fluidPage(verticalLayout(
            div(strong("Simple regression equation:")),
            withMathJax(helpText(
              paste(
-               "$$\\color{darkgrey}{attitude = 0.25 - 0.6 * exposure}$$"
+               "$$\\color{darkgrey}{attitude = 1.575 - 0.6 * exposure}$$"
              )
            ))
   ),
@@ -32,7 +32,7 @@ shinyUI(fluidPage(verticalLayout(
   
   fluidRow(align = "center",
            sliderInput("contactvalueslider",
-                       label = "Adjust the value of Contact (Moderator):",
+                       label = "Adjust the value of Contact:",
                        min = 0,
                        max = 10,
                        value = 3,

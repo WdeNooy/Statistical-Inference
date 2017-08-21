@@ -5,6 +5,8 @@ library(ggplot2)
 shinyServer(function(input, output) {
   #Load styling for plots
   source("../plottheme/styling.R", local = TRUE)
+  #Set constant.
+  contact_mean = 4.5
   
   #CREATE PREDICTOR
   n <- 600 #number of data points
@@ -12,16 +14,16 @@ shinyServer(function(input, output) {
   exposure <- runif(n) * 10
   # contact.
   set.seed(4321)
-  contact <- rnorm(n, mean = 4.5, sd = 2)
+  contact <- rnorm(n, mean = contact_mean, sd = 2)
   #smoker
   smoker <- sample(c(0,1),size = n, replace = TRUE)
   # Create outcome.
   set.seed(391)
   attitude <-
-    0.25 - 0.6 * exposure + 0.5 * smoker + 0.15 * contact + rnorm(n, mean = 0.4, sd = 0.9)
+    0.65 - 0.6 * exposure + 0.5 * smoker + 0.15 * contact + rnorm(n, mean = 0, sd = 0.9)
 
   attfun <- function(exposure, contact, smoker) {
-    0.25 - 0.6 * exposure + 0.5 * smoker + 0.15 * contact
+    0.65 - 0.6 * exposure + 0.5 * smoker + 0.15 * contact
   }
 
   output$mainplot <- renderPlot({
@@ -38,10 +40,8 @@ shinyServer(function(input, output) {
                  size = 3,
                  aes(x = exposure,
                      y = attitude)) +
-      geom_smooth(data = scatter,
-                  method='lm',
-                  formula=y~x,
-                  se = FALSE, aes(colour = "Simple regression line")) +
+      geom_segment(aes(x = 0, y = 0.65 - 0.6 * 0 + 0.5 * 0.5 + 0.15 * contact_mean, 
+                       xend = 10, yend = 0.65 - 0.6 * 10 + 0.5 * 0.5 + 0.15 * contact_mean)) +
     stat_function(data= df,inherit.aes = FALSE,
         fun = attfun,
         args = list(contact = input$contactvalueslider, smoker =  as.numeric(input$smokeselector)),
