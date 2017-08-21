@@ -113,7 +113,7 @@ shinyServer(function(input, output, session) {
       annotate("text", x = .5, y = .5,
                label = deparse(bquote("b*"[indirect] == .(b_indirect))),
                parse = TRUE,
-               colour = "darkgrey") +
+               colour = brewercolors["Red"]) +
       coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
       theme_general() +
       scale_x_continuous(name = "", breaks = NULL) +
@@ -150,6 +150,7 @@ output$histplot <- renderPlot({
       )
     ) +
     coord_cartesian(xlim = c(0, .6)) +
+    xlab("b* Interest >Time") +
     theme_general()
 
   #Histogram for Predictor/mediator
@@ -167,12 +168,13 @@ output$histplot <- renderPlot({
         bw = 0.01
       )
     ) +
-    coord_cartesian(xlim = c(0, .6)) +
+    coord_cartesian(xlim = c(0, .4)) +
+    xlab("b* Age > Interest") +
     theme_general()
   
   #Histogram for Predictor/Outcome indirect
   pindirplot <- ggplot(data.frame(b_indirect), aes(x = b_indirect)) +
-    geom_histogram(fill = "darkgrey",
+    geom_histogram(fill = brewercolors["Red"],
                    binwidth = 0.01) +
     stat_function(
       fun = function(x, mean, sd, n, bw) {
@@ -185,7 +187,8 @@ output$histplot <- renderPlot({
         bw = 0.01
       )
     ) +
-    coord_cartesian(xlim = c(0, .6)) +
+    coord_cartesian(xlim = c(0, .15)) +
+    xlab("b* indirect") +
     theme_general()
   
 grid.arrange(pmplot,moplot,pindirplot, ncol=3)
