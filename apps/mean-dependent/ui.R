@@ -19,7 +19,7 @@ shinyUI(
       
       fluidRow(align = "center",
                           plotOutput("lastsampleplot",
-                                      width = fig.width,
+                                      width = fig.width + 50,
                                       height = fig.height)
       ),
       
@@ -30,10 +30,10 @@ shinyUI(
       ),
       fluidRow(align = "center",
                actionButton("smallsamplebutton",
-                            label = "Draw single sample"
+                            label = "Sample 1 case"
                ),
                actionButton("largesamplebutton",
-                            label = "Draw 1000 samples"
+                            label = "Draw 1000 samples of size 5"
                ),
                actionButton("resetbutton",
                             label = "Reset"

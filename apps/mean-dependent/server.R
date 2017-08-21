@@ -9,22 +9,36 @@ shinyServer(function(input, output) {
   
   N <- 100 #population size
   mean <- 3.5 # population before mean
-  sd <- 1.2 # population sd red
+  sd <- 1.2 # population sd 
+  n <- 5 # small sample size
   
   # container for samples
-  samples <- reactiveValues(
+    samples <- reactiveValues(
     lastsample = as.numeric(),
-    hist = as.numeric()
+    singlesamplehist = as.numeric(),
+    meanhist = as.numeric(),
+    counter = 0
   )
   #Make a before and after population
   before <- rnorm(n = N, mean = mean, sd =sd)
   after <- before - runif(n = N,0,2)
   population <- data.frame(before = before, after = after)
+  
   #Smallsamplebuttonpress
   observeEvent(input$smallsamplebutton,{
+    samples$counter <<- samples$counter + 1
+    if(samples$counter == 6) {
+      samples$counter <<- 1
+      samples$singlesamplehist <<- numeric()
+    }
     samples$lastsample <<- sample(1:N,1)
     difference <- before[samples$lastsample] - after[samples$lastsample]
-    samples$hist <<- c(samples$hist,difference)
+    if(samples$counter <= n){
+      samples$singlesamplehist <<- c(samples$singlesamplehist,difference)
+    }
+    if(samples$counter == n){
+      samples$meanhist <<- c(samples$meanhist,mean(samples$singlesamplehist))
+    }
   }
   )
   #Largesamplebuttonpress
@@ -32,21 +46,27 @@ shinyServer(function(input, output) {
     largesample <- sample(1:N,1000,replace = TRUE)
     difference <- before[largesample] - after[largesample]
     samples$lastsample <<- largesample[length(largesample)]
-    samples$hist <<- c(samples$hist, difference) 
+    largesamplemeans <- as.numeric(by(difference,INDICES = as.factor(rep(1:(1000/n),each = n)), FUN = function(x) mean(x)))
+    samples$meanhist <<- c(samples$hist, largesamplemeans) 
+    
   }
   )
   #Resetbuttonpress
   observeEvent(input$resetbutton,{
     samples$lastsample <<- as.numeric()
-    samples$hist <<- as.numeric()
+    samples$meanhist <<- as.numeric()
+    samples$singlesamplehist <<- as.numeric()
+    samples$counter <<- 0
   }
   )
   
   #Before population plot
   output$beforepopplot <- renderPlot({
     
-    samplefill = rep(NA,N)
-    samplefill[samples$lastsample] = brewercolors["Red"]
+    samplefill <- rep(NA,N)
+    
+    samplefill[which(sort(before) == before[samples$lastsample])] <- brewercolors["Red"]
+    
     ggplot(population,aes(x = before)) + 
       geom_dotplot(aes(fill = ..x..),binwidth = .2) +
       geom_dotplot(fill = samplefill,binwidth = .2) +
@@ -67,7 +87,7 @@ shinyServer(function(input, output) {
   #After population plot
   output$afterpopplot <- renderPlot({
     samplefill = rep(NA,N)
-    samplefill[samples$lastsample] = brewercolors["Orange"]
+    samplefill[which(sort(after) == after[samples$lastsample])] = brewercolors["Orange"]
     ggplot(population,aes(x = after)) + 
       geom_dotplot(aes(fill = ..x..),binwidth = .2) + 
       geom_dotplot(fill = samplefill, binwidth = .2) + 
@@ -86,23 +106,24 @@ shinyServer(function(input, output) {
   })
   #Last sample difference plot
   output$lastsampleplot <- renderPlot({
-    validate(
-      need(samples$lastsample != "", "")
-    )
-    df <- data.frame(difference = before[samples$lastsample] - after[samples$lastsample])
+   
+    df <- data.frame(difference = samples$singlesamplehist)
+    
+    
+    
     ggplot(df, aes(x = difference)) + 
       geom_dotplot(method = "histodot",
-                   bins = 1,
                    fill = "black",
-                   dotsize = 8) + 
+                   binwidth = 0.2,
+                   dotsize = 1) + 
       geom_vline(size = .7,
                  aes(xintercept = mean(difference),
-                     linetype = paste("Difference = ",
+                     linetype = paste("Average = ",
                                       round(mean(difference), digits = 2)))) +
       coord_cartesian(xlim = c(0,6)) + 
       scale_x_continuous("Weight", breaks = seq(0,6,by = .5)) + 
       scale_y_continuous(name = NULL , labels = NULL, breaks = NULL) +
-      ggtitle("Last sample of colordifference") +
+      ggtitle("One sample of colordifference") +
       theme_general() + 
       scale_linetype_manual("", values = "solid") +
       theme(legend.justification = c(1,1),
@@ -130,9 +151,9 @@ shinyServer(function(input, output) {
   #Sampling distribution plot
   output$sampdistplot <- renderPlot({
     validate(
-      need(samples$hist != "", "Please start by drawing a sample")
+      need(samples$meanhist != "", "Please start by drawing 5 cases for the first sample")
     )
-    df <- data.frame(difference = samples$hist)
+    df <- data.frame(difference = samples$meanhist)
     ggplot(df, aes(x = difference)) + 
       geom_histogram(fill = "grey",
                      colour = "black",
