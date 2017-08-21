@@ -35,7 +35,7 @@ shinyUI(fluidPage(verticalLayout(
                        label = "Adjust the value of Contact:",
                        min = 0,
                        max = 10,
-                       value = 3,
+                       value = 0,
                        step = .5
             )
    )
