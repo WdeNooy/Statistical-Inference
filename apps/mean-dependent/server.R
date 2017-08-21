@@ -77,7 +77,7 @@ shinyServer(function(input, output) {
       coord_cartesian(xlim = c(0,6)) +
       scale_x_continuous("Colour intensity", breaks = seq(0,6,by = .5)) + 
       scale_y_continuous(name = NULL , labels = NULL, breaks = NULL) +
-      ggtitle("Population of candy colour intensity before") +
+      ggtitle("Population: Before") +
       theme_general() + 
       scale_linetype_manual("", values = "dashed") +
       theme(legend.justification = c(1,1),
@@ -98,7 +98,7 @@ shinyServer(function(input, output) {
       scale_x_continuous("Colour intensity",breaks = seq(0,6,by = .5)) + 
       scale_y_continuous(name = NULL , labels = NULL, breaks = NULL) +
       scale_fill_gradient(low = "yellow", high = "white",guide = "none") +
-      ggtitle("Population of candy colour intensity after") +
+      ggtitle("Population: After") +
       theme_general() + 
       scale_linetype_manual("", values = "dashed") +
       theme(legend.justification = c(1,1),
@@ -117,13 +117,13 @@ shinyServer(function(input, output) {
                    binwidth = 0.2,
                    dotsize = 1) + 
       geom_vline(size = .7,
-                 aes(xintercept = mean(difference),
+                 aes(xintercept = ifelse(is.na(mean(difference)), 1, mean(difference)),
                      linetype = paste("Average = ",
-                                      round(mean(difference), digits = 2)))) +
-      coord_cartesian(xlim = c(0,6)) + 
-      scale_x_continuous("Weight", breaks = seq(0,6,by = .5)) + 
+                                      ifelse(is.na(mean(difference)), "", round(mean(difference), digits = 2))))) +
+      coord_cartesian(xlim = c(0,3)) + 
+      scale_x_continuous("", breaks = seq(0,6,by = .5)) + 
       scale_y_continuous(name = NULL , labels = NULL, breaks = NULL) +
-      ggtitle("One sample of colordifference") +
+      ggtitle("One sample of color differences") +
       theme_general() + 
       scale_linetype_manual("", values = "solid") +
       theme(legend.justification = c(1,1),
@@ -159,7 +159,7 @@ shinyServer(function(input, output) {
                      colour = "black",
                      alpha = .8,
                      binwidth = .1) +
-      coord_cartesian(xlim = c(0,3)) + 
+      coord_cartesian(xlim = c(0,2)) + 
       scale_x_continuous(name = "Mean differences", breaks = seq(0,3,by = 0.5)) +
       ggtitle("Sampling distribution of mean differences") +
       theme_general()
