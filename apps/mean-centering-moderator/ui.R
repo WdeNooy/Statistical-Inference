@@ -12,34 +12,19 @@ shinyUI(fluidPage(
                       width = fig.width
            )
   ),
-  
-  fluidRow(align = "center",
-           div(strong("Equation:")),
-           withMathJax(helpText(
-             paste("$$\\color{black}{attitude = b_0 + (}\\color{red}{b_1 + b_3 }* \\color{blue}{",
-                   "contact",
-                   "}\\color{black}{)*exposure + b_2*}\\color{blue}{",
-                   "contact",
-                   "}$$"
-             )))
-  ),
-  fluidRow(align = "center",
-           div(strong("Equation with influence of centering:")),
-           withMathJax(uiOutput("eqbef"))
-  ),
-  fluidRow(align = "center",
-           sliderInput("modvalueslider",
-                       label = "Adjust the value of Contact (Moderator):",
-                       min = 0,
-                       max = 10,
-                       value = 0,
-                       step = .5)
- ),
  fluidRow(align = "center",
           sliderInput("modcenterslider",
-                      label = "Adjust the centering of Contact:",
+                      label = "Center Contact. Subtract from Contract:",
                       min = 0,
                       max = 10,
                       value = 0,
-                      step = .5))
+                      step = .5)),
+ fluidRow(align = "center",
+          sliderInput("modvalueslider",
+                      label = "Adjust the value of Contact (Moderator):",
+                      min = 0,
+                      max = 10,
+                      value = 0,
+                      step = .5)
+ )
 )))
