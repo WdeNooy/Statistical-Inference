@@ -65,7 +65,7 @@ shinyServer(function(input, output) {
         aes(color = "Only contact")) +
       stat_function(
         fun = attfun,
-        args = list(contact =  input$modcenterslider/2, betaexposure = -0.26 + 0.04 * input$modcenterslider/2),
+        args = list(contact =  0 - input$modcenterslider/2, betaexposure = -0.26 + 0.04 * (input$modcenterslider/2)),
         n = 500,
         alpha = 1,
         size = .9,
