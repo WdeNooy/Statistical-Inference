@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   ),
  fluidRow(align = "center",
           sliderInput("modcenterslider",
-                      label = "Center Contact. Subtract from Contract:",
+                      label = "Center Contact. Subtract from Contact:",
                       min = 0,
                       max = 10,
                       value = 0,
