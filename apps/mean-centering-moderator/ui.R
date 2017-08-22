@@ -16,7 +16,7 @@ shinyUI(fluidPage(
   fluidRow(align = "center",
            div(strong("Equation:")),
            withMathJax(helpText(
-             paste("$$\\color{black}{attitude = b_0 + (b_1 + b_3 * }\\color{blue}{",
+             paste("$$\\color{black}{attitude = b_0 + (}\\color{red}{b_1 + b_3 }* \\color{blue}{",
                    "contact",
                    "}\\color{black}{)*exposure + b_2*}\\color{blue}{",
                    "contact",
@@ -24,12 +24,8 @@ shinyUI(fluidPage(
              )))
   ),
   fluidRow(align = "center",
-           div(strong("Reference value before centering:")),
+           div(strong("Equation with influence of centering:")),
            withMathJax(uiOutput("eqbef"))
-  ),
-  fluidRow(align = "center",
-           div(strong("Reference value after centering:")),
-           withMathJax(uiOutput("eqafter"))
   ),
   fluidRow(align = "center",
            sliderInput("modvalueslider",
