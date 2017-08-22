@@ -60,7 +60,7 @@ shinyServer(function(input, output) {
       scale_color_manual(name = "",
                          values = c("Contact centered = 0" = unname(brewercolors["Red"]),
                                     "Contact = 0" = unname(brewercolors["Blue"]))) +
-      geom_text(aes(x = 5, y = -4.5, color = "Contact centered = 0"), size = 3.2,
+      geom_text(aes(x = 5, y = -4.5, color = "Contact centered = 0"), size = 2.8,
                 label = paste("Attitude = ",  0.4 + 0.15 * input$modcenterslider/2,
                               " + ", -0.26 + 0.04 * input$modcenterslider/2,
                               " * Exposure + 0.15 * Contact + 0.04 * Contact * Exposure"),
