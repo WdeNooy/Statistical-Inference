@@ -54,9 +54,9 @@ shinyServer(function(input, output) {
     
     postHocpValues <- pairwise.t.test(df$y,df$cat,p.adjust.method = "none")$p.value
     
-    phJolCloon   <-  round(postHocpValues[1],2)
-    phNoEndCloon <-  round(postHocpValues[2],2)
-    phNoEndJol   <-  round(postHocpValues[4],2)
+    phJolCloon   <-  postHocpValues[1]
+    phNoEndCloon <-  postHocpValues[2]
+    phNoEndJol   <-  postHocpValues[4]
     
     ggplot(df,aes(x = x, y = y)) +
       #Mean of group Clooney
@@ -81,8 +81,8 @@ shinyServer(function(input, output) {
                    size = 1.2,
                    aes(colour = "No Endorser")) +  
       #Arrows between group means
-      geom_segment(x = end - 1.05,
-                   xend = end - 1.05,
+      geom_segment(x = end - 2.55,
+                   xend = end - 2.55,
                    y = mean(subset(df, cat == "Clooney")$y),
                    yend = mean(subset(df, cat == "Jolie")$y),
                    linetype = "solid",
@@ -90,8 +90,8 @@ shinyServer(function(input, output) {
                    arrow = arrow(length = unit(2,"mm"),
                                  ends = "both",
                                  type = "closed")) + 
-      geom_segment(x = end - 0.55,
-                   xend = end - 0.55,
+      geom_segment(x = end - 1.55,
+                   xend = end - 1.55,
                    y = mean(subset(df, cat == "NoEnd")$y),
                    yend = mean(subset(df, cat == "Jolie")$y),
                    linetype = "solid",
@@ -99,8 +99,8 @@ shinyServer(function(input, output) {
                    arrow = arrow(length = unit(2,"mm"),
                                  ends = "both",
                                  type = "closed")) + 
-      geom_segment(x = end-0.1,
-                   xend = end - 0.1,
+      geom_segment(x = end-0.2,
+                   xend = end - 0.2,
                    y = mean(subset(df, cat == "Clooney")$y),
                    yend = mean(subset(df, cat == "NoEnd")$y),
                    linetype = "solid",
@@ -133,43 +133,37 @@ shinyServer(function(input, output) {
                 hjust = 0.5,
                 parse = TRUE) +
       #Fvalue text label
-      geom_text(label = paste0("F = ",
-                               format(round(Fstat,1), nsmall = 2),
-                               " (",
+      geom_text(label = paste0("F (",
                                format(df1And2[1]),
-                               ",",
+                               ", ",
                                format(df1And2[2]),
-                               ") p <= ",
-                               round(pValue,2)),
+                               ") = ",
+                               rprint(Fstat),
+                               ", ",
+                               pprint(pValue)),
                 x = end - 0.4,
                 y = 9.0,
                 hjust = 0.5,
                 parse = FALSE) +
       #Post hoc Cloon jolie text 
-      geom_text(label = paste0("p <= ",
-                               phJolCloon
-                               ),
-                x = end - 1,
+      geom_label(label = pprint(phJolCloon),
+                x = end - 2.5,
                 y = mean(c(mean(subset(df, cat == "Clooney")$y),
                               mean(subset(df, cat == "Jolie")$y))
                               ),
                 hjust = 0,
                 parse = FALSE) +
-      #Post hoc Cloon NoEnd text 
-      geom_text(label = paste0("p <= ",
-                               phNoEndJol
-      ),
-      x = end - 0.53,
+      #Post hoc Jolie NoEnd text 
+      geom_label(label = pprint(phNoEndJol),
+      x = end - 1.5,
       y = mean(c(mean(subset(df, cat == "Jolie")$y),
                  mean(subset(df, cat == "NoEnd")$y))
       ),
       hjust = 0,
       parse = FALSE) +
-      #Post hoc Jolie NoEnd text 
-      geom_text(label = paste0("p <= ",
-                               phNoEndCloon
-      ),
-      x = end - 0.08,
+      #Post hoc Clooney NoEnd text 
+      geom_label(label = pprint(phNoEndCloon),
+      x = end - 0.18,
       y = mean(c(mean(subset(df, cat == "Clooney")$y),
                  mean(subset(df, cat == "NoEnd")$y))
       ),
