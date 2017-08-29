@@ -329,20 +329,43 @@ The assumption of equal population variances is less important if group samples 
 
 ### Which groups have different average scores?
 
-```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population?"}
+```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="525px"}
 # Goal: Sensitize students to the need for and problems with post-hoc tests.
 # Generate and display a sample as in the app anova-means with option to change
 # group means.
 # Display the model F test and the results of three t-tests (without Bonferroni
 # correction) for pairwise comparisons (if feasible: as labels to the vertical
-# arrows between group means in the plot).
+# arcs between group means in the plot).
+knitr::include_app("http://82.196.4.233:3838/apps/anova-posthoc/", height="485px")
 ```
 
 1. Does the F test in analysis of variance tell us which groups have significantly different average population outcome scores? In other words, can we have the same F test result with different sets of group means? Adjust group means in Figure \@ref(fig:anova-posthoc) to demonstrate your answer.
 
-2. Is it possible that the F test is statistically significant but none of the t tests that compare groups one by one? Check your answer with Figure \@ref(fig:anova-posthoc).
+```{r eval=FALSE}
+* No, the F test in analysis of variance does not tell us which groups have
+significantly different average population outcome scores.
+* Just switch the means of two groups. You will get the same F test results as
+before, but now different pairs of groups have different means.
+```
 
-3. Is it okay that we apply both an F test and several t tests to the same group differences?
+2. Is it possible that the F test is not statistically significant but at least one of the t tests that compare groups one by one (p values to vertical arrows) is statistically significant? Check your answer with Figure \@ref(fig:anova-posthoc).
+
+```{r eval=FALSE}
+* Yes, this is possible. For example, enter the following group means: Clooney
+6, Jolie 7, and No endorser 5.
+* With three t tests, the probability that at least one t test is statistically
+significant, is much larger than .05. Therefore, we are likely to find a
+statistically significant t test even if the F test is not statistically
+significant.
+```
+
+3. Is it okay that we apply both an F test and several t tests to the same data on group differences?
+
+```{r eval=FALSE}
+* No, this is not okay. Every additinal significance test increases the
+probability that we find a statistically significant result even if there is no
+difference between the group means in the population.
+```
 
 If the F test is statistically significant, we reject the null hypothesis that all groups have the same population mean on the outcome variable. In our current example, we reject the null hypothesis that average willingness to donate is equal for people who saw George Clooney, Angelina Jolie, or no endorser for the fund raiser. In other words, we _reject_ the null hypothesis that the endorser does _not_ matter to willingness to donate.
 
