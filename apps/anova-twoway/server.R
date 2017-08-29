@@ -108,7 +108,7 @@ shinyServer(function(input, output) {
         xend.grpgr = df$x,
         y.grpgr    = rep(mean(df$y), length(df$y)),
         yend.grpgr = 
-          rep(as.vector(by(df$y, df$cat1, mean, simplify = TRUE)), 4))
+          rep(as.vector(by(df$y, df$cat1, mean, simplify = TRUE)), each =  4))
 
       p <-
         p +
