@@ -342,7 +342,7 @@ Therefore, it is recommended to interpret only the unstandardized regression coe
 
 ### A categorical predictor and dummy variables {#categorical-predictor}
 
-```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?"}
+```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Understanding effects of dummy variables by manipulating the reference
 # group.
 # Generate numerical outcome data (attitude, range [-5, 5]) for a categorical
@@ -359,13 +359,66 @@ Therefore, it is recommended to interpret only the unstandardized regression coe
 # Add input to select the reference group, initially set to group (1). Update
 # regression lines and their p values on selection of a new reference group.
 # Add button to generate a new plot (with a new scenario).
+knitr::include_app("http://82.196.4.233:3838/apps/regression-categorical/", height="480px")
 ```
 
 1. Interpret the effects of smoking status in Figure \@ref(fig:regression-categorical).
 
-2. Can you tell whether the attitude of smokers is significantly different from the attitude of former smokers? Select a different reference group to motivate your answer.
+```{r eval=FALSE}
+* The precise answer to this question obviously depends on the group means in
+your plot.
+* In general, the interpretation focuses on differences between the mean scores
+of groups and the mean score of the reference group. In this example, we are
+talking about average attitude towards smoking for each group defined by their
+smoking status. The reference group is signalled by the Select reference
+drop-down list.
+* The unstandardized regression coefficient (b) tells us how much larger
+(positive coefficient) or smaller (negative coefficient) the mean score of a
+group is in comparison to the reference group.
+* The associated p value tells us how uncertain we are that there truly is a
+mean difference in the population.
+```
+
+2. In the initial state of Figure \@ref(fig:regression-categorical), can you tell whether the attitude of smokers is significantly different from the attitude of former smokers? Select a different reference group to motivate your answer.
+
+```{r eval=FALSE}
+* In the initial state of this figure, people who never smoked are the
+reference group. The p values, then, are associated with differences between on
+the one hand people who never smoked and on the other hand people who stopped
+smoking or are smoking. The comparison between the latter two is not included.
+* It is hazardous to derive the p value of the difference between two
+non-reference groups from the p values of the differences between these groups
+and the reference group. Remember that a p value depends on both effect size
+(difference between group means) and on the standard error. The latter depends
+on the variance of the outcome variable per group (in the population) and on
+sample size per group.
+* The solution is to re-estimate the regression model with one of the groups
+that you want to compare as reference group. In this figure, you can do this by
+selecting a different group in the drop-down list.
+```
 
 3. Select some new plots. For each plot, determine which reference group you think is most convenient for summarizing the results. 
+
+```{r eval=FALSE}
+* There is not one right way choose a reference group; think about arguments.
+* 1. Substantive interest: Does your research focus on one particular group? If
+so, use this group as the reference group, so it is included in all
+comparisons. If, for example, the research is meant to support an anti-smoking
+campaign, the group of current smokers is probably of central interest. Make
+them your reference group.
+* 2. If you expect a particular order in the group means, the group that you
+expect to be in the middle, is a good choice as reference group. If, for
+example, you expect that attitude towards smoking is more positive for smokers
+than for former smokers, and the latter are more positive than people who never
+smoked, the former smokers are expected to be in the middle. If we use them as
+reference group, we can test if they are more positive than people who never
+smoked, and more negative than people who are currently smoking.
+* 3. If two groups have relatively similar means in comparison to the third
+group, you may be interested to know if the relatively small difference is
+statistically significant. In this case, one of the two groups that have
+similar means is a good reference group.
+* 4. Any other arguments?
+```
 
 What if smoking status was measured with three categories: (1) never smoked, (2) have smoked, (3) currently smoking? We can only include such a categorical predictor if we change it into a set of dichotomies. 
 

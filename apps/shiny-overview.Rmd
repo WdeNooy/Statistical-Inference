@@ -61,6 +61,18 @@ knitr::include_app("http://82.196.4.233:3838/apps/bootstrap-lim/", height="560px
 knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
 ```
 
+```{r normal-approx-proportion, fig.cap="How does the shape of the distribution of sample proportions change with sample size and proportion value?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+#Generate a binomial sampling distribution with population proportion 0.5 and a
+#large sample size and display it as a histogram.
+# Project the normal distribution with population proportion p as mean and sqrt
+# of p(1 - p)/N as standard deviation. Allow the user to change sample size and
+# population proportion and update both the sampling distribution and the normal
+# curve.
+#perhaps adapt/simplify CLT_prop from Shiny-Ed on GitHub,
+#https://github.com/ShinyEd/ShinyEd/tree/master/CLT_prop
+knitr::include_app("http://82.196.4.233:3838/apps/normal-approx-proportion/", height="560px")
+```
+
 ```{r mean-independent, echo=TRUE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="540px", screenshot.opts = list(delay = 5), dev="png"}
 # Demonstrate the construction of a sampling distribution of mean differences for independent samples; generate more or less normal dotplots for two populations (normal distributions): weight of red candies and yellow candies; a button allows to draw a random sample from each population, showing a dotplot for each sample (first draw the reds, then the yellows) with the mean added as vertical line with value ; then calculate the difference of the two means and store this difference in a sampling distribution, which is also shown as a histogram. Add a button to draw 1,000 samples and show the resulting sampling distribution.
 knitr::include_app("http://82.196.4.233:3838/apps/mean-independent/", height="580px")
@@ -287,6 +299,26 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="6
 ```
 
 ## Chapter 8
+
+```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Understanding effects of dummy variables by manipulating the reference
+# group.
+# Generate numerical outcome data (attitude, range [-5, 5]) for a categorical
+# predictor with 3 categories: (1) non-smoker, (2) former smoker, (3) smoker,
+# and a random choice of one of the following scenarios:
+#* (1 M = -1.7, SD = 1) < (2) = (3 M = 0.75, SD = 1) {initial situation},
+#* (1 M = -1.7, SD = 1) = (2) < (3 M = 0.75, SD = 1), 
+#* (2  M = -1.7, SD = 1) < (1) = (3 M = 0.75, SD = 1),
+#* (1 M = -1.7, SD = 1) < (2 M = 0.75, SD = 1) < (3 M = 1.8, SD = 1). 
+# Display jittered scatterplot containing the three groups with group means
+# indicated by a line segment and value, regression lines through the reference
+# group mean and each of the other group means. Display b and p value of
+# regression weights with the regression lines.
+# Add input to select the reference group, initially set to group (1). Update
+# regression lines and their p values on selection of a new reference group.
+# Add button to generate a new plot (with a new scenario).
+knitr::include_app("http://82.196.4.233:3838/apps/regression-categorical/", height="480px")
+```
 
 ```{r resid-normal, fig.cap="What are the residuals and how are they distributed?"}
 # Goal: Understand the meaning of residuals by linking residuals in a
