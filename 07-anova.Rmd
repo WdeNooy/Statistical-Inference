@@ -455,11 +455,11 @@ population of adults.
 
 ## Different Score Levels for Two Factors
 
-```{r anova-twoway, fig.cap="?"}
+```{r anova-twoway, fig.cap="How do group means tell us about (main) effects in analysis of variance?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="520px"}
 # Goal: Illustrate that different main effects merely use means of different
 # groupings.
 # Similar to app anova-between but with a double classification of cases
-# (according to endorser and sex) and the option to display means of different
+# (according to endorser and sex) and te option to display means of different
 # groupings.
 # Generate 6 sets of 2 (random) observations (from a normally distributed
 # population with mean runif(3, 7) and sd = 1). Assign the groups to the
@@ -471,14 +471,46 @@ population of adults.
 # Allow the user to select (display) group means on one of the two factors or
 # both. On selection, add group means as horizontal lines (coloured for the 3
 # levels factor and different line styles for 2 levels factor) with between
-# group variation indicated by double-sided arrows between group mean and grand
+# group variation indicated by double-sided arcs between group mean and grand
 # mean for each dot (between). Add subgroup (endorser by sex) means if both
 # factors are selected.
+knitr::include_app("http://82.196.4.233:3838/apps/anova-twoway/", height="510px")
 ```
 
-1. How does an analysis of variance test the effect of endorser on willingness to donate with the data displayed in Figure \@ref(fig:)? Select the endorser factor to check your answer.
+1. How does an analysis of variance test the effect of endorser on willingness to donate with the data displayed in Figure \@ref(fig:anova-twoway)? Select the endorser factor to check your answer.
 
-2. Which effect on willingness to donate is probably stronger: the effect of endorser or of sex? Motivate your answer. Compare a plot with the endorser factor selected to a plot with the sex factor selected.
+```{r eval=FALSE}
+* Analysis of variance tests the variance (variation, spread) in the mean
+scores on the outcome variable among groups. If the group means are more widely
+apart, the variance of group means is larger, so the F test value is larger and
+further away from what we expect if there are no differences among group means
+in the population. The variation among group means is larger if they are more
+distant from the grand (or overall) mean.
+* To test the endorser effect, analysis of variance looks at the mean scores of
+groups defined by the celebrity endorser they have seen. It will check the
+distance between the three celebrity group means and the grand mean.
+```
+
+2. Which effect on willingness to donate is probably stronger: the effect of endorser or of sex? Motivate your answer, for example, using the grey arrows in the plot. Compare a plot with the endorser factor selected to a plot with the sex factor selected.
+
+```{r eval=FALSE}
+* The effect of endorser is probably stronger than the effect of sex because
+the observations within an endorser group are less equally distributed around
+the grand mean (they are more clustered above or below the grand mean) than
+observations within a sex group. Both females and males are found nearly
+equally above and below the grand mean, so their group means are close to the
+grand mean, and there is little variation in sex group means.
+* The grey arrows represent the distance between group mean and grand mean for
+each observation. They are much shorter for the difference between emales and
+males than for differences between endorser groups.
+```
+
+3. Where do you expect the group means to show up in the graph if you select both the Endorser and Sex check boxes?
+```{r eval=FALSE}
+* If both boxes are ticked, the scores are grouped by the combination of
+endorser and sex. We will see the means of subgroups: females exposed to
+Clooney, males exposed to Clooney, males exposed to Jolie, and so on.
+```
 
 In the preceding section, we have looked at the effect of a single factor on willingness to donate, namely, the endorser to whom participants are exposed. Thus, we take into account two variables: one predictor and one outcome variable. This is an example of a bivariate analysis.
 

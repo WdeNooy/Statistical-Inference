@@ -248,6 +248,28 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-between/", height="530px
 knitr::include_app("http://82.196.4.233:3838/apps/anova-posthoc/", height="485px")
 ```
 
+```{r anova-twoway, fig.cap="How do group means tell us about (main) effects in analysis of variance?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="520px"}
+# Goal: Illustrate that different main effects merely use means of different
+# groupings.
+# Similar to app anova-between but with a double classification of cases
+# (according to endorser and sex) and te option to display means of different
+# groupings.
+# Generate 6 sets of 2 (random) observations (from a normally distributed
+# population with mean runif(3, 7) and sd = 1). Assign the groups to the
+# experimental treatment factor (endorser, 3 levels) and sex factor (2 levels).
+# Represent observations in a dotplot with treatment as dot colour and sex as
+# dot shape, each observation with a separate value on the x axis, ordered by
+# factor levels.
+# Display the grand mean as a horizontal line. 
+# Allow the user to select (display) group means on one of the two factors or
+# both. On selection, add group means as horizontal lines (coloured for the 3
+# levels factor and different line styles for 2 levels factor) with between
+# group variation indicated by double-sided arcs between group mean and grand
+# mean for each dot (between). Add subgroup (endorser by sex) means if both
+# factors are selected.
+knitr::include_app("http://82.196.4.233:3838/apps/anova-twoway/", height="510px")
+```
+
 ```{r anova-moderation, fig.cap="How can we recognize main effects and moderation in a means plot?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goals: Learn to recognize different types of moderation, visually distinguishing between main effects (differences) and moderation (different differences.
 # Create a means plot with 3x2 means, willingness on Y axis, endorser (nobody, Clooney, Jolie) on X axis, and different colours for sex. Initial means have main effects but no interaction effect.Connect the means per sex by line segments. Link the female & male mean for the same group by a vertical double-sided arc. Allow user to change all six means (if possible, by dragging them vertically?). Display marginal (total) means for each sex and endorser.
