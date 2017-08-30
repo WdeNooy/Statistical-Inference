@@ -73,7 +73,7 @@ shinyServer(function(input, output) {
       geom_line(y = mean(df$y),
                 aes(linetype = "Grand Mean", colour = "Grand Mean"),
                 size = 1.3) +
-      geom_point(size = 3, aes(fill = cat1, shape = cat2)) +
+      geom_point(size = 5, aes(fill = cat1, shape = cat2)) +
       scale_colour_manual(values = 
                             c("Grand Mean" = "black",
                             "Clooney" = unname(brewercolors["Orange"]),
@@ -135,6 +135,7 @@ shinyServer(function(input, output) {
                       y        = dfarrows$y.grpgr,
                       yend     = dfarrows$yend.grpgr,
                       linetype = "solid",
+                      colour   = "grey",
                       arrow    = 
                         arrow(length = unit(2, "mm"),
                               ends   = "both",
@@ -159,7 +160,7 @@ shinyServer(function(input, output) {
                     xend.grpgr = df$x,
                     y.grpgr    = rep(mean(df$y), length(df$y)),
                     yend.grpgr = 
-                      rep(as.vector(by(df$y, df$cat2, mean, simplify = TRUE)),6)
+                      rep(as.vector(by(df$y, df$cat2, mean, simplify = TRUE)),3, each = 2)
                     )
       
       p <-
@@ -193,6 +194,7 @@ shinyServer(function(input, output) {
                       y        = dfarrows$y.grpgr,
                       yend     = dfarrows$yend.grpgr,
                       linetype = "solid",
+                      colour   = "grey",
                       arrow    = arrow( length = unit(2, "mm"),
                                         ends   = "both",
                                         type   = "closed"))
@@ -254,6 +256,7 @@ shinyServer(function(input, output) {
                      y = dfarrows$y.grpgr,
                      yend = dfarrows$yend.grpgr,
                      linetype = "solid",
+                     colour   = "grey",
                      arrow = arrow(
                       length = unit(2, "mm"),
                       ends = "both",
