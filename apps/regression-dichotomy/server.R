@@ -12,7 +12,7 @@ shinyServer(function(input, output) {
     
     x <- c(rep(0, 20), rep(1, 20))
     
-    # Generate random errors per group.
+    # Generate random error per group.
     
     set.seed(1272)
     e <- rnorm(20, mean = 0, sd = 1)
@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
     # Generate outcome scaled by unstandardized regression coefficient.
     
     y <- nonsmoker + (smoker - nonsmoker)*x + e
-    category <- c(rep("Non-Smoker", 20), rep("Smoker", 20))
+    category <- c(rep("Non-Smoker (0)", 20), rep("Smoker (1)", 20))
     
     data.frame(y = y, x = x,category)
   })
@@ -91,13 +91,11 @@ shinyServer(function(input, output) {
                    data = segments,
                    aes(x = x, xend = xend,y = y, yend= yend),
                    linetype = "dashed") +
-      scale_colour_manual("Smoking status",
-                          values = c("Non-Smoker (0)" = unname(brewercolors["Red"]),
+      scale_colour_manual(name = "Smoking status", values = c("Non-Smoker (0)" = unname(brewercolors["Red"]),
                                      "Smoker (1)" = unname(brewercolors["Blue"]))) + 
       scale_y_continuous(name = "Attitude",
                          breaks = c(-5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
       coord_cartesian(ylim = c(-5,5)) + 
-      xlab("Group") + 
       theme_general() + 
       theme(legend.position = "none")
    
