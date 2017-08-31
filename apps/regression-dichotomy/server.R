@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
     
     # Generate outcome scaled by unstandardized regression coefficient.
     
-    y <- nonsmoker + smoker*x + e
+    y <- nonsmoker + (smoker - nonsmoker)*x + e
     category <- c(rep("Non-Smoker", 20), rep("Smoker", 20))
     
     data.frame(y = y, x = x,category)
@@ -48,7 +48,7 @@ shinyServer(function(input, output) {
         paste("$$\\color{black}{attitude = }\\color{#D7191C}{\\beta_0(",
               input$nonsmokeraveragesli,
               ")}\\color{black}{ + }\\color{#2B83BA}{\\beta_1 (",
-              input$smokeraveragesli,
+              (input$smokeraveragesli - input$nonsmokeraveragesli),
               ")}\\color{black}{* x + error}$$")
       )
     )
@@ -82,7 +82,6 @@ shinyServer(function(input, output) {
     
     ggplot(df, aes(x = category, y = y, colour = category)) + 
       geom_jitter(width = .2) + 
-      coord_cartesian(ylim = c(-5,5)) + 
       stat_function(inherit.aes = FALSE,
                     data = data.frame(x = c(0,3)),
                     aes(x = x),
@@ -95,8 +94,10 @@ shinyServer(function(input, output) {
       scale_colour_manual("Group",
                           values = c("Non-Smoker" = unname(brewercolors["Red"]),
                                      "Smoker" = unname(brewercolors["Blue"]))) + 
+      scale_y_continuous(name = "Attitude",
+                         breaks = c(-5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
+      coord_cartesian(ylim = c(-5,5)) + 
       xlab("Group") + 
-      ylab("Attitude") + 
       theme_general() + 
       theme(legend.position = "none")
    

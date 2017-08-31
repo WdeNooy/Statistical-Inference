@@ -12,19 +12,19 @@ shinyUI(
                )
       ),
       fluidRow(align = "center",
-               sliderInput("nonsmokeraveragesli",
-                            label = "Non Smoker",
-                            min = -5,
-                            max = 5,
-                            step = 0.1,
-                            value = -0.6)
-      ),
-      fluidRow(align = "center",
-               div(strong("Equation:")),
+#               div(strong("Equation:")),
                withMathJax(uiOutput("equationui"))
       ),
       fluidRow(align = "center",
                div(strong("Adjust group averages:")),
+               sliderInput("nonsmokeraveragesli",
+                           label = "Non Smoker",
+                           min = -5,
+                           max = 5,
+                           step = 0.1,
+                           value = -0.6)
+      ),
+      fluidRow(align = "center",
                sliderInput("smokeraveragesli",
                            label = "Smoker",
                            min = -5,
