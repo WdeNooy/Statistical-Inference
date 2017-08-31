@@ -10,21 +10,21 @@ shinyUI(
                )
      ),
      fluidRow(align = "center",
+              div(
+                selectInput("selectinput",
+                            label = "Choose group",
+                            choices = c("All", "Smoker", "Former smoker", "Non-smoker"),
+                            selected = "All"
+                            
+                ), 
+                align = "center"
+              )
+     ),
+     fluidRow(align = "center",
               plotOutput("histogram",
                          width = fig.width,
                          height = fig.height
               )
-     ),
-     fluidRow(align = "center",
-              div(
-                selectInput("selectinput",
-                             label = "Choose group",
-                             choices = c("All", "Smoker", "Former smoker", "Non-smoker"),
-                             selected = "All"
-                
-                             ), 
-                align = "center"
-                )
      ),
      fluidRow(align = "center",
               actionButton("samplebtn",
