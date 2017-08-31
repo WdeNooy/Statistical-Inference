@@ -49,7 +49,7 @@ shinyServer(function(input, output) {
               input$nonsmokeraveragesli,
               ")}\\color{black}{ + }\\color{#2B83BA}{\\beta_1 (",
               (input$smokeraveragesli - input$nonsmokeraveragesli),
-              ")}\\color{black}{* x + error}$$")
+              ")}\\color{black}{* status + e}$$")
       )
     )
   })
@@ -91,9 +91,9 @@ shinyServer(function(input, output) {
                    data = segments,
                    aes(x = x, xend = xend,y = y, yend= yend),
                    linetype = "dashed") +
-      scale_colour_manual("Group",
-                          values = c("Non-Smoker" = unname(brewercolors["Red"]),
-                                     "Smoker" = unname(brewercolors["Blue"]))) + 
+      scale_colour_manual("Smoking status",
+                          values = c("Non-Smoker (0)" = unname(brewercolors["Red"]),
+                                     "Smoker (1)" = unname(brewercolors["Blue"]))) + 
       scale_y_continuous(name = "Attitude",
                          breaks = c(-5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
       coord_cartesian(ylim = c(-5,5)) + 
