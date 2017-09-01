@@ -45,9 +45,9 @@ shinyServer(function(input, output) {
   output$equationui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude = }\\color{#D7191C}{\\beta_0(",
+        paste("$$\\color{black}{attitude = }\\color{#D7191C}{b_0(",
               input$nonsmokeraveragesli,
-              ")}\\color{black}{ + }\\color{#2B83BA}{\\beta_1 (",
+              ")}\\color{black}{ + }\\color{#2B83BA}{b_1 (",
               (input$smokeraveragesli - input$nonsmokeraveragesli),
               ")}\\color{black}{* status + e}$$")
       )
