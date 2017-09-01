@@ -61,6 +61,18 @@ knitr::include_app("http://82.196.4.233:3838/apps/bootstrap-lim/", height="560px
 knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
 ```
 
+```{r normal-approx-proportion, fig.cap="How does the shape of the distribution of sample proportions change with sample size and proportion value?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+#Generate a binomial sampling distribution with population proportion 0.5 and a
+#large sample size and display it as a histogram.
+# Project the normal distribution with population proportion p as mean and sqrt
+# of p(1 - p)/N as standard deviation. Allow the user to change sample size and
+# population proportion and update both the sampling distribution and the normal
+# curve.
+#perhaps adapt/simplify CLT_prop from Shiny-Ed on GitHub,
+#https://github.com/ShinyEd/ShinyEd/tree/master/CLT_prop
+knitr::include_app("http://82.196.4.233:3838/apps/normal-approx-proportion/", height="560px")
+```
+
 ```{r mean-independent, echo=TRUE, fig.cap="How do we obtain a sampling distribution for the mean difference of to independent samples?", out.width="540px", screenshot.opts = list(delay = 5), dev="png"}
 # Demonstrate the construction of a sampling distribution of mean differences for independent samples; generate more or less normal dotplots for two populations (normal distributions): weight of red candies and yellow candies; a button allows to draw a random sample from each population, showing a dotplot for each sample (first draw the reds, then the yellows) with the mean added as vertical line with value ; then calculate the difference of the two means and store this difference in a sampling distribution, which is also shown as a histogram. Add a button to draw 1,000 samples and show the resulting sampling distribution.
 knitr::include_app("http://82.196.4.233:3838/apps/mean-independent/", height="580px")
@@ -238,6 +250,38 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-means/", height="490px")
 knitr::include_app("http://82.196.4.233:3838/apps/anova-between/", height="530px")
 ```
 
+```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="525px"}
+# Goal: Sensitize students to the need for and problems with post-hoc tests.
+# Generate and display a sample as in the app anova-means with option to change
+# group means.
+# Display the model F test and the results of three t-tests (without Bonferroni
+# correction) for pairwise comparisons (if feasible: as labels to the vertical
+# arcs between group means in the plot).
+knitr::include_app("http://82.196.4.233:3838/apps/anova-posthoc/", height="485px")
+```
+
+```{r anova-twoway, fig.cap="How do group means tell us about (main) effects in analysis of variance?", echo=TRUE, screenshot.opts = list(delay = 5), dev="png", out.width="520px"}
+# Goal: Illustrate that different main effects merely use means of different
+# groupings.
+# Similar to app anova-between but with a double classification of cases
+# (according to endorser and sex) and te option to display means of different
+# groupings.
+# Generate 6 sets of 2 (random) observations (from a normally distributed
+# population with mean runif(3, 7) and sd = 1). Assign the groups to the
+# experimental treatment factor (endorser, 3 levels) and sex factor (2 levels).
+# Represent observations in a dotplot with treatment as dot colour and sex as
+# dot shape, each observation with a separate value on the x axis, ordered by
+# factor levels.
+# Display the grand mean as a horizontal line. 
+# Allow the user to select (display) group means on one of the two factors or
+# both. On selection, add group means as horizontal lines (coloured for the 3
+# levels factor and different line styles for 2 levels factor) with between
+# group variation indicated by double-sided arcs between group mean and grand
+# mean for each dot (between). Add subgroup (endorser by sex) means if both
+# factors are selected.
+knitr::include_app("http://82.196.4.233:3838/apps/anova-twoway/", height="510px")
+```
+
 ```{r anova-moderation, fig.cap="How can we recognize main effects and moderation in a means plot?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goals: Learn to recognize different types of moderation, visually distinguishing between main effects (differences) and moderation (different differences.
 # Create a means plot with 3x2 means, willingness on Y axis, endorser (nobody, Clooney, Jolie) on X axis, and different colours for sex. Initial means have main effects but no interaction effect.Connect the means per sex by line segments. Link the female & male mean for the same group by a vertical double-sided arc. Allow user to change all six means (if possible, by dragging them vertically?). Display marginal (total) means for each sex and endorser.
@@ -255,6 +299,44 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="6
 ```
 
 ## Chapter 8
+
+### regression-dichotomy
+
+Section 8.1.3, Dichotomous predictors.
+
+```{r regression-dichotomy, eval=TRUE, echo=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
+# Goal: Refresh interpretation of unstandardized regression weight for a
+# dichotomous predictor by manipulating group averages.
+# Generate attitude scores  with average values -0.6 for non-smokers and 1.0 for
+# smokers (N = 20 per group).
+# Draw horizontal and vertical lines from the axes to the group means and add a
+# regression line (line through the two group means).
+# Display the current regression equation beneath or in the plot. 
+# Allow the user to change the average score per group. Update the scatterplot,
+# regression line and equation, and the horizontal/vertical lines.
+knitr::include_app("http://82.196.4.233:3838/apps/regression-dichotomy/", height="630px")
+```
+
+### regression-categorical
+```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Goal: Understanding effects of dummy variables by manipulating the reference
+# group.
+# Generate numerical outcome data (attitude, range [-5, 5]) for a categorical
+# predictor with 3 categories: (1) non-smoker, (2) former smoker, (3) smoker,
+# and a random choice of one of the following scenarios:
+#* (1 M = -1.7, SD = 1) < (2) = (3 M = 0.75, SD = 1) {initial situation},
+#* (1 M = -1.7, SD = 1) = (2) < (3 M = 0.75, SD = 1), 
+#* (2  M = -1.7, SD = 1) < (1) = (3 M = 0.75, SD = 1),
+#* (1 M = -1.7, SD = 1) < (2 M = 0.75, SD = 1) < (3 M = 1.8, SD = 1). 
+# Display jittered scatterplot containing the three groups with group means
+# indicated by a line segment and value, regression lines through the reference
+# group mean and each of the other group means. Display b and p value of
+# regression weights with the regression lines.
+# Add input to select the reference group, initially set to group (1). Update
+# regression lines and their p values on selection of a new reference group.
+# Add button to generate a new plot (with a new scenario).
+knitr::include_app("http://82.196.4.233:3838/apps/regression-categorical/", height="480px")
+```
 
 ```{r resid-normal, fig.cap="What are the residuals and how are they distributed?"}
 # Goal: Understand the meaning of residuals by linking residuals in a

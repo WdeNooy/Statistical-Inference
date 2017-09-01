@@ -74,7 +74,8 @@ output$scatterplot <- renderPlot({
                  aes(x = x-0.2,xend = x + 0.2,y=means,yend = means, colour = colour), 
                  size = 1.5, show.legend = FALSE) + 
     stat_function(inherit.aes = FALSE,data = data.frame(x = c(1,3)),aes(x=x), 
-                  fun = regfunc, args = list(int = coef(mod1)[1],bet1 = coef(mod1)[2]), 
+                  fun = regfunc, args = list(int = coef(mod1)[1],bet1 = coef(mod1)[2]),
+                  colour = "grey",
                   alpha = ifelse(input$selector == "Smoking", 0, 1)) + 
     stat_function(inherit.aes = FALSE,data = data.frame(x = c(1,3)),aes(x=x), 
                   fun = regfunc, args = list(int = coef(mod1)[1],bet1 = coef(mod1)[3]/2), 
@@ -82,17 +83,19 @@ output$scatterplot <- renderPlot({
     stat_function(inherit.aes = FALSE,data = data.frame(x = c(1,3)),aes(x=x), 
                   fun = regfunc, args = list(int = coef(mod2)[1]- coef(mod2)[3],bet1 = coef(mod2)[3]), 
                   alpha = ifelse(input$selector == "Never smoked", 0, 1)) + 
-    geom_text(inherit.aes=FALSE,x = 1.5,y=regfunc(1.5,int = coef(mod1)[1],bet1 = coef(mod1)[2]) + 0.3,
-              label = ifelse(pval1 < .001, "p < .001", paste0("p = ", format(round(pval1, digits = 3), nsmall = 3))), 
+    geom_text(inherit.aes=FALSE,x = 1.5,y=regfunc(1.5,int = coef(mod1)[1],bet1 = coef(mod1)[2]) + 0.8,
+              label = paste0("b = ", rprint(coef(mod1)[2]), "\n", pprint(pval1)),
+              colour = "grey", 
               alpha = ifelse(input$selector == "Smoking", 0, 1)) +
-    geom_text(inherit.aes=FALSE,x = 2.0,y=regfunc(2.0,int = coef(mod1)[1],bet1 = coef(mod1)[3]/2) - 0.3,
-              label = ifelse(pval2 < .001, "p < .001", paste0("p = ", format(round(pval2, digits = 3), nsmall = 3))), 
+    geom_text(inherit.aes=FALSE,x = 2.0,y=regfunc(2.0,int = coef(mod1)[1],bet1 = coef(mod1)[3]/2) - 0.8,
+              label = paste0("b = ", rprint(coef(mod1)[3]), "\n", pprint(pval2)),
+              colour = "darkgrey", 
               alpha = ifelse(input$selector == "Stopped smoking", 0, 1)) +
-    geom_text(inherit.aes=FALSE,x = 2.5,y=regfunc(2.5,int = coef(mod2)[1]- coef(mod2)[3],bet1 = coef(mod2)[3]) - 0.3,
-              label = ifelse(pval3 < .001, "p < .001", paste0("p = ", format(round(pval3, digits = 3), nsmall = 3))), 
+    geom_text(inherit.aes=FALSE,x = 2.5,y=regfunc(2.5,int = coef(mod2)[1]- coef(mod2)[3],bet1 = coef(mod2)[3]) + 0.8,
+              label = paste0("b = ", rprint(coef(mod2)[3]), "\n", pprint(pval3)), 
               alpha = ifelse(input$selector == "Never smoked", 0, 1)) +
     geom_text(inherit.aes=FALSE,data=meaningroup,aes(x = x + 0.4,y=means + 0.5, 
-                                                     label = format(round(means,2), nsmall = 3),colour = colour),
+                                                     label = rprint(means),colour = colour),
               position = position_dodge(width=0.5), size = 5, show.legend = FALSE) + 
     xlab("Group") + 
     scale_y_continuous(name = "Attitude", limits = c(-5, 5)) +

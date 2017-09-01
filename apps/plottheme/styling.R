@@ -24,3 +24,9 @@ pprint <- function(pvalue) {
 rprint <- function(value) {
   format(round(value,2), nsmall = 2)
 }
+# Function to print p values.
+pprint <- function(value) {
+  ifelse(value < 0.001, "p < .001",
+    paste0("p = ", format(round(value,3), nsmall = 3))
+         )
+}
