@@ -11,35 +11,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
 
-# regression-dichotomy
-
-Section 8.1.3, Dichotomous predictors.
-
-```{r regression-dichotomy, eval=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?"}
-# Goal: Refresh interpretation of unstandardized regression weight for a
-# dichotomous predictor by manipulating group averages.
-# Generate attitude scores  with average values -0.6 for non-smokers and 1.0 for
-# smokers (N = 20 per group).
-# Draw horizontal and vertical lines from the axes to the group means and add a
-# regression line (line through the two group means).
-# Display the current regression equation beneath or in the plot. 
-# Allow the user to change the average score per group. Update the scatterplot,
-# regression line and equation, and the horizontal/vertical lines.
-# Generate predictor.
-x <- c(rep(0, 20), rep(1, 20))
-# Generate random errors per group.
-set.seed(1272)
-e <- rnorm(20, mean = 0, sd = 1)
-e <- sign(e) * sqrt(abs(e*abs(e) - mean(e*abs(e)))) # center in squares
-e <- c(e, e)
-# Set group means
-nonsmoker <- -0.6
-smoker <- 1.0
-# Generate outcome scaled by unstandardized regression coefficient.
-y <- nonsmoker + smoker*x + e
-lm(y~x)
-```
-
 # regression-sampling
 
 Section 8.1.5, Sampling distributions and assumptions.

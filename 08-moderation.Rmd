@@ -277,7 +277,7 @@ Note that the regression coefficient is calculated for the predictor values that
 
 ### Dichotomous predictors {#dichpredictor}
 
-```{r regression-dichotomy, eval=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?"}
+```{r regression-dichotomy, eval=TRUE, echo=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
 # Goal: Refresh interpretation of unstandardized regression weight for a
 # dichotomous predictor by manipulating group averages.
 # Generate attitude scores  with average values -0.6 for non-smokers and 1.0 for
@@ -287,22 +287,41 @@ Note that the regression coefficient is calculated for the predictor values that
 # Display the current regression equation beneath or in the plot. 
 # Allow the user to change the average score per group. Update the scatterplot,
 # regression line and equation, and the horizontal/vertical lines.
-# Generate predictor.
-x <- c(rep(0, 20), rep(1, 20))
-# Generate random errors per group.
-set.seed(1272)
-e <- rnorm(20, mean = 0, sd = 1)
-e <- sign(e) * sqrt(abs(e*abs(e) - mean(e*abs(e)))) # centre in squares
-e <- c(e, e)
-# Set group means
-nonsmoker <- -0.6
-smoker <- 1.0
-# Generate outcome scaled by unstandardized regression coefficient.
-y <- nonsmoker + smoker*x + e
-lm(y~x)
+knitr::include_app("http://82.196.4.233:3838/apps/regression-dichotomy/", height="630px")
 ```
 
-1. What is the relation between the regression line for the dichotomous predictor (smoking) status and group averages?
+1. What is the relation between the intercept of the regression line in Figure \ref(fig:regression-dichotomy) and group averages? Motivate your answer by plugging values for smoking status into the regression equation. 
+
+```{r eval=FALSE}
+* The intercept (b_0) is equal to the average attitude of the non-smokers.
+* Plug in the smoking status value of non-smokers, which is zero, into the
+regression equation:
+* attitude = b_0 + b_1 * status = b_0 + b_1 * 0 = b_0
+* The predicted attitude for non-smokers, then, equals the intercept (b_0). In
+addition, we know that the predicted value for a group equals the average score
+of the group. As a result, the intercept (b_0) equals the average score of
+non-smokers in this example.
+* Note that this is true only if the group is coded zero.
+```
+
+2. Change the group means to detect the relation between group means and the unstandardized regression coefficient ($b_1$). How can we calculate the unstandardized regression coefficient ($b_1$) from the group averages? Again, show that your answer is correct by plugging values for smoking status into the regression equation. 
+
+```{r eval=FALSE}
+* In this example, the unstandardized regression coefficient (b_1) is equal to
+the average attitude score of smokers minus the average attitude score of
+non-smokers.
+* This is so because smokers are coded as ones and non-smokers are coded as
+zeros. The difference between smokers and non-smokers on the smoking status
+variable is one. The regression coefficient (b_1) tells us the difference in
+predicted attitude scores for a difference of one unit on the predictor
+variable. As a result, the unstandardized regression coefficient (b_1) tells us
+the difference between the average (= predicted value) for smokers and the
+average (= predicted value) for non-smokers.
+* With equations:
+* Smokers average: attitude = b_0 + b_1 * status = b_0 + b_1 * 1 = b_0 + b_1
+* Non-smokers average: attitude = b_0 + b_1 * status = b_0 + b_1 * 0 = b_0
+* Smokers - Non-smokers = (b_0 + b_1) - b_0 = b_1
+```
 
 Apart from numeric predictors, we can use dichotomous predictors, that is, predictors with only two values, which are preferably coded as 0 and 1 (_dummy coding_). The interpretation of the effect of a dichotomous predictor in a regression model is quite different from the interpretation of a numeric predictor.
 
