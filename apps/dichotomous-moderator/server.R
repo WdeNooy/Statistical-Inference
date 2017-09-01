@@ -25,8 +25,8 @@ shinyServer(function(input, output) {
     #With different means for different groups.
     Attitude <- -0.7 * Exposure + #general negative effect
       2.8 * smoker + 1.9 * nonsmoker + #average group differences
-      ifelse(runif(1, 0, 1) < .5, runif(1, -0.02, 0.02), runif(1, 0.4, 0.8)) * smoker * Exposure + #interaction smokers
-      ifelse(runif(1, 0, 1) < .5, runif(1, -0.02, 0.02), runif(1, 0.1, 0.4)) * nonsmoker * Exposure + #interaction non-smokers
+      ifelse(runif(1, 0, 1) < .6, runif(1, -0.02, 0.02), runif(1, 0.4, 0.8)) * smoker * Exposure + #interaction smokers
+      ifelse(runif(1, 0, 1) < .8, runif(1, -0.02, 0.02), runif(1, 0.1, 0.4)) * nonsmoker * Exposure + #interaction non-smokers
       rnorm(n = 3*n, mean = 0, sd = 1) #random error
     #Rescale Attitude to [-5, 5]
     Attitude <- ((Attitude - min(Attitude)) / ((max(Attitude) - min(Attitude)) / 10)) - 5
@@ -42,7 +42,7 @@ shinyServer(function(input, output) {
     
     ggplot(df, aes(x = Exposure, y = Attitude, colour = Group)) +
       geom_point() +
-      geom_smooth(method="lm", fill=NA, n = 1000, fullrange = TRUE) +
+      geom_smooth(method="lm", fill=NA, n = 1000, fullrange = FALSE) +
       scale_colour_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
                                      "Smoker" = unname(brewercolors["Green"]),
                                      "Non-smoker" = unname(brewercolors["Red"]))) +
