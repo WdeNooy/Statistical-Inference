@@ -466,7 +466,7 @@ Which group should we use as reference category, that is, which dummy should not
 
 ### Sampling distributions and assumptions {#regr-inference}
 
-```{r regression-sampling, fig.cap="What happens to regression lines from sample to sample?"}
+```{r regression-sampling, eval=FALSE, echo=FALSE, fig.cap="What happens to regression lines from sample to sample?"}
 # Goal: Understand that regression constant and coefficient(s) have sampling
 # distributions.
 # Generate a population with a weak negative effect (-0.6) of exposure on
@@ -480,13 +480,13 @@ Which group should we use as reference category, that is, which dummy should not
 # Add button (or change sampling button) to draw 1,000 samples: don't display
 # samples, just update sampling distribution with normal (or t) distribution as
 # superimposed curve.
-```
 
 1. Which estimates can change from sample to sample: the regression constant, the regression coefficient, or both? Check your answer by drawing new samples.
 
 2. What is the shape of the sampling distribution if you draw a lot of samples?
 
 3. What happens if you draw samples of larger size? Think of what you learned in preceding chapters. Formulate your answer before you change sample size in Figure \@ref(fig:regression-sampling).
+```
 
 If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results. The confidence interval gives us bounds for the population value of the unstandardized regression coefficient. The p value is used to test the null hypothesis that the unstandardized regression coefficient is zero in the population.
 
@@ -969,7 +969,7 @@ In the current section, we discuss regression models with a numerical predictor 
 
 ### A dichotomous moderator and continuous predictor
 
-```{r dichotomous-moderator, fig.cap="Is the effect of exposure on attitude moderated by smoking status?"}
+```{r dichotomous-moderator, fig.cap="Is the effect of exposure on attitude moderated by smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize the student to the notion that moderation in a regression
 # model means different slopes for different groups.
 # In a graph with attitude as Y axis and exposure as X axis, generate two regression lines, one for smokers and one for non-smokers. 
@@ -979,11 +979,18 @@ In the current section, we discuss regression models with a numerical predictor 
 # opposite signs) and the intercept difference (positive, nearly zero,
 # negative).
 # Add a Generate New button to replace the regression lines by a new pair of lines.
+knitr::include_app("http://82.196.4.233:3838/apps/dichotomous-moderator/", height="350px")
 ```
 
-1. Is the effect of exposure on attitude moderated by the smoking status of respondents (smokers versus non-smokers) in Figure \@ref(fig:dichotomous-moderator)? Motivate your answer.
+1. Is the effect of exposure on attitude moderated by the smoking status of respondents (smokers versus non-smokers) in Figure \@ref(fig:dichotomous-moderator)? Motivate your answer. Press the *Take new sample* button to practice some more with recognizing moderation.
 
-2. Press the Generate New button to practice some more with recognizing moderation. How can the regression equations help you to see whether the effect is moderated?
+```{r eval=FALSE}
+* This depends on the sample drawn. If the regression lines for the three
+smoking status groups are more or less parallel, the (predictive) effect of
+exposure on attitude is more or less the same for the three groups.
+* In this case, there is no moderation.
+* In all other situations, there is moderation.
+```
 
 In Section \@ref(regression-equation), we have analyzed the predictive effects of exposure to an anti-smoking campaign and smoking status on a person's attitude towards smoking. We have found a negative effect for exposure and a positive effect for smoking. More exposure predicts a more negative attitude whereas smokers have a more positive attitude towards smoking.
 
@@ -995,7 +1002,7 @@ In the context of a regression model, moderation means __different slopes for di
 
 ### Interaction variable {#interaction-variable}
 
-```{r interaction-var-effect, fig.cap="What does an interaction variable do?"}
+```{r interaction-var-effect, eval=FALSE, echo=FALSE, fig.cap="What does an interaction variable do?"}
 # Goal: Intuitive understanding of the effect of an interaction variable.
 # Generate a dataset with 30 observations for the regression model y = 3 -
 # 0.5x_1 + 1.5x_2 + 0.3x_1*x_2 with x_1 in the range [0, 10] and x_2 a dummy (0
@@ -1013,13 +1020,13 @@ In the context of a regression model, moderation means __different slopes for di
 # Clicking/hovering over the newly created line shows the slope as a sum of the
 # conditional and interaction effect, e.g., "Slope: 0.5 * exposure + 0.3 * 1 *
 # exposure".
-```
 
 1. In Figure \@ref(fig:interaction-var-effect), does the fat grey line represent the effect of exposure on attitude in a simple regression model, a multiple regression model, or both?
 
 2. Select an option under "Add product" and explain what the newly created regression line means.
 
 3. Select the other option. Explain why the two regression lines that you created have different slopes.
+```
 
 How do we obtain different regression coefficients and lines for smokers and non-smokers? The statistical trick is quite easy: Include a new predictor in the model that is the product of the predictor (exposure) and the moderator (smoking status). This new predictor is the _interaction variable_. It must be included together with the original predictor and moderator variables, see Equation \@ref(eq:intvar). This is also visible in the statistical model (Figure \@ref(fig:moderator-statistical)) for moderation in a regression model.
 
@@ -1757,7 +1764,7 @@ The zero score on the moderator is the _reference value_ for the conditional eff
 
 ### Mean-centering
 
-```{r mean-centering-moderator, fig.cap="What happens if you mean-center the moderator variable?", echo=TRUE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mean-centering-moderator, fig.cap="What happens if you mean-center the moderator variable?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand how mean-centering affects the interpretion of the
 # conditional effect of the predictor by seeing how the reference value changes
 # with mean-centering (and centering on another value, e.g., M plus/minus 1 SD).
@@ -1805,7 +1812,7 @@ Remember that the interaction variable is the product of the predictor and moder
 
 ### Symmetry of predictor and moderator
 
-```{r symmetry-predictor-moderator, fig.cap=""}
+```{r symmetry-predictor-moderator, eval=FALSE, echo=FALSE, fig.cap=""}
 # Goal: Understand the advantages of mean-centering the predictor by seeing how
 # the reference value changes with mean-centering (and centering on another
 # value, e.g., M plus/minus 1 SD).
@@ -1820,11 +1827,11 @@ Remember that the interaction variable is the product of the predictor and moder
 # range [0, 10], initial value 0), labeled with values M - SD, M, and M + SD.
 # Adjusting the sliders update the scale of the appropriate x axis (the marked
 # point zero moves) and the regression lines in the scatterplot.
-```
 
 1. If you change the value on the slider 'Exposure - x', which regression line in the plot changes? Why this line?
 
 2. Which variable is the predictor and which is the moderator if you adjust the value of the slider 'Exposure - x'?
+```
 
 If we want to interpret the conditional effect of contact on attitude ($b_2$), we must realize that this is the effect for people who score zero on the exposure variable. This is clear if we rearrange the regression equation as in Equation \@ref(eq:contactbyexposure).
 
@@ -2391,11 +2398,9 @@ Interpret the results:
 * Coverage of the exposure predictor is poor at low contact levels. Especially low exposure hardly occurs at low contact level. This explains the the high standard error for the exposure effect in Exercise 1 as explained in Exercise 3.  
 ```
 
-5. Let us hypothesize that children's media literacy depends on sex, age, and parental supervision. Is the effect of parental supervision moderated by the child's age? 
-
-Use <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav</a> to answer this research question and apply mean-centering. 
-
-Report the results as required in this course (APA6), include a moderation plot, and discuss coverage. 
+5. Let us hypothesize that children's media literacy depends on sex, age, and parental supervision. Is the effect of parental supervision moderated by the child's age?
+    Use <a href="http://82.196.4.233:3838/data/children.sav" target="_blank">children.sav</a> to answer this research question and apply mean-centering. 
+    Report the results as required in this course (APA6), include a moderation plot, and discuss coverage. 
 
 ```{r eval=FALSE}
 SPSS syntax:  
