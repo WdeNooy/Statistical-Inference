@@ -45,7 +45,7 @@ And this is what we need a sampling distribution for.
 
 ```{r eval=FALSE}
 * A bootstrapped sampling distribution only resembles
-the true sampling distribution is the initial
+the true sampling distribution if the initial
 sample is more or less representative of the
 population. The sample statistic that we are
 interested in, in the current example, the
@@ -57,10 +57,10 @@ bootstrapped sampling distribution (yellow) is very
 similar to the true sampling distribution (grey).
 ```
 
-```{r models-summary-3}
+```{r models-summary-3, echo=FALSE}
 ####Exact approach.
 d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
-                Combinations = c("tail-tail-tail", "tail-tail-head", "head-tail-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"))
+                Combinations = c("tail-tail-tail", "tail-tail-head", "tail-head-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"))
 knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Number of heads", "Combination"), align = c("l", "l"))
 ```
 
@@ -79,7 +79,7 @@ This can only be done if the number of combinations
 is limited. So we need discrete or categorical
 variables. Exact approaches to the sampling
 distribution are only available for inference on
-catgeorical variables, such as proportions and
+categorical variables, such as proportions and
 associations. 
 ```
 
@@ -245,7 +245,7 @@ However, the number of yellow candies is reduced by one after we have drawn the 
 
 So is it OK to sample with replacement? From the point of view of probabilities, it is OK because we usually calculate probabilities as if we sampled with replacement. In practice, however, we never want the same respondent to participate twice in our research because this does not yield new information.
 
-In contrast, when is it _not_ OK to sample without replacement as we normally do in research? It is OK to sample without replacement as long as the population is much larger than the sample. If the population is much larger, the probabilities more or less remain the same during the sampling process, so calculating probabilities as if the probabilities do not change is not a problem.
+In contrast, when is it _not_ OK to sample without replacement as we normally do in research? It is not OK to sample without replacement if the population is not much larger than the sample. If the population is not much larger, the probabilities change substantially during the sampling process, so calculating probabilities as if the probabilities do not change would be a problem.
 
 ### Limitations to bootstrapping  
 
@@ -271,7 +271,7 @@ bootstrapped sampling distribution overlaps the true
 sampling distribution much more frequently. So for
 larger samples, we can trust the bootstrapped
 sampling distribution more. But even then, it can
-sometimes be quite of the mark. 
+sometimes be quite off the mark. 
 ```
 
 2. How does sample size relate to representativeness of the sample? Twenty per cent of the candies in the population are yellow.
@@ -342,92 +342,92 @@ In principle, any sample statistic can be bootstrapped. SPSS, however, does not 
 
 ### Exercises 
 
-1. Download the data set <a href="http://82.196.4.233:3838/data/candies.sav" target="_blank">candies.sav</a> and use SPSS to bootstrap the t test on average weight of yellow and red candies (the example above). The test is available in the _Analyze>Compare Means_ menu.
+1. Download the data set [candies.sav](http://82.196.4.233:3838/data/candies.sav) and use SPSS to bootstrap the t test on average weight of yellow and red candies (the example above). The test is available in the _Analyze>Compare Means_ menu.
 
 ```{r eval=FALSE}
-SPSS syntax:
-  
-* Exercise 1: Bootstrap different averages.
-* Check data.
-FREQUENCIES VARIABLES=colour weight
-  /ORDER=ANALYSIS.
-* Execute independent-samples t test with bootstrap.
-BOOTSTRAP
-  /SAMPLING METHOD=SIMPLE
-  /VARIABLES TARGET=weight INPUT=colour 
-  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000
-  /MISSING USERMISSING=EXCLUDE.
-T-TEST GROUPS=colour(4 5)
-  /MISSING=ANALYSIS
-  /VARIABLES=weight
-  /CRITERIA=CI(.95).
-
-Check data:
-
-There are no impossible values on the two variables.  
+SPSS syntax:  
     
-Check assumptions:
-
-The measurement levels of the variables are OK:
-colour is a categorical variable and weight is a 
-numeric variable. There are no additional assumptions
-for bootstrapping.
+\* Exercise 1: Bootstrap different averages.  
+\* Check data.  
+FREQUENCIES VARIABLES=colour weight  
+  /ORDER=ANALYSIS.  
+\* Execute independent-samples t test with bootstrap.  
+BOOTSTRAP  
+  /SAMPLING METHOD=SIMPLE  
+  /VARIABLES TARGET=weight INPUT=colour   
+  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000  
+  /MISSING USERMISSING=EXCLUDE.  
+T-TEST GROUPS=colour(4 5)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=weight  
+  /CRITERIA=CI(.95).  
   
-Interpret the results: 
-
-The table "Bootstrap for Independent Samples Test" contains 
-the results that we are interested in. 
-
-Levene s test on homegeneity of variances is not statistically
-significant, so we may assume that the population variances of
-red and yellow candy weight are equal. So we interpret the
-top row in table "Bootstrap for Independent Samples Test".
-
-The mean difference between red and yellow candy weight is
--0.04 grams. In our sample, red candies are just a little
-lighter than yellow candies.
-
-The bootstrapped 95% confidence interval for this difference
-is -0.21 to 0.11. Note that your results can be slightly 
-different because bootstrapping creates random samples.
-In the population, red candies may be heavier of lighter
-than yellow candies. We cannot tell which of the two it
-is with enough confidence.
+Check data:  
+  
+There are no impossible values on the two variables.    
+      
+Check assumptions:  
+  
+The measurement levels of the variables are OK:  
+colour is a categorical variable and weight is a   
+numeric variable. There are no additional assumptions  
+for bootstrapping.  
+    
+Interpret the results:   
+  
+The table "Bootstrap for Independent Samples Test" contains   
+the results that we are interested in.   
+  
+Levene s test on homegeneity of variances is not statistically  
+significant, so we may assume that the population variances of  
+red and yellow candy weight are equal. So we interpret the  
+top row in table "Bootstrap for Independent Samples Test".  
+  
+The mean difference between red and yellow candy weight is  
+-0.04 grams. In our sample, red candies are just a little  
+lighter than yellow candies.  
+  
+The bootstrapped 95% confidence interval for this difference  
+is -0.21 to 0.11. Note that your results can be slightly   
+different because bootstrapping creates random samples.  
+In the population, red candies may be heavier of lighter  
+than yellow candies. We cannot tell which of the two it  
+is with enough confidence.  
 ```
 
 2. Use the same data set to bootstrap the median of candy weight. Remember that measures of central tendency can be obtained with the _Frequencies>Statistics_ command in the _Analyze>Descriptive Statistics_ menu.
 
 ```{r eval=FALSE}
-SPSS syntax:
-  
-* Exercise 2: Bootstrap on median candy weight.
-* Check data.
-FREQUENCIES VARIABLES=weight
-  /ORDER=ANALYSIS.
-* Bootstrap the median.
-BOOTSTRAP
-  /SAMPLING METHOD=SIMPLE
-  /VARIABLES INPUT=weight 
-  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000
-  /MISSING USERMISSING=EXCLUDE.
-FREQUENCIES VARIABLES=weight
-  /FORMAT=NOTABLE
-  /STATISTICS=MEDIAN
-  /ORDER=ANALYSIS.
-
-Check data:
-  
-There are no impossible values on the weight variable.
-
-Check assumptions:
-  
-The measurement level of variable weight is OK.
+SPSS syntax:  
     
-Interpret the results: 
-
-Median candy weight in the sample is 2.89 gram. With 
-95% confidence, we expect median candy weight to be 
-between 2.77 and 2.92 grams in the population of all candies.
+\* Exercise 2: Bootstrap on median candy weight.  
+\* Check data.  
+FREQUENCIES VARIABLES=weight  
+  /ORDER=ANALYSIS.  
+\* Bootstrap the median.  
+BOOTSTRAP  
+  /SAMPLING METHOD=SIMPLE  
+  /VARIABLES INPUT=weight   
+  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000  
+  /MISSING USERMISSING=EXCLUDE.  
+FREQUENCIES VARIABLES=weight  
+  /FORMAT=NOTABLE  
+  /STATISTICS=MEDIAN  
+  /ORDER=ANALYSIS.  
+  
+Check data:  
+    
+There are no impossible values on the weight variable.  
+  
+Check assumptions:  
+    
+The measurement level of variable weight is OK.  
+      
+Interpret the results:   
+  
+Median candy weight in the sample is 2.89 gram. With   
+95% confidence, we expect median candy weight to be   
+between 2.77 and 2.92 grams in the population of all candies.  
 ```
 
 ## Exact Approaches to the Sampling Distribution
@@ -437,7 +437,7 @@ between 2.77 and 2.92 grams in the population of all candies.
 # Scenarios: number of heads per toss if we toss 1, 2, 3 unbiased coins; sum of the number of eyes per throw if we throw 1 or 2 unbiased dice.
 # If feasible: Don't show probabilities but let user enter probabilities if a scenario is used for the second (or later) time within a session.
 d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
-                Combinations = c("tail-tail-tail", "tail-tail-head", "head-tail-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"),
+                Combinations = c("tail-tail-tail", "tail-tail-head", "head-tail-tail", "tail-head-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"),
                 Probability = c("1/8 =  .125", "", "", "3/8 =  .375", "", "", "3/8 =  .375", "1/8 =  .125", "1.000"))
 knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Outcome", "Combination", "Probability"), align = c("l", "l", "r"))
 ```
@@ -449,7 +449,7 @@ knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.name
 outcomes if we toss three coins. 
 * The sample statistic is the number of heads
 in a throw of three coins. It simply counts
-the number of heads tha appear in the
+the number of heads that appear in the
 combination. This number can range from zero
 to three. This is the sampling space.
 ```
@@ -457,13 +457,13 @@ to three. This is the sampling space.
 2. Explain how the combinations relate to the probabilities.  
 
 ```{r eval=FALSE}
-* There are eight combinations. If the cins are
+* There are eight combinations. If the coins are
 fair, each combination has the same probability
 to appear, namely 1/8 = .125. We sum this
 probability for all combinations that have the
 same outcome, namely the same number of heads.
 * Thus we arrive at the probability of having no
-heads i a throw (p = .125), one head (p = .375),
+heads in a throw (p = .125), one head (p = .375),
 and so on.
 ```
 
@@ -511,71 +511,71 @@ knitr::include_url("https://www.youtube.com/embed/B-I6T4gCdsM", height = "360px"
 
 ### Exercises 
 
-1. <a href="http://82.196.4.233:3838/data/candies.sav" target="_blank"> Download the data set "candies.sav" here</a> and use SPSS to apply a Fisher-exact test to the association between candy colour and candy stickiness.  
+1. Download the data set [candies.sav](href="http://82.196.4.233:3838/data/candies.sav) and use SPSS to apply a Fisher-exact test to the association between candy colour and candy stickiness.  
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Exact test on the relation between candy colour
-* and candy stickiness.
-* Do not forget to deselect bootstrapping.
-CROSSTABS
-  /TABLES=colour BY sticky
-  /FORMAT=AVALUE TABLES
-  /STATISTICS=CHISQ PHI 
-  /CELLS=COUNT COLUMN 
-  /COUNT ROUND CELL
-  /METHOD=EXACT TIMER(5).
-
-Check data:
-
-The contingency table does not show any impossible values for
-the two categorical variables.
-
-Check assumptions:
-
-There are no assumptions for a Fisher-exact test.
-
-Interpret the results:
-
-There is a strong association (Phi = .52) between 
-candy colour and candy stickiness, which is 
-statistically significant, p = .010 (exact). 
-Yellow and red candies are less often sticky than 
-blue, green, and orange candies.
+SPSS syntax:  
+  
+\* Exact test on the relation between candy colour  
+\* and candy stickiness.  
+\* Do not forget to deselect bootstrapping.  
+CROSSTABS  
+  /TABLES=colour BY sticky  
+  /FORMAT=AVALUE TABLES  
+  /STATISTICS=CHISQ PHI   
+  /CELLS=COUNT COLUMN   
+  /COUNT ROUND CELL  
+  /METHOD=EXACT TIMER(5).  
+  
+Check data:  
+  
+The contingency table does not show any impossible values for  
+the two categorical variables.  
+  
+Check assumptions:  
+  
+There are no assumptions for a Fisher-exact test.  
+  
+Interpret the results:  
+  
+There is a strong association (Phi = .52) between   
+candy colour and candy stickiness, which is   
+statistically significant, p = .010 (exact).   
+Yellow and red candies are less often sticky than   
+blue, green, and orange candies.  
 ```
 
 2. With the same data, apply a Fisher-exact test to the association between candy colour and candy spottiness.  
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Exact test on the relation between candy colour
-* and candy spottiness.
-* Do not forget to deselect bootstrapping.
-CROSSTABS
-  /TABLES=colour BY spotted
-  /FORMAT=AVALUE TABLES
-  /STATISTICS=CHISQ PHI 
-  /CELLS=COUNT COLUMN 
-  /COUNT ROUND CELL
-  /METHOD=EXACT TIMER(5).
-
-Check data:
-
-The contingency table does not show any impossible values for
-the two categorical variables.
-
-Check assumptions:
-
-There are no assumptions for a Fisher-exact test.
-
-Interpret the results:
-
-There is a moderate association (Cramer's V = .27) between 
-candy colour and candy stickiness, which is 
-not statistically significant, p = .480 (exact). 
-Candy colour does not seem relevant to having spots.
+SPSS syntax:  
+  
+\* Exact test on the relation between candy colour  
+\* and candy spottiness.  
+\* Do not forget to deselect bootstrapping.  
+CROSSTABS  
+  /TABLES=colour BY spotted  
+  /FORMAT=AVALUE TABLES  
+  /STATISTICS=CHISQ PHI   
+  /CELLS=COUNT COLUMN   
+  /COUNT ROUND CELL  
+  /METHOD=EXACT TIMER(5).  
+  
+Check data:  
+  
+The contingency table does not show any impossible values for  
+the two categorical variables.  
+  
+Check assumptions:  
+  
+There are no assumptions for a Fisher-exact test.  
+  
+Interpret the results:  
+  
+There is a moderate association (Cramer's V = .27) between   
+candy colour and candy stickiness, which is   
+not statistically significant, p = .480 (exact).   
+Candy colour does not seem relevant to having spots.  
 ```
 
 ## Theoretical Approximations of the Sampling Distribution
@@ -661,11 +661,30 @@ knitr::include_app("http://82.196.4.233:3838/apps/normal-approx-proportion/", he
 
 1. How do you expect that sample size affects the shape of the sampling distribution? State your expectation and then check it in the interactive content by changing sample size.
 
+```{r eval=FALSE}
+* The larger the sample, the more information each sample contains, the more
+samples resemble the population, the closer is the sample statistic to the
+population value. As a consequence, a larger sample produces a sampling
+distribution with a lower spread (standard deviation, variance), so the
+sampling distribution is more peaked.
+```
+
 2. How do you expect that the value of the proportion in the population affects the shape of the sampling distribution? State your expectation and then check it in the interactive content by changing the population proportion.
+
+```{r eval=FALSE}
+* The population proportion (parameter value) is equal to the average of the
+sampling distribution because the sample proportion is an unbiased estimator of
+the population proportion. So if we change the population proportion, the
+center of the sampling distribution changes accordingly.
+* In addition, the sampling distribution becomes less symetrical/more skewed if
+the population proportion approaches zero or one. Because proportions cannot be
+less than zero or more than one, the sampling distribution cannot remain
+symmetrical if the population proportion is near zero or one.
+```
 
 Do theoretical probability distributions fit the true sampling distribution? As you may have noticed from the interactive content, this is not always the case. In general, theoretical probability distributions fit sampling distributions better if the sample is larger. In addition, the value of the parameter may be relevant to the fit of the theoretical probability distribution. The sampling distribution of a sample proportion is more symmetrical, like the normal distribution, if the proportion in the population is nearer .5.
 
-This illustrates that we often have several conditions for a theoretical probability distribution to fit the sampling distribution that we should evaluate together. In the example of proportions, a large sample is less important if the true proportion is closer to .5 but it is more important for true proportions that are more distant from .5.
+This illustrates that we often have several conditions for a theoretical probability distribution to fit the sampling distribution that we should evaluate at the same time. In the example of proportions, a large sample is less important if the true proportion is closer to .5 but it is more important for true proportions that are more distant from .5.
 
 The rule of thumb for using the normal distribution as the sampling distribution of a sample proportion combines the two aspects by multiplying them and requiring the resulting product to be larger than five.  If the probability of drawing a yellow candy is .2 and our sample size is 30, the product is .2 * 30 = 6, which is larger than five. So we may use the normal distribution as approximation of the sampling distribution.
 
@@ -722,15 +741,21 @@ The result is added to the sampling distribution.
 3. Click on the button to draw one thousand samples once or more often. Does the sampling distribution look familiar to you?
 
 ```{r eval=FALSE}
-* The sampling distribution has a bell shape like the normal or (Student) t distribution.
+* The sampling distribution has a bell shape like the normal or (Student) t
+distribution.
 ```
 
 4. What, do you expect, is the mean of the sampling distribution?
 
 ```{r eval=FALSE}
-* The true difference in averages in the population is what we expect as the average difference in the sampling distribution.
-Average weight of red candies in the population is 2.8 grams and the average weight in the population of yellow candies is 3.1 gram. The average weight difference in the population is 2.8 - 3.1 = -0.3 gram. This is our expectation.
-* The centre of the sampling distribution is indeed at -0.3 if we draw thousands of samples.
+* The true difference in averages in the population is what we expect as the
+average difference in the sampling distribution.
+* Average weight of red candies in the population is 2.8 grams and the average
+weight in the population of yellow candies is 3.1 gram. The average weight
+difference in the population is 2.8 - 3.1 = -0.3 gram. This is our
+expectation.
+* The centre of the sampling distribution is indeed at -0.3 if we draw
+thousands of samples.
 ```
 
 If we draw a sample from both the yellow and the red candies in the population, we may calculate the means for both samples and the difference between the two means. For example, the average weight of yellow candies in the sample bag is 2.76 gram and the average for red candies is 2.82 gram. For this pair of samples, the statistic of interest is 2.76 - 2.82 = -0.06, that is, the difference in average weight. If we repeat this many, many times and collect all differences between means in a distribution, we obtain the sampling distribution that we need.  
