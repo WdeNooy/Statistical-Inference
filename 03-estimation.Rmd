@@ -1,4 +1,4 @@
-# Estimating a Parameter: Which Population Values Are Plausible? {#param-estim}
+  # Estimating a Parameter: Which Population Values Are Plausible? {#param-estim}
 > Key concepts: point estimate, interval estimate, confidence (level), precision, standard error, critical value, degrees of freedom, confidence interval, uncertainty.
 
 ### Summary {-}
@@ -16,7 +16,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/estimation/", height="460px")
 
 Figure \@ref(fig:estimation) shows the sampling distribution of average candy weight in a sample bag, which is a normal distribution. 
 
-1. What is most likely estimate for average candy weight in the population?
+1. What is the most likely estimate for average candy weight in the population?
 ```{r, eval=FALSE}
 * The average of a distribution of sample means is the expected value or
 expectation of the population mean (because a sample mean is an unbiased
@@ -71,19 +71,19 @@ the mean of the sampling distribution).
 errors if the confidence level and the degrees of freedom do not change. 
 * If this was a t distribution, the critical values would slightly decrease 
 with larger sample size but this change is too small to be of practical 
-relevance, so it is ignored in this booklet.
+relevance, so it is ignored in this web book.
 ```
 
 7. What happens to the critical values if you change the confidence level?
 ```{r, eval=FALSE}
 * Higher confidence levels yield more extreme critical values because 
-the interval must cover a larger prportion of all possible samples.
+the interval must cover a larger proportion of all possible samples.
 ```
 
 8. If 2.8 is average candy weight in the sample but not necessarily true average candy weight in the population, the interval marked by the arrows is called a _confidence interval_. In this example, a confidence interval for what? And what is the point estimate?
 ```{r, eval=FALSE}
 * A confidence interval always belongs to a population statistic (parameter).
-In this example, we use the sample mean to estimate the populaiton mean, so
+In this example, we use the sample mean to estimate the population mean, so
 the confidence interval refers to average candy weight in the population. The
 point estimate, which gives a single number instead of an interval, would be
 2.8 grams here.
@@ -115,6 +115,8 @@ The sample statistic value is our best point estimate but it is nearly certain t
 
 The sampling distribution of a continuous sample statistic tells us the probability of finding a range of scores for the sample statistic in a random sample. For example, the average weight of candies in a sample bag is a continuous random variable. The sampling distribution tells us the probability of drawing a sample with average candy weight between 2.0 and 3.6 gram. We can use this range as our _interval estimate_. 
 
+Note that we are reasoning from sampling distribution to sample now. This is not what we want to do in actual research, where we want to reason from sample to sampling distribution to population. We get to that in Section \@ref(ci-parameter). For now, assume that we know the true sampling distribution.
+
 Remember that the average or expected value of a sampling distribution is equal to the population value if the estimator is unbiased. For example, the mean weight of yellow candies averaged over a large number of samples is equal to the mean weight of yellow candies in the population. For an interval estimate, we now select the sample statistic values that are closest to the average of the sampling distribution. 
 
 Between which boundaries are the sample statistic values situated that are closest to the population value? Of course, we have to specify what we mean by "closest". Which part of all samples do we want to include? A popular proportion is 95%, so we want to know the boundary values that include 95% of all samples that are closest to the population value. For example, between which boundaries is the average candy weight situated for 95% of all samples that are closest to the average candy weight in the population?
@@ -130,7 +132,7 @@ Figure \@ref(fig:ci-borders) shows the sampling distribution of average sample c
 ```{r eval=FALSE}
 * A sample mean is an unbiased estimator of the population mean. As a
 consequence, the mean of the sampling distribution is equal to the population.
-* The(normal)  sampling distribution is symmetrical, so the mean of the
+* The (normal) sampling distribution is symmetrical, so the mean of the
 sampling distribution is in its middle, exactly under the top of the sampling
 distribution. Here, the value is 2.8 (gram). This is average candy weight in
 the population.
@@ -199,7 +201,7 @@ Figure \@ref(fig:interval-size) shows a sampling distribution of average candy w
 ```{r eval=FALSE}
 * Larger samples offer more information, so they allow a more precise estimate
 of a population value, such as average candy weight. The precision of the
-interval will increase, so the interval will become narrower, the arror will
+interval will increase, so the interval will become narrower, the arrow will
 become shorter.
 * The computational reason: A larger sample yields a smaller standard error
 (se). See the next section.
@@ -311,7 +313,7 @@ in the population, in this example 2.8 gram.
 In Figure \@ref(fig:crit-values), we approximate the sampling distribution with a theoretical probability distribution, namely the normal distribution. The theoretical probability distribution links probabilities (areas under the curve) to sample statistic outcome values (scores on the horizontal axis). For example, we have 2.5% probability to draw a sample bag with average candy weight below 1.2 gram or 2.5% probability to draw a sample bag with average candy weight over 4.4 gram.  
 
 ### Standardization and _z_ scores  
-The average candy weights that are associated with 2.5% and 97.5% probabilities in Figure \@ref(fig:crit-values) depend on the sample that we have drawn. As you will have noticed while playing with Figure \@ref(fig:interval-size), changing the size of the sample also changes the avergae candy weights that mark the 2.5% and 97.5% probabilities.
+The average candy weights that are associated with 2.5% and 97.5% probabilities in Figure \@ref(fig:crit-values) depend on the sample that we have drawn. As you will have noticed while playing with Figure \@ref(fig:interval-size), changing the size of the sample also changes the average candy weights that mark the 2.5% and 97.5% probabilities.
 
 We can simplify the situation if we _standardize_ the sampling distribution: Subtract the average of the sampling distribution from each sample mean in this distribution, and divide the result by the standard error. Thus, we transform the sampling distribution into a distribution of standardized scores. The mean of the new standardized variable is always zero.  
 
@@ -333,7 +335,7 @@ For other theoretical probability distributions, the situation is slightly more 
 
 We need not be concerned with the exact meaning of degrees of freedom, or how the degrees of freedom are calculated for a sample, if we want to use a theoretical probability distribution. Our statistical software takes care of this for us. We must, however, report the degrees of freedom in accordance with the APA6 standard.
 
-## Confidence Interval for a Parameter
+## Confidence Interval for a Parameter {#ci-parameter}
 
 Working through the preceding sections, it may have occurred to you that it is all very well to be able to estimate the value of a statistic in a new sample with a particular precision and probability, but that this is not what we are primarily interested in. Instead, we want to estimate the value of the statistic in the population.
 
@@ -493,7 +495,7 @@ Figure \@ref(fig:95ci-simul) shows a 95% confidence interval for average candy w
 1. Does the (first) confidence interval include the true average candy weight in the population?
 
 ```{r eval=FALSE}
-* The first confidence interval may (blue) and may not (red) include the true
+* The first confidence interval may (blue) or may not (red) include the true
 population mean (2.8).
 * The sample mean can be close enough to the true population mean for the
 confidence interval to include the true population mean. But it can also be too
@@ -585,42 +587,42 @@ knitr::include_url("https://www.youtube.com/embed/7e1gCCKYcW4", height = "360px"
     Interpret the results and explain why the 99% confidence interval is wider than the 95% confidence interval.  
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=weight
-  /FORMAT=NOTABLE
-  /HISTOGRAM NORMAL
-  /ORDER=ANALYSIS.
-* 95% CI.
-T-TEST
-  /TESTVAL=0
-  /MISSING=ANALYSIS
-  /VARIABLES=weight
-  /CRITERIA=CI(.95).
-* 99% CI.
-T-TEST
-  /TESTVAL=0
-  /MISSING=ANALYSIS
-  /VARIABLES=weight
-  /CRITERIA=CI(.99).
-
-Check data:
-
-There are no impossible values on variable weight.
-
-Check assumptions:
-
-Sample size (N = 50) is well over 30, so we need not care about
-the normal distribution of candy weight in the population.
-
-Interpret the results:
-
-Average weight of candies in the population is between 2.77 and 
-2.90 gram with 95% confidence and between 2.75 and 2.92 gram
-with 99% confidence.
-If we want to be more confident, we must allow for a broader
-range of values, so the confidence interval is wider.
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=weight  
+  /FORMAT=NOTABLE  
+  /HISTOGRAM NORMAL  
+  /ORDER=ANALYSIS.  
+\* 95% CI.  
+T-TEST  
+  /TESTVAL=0  
+  /MISSING=ANALYSIS  
+  /VARIABLES=weight  
+  /CRITERIA=CI(.95).  
+\* 99% CI.  
+T-TEST  
+  /TESTVAL=0  
+  /MISSING=ANALYSIS  
+  /VARIABLES=weight  
+  /CRITERIA=CI(.99).  
+  
+Check data:  
+  
+There are no impossible values on variable weight.  
+  
+Check assumptions:  
+  
+Sample size (N = 50) is well over 30, so we need not care about  
+the normal distribution of candy weight in the population.  
+  
+Interpret the results:  
+  
+Average weight of candies in the population is between 2.77 and   
+2.90 gram with 95% confidence and between 2.75 and 2.92 gram  
+with 99% confidence.  
+If we want to be more confident, we must allow for a broader  
+range of values, so the confidence interval is wider.  
 ```
 
 2. Let SPSS calculate the 95% confidence interval for median candy weight. Interpret the result. The data are in "candies.sav". 
@@ -628,35 +630,35 @@ range of values, so the confidence interval is wider.
     Remember the SPSS exercises in Chapter \@ref(probmodels).
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=weight
-  /ORDER=ANALYSIS.
-* Bootstrap on median candy weight.
-BOOTSTRAP
-  /SAMPLING METHOD=SIMPLE
-  /VARIABLES INPUT=weight 
-  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000
-  /MISSING USERMISSING=EXCLUDE.
-FREQUENCIES VARIABLES=weight
-  /FORMAT=NOTABLE
-  /STATISTICS=MEDIAN
-  /ORDER=ANALYSIS.
-
-Check data:
+SPSS syntax:  
   
-There are no impossible values on the weight variable.
-
-Check assumptions:
+\* Check data.  
+FREQUENCIES VARIABLES=weight  
+  /ORDER=ANALYSIS.  
+\* Bootstrap on median candy weight.  
+BOOTSTRAP  
+  /SAMPLING METHOD=SIMPLE  
+  /VARIABLES INPUT=weight   
+  /CRITERIA CILEVEL=95 CITYPE=BCA  NSAMPLES=5000  
+  /MISSING USERMISSING=EXCLUDE.  
+FREQUENCIES VARIABLES=weight  
+  /FORMAT=NOTABLE  
+  /STATISTICS=MEDIAN  
+  /ORDER=ANALYSIS.  
   
-The measurement level of variable weight is OK.
+Check data:  
     
-Interpret the results: 
-
-Median candy weight in the sample is 2.89 gram. With 
-95% confidence, we expect median candy weight to be 
-between 2.77 and 2.92 grams in the population of all candies.
+There are no impossible values on the weight variable.  
+  
+Check assumptions:  
+    
+The measurement level of variable weight is OK.  
+      
+Interpret the results:   
+  
+Median candy weight in the sample is 2.89 gram. With   
+95% confidence, we expect median candy weight to be   
+between 2.77 and 2.92 grams in the population of all candies.  
 ```
 
 3. Use SPSS to determine the 95% confidence interval for a paired-samples t test on candy colour fading under sunlight (variables colour_pre and colour_post in "candies.sav"). In your interpretation of the confidence interval, clarify the meaning of the statistic for which the confidence interval was calculated.
@@ -664,32 +666,32 @@ between 2.77 and 2.92 grams in the population of all candies.
     The paired-samples t test is available in SPSS under _Analyze > Compare Means_.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data.
-FREQUENCIES VARIABLES=colour_pre colour_post
-  /FORMAT=NOTABLE
-  /HISTOGRAM NORMAL
-  /ORDER=ANALYSIS.
-* Paired-samples t test.
-T-TEST PAIRS=colour_pre WITH colour_post (PAIRED)
-  /CRITERIA=CI(.9500)
-  /MISSING=ANALYSIS.
-
-Check data:
-
-There are no impossible values on variable weight.
-
-Check assumptions:
-
-Sample size (N = 50) is well over 30, so we need not care about
-the normal distribution of candy weight in the population.
-
-Interpret the results:
-
-Candy colourfulness fades under sunlight by 1.88 (or between 
-1.6 to 2.2) points in the data. This change is statistically 
-significant, t (49) = 12.86, p < 001, 95%CI[1.59; 2.17].
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=colour_pre colour_post  
+  /FORMAT=NOTABLE  
+  /HISTOGRAM NORMAL  
+  /ORDER=ANALYSIS.  
+\* Paired-samples t test.  
+T-TEST PAIRS=colour_pre WITH colour_post (PAIRED)  
+  /CRITERIA=CI(.9500)  
+  /MISSING=ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on variable weight.  
+  
+Check assumptions:  
+  
+Sample size (N = 50) is well over 30, so we need not care about  
+the normal distribution of candy weight in the population.  
+  
+Interpret the results:  
+  
+Candy colourfulness fades under sunlight by 1.88 (or between   
+1.6 to 2.2) points in the data. This change is statistically   
+significant, t (49) = 12.86, p < 001, 95%CI[1.59; 2.17].  
 ```
 
 4. Use SPSS to determine if candy colourfulness after exposure to sunlight (colour_post) depends on candy weight and candy sweetness. Interpret the 95% confidence intervals for both effects. 
@@ -697,41 +699,41 @@ significant, t (49) = 12.86, p < 001, 95%CI[1.59; 2.17].
     Hint: Use regression analysis, which is available under _Analyze > Regression > Linear_ in SPSS.
 
 ```{r eval=FALSE}
-SPSS syntax:
-
-* Check data: Assumption checks in Chapter 8.
-* CHeck for impossible values.
-FREQUENCIES VARIABLES=weight sweetness colour_post
-  /ORDER=ANALYSIS.
-* Regression of colour_post on weight and sweetness. 
-REGRESSION
-  /MISSING LISTWISE
-  /STATISTICS COEFF OUTS CI(95) R ANOVA
-  /CRITERIA=PIN(.05) POUT(.10)
-  /NOORIGIN 
-  /DEPENDENT colour_post
-  /METHOD=ENTER weight sweetness.
-
-Check data: 
-
-There are no impossible values on the variables.
-
-Check assumptions:
-
-Assumptions are presented later (Chapter 8).
-
-Interpret the results:
-
-We are 95 per cent confident that average candy
-colourfulness decreases by 0.23 to 0.52 for
-each additional unit of sweetness in the
-population.
-We are not confident about the direction of the
-effect of candy weight on colourfulness. This
-effect can be negative (up to a .65 decrease for
-each additional candy weight gram) or positive
-(up to a 2.05 increase for each additional candy
-weight gram).
+SPSS syntax:  
+  
+\* Check data: Assumption checks in Chapter 8.  
+\* CHeck for impossible values.  
+FREQUENCIES VARIABLES=weight sweetness colour_post  
+  /ORDER=ANALYSIS.  
+\* Regression of colour_post on weight and sweetness.   
+REGRESSION  
+  /MISSING LISTWISE  
+  /STATISTICS COEFF OUTS CI(95) R ANOVA  
+  /CRITERIA=PIN(.05) POUT(.10)  
+  /NOORIGIN   
+  /DEPENDENT colour_post  
+  /METHOD=ENTER weight sweetness.  
+  
+Check data:   
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+Assumptions are presented later (Chapter 8).  
+  
+Interpret the results:  
+  
+We are 95 per cent confident that average candy  
+colourfulness decreases by 0.23 to 0.52 for  
+each additional unit of sweetness in the  
+population.  
+We are not confident about the direction of the  
+effect of candy weight on colourfulness. This  
+effect can be negative (up to a .65 decrease for  
+each additional candy weight gram) or positive  
+(up to a 2.05 increase for each additional candy  
+weight gram).  
 ```
 
 ## Take-Home Points  
@@ -744,4 +746,4 @@ weight gram).
 
 * A larger sample or a lower confidence level yields a narrower, that is, a more precise confidence interval. The sample statistic is more likely to be closer to the population value. We have less uncertainty in our results.
 
-* A larger sample yields a smaller standard error, which yields a more precise confidence interval because the limits of a confidence interval fall one standard error times the critical value below and above the value of the sample statistic.
+* A larger sample yields a smaller standard error, which yields a more precise confidence interval because the limits of a 95% confidence interval fall one standard error times the critical value below and above the value of the sample statistic.
