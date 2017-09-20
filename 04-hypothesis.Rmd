@@ -191,11 +191,11 @@ knitr::include_url("https://www.youtube.com/embed/S8I5o_3p6ro", height = "360px"
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=tv_reach  
   /ORDER=ANALYSIS.  
-\* Binomial test.  
-\* Note: The test is one-sided if the test proprtion is not 0.50.  
+* Binomial test.  
+* Note: The test is one-sided if the test proprtion is not 0.50.  
 NPAR TESTS  
   /BINOMIAL (0.40)=tv_reach  
   /MISSING ANALYSIS.  
@@ -206,7 +206,8 @@ Variable tv_reach is a dichotomy as it should be for this test.
     
 Interpret the results:  
   
-We have to reject the null hypothesis that the TV station does not reach at least fourty per cent of all households, p = .039 (one-sided).  
+We have to reject the null hypothesis that the TV station does not reach at
+least fourty per cent of all households, p = .039 (one-sided).
 ```
 
 2. Test the hypothesis that the TV station reaches 55 per cent of all households in the population.
@@ -214,11 +215,11 @@ We have to reject the null hypothesis that the TV station does not reach at leas
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=tv_reach  
   /ORDER=ANALYSIS.  
-\* Binomial test.  
-\* Hint: Test the proportion of households not reached because   
+* Binomial test.  
+* Hint: Test the proportion of households not reached because   
   this is the first category: 1 - 0.55 = 0.45.  
 NPAR TESTS  
   /BINOMIAL (0.45)=tv_reach  
@@ -239,11 +240,11 @@ at least 55 per cent of all households, p = .260 (one-sided).
 ```{r eval=FALSE}  
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=income  
   /ORDER=ANALYSIS.  
-\* Binomial test.  
-\* Use the cut off option in the binomial test.  
+* Binomial test.  
+* Use the cut off option in the binomial test.  
 NPAR TESTS  
   /BINOMIAL (0.50)=income (40000)  
   /MISSING ANALYSIS.  
@@ -268,22 +269,22 @@ is significantly less than fifty per cent, p = .022. It is
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=income  
   /ORDER=ANALYSIS.  
-\* Recoding income into groups.  
+* Recoding income into groups.  
 RECODE income (Lowest thru 30000=1) (30000  thru 50000=2)  
   (50000 thru Highest=3) INTO income_group.  
 VARIABLE LABELS  income_group 'Grouped income'.  
 EXECUTE.  
-\* Define Variable Properties.  
-\*income_group.  
+* Define Variable Properties.  
+*income_group.  
 VALUE LABELS income_group  
   1.00 'low'  
   2.00 'medium'  
   3.00 'high'.  
 EXECUTE.  
-\* one-sample chi-squared test.  
+* one-sample chi-squared test.  
 NPAR TESTS  
   /CHISQUARE=income_group  
   /EXPECTED=20 50 30  
@@ -293,8 +294,11 @@ There are no apparent impossible income values.
   
 Check assumptions:  
   
-There are no assumptions for the chi-squared test.  
-    
+Assumptions for the chi-squared test:
+
+* Expected frequencies never below 1 and max 20% below 5: OK, the SPSS table note says: "0 cells (0.0%) have expected frequencies less than 5. The minimum expected cell frequency is 24.0."
+* In this case, 0% of the cells have expected frequencies below 5, which is less than the allowed maximum of 20%. In other words, at least 80% of the cells have expected frequencies of 5 or more.
+   
 Interpret the results:  
   
 The distribution of incomes over income groups in the sample   
@@ -332,15 +336,15 @@ knitr::include_url("https://www.youtube.com/embed/Bx0eiqfVfaw", height = "360px"
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=supervision  
   /ORDER=ANALYSIS.  
-\* Set imposible value (25) to missing.  
-\* Define Variable Properties.  
-\*supervision.  
+* Set imposible value (25) to missing.  
+* Define Variable Properties.  
+*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-\* One-sample t test.  
+* One-sample t test.  
 T-TEST  
   /TESTVAL=5.5  
   /MISSING=ANALYSIS  
@@ -374,15 +378,15 @@ interval for the population mean.
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=supervision  
   /ORDER=ANALYSIS.  
-\* Set imposible value (25) to missing.  
-\* Define Variable Properties.  
-\*supervision.  
+* Set imposible value (25) to missing.  
+* Define Variable Properties.  
+*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-\* One-sample t test.  
+* One-sample t test.  
 T-TEST  
   /TESTVAL=4.5  
   /MISSING=ANALYSIS  
@@ -438,10 +442,10 @@ knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px"
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=age_group immigrant  
   /ORDER=ANALYSIS.  
-\* Independent-samples t test with Levene s test.  
+* Independent-samples t test with Levene s test.  
 T-TEST GROUPS=age_group(1 2)  
   /MISSING=ANALYSIS  
   /VARIABLES=immigrant  
@@ -473,22 +477,22 @@ one-way analysis of variance. We could have used that approach here as well.
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=age immigrant  
   /ORDER=ANALYSIS.  
-\* Group age.  
+* Group age.  
 RECODE age (Lowest thru 35=1) (36 thru 65=2)  
   (66 thru Highest=3) INTO age3.  
 VARIABLE LABELS  age3 'Voter ages in three groups'.  
 EXECUTE.  
-\* Define Variable Properties.  
-\*age3.  
+* Define Variable Properties.  
+*age3.  
 VALUE LABELS age3  
   1.00 '18-35'  
   2.00 '36-65'  
   3.00 '66+'.  
 EXECUTE.  
-\* ANOVA with descriptives.  
+* ANOVA with descriptives.  
 ONEWAY immigrant BY age3  
   /STATISTICS DESCRIPTIVES HOMOGENEITY   
   /MISSING ANALYSIS.  
@@ -626,10 +630,10 @@ knitr::include_url("https://www.youtube.com/embed/1-kh9_pGI9k", height = "360px"
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=willing_post endorser  
   /ORDER=ANALYSIS.  
-\* One-way analysis of variance.  
+* One-way analysis of variance.  
 ONEWAY willing_post BY endorser  
   /STATISTICS DESCRIPTIVES HOMOGENEITY   
   /PLOT MEANS  
@@ -670,10 +674,10 @@ ANOVA table can be included.
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=willing_post remember  
   /ORDER=ANALYSIS.  
-\* Independent-samples t test.  
+* Independent-samples t test.  
 T-TEST GROUPS=remember(0 1)  
   /MISSING=ANALYSIS  
   /VARIABLES=willing_post  
@@ -705,10 +709,10 @@ scale, this is quite a small difference.
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=willing_post willing_pre  
   /ORDER=ANALYSIS.  
-\* Paired-samples t test.  
+* Paired-samples t test.  
 T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
   /CRITERIA=CI(.9500)  
   /MISSING=ANALYSIS.  
@@ -742,7 +746,7 @@ Measures of association are statistics that put a number to the pattern of group
 
 For categorical variables, measured at the nominal or ordinal level, chi-squared indicates whether variables are statistically associated. The larger chi-squared, the less probable it is that the variables are not associated in the population. If variables are not associated, they are said to be _statistically independent_.
 
-Several measures exist that express the strength of the association between two categorical variables. We use Phi and Cramer's V (two nominal variables, symmetric association), Goodman & Kruskals tau (two nominal variables, asymmetric association), Kendalls tau-b (two categorical ordinal variables, symmetric association), and Somers' d (two categorical ordinal variables, symmetric association).
+Several measures exist that express the strength of the association between two categorical variables. We use Phi and Cramer's V (two nominal variables, symmetric association), Goodman & Kruskals tau (two nominal variables, asymmetric association), Kendalls tau-b (two categorical ordinal variables, symmetric association), and Somers' d (two categorical ordinal variables, asymmetric association).
 
 ### Testing associations in SPSS {#associationSPSS}
 
@@ -793,14 +797,14 @@ knitr::include_url("https://www.youtube.com/embed/Nqtg8q-S0k8", height = "360px"
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=ad_expo brand_aw  
   /ORDER=ANALYSIS.  
-\* Check if the association can be linear.  
+* Check if the association can be linear.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=ad_expo WITH brand_aw  
   /MISSING=LISTWISE.  
-\* Correlations.  
+* Correlations.  
 CORRELATIONS  
   /VARIABLES=ad_expo brand_aw  
   /PRINT=TWOTAIL NOSIG  
@@ -839,10 +843,10 @@ brand awareness.
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Check data.  
+* Check data.  
 FREQUENCIES VARIABLES=ad_expo brand_aw  
   /ORDER=ANALYSIS.  
-\* Simple regression.  
+* Simple regression.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -867,7 +871,7 @@ Ad exposure predicts about one fifth of the
 variation in brand awareness scores, R2 = .21,   
 F (1, 60) = 15.87, p < .001.  
 The predictive effect of exposure to brand advertisements   
-is moderately strong (b\* = 0.46). An additional  
+is moderately strong (b* = 0.46). An additional  
 unit of exposure increases the predicted brand awareness  
 with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].  
 ```
@@ -877,7 +881,7 @@ with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].
 ```{r eval=FALSE}
 SPSS syntax:  
   
-\* Contingency table with chi-squared test and measure of association.  
+* Contingency table with chi-squared test and measure of association.  
 CROSSTABS  
   /TABLES=wom BY gender  
   /FORMAT=AVALUE TABLES  
