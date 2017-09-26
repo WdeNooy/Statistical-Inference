@@ -16,19 +16,20 @@ Among the alternatives to null hypothesis significance testing, using a confiden
 knitr::include_app("http://82.196.4.233:3838/apps/sig-effect-power/", height="550px")
 ```
 
-Figure \@ref(fig:power-problem) displays the sampling distribution for candy weight under the null hypothesis that average candy weight is 2.8 in the population. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample: weak, moderate, or strong . Five samples are drawn from a population with the average candy weight specified by the top slider. The samples' average candy weights are represented by coloured dots on the horizontal axis.
+Figure \@ref(fig:power-problem) displays the sampling distribution for candy weight under the null hypothesis that average candy weight is 2.8 in the population. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample: weak, moderate, or strong. Five samples are drawn from a population with the average candy weight specified by the top slider. The samples' average candy weights are represented by coloured dots on the horizontal axis.
 
 1. Which sample means are statistically significant (5% two-sided) and which are not?
 ```{r eval=FALSE}
 * The sample means (coloured dots) that are in the rejection regions (average
 candy weight scores beneath the blue tails), are statistically significant.
 The sample means in between the two blue tails are not statistically
-significant; their test values are sufficiently close to zero.
+significant; these means are sufficiently close to the mean according to the 
+null hypothesis.
 ```
 
 2. Is the null hypothesis true for samples with non-significant mean scores?
 ```{r eval=FALSE}
-* The null hypothesis is usually not true for the samples with non-significant
+* The null hypothesis is usually not true for samples with non-significant
 mean scores. It is only true if the true population mean is equal to the
 hypothesized population mean. In this example, the true population mean is
 equal to the hypothesized population mean only if the population average
@@ -102,7 +103,7 @@ Perhaps, Chapter \@ref(hypothesis) on null hypothesis testing should have been t
 
 If our sample is large or very large, small differences between what we expect according to our null hypothesis can be statistically significant even if the differences are too small to be of any practical value. A statistically significant result need not be practically relevant.  
 
-It is, however, a common mistake to think that statistical significance is a measure of the strength or practical significance of an effect. In the video, this mistaken interpretation is expressed by the type of sound associated with a p value: the lower the significance level of the test result, the more joyous the sound. 
+It is, however, a common mistake to think that statistical significance is a measure of the strength or practical significance of an effect. In the video, this mistaken interpretation is expressed by the type of sound associated with a p value: the lower the p value of the test, the more joyous the sound. 
 
 It is wrong to use statistical significance as a measure of strength or importance. In a large sample, even irrelevant results can be highly significant and in small samples, as demonstrated in the video, results can sometimes by highly significant and sometimes be insignificant. Never forget:  
 
@@ -169,9 +170,9 @@ Instead of focusing on true versus false, we had better take into account the pr
 
 With low power, we have high probability of not rejecting a false null hypothesis even if the true population value is quite different from the hypothesized value. The statistical test result should not make us conclude that there is no interesting effect.
 
-In contrast, if our test has very high power, we should expect effects to be statistically significant. Even tiny effects that are totally irrelevant from a substantive point of view. For example, an effect of exposure on attitude of 0.001 on a 10-point scale, is likely to be statistically significant in a very large sample but it is substantively uninteresting.
+In contrast, if our test has very high power, we should expect effects to be statistically significant. Even tiny effects that are totally irrelevant from a substantive point of view. For example, an effect of exposure on attitude of 0.01 on a 10-point scale, is likely to be statistically significant in a very large sample but it is substantively uninteresting.
 
-As noted before (Section \@ref()), standard statistical software usually does not report the power of a test. For this reason, it is not common practice to evaluate the statistical significance of results in combination with test power.
+As noted before (Section \@ref(typeIIerror)), standard statistical software usually does not report the power of a test. For this reason, it is not common practice to evaluate the statistical significance of results in combination with test power.
 
 By now, however, you understand that test power is affected by sample size. You should realize that null hypotheses are easily rejected in large samples but they are more difficult to reject in small samples. Don't let your selection of interesting results be guided predominantly by statistical significance if your sample is not very large.
 
@@ -199,7 +200,7 @@ Following up on a report commissioned by the American Psychological Association 
 
 Estimation is becoming more important: Assessing the precision of our statements about the population rather than deciding pro or con our hypothesis about the population. This is an important step forward and it is easy to accomplish if your statistical software reports confidence intervals.  
 
-```{r ci-nullhyp, eval=TRUE, echo=FALSE, fig.cap="What is the most sensible interpretation of the result represented by the confidence interval ?"}
+```{r ci-nullhyp, eval=TRUE, echo=FALSE, fig.cap="What is the most sensible interpretation of the results represented by the confidence interval ?"}
 #REPLACED BY STATIC IMAGE
 
 # Display an x-axis labeled "Effect size" with values "none
@@ -237,7 +238,7 @@ Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population val
 1. Would you advise the company to use the advertisement based on a null hypothesis significance test?
 
 ```{r eval=FALSE}
-If the 95% confidence interval does not include Ho (the vertical line), we
+If the 95% confidence interval does not include H0 (the vertical line), we
 must reject the null hypothesis at the 5% significance level. That is the rule
 of the game called null hypothesis significance testing.
 This is the case for confidence intervals C, E, and F.
@@ -247,16 +248,16 @@ tiny effect (intervals B and C) or a large effect (interval F). In case of a
 tiny effect, would we recommend to use the advertisement?
 ```
 
-2. Would you advise the company to use the advertisement based on the confidence interval in Figure \@ref(fig:ci-nullhyp)?
+2. Would you advise the company to use the advertisement based on the confidence intervals in Figure \@ref(fig:ci-nullhyp)?
 
 ```{r eval=FALSE}
 If less of the confidence interval extends to the left of H0 (negative effect)
 and more of it is situated to the right (positive effect), we are more
-confident that the efect is positive in the population.
+confident that the effect is positive in the population.
 If the range of plausible population values is more strongly positive, we are
 more certain that there is a substantial positive effect in the population.
 This is the most important reason to recommend using the advertisement.
-Interval F ofers the most convincing evidence for a substantial positive
+Interval F offers the most convincing evidence for a substantial positive
 effect. Intervals D and E also suggest a positive effect but we are not so
 sure about the size of the effect: it may be tiny or perhaps even absent but
 it can also be moderate to strong.
@@ -264,7 +265,7 @@ it can also be moderate to strong.
 
 A confidence interval shows us whether or not our null hypothesis must be rejected (see \@ref(null-ci0)). The rule is simple: If the value of the null hypothesis is within the confidence interval, the null hypothesis must not be rejected. By the way, note that a confidence interval allows us to test a null hypothesis other than the nil. If we hypothesize that the effect of exposure on brand awareness is 0.1, we reject the hypothesis if the confidence interval of the regression coefficient does not include 0.1.
 
-At the same time, however, confidence intervals allow us to draw a more nuanced conclusion. A confidence interval displays our uncertainty about the result. If the confidence interval is wide, we are quite uncertain about the true population value. If a wide confidence interval includes the null hypothesis near one of its boundaries, we reject the null hypothesis but it still is plausible that the population value is substantially larger (or substantially smaller) than the hypothesized value. 
+At the same time, however, confidence intervals allow us to draw a more nuanced conclusion. A confidence interval displays our uncertainty about the result. If the confidence interval is wide, we are quite uncertain about the true population value. If a wide confidence interval includes the null hypothesis near one of its boundaries, we do not reject the null hypothesis but it still is plausible that the population value is substantially larger (or substantially smaller) than the hypothesized value. 
 
 We should report that the population value seems to be larger (smaller) than specified in the null hypothesis but that we have inconclusive evidence because the test is not statistically significant. This is better than reporting that there is no difference because the statistical test is not significant.  
 
@@ -284,7 +285,7 @@ Or it might be:
 </div>
 ---- 
 
-In a similar way, a very narrow confidence interval including the null hypothesis and a very narrow confidence interval near the null hypothesis but excluding it should not yield opposite conclusions because the statistical test is significant in the first but not in the second situation. After all, even for the non-significant situation, we know with high confidence (narrow confidence interval) that the population value is close to the hypothesized value.
+In a similar way, a very narrow confidence interval including the null hypothesis and a very narrow confidence interval near the null hypothesis but excluding it should not yield opposite conclusions because the statistical test is significant in the second but not in the first situation. After all, even for the non-significant situation, we know with high confidence (narrow confidence interval) that the population value is close to the hypothesized value.
 
 Using confidence intervals in this way, we avoid the problem that statistically non-significant effects are not published. Not publishing non-significant results, either because of self-selection by the researcher or selection by journal editors and reviewers, offers a misleading view of research results.
 
@@ -325,7 +326,7 @@ What if I do not have a random sample? Can I still estimate confidence intervals
 
 We should note that statistical inference based on a random sample is the most convincing type of inference because we exactly know the nature of the uncertainty in the data, namely the chance introduced by our random sampling. Think of exact methods for creating a sampling distribution. If we know the distribution of candy colours in the population of all candies, we can calculate the exact probability of drawing a sample bag with, for example, 25 per cent of all candies being yellow if we carefully draw the sample at random.
 
-We can calculate the probability because we understand the process of random sampling. For example each candy has the same probability to be included in the sample. The uncertainty or probabilities arise from the way we designed our data collection, namely as a random sample from a much larger population.
+We can calculate the probability because we understand the process of random sampling. For example, we know that each candy has the same probability to be included in the sample. The uncertainty or probabilities arise from the way we designed our data collection, namely as a random sample from a much larger population.
 
 In summary, we know the population and how chance affects our sample if we draw a random sample. We know neither the population nor the workings of chance if we want to apply statistical inference to data that were not collected as a random sample. We have to substantiate the claim that our data set can be regarded as a random sample. 
 
@@ -345,7 +346,7 @@ There is a complication. The circumstances and personal characteristics are very
 
 As a consequence, we have variation in the outcome scores for participants who are exposed to the same celebrity and that have the same scores on personal characteristics that we measured. This variation is supposed to be random, that is, the result of chance. In this approach, then, random variation is not caused by random sampling but by fluctuations in the data generating process. 
 
-Compare this to a machine producing yellow candies. Fluctuations in the temperature and humidity within the factory, vibrations due to heavy trucks passing by, and irregularities in the base materials may affect the weight of individual candies. The weights are the data that we are going to analyze and the operation of the machine is the data generating process.
+Compare this to a machine producing candies. Fluctuations in the temperature and humidity within the factory, vibrations due to heavy trucks passing by, and irregularities in the base materials may affect the weight of individual candies. The weights are the data that we are going to analyze and the operation of the machine is the data generating process.
 
 We can use the inferential techniques developed for random samples on data with random variation stemming from the data generation process if the probability distributions for sampling distributions apply to random variation in the data generating process. This is the tricky thing about the data generating process approach.
 
@@ -373,7 +374,7 @@ The normal distribution is usually attributed to Carl Friedrich Gauss [-@RefWork
 
 * Statistically significant results need not be relevant or important. A small, negligible difference between the sample outcome and the hypothesized population value can be statistically significant in a very large sample with high test power.
 
-* A relevant and important difference between the sample outcome and the hypothesized population value need not be statistically significant in a small sample or with a test with low power.
+* A practically relevant and important difference between the sample outcome and the hypothesized population value need not be statistically significant in a small sample or with a test with low power.
 
 * Give priority to effect size over statistical significance in your interpretation of results.
 
