@@ -144,17 +144,15 @@ shinyServer(function(input, output) {
       #Eta squared text label
       geom_text(label = paste("'eta'^2 ==", round(etasqrd,2)),
                 x = 3,
-                y = max(df$y) + .5,
+                y = 9.5,
                 parse = TRUE) +
       #Legend definitions
       guides(colour = guide_legend(title = "Group Means"),
              linetype = guide_legend(title = "Grand Mean",label = FALSE),
              fill = FALSE) + 
       #X label definitions
-      scale_x_continuous(breaks = 1:3,labels = c("Clooney", "Jolie", "No Endorser")) +
-      coord_cartesian(ylim = c(min(df$y) - 1,max(df$y)+ 1)) +
-      xlab("") + 
-      ylab("Willingness") + 
+      scale_x_continuous(name = "", breaks = 1:3,labels = c("Clooney", "Jolie", "No Endorser")) +
+      scale_y_continuous(name = "Willingness", limits = c(1, 10), breaks = 1:10) +
       theme_general() + 
       theme(legend.position = "top") 
       
