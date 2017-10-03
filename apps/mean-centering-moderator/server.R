@@ -59,11 +59,18 @@ shinyServer(function(input, output) {
         aes(color = "Contact centered = 0")) +
       scale_color_manual(name = "",
                          values = c("Contact centered = 0" = unname(brewercolors["Red"]),
-                                    "Contact = 0" = unname(brewercolors["Blue"]))) +
-      geom_text(aes(x = 5, y = -4.5, color = "Contact centered = 0"), size = 2.8,
+                                    "Contact = 0" = unname(brewercolors["Blue"])),
+                         labels = c(paste("Contact =", input$modvalueslider), "Contact centered = 0")) +
+      geom_text(aes(x = 5, y = -4.0, color = "Contact centered = 0"), size = 2.8,
                 label = paste("Attitude = ",  0.4 + 0.15 * input$modcenterslider/2,
                               " + ", -0.26 + 0.04 * input$modcenterslider/2,
                               " * Exposure + 0.15 * Contact + 0.04 * Contact * Exposure"),
+                show.legend = FALSE) +
+      geom_text(aes(x = 5, y = -4.8, color = "Contact = 0"), size = 2.8,
+                label = paste("Attitude = 0.4 + -0.26 * Exposure + 0.15 * Contact (",
+                              input$modvalueslider,
+                              ") + 0.04 * Contact (", input$modvalueslider,
+                              ") * Exposure"),
                 show.legend = FALSE) +
       coord_cartesian(xlim = c(0, 10), ylim = c(-5, 5)) +
       ylab("Attitude") +
