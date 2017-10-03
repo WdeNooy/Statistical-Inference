@@ -67,7 +67,7 @@ shinyServer(function(input, output) {
                               " * Exposure + 0.15 * Contact + 0.04 * Contact * Exposure"),
                 show.legend = FALSE) +
       geom_text(aes(x = 5, y = -4.8, color = "Contact = 0"), size = 2.8,
-                label = paste("Attitude = 0.4 + -0.26 * Exposure + 0.15 * Contact (",
+                label = paste0("Attitude = 0.4 + -0.26 * Exposure + 0.15 * Contact (",
                               input$modvalueslider,
                               ") + 0.04 * Contact (", input$modvalueslider,
                               ") * Exposure"),
