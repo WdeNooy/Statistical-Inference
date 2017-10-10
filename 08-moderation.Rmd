@@ -1,6 +1,10 @@
 # Moderation with Regression Analysis {#moderation}
 > Key concepts: interaction variable, covariate, outcome, regression equation, dummy variables, normally distributed residuals, linearity, homoscedasticity, independent observations, statistical diagram, common support, simple slope, conditional effect, mean-centering.
 
+```{r eval=FALSE, echo=FALSE}
+* Add SPSS video explaining how to report regresision results? See Fam?
+```
+
 ### Summary {-}
 
 The linear regression model is a powerful and very popular model for predicting a numeric outcome variable from one or more predictor variables. Predictor variables must be numeric or dichotomies. Regression coefficients show the predicted difference in the outcome for a one unit difference in the predictor. 
@@ -222,7 +226,7 @@ the predicted difference in the outcome for a difference of one unit in the
 predictor variable.
 * According to the equations, the predicted attitude decreases by 0.25 for a one
 unit increase in exposure.
-* This is the decrease from 0.40 to 1.15 signalled by the horizontal line
+* This is the decrease from 0.40 to 0.15 signalled by the horizontal line
 segments.
 ```
 
@@ -357,7 +361,7 @@ Regression equation \@ref(eq:regdicho0) represents all non-smokers. Their smokin
 \normalsize
 \end{equation}
 
-It does not make sense to interpret the regression coefficient of smoking status ($b_2$) as predicted difference in attitude for a difference of one 'more' smoking status. After all, the 0 and 1 scores do not mean that there is a one unit more smoking. Instead, the coefficient indicates that we are dealing with different groups: smokers versus non-smokers. We have to interpret the effect as a difference between two groups. More specifically, as the difference between the group represented by the score 1 and the _reference group_ represented by score 0.
+It does not make sense to interpret the regression coefficient of smoking status ($b_2$) as predicted difference in attitude for a difference of one 'more' smoking status. After all, the 0 and 1 scores do not mean that there is one unit 'more' smoking. Instead, the coefficient indicates that we are dealing with different groups: smokers versus non-smokers. We have to interpret the effect as a difference between two groups. More specifically, as the difference between the group represented by the score 1 and the _reference group_ represented by score 0.
 
 If you compare the final equations for smokers (Eq. \@ref(eq:regdicho1)) and non-smokers (Eq. \@ref(eq:regdicho0)), the only difference is $b_2$, which is present for smokers but absent for non-smokers. It is the difference between the average outcome score (attitude) for smokers and the average outcome score (attitude) non-smokers. This is exactly the same as in an independent-samples t test!
 
@@ -496,7 +500,7 @@ Which group should we use as reference category, that is, which dummy should not
 
 If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results. The confidence interval gives us bounds for the population value of the unstandardized regression coefficient. The p value is used to test the null hypothesis that the unstandardized regression coefficient is zero in the population.
 
-Each regression coefficient as well as the constant may vary from sample to sample drawn from the same population, so we should devise a sampling distribution for each of them. Because the constant in a regression model is usually uninteresting, we will only discuss sampling distributions for regression coefficients. Their sampling distributions happen to have a t distribution under particular assumptions.
+Each regression coefficient as well as the constant may vary from sample to sample drawn from the same population, so we should devise a sampling distribution for each of them. These sampling distributions happen to have a t distribution under particular assumptions.
 
 Chapters \@ref(param-estim) and \@ref(hypothesis) have extensively discussed how confidence intervals and p values are constructed and how they must be interpreted. So we may as well focus now on the assumptions under which the t distribution is a good approximation of the sampling distribution of a regression coefficient. 
 
@@ -610,7 +614,7 @@ The other two assumptions that we use tell us about problems in our model rather
 
 We can check the assumption of a linear model in a graph showing the (standardized) residuals (vertical axis) against the (standardized) predicted values of the outcome variable (on the horizontal axis). Note that the residuals represent prediction errors. If our regression predictions are systematically too low at some levels of the outcome variable and too high at other levels, the residuals are not nicely distributed around zero for all predicted levels of the outcome variable. This is what you see if the association is curved or U-shaped.
 
-This indicates that our linear model does not fit the data. If it would fit, the average prediction error is zero for all predicted outcome levels. Graphically speaking, our linear model matches the data if at every horizontal position, positive prediction errors (residuals) are balanced by negative prediction errors.
+This indicates that our linear model does not fit the data. If it would fit, the average prediction error is zero for all predicted outcome levels. Graphically speaking, our linear model matches the data if positive prediction errors (residuals) are more or less balanced by negative prediction errors everywhere along the horizontal dimension.
 
 #### Homoscedasticity and prediction errors
 
@@ -721,7 +725,7 @@ The regression equation without the error term $e$ predicts the outcome variable
 
 If we focus on the relation between one predictor and the outcome variable, the predicted values can be represented by a straight line in a scatter plot. By convention, we display the predictor on the horizontal axis and the outcome variable on the vertical axis of the scatter plot. 
 
-In a simple regression, we only have one predictor, so we can only draw one regression line. In a multiple regression, however, we have several predictors. We can draw regression lines for each predictor and, importantly, we can draw different regression lines for the same predictor.
+In a simple regression, we only have one predictor, so we can only draw one regression line. In multiple regression, however, we have several predictors. We can draw regression lines for each predictor and, importantly, we can draw different regression lines for the same predictor.
 
 If we want to draw the regression line for the predictive effect of one predictor, we regard the other predictors as covariates. Let us define a _covariate_ as a variable that may predict the outcome but is not our prime interest, so we mainly want to control for its effects. For example, if we focus on the predictive effect of exposure on attitude towards smoking, exposure is our predictor and smoking status and contact with smokers are covariates. 
 
@@ -2188,7 +2192,7 @@ Pros/cons: Adds F Change test; F Change test does not add to significance test o
 
 ### Higher-order interaction effects
 
-An interaction effect with one moderator, albeit continuous or categorical, is called a _first-order interaction_. It is possible to have a moderated effect that is moderated itself by a second moderator. For example, the change in the exposure effect due to a person's contact with smokers may be different for smokers than for non-smokers. This is called a _second-order interaction_ or _higher order interaction_. We can include more moderators, yielding even higher higher-order interactions, such as three or four moderators.
+An interaction effect with one moderator, whether continuous or categorical, is called a _first-order interaction_. It is possible to have a moderated effect that is moderated itself by a second moderator. For example, the change in the exposure effect due to a person's contact with smokers may be different for smokers than for non-smokers. This is called a _second-order interaction_ or _higher order interaction_. We can include more moderators, yielding even higher higher-order interactions, such as three or four moderators.
 
 An interaction variable that is the product of the predictor and two moderators can be used to include a second-order interaction in a regression model. If you include a second-order interaction, you must also include the effects of the variables involved in the interaction as well as all first-order interactions among these variables in the regression model. All in all, these models become very complicated to interpret, so we do not pay further attention to them.
 
@@ -2260,10 +2264,9 @@ knitr::kable(table, align = c("l", "c"), caption = "Predicting attitude towards 
 source("report_n.R")
 ```
 
-\small _Note_. _N_ = `r n`. CI = confidence interval.
+_Note_. _N_ = `r n`. CI = confidence interval.
 
 \* _p_ < .05. \** _p_ < .01. \*** _p_ < .001.
-\small
 
 If we report a regression model, we first present the significance test and predictive power of the entire regression model. We may report that the regression model is statistically significant, F (`r resultsF[[1,4]]`, `r resultsF[[2,4]]`) = `r report_n(as.numeric(resultsF[[1,6]]),2)`, p `r ifelse(resultsF[[1,7]] == "0.000", "< 0.001", paste0("=", resultsF[[1,7]]))`, so the regression model very likely helps to predict attitude towards smoking in the population. Retrieve the test information from SPSS; the APA6-style table (Table \@ref(tab:report-moderation-table)) only reports the F value and its significance level.
 
@@ -2887,7 +2890,7 @@ medliter = 4.499 + 0.255*supervision
 
 * The effect of the predictor in a model with an interaction variable does _not_ represent a main or average effect. It is a conditional effect: The effect for cases that score zero on the moderator. The same applies to the effect of the moderator, which is the conditional effect for cases scoring zero on the predictor.
 
-* Mean center a numeric mediator and a numeric predictor that is involved in an interaction effect. Observations with a mean score on the moderator are a substantively interesting reference group.
+* Mean center a numeric moderator and a numeric predictor that is involved in an interaction effect. Observations with a mean score on the moderator are a substantively interesting reference group.
 
 * To interpret moderation, describe the effects (slopes, unstandardized regression coefficients) and preferably visualize the regression lines for different groups or contexts. For a numerical variable, select some interesting levels of the moderator, such as the mean and one standard deviation below or above the mean.
 
