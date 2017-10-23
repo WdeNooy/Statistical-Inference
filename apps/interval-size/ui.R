@@ -11,11 +11,12 @@ shinyUI(
                ),
       fluidRow(align = "center",
                sliderInput("mainslider",
-                           label = "Sample size",
+                           label = "Sample size: Number of candies per sample bag",
                            min = 10,
                            max = 100,
                            value = 40,
-                           step = 5
+                           step = 5,
+                           width = fig.width - 50
                           )
                )
     )
