@@ -2,8 +2,7 @@ library(shiny)
 fig.height = 300 
 fig.width = 400
 shinyUI(fluidPage(
-  sidebarLayout(
-    sidebarPanel(
+    fluidRow(column(4,
              sliderInput("savslider",
                          label = "Sample b",
                          min = -0.6,
@@ -18,8 +17,8 @@ shinyUI(fluidPage(
                          step = 10
              )
     ),
-    mainPanel(
-             plotOutput("mainplot",
+            column(8, 
+           plotOutput("mainplot",
                         width = fig.width,
                         height = fig.height
                         )

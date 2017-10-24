@@ -9,7 +9,7 @@ shinyServer(function(input, output) {
 
   mean <- 2.8 #Hypothesized population mean
   sdpop <- 0.6 #Population SD 
-  
+
   ##RENDER MAIN PLOT##
   output$mainplot <- renderPlot({
     
@@ -33,6 +33,18 @@ shinyServer(function(input, output) {
     sign <- ifelse(right <= input$savslider, 
                    "Statistically\n significant\n test result", 
                    "Statistically\n non-significant\n test result")
+    #calculate power and store
+    power <- ifelse(
+      input$savslider == 2.8, NA, round(
+        power.t.test(n = input$ssizeslider,
+                     delta = (input$savslider - mean),
+                     sd = sdpop,
+                     sig.level = 0.05,
+                     type = "one.sample",
+                     alternative = "two.sided")$power,
+        2)
+    )
+    
     
      #PLOT
      ggplot(data.frame(x = c(0,6)), aes(x = x)) +
@@ -81,7 +93,13 @@ shinyServer(function(input, output) {
                 vjust = 1,
                 color = brewercolors["Blue"]
                 ) +
-      #Definition of sample mean type and legend name
+      #Power
+       geom_text(label = paste0("Power ", power),
+                 aes(x = 2.45, 
+                     y = dnorm(mean, mean, SE)),
+                 vjust = 1
+       ) +
+       #Definition of sample mean type and legend name
       scale_linetype_manual(name = "",
                             values = c("Hypothesized population mean" = "dashed", 
                                        "Sample mean" = "solid")) + 
