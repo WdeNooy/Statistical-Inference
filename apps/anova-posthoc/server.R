@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
     df1And2  <- unlist(summary(aov(data = df, y  ~ cat)))[1:2]
     pValue   <- unlist(summary(aov(data = df, y  ~ cat)))["Pr(>F)1"]
     
-    postHocpValues <- pairwise.t.test(df$y,df$cat,p.adjust.method = "none")$p.value
+    postHocpValues <- pairwise.t.test(df$y,df$cat,p.adjust.method = "bonferroni")$p.value
     
     phJolCloon   <-  postHocpValues[1]
     phNoEndCloon <-  postHocpValues[2]
@@ -145,7 +145,7 @@ shinyServer(function(input, output) {
                 y = 9.0,
                 hjust = 0.5,
                 parse = FALSE) +
-      #Post hoc Cloon jolie text 
+      #Post hoc Clooney - Jolie text 
       geom_label(label = pprint(phJolCloon),
                 x = end - 2.5,
                 y = mean(c(mean(subset(df, cat == "Clooney")$y),
