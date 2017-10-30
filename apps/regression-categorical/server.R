@@ -94,11 +94,12 @@ output$scatterplot <- renderPlot({
     geom_text(inherit.aes=FALSE,x = 2.5,y=regfunc(2.5,int = coef(mod2)[1]- coef(mod2)[3],bet1 = coef(mod2)[3]) + 0.8,
               label = paste0("b = ", rprint(coef(mod2)[3]), "\n", pprint(pval3)), 
               alpha = ifelse(input$selector == "Never smoked", 0, 1)) +
-    geom_text(inherit.aes=FALSE,data=meaningroup,aes(x = x + 0.4,y=means + 0.5, 
+    geom_text(inherit.aes=FALSE,data=meaningroup,aes(x = x + 0.4,y=means + 0.05, 
                                                      label = rprint(means),colour = colour),
               position = position_dodge(width=0.5), size = 5, show.legend = FALSE) + 
     xlab("Group") + 
-    scale_y_continuous(name = "Attitude", limits = c(-5, 5)) +
+    coord_cartesian(ylim = c(-5, 5)) +
+    ylab("Attitude") +
     theme_general() + 
     theme(legend.position = "bottom")
 })

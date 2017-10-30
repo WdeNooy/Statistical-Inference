@@ -45,9 +45,9 @@ shinyServer(function(input, output) {
   output$equationui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude = }\\color{#D7191C}{b_0(",
+        paste("$$\\color{black}{attitude = }\\color{#D7191C}{constant(",
               input$nonsmokeraveragesli,
-              ")}\\color{black}{ + }\\color{#2B83BA}{b_1 (",
+              ")}\\color{black}{ + }\\color{#2B83BA}{b (",
               (input$smokeraveragesli - input$nonsmokeraveragesli),
               ")}\\color{black}{* status + e}$$")
       )
@@ -95,6 +95,7 @@ shinyServer(function(input, output) {
                                      "Smoker (1)" = unname(brewercolors["Blue"]))) + 
       scale_y_continuous(name = "Attitude",
                          breaks = c(-5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
+      xlab("Smoking status") +
       coord_cartesian(ylim = c(-5,5)) + 
       theme_general() + 
       theme(legend.position = "none")
