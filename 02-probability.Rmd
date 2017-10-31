@@ -3,114 +3,11 @@
 
 ### Summary {-}
 
+> How do we get a sampling distribution without drawing many samples ourselves?
+
 In the previous chapter, we drew a large number of samples from a population to obtain the sampling distribution of a sample statistic, for instance, the proportion of yellow candies or average candy weight in the sample. The procedure is quite simple: Draw a sample, calculate the desired sample statistic, add the sample statistic value to the sampling distribution, and repeat this thousands of times.  
 
 Although this procedure is simple, it is not practical. In a research project, we would have to draw thousands of samples and administer a survey to each sample or collect data on the sample in some other way. This requires too much time and money to be of any practical value. So how do we create a sampling distribution, if we only collect data for a single sample? This chapter presents three ways of doing this: bootstrapping, exact approaches, and theoretical approximations.
-
-### Test your intuition and understanding {-}
-
-```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
-```
-
-1. Why does Figure \@ref(fig:models-summary1) not show a population? 
-
-```{r eval=FALSE}
-* With bootstrapping, we create a sampling distribution by sampling
-("bootstrapping") from our initial sample. Therefore, we do not need the
-original population for bootstrapping.
-```
-
-2. Which type of sampling is better here: with or without replacement? Justify your answer. 
-
-```{r eval=FALSE}
-* The bootstrap sample must contain the same number of observations as the
-original sample because the sampling distribution depends on sample size. If
-we draw bootstrap samples without replacement from the original sample, each
-bootstrap sample must contain exactly the same observations as the original
-sample. All bootstrap samples are identical, so we do not have variation in
-the sampling distribution.
-* Only if we sample with replacement, bootstrap samples can be different from
-the initial sample, so we obtain a sampling distribution with variation, that
-is, allowing for different sample outcomes. And this is what we need a
-sampling distribution for.
-```
-
-3. Draw a new initial sample in Figure \@ref(fig:models-summary1). Is the bootstrapped sampling distribution going to resemble the true sampling distribution? Note that twenty per cent of the candies in the population are yellow. Motivate your answer. Draw 1,000 bootstrap samples to check your answer.
-
-```{r eval=FALSE}
-* A bootstrapped sampling distribution only resembles the true sampling
-distribution if the initial sample is more or less representative of the
-population. The sample statistic that we are interested in, in the current
-example, the proportion of yellow candies, must be quite near the population
-statistic.
-* If the proportion of yellow samples in the original sample is .2, as it is
-in the population, the bootstrapped sampling distribution (yellow) is very
-similar to the true sampling distribution (grey).
-```
-
-```{r models-summary-3, echo=FALSE}
-####Exact approach.
-d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
-                Combinations = c("tail-tail-tail", "tail-tail-head", "tail-head-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"))
-knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Number of heads", "Combination"), align = c("l", "l"))
-```
-
-4. Calculate the exact probability distribution of the number of heads in a toss of three fair coins (Table \@ref(tab:models-summary-3)).
-
-```{r eval=FALSE}
-* For the answer, see Section Exact Approaches to the Sampling Distribution.
-```
-
-5. In which situations can we use exact probabilities as a sampling distribution?
-
-```{r eval=FALSE}
-* We must be able to list and count all combinations. This can only be done if
-the number of combinations is limited. So we need discrete or categorical
-variables. Exact approaches to the sampling distribution are only available
-for inference on categorical variables, such as proportions and associations.
-```
-
-```{r models-summary2, echo=FALSE, out.width="420px", fig.cap="How do we approximate a sampling distribution with a theoretical probability distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
-```
-
-6. Generate a sampling distribution of average sample candy weight in Figure \@ref(fig:models-summary2). Try to explain in your own words why the sampling distribution of a sample mean has a bell shape. 
-
-```{r eval=FALSE}
-* Samples with means close to the true population mean are more likely than
-samples with means far away from the true population mean because observations
-(candy weights) above average tend to be balanced by observations below
-average. This explains the top at the true population mean.
-* It is equally likely to draw a sample with above average mean score as a
-sample with below average mean score, so the sampling distribution is
-symmetric around the true population value.
-```
-
-7. Which part of the graph in Figure \@ref(fig:models-summary2) represents the theoretical probability distribution? 
-
-```{r eval=FALSE}
-* The black curve (or the surface below the black curve) represents the
-theoretical probability distribution. It is a normal or (Student) t
-distribution.
-```
-
-8. Can we always use this theoretical probability distribution if we are interested in sample means? See if the general outline of the theoretical probability distribution matches the histogram of average sample candy weight observed in a large number of samples. Pay special attention to the lowest (red) and highest (green) 2.5% of observed sample means.
-
-```{r eval=FALSE}
-* The curve fits the histogram of observed sample means quite well.
-Discrepancies are mainly due to the jagged layout of the histogram, which
-result from binning the data (to create bars) and from the fact that the
-number of samples is large but not very large.
-* The borders demarcating the lowest and highest 2.5% of sample means in the
-theoretical probability distribution (the dotted lines) nicely coincide with
-the border between red or green and blue bars in the histogram in most of the
-sampling distributions that we generate with this app.
-* For the sampling distribution of means we know that the normal or (Student)
-t distribution represents the sampling distribution very accurately.
-```
-
-On first reading, you may not know all answers. Try again after you have studied this chapter.
 
 ## The Bootstrap Approximation of the Sampling Distribution {#boot-approx}
 
@@ -172,6 +69,10 @@ The _bootstrap_ concept refers to the story in which Baron von M&uuml;nchhausen 
 
 ### Sampling with and without replacement  
 
+As we will see in a later chapter, the size of a sample is very important to the shape of the sampling distribution. The sampling distribution of samples with twenty cases can be very different from the sampling distribution of samples with forty cases. To construct a sampling distribution from bootstrap samples, the bootstrap samples must be exactly as large as the original sample.  
+
+How can we draw many different bootstrap samples from the original sample if each bootstrap sample must contain the same number of cases as the original sample?
+
 ```{r replacement, eval=TRUE, echo=FALSE, fig.cap="Sampling with and without replacement."}
 #Create a sample consisting of 10 candies (dots) that are coloured (5 colours)
 #and numbered. Display this sample as a dotplot.
@@ -197,27 +98,31 @@ candies (twelve or eleven) in the bootstrap sample than in the initial sample
 (ten red candies).
 ```
 
-As we will see in a later chapter, the size of a sample is very important to the shape of the sampling distribution. The sampling distribution of samples with twenty cases can be very different from the sampling distribution of samples with forty cases. To construct a sampling distribution from bootstrap samples, the bootstrap samples must be exactly as large as the original sample.  
-
-How can we draw many different bootstrap samples from the original sample if each bootstrap sample must contain the same number of cases as the original sample? If we allow every case in the original sample to be sampled only once, each bootstrap sample contains all cases of the original sample, so it is an exact copy of the original sample. Thus, we cannot create different bootstrap samples. 
+If we allow every case in the original sample to be sampled only once, each bootstrap sample contains all cases of the original sample, so it is an exact copy of the original sample. Thus, we cannot create different bootstrap samples. 
 
 By the way, we often use the type of sampling described above, which is called _sampling without replacement_. If a person is (randomly) chosen for our sample, we do not put this person back into the population so she or he can be chosen again. We want our respondents to fill out our questionnaire only once or participate in our experiment only once.  
 
 If we do allow the same person to be chosen more than once, we sample _with replacement_. The same person can occur more than once in a sample. Bootstrap samples that are sampled with replacement from the original sample can vary because they need not contain all cases in the original sample. Some cases may not be sampled while other cases are sampled several times. You probably have noticed this in Figure \@ref(fig:replacement). Sampling with replacement allows us to obtain different bootstrap samples from the original sample, and still have bootstrap samples of the same size as the original sample.  
 
 ### Calculating probabilities with replacement  
-You may wonder whether it is OK to sample with replacement. The short answer is: Yes it is. We usually calculate probabilities as if we sampled with replacement. Suppose we want to calculate the probability of picking two yellow candies from a population in which 20% of the candies are yellow. The probability of picking two yellow candies is then calculated as .200 * .200: twice the probability of drawing a yellow candy.  
+You may wonder whether it is OK to sample with replacement when we are bootstrapping. The short answer is: Yes it is. We usually calculate probabilities as if we sampled with replacement. Suppose we want to calculate the probability of picking two yellow candies from a population in which 20% of the candies are yellow. The probability of picking two yellow candies is then calculated as .200 * .200: twice the probability of drawing a yellow candy.  
 
 In this calculation, we assume that the probability to draw a yellow candy remains the same while we are sampling. The probability of sampling a yellow candy is assumed to be .200 whether we sample the first or the second candy. We act as if the proportion of yellow candies in the population remains the same, namely 20%. This assumption is very convenient because it simplifies the calculation of probabilities.
 
 ### Calculating probabilities without replacement  
-However, the number of yellow candies is reduced by one after we have drawn the first yellow candy unless it is immediately replaced by a new yellow candy in the factory. The probability of drawing a second yellow candy should then be less than 20%. If the population is large, the decrease in the probability is too small to be in any way relevant. For instance, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992 ; the difference between the two probabilities (0,0000008) is negligible. 
+In practice, however, we never want the same respondent to participate twice in our research because this would not yield new information. In actual research, then, we sample _without_ replacement. A respondent does not risk being sampled more than once.
 
-So is it OK to sample with replacement? From the point of view of probabilities, it is OK because we usually calculate probabilities as if we sampled with replacement. In practice, however, we never want the same respondent to participate twice in our research because this does not yield new information.
+How about calculating probabilities if we sample without replacement? If we do not put the sampled yellow candy back in the population, the number of yellow candies in the population is reduced by one after we have drawn the first yellow candy. The probability of drawing a second yellow candy should then be less than 20%. 
 
-In contrast, when is it _not_ OK to sample without replacement as we normally do in research? It is not OK to sample without replacement if the population is not much larger than the sample. If the population is not much larger, the probabilities change substantially during the sampling process, so calculating probabilities as if the probabilities do not change would be a problem.
+If the population is large, the decrease in the probability is too small to be in any way relevant. For instance, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992 ; the difference between the two probabilities (0,0000008) is negligible. 
+
+As you can see, calculating probablities becomes complicated if we sample without replacement. But we can ignore the complications if the population is much larger than the sample because the probabilities hardly differ from the simple probabilities that we have if we sample with replacement. 
+
+In practice, then, we always sample _without_ replacement but our statistical software calculates probabilities as if we sampled _with_ replacement. This is perectly fine as long as the population is much larger than the sample. If the sample contains a large share of the population, however, we should not trust the probabilities that our software reports.
 
 ### Limitations to bootstrapping  
+
+Does the bootstrapped sampling distribution always reflect the true sampling distribution?
 
 ```{r bootstrap-lim, echo=FALSE, fig.cap="How is bootstrapping influenced by sample size?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # variant of app sampling-distribution.
@@ -395,14 +300,17 @@ between 2.77 and 2.92 grams in the population of all candies.
 
 ## Exact Approaches to the Sampling Distribution
 
+A second approach to constructing a sampling distribution has implicitly been demonstrated in the preceding section on bootstrapping (Section \@ref(boot-approx)) and the section on probability distributions (Section \@ref(probdistribution)). In these sections, we calculated the true sampling distribution of the proportion of yellow candies in a sample from the probabilities of the colours. If we know or think we know the proportion of yellow candies in the population, we can exactly calculate the probability that a sample of ten candies includes one, two, three, or ten yellow candies. See the section on discrete random variables for details (Section \@ref(discreterandomvariable)).  
+
 ```{r exact-approach, echo=FALSE, fig.cap="How does an exact aproach to the sampling distribution work?"}
 # Several scenarios (choice list) for discrete probability distributions (dice, coin flips) ; display a table with all outcomes sampling space), all possible combinations for each oucome , and calculated probabilities.
 # Scenarios: number of heads per toss if we toss 1, 2, 3 unbiased coins; sum of the number of eyes per throw if we throw 1 or 2 unbiased dice.
 # If feasible: Don't show probabilities but let user enter probabilities if a scenario is used for the second (or later) time within a session.
 d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
                 Combinations = c("tail-tail-tail", "tail-tail-head", "head-tail-tail", "tail-head-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"),
-                Probability = c("1/8 =  .125", "", "", "3/8 =  .375", "", "", "3/8 =  .375", "1/8 =  .125", "1.000"))
-knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Outcome", "Combination", "Probability"), align = c("l", "l", "r"))
+                Probability_of_combination = c("1/2 * 1/2 * 1/2 = 1/8 =  .125", "1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125", ""),
+                Probability_of_outcome = c("1/8 =  .125", "", "", "3/8 =  .375", "", "", "3/8 =  .375", "1/8 =  .125", "1.000"))
+knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Outcome", "Combination", "Probability: Combination", "Probability: Outcome"), align = c("l", "l", "l", "r"))
 ```
 
 1. Explain the meaning of the entries in the column __Combinations__ and how they relate to the entries in the __Outcomes__ columns.  
@@ -423,8 +331,6 @@ all combinations that have the same outcome, namely the same number of heads.
 * Thus we arrive at the probability of having no heads in a throw (p = .125),
 one head (p = .375), and so on.
 ```
-
-A second approach to constructing a sampling distribution has implicitly been demonstrated in the preceding section on bootstrapping (Section \@ref(boot-approx)) and the section on probability distributions (Section \@ref(probdistribution)). In these sections, we calculated the true sampling distribution of the proportion of yellow candies in a sample from the probabilities of the colours. If we know or think we know the proportion of yellow candies in the population, we can exactly calculate the probability that a sample of ten candies includes one, two, three, or ten yellow candies. See the section on discrete random variables for details.  
 
 The calculated probabilities of all possible sample statistic outcomes give us an exact approach to the sampling distribution. Note that I use the word _approach_ instead of _approximation_ here because the obtained sampling distribution is no longer an approximation, that is, more or less similar to the true sampling distribution. No, it is the true sampling distribution itself.  
 
@@ -779,7 +685,110 @@ By default, SPSS uses a theoretical probability distribution to approximate the 
 
 In one case, SPSS automatically selects an exact approach if the conditions for a theoretical approximation are not met: If you do a chi-squared test to a contingency table in SPSS, SPSS will automatically apply Fisher's exact test if the table has two rows and two columns. In all other cases, you have to select a bootstrapping or exact approach yourself if the conditions for a theoretical approximation are not met.
 
-We are not going to practice with theoretical approximations in SPSS, now. Because theoretical approximation is the default approach in SPSS, we will encounter it in the exercises in later chapters.  
+We are not going to practice with theoretical approximations in SPSS, now. Because theoretical approximation is the default approach in SPSS, we will encounter it in the exercises in later chapters.
+
+## Test Your Understanding
+
+```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
+```
+
+1. Why does Figure \@ref(fig:models-summary1) not show a population? 
+
+```{r eval=FALSE, echo=FALSE}
+* With bootstrapping, we create a sampling distribution by sampling
+("bootstrapping") from our initial sample. Therefore, we do not need the
+original population for bootstrapping.
+```
+
+2. Which type of sampling is better here: with or without replacement? Justify your answer. 
+
+```{r eval=FALSE, echo=FALSE}
+* The bootstrap sample must contain the same number of observations as the
+original sample because the sampling distribution depends on sample size. If
+we draw bootstrap samples without replacement from the original sample, each
+bootstrap sample must contain exactly the same observations as the original
+sample. All bootstrap samples are identical, so we do not have variation in
+the sampling distribution.
+* Only if we sample with replacement, bootstrap samples can be different from
+the initial sample, so we obtain a sampling distribution with variation, that
+is, allowing for different sample outcomes. And this is what we need a
+sampling distribution for.
+```
+
+3. Draw a new initial sample in Figure \@ref(fig:models-summary1). Is the bootstrapped sampling distribution going to resemble the true sampling distribution? Note that twenty per cent of the candies in the population are yellow. Motivate your answer. Draw 1,000 bootstrap samples to check your answer.
+
+```{r eval=FALSE, echo=FALSE}
+* A bootstrapped sampling distribution only resembles the true sampling
+distribution if the initial sample is more or less representative of the
+population. The sample statistic that we are interested in, in the current
+example, the proportion of yellow candies, must be quite near the population
+statistic.
+* If the proportion of yellow samples in the original sample is .2, as it is
+in the population, the bootstrapped sampling distribution (yellow) is very
+similar to the true sampling distribution (grey).
+```
+
+```{r models-summary-3, echo=FALSE}
+####Exact approach.
+d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
+                Combinations = c("tail-tail-tail", "tail-tail-head", "tail-head-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"))
+knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Number of heads", "Combination"), align = c("l", "l"))
+```
+
+4. Calculate the exact probability distribution of the number of heads in a toss of three fair coins (Table \@ref(tab:models-summary-3)).
+
+```{r eval=FALSE, echo=FALSE}
+* For the answer, see Section Exact Approaches to the Sampling Distribution.
+```
+
+5. In which situations can we use exact probabilities as a sampling distribution?
+
+```{r eval=FALSE, echo=FALSE}
+* We must be able to list and count all combinations. This can only be done if
+the number of combinations is limited. So we need discrete or categorical
+variables. Exact approaches to the sampling distribution are only available
+for inference on categorical variables, such as proportions and associations.
+```
+
+```{r models-summary2, echo=FALSE, out.width="420px", fig.cap="How do we approximate a sampling distribution with a theoretical probability distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height="300px")
+```
+
+6. Generate a sampling distribution of average sample candy weight in Figure \@ref(fig:models-summary2). Try to explain in your own words why the sampling distribution of a sample mean has a bell shape. 
+
+```{r eval=FALSE, echo=FALSE}
+* Samples with means close to the true population mean are more likely than
+samples with means far away from the true population mean because observations
+(candy weights) above average tend to be balanced by observations below
+average. This explains the top at the true population mean.
+* It is equally likely to draw a sample with above average mean score as a
+sample with below average mean score, so the sampling distribution is
+symmetric around the true population value.
+```
+
+7. Which part of the graph in Figure \@ref(fig:models-summary2) represents the theoretical probability distribution? 
+
+```{r eval=FALSE, echo=FALSE}
+* The black curve (or the surface below the black curve) represents the
+theoretical probability distribution. It is a normal or (Student) t
+distribution.
+```
+
+8. Can we always use this theoretical probability distribution if we are interested in sample means? See if the general outline of the theoretical probability distribution matches the histogram of average sample candy weight observed in a large number of samples. Pay special attention to the lowest (red) and highest (green) 2.5% of observed sample means.
+
+```{r eval=FALSE, echo=FALSE}
+* The curve fits the histogram of observed sample means quite well.
+Discrepancies are mainly due to the jagged layout of the histogram, which
+result from binning the data (to create bars) and from the fact that the
+number of samples is large but not very large.
+* The borders demarcating the lowest and highest 2.5% of sample means in the
+theoretical probability distribution (the dotted lines) nicely coincide with
+the border between red or green and blue bars in the histogram in most of the
+sampling distributions that we generate with this app.
+* For the sampling distribution of means we know that the normal or (Student)
+t distribution represents the sampling distribution very accurately.
+```
 
 ## Take-Home Points  
 
