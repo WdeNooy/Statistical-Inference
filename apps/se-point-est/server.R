@@ -24,6 +24,11 @@ shinyServer(function(input, output) {
   observeEvent(input$smallsamplebutton,{
     samples$lastsample <<- rnorm(N,mean = mean, sd = sd)
     samples$hist <<- c(samples$hist, mean(samples$lastsample))
+    # Limit size of sample to 3 Mb
+    if(object.size(samples) > 3e+06) {
+      samples$hist <<- numeric()
+      samples$lastsample <<- numeric()
+    }
     })
   
   #Take largesample
@@ -31,6 +36,11 @@ shinyServer(function(input, output) {
     temp <- replicate(n = reps, rnorm(N,mean = mean, sd = sd))
     samples$hist <<- c(samples$hist,apply(temp, MARGIN = 2, mean))
     samples$lastsample <<- temp[ , reps]
+    # Limit size of sample to 3 Mb
+    if(object.size(samples) > 3e+06) {
+      samples$hist <<- numeric()
+      samples$lastsample <<- numeric()
+    }
   })
   
   #Reset

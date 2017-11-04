@@ -35,6 +35,13 @@ shinyServer(function(input, output) {
                                                     )
                meantemp <- mean(samples$lastsamplered) - mean(samples$lastsampleyellow)
                samples$hist <<- c(samples$hist,meantemp)
+               
+               # Limit sample size to 3 Mb
+               if (object.size(samples) > 3e+06) {
+                 samples$lastsamplered <<- as.numeric()
+                 samples$lastsampleyellow <<- as.numeric()
+                 samples$hist <<- as.numeric()
+               }
                }
                )
    #Largesamplebuttonpress
@@ -54,6 +61,13 @@ shinyServer(function(input, output) {
       samples$lastsampleyellow <<- largesampleyellow[,n]
       
       samples$hist <<- c(samples$hist, r-y) 
+      
+      # Limit sample size to 3 Mb.
+      if (object.size(samples) > 3e+06) {
+        samples$lastsamplered <<- as.numeric()
+        samples$lastsampleyellow <<- as.numeric()
+        samples$hist <<- as.numeric()
+      }
       }
    )
    #Resetbuttonpress

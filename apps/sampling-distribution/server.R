@@ -116,6 +116,11 @@ shinyServer(function(input, output) {
         
     })
     
+    # Limit sample size to 3 Mb
+    if(object.size(candy.sample.history.df) > 3e+06) {
+      candy.sample.history.df <<- character()
+    }
+    
   })
   
   #Events triggered by large sample button
@@ -139,6 +144,11 @@ shinyServer(function(input, output) {
                 table(candy.sample.df$candy.sample,
                       exclude = candy$colornames[candy$colornames != "Yellow"])
               ))
+      
+      # Limit sample size to 3 Mb
+      if(object.size(candy.sample.history.df) > 3e+06) {
+        candy.sample.history.df <<- character()
+      }
     }
     
     

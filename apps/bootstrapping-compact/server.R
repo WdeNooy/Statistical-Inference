@@ -66,7 +66,7 @@ shinyServer(function(input, output) {
     samples$hist <- numeric()
     samples$lastsample <- numeric()
   })
-  #Wehn single sample is taken, take sample, append to history
+  #Whhn single sample is taken, take sample, append to history
   observeEvent(input$bootstrapsmallaction,
                                    {
                                      newsample <-
@@ -78,6 +78,14 @@ shinyServer(function(input, output) {
                                        prop.table(table(newsample))["5"]
                                      newprop[is.na(newprop)] <- 0
                                      samples$hist <<- c(samples$hist, newprop)
+                                     
+                                     # Limit size of samples to 3 Mb
+                                     if(object.size(samples) > 3e+06) {
+                                       samples$firstsample <<- sample(1:5, size = 50, replace = TRUE)
+                                       samples$hist <<- numeric()
+                                       samples$lastsample <<- numeric()
+                                     }
+                                     
                                    })
   #When big sample is taken, take sample, append to history, store last sample
   observeEvent(input$bootstraplargeaction,
@@ -95,6 +103,14 @@ shinyServer(function(input, output) {
                                             function(x) prop.table(table(x))["5"])
                                     newprop[is.na(newprop)] <- 0
                                     samples$hist <<- c(samples$hist, newprop)
+                                    
+                                    # Limit size of samples to 3 Mb
+                                    if(object.size(samples) > 3e+06) {
+                                      samples$firstsample <<- sample(1:5, size = 50, replace = TRUE)
+                                      samples$hist <<- numeric()
+                                      samples$lastsample <<- numeric()
+                                    }
+                                    
                                    })
   
   # Render Plot of last sample

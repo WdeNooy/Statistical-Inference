@@ -60,15 +60,15 @@ shinyServer(function(input, output) {
       lastsample = factor()
     )
   
-  #When initial sample is taken, take sample, clear history.
+  # When initial sample is taken, take sample, clear history.
   observeEvent(input$firstsampleaction,{
     samples$firstsample <- sample(1:5, size = 50, replace = TRUE)
     samples$hist <- numeric()
     samples$lastsample <- numeric()
   })
-  #Wehn single sample is taken, take sample, append to history
-  observeEvent(input$bootstrapsmallaction,
-                                   {
+  
+  # When single sample is taken, take sample, append to history.
+  observeEvent(input$bootstrapsmallaction,{
                                      newsample <-
                                        replicate(sample(x = samples$firstsample,
                                               size = N,
@@ -78,8 +78,18 @@ shinyServer(function(input, output) {
                                        prop.table(table(newsample))["5"]
                                      newprop[is.na(newprop)] <- 0
                                      samples$hist <<- c(samples$hist, newprop)
+                                     
+                                     # Limit size of sample to 3 Mb
+                                     if(object.size(samples) > 3e+06) {
+                                       samples$firstsample <<- sample(1:5, size = 50, replace = TRUE)
+                                       samples$hist <<- numeric()
+                                       samples$lastsample <<- numeric()
+                                     }
+                                     
                                    })
-  #When big sample is taken, take sample, append to history, store last sample
+  
+  # When big sample is taken, take sample, append to history, store last sample.
+  
   observeEvent(input$bootstraplargeaction,
                                    {
                                     newsample <-
@@ -95,11 +105,19 @@ shinyServer(function(input, output) {
                                             function(x) prop.table(table(x))["5"])
                                     newprop[is.na(newprop)] <- 0
                                     samples$hist <<- c(samples$hist, newprop)
+                                   # Limit size of sample to 3 Mb
+                                     if(object.size(samples) > 3e+06) {
+                                      samples$firstsample <<- sample(1:5, size = 50, replace = TRUE)
+                                      samples$hist <<- numeric()
+                                      samples$lastsample <<- numeric()
+                                    }
                                    })
   
-  # Render Plot of last sample
+  # Render Plot of last sample.
+  
   output$sampleplot <- renderPlot({
-    #Store sample and make factor
+
+    # Store sample and make factor.
     sample <- samples$firstsample
     sample <- factor(sample,
               levels = c(1:5),
@@ -188,9 +206,12 @@ shinyServer(function(input, output) {
         theme(line = element_blank(),
               legend.position  = "none")
   })
-  # Render plot of distributions
+  
+  # Render plot of distributions.
   output$sampdistplot <- renderPlot({
-      df <- data.frame(prop = samples$hist)
+    # Store hist in data frame.  
+    df <- data.frame(prop = samples$hist)
+    
       ggplot(df, aes(x = prop)) + 
         geom_histogram(color = "Black",
                        fill = "Grey",
