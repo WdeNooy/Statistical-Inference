@@ -3,142 +3,19 @@
 
 ### Summary {-}
 
-If we analyze the effects of two or more predictors on an outcome variable in a regression model, the effect of a predictor is adjusted for the effects of other predictors. Each predictor only predicts the part of the outcome scores that cannot be predicted by the other predictors. If we predict newspaper reading time, for example, from age and interest in politics, age predicts the part of newspaper reading time that interest in politics cannot predict.
+> So we have several predictors in a multiple regression model. What happens if we add predictors to a regression model? And can we estimate causal models in which one variable predicts another variable, which predicts a third variable?
 
-Because of adjustment for other predictors, adding new predictors to a regression model may change the effects of all predictors. The effects can become stronger (the new variable was a suppressor), weaker, and even change direction (the new variable was a reinforcer, the effect was partly spurious). For example, adding respondents' news site use to the regression model predicting newspaper reading time from age may change the effect of age on newspaper reading time. For this reason, we cannot be sure that the regression estimates represent the true effects of the predictors.
+Imagine that we want to understand why some people send more time on reading newspapers than other people. We can think of several causes or predictors, such as a person's age, interest in politics, use of online news sites, and so on. We can use a regression model to see how we can predict newspaper reading time from age, interest in politics, and online news site use.
 
-Indirect correlations play a central role here: The correlation of a predictor (age) with the outcome (newspaper reading time) due to the fact that the predictor (age) is correlated with another predictor (news site use) that is also correlated with the outcome (newspaper reading time). The size of the indirect correlation is simply the product of the correlation between the two predictors (age and news site use) and the standardized regression effect of the other predictor (news site use) on the outcome variable (newspaper reading time).
+If we include two or more predictors in a regression model, the effect of a predictor is adjusted for the effects of other predictors. Each predictor only predicts the part of the outcome scores that cannot be predicted by the other predictors. If we predict newspaper reading time, for example, from age and interest in politics, age predicts the part of newspaper reading time that interest in politics cannot predict.
 
-If we add a causal order among the predictors of our regression model, we obtain a causal model or path model. The causal model includes an indirect effect: The first predictor affects the scores on the second predictor, which affects the outcome scores. For example, age affects news site use, which affects newspaper reading time. In this path model, the second predictor (news site use) mediates the effect of the first predictor on the outcome variable. The second predictor is called a mediator.
+Because of adjustment for other predictors, adding new predictors to a regression model may change the effects of all predictors. The effects can become stronger (the new variable was a suppressor), weaker, and even change direction (the new variable was a reinforcer, the effect was partly spurious). For example, adding respondents' news site use to the regression model predicting newspaper reading time from age may change the effect of age on newspaper reading time. An additional predictor may change the effects of previously included predictors, so how can we be sure that our regression coeficients represent the true effects of the predictors?
 
-We can estimate a path model as a series of regression models. With additional software, we can also estimate the confidence interval of an indirect effect. The causal order underlying the path model, however, is an assumption that we make. A regression model shows the predictive effects, which need not be causal. We cannot prove that the predictive effects are causal. We can only think of arguments that make a causal effect plausible.
+Indirect correlations play a central role here: The correlation of a predictor (age) with the outcome (newspaper reading time) that is due to the fact that the predictor (age) is correlated with another predictor (news site use) that is also correlated with the outcome (newspaper reading time). A variable that is correlated with both a predictor and the outcome is a confounder if it is not included in the regression model. Adding this variable, for example, news site use, as a predictor will change the effect of the original predictor (age) on the outcome (newspaper reading time).
 
-### Test your intuition and understanding {-}
+If we add causal order among the predictors of our regression model, we obtain a causal model or path model. The causal model includes an indirect effect: The first predictor affects the scores on the second predictor, which affects the outcome scores. For example, age affects news site use, which affects newspaper reading time. In this path model, the second predictor (news site use) mediates the effect of the first predictor on the outcome variable. The second predictor is called a mediator.
 
-```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-# Use app mediation-commoncause.
-knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
-```
-
-1. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated?
-```{r eval=FALSE}
-* The curved arrow is the standardized indirect (predictive) effect of age on
-reading time. It represents the predicted change (in standard deviations) of
-reading time that results from a change in political interest that results
-from a change of one standard deviation in age.
-* To obtain the value of the indirect standardized predictive effect, multiply
-the standardized predictive effect of age on political interest by the
-standardized predictive effect of political interest on reading time.
-```
-
-2. How do the numbers tell you that the regression effect of political interest on newspaper reading time is controlled for age? Hint: In a regression model with only one predictor, the standardized regression effect is equal to the correlation between the predictor and outcome variable.
-```{r eval=FALSE}
-* A simple regression model includes only one predictor, so it does not
-control for effects of other predictors.
-* In a simple regression model, the standardized regression coefficient (of
-the only predictor) is equal to the (Pearson) correlation between the
-predictor and outcome.
-* In this example, the standardized regression coefficient of political
-interest on reading time (b*_MO in the plot) is (usually) not equal to the
-correlation (bottom slider). The difference between the two values shows that
-the effect of political interest on reading time is controlling for effects of
-other predictors. Age is the only other predictor in the model.
-```
-
-3. If age is excluded from the model as presented in Figure \@ref(fig:mediation-selftest), would it suppress or reinforce the effect of political interest on newspaper reading time? When would age suppress, reinforce, or not confound the effect of political interest on newspaper reading time? Use the sliders to check your answer.
-```{r eval=FALSE}
-* If age is removed from the model, the standardized effect of political
-interest on newspaper reading time is equal to the correlation between these
-two variables. We would have a simple regression model with one predictor. So
-we can use the correlation between political interest and newspaper reading
-time as the standardized effect in a model without age.
-* If the standardized regression effect of political interest on newspaper
-reading time is higher than the correlation, age suppresses the effect. If we
-exclude age from the model, the regression effect drops, so it is partly
-suppressed.
-* If the standardized regression effect of political interest on newspaper
-reading time is lower than the correlation, age reinforces the effect. If we
-exclude age from the model, the regression effect increases, so it is partly
-reinforced.
-* If age is not a common cause of political interest and newspaper reading
-time, age is neither a suppressor nor a reinfocer, so it does not confound the
-effect of political interest on newspaper reading time.
-* Age is not a common cause if it has no effect on political interest or on
-reading time in this model. In other words, if at least one of the two arrows
-emanating from age is zero (absent).
-* It is easy to set the effect of age on political interest to zero: Just set
-this correlation to zero. Now, there is no indirect effect of the predictor on
-the outcome via the mediator. As a result, no part of the correlation between
-mediator and outcome can be due to the indirect effect of the predictor. The
-mediator is responsible for the full correlation between mediator and outcome,
-so its standardized regression coefficient is equal to its correlation with
-the outcome variable.
-* It is more difficult to find the value of the correlation between age and
-reading time that makes the regression effect zero. This effect is zero if the
-correlation between age and reading time is for 100% an indirect effect via
-political interest. In that case, there cannot be a direct effect (there is
-full mediation).
-* So adjust the correlation between age and political interest and the
-correlation between political interest and reading time such that their
-product (the indirect effect size) equals the correlation between age and
-reading time. Now, the regression effect of age on reading time is zero and
-the regression coefficient for the effect of political interest on reading
-time is equal to the correlation between these two variables.
-```
-
-4. When is the correlation between political interest and reading time completely spurious in this model? Use the sliders to check your answer.
-```{r eval=FALSE}
-* The correlation between political interest and reading time is completely
-spurious in this model if the entire correlation is due to a common cause.
-* The indirect correlation created by a common cause is equal to the product
-of the correlations between, on the one hand, the common cause (here: age)
-and, on the other hand, the other two variables (political interest and
-reading time).
-* The correlation between political interest and reading time, then, is
-completely spurious in this model if this correlation equals the product of
-the correlations with age.
-*Check this by adjusting the three correlations until the correlation between
-political interest and reading time equals the product of the other two
-correlations. Set, for instance, the correlation between political interest and
-reading time to 0.1, the correlation between age and political interest to 0.4
-and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25
-= 0.1.
-* In the plot, the standardized regression coefficient for the effect of
-political interest on reading time (b_MO) should become zero. There is no
-effect if we control for age even though the correlation is 0.1.
-* Note that the standardized regression effect of political interest on
-reading time need not be zero if the correlation between these two variables
-is zero.
-```
-
-5. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not? Use the sliders to check your answer.
-```{r eval=FALSE}
-* Yes, the standardized effect of political interest on reading time can be
-larger than 1.0 or smaller than -1.0.
-* If the correlation between political interest and reading time is positive,
-age suppresses the regression if the indirect correlation between political
-interest via age with reading time is negative. Just increase the positive
-correlations and make the negative correlation stronger to obtain a
-standardized regression coefficient for the effect of political interest on
-reading time well above one.
-* If the correlation between political interest on reading time is negative,
-age suppresses the regression if the indirect correlation between political
-interest via age on reading time is positive. Make both the correlation
-between age and reading time and the correlation between age and political
-interest positive or negative. The standardized regression effect of political
-interest on reading time will become more strongly negative than its
-correlation. Again make the correlations stronger to obtain a standardized
-regression coefficient for the effect of political interest on reading time
-well below minus one.
-```
-
-6. How many path models do we need to estimate the model of Figure \@ref(fig:mediation-selftest)?
-```{r eval=FALSE}
-* We must estimate a regression model for each variable that has at least one
-predictor in the model.
-* So we need two regression models: one with newspaper reading time as outcome
-variable and the other with political interest as outcome variable.
-```
+We can estimate a path model as a series of regression models. With additional software (PROCESS), we can also estimate the confidence interval of an indirect effect. The causal order underlying the path model, however, is an assumption that we make. A regression model shows the predictive effects, which need not be causal. We cannot prove that the predictive effects are causal. We can only think of arguments that make a causal effect plausible.
 
 ## Controlling for Effects of Other Predictors {#controlling}
 
@@ -195,7 +72,7 @@ For example, European citizens who are older spend more time on reading newspape
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/", height="465px")
 ```
 
-1. Select Age and Education in Figure \@ref(fig:mediation-multipleregression). Compare the regression coefficients and their confidence intervals for the multiple regression model including the selected predictors (blue dots and lines) to the results for the simple regression models including only one predictor (gray dots and lines).
+1. Select age and education in Figure \@ref(fig:mediation-multipleregression). Compare the regression coefficients and their confidence intervals for the multiple regression model including the selected predictors (blue dots and lines) to the results for the simple regression models including only one predictor (gray dots and lines).
 
 ```{r eval=FALSE}
 * The effect of age remains more or less the same, around 0.9, if we control
@@ -206,7 +83,7 @@ zero (and positive rather than negative) and the confidence interval includes
 zero.
 ```
 
-2. Try other combinations of Age and a second predictor. When does the regression coefficient of Age change markedly? Can you explain why it changes as it does?
+2. Try other combinations of age and a second predictor. When does the regression coefficient of age change markedly? Can you make sense of the way the effect of age changes?
 
 ```{r eval=FALSE}
 * The regression coefficient of age changes most when we add news site use as a
@@ -219,7 +96,7 @@ instead of their age. That part of the age effect disappears if we add news
 site use as predictor to the model.
 ```
 
-3. Interpret the meaning of the simple regression models and explain why they do not change if predictors are added. In which situation are the light and dark results equal?
+3. Interpret the meaning of the simple regression models and explain why they do not change if predictors are added.
 
 ```{r eval=FALSE}
 * A simple regression model contains only one predictor. The regression
@@ -230,26 +107,26 @@ Older people and people who are more interested in politics are predicted to
 spend more time on reading newspapers. The effects are negative for education
 and news site use: People with more (years of) education or more frequently
 using news sites are predicted to spend less time on reading newspapers.
-* If we select only one confounder, we have a simple regression model, so the
-predictor's blue effect must be equal to its gray effect.
 ```
 
 ### Partial effect  
-Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
+How is the effect of a predictor estimated in a multiple regression model? Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
 
-In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the outcome. It is the contribution to the prediction of the outcome variable over and above the predictions that we can make with all other predictors in the model. This is called a _partial effect_.
+Thus, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the outcome. It is the contribution to the prediction of the outcome variable over and above the predictions that we can make with all other predictors in the model. It is, for example, the variation in newspaper reading time among respondents that we can predict from respondent's age but not from the respondent's education, political interest, or news site use. This is called a _partial effect_.
 
-This is what we mean if we say that we are _controlling for all other predictors_ in our interpretation of a regression model. We are not controlling as in an experiment where we ensure that participants get a particular value on a predictor (treatment) variable. It is controlling in a statistical sense, using the data that we have collected.
+This is what we mean if we say that we are _controlling for all other predictors_ in our interpretation of a multiple regression model. We are not controlling as in an experiment where we ensure that participants get a particular value on a predictor (treatment) variable. It is controlling in a statistical sense, using the data that we have collected.
 
 ### Confounding variables
 
 It is important to note that the effect is only unique in comparison to the other predictors that are included in the model. It may well be that we did not include variables in the model that are actually responsible for part of the effects that are attributed to the predictors in the model. Such left-out variables are called _confounding variables_ or, for short, _confounders_.
 
-If we include a confounder as a new predictor in the model, the partial effects of old predictors change. In Figure \@ref(fig:mediation-multipleregression), for instance, this happens if you add news site use to a model containing age as a predictor for newspaper reading time. The effects of old predictors are adjusted to a new situation, namely a situation with an added new predictor. The new predictor helps to predict variation in the outcome variable, so the variation left to be explained by old predictors changes. In Section \@ref(confounders), we will learn that regression coefficients can go up and down if confounders are included in the model.
+If we include a confounder as a new predictor in the model, the partial effects of old predictors change. In Figure \@ref(fig:mediation-multipleregression), for instance, this happens if you add news site use to a model containing age as a predictor for newspaper reading time. The effects of old predictors are adjusted to a new situation, namely a situation with an added new predictor. The new predictor helps to predict variation in the outcome variable, so the variation left to be explained by old predictors changes. In Section \@ref(confounders), we will learn that regression coefficients can increase and decrease if confounders are included in the model.
 
-With non-experimental data, for example data on newspaper reading habits gathered with a survey, we must include all confounders to ensure that the estimated regression coefficients represent the effects of the predictors and not effects of confounders. In practical applications, we can only include a limited number of variables in our research and we do not always know what are the confounders. We should strive to include the most important confounders in our research project but we should always keep in mind that the predictive effects that we find may be due to variables not included in our regression model.
+With non-experimental data, for example data on newspaper reading habits gathered with a survey, we must include all confounders to ensure that the estimated regression coefficients represent the effects of the predictors and not effects of confounders. In practical applications, we can only include a limited number of variables in our research and we do not always know the confounders. We should strive to include the most important confounders in our research project but we should always keep in mind that the predictive effects that we find may be due to variables not included in our regression model.
 
 ## Indirect Correlation {#indirectcorrelation}
+
+How can variables that are not included in the regression model affect (confound) the regression coefficients that we estimate?
 
 ```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrow).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and outcome variable, hence, the indirect correlation is stronger.
@@ -293,20 +170,26 @@ If the correlation between the two predictors is below one (disregarding the sig
 ### Indirect correlation and size of confounding
 In Figure \@ref(fig:mediation-indirectcorrelation), we start with a simple regression model with political interest as the only predictor of newspaper reading time. Respondent's age, however, is correlated both with political interest ($r = 0.12$) and with newspaper reading time ($r = 0.88$). Age creates a positive indirect correlation between political interest and reading time. 
 
-As long as age is not included in the regression model, the model believes that the indirect correlation via age is part of the effect of political interest. It assigns the indirect correlation via age erroneously to the partial effect of political interest, that is, to the regression coefficient of political interest. In this  situation, the regression coefficient for political interest expresses both the effect of the political interest itself and the effect of age (the confounder).
+As long as age is not included as a predictor in the regression model, the model believes that the indirect correlation via age is part of the effect of political interest. It assigns the indirect correlation via age erroneously to the partial effect of political interest, that is, to the regression coefficient of political interest. In this  situation, the regression coefficient for political interest expresses both the effect of political interest itself and the effect of age (the confounder).
 
 Once we add age as a new predictor to the regression model, the indirect correlation via age is removed from the effect of political interest. The effect of age on newspaper reading time is now correctly assigned to age. As a result, the value of the regression coefficient for political interest changes if we add age as a new predictor.
 
 The size of the change usually is closely related to the size of the indirect correlation, so the larger the indirect correlation, the more the regression coefficient of political interest changes if age (the former confounder) is included as a new predictor. This answers the second part of the question with which we started Section \@ref(indirectcorrelation): When is a variable a stronger confounder?
 
-If you love the details: The size of the change is not exactly the same as the size of the indirect correlation. It is equal to the correlation between the confounder (age) and the predictor (political interest) times the partial effect of the confounder (age) on the outcome variable (newspaper reading time) that controls for the effect of the predictor (political interest). This quantity is subtracted from the effect of the predictor (political interest) if we add age as a new predictor to the regression model. 
+If you love the details: The size of the change is not exactly the same as the size of the indirect correlation. It is equal to the correlation between the confounder (age) and the predictor (political interest) times the partial effect of the confounder (age) on the outcome variable (newspaper reading time) that controls for the effect of the predictor (political interest). This quantity is subtracted from the effect of the predictor (political interest) if we add age as a new predictor to the regression model.
 
 ### Confounders are not included in the regression model
-Finally, it is important to remember again that a confounder, such as age in the present example, is a variable that is not included in our regression model. As long as it is not included, the indirect correlation between predictor (political interest) and outcome (newspaper reading time) via the confounder (age) is not controlled for when the effect of the predictor is estimated. The estimated effect is not correct, it is confounded (confused) with the effect of the confounding variable.
+Finally, it is important to remember that a confounder, such as age in the present example, is a variable that is not included in our regression model. As long as it is not included, the indirect correlation between predictor (political interest) and outcome (newspaper reading time) via the confounder (age) is not controlled for when the effect of the predictor is estimated. The estimated effect is not correct, it is confounded (confused) with the effect of the confounding variable.
 
 Once the confounder (age) is added to the regression model, however, the estimated effects are controlling for the variable formerly known as a confounder. The effects no longer partly represent the effect of the former confounder. In other words, they are no longer confounded by the effect of that variable. The former confounding variable now is a predictor or, if we are not interested in its effects, a control variable in the regression model.
 
+Take care. If we say that a variable is a confounder in or for a regression model, this variable is _not_ included as a predictor in the regression model.
+
 ## Two Types of Confounders {#confounders}
+
+In the preceding section, we learned that a partial effect expressed by a regression coefficient may change if a new predictor is added to the regression model. The partial effect of a predictor changes if the added variable is a confounder: It is correlated both with the predictor and outcome variable. In other words, there is an indirect correlation between the predictor and outcome via the confounding variable.
+
+The partial effect of a predictor can become stronger, weaker, or even change direction if we add a confounder to the regression model. The current section describes the two types of confounders that are responsible for these changes: suppressors and reinforcers.
 
 ```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Intuitive understanding of how the pattern of correlation/effect
@@ -320,7 +203,7 @@ Once the confounder (age) is added to the regression model, however, the estimat
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-confoundertypes/", height="390px")
 ```
 
-1. When is a partial regression effect weaker than the simple regression effect and when is it stronger? Formulate a general rule and check it in Figure \@ref(fig:mediation-confoundertypes).
+1. When is a partial regression effect weaker than the simple regression effect and when is it stronger? Experiment with Figure \@ref(fig:mediation-confoundertypes) and try to formulate a general rule.
 
 ```{r eval=FALSE}
 * If the indirect correlation has the opposite sign of the direct effect of
@@ -345,10 +228,6 @@ Then, political interest is not the only predictor in the regression model.
 by Interest in sports would be negative. It would be the opposite of the sign
 of the direct effect, so the partial effect would be stronger.
 ```
-
-In the preceding section, we learned that a partial effect expressed by a regression coefficient may change if a new predictor is added to the regression model. The partial effect of a predictor changes if the added variable is a confounder: It is correlated both with the predictor and outcome variable. In other words, there is an indirect correlation between the predictor and outcome via the confounding variable.
-
-The partial effect of a predictor can become stronger, weaker, or even change direction if we add a confounder to the regression model. The current section describes the two types of confounders that are responsible for these changes: suppressors and reinforcers.
 
 ### Suppression {#suppression}
 A predictor's effect becomes stronger if we include a confounding variable that is responsible for an indirect correlation that points in the opposite direction of the effect of the predictor. Here, the indirect correlation contradicts the effect of the predictor and as a result, the effect of the predictor is underestimated (suppressed) if the confounder is not included in the model. 
@@ -380,7 +259,7 @@ rm(variables)
 
 Let us assume that political interest has a positive effect on reading newspapers. People who are more interested in politics tend to spend more time on reading newspapers than people who are less interested in politics. The use of news media confounds this effect if it is correlated with both political interest and newspaper reading time. What happens if people interested in politics use news sites more often (positive correlation) but using news sites decreases newspaper reading time (negative correlation)?
 
-In this situation, the indirect correlation between political interest and newspaper reading time via news site use is negative: Positive times negative yields a negative. The indirect correlation tells us that people interested in politics use news sites more frequently and for that reason read less newspapers. The indirect correlation clearly contradicts the regression effect of political interest on newspaper reading time, which is positive: People who are more interested in politics spend more time on reading newspapers.
+In this situation, the indirect correlation between political interest and newspaper reading time via news site use is negative: Positive times negative yields a negative. The indirect correlation tells us that people interested in politics use news sites more frequently and for that reason spend less time on newspaper reading. The indirect correlation clearly contradicts the regression effect of political interest on newspaper reading time, which is positive: People who are more interested in politics spend more time on reading newspapers.
 
 If news site use---the confounder---is not included in the regression model, the standardized regression effect of political interest more or less adds the indirect correlation to the effect of political interest. Adding a negative amount (indirect correlation), however, is equal to subtracting this amount from the standardized regression coefficient. The positive effect of political interest on reading time is underestimated. In this example, the effect of political interest is _suppressed_ (_masked_) by the confounder news site use. News site use is a _suppressor variable_. 
 
@@ -407,10 +286,10 @@ Now, let us have a look at the situation in which the indirect correlation is po
 
 Suppression can have surprising effects. If the predictor's original effect was close to zero, adding a suppressor variable to the model will strengthen the effect. An effect that we initially believed to be absent may turn out to be substantial and statistically significant. If our regression model tells us that our predictor does not have an effect, we cannot rule out that it does have an effect that is suppressed by a suppressor variable.
 
-Finally, indirect correlations via other predictors can add so much to the original partial effect of a predictor that the standardized regression coefficient becomes larger than 1 or smaller than -1. This clearly illustrates that standardized regression coefficients are not correlations in multiple regression models because correlations can never be higher than 1 or lower than -1. In contrast, the standardized regression coefficient in a simple regression model is equal to the correlation between predictor and outcome. Isn't that confusing?
+Finally, indirect correlations via other predictors can add so much to the original partial effect of a predictor that the standardized regression coefficient becomes larger than 1 or smaller than -1. This clearly illustrates that standardized regression coefficients are not correlations in multiple regression models because correlations can never be higher than 1 or lower than -1. In contrast, the standardized regression coefficient in a simple regression model is equal to the correlation between predictor and outcome, so it can not be larger than 1 or smaller than -1.
 
 ### Reinforcement and spuriousness {#spuriousness}
-Adding a new predictor to a regression model may weaken the effects of other predictors. This happens if the indirect correlation due to a confounder has the same direction (sign) as the regression effect of the predictor. Either both the indirect correlation and regression effect are both positive or they are both negative.
+Adding a new predictor to a regression model may weaken the effects of other predictors. This happens if the indirect correlation due to a confounder has the same direction (sign) as the regression effect of the predictor. Either the indirect correlation and regression effect are both positive or they are both negative.
 
 In both situations, regression effects are initially overestimated because the predictors cover part of the effect of an important variable that had not yet been added to the regression model. The part of the effect that is due to the confounding variable is called _spurious_. The confounding variable is called a _reinforcer_ because it makes an effect appear stronger than it really is as long as the confounder has not been added to the regression model.
 
@@ -454,9 +333,9 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-As with suppression, spuriousness can have surprising results. It may happen that the entire estimated effect of a predictor is spurious. Adding a reinforcer variable to the regression model may make the entire effect of a predictor disappear. In other words, an effect that we initially thought was substantial may turn out to be too weak to be of interest.
+As with suppression, reinforcement can have surprising results. A reinforced effect is overestimated, so adding a reinforcer (political cynicism) as a predictor to the regression model moves the original predictor's effect (political interest) towards zero. It may happen that the entire estimated effect of the original predictor is spurious, so the entire effect of the predictor disappears. In other words, an effect that we initially thought was substantial may turn out to be too weak to be of interest.
 
-Actually, the indirect correlation between a predictor and outcome via a confounding variable can be so strong that a positive effect in a model without the confounder changes into a negative effect in a model that includes the variable. The opposite may happen as well: A formerly negative effect may become positive if a strong positive reinforcer variable is added to the model. 
+In addition, reinforcement can be so strong that the effect of a predictor moves past zero if the reinforcer is added to the model. A positive effect in a model without the confounder changes into a negative effect in a model that includes the variable. The opposite may happen as well: A formerly negative effect may become positive if a strong positive reinforcer variable is added to the model. So, if we find a positive effect of political interest on newspaper reading time in our regression model, the true effect can still be negative if we forget to include a strong reinforcer as predictor in the model.
 
 The bottom line is simple: We can only trust the results if all important confounders are included in the model.
 
@@ -569,7 +448,7 @@ without age. They seemed to be effects of education, political interest, and
 news site use but they are actually effects of age.
   
 * The signs of the correlations between predictor, confounder, and outcome
-variable tells us if a confounder is a suppressor or reinforcer.
+variable tell us if a confounder is a suppressor or reinforcer.
 * If the sign (direction) of the indirect correlation between predictor and
 oucome via the confounder (age) is equal to the sign of the correlation
 between predictor and outcome, the confounder is a reinforcer. In this case,
@@ -584,7 +463,7 @@ the correlation between predictor and outcome. This situation does not occur
 for age as the confounder in the models estimated in Exercise 1.
 ```
 
-3. Predict average newspaper reading time from education, political cynicism, news site use, and age. Add the predictors one by one to the regression model in the order specified in the preceding sentence. Does suppression occur here? If so, for which predictor and confounder and in which model(s)?
+3. Predict newspaper reading time from education, political cynicism, news site use, and age. Add the predictors one by one to the regression model in the order specified in the preceding sentence. Does suppression occur here? If so, for which predictor and confounder and in which model(s)?
 
 ```{r eval=FALSE}
 SPSS syntax:  
@@ -625,6 +504,8 @@ political cynicism suppressed part of the effect of education.
 
 ## Mediation as Causal Process
 
+Until now, we did not care about the causal order among predictors in a multiple regression model. We merely attempted to estimate the (partial) effects of age, political interest, and so on, on newspaper reading time. We may theorize, however, that age is a cause of political interest, and political interest causes newspaper reading time. What changes if we introduce the notion of causality?
+
 ```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize students to the concept of a common cause creating a spurious effect and mediation as indirect effect.
 # Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arrow representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arrows to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
@@ -661,12 +542,12 @@ the effects of age on political interest and political interest on reading
 time.
 ```
 
-2. In a mediation model such as Figure \@ref(fig:mediation-commoncause), which standardized effects are always equal to the correlation between the corresponding variables? Explain why this is so.
+2. In a mediation model such as Figure \@ref(fig:mediation-commoncause), which standardized effects are always equal to the correlation between the corresponding variables? Experiment with the correlations in the figure and try to formulate why this is so.
 ```{r eval=FALSE}
 * A correlation in a mediation model can differ from the standardized
 regression coefficient in a mediation model in two ways:
   
-1. Part of the correlation is spurious (suppressed or reinforced) because the
+1. Part of the correlation is suppressed or reinforced because the
 two variables involved in the correlation have a common cause in the model.
 
 2. Part of the correlation is actually an indirect effect, so it is subtracted
@@ -679,8 +560,8 @@ variables (political interest and reading time in the example) need not equal
 the standardized regression effect.
 * Ad 2: Our mediation model can only contain an indirect effect of the
 predictor (age) on the outcome (reading time), namely, via the mediator
-(political interest). As a result, the regression coefficient of the effect of
-age on reading time need not equal their correlation coefficient.
+(political interest). As a result, the regression coefficient of the direct
+effect of age on reading time need not equal the correlation coefficient.
 * The predictor-mediator pair (age and political interest) does not have a
 common cause in this model nor can there be an indirect effect, so the
 standardized regression coefficient for the effect of age on political
@@ -698,13 +579,12 @@ the correlation.
 
 3. Adjust the correlations in such a way that the effect of age on reading time is fully mediated by political interest. How can we see that the effect is fully mediated? 
 ```{r eval=FALSE}
-* An effect of a predictor on an outcome is fully mediated if the indirect
-effect via the mediator is equal to the overall correlation between the
-predictor and the outcome. In other words, the correlation only represents the
-indirect effect, so there cannot be a direct effect.
+* An effect of a predictor on an outcome is fully mediated if the direct
+effect is zero.
+* The direct effect is zero if the entire correlation between age and reading time is represented by the indirect effect. 
 * Of course, it makes no sense to say that an effect is fully mediated if
-there is no indirect effect (and no direct effect). So we must start with a
-non-zero correlation between predictor and outcome.
+there is no effect. So we must start with a non-zero correlation between
+predictor (age) and outcome (reading time).
 * As a next step, we must select values for the correlation between predictor
 (age) and mediator (political interest) and for the correlation between
 mediator and outcome (reading time) such that their product (the indirect
@@ -723,9 +603,9 @@ The second criterion is the time order between cause and consequence. A conseque
 
 A third criterion for causality is that the correlation is not spurious. In Section \@ref(spuriousness), we have encountered a spurious effect as an effect that incorrectly includes the effect of a confounder (reinforcer).
 
-In the context of causality, spuriousness is linked to a confounder that is a _common cause_ to both the assumed cause (predictor) and consequence (outcome). Age, for instance, can be a common cause both to having (grand)children and reading newspapers. Older people tend to have more (grand)children and they read more newspapers. If we do not control for age when we regress newspaper reading time on the number of (grand)children a person has, we may find a positive effect.
+In the context of causality, spuriousness is linked to a confounder that is a _common cause_ to both the assumed cause (predictor) and consequence (outcome). Age, for instance, can be a common cause both to having (grand)children and reading newspapers. Older people tend to have more grandchildren and they read more newspapers. If we do not control for age when we regress newspaper reading time on the number of grandchildren a person has, we may find a positive effect.
 
-This effect is probably not causal: We do not spend more time reading newspapers because we have more (grand)children. Unless we use newspaper reading to ignore our children and grandchildren when they are around. Most if not all of the effect of (grand)children on newspaper reading is spurious because it results from a common cause, namely age or the habits and opportunities represented by age.
+This effect is probably not causal: We do not spend more time reading newspapers because we have more grandchildren. Unless we use newspaper reading to ignore our grandchildren when they are around. Most if not all of the effect of grandchildren on newspaper reading is spurious because it results from a common cause, namely age or the habits and opportunities represented by age.
 
 To interpret the effect that we find as causal, then, we must ensure that there are no confounding variables that are common causes to both our predictors and outcome. Including them as controls in the regression model is a way to solve the problem. Unfortunately, we can never be sure that we have included all common causes in our model.
 
@@ -733,7 +613,7 @@ To interpret the effect that we find as causal, then, we must ensure that there 
 
 A common cause need not remove the entire effect between a predictor and outcome. Even if part of newspaper reading is caused by age, another part can be caused by a variable related to age, for example, interest in politics. During their lifetime, people may gain more experience with politics and, for that reason, become more interested in reading about politics. This may cause them to invest more time in reading newspapers for collecting information.
 
-Not all people become more interested in politics as they grow older and their interest in politics need not increase regularly during all of their lifetime. The relation between age and interest in politics, therefore, will not be perfect. This allows us to technically distinguish between the effect of age and the effect of interest in politics.
+Not all people become more interested in politics as they grow older. The relation between age and interest in politics, therefore, will not be perfect. This allows us to technically distinguish between the effect of age and the effect of interest in politics.
 
 If we include both age and interest in politics as predictors in a regression model for newspaper reading time, the partial effect of interest in politics is corrected for the spurious correlation between interest in politics and newspaper reading caused by age as their common cause. The partial effect of political interest can be interpreted as causal if current interest in politics was attained before the newspaper readings that we measure (very plausible) and age is the only common cause of interest in politics and newspaper reading (highly questionable).
 
@@ -754,7 +634,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-Now let us draw the _causal diagram_ for this simple example (Figure \@ref(fig:causaldiagram)). A causal diagram contains the names of the variables with arrows pointing from causes to consequences. The causal order of variables is represented from left to right. In Figure \@ref(fig:causaldiagram), the very first cause (age) is at the left, the final consequence (newspaper reading time) is at the right, and interest in politics is placed in the middle. In this layout, the arrows always point to the right.
+Now let us draw the _causal diagram_ for this simple example (Figure \@ref(fig:causaldiagram)). A causal diagram contains the names of the variables with arrows pointing from causes to consequences. The causal order of variables is represented from left to right. In Figure \@ref(fig:causaldiagram), the very first cause (age) is at the left, the final consequence (newspaper reading time) is at the right, and interest in politics is placed in the middle. In this type of layout, the arrows always point to the right.
 
 In the causal order that we theorize, age is causally prior or _antecedent_ to interest in politics, which is antecedent to current newspaper reading time. We have an _indirect effect_ of age on newspaper reading by way of interest in politics. When adults grow older, they tend to be more interested in politics and because of this, they tend to spend more time on reading newspapers. We say that interest in politics _mediates_ the effect of age on newspaper reading time. Interest in politics is a _mediator_, an _intermediary variable_, or an _intervening variable_ in this causal diagram.
 
@@ -778,19 +658,21 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-An indirect effect may contain more than one step or mediator. If we include news site use in the model (Figure \@ref(fig:causaldiagram2)), we would have an indirect effect from age to interest in politics to news site use and finally to newspaper reading time.
+An indirect effect may contain more than one mediator. If we include news site use in the model (Figure \@ref(fig:causaldiagram2)), we would have an indirect effect from age to interest in politics to news site use and finally to newspaper reading time.
 
 ### Causal process
 
-In our example (Figure \@ref(fig:causaldiagram2)), age has a direct effect on newspaper reading time. What does the direct effect mean? If we start thinking about why older people spend more time on reading newspapers, we soon realize that this is probably not some biological process. It is hard to believe that an ageing human body viewed apart requires more newspaper reading time. The effect is more likely to be social.
+In our example (Figure \@ref(fig:causaldiagram2)), age has a direct effect on newspaper reading time. What does the direct effect mean? If we start thinking about why older people spend more time on reading newspapers, we soon realize that this is probably not some biological process. It is hard to believe that an ageing human body by itself requires more newspaper reading time. The effect is more likely to be social.
 
 In the middle of the 20th century, newspapers were among the most important sources of information. A person who was born and grew up in that period is accustomed to using newspapers as main information source. For later generations, however, news sites on the internet have become important sources of information. Newspapers being less important to them, they are less oriented and accustomed to reading newspapers.
 
-This line of reasoning shows us two things. First, we discover that our common cause may actually represent different things. Age, for instance, refers to life experience in its effect on interest in politics. In contrast, it relates to the period of coming of age in its direct effect on newspaper reading time.
+This line of reasoning shows us two things. First, we discover that our common cause may actually represent different things. Age, for instance, refers to life experience in its effect on interest in politics. In contrast, it relates to the period of coming of age in its direct effect on newspaper reading time. A causal model may combine different causal processes.
 
 Our second discovery is that we usually look for mediators if we want to understand a direct effect. Date of birth affects exposure to people using newspapers as information sources, which affects the habit of reading newspapers, which finally affects the time spend on reading newspapers later on. Exposure and habit are mediators here. A direct effect of age on newspaper reading merely replaces a causal process that may contain many intermediary steps. Adding mediators to our model is a way of getting more insight in the causal process.
 
 ## Path Model with Regression Analysis
+
+Regression analysis offers a means to estimate path models.
 
 ```{r mediation-regression, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/mediation-regression.png"}
 # Goal: Exemplify the different regression models required to estimate the direct effects in a path model.
@@ -862,9 +744,8 @@ visNetwork(nodes, edges, width = "100%") %>%
 * There are four variables with incoming arrows in this model. Each of them can
 be an outcome variable in a regression model, so we can estimate four
 regression models.
-* The unstandardized and standardized regression coefficients tell us the
-(unstandardized or standardized) sizes of the direct effects in the path
-model.
+* The regression coefficients tell us the (in this example, unstandardized)
+sizes of the direct effects in the path model.
 * For example, news site use has an unstandardized effect of -1.55 on
 newspaper reading time in the diagram. A difference of one unit of news site
 use predicts a decrease in newspaper reading time of 1.55 units. We are 95
@@ -892,7 +773,7 @@ directly from the regression results.
 * Indirect effect sizes are easily calculated. Just multiply the regression
 coefficients of all effects that make up the indirect effect.
 * Confidence intervals and p values of indirect effects cannot be easily
-calculated from the regression results. We use bootstrapping to this end.
+calculated from the regression results. We use bootstrapping for this.
 ```
 
 Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is an outcome variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the outcome variable. In other words, all variables that are causally antecedent to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are antecedent to it.
@@ -912,7 +793,7 @@ We can estimate mediation and path models with regression analysis if we meet th
 
 2. Each variable used as a predictor must be a numeric or dichotomous (dummy) variable. Again, this is a general requirement of regression models.
 
-3. There are no causal feedback loops. Causality must work in one direction. It must be impossible to travel from a variable back to it while following the direction of the arrows. Note that it can be difficult to assign a causal order. For example, does political interest cause (low) political cynicism or the other way around? Or are they not causally related?
+3. There are no causal feedback loops. Causality must work in one direction. It must be impossible to travel from a variable back to it while following the direction of the arrows. Note that it can be difficult to assign a causal order. For example, does political interest cause political cynicism or the other way around? Or are they not causally related?
 
 4. All regression models meet the assumptions for regression analysis. Check if the residuals are normally distributed, centered around zero for all levels of the predicted outcome, and that all outcome levels are predicted equally well (see Section \@ref(regr-inference)).
 
@@ -937,17 +818,17 @@ In its turn, interest in politics has an unstandardized effect of `r round(model
 
 Ten additional years of life only predict an increase of `r round(model_2$coefficients[2], digits=2)` in political interest, not a full unit increase. The predicted increase of `r round(model_2$coefficients[2], digits=2)` in political interest predicts `r round(model_2$coefficients[2], digits=2)` * `r round(model_4$coefficients[4], digits=2)` = `r round(model_2$coefficients[2] * model_4$coefficients[4], digits=2)` minutes of additional newspaper reading time.  As a result, the additional ten years of life predict `r round(model_2$coefficients[2], digits=2)` * `r round(model_4$coefficients[4], digits=2)` = `r round(model_2$coefficients[2] * model_4$coefficients[4], digits=2)` minutes of additional newspaper reading time. 
 
-Note that the indirect effect is interpreted in terms of the measurement units of the initial predictor (age in tens of years) and the final outcome (reading time in minutes): A difference in (tens of) years predicts a difference in reading time in minutes. As a consequence, we can directly compare unstandardized indirect effect sizes of different paths between the same predictor and outcome, as we will see in Section \@ref(partialserialmediation).
+Note that the indirect effect is interpreted in terms of the measurement units of the initial predictor (age in tens of years) and the final outcome (reading time in minutes): A difference in (tens of) years predicts a difference in reading time in minutes. As a consequence, we can directly compare indirect effect sizes of different paths between the same predictor and outcome, as we will see in Section \@ref(partialserialmediation).
 
 ### Direction of indirect effects
 
-Multiplication of direct effects assigns the right direction (positive or negative) to indirect effects. In the example above, age has a positive effect on interest in politics, which has a positive effect on newspaper reading time. If age goes up, interest in politics goes up and if interest in politics goes up, reading time increases. Thus, higher age is indirectly associated with more reading time through interest in politics: Plus times plus yields a plus.
+Multiplication of direct effects assigns the correct direction (positive or negative) to indirect effects. In the example above, age has a positive effect on interest in politics, which has a positive effect on newspaper reading time. If age goes up, interest in politics goes up and if interest in politics goes up, reading time increases. Thus, higher age is indirectly associated with more reading time through interest in politics: Plus times plus yields a plus.
 
 If people with more interest in politics use news sites more frequently, there is a positive regression effect. If more news site use is associated with less newspaper reading (a negative effect), the indirect effect of interest in politics on reading time via news site use is negative. People with more interest in politics spend less time on reading newspapers because they use news sites more: Positive times negative yields a negative.
 
 ### Parallel and serial mediation {#partialserialmediation}
 
-If the indirect effects of an antecedent variable on an outcome variable contain at most one mediator, we have _single mediation_ or _parallel mediation_. Figure \@ref(fig:mediationparallel) illustrates single and parallel mediation.
+If all indirect effects of a predictor on an outcome contain at most one mediator, we have _single mediation_ or _parallel mediation_. Figure \@ref(fig:mediationparallel) illustrates single and parallel mediation.
 
 ```{r mediationparallel, echo=FALSE, fig.cap="Causal diagrams for single (left) and parallel mediation (right).", fig.asp=0.6, fig.show="hold", out.width="50%"}
 library(ggplot2)
@@ -981,7 +862,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-If any of the indirect effects between an antecedent and outcome variable contains two or more mediators, we are dealing with serial mediation. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
+If any of the indirect effects between an antecedent and outcome variable contains two or more mediators, we are dealing with _serial mediation_. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
 
 
 ```{r mediationserial, echo=FALSE, fig.cap="Causal diagram for serial mediation.", fig.asp=0.3}
@@ -1031,11 +912,11 @@ knitr::kable(results, caption = "All unstandardized direct and indirect effects 
 
 Table \@ref(tab:age-indirect) lists all direct and indirect effects of age on newspaper reading time in Figure \@ref(fig:pathdiagram-unstandardized). We can trace eight different paths from age to newspaper reading time. For each path, we multiply the unstandardized effect sizes. 
 
-The unstandardized indirect effects between the same predictor and outcome can be compared directly because they are all expressed in the same measurement units, namely the predicted change in the outcome (reading time in minutes) for a difference of one unit in the predictor (ten additional years of life) (Section \@ref(size-indirect-effects)). The unstandardized direct effect is also expressed as predicted change in reading time (minutes) for a difference in age (tens of years), so it can be compared to the indirect effect. In addition, we can sum the unstandardized direct and indirect effects to obtain the total unstandardized effect.
+The unstandardized indirect effects between the same predictor and outcome can be compared directly because they are all expressed in the same measurement units, namely the predicted change in the outcome (reading time in minutes) for a difference of one unit in the predictor (ten additional years of life) (Section \@ref(size-indirect-effects)). The unstandardized direct effect is also expressed as predicted change in reading time (minutes) for a difference in age (tens of years), so it can be compared to the indirect effect. In addition, we can sum the unstandardized direct and indirect effects to obtain the unstandardized _total effect_.
 
 With this in mind, we see that the relation between age and newspaper reading time is dominated by the positive direct effect (_b_ = `r round(model_4$coefficients[2], digits=2)`) and the positive indirect effect via news site use (_b_ = `r round(model_3$coefficients[2]*model_4$coefficients[5], digits=2)`). The remaining indirect effects are relatively small as indirect effects usually are. 
 
-Summing all effects, we obtain a _total effect_ of age on newspaper reading time around `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=0)` (_b_ = `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=2)`). A person who is ten years older but in other respects the same as another person, is predicted to spend on average `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=0)` additional minutes on reading newspapers per day. 
+Summing all effects, we obtain a total effect of age on newspaper reading time around `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=0)` (_b_ = `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=2)`). A person who is ten years older but in other respects the same as another person, is predicted to spend on average `r round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=0)` additional minutes on reading newspapers per day. 
 
 If the direct effect of a predictor on the outcome is zero in a model with mediators, the predictor's effect is _fully mediated_. This clearly is not the case in our example: There still is a substantial direct effect of age on newspaper reading time. This is what we usually encounter; it is called _partial mediation_.
 
@@ -1091,7 +972,7 @@ SPSS does not calculate the size of indirect effects for us or their confidence 
 
 For statistical inference on the indirect effect, we need the sampling distribution of the size of the indirect effect. This sampling distribution is not the same as the product or some other combination of the sampling distributions of the direct effects that make up the indirect effect. The situation is similar to the sampling distribution of the difference of two sample means (independent-samples t test), which is not equal to the difference between the sampling distribution of one mean and the sampling distribution of the other mean (Section \@ref(complicatedsampling)). 
 
-We use bootstrapping (Section \ref(boot-approx)) to create the sampling distribution of indirect effect size. We have learned the principles and limitations of bootstrapping in Section \@ref(boot-approx), so we need not go into details here. Suffice it to repeat that our original sample must not be too small and it must be quite representative of the population if we apply bootstrapping.
+We use bootstrapping (Section \@ref(boot-approx)) to create the sampling distribution of indirect effect size. We have learned the principles and limitations of bootstrapping in Section \@ref(boot-approx), so we need not go into details here. Suffice it to repeat that our original sample must not be too small and it must be quite representative of the population if we apply bootstrapping.
 
 ```{r indirect-sim, echo=FALSE}
 # Example of bootstrapped CI and p value for the indirect effects of age via political interest and/or news site use on reading time, similar to output from PROCESS (Model 6 with 2 mediators).
@@ -1202,7 +1083,7 @@ rm(results)
 
 A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arrows. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous or a set of dummy variables (see Section \@ref(dichpredictor)).
 
-```{r results-pathdiagram, echo=FALSE, fig.cap="Unstandardized direct effects for a path model with one mediator and two covariates.", screenshot.alt = "figures/results-pathdiagram.png"}
+```{r results-pathdiagram, echo=FALSE, fig.cap="Unstandardized direct effects and indirect effect for a path model with one mediator and two covariates.", screenshot.alt = "figures/results-pathdiagram.png"}
 # Load data.
 readers <- haven::read_spss("data/readers.sav")
 # Create effect sizes.
@@ -1381,7 +1262,7 @@ down-sloping strips. This is the consequence of the fact that the outcome
 places. So this pattern is nothing to worry about.
 * Check that the residuals are evenly distributed above and below zero for all
 predicted outcome levels and that the variation is more or less equal for all
-predicted utcome levels. Because the residuals are organized in strips, the
+predicted outcome levels. Because the residuals are organized in strips, the
 variation cannot be as large at the extreme right or extreme left as in the
 middle. But we may assume that this results from the discrete (integer)
 outcome variable instead of from a problem with homoscedasticity.
@@ -1434,9 +1315,10 @@ not exactly the same as the ones reported here.
   
 * An age difference of ten years (remember that age was measured in decades)
 increases the predicted average newspaper reading time through news site use
-with slightly more than one minute. With 95% confidence, the increase is 0.3
-and 1.9 additional minutes.
-* The indirect effect is weak to moderate, b* = .16, 95%CI[.05; .28].  
+with slightly more than one minute. With 95% confidence, the increase is
+between 0.3 and 1.9 additional minutes.
+* According to the confidence interval of the standardized coefficient, the
+indirect effect is weak to moderate, b* = .16, 95%CI[.05; .28].
 ```
 
 3. Add interest in politics as a covariate to the model of Exercise 2. Are you going to use it as a covariate for the mediator (news site use), the outcome (newspaper reading time), or both? Motivate your choice. Present the unstandardized effects as a path diagram and add the indirect effect to it.
@@ -1475,17 +1357,49 @@ of antecedent, political interest should be included as a (second) mediator
 between news site use and reading time. In this case, you should estimate a
 model for serial mediation, see Exercise 4.
   
-The relevant results in the PROCESS output:  
+The relevant results in the PROCESS output:
   
-Indirect effect of X on Y   
+Direct effects
+
+Outcome: newssite 
  
-          |  Effect  |  Boot SE  |  BootLLCI  |  BootULCI  
-newssite  |  1.441   |  .416     |  .589      |  2.225  
-
-Completely standardized indirect effect of X on Y   
-
-          |  Effect  |  Boot SE  |  BootLLCI  |  BootULCI  
-newssite  |  .212    |  .061     |  .087      |  .325  
+Model Summary 
+         R      R-sq       MSE         F       df1       df2         p 
+      .925      .855      .542   909.759     2.000   309.000      .000 
+ 
+Model 
+             coeff        se         t         p      LLCI      ULCI 
+constant     7.357      .167    44.122      .000     7.029     7.685 
+age          -.938      .022   -42.654      .000     -.981     -.895 
+polinter      .135      .026     5.263      .000      .084      .185 
+ 
+Outcome: readingt 
+ 
+Model Summary 
+         R      R-sq       MSE         F       df1       df2         p 
+      .889      .791    35.746   388.937     3.000   308.000      .000 
+ 
+Model 
+             coeff        se         t         p      LLCI      ULCI 
+constant    14.182     3.660     3.875      .000     6.980    21.384 
+newssite    -1.537      .462    -3.326      .001    -2.446     -.628 
+age          4.552      .469     9.710      .000     3.629     5.474 
+polinter      .531      .217     2.450      .015      .105      .958 
+  
+ 
+******************** DIRECT AND INDIRECT EFFECTS ************************* 
+ 
+Direct effect of X on Y 
+    Effect        SE         t         p      LLCI      ULCI 
+     4.552      .469     9.710      .000     3.629     5.474 
+ 
+Indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+newssite     1.441      .420      .605     2.254 
+ 
+Completely standardized indirect effect of X on Y 
+            Effect   Boot SE  BootLLCI  BootULCI 
+newssite      .212      .061      .087      .331 
 
 * The interpretation is very much like the interpretation in Exercise 2. Note
 that the indirect effect has become a little stronger now that we control for
@@ -1501,7 +1415,6 @@ SPSS syntax:
 unintelligble code.
   
 In addition to the PROCESS menu selections specified in Exercise 2, you should:  
-    
 * Add political interest to the list of M Variable(s) ensuring that it is the first in
 this list.
 * Change Model Number to 6 (Model with two mediators in line).  
@@ -1565,7 +1478,6 @@ FREQUENCIES VARIABLES=age supervision medliter
 MISSING VALUES supervision(25.00).    
 EXECUTE.    
 * Indirect effect test with PROCESS: Model 4.    
-* Do not paste PROCESS output.    
 * Regression models for checking assumptions.    
 * Outcome: media literacy.    
 REGRESSION    
@@ -1671,7 +1583,7 @@ A direct effect of age on newspaper reading time refers to changes in reading ti
 
 In an experiment, we would have to manipulate the value of the mediator to ensure that it does not change. If we succeed in doing this, which is difficult to imagine, the effect of the predictor on the outcome is really a direct effect, at least within the model. For example, interest in politics is manipulated to be the same for some participants. Then, a change in newspaper reading time due to age change would indeed represent the direct effect for these participants. 
 
-Controlling the effect of a predictor on an outcome for the mediator in a regression model, however, is not the same as experimental control as described above. In a regression model, the mediator values vary among persons. The statistical trick is that we only compare people who have the same mediator score when we calculate the direct effect. But even for these people, the effect of the predictor on the mediator may have done it's work: Their actual interest in politics is affected by their age. As a result, the effect of age on newspaper reading time includes an effect of age on interest in politics, so the mediator (interest in politics) is not completely excluded from the direct effect.
+Controlling the effect of a predictor on an outcome for the mediator in a regression model is not the same as experimental control as described above. In a regression model, the mediator values vary among persons. The statistical trick is that we only compare people who have the same mediator score when our statistical software calculate the direct effect. But even for these people, the effect of the predictor on the mediator may have done it's work: Their actual interest in politics is affected by their age. As a result, the effect of age on newspaper reading time includes an effect of age on interest in politics, so the mediator (interest in politics) is not completely excluded from the direct effect.
 
 ### Recommendations
 All in all, mediation is an intuitively simple and appealing concept. Unfortunately, it is very difficult to substantiate the claim that indirect effects in path models represent mediation. Mediation assumes causal effects and causality is difficult to establish. 
@@ -1692,15 +1604,164 @@ If the indirect effect is different for females and males, at least one of the t
 
 Several models with more than one mediator or with moderated mediation can be estimated with PROCESS. For an overview of the models, see http://www.afhayes.com/public/templates.pdf or Appendix A in Hayes [-@RefWorks:3873]. The models, however, are quite complex, so we leave them for enthusiasts.
 
+## Test your intuition and understanding
+
+```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Use app mediation-commoncause.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
+```
+
+1. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated?
+```{r eval=FALSE, echo=FALSE}
+* The curved arrow is the standardized indirect (predictive) effect of age on
+reading time. It represents the predicted change (in standard deviations) of
+reading time that results from a change in political interest that results
+from a change of one standard deviation in age.
+* To obtain the value of the indirect standardized predictive effect, multiply
+the standardized predictive effect of age on political interest by the
+standardized predictive effect of political interest on reading time.
+```
+
+2. How do the numbers tell you that the regression effect of political interest on newspaper reading time is controlled for age? Hint: In a regression model with only one predictor, the standardized regression effect is equal to the correlation between the predictor and outcome variable.
+```{r eval=FALSE, echo=FALSE}
+* A simple regression model includes only one predictor, so it does not
+control for effects of other predictors.
+* In a simple regression model, the standardized regression coefficient (of
+the only predictor) is equal to the (Pearson) correlation between the
+predictor and outcome.
+* In this example, the standardized regression coefficient of political
+interest on reading time (b*_MO in the plot) is (usually) not equal to the
+correlation (bottom slider). The difference between the two values shows that
+the effect of political interest on reading time is controlling for effects of
+other predictors. Age is the only other predictor in the model.
+```
+
+3. If age is excluded from the model as presented in Figure \@ref(fig:mediation-selftest), would it suppress or reinforce the effect of political interest on newspaper reading time? When would age suppress, reinforce, or not confound the effect of political interest on newspaper reading time? Use the sliders to check your answer.
+```{r eval=FALSE, echo=FALSE}
+* If age is removed from the model, the standardized effect of political
+interest on newspaper reading time is equal to the correlation between these
+two variables. We would have a simple regression model with one predictor. So
+we can use the correlation between political interest and newspaper reading
+time as the standardized effect in a model without age.
+* If the standardized regression effect of political interest on newspaper
+reading time is higher than the correlation, age suppresses the effect. If we
+exclude age from the model, the regression effect drops, so it is partly
+suppressed.
+* If the standardized regression effect of political interest on newspaper
+reading time is lower than the correlation, age reinforces the effect. If we
+exclude age from the model, the regression effect increases, so it is partly
+reinforced.
+* If age is not a common cause of political interest and newspaper reading
+time, age is neither a suppressor nor a reinfocer, so it does not confound the
+effect of political interest on newspaper reading time.
+* Age is not a common cause if it has no effect on political interest or on
+reading time in this model. In other words, if at least one of the two arrows
+emanating from age is zero (absent).
+* It is easy to set the effect of age on political interest to zero: Just set
+this correlation to zero. Now, there is no indirect effect of the predictor on
+the outcome via the mediator. As a result, no part of the correlation between
+mediator and outcome can be due to the indirect effect of the predictor. The
+mediator is responsible for the full correlation between mediator and outcome,
+so its standardized regression coefficient is equal to its correlation with
+the outcome variable.
+* It is more difficult to find the value of the correlation between age and
+reading time that makes the regression effect zero. This effect is zero if the
+correlation between age and reading time is for 100% an indirect effect via
+political interest. In that case, there cannot be a direct effect (there is
+full mediation).
+* So adjust the correlation between age and political interest and the
+correlation between political interest and reading time such that their
+product (the indirect effect size) equals the correlation between age and
+reading time. Now, the regression effect of age on reading time is zero and
+the regression coefficient for the effect of political interest on reading
+time is equal to the correlation between these two variables.
+```
+
+4. When is the correlation between political interest and reading time completely spurious in this model? Use the sliders to check your answer.
+```{r eval=FALSE, echo=FALSE}
+* The correlation between political interest and reading time is completely
+spurious in this model if the entire correlation is due to a common cause.
+* The indirect correlation created by a common cause is equal to the product
+of the correlations between, on the one hand, the common cause (here: age)
+and, on the other hand, the other two variables (political interest and
+reading time).
+* The correlation between political interest and reading time, then, is
+completely spurious in this model if this correlation equals the product of
+the correlations with age.
+*Check this by adjusting the three correlations until the correlation between
+political interest and reading time equals the product of the other two
+correlations. Set, for instance, the correlation between political interest and
+reading time to 0.1, the correlation between age and political interest to 0.4
+and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25
+= 0.1.
+* In the plot, the standardized regression coefficient for the effect of
+political interest on reading time (b_MO) should become zero. There is no
+effect if we control for age even though the correlation is 0.1.
+* Note that the standardized regression effect of political interest on
+reading time need not be zero if the correlation between these two variables
+is zero.
+```
+
+5. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not? Use the sliders to check your answer.
+```{r eval=FALSE, echo=FALSE}
+* Yes, the standardized effect of political interest on reading time can be
+larger than 1.0 or smaller than -1.0.
+* If the correlation between political interest and reading time is positive,
+age suppresses the regression if the indirect correlation between political
+interest via age with reading time is negative. Just increase the positive
+correlations and make the negative correlation stronger to obtain a
+standardized regression coefficient for the effect of political interest on
+reading time well above one.
+* If the correlation between political interest on reading time is negative,
+age suppresses the regression if the indirect correlation between political
+interest via age on reading time is positive. Make both the correlation
+between age and reading time and the correlation between age and political
+interest positive or negative. The standardized regression effect of political
+interest on reading time will become more strongly negative than its
+correlation. Again make the correlations stronger to obtain a standardized
+regression coefficient for the effect of political interest on reading time
+well below minus one.
+```
+
+6. How many path models do we need to estimate the model of Figure \@ref(fig:mediation-selftest)?
+```{r eval=FALSE, echo=FALSE}
+* We must estimate a regression model for each variable that has at least one
+predictor in the model.
+* So we need two regression models: one with newspaper reading time as outcome
+variable and the other with political interest as outcome variable.
+```
+
+7. How does PROCESS estimate the confidence interval of the indirect effect in Figure \@ref(fig:mediation-selftest)?
+
+```{r eval=FALSE, echo=FALSE}
+* PROCESS bootstraps the indirect effect:
+ - It draws many bootstrap samples from the original sample.
+ - For every bootstrap sample, it estimates the unstandardized regression
+ coefficients of the effect of age on political interest and the effect of
+ political interest on newspaper reading time (controlling for age).
+ - For every bootstrap sample, it multiplies the two unstandardized regression
+ coefficients to obtain the unstandardized indirect effect.
+ - All calculated indirect effects constitute the sampling distribution from
+ which PROCESS derives the confidence interval.
+```
+
+8. How many covariates does the mediation model in Figure \@ref(fig:mediation-selftest) contain?
+
+```{r eval=FALSE, echo=FALSE}
+* Zero. This mediation model does not contain a covariate.
+* A covariate in a mediation model is a variable other than the predictor that
+is causally antecedent to the mediator.
+```
+
 ## Take-Home Points  
 
-* In a multiple regression model, a regression coefficient represents the predictive effect of a variable while controlling for the effects of all other predictors. It is called a _partial effect_: the predictions of the outcome that cannot be predicted by the other predictors.
+* In a multiple regression model, a regression coefficient represents the predictive effect of a variable while controlling for the effects of all other predictors. It is called a _partial effect_: the variation in outcome scores that cannot be predicted by the other predictors.
 
 * If a new predictor is added to a regression model, the regression coefficient of an old predictor changes if the new predictor is correlated with both the old predictor and the outcome. If the old predictor's effect becomes stronger, the new predictor was a suppressor. If it becomes weaker or changes direction (sign), the new predictor was a reinforcer and the old effect was (partially) spurious.
 
 * An estimated regression coefficient only shows the true effect of a predictor if all suppressors and reinforcers are included in the model.
 
-* A causal or path model without causal feedback loops can be estimated as a series of regression models: one regression model for each variable that has at last one predictor in the path model.
+* A causal or path model without causal feedback loops can be estimated as a series of regression models: one regression model for each variable that has at least one predictor in the path model.
 
 * Unstandardized regression coefficients, standardized regression coefficients, and correlations can be multiplied to obtain indirect effects or indirect correlations.
 
