@@ -38,19 +38,6 @@ shinyServer(function(input, output) {
 
   N <- 50 #size of a single sample
   reps <- 1000 #number of of repetitions for large bootstrap
-  repstheor <- 5000  #size of theoretical sample
-
-  #Sampling distribution
-  theoreticalsample <- replicate(sample(1:5, size = N,
-                                        prob = rep(0.2,5),
-                                        replace = TRUE),
-                                 n = repstheor)
-  #Generate proportions of for each of the samples
-  theoreticalsample <-
-    apply(X = theoreticalsample,
-          MARGIN = 2,
-          function(x) prop.table(table(x))["5"])
-  theoreticalsample <- data.frame(prop = theoreticalsample)
 
  # Reactive container for changing values
   samples <- 
@@ -66,7 +53,7 @@ shinyServer(function(input, output) {
     samples$hist <- numeric()
     samples$lastsample <- numeric()
   })
-  #Whhn single sample is taken, take sample, append to history
+  #When single sample is taken, take sample, append to history
   observeEvent(input$bootstrapsmallaction,
                                    {
                                      newsample <-
@@ -208,27 +195,17 @@ shinyServer(function(input, output) {
   output$sampdistplot <- renderPlot({
       df <- data.frame(prop = samples$hist)
       ggplot(df, aes(x = prop)) + 
-        geom_histogram(color = "Black",
-                       fill = "Grey",
-                       alpha = .4,
-                       data = theoreticalsample,
-                       binwidth = .02,
-                       aes(x = prop,
-                           y = ..count../sum(..count..)
-                       ))+
-      geom_histogram(fill = brewercolors["Yellow"],
+        geom_line(data = data.frame(x = (0:20)/50, y = dbinom(0:20, 50, 0.2)), 
+                     aes(x, y)) +
+        geom_histogram(fill = brewercolors["Yellow"],
                      color = "Grey",
                      alpha = .6,
                      binwidth = .02,
                      aes(y = ..count../sum(..count..))) + 
-      ggtitle("Proportions of yellow candies in all samples") +
-      scale_x_continuous(name = "Proportion of yellow candies",
-                        limits = c(0,0.45),
-                        breaks = seq(0, 0.45, by = 0.05))+
-        scale_y_continuous(name = "Density",
-                           limits = c(0,1.1),
-                           breaks = seq(0,1,by = 0.2))+
-      theme_general()
+        ggtitle("Proportions of yellow candies in all samples") +
+          coord_cartesian(xlim = c(0, 0.4)) +
+          labs(x = "Proportion of yellow candies", y = "Density") +
+        theme_general()
   })
 
 })
