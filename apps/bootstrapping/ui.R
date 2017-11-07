@@ -1,6 +1,6 @@
 library(shiny)
-fig.width = 400
-fig.height = 150
+fig.width = 360
+fig.height = 140
 # Define UI for application that draws a histogram
 shinyUI(
   fluidPage(

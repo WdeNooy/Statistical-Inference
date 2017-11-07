@@ -38,19 +38,6 @@ shinyServer(function(input, output) {
 
   N <- 50 #size of a single sample
   reps <- 1000 #number of of repetitions for large bootstrap
-  repstheor <- 5000  #size of theoretical sample
-
-  #Sampling distribution
-  theoreticalsample <- replicate(sample(1:5, size = N,
-                                        prob = rep(0.2,5),
-                                        replace = TRUE),
-                                 n = repstheor)
-  #Generate proportions of for each of the samples
-  theoreticalsample <-
-    apply(X = theoreticalsample,
-          MARGIN = 2,
-          function(x) prop.table(table(x))["5"])
-  theoreticalsample <- data.frame(prop = theoreticalsample)
 
  # Reactive container for changing values
   samples <- 
@@ -60,15 +47,15 @@ shinyServer(function(input, output) {
       lastsample = factor()
     )
   
-  # When initial sample is taken, take sample, clear history.
+  #When initial sample is taken, take sample, clear history.
   observeEvent(input$firstsampleaction,{
     samples$firstsample <- sample(1:5, size = 50, replace = TRUE)
     samples$hist <- numeric()
     samples$lastsample <- numeric()
   })
-  
-  # When single sample is taken, take sample, append to history.
-  observeEvent(input$bootstrapsmallaction,{
+  #When single sample is taken, take sample, append to history
+  observeEvent(input$bootstrapsmallaction,
+                                   {
                                      newsample <-
                                        replicate(sample(x = samples$firstsample,
                                               size = N,
@@ -79,7 +66,7 @@ shinyServer(function(input, output) {
                                      newprop[is.na(newprop)] <- 0
                                      samples$hist <<- c(samples$hist, newprop)
                                      
-                                     # Limit size of sample to 3 Mb
+                                     # Limit size of samples to 3 Mb
                                      if(object.size(samples) > 3e+06) {
                                        samples$firstsample <<- sample(1:5, size = 50, replace = TRUE)
                                        samples$hist <<- numeric()
@@ -87,9 +74,7 @@ shinyServer(function(input, output) {
                                      }
                                      
                                    })
-  
-  # When big sample is taken, take sample, append to history, store last sample.
-  
+  #When big sample is taken, take sample, append to history, store last sample
   observeEvent(input$bootstraplargeaction,
                                    {
                                     newsample <-
@@ -105,19 +90,19 @@ shinyServer(function(input, output) {
                                             function(x) prop.table(table(x))["5"])
                                     newprop[is.na(newprop)] <- 0
                                     samples$hist <<- c(samples$hist, newprop)
-                                   # Limit size of sample to 3 Mb
-                                     if(object.size(samples) > 3e+06) {
+                                    
+                                    # Limit size of samples to 3 Mb
+                                    if(object.size(samples) > 3e+06) {
                                       samples$firstsample <<- sample(1:5, size = 50, replace = TRUE)
                                       samples$hist <<- numeric()
                                       samples$lastsample <<- numeric()
                                     }
+                                    
                                    })
   
-  # Render Plot of last sample.
-  
+  # Render Plot of last sample
   output$sampleplot <- renderPlot({
-
-    # Store sample and make factor.
+    #Store sample and make factor
     sample <- samples$firstsample
     sample <- factor(sample,
               levels = c(1:5),
@@ -206,34 +191,21 @@ shinyServer(function(input, output) {
         theme(line = element_blank(),
               legend.position  = "none")
   })
-  
-  # Render plot of distributions.
+  # Render plot of distributions
   output$sampdistplot <- renderPlot({
-    # Store hist in data frame.  
-    df <- data.frame(prop = samples$hist)
-    
+      df <- data.frame(prop = samples$hist)
       ggplot(df, aes(x = prop)) + 
-        geom_histogram(color = "Black",
-                       fill = "Grey",
-                       alpha = .4,
-                       data = theoreticalsample,
-                       binwidth = .02,
-                       aes(x = prop,
-                           y = ..count../sum(..count..)
-                       ))+
-      geom_histogram(fill = brewercolors["Yellow"],
+        geom_line(data = data.frame(x = (0:20)/50, y = dbinom(0:20, 50, 0.2)), 
+                     aes(x, y)) +
+        geom_histogram(fill = brewercolors["Yellow"],
                      color = "Grey",
                      alpha = .6,
                      binwidth = .02,
                      aes(y = ..count../sum(..count..))) + 
-      ggtitle("Proportions of yellow candies in all samples") +
-      scale_x_continuous(name = "Proportion of yellow candies",
-                        limits = c(0,0.45),
-                        breaks = seq(0, 0.45, by = 0.05))+
-        scale_y_continuous(name = "Density",
-                           limits = c(0,1.1),
-                           breaks = seq(0,1,by = 0.2))+
-      theme_general()
+        ggtitle("Proportions of yellow candies in all samples") +
+          coord_cartesian(xlim = c(0, 0.4)) +
+          labs(x = "Proportion of yellow candies", y = "Density") +
+        theme_general()
   })
 
 })
