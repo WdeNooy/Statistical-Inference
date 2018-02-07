@@ -13,133 +13,6 @@ If we add a causal order among the predictors of our regression model, we obtain
 
 We can estimate a path model as a series of regression models. With additional software, we can also estimate the confidence interval of an indirect effect. The causal order underlying the path model, however, is an assumption that we make. A regression model shows the predictive effects, which need not be causal. We cannot prove that the predictive effects are causal. We can only think of arguments that make a causal effect plausible.
 
-### Test your intuition and understanding {-}
-
-```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-# Use app mediation-commoncause.
-knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
-```
-
-1. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated?
-```{r eval=FALSE}
-* The curved arrow is the standardized indirect (predictive) effect of age on
-reading time. It represents the predicted change (in standard deviations) of
-reading time that results from a change in political interest that results
-from a change of one standard deviation in age.
-* To obtain the value of the indirect standardized predictive effect, multiply
-the standardized predictive effect of age on political interest by the
-standardized predictive effect of political interest on reading time.
-```
-
-2. How do the numbers tell you that the regression effect of political interest on newspaper reading time is controlled for age? Hint: In a regression model with only one predictor, the standardized regression effect is equal to the correlation between the predictor and outcome variable.
-```{r eval=FALSE}
-* A simple regression model includes only one predictor, so it does not
-control for effects of other predictors.
-* In a simple regression model, the standardized regression coefficient (of
-the only predictor) is equal to the (Pearson) correlation between the
-predictor and outcome.
-* In this example, the standardized regression coefficient of political
-interest on reading time (b*_MO in the plot) is (usually) not equal to the
-correlation (bottom slider). The difference between the two values shows that
-the effect of political interest on reading time is controlling for effects of
-other predictors. Age is the only other predictor in the model.
-```
-
-3. If age is excluded from the model as presented in Figure \@ref(fig:mediation-selftest), would it suppress or reinforce the effect of political interest on newspaper reading time? When would age suppress, reinforce, or not confound the effect of political interest on newspaper reading time? Use the sliders to check your answer.
-```{r eval=FALSE}
-* If age is removed from the model, the standardized effect of political
-interest on newspaper reading time is equal to the correlation between these
-two variables. We would have a simple regression model with one predictor. So
-we can use the correlation between political interest and newspaper reading
-time as the standardized effect in a model without age.
-* If the standardized regression effect of political interest on newspaper
-reading time is higher than the correlation, age suppresses the effect. If we
-exclude age from the model, the regression effect drops, so it is partly
-suppressed.
-* If the standardized regression effect of political interest on newspaper
-reading time is lower than the correlation, age reinforces the effect. If we
-exclude age from the model, the regression effect increases, so it is partly
-reinforced.
-* If age is not a common cause of political interest and newspaper reading
-time, age is neither a suppressor nor a reinfocer, so it does not confound the
-effect of political interest on newspaper reading time.
-* Age is not a common cause if it has no effect on political interest or on
-reading time in this model. In other words, if at least one of the two arrows
-emanating from age is zero (absent).
-* It is easy to set the effect of age on political interest to zero: Just set
-this correlation to zero. Now, there is no indirect effect of the predictor on
-the outcome via the mediator. As a result, no part of the correlation between
-mediator and outcome can be due to the indirect effect of the predictor. The
-mediator is responsible for the full correlation between mediator and outcome,
-so its standardized regression coefficient is equal to its correlation with
-the outcome variable.
-* It is more difficult to find the value of the correlation between age and
-reading time that makes the regression effect zero. This effect is zero if the
-correlation between age and reading time is for 100% an indirect effect via
-political interest. In that case, there cannot be a direct effect (there is
-full mediation).
-* So adjust the correlation between age and political interest and the
-correlation between political interest and reading time such that their
-product (the indirect effect size) equals the correlation between age and
-reading time. Now, the regression effect of age on reading time is zero and
-the regression coefficient for the effect of political interest on reading
-time is equal to the correlation between these two variables.
-```
-
-4. When is the correlation between political interest and reading time completely spurious in this model? Use the sliders to check your answer.
-```{r eval=FALSE}
-* The correlation between political interest and reading time is completely
-spurious in this model if the entire correlation is due to a common cause.
-* The indirect correlation created by a common cause is equal to the product
-of the correlations between, on the one hand, the common cause (here: age)
-and, on the other hand, the other two variables (political interest and
-reading time).
-* The correlation between political interest and reading time, then, is
-completely spurious in this model if this correlation equals the product of
-the correlations with age.
-*Check this by adjusting the three correlations until the correlation between
-political interest and reading time equals the product of the other two
-correlations. Set, for instance, the correlation between political interest and
-reading time to 0.1, the correlation between age and political interest to 0.4
-and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25
-= 0.1.
-* In the plot, the standardized regression coefficient for the effect of
-political interest on reading time (b_MO) should become zero. There is no
-effect if we control for age even though the correlation is 0.1.
-* Note that the standardized regression effect of political interest on
-reading time need not be zero if the correlation between these two variables
-is zero.
-```
-
-5. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not? Use the sliders to check your answer.
-```{r eval=FALSE}
-* Yes, the standardized effect of political interest on reading time can be
-larger than 1.0 or smaller than -1.0.
-* If the correlation between political interest and reading time is positive,
-age suppresses the regression if the indirect correlation between political
-interest via age with reading time is negative. Just increase the positive
-correlations and make the negative correlation stronger to obtain a
-standardized regression coefficient for the effect of political interest on
-reading time well above one.
-* If the correlation between political interest on reading time is negative,
-age suppresses the regression if the indirect correlation between political
-interest via age on reading time is positive. Make both the correlation
-between age and reading time and the correlation between age and political
-interest positive or negative. The standardized regression effect of political
-interest on reading time will become more strongly negative than its
-correlation. Again make the correlations stronger to obtain a standardized
-regression coefficient for the effect of political interest on reading time
-well below minus one.
-```
-
-6. How many path models do we need to estimate the model of Figure \@ref(fig:mediation-selftest)?
-```{r eval=FALSE}
-* We must estimate a regression model for each variable that has at least one
-predictor in the model.
-* So we need two regression models: one with newspaper reading time as outcome
-variable and the other with political interest as outcome variable.
-```
-
 ## Controlling for Effects of Other Predictors {#controlling}
 
 In a regression model, we use the variation in scores on predictor variables to predict the variation of scores in the outcome variable: Does a person with a higher score on a predictor also have a higher score or, on the contrary, a lower score on the outcome variable? A simple regression model contains only one predictor but a multiple regression model includes more than one.
@@ -407,7 +280,7 @@ Now, let us have a look at the situation in which the indirect correlation is po
 
 Suppression can have surprising effects. If the predictor's original effect was close to zero, adding a suppressor variable to the model will strengthen the effect. An effect that we initially believed to be absent may turn out to be substantial and statistically significant. If our regression model tells us that our predictor does not have an effect, we cannot rule out that it does have an effect that is suppressed by a suppressor variable.
 
-Finally, indirect correlations via other predictors can add so much to the original partial effect of a predictor that the standardized regression coefficient becomes larger than 1 or smaller than -1. This clearly illustrates that standardized regression coefficients are not correlations in multiple regression models because correlations can never be higher than 1 or lower than -1. In contrast, the standardized regression coefficient in a simple regression model is equal to the correlation between predictor and outcome. Isn't that confusing?
+Finally, indirect correlations via other predictors can add so much to the original partial effect of a predictor that the standardized regression coefficient becomes higher than 1 or lower than -1. This clearly illustrates that standardized regression coefficients are not correlations in multiple regression models because correlations can never be higher than 1 or lower than -1. In contrast, the standardized regression coefficient in a simple regression model is equal to the correlation between predictor and outcome. Isn't that confusing?
 
 ### Reinforcement and spuriousness {#spuriousness}
 Adding a new predictor to a regression model may weaken the effects of other predictors. This happens if the indirect correlation due to a confounder has the same direction (sign) as the regression effect of the predictor. Either both the indirect correlation and regression effect are both positive or they are both negative.
@@ -663,7 +536,7 @@ time.
 
 2. In a mediation model such as Figure \@ref(fig:mediation-commoncause), which standardized effects are always equal to the correlation between the corresponding variables? Explain why this is so.
 ```{r eval=FALSE}
-* A correlation in a mediation model can differ from the standardized
+* A (bivariate) correlation in a mediation model can differ from the standardized
 regression coefficient in a mediation model in two ways:
   
 1. Part of the correlation is spurious (suppressed or reinforced) because the
@@ -1256,7 +1129,7 @@ Inform the reader that you bootstrapped the indirect effect and report the numbe
 
 SPSS cannot apply statistical inference to indirect effects, so we use the PROCESS macro developed for this purpose [@RefWorks:3873]. If correctly installed (see below), the macro can be used from within the SPSS Regression menu. Please note that you had better not paste the PROCESS commands to the SPSS syntax because it produces a lot of code that is difficult to understand. Instead, run the PROCESS command directly from the menu and manually add a comment to your SPSS syntax file reminding yourself of the model that you estimated with PROCESS.
 
-[Download the PROCESS macro](http://processmacro.org/download.html) and [install the SPSS custom dialog file](http://www.processmacro.org/uploads/3/4/8/5/34858384/dialoginstall.pdf). Check the [FAQ at the PROCESS website](http://processmacro.org/faq.html) if installation is not successful. If PROCESS is successfully installed, it can be found in the Analyse > Regression menu.
+[Download the PROCESS macro](http://processmacro.org/download.html) and [install the SPSS custom dialog file](http://www.processmacro.org/uploads/3/4/8/5/34858384/dialoginstall.pdf). Check the [FAQ at the PROCESS website](http://processmacro.org/faq.html) if installation is not successful. If PROCESS is successfully installed, it can be found in the Analyze > Regression menu.
 
 ----
 
@@ -1691,6 +1564,133 @@ Mediation and moderation (Chapter \@ref(moderation)) can occur in the same model
 If the indirect effect is different for females and males, at least one of the two direct effects (predictor on mediator or mediator on outcome) must be different for females and males. This direct effect is moderated and as a consequence, indirect effects including this effect are moderated. This is called _moderated mediation_. In the example, sex is the moderator and interest in politics is the mediator of the indirect effect of age on newspaper reading time.
 
 Several models with more than one mediator or with moderated mediation can be estimated with PROCESS. For an overview of the models, see http://www.afhayes.com/public/templates.pdf or Appendix A in Hayes [-@RefWorks:3873]. The models, however, are quite complex, so we leave them for enthusiasts.
+
+## Test your intuition and understanding
+
+```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+# Use app mediation-commoncause.
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="625px")
+```
+
+1. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated?
+```{r eval=FALSE, echo=FALSE}
+* The curved arrow is the standardized indirect (predictive) effect of age on
+reading time. It represents the predicted change (in standard deviations) of
+reading time that results from a change in political interest that results
+from a change of one standard deviation in age.
+* To obtain the value of the indirect standardized predictive effect, multiply
+the standardized predictive effect of age on political interest by the
+standardized predictive effect of political interest on reading time.
+```
+
+2. How do the numbers tell you that the regression effect of political interest on newspaper reading time is controlled for age? Hint: In a regression model with only one predictor, the standardized regression effect is equal to the correlation between the predictor and outcome variable.
+```{r eval=FALSE, echo=FALSE}
+* A simple regression model includes only one predictor, so it does not
+control for effects of other predictors.
+* In a simple regression model, the standardized regression coefficient (of
+the only predictor) is equal to the (Pearson) correlation between the
+predictor and outcome.
+* In this example, the standardized regression coefficient of political
+interest on reading time (b*_MO in the plot) is (usually) not equal to the
+correlation (bottom slider). The difference between the two values shows that
+the effect of political interest on reading time is controlling for effects of
+other predictors. Age is the only other predictor in the model.
+```
+
+3. If age is excluded from the model as presented in Figure \@ref(fig:mediation-selftest), would it suppress or reinforce the effect of political interest on newspaper reading time? When would age suppress, reinforce, or not confound the effect of political interest on newspaper reading time? Use the sliders to check your answer.
+```{r eval=FALSE, echo=FALSE}
+* If age is removed from the model, the standardized effect of political
+interest on newspaper reading time is equal to the correlation between these
+two variables. We would have a simple regression model with one predictor. So
+we can use the correlation between political interest and newspaper reading
+time as the standardized effect in a model without age.
+* If the standardized regression effect of political interest on newspaper
+reading time is higher than the correlation, age suppresses the effect. If we
+exclude age from the model, the regression effect drops, so it is partly
+suppressed.
+* If the standardized regression effect of political interest on newspaper
+reading time is lower than the correlation, age reinforces the effect. If we
+exclude age from the model, the regression effect increases, so it is partly
+reinforced.
+* If age is not a common cause of political interest and newspaper reading
+time, age is neither a suppressor nor a reinfocer, so it does not confound the
+effect of political interest on newspaper reading time.
+* Age is not a common cause if it has no effect on political interest or on
+reading time in this model. In other words, if at least one of the two arrows
+emanating from age is zero (absent).
+* It is easy to set the effect of age on political interest to zero: Just set
+this correlation to zero. Now, there is no indirect effect of the predictor on
+the outcome via the mediator. As a result, no part of the correlation between
+mediator and outcome can be due to the indirect effect of the predictor. The
+mediator is responsible for the full correlation between mediator and outcome,
+so its standardized regression coefficient is equal to its correlation with
+the outcome variable.
+* It is more difficult to find the value of the correlation between age and
+reading time that makes the regression effect zero. This effect is zero if the
+correlation between age and reading time is for 100% an indirect effect via
+political interest. In that case, there cannot be a direct effect (there is
+full mediation).
+* So adjust the correlation between age and political interest and the
+correlation between political interest and reading time such that their
+product (the indirect effect size) equals the correlation between age and
+reading time. Now, the regression effect of age on reading time is zero and
+the regression coefficient for the effect of political interest on reading
+time is equal to the correlation between these two variables.
+```
+
+4. When is the correlation between political interest and reading time completely spurious in this model? Use the sliders to check your answer.
+```{r eval=FALSE, echo=FALSE}
+* The correlation between political interest and reading time is completely
+spurious in this model if the entire correlation is due to a common cause.
+* The indirect correlation created by a common cause is equal to the product
+of the correlations between, on the one hand, the common cause (here: age)
+and, on the other hand, the other two variables (political interest and
+reading time).
+* The correlation between political interest and reading time, then, is
+completely spurious in this model if this correlation equals the product of
+the correlations with age.
+*Check this by adjusting the three correlations until the correlation between
+political interest and reading time equals the product of the other two
+correlations. Set, for instance, the correlation between political interest and
+reading time to 0.1, the correlation between age and political interest to 0.4
+and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25
+= 0.1.
+* In the plot, the standardized regression coefficient for the effect of
+political interest on reading time (b_MO) should become zero. There is no
+effect if we control for age even though the correlation is 0.1.
+* Note that the standardized regression effect of political interest on
+reading time need not be zero if the correlation between these two variables
+is zero.
+```
+
+5. Can the standardized effect of political interest on reading time be larger than 1.0 or smaller than -1.0? If so, in which situation? If not, why not? Use the sliders to check your answer.
+```{r eval=FALSE, echo=FALSE}
+* Yes, the standardized effect of political interest on reading time can be
+larger than 1.0 or smaller than -1.0.
+* If the correlation between political interest and reading time is positive,
+age suppresses the regression if the indirect correlation between political
+interest via age with reading time is negative. Just increase the positive
+correlations and make the negative correlation stronger to obtain a
+standardized regression coefficient for the effect of political interest on
+reading time well above one.
+* If the correlation between political interest on reading time is negative,
+age suppresses the regression if the indirect correlation between political
+interest via age on reading time is positive. Make both the correlation
+between age and reading time and the correlation between age and political
+interest positive or negative. The standardized regression effect of political
+interest on reading time will become more strongly negative than its
+correlation. Again make the correlations stronger to obtain a standardized
+regression coefficient for the effect of political interest on reading time
+well below minus one.
+```
+
+6. How many path models do we need to estimate the model of Figure \@ref(fig:mediation-selftest)?
+```{r eval=FALSE, echo=FALSE}
+* We must estimate a regression model for each variable that has at least one
+predictor in the model.
+* So we need two regression models: one with newspaper reading time as outcome
+variable and the other with political interest as outcome variable.
+```
 
 ## Take-Home Points  
 

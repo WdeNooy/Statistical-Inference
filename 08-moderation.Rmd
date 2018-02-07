@@ -491,7 +491,8 @@ score predicted by the regression line (blue) for the predictor score
 ```{r eval=FALSE}
 * The residuals represented by the red lines in the scatterplot are counted in
 the histogram.
-* Drag the mouse pointer around one or more dots in the scatterplot and you
+* Drag the mouse pointer around one or more dots in the scatterplot while
+pressing the left mouse button to select on or more observations (dots). You
 will see where they are featured in the histogram (blue). The dot that is
 furthest below the regression line is counted in the left-most bar of the
 histogram.
@@ -1190,7 +1191,7 @@ In Table \@ref(tab:dich-moderator-output), non-smokers are the reference group b
 
 The effect of (smoking) status on attitude is conditional on exposure. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average `r report_n(results[3, 1], digits = 2)` more positive towards smoking than non-smokers. The p value tests the null hypothesis that the difference is zero for people without exposure to the anti-smoking campaign.
 
-Smokers are coded 1 on the (smoking) status variable, so the regression coefficient for the interaction tells us that the slope of the exposure effect is `r report_n(abs(results[4, 1]), digits = 2)` lower for smokers than for non-smokers. In a preceding paragraph, we have seen that the estimated slope of the exposure effect is `r report_n(results[2, 1], digits = 2)` for non-smokers. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is `r report_n(results[2, 1] + results[4, 1], digits = 2)`. Now we can compare the two regression lines for the two groups, which gives good insight in the nature of moderation in this example. A graph of the two regression lines is probably the best way to communicate your results.
+Smokers are coded 1 on the (smoking) status variable, so the regression coefficient for the interaction tells us that the slope of the exposure effect is `r report_n(abs(results[4, 1]), digits = 2)` lower for smokers than for non-smokers. In a preceding paragraph, we have seen that the estimated slope of the exposure effect is `r report_n(results[2, 1], digits = 2)` for non-smokers. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is `r report_n(results[2, 1] + results[4, 1], digits = 2)`. Now we can compare the two regression lines for the two groups, which gives good insight into the nature of moderation in this example. A graph of the two regression lines is probably the best way to communicate your results.
 
 ```{r dich-moderator-graph, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="The effects of exposure to the anti-smoking campaign on attitude towards smoking among smokers and non-smokers."}
 # Graph of regression lines calculated in chunk dich-moderator-output.
@@ -2248,7 +2249,7 @@ If we report a regression model, we first present the significance test and pred
 
 How well does the regression model predict attitude towards smoking? The effect size of a regression model or its predictive power is summarized by $R^2$ (_R Square_), which is the proportion of the variation in the outcome variable scores (attitude towards smoking) that can be predicted with the regression model. In this example, $R^2$ is `r report_n(summ$r.squared, 2)`, so the regression model predicts `r report_n(summ$r.squared * 100, 0)`% of the variance in attitude towards smoking among the respondents. In communication research, $R^2$ is usually smaller. 
 
-$R^2$ tells us how well the regression model predicts the outcome variable in the sample. Every predictor that we add to the regression model helps to predict results in the sample even if the predictor does not help to predict the outcome in the population. For a better idea of the predictive power of the regression model in the population, we may use _Adjusted R Square_. Adjusted R Square is usually slightly lower than R Square. In the example, Adjusted R Square is `r report_n(summ$adj.r.squared, 2)` (not reported in Table \@ref(tab:report-moderation-table))
+$R^2$ tells us how well the regression model predicts the outcome variable in the sample. Every predictor that we add to the regression model helps to predict results in the sample even if the predictor does not help to predict the outcome in the population. For a better idea of the predictive power of the regression model in the population, we may use _Adjusted R Square_. Adjusted R Square is usually slightly lower than R Square. In the example, Adjusted R Square is `r report_n(summ$adj.r.squared, 2)` (not reported in Table \@ref(tab:report-moderation-table)).
 
 As a next step, we discuss the size, statistical significance, and confidence intervals of the regression coefficients. If a predictor is involved in one or more interaction effects, we must be very clear about the reference value and reference group to which the effect applies.
 
