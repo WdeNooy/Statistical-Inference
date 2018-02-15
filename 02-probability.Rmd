@@ -36,7 +36,7 @@ sample.
 * The sampling distribution of a sample proportion is an exact distribution
 (named binomial distribution): the probabilities of every number or proportion
 of yellow candies in the sample can be calculated. The results are displayed
-as a grey histogram at the bottom of the figure.
+as a black curve at the bottom of the figure.
 ```
 
 3. Does the bootstrap sampling distribution resemble the true sampling distribution? Use the "Bootstrap 1000 samples" button and justify your answer.  
@@ -45,7 +45,7 @@ as a grey histogram at the bottom of the figure.
 * That depends. If the proportion of yellow candies in the original sample is
 close to .2, that is, ten out of fifty candies in the sample are yellow, the
 bootstrapped sampling distribution (yellow histogram) is very similar to the
-true (exact) sampling distribution (grey histogram).
+true (exact) sampling distribution (black curve).
 * If there are much less or many more than ten yellow candies in the sample,
 however, the bootstrapped sampling distribution is quite different from the
 true sampling distribution. Especially the mean (horizontal location) of the
@@ -88,7 +88,7 @@ knitr::include_graphics("figures/replacement.png")
 
 ```{r eval=FALSE}
 * If we draw a sample without replacement from our initial sample of the same
-size as the initial sample, the new sample must contain all obervations from
+size as the initial sample, the new sample must contain all observations from
 the initial sample. As a result, the new sample is identical to the initial
 sample. All samples that we draw are identical.
 * Drawing with replacement, an observation can be drawn more than once. This
@@ -116,9 +116,9 @@ How about calculating probabilities if we sample without replacement? If we do n
 
 If the population is large, the decrease in the probability is too small to be in any way relevant. For instance, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992 ; the difference between the two probabilities (0,0000008) is negligible. 
 
-As you can see, calculating probablities becomes complicated if we sample without replacement. But we can ignore the complications if the population is much larger than the sample because the probabilities hardly differ from the simple probabilities that we have if we sample with replacement. 
+As you can see, calculating probabilities becomes complicated if we sample without replacement. But we can ignore the complications if the population is much larger than the sample because the probabilities hardly differ from the simple probabilities that we have if we sample with replacement. 
 
-In practice, then, we always sample _without_ replacement but our statistical software calculates probabilities as if we sampled _with_ replacement. This is perectly fine as long as the population is much larger than the sample. If the sample contains a large share of the population, however, we should not trust the probabilities that our software reports.
+In practice, then, we always sample _without_ replacement but our statistical software calculates probabilities as if we sampled _with_ replacement. This is perfectly fine as long as the population is much larger than the sample. If the sample contains a large share of the population, however, we should not trust the probabilities that our software reports.
 
 ### Limitations to bootstrapping  
 
@@ -236,10 +236,10 @@ There are no impossible values on the two variables.
       
 Check assumptions:  
   
-The measurement levels of the variables are OK:  
-colour is a categorical variable and weight is a   
-numeric variable. There are no additional assumptions  
-for bootstrapping.  
+The measurement levels of the variables are OK for a t test: 
+colour is a categorical variable with two values and weight is
+a numeric variable. There are no additional assumptions for 
+bootstrapping.
     
 Interpret the results:   
   
@@ -326,7 +326,7 @@ can range from zero to three. This is the sampling space.
 
 ```{r eval=FALSE}
 * There are eight combinations. If the coins are fair, each combination has
-the same probability to appear, namely 1/8 = .125. We sum this probability for
+the same probability to appear, namely 1/8 = .125. We sum the probabilities for
 all combinations that have the same outcome, namely the same number of heads.
 * Thus we arrive at the probability of having no heads in a throw (p = .125),
 one head (p = .375), and so on.
@@ -443,7 +443,7 @@ Candy colour does not seem relevant to having spots.
 
 ## Theoretical Approximations of the Sampling Distribution
 
-Because bootstrapping and exact approaches to the sampling distribution require quite a lot of computing power, these methods were not practical in the not so very distant pre-computer age. In those days, mathematicians and statisticians discovered that many sampling distributions look a lot like known mathematical functions. For example, the sampling distribution of the sample mean can be quite similar to the well-known bell-shape of the _normal distribution_ or the closely related _(Student) t distribution_. The mathematical functions are called _theoretical probability distributions_.  
+Because bootstrapping and exact approaches to the sampling distribution require quite a lot of computing power, these methods were not practical in the not so very distant pre-computer age. In those days, mathematicians and statisticians discovered that many sampling distributions look a lot like known mathematical functions. For example, the sampling distribution of the sample mean can be quite similar to the well-known bell-shape of the _normal distribution_ or the closely related _(Student) t distribution_. The mathematical functions are called _theoretical probability distributions_. Most statistical tests use theoretical approximations of the sampling distribution.
 
 ```{r normal-approximation, echo=FALSE, fig.cap="Normal function as theoretical approximation of a sampling distribution.", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Variant of app: p-values.
@@ -456,7 +456,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height
 ```{r eval=FALSE}
 * The curve fits the histogram of observed sample means quite well.
 Discrepancies are mainly due to the jagged layout of the histogram, which
-result from binning the data (to create bars) and from the fact that the
+results from binning the data (to create bars) and from the fact that the
 number of samples is large but not very large.
 * For the sampling distribution of means we know that the normal or (Student)
 t distribution represents the sampling distribution very accurately.
@@ -629,7 +629,7 @@ Imagine that a magnetic field is activated if the first coin lands with heads up
 
 ### Dependent samples {#dependentsamples}
 
-The example of a manipulated second toss is applicable to repeated measurements. If we want to know how quickly the yellow colour fades when yellow candies are exposed to sun light, we may draw a sample of yellow candies once and measure the colourfulness of each candy at least twice: at the start and after some time interval. Subsequently, we compare the average colourfulness of the second set of measurements to the average in the first set of measurements.  
+The example of a manipulated second toss is applicable to repeated measurements. If we want to know how quickly the yellow colour fades when yellow candies are exposed to sun light, we may draw a sample of yellow candies once and measure the colorfulness of each candy at least twice: at the start and after some time interval. Subsequently, we compare the average colorfulness of the second set of measurements to the average in the first set of measurements.  
 
 ```{r mean-dependent, fig.cap="Dependent samples.", echo=FALSE, out.width="560px", screenshot.opts = list(delay = 5), dev="png"}
  # Demonstrate the construction of a sampling distribution for mean differences
@@ -687,6 +687,12 @@ In one case, SPSS automatically selects an exact approach if the conditions for 
 
 We are not going to practice with theoretical approximations in SPSS, now. Because theoretical approximation is the default approach in SPSS, we will encounter it in the exercises in later chapters.
 
+## When Do We Use Which Approach to the Sampling Distribution?
+
+By default, SPSS uses a theoretical approximation of the sampling distribution. Select the right test in SPSS and SPSS ensures that an appropriate theoretical probability distribution is used. You, however, must check whether the sample meets the conditions for using this theoretical probability distribution, see Table \@ref(tab:thumb).
+
+If the conditions for using a theoretical probability distribution are not met, we use bootstrapping or an exact approach. An exact approach is available only if the variables are categorical. Sometimes, for example in a two by two cross tabulation, SPSS automatically uses an exact approach. Otherwise, you have to request an exact test or bootstrapping yourself. We also use bootstrapping if SPSS does not have a test for the statistic in which we are interested, for example, the median value or the standard deviation of a variable.
+
 ## Test Your Understanding
 
 ```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
@@ -726,7 +732,7 @@ example, the proportion of yellow candies, must be quite near the population
 statistic.
 * If the proportion of yellow samples in the original sample is .2, as it is
 in the population, the bootstrapped sampling distribution (yellow) is very
-similar to the true sampling distribution (grey).
+similar to the true sampling distribution (black curve).
 ```
 
 ```{r models-summary-3, echo=FALSE}

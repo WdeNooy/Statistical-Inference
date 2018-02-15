@@ -37,7 +37,7 @@ Note that we are reasoning from sampling distribution to sample now. This is not
 
 Remember that the average or expected value of a sampling distribution is equal to the population value if the estimator is unbiased. For example, the mean weight of yellow candies averaged over a large number of samples is equal to the mean weight of yellow candies in the population. For an interval estimate, we now select the sample statistic values that are closest to the average of the sampling distribution. 
 
-Between which boundaries are the sample statistic values situated that are closest to the population value? Of course, we have to specify what we mean by "closest". Which part of all samples do we want to include? A popular proportion is 95%, so we want to know the boundary values that include 95% of all samples that are closest to the population value. For example, between which boundaries is the average candy weight situated for 95% of all samples that are closest to the average candy weight in the population?
+Between which boundaries are the sample statistic values situated that are closest to the population value? Of course, we have to specify what we mean by "closest". Which part of all samples do we want to include? A popular proportion is 95%, so we want to know the boundary values that include 95% of all samples that are closest to the population value. For example, between which boundaries is average candy weight situated for 95% of all samples that are closest to the average candy weight in the population?
 
 ```{r ci-borders, fig.cap="Within which interval do we find the sample results that are closest to the population value?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Graph a normal distribution with mean 2.8 and standard deviation equal to a random number between 0.05 and 0.2 ; x-axis with scale and labelled "Average candy weight"; add two vertical lines, one to the extreme left, one to the extreme right with their values on the x-axis displayed and the percentage of observations (area) between the two lines displayed (initially near 50%) ; slider moves right line and left line (in opposite directions) and adjusts percentage of area between lines ; note that the lines cannot be moved across the centre of the distribution
@@ -51,7 +51,7 @@ Figure \@ref(fig:ci-borders) shows the sampling distribution of average sample c
 * A sample mean is an unbiased estimator of the population mean. As a
 consequence, the mean of the sampling distribution is equal to the population.
 * The (normal) sampling distribution is symmetrical, so the mean of the
-sampling distribution is in its middle, exactly under the top of the sampling
+sampling distribution is in the middle, exactly under the top of the sampling
 distribution. Here, the value is 2.8 (gram). This is average candy weight in
 the population.
 ```
@@ -85,10 +85,10 @@ knitr::include_app("http://82.196.4.233:3838/apps/interval-level/", height="310p
     First write down what you expect, and why you expect that. Then check what happens if you change the confidence level slider in Figure \@ref(fig:interval-level).
 
 ```{r eval=FALSE}
-* The more population values we exclude, the larger the probability that the
-true population value is NOT in our estimated interval. In other words, our
-confidence is smaller if we increase the precision of our estimate or, in other
-words, if we reduce the width of the estimated interval.
+* The lower our confidence level, the more population values we exclude, the
+narrower the interval estimate: precision is higher. * The higher our
+confidence level, the more population values we include, the broader the
+interval estimate: precision is smaller.
 ```
 
 2. What happens if we want to be 100% certain that our interval contains the true population value?
@@ -100,7 +100,7 @@ infinitely wide. Of course, such an interval is completely useless because it
 tells us that any value is possible.
 ```
 
-If we want to predict something, however, we value precision. We rather conclude that the average weight of candies in the next sample we draw lies between 2.0 and 3.6 gram than between 1.6 and 4.0 gram. If we would be satisfied with a very imprecise estimate, we need not do any research at all. With relatively little knowledge about the candies that we are investigating, we could straightaway predict that the average candy weight is between zero and ten gram. The goal of our research is to find a more precise estimation.
+If we want to predict something, we value precision. We rather conclude that the average weight of candies in the next sample we draw lies between 2.0 and 3.6 gram than between 1.6 and 4.0 gram. If we would be satisfied with a very imprecise estimate, we need not do any research at all. With relatively little knowledge about the candies that we are investigating, we could straightaway predict that the average candy weight is between zero and ten gram. The goal of our research is to find a more precise estimation.
 
 There are several ways to increase the precision of our interval estimate, that is, to obtain a narrower interval for our estimate. The easiest and least useful way is to decrease the probability that our estimate is correct. If we lower the probability that we are right, we can discard a large number of other possible sample statistic outcomes and focus on a narrower range of sample outcomes around the true population value.
 
@@ -129,15 +129,15 @@ become shorter.
 
 2. How does the shape of the sampling distribution change if you change sample size? Explain what this means for the values of the sample statistic.
 ```{r eval=FALSE}
-* The sampling distribution becomes more peaked/less flat because more sample
-means are found near the (true) population mean.
+* The sampling distribution becomes more peaked/less flat with a larger sample
+because more sample means are found near the (true) population mean.
 ```
 
 As you may have noticed while playing with Figure \@ref(fig:interval-size), a larger sample yields a narrower, that is, more precise interval. You may have expected intuitively that larger samples give more precise estimates because they offer more information. This intuition is correct.  
 
 In a larger sample, an observation above the mean is more likely to be compensated by an observation below the mean. Just because there are more observations, it is less likely that we sample relatively high scores but no or considerably fewer scores that are relatively low. 
 
-In other words, the larger the sample, the more the distribution of scores for a variable in the sample will resemble the distribution of scores for this variable in the population. As a consequence, a sample statistic value will be closer to the population value for this statistic.  
+The larger the sample, the more the distribution of scores for a variable in the sample will resemble the distribution of scores for this variable in the population. As a consequence, a sample statistic value will be closer to the population value for this statistic.  
 
 Larger samples resemble the population more closely, and therefore large samples drawn from the same population are also closer to one another. The result is that the sample statistic values in the sampling distribution are less varied and more similar. They are more concentrated around the true population value, which is the average of the sampling distribution. The sampling distribution is more peaked, so the middle 95% of all sample statistic values are closer to the centre.  
 
@@ -266,7 +266,7 @@ In addition, you may have realized that, if we know the sampling distribution,  
 
 Our problem is this: We want to estimate a population value using probabilities. For probabilities we need the sampling distribution but for the sampling distribution, we must know the population. A vicious circle.
 
-```{r exactapproachfigure, eval=TRUE, echo=FALSE, out.width="420px", fig.cap="Probabilities of a sample with a particular number of yellow candies if 20 per cent of the candies are yellow in the population."}
+```{r exactapproachfigure, eval=TRUE, echo=FALSE, out.width="300px", fig.cap="Probabilities of a sample with a particular number of yellow candies if 20 per cent of the candies are yellow in the population."}
 knitr::include_graphics("figures/exactapproach.png")
 ```
 
@@ -300,7 +300,7 @@ By the way, we also need the standard error to know how peaked or flat the bell 
 
 ### Imaginary population values  {#imag-pop-values}
 
-How can we find plausible population means? Figure \@ref(fig:pop-means-ci) shows average candy weight in a random sample (lower scale). Click somewhere under the top axis to select a possible value for the population mean. The app will then display the interval of most plausible sample means (green if it contains the actual sample means, red otherwise) and the actual sample mean's _z_ value if this would have been the true population value.
+How can we find plausible population means? Figure \@ref(fig:pop-means-ci) shows average candy weight in a random sample (lower scale). Click somewhere under the top axis to select a possible value for the population mean. The app will then display the interval of most plausible sample means (green if it contains the actual sample means, red otherwise) and the actual sample mean's _z_ value if the selected value is the true population value.
 
 ```{r pop-means-ci, fig.cap="For which population means is our sample mean plausible?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # draw two horizontal lines, the top line labeled 'population' and the bottom line labeled 'sample', both lines with a numerical scale (0-5) ; generate a sample mean and standard error within a particular range, say 1-4 for the sample mean and the standard error in a range convenient to have interval estimates within the 0-5 or -1-6 range ; mark the sample mean on the lower line and show the value of the standard error somewhere in the app ; if the user clicks on the upper line, the corresponding number is shown as an (imaginary) population mean ; the 95% probability interval estimate for the sample mean is shown as a horizontal line segment on top/near the lower line (plus a light triangle starting at the population value) ; if the line segment overlaps with the sample mean, the selected population value is marked by a green dot and the line segment is green, they are red dots otherwise ; also show the z value of the sample mean for the chosen population mean ; at next click, remove old interval estimate (line segment plus triangle) but keep the prevously selected population mean ; a 'Reset' button generates new values to restart the interaction (repeat the assignment with different values for the sample mean and standard error to emphasize that the z values remain the same)
@@ -398,9 +398,9 @@ This interval is linked to a probability, for instance, 95%. However, it is very
 
 The parameter has one value, which is either within or outside the interval that we have constructed. We just don't know. But we do know that our sample is more likely for population values within the interval.  
 
-We use the term _confidence_ instead of probability when we use this interval to estimate a parameter. We say that we are 95% confident that the parameter falls within the interval. The interval is called a _confidence interval_ and we usually add the confidence level, for instance, the 95% confidence interval (abbreviated: 95%CI) of the average weight of candies in the population ranges from 2.4 to 3.2 gram. An average candy weight between 2.4 and 3.2 gram is plausible given the sample that we have drawn. In our reports, we say that: 
+We use the term _confidence_ instead of probability when we use this interval to estimate a parameter. We say that we are 95% confident that the parameter falls within the interval. The interval is called a _confidence interval_ and we usually add the confidence level, for instance, the 95% confidence interval (abbreviated: 95%CI) of the average weight of candies in the population ranges from 2.4 to 3.2 gram. An average candy weight between 2.4 and 3.2 gram in the population is plausible given the sample that we have drawn. In our reports, we say that: 
 
-> We are 95% confident that the average candy weight in the population is between 2.4 and 3.2 gram.  
+> We are 95% confident that average candy weight in the population is between 2.4 and 3.2 gram.  
 
 ```{r 95ci-simul, fig.cap="How often does a confidence interval include the true population value?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Generate 100 samples of size 50 (or larger to obtain about 95% coverage) from
@@ -630,7 +630,7 @@ significant, t (49) = 12.86, p < 001, 95%CI[1.59; 2.17].
 SPSS syntax:  
   
 * Check data: Assumption checks in Chapter 8.  
-* CHeck for impossible values.  
+* Check for impossible values.  
 FREQUENCIES VARIABLES=weight sweetness colour_post  
   /ORDER=ANALYSIS.  
 * Regression of colour_post on weight and sweetness.   
@@ -653,15 +653,15 @@ Assumptions are presented later (Chapter 8).
 Interpret the results:  
   
 We are 95 per cent confident that average candy  
-colourfulness decreases by 0.23 to 0.52 for  
+colourfulness decreases by 0.19 to 0.46 for  
 each additional unit of sweetness in the  
 population.  
 We are not confident about the direction of the  
 effect of candy weight on colourfulness. This  
-effect can be negative (up to a .65 decrease for  
-each additional candy weight gram) or positive  
-(up to a 2.05 increase for each additional candy  
-weight gram).  
+effect can be negative (up to a 1.15 decrease for  
+each additional candy weight gram with 95% confidence)
+or positive (up to a 2.28 increase for each additional
+candy weight gram with 95% confidence).  
 ```
 
 ## Test Your Understanding
