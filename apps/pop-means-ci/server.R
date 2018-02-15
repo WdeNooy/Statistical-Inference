@@ -49,9 +49,9 @@ shinyServer(function(input, output) {
       ll_cur <- smean$llim
       ul_cur <- smean$ulim
       smean <<- data.frame(x = samplemean, y = ymin + psize/200, 
-                           z = ifelse((samplemean - x)/se > 1.93 & (samplemean - x)/se < 1.99, 
+                           z = ifelse((samplemean - x)/se > 1.9 & (samplemean - x)/se <= 1.96, 
                                       1.96,
-                                      ifelse((samplemean - x)/se < -1.93 & (samplemean - x)/se > -1.99, 
+                                      ifelse((samplemean - x)/se < -1.9 & (samplemean - x)/se >= -1.96, 
                                              -1.96, (samplemean - x)/se)), #around 1.96 -> 1.96
                            xlow = x - 1.96 * se, 
                            xhigh = x + 1.96 * se, 
