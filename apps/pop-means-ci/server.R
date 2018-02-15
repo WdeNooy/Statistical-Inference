@@ -46,10 +46,13 @@ shinyServer(function(input, output) {
                                   y = ymax - psize/200,
                                   colour = ifelse(out, brewercolors["Red"], brewercolors["Green"])))
       #Update 95% confidence interval and z value of sample mean
-      ll_cur <- smean$llim[1]
-      ul_cur <- smean$ulim[1]
+      ll_cur <- smean$llim
+      ul_cur <- smean$ulim
       smean <<- data.frame(x = samplemean, y = ymin + psize/200, 
-                           z = (samplemean - x)/se,
+                           z = ifelse((samplemean - x)/se > 1.93 & (samplemean - x)/se < 1.99, 
+                                      1.96,
+                                      ifelse((samplemean - x)/se < -1.93 & (samplemean - x)/se > -1.99, 
+                                             -1.96, (samplemean - x)/se)), #around 1.96 -> 1.96
                            xlow = x - 1.96 * se, 
                            xhigh = x + 1.96 * se, 
                            ypop = ymax,
@@ -59,8 +62,8 @@ shinyServer(function(input, output) {
                            colour = ifelse(out, brewercolors["Red"], brewercolors["Green"]))
       #Update results
       result$ntry <- result$ntry + 1
-      if (smean$z > 1.9 & smean$z <= 1.96) result$ll_reached <- "Lower limit reached"
-      if (smean$z < -1.9 & smean$z >= -1.96) result$ul_reached <- "Upper limit reached"
+      if (smean$z == 1.96) result$ll_reached <- "Lower limit reached"
+      if (smean$z == -1.96) result$ul_reached <- "Upper limit reached"
       if (result$ll_reached != "" & result$ul_reached != "") 
         result$both_reached <- paste0(result$ntry, " Clicks")
       result <<- result
@@ -93,10 +96,10 @@ shinyServer(function(input, output) {
                 alpha = ifelse(smean$ypop == ymin, 0, 1)) +
       #Lower and upper bounds
       geom_text(aes(x = smean$llim, y = ymax - psize/40,
-                    label = paste0(ifelse(result$ll_reached[1] == "","","Lower limit\n"), 
+                    label = paste0(ifelse(result$ll_reached == "","","Lower limit\n"), 
                                    ifelse(smean$llim == samplemean,"",format(round(smean$llim, digits = 2), nsmall=2))))) +
       geom_text(aes(x = smean$ulim, y = ymax - psize/40,
-                    label = paste0(ifelse(result$ul_reached[1] == "","","Upper limit\n"), 
+                    label = paste0(ifelse(result$ul_reached == "","","Upper limit\n"), 
                                    ifelse(smean$ulim == samplemean,"",format(round(smean$ulim, digits = 2), nsmall=2))))) +
       #Population means (on click)
       geom_point(aes(x = df$x, y = df$y), 
