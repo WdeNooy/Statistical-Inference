@@ -54,8 +54,8 @@ shinyServer(function(input, output) {
                            xhigh = x + 1.96 * se, 
                            ypop = ymax,
                            ylab = ymin + 4*psize/200,
-                           llim = ifelse(!out & x < ll_cur, x, ll_cur),
-                           ulim = ifelse(!out & x > ul_cur, x, ul_cur),
+                           llim = ifelse(result$ll_reached == "", x, ll_cur),
+                           ulim = ifelse(result$ul_reached == "", x, ul_cur),
                            colour = ifelse(out, brewercolors["Red"], brewercolors["Green"]))
       #Update results
       result$ntry <- result$ntry + 1
@@ -74,7 +74,7 @@ shinyServer(function(input, output) {
                  size = psize) +
       #z Value of sample mean
       geom_text(aes(x = smean$x, y = smean$ylab, 
-                     label = paste0("z = ", round(smean$z, digits = 2))),
+                     label = paste0("z = ", format(round(smean$z, digits = 2), nsmall=2))),
                     alpha = ifelse(smean$ypop == ymin, 0, 1)) +
       #95% most likely sample means
       geom_segment(aes(x = (xhigh + xlow)/2, xend = xlow, 
@@ -93,11 +93,11 @@ shinyServer(function(input, output) {
                 alpha = ifelse(smean$ypop == ymin, 0, 1)) +
       #Lower and upper bounds
       geom_text(aes(x = smean$llim, y = ymax - psize/40,
-                    label = paste0("Lower limit\n", round(smean$llim, digits = 2))),
-                alpha = ifelse(smean$llim == samplemean, 0, 1)) +
+                    label = paste0(ifelse(result$ll_reached[1] == "","","Lower limit\n"), 
+                                   ifelse(smean$llim == samplemean,"",format(round(smean$llim, digits = 2), nsmall=2))))) +
       geom_text(aes(x = smean$ulim, y = ymax - psize/40,
-                    label = paste0("Upper limit\n", round(smean$ulim, digits = 2))),
-                alpha = ifelse(smean$ulim == samplemean, 0, 1)) +
+                    label = paste0(ifelse(result$ul_reached[1] == "","","Upper limit\n"), 
+                                   ifelse(smean$ulim == samplemean,"",format(round(smean$ulim, digits = 2), nsmall=2))))) +
       #Population means (on click)
       geom_point(aes(x = df$x, y = df$y), 
                  alpha = ifelse(df$y == ymin, 0, 1),
