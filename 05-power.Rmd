@@ -27,7 +27,7 @@ Table \@ref(tab:thumb) in Chapter \@ref(probmodels) shows the conditions that mu
 knitr::kable(rbind(c("Binomial distribution", "proportion", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)"), c("(Standard) normal distribution", "one or two means", "> 100"), c("t distribution", "one or two means", "> 30"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30"), c("t distribution", "regression coefficient", "20+ per predictor variable"), c("F distribution", "3+ means", " all groups are more or less of equal size"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5")), col.names = c("Distribution", "Sample statistic", "Minimum sample size"), caption = "Rules of thumb for minimum sample sizes." )
 ```
 
-Conditions often include sample size (Table \@ref(tab:thumbsize) reproduces the sie requirements from Table \@ref(tab:thumb)). If you plan to do a t-test, either on its own or in post-hoc tests after analysis of variance, each group should contain more than thirty cases. So if you plan on doing t-tests, recruit more than thirty participants for each experimental group or more than thirty respondents for each group in your survey and you are fine. Well, if you have to reckon with non-response, that is, sampled participants or respondents unwilling to participate in your research, you should recruit more participants or respondents to have more than thirty observations in the end.  
+Conditions often include sample size (Table \@ref(tab:thumbsize) reproduces the size requirements from Table \@ref(tab:thumb)). If you plan to do a t-test, either on its own or in post-hoc tests after analysis of variance, each group should contain more than thirty cases. So if you plan on doing t-tests, recruit more than thirty participants for each experimental group or more than thirty respondents for each group in your survey and you are fine. Well, if you have to reckon with non-response, that is, sampled participants or respondents unwilling to participate in your research, you should recruit more participants or respondents to have more than thirty observations in the end.  
 
 Chi-squared tests require a minimum of five expected frequencies per category in a frequency distribution or cell in a contingency table. Your sample size should be at least the number of categories or cells times five to come even near this requirement. Regression analysis requires at least 20 cases per predictor variable in the regression model.  
 
@@ -45,7 +45,7 @@ Of course, the size of the difference between our sample outcome and the hypothe
 ![Security metal detector](figures/metaldetector.png)
 </div>
 
-The probability of rejecting a null hypothesis, then, depends both on sample size and effect size, that is, the difference between what we expect null hypothesis) and what we find (sample outcome). 
+The probability of rejecting a null hypothesis, then, depends both on sample size and effect size, that is, the difference between what we expect (null hypothesis) and what we find (sample outcome). 
 
 * A larger sample size makes a statistical test more sensitive. The test will pick up (be statistically significant for) smaller effect sizes.
 
@@ -65,14 +65,14 @@ Note the important difference between practical significance and statistical sig
 Statistical significance is just a tool that we use to signal practically significant effects. Statistical significance is not meaningful in itself. For example, we do not want to have a security detector responding to a minimal quantity of metal in a person's dental filling. Statistical significance is important only if it signals practical significance. We will return to this topic in Chapter \@ref(crit-discus).
 
 ### Unstandardized and standardized effect sizes  
-The difference between our sample outcome and the hypothesized value is the _unstandardized effect size_. If we test a mean, the unstandardized effect size is just the difference between our sample mean and the hypothesized population mean. For example, if we hypothesized that average candy weight in the population is 2.8 gram and we find an average candy weight in our sample bag of 2.75 gram, the unstandardized effect size is -0.05 gram.
+The difference between our sample outcome and the hypothesized value is the _unstandardized effect size_. If we test a mean, the unstandardized effect size is just the difference between our sample mean and the hypothesized population mean. For example, if we hypothesized that average candy weight in the population is 2.8 gram and we find an average candy weight in our sample bag of 2.75 gram, the unstandardized effect size is -0.05 gram. If 0.05 gram is a great deal to us, the effect is practically significant.
 
-Unstandardized effect sizes depend on the scale on which we measure the sample outcome. The unstandardized effect size of average candy weight changes if we measure candy weight in grams, micro grams, kilograms, or ounces. Of course, changing the scale does not affect the meaning of the effect size but the number that we are looking at is very different: 0.05 gram, 50 micro gram, 0.00005 kilo, or 0.00176 ounce. The unstandardized effect size value, then, does not tell us whether the effect size is large or small.
+Unstandardized effect sizes depend on the scale on which we measure the sample outcome. The unstandardized effect size of average candy weight changes if we measure candy weight in grams, micro grams, kilograms, or ounces. Of course, changing the scale does not affect the meaning of the effect size but the number that we are looking at is very different: 0.05 gram, 50 micro gram, 0.00005 kilo, or 0.00176 ounce. For this reason, we do not have rules of thumb for interpreting unstandardized effect sizes in  terms of small, medium, or large.
 
 ### Cohen's d  
 In scientific research, we rarely have precise norms for differences that are practically significant and differences that are not. Instead, we tend to think of small and large effects as differences that are large or small in comparison to the scores that we usually encounter.  
 
-If candy weights vary a lot, we will not be very impressed by a relatively small difference between observed and expected (hypothesized) average candy weight. In contrast, if candy weight is quite constant, a small average difference is important. 
+If candy weights vary a lot, we will not be very impressed by a relatively small difference between observed and expected (hypothesized) average candy weight. In contrast, if candy weight is quite constant, a small average difference can be important. 
 
 For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the hypothesized population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on means is known as _Cohen's d_. 
 
@@ -164,7 +164,7 @@ size.
 * We approximate the standardized effect size (Cohen's d in this case) by
 dividing twice the t value by the square root of the degrees of freedom. Note
 that the F test on equality of population variances is statistically
-significant (p = .029), so we do not assume equalx` variances and we use the
+significant (p = .029), so we do not assume equal variances and we use the
 bottom row from the results table.
 * Cohen's d = 2 * 1.602 / sqrt(30.009) = 3.204 / 5.478 = 0.58. This is a
 moderate effect.
@@ -185,12 +185,12 @@ We can use standardized effect size to express the effects that we are intereste
 
 If we know the effect size in the sample for which we want statistically significant results, we can figure out the minimum sample size for which the test statistic is statistically significant. 
 
-```{r sample-size, fig.cap="What is the minimum sample size required for a significant test result if the sample mean has a particular effect size?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+```{r sample-size, fig.cap="What is the minimum sample size required for a significant two-sided test result if the sample mean has a particular effect size?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Average candy weight sampling distribution approximated by a t distribution with two-sided 5% significance tails. Weak, moderate, and strong effect sizes (under null hypothesis that average candy weight is 2.8 in the population) marked by vertical red lines with two-sided p values for a smaple with this average.
 knitr::include_app("http://82.196.4.233:3838/apps/sample-size/", height="410px")
 ```
 
-1. Use the slider in Figure \@ref(fig:sample-size) to find the minimum sample size that we need for a statistically significant test result for each of the three efect sizes represented by red lines.
+1. Use the slider in Figure \@ref(fig:sample-size) to find the minimum sample size that we need for a statistically significant test result for each of the three effect sizes represented by red lines.
 
 ```{r eval=FALSE}
 * We need a sample of minimum size 9 to have a statistically significant result
@@ -227,13 +227,13 @@ is twice the surface of the tail to its right or to its left.
 
 Effect size as well as test statistics reflect the difference between what we expect according to the null hypothesis and what we observe in our sample. As a consequence, effect size indicators and test statistics are related. In some cases, such as Cohen's d, the relation between effect size and test statistic is very simple.  
 
-The test statistic t for a t test on one mean is equal to Cohen's d times the square root of sample size. Here, the only difference between the two is sample size! Sample size influences the test statistic---the larger the sample, the larger the test statistic---but it does not affect effect size. This is one reason why effect size is more interesting than test statistics and their p values.  
+The test statistic t for a t test on one mean is equal to Cohen's d times the square root of sample size. Here, the only difference between the two is sample size! Sample size influences the test statistic---the larger the sample, the larger the test statistic. At the same time, effect size affects the test statistic---a larger effect size produces a larger test statistic. 
 
 ## Hypothetical World Versus Imaginary True World  
 
 In the preceding paragraphs, we determined sample size using the effect size that we expect to find in our sample. We should realize, however, that we are interested in the effect size in the population. The 'true' effect size, so to speak. 
 
-The effect of a new medicine or a media campaign in our sample is not important but the effect in the population is. This complicates the calculation of our sample size. Instead of using the effect size in our (future!) sample, we must use the effect size in the population.  
+The effect of a new medicine or media campaign in our sample is not important but the effect in the population is. This complicates the calculation of sample size. Instead of using the effect size in our (future!) sample, we must use the effect size in the population.  
 
 ### Imagining a population with a small effect  
 Our null hypothesis states that average candy weight in the population is 2.8 grams. Let us decide that a small effect size is practically significant. We can think now of a population that could be the true population if the effect size is small. For example, a population in which average candy weight is 2.9 grams (and the standard deviation is 0.5).
@@ -333,7 +333,7 @@ Note that we can reject the null hypothesis in two ways: If our sample happens t
 
 However, a little bit of power is situated in the left tail. It is so small that we usually cannot see the orange section in the left tail of the bottom graph but the displayed probability shows that it is there. This is a bit strange because one could say that we reject the null hypothesis for the wrong reason: We think our null hypothesis is too high whereas it actually is too low.  
 
-The probability that this happens is very small and usually negligible. In the interactive content, you may encounter power values in the left tail that are so small that they have to be written in scientific notation, e.g., 1.0E-10, which means 1 at the tenth decimal place: 0.0000000001. Anyway, the important thing is that we reject a false null hypothesis even if it is for the 'wrong' reason. Rejecting a false null hypothesis, our conclusion is not erroneous.  
+The probability that this happens is very small and usually negligible. In the interactive content, you may encounter power values in the left tail that are so small that they have to be written in scientific notation, e.g., 1.0E-10, which means 1 at the tenth decimal place: 0.0000000001. Anyway, the important thing is that we reject a false null hypothesis even if it is for the 'wrong' reason. The decision to reject the null hypothesis is right because the null hypothesis is false. Unfortunately, in this situation our conclusion that the population value is below the hypothesized value would be wrong.  
 
 ## Sample Size, Effect Size, and Power  
 
@@ -359,11 +359,11 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size-power/", height="3
 * The red areas represent the significance level of the null hypothesis test,
 namely the total probability of rejecting the null hypothesis if it is true.
 * The yellow area gives the probability that we draw a sample from a population
-with true mean H~1~ which does not reject the null hypothesis. With such
+with true mean H1 which does not reject the null hypothesis. With such
 samples, we do not reject the null hypothesis, which is false, so we make a
 Type II error. The yellow area is the probability of making a Type II error.
 * The blue area is the probability that we draw a sample from a population with
-true mean H~1~ that rejects the null hypothesis, which is false. It is the
+true mean H1 that rejects the null hypothesis, which is false. It is the
 probability that we reject a false null hypothesis, which is the power of the
 test.
 ```
@@ -372,7 +372,7 @@ test.
 
 ```{r eval=FALSE}
 * If we set power to 50%, the yellow and blue areas each should occupy half of
-the sampling distribution that is centred at H~1~.
+the sampling distribution that is centred at H1.
 * A smaller power implies that we run a larger risk of not rejecting a false
 null hypothesis, so we need a smaller sample.
 ```
@@ -381,7 +381,7 @@ null hypothesis, so we need a smaller sample.
 
 ```{r eval=FALSE}
 * With larger effect size, the difference between the true population mean
-(H~1~) and the population mean according to the null hypothesis (H~0~) is
+(H1) and the population mean according to the null hypothesis (H0) is
 larger, and it will be more easily spotted in a smaller sample. In other words,
 we have higher power with a larger effect size. We need a smaller sample to
 achieve the original test power.
@@ -592,7 +592,7 @@ is false.
 
 * Effect size is related to practical significance. Effect sizes are expressed by (standardized) mean differences, regression coefficients, and measures of association such as the correlation coefficient, _R_^2^, and eta^2^.
 
-* Statistical significance of a test depends on effect size and sample size.  
+* Statistical significance of a test depends on effect size and sample size. Because sample size is important to statistical significance, it is wrong to use significance or a p value as an indication of effect size.
 
 * Not rejecting a false null hypothesis is a Type II error. A researcher can make this error only if the null hypothesis is not rejected.  
 
@@ -600,4 +600,4 @@ is false.
 
 * The probability of _not_ making a Type II error is the power of the test.  
 
-* The power of a test tells us the probability that we reject the null hypothesis if there is an effect of a particular size in the population. The larger this probability, the more confident we are that we do not overlook this effect when we do not reject the null hypothesis. 
+* The power of a test tells us the probability that we reject the null hypothesis if there is an effect of a particular size in the population. The larger this probability, the more confident we are that we do not overlook an effect when we do not reject the null hypothesis. 
