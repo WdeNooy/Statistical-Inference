@@ -31,17 +31,19 @@ If our sample is large or very large, small differences between what we expect a
 knitr::include_app("http://82.196.4.233:3838/apps/tiny-effects/", height="310px")
 ```
 
-1. What is the null hypothesis in Figure \@ref(fig:tiny-effects)?
+1. What is the null hypothesis in Figure \@ref(fig:tiny-effects) and how can you tell?
 ```{r eval=FALSE}
 * The null hypothesis is that average candy weight is 2.8 (gram) in the
 population.
+* In a statistical test, the sampling distribution has the hypothesized value
+as it's mean (as its expected value).
 ```
 
 2. In Figure \@ref(fig:tiny-effects), what should you do to obtain a statistically significant result for a sample average of 2.9 gram if the null hypothesis states that average candy weight is 2.8?
 ```{r eval=FALSE}
 * Increase sample size. Already at a sample size of 140, a sample with average
 candy weight of 2.9 gram differs significantly from the hypothesized 2.8 gram.
-In other words, a sample of this size with an average of 2.9 is quite unlikely
+In other words, a sample of this size with an average of (at least) 2.9 is quite unlikely
 to be drawn from the hypothesized population with an average of 2.8.
 ```
 
@@ -99,7 +101,7 @@ Instead of focusing on true versus false, we had better take into account the pr
 
 With low power, we have high probability of not rejecting a false null hypothesis even if the true population value is quite different from the hypothesized value. For example, a small sample of candies drawn from a population with average candy weight of 3.0  gram may not reject the null hypothesis that average candy weight is 2.8 gram in the population. The statistical test result should not make us conclude that there is no interesting effect. The test may not pick up substantively interesting effects.
 
-In contrast, if our test has very high power, we should expect effects to be statistically significant. Even tiny effects that are totally irrelevant from a substantive point of view. For example, an effect of exposure on attitude of 0.01 on a 10-point scale, is likely to be statistically significant in a very large sample but it is substantively uninteresting.
+In contrast, if our test has very high power, we should expect effects to be statistically significant. Even tiny effects that are totally irrelevant from a substantive point of view. For example, an effect of exposure on attitude of 0.01 on 10-point scales, is likely to be statistically significant in a very large sample but it is substantively uninteresting.
 
 As noted before (Section \@ref(typeIIerror)), standard statistical software usually does not report the power of a test. For this reason, it is not common practice to evaluate the statistical significance of results in combination with test power.
 
@@ -112,7 +114,7 @@ Imagine that previous research has taught us that one additional unit of exposur
 
 Well, try to test this null hypothesis in your favourite statistics software. Can you actually tell the software that the null hypothesis for the regression coefficient is 0.1? Most likely you can't because the software automatically tests the null hypothesis that the regression coefficient is zero in the population. 
 
-This approach is so prevalent that null hypotheses equating the population value of interest to zero have received a special name: the _nil hypothesis_ or _the nil_ for short (see Section \@ref(nil)). So you simply cannot include previous knowledge in your test if the software always tests the nil.  
+This approach is so prevalent that null hypotheses equating the population value of interest to zero have received a special name: the _nil hypothesis_ or _the nil_ for short (see Section \@ref(nil)). How can we include previous knowledge in our test if the software always tests the nil?  
 
 The null hypothesis that there is no association between the predictor variable and the outcome variable in the population may be interesting to reject if you really have no clue about the association. But in the example above, previous knowledge makes us expect a positive association of a particular size. Here, it is not interesting to reject the null hypothesis of no association. The null hypothesis of no association is a _straw man_ in this example. It is unlikely to stand the test and nobody should applaud if we knock it down.
 
@@ -167,11 +169,11 @@ Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population val
 1. Would you advise the company to use the advertisement based on a null hypothesis significance test?
 
 ```{r eval=FALSE}
-If the 95% confidence interval does not include H0 (the vertical line), we
+* If the 95% confidence interval does not include H0 (the vertical line), we
 must reject the null hypothesis at the 5% significance level. That is the rule
 of the game called null hypothesis significance testing.
-This is the case for confidence intervals C, E, and F.
-If we can reject the null hypothesis, we would be confident that there is an
+* This is the case for confidence intervals C, E, and F.
+* If we can reject the null hypothesis, we would be confident that there is an
 effect of exposure on brand awareness in the population. But this can be a
 tiny effect (intervals B and C) or a large effect (interval F). In case of a
 tiny effect, would we recommend to use the advertisement?
@@ -180,13 +182,13 @@ tiny effect, would we recommend to use the advertisement?
 2. Would you advise the company to use the advertisement based on the confidence intervals in Figure \@ref(fig:ci-nullhyp)?
 
 ```{r eval=FALSE}
-If less of the confidence interval extends to the left of H0 (negative effect)
+* If less of the confidence interval extends to the left of H0 (negative effect)
 and more of it is situated to the right (positive effect), we are more
-confident that the effect is positive in the population.
-If the range of plausible population values is more strongly positive, we are
-more certain that there is a substantial positive effect in the population.
-This is the most important reason to recommend using the advertisement.
-Interval F offers the most convincing evidence for a substantial positive
+confident that the effect is positive in the population. If the range of
+plausible population values is more strongly positive, we are more certain
+that there is a substantial positive effect in the population. This is the
+most important reason for using the advertisement.
+* Interval F offers the most convincing evidence for a substantial positive
 effect. Intervals D and E also suggest a positive effect but we are not so
 sure about the size of the effect: it may be tiny or perhaps even absent but
 it can also be moderate to strong.
@@ -247,7 +249,7 @@ Bayesian inference is intuitively appealing but it has not yet spread widely in 
 
 ## What If I Do Not Have a Random Sample? {#no-random-sample}
 
-In our approach to statistical inference, we have assumed all the time that we could have drawn a very large number of random samples from the same population. The large number of samples constitutes the sampling distribution that tells us about the probability of drawing the one random sample that we have actually drawn.
+In our approach to statistical inference, we have assumed all the time that we could have drawn a very large number of random samples from the same population. The large number of samples constitutes the sampling distribution that tells us about the probability of drawing the one random sample that we have actually drawn or a sample with a result that is even further away from the hypothesized value.
 
 What if I do not have a random sample? Can I still estimate confidence intervals or test null hypotheses? If you carefully read reports of scientific research, you will encounter examples of statistical inference on non-random samples or data that are not samples at all but rather represent an entire population, for instance, all people visiting a particular web site. Statistical inference is clearly being applied to data that are not sampled at random from an observable population. The fact that it happens, however, is not a guarantee that it is right.
 
