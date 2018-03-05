@@ -1,5 +1,5 @@
 library(shiny)
-fig.width = 360
+fig.width = 400
 fig.height = 300
 shinyUI(
   fluidPage(
@@ -18,13 +18,15 @@ shinyUI(
     
     verticalLayout(
       fluidRow(
-        column(6,
         align = "center",
         plotOutput("mainplot",
                    width = fig.width,
                    height = fig.height)
       ),
-      column(6,
+      fluidRow(align = "center",
+               uiOutput("fvaltext")
+      ),
+      fluidRow(
         align = "center",
         
         tags$table(
@@ -130,10 +132,7 @@ shinyUI(
           ) 
         )
       )
-    ),
-    fluidRow(align = "center",
-             uiOutput("fvaltext")
     )
   )
 )
-)
+
