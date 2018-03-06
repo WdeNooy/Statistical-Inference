@@ -535,6 +535,8 @@ rm(df)
 
 Table \@ref(tab:anova-balanced) shows an example of a balanced 3x2 factorial design. Each subgroup (cell) contains two participants (cases). If you remember the principles of statistical association and independence in contingency tables (Section \@ref(score-combi)), you know that equal distributions of frequencies across columns or across rows indicate statistical independence. In the example, the distributions are the same across columns (and rows), so the factors are statistically independent.
 
+In practice, it may not always be possible to have exactly the same number of observations for each subgroup. A participant may drop out from the experiment, a measurement may go wrong, and so on. If the numbers of observations are more or less the same for all subgroups, the factors are nearly independent, which is okay. So let us use the same rule of thumb for a balanced design as for the conditions of an F test in analysis of variance: If the size of the smallest subgroup is less than ten per cent smaller than the size of the largest group, we call a factorial design balanced.
+
 A balanced design is nice but not necessary. Unbalanced designs can be analyzed but estimation is more complicated (a problem for the computer, not for us) and the assumption of equal population variances for all groups (Levene's F test) is more important (a problem for us, not for the computer) because we do not have equal group sizes. Note that the requirement of equal group sizes applies to the subgroups in a two-way analysis of variance. With a balanced design, we ensure that we have the same number of observations in all subgroups, so we are on the safe side.
 
 ### Main effects in two-way analysis of variance {#maineffects}
@@ -703,7 +705,7 @@ In this situation, the main effect of endorser on willingness to donate is (near
 
 ### Testing main and interaction effects
 
-The effect of a single factor is called a main effect, as we learned in Section \@ref(maineffects). A main effect reflects the difference between means for groups within one factor. The main effect of sex, for instance, can be that females are on average more willing to donate than males. A two-way analysis of variance includes two main effects, one for each factor (see Section \@ref(anova2way)), for example a man effect of sex and a main effect of endorser. 
+The effect of a single factor is called a main effect, as we learned in Section \@ref(maineffects). A main effect reflects the difference between means for groups within one factor. The main effect of sex, for instance, can be that females are on average more willing to donate than males. A two-way analysis of variance includes two main effects, one for each factor (see Section \@ref(anova2way)), for example a main effect of sex and a main effect of endorser. 
 
 For moderation, however, we compare average scores of subgroups, that is, groups that combine a level on one factor and a level on another factor. In Figure \@ref(fig:anova-interaction), for instance, we compare average willingness to donate for combinations of endorser and participant's sex. The effect of differences among subgroups on the outcome variable is called an _interaction effect_. Just like a main effect, an interaction effect is tested with an F test and its effect size is expressed by eta^2^.
 
@@ -822,7 +824,7 @@ For the statistically informed reader, you should include the following informat
 
 * Report it if the main assumption is violated, that is, if you have (sub)groups of unequal size and the test on homogeneous variances is statistically significant. Report Levene's test just like you report the F test of a main effect (see above). If the assumption is violated, we still report and interpret the results of the analysis of variance but we warn that the results may not be trustworthy. 
 
-In a two-way analysis of analysis, the number of numeric results can be large. It is recommended to present them as a table (in the text or in an appendix). If you report the table, include the error, the sums of squares and mean squares in the same way that SPSS reports them. Table \@ref(tab:2way-table) presents an example.
+In a two-way analysis of variance, the number of numeric results can be large. It is recommended to present them as a table (in the text or in an appendix). If you report the table, include the error, the sums of squares and mean squares in the same way that SPSS reports them. Table \@ref(tab:2way-table) presents an example.
 
 ```{r 2way-table, warning=FALSE, message=FALSE, echo=FALSE}
 results <- anova(lm(willing_post ~ sex*endorser, data = donors))
