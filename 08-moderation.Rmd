@@ -668,8 +668,10 @@ moves up 0.15 points on the attitude scale.
 
 ```{r eval=FALSE}
 * It is possible to have the red regression line fully overlap the blue
-regression line because they have the same slope, namely -0.6. The multiple and simple regression lines are parallel. If we adjust the values of smoking status or contact with smokers, we can move the red line on top of
-the blue line.
+regression line because they have the same slope, namely -0.6. The multiple
+and simple regression lines are parallel. If we adjust the values of smoking
+status or contact with smokers, we can move the red line on top of the blue
+line.
 * For non-smokers, we have to set contact near six for the red line to overlap
 the blue one. The contact value for smokers is near 3.
 * If you like, you can calculate the exact values for contact at which the
@@ -1234,7 +1236,7 @@ If you want to know the confidence interval or p value of the exposure effect fo
 
 Interaction variables are used just like ordinary predictors, so the general assumptions of regression analysis apply. See Section \@ref(regr-inference) for a description of the assumptions and checks.
 
-Let us conclude the interpretation with a warning. The standardized regression coefficients that SPSS reports for interaction effects or effects of predictors that are involved in interaction effects __must not be used__. They are calculated in the wrong way if the regression model includes an interaction variable. As a result, they are meaningless.
+Let us conclude the interpretation with a warning. The standardized regression coefficients that SPSS reports for interaction effects or effects of predictors that are involved in interaction effects __must not be used__. They are calculated in the wrong way if the regression model includes an interaction variable. As a result, they are misleading.
 
 ### A categorical moderator
 What if we have three or more groups in our moderator? For example, smoking status measured with three categories: (1) never smoked, (2) have smoked, (3) currently smoking? Does the effect of exposure on attitude vary between people who never smoked, stopped smoking, and are still smoking?
@@ -1263,7 +1265,7 @@ effect, for example, if two lines are parallel but the third line is not
 parallel to the other two lines.
 ```
 
-In Section \@ref(categorical-predictor), we learned that we must create dummy variables for all but one groups of a categorical predictor in a regression model. This is what we have to do also for a categorical moderator because we must include a moderator as a predictor in the regression model. If the effect of another predictor, such as exposure, is moderated by a categorical variable, we have to create an interaction variable for each dummy variable in the equation. To create the interaction variables, we multiply the predictor with each of the dummy variable as we have done before. 
+In Section \@ref(categorical-predictor), we learned that we must create dummy variables for all but one groups of a categorical predictor in a regression model. This is what we have to do also for a categorical moderator. If the effect of another predictor, such as exposure, is moderated by a categorical variable, we have to create an interaction variable for each dummy variable in the equation. To create the interaction variables, we multiply the predictor with each of the dummy variable as we have done before. 
 
 ```{r categorical-moderator-fig, echo=FALSE, fig.cap="Statistical diagram with a moderator consisting of three groups. Non-smokers are the reference group", fig.asp=0.4}
 library(ggplot2)
@@ -1320,7 +1322,7 @@ Remember that the effects of predictors that are included in interactions are co
 
 Interaction predictors show effect differences. In Table \@ref(tab:cat-moderator-results), the interaction predictors test the null hypotheses that the effect of exposure is equal for former smokers and non-smokers (Exposure\*Former smoker) or for smokers and non-smokers (Exposure\*Smoker) in the population.
 
-If we would like to know whether the exposure effect for former smokers is significantly different from zero, we have to rerun the regression model using the people who stopped smoking as reference group. This new model would also tell us whether the exposure effect for people who stopped smoking is significantly different from the exposure effect for people who are still smoking.
+If we would like to know whether the exposure effect for former smokers is significantly different from zero, we have to rerun the regression model using former smokers as reference group. This new model would also tell us whether the exposure effect for people who stopped smoking is significantly different from the exposure effect for people who are still smoking.
 
 ### Common support {#commonsupportdichotomous}
 
@@ -1361,9 +1363,10 @@ knitr::include_app("http://82.196.4.233:3838/apps/common-support/", height="580p
 
 ```{r eval=FALSE}
 * The answer depends on the sample that was drawn.
-* A moderator (smoking status) group may have scores for the entire range of
-the predictor exposure, that is, from 0 to 10. But scores may also be available
-only for part of this range, for example, from 1 to 6 or from 4 to 8.
+* For one moderator (smoking status) group, the predictor (exposure) may have
+scores for the entire range, that is, from 0 to 10. But scores may also be
+available only for part of this range, for example, from 1 to 6 or from 4 to
+8.
 ```
 
 3. What is the problem if exposure scores are not nicely spread over the same range for all smoke status groups?
@@ -1375,7 +1378,7 @@ for smokers versus a positive effect for non-smokers. However, the effect for
 smokers may be based on a range of exposure values that is different and
 perhaps hardly overlapping with the range of exposure values for non-smokers.
 In this case, the effect difference may be due to the level of predictor scores
-instead of to the moderator.
+instead of the moderator.
 * In extreme cases, we may have only very few observations for a moderator
 group, for example, only a handful of smokers. In this situation, the
 regression effect for this group is not to be trusted.
