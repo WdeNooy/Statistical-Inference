@@ -19,7 +19,7 @@ In a regression model, we use the variation in scores on predictor variables to 
 
 For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two predictors (age and interest in politics) to predict the outcome variable (newspaper reading time). The two predictors can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which predictor is responsible for which part of the variation in outcome scores? 
 
-```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors for reading time are added to the model? The grey dots and lines represent the simple regression coefficients and their 95 per cent confidence intervals in a model predicting newspaper reading time. Blue dots and lines represent results in a regression model including all selected predictors.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
+```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors for reading time are added to the model? The grey dots and lines represent the regression coefficients and their 95 per cent confidence intervals in a simple regression model predicting newspaper reading time. Blue dots and lines represent results in a multiple regression model including all selected predictors.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
 # Goal: Show that regression coefficients change if new predictors are added to
 # the regression model.
 # For outcome Newspaper Reading Time, display the standardized simple
@@ -108,7 +108,8 @@ predictor's blue effect must be equal to its gray effect.
 ```
 
 ### Partial effect  
-Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
+
+How does a multiple regression model control the effect of a predictor for the effects of all other predictors? Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
 
 In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the outcome. It is the contribution to the prediction of the outcome variable over and above the predictions that we can make with all other predictors in the model. This is called a _partial effect_.
 
@@ -122,7 +123,7 @@ If we include a confounder as a new predictor in the model, the partial effects 
 
 With non-experimental data, for example data on newspaper reading habits gathered with a survey, we must include all confounders to ensure that the estimated regression coefficients represent the effects of the predictors and not effects of confounders. In practical applications, we can only include a limited number of variables in our research and we do not always know what are the confounders. We should strive to include the most important confounders in our research project but we should always keep in mind that the predictive effects that we find may be due to variables not included in our regression model.
 
-## Indirect Correlation {#indirectcorrelation}
+  ## Indirect Correlation {#indirectcorrelation}
 
 ```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrow).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and outcome variable, hence, the indirect correlation is stronger.
@@ -154,7 +155,7 @@ time, it affects the effect of political interest on reading time most
 strongly.
 ```
 
-When is a variable a confounder and when is it a stronger confounder, changing the effect of another predictor a lot? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and outcome but it is not (yet) included itself in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and outcome variable.
+When is a variable a confounder and when is it a stronger confounder, changing the effect of another predictor a lot? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and outcome but is not (yet) included itself in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and outcome variable.
 
 The size of the indirect correlation is equal to the product of the correlation between confounder and predictor and the correlation between confounder and outcome variable. In Figure \@ref(fig:mediation-indirectcorrelation), the correlation between age and interest in politics is .12 and the correlation between age and newspaper reading time is .88, the indirect correlation between interest in politics and reading time established by age is .12 * .88 = .11.
 
@@ -172,7 +173,7 @@ Once we add age as a new predictor to the regression model, the indirect correla
 
 The size of the change usually is closely related to the size of the indirect correlation, so the larger the indirect correlation, the more the regression coefficient of political interest changes if age (the former confounder) is included as a new predictor. This answers the second part of the question with which we started Section \@ref(indirectcorrelation): When is a variable a stronger confounder?
 
-If you love the details: The size of the change is not exactly the same as the size of the indirect correlation. It is equal to the correlation between the confounder (age) and the predictor (political interest) times the partial effect of the confounder (age) on the outcome variable (newspaper reading time) that controls for the effect of the predictor (political interest). This quantity is subtracted from the effect of the predictor (political interest) if we add age as a new predictor to the regression model. 
+If you love the details: The size of the change is not exactly the same as the size of the indirect correlation. It is equal to the correlation between the confounder (age) and the predictor (political interest) times the partial effect (standardized regression coefficient) of the confounder (age) on the outcome variable (newspaper reading time) that controls for the effect of the predictor (political interest). This quantity is subtracted from the effect of the predictor (political interest) if we add age as a new predictor to the regression model. 
 
 ### Confounders are not included in the regression model
 Finally, it is important to remember again that a confounder, such as age in the present example, is a variable that is not included in our regression model. As long as it is not included, the indirect correlation between predictor (political interest) and outcome (newspaper reading time) via the confounder (age) is not controlled for when the effect of the predictor is estimated. The estimated effect is not correct, it is confounded (confused) with the effect of the confounding variable.
@@ -216,7 +217,8 @@ Then, political interest is not the only predictor in the regression model.
 ```{r eval=FALSE}
 * The indirect correlation between Political interest and Reading time created
 by Interest in sports would be negative. It would be the opposite of the sign
-of the direct effect, so the partial effect would be stronger.
+of the direct effect, so the partial effect would be stronger if we include
+Interest in sports as a predictor in the regression model.
 ```
 
 In the preceding section, we learned that a partial effect expressed by a regression coefficient may change if a new predictor is added to the regression model. The partial effect of a predictor changes if the added variable is a confounder: It is correlated both with the predictor and outcome variable. In other words, there is an indirect correlation between the predictor and outcome via the confounding variable.
@@ -257,7 +259,7 @@ In this situation, the indirect correlation between political interest and newsp
 
 If news site use---the confounder---is not included in the regression model, the standardized regression effect of political interest more or less adds the indirect correlation to the effect of political interest. Adding a negative amount (indirect correlation), however, is equal to subtracting this amount from the standardized regression coefficient. The positive effect of political interest on reading time is underestimated. In this example, the effect of political interest is _suppressed_ (_masked_) by the confounder news site use. News site use is a _suppressor variable_. 
 
-If we include this suppressor variable (news site use) in our regression model, we eliminate its suppression of the effect of political interest on newspaper reading time. The negative effect of news site use on reading time is captured by the regression coefficient for the new news site use predictor. The effect of political interest on newspaper reading time is now controlled for the effect of news site use; it no longer includes the indirect correlation via news site use.
+If we include this suppressor variable (news site use) in our regression model, we eliminate its suppression of the effect of political interest on newspaper reading time. The negative effect of news site use on reading time is captured by the regression coefficient for the new news site use predictor. The effect of political interest on newspaper reading time is now controlled for the effect of news site use; it no longer includes the indirect correlation via news site use. In this example, the effect of political interest on newspaper reading time becomes more strongly positive.
 
 ```{r suppression2, echo=FALSE, fig.cap="Interest in politics as a confounder of the effect of news site use on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
@@ -283,7 +285,7 @@ Suppression can have surprising effects. If the predictor's original effect was 
 Finally, indirect correlations via other predictors can add so much to the original partial effect of a predictor that the standardized regression coefficient becomes higher than 1 or lower than -1. This clearly illustrates that standardized regression coefficients are not correlations in multiple regression models because correlations can never be higher than 1 or lower than -1. In contrast, the standardized regression coefficient in a simple regression model is equal to the correlation between predictor and outcome. Isn't that confusing?
 
 ### Reinforcement and spuriousness {#spuriousness}
-Adding a new predictor to a regression model may weaken the effects of other predictors. This happens if the indirect correlation due to a confounder has the same direction (sign) as the regression effect of the predictor. Either both the indirect correlation and regression effect are both positive or they are both negative.
+Adding a new predictor to a regression model may weaken the effects of other predictors. This happens if the indirect correlation due to a confounder has the same direction (sign) as the regression effect of the predictor. Either the indirect correlation and regression effect are both positive or they are both negative.
 
 In both situations, regression effects are initially overestimated because the predictors cover part of the effect of an important variable that had not yet been added to the regression model. The part of the effect that is due to the confounding variable is called _spurious_. The confounding variable is called a _reinforcer_ because it makes an effect appear stronger than it really is as long as the confounder has not been added to the regression model.
 
