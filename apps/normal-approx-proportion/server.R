@@ -18,23 +18,27 @@ output$mainplot <- renderPlot({
   data <- data.frame(sampmeans)
 
   ggplot(data = data, aes(x = sampmeans)) + 
-    geom_histogram(binwidth = 0.02,fill = brewercolors["Yellow"], colour = "black") +
-    coord_cartesian(xlim = c(0,1)) + 
-    ylab("Count") + 
-    xlab("Sample proportion of yellow candies") + 
-    stat_function( 
-      fun = function(x, mean, sd, n, bw){ 
-        dnorm(x = x, mean = mean, sd = sd) * n * bw
-      }, 
-      args = c(mean = p, sd = sqrt(p*(1-p)/n), n = k, bw = 0.02),
-      n = 1000) +
-    geom_area(stat = "function", 
-      fun = function(x, mean, sd, n, bw){ 
-        dnorm(x = x, mean = mean, sd = sd) * n * bw
-      }, 
-      args = c(mean = p, sd = sqrt(p*(1-p)/n), n = k, bw = 0.02),
+    geom_histogram(aes(y = ..density..),
+                   binwidth = 1/n,
+                   fill = brewercolors["Yellow"], 
+                   colour = "black") +
+    stat_function(
+      fun = function(x, mean, sd){
+        dnorm(x = x, mean = mean, sd = sd)
+      },
+      args = c(mean = p, sd = sqrt(p*(1-p)/n)),
+      n = 500) +
+    geom_area(stat = "function",
+      fun = function(x, mean, sd){
+        dnorm(x = x, mean = mean, sd = sd)
+      },
+      args = c(mean = p, sd = sqrt(p*(1-p)/n)),
       fill = "grey",
       alpha = 0.5) +
+    scale_x_continuous(name = "Sample proportion of yellow candies",
+                       breaks = c(0, .25, .5, .75, 1),
+                       limits = c(-.2, 1.2)) +
+    scale_y_continuous(name = "Count", breaks = NULL) +
     theme_general()
   
   

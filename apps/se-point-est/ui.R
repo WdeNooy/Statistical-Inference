@@ -1,27 +1,37 @@
 library(shiny)
-fig.width = 400
+fig.width = 350
 fig.height = 150
 
-shinyUI(fluidPage(
-  verticalLayout(
-    fluidRow(align = "center",
-             plotOutput("sampleplot",
-                        width = fig.width,
-                        height = fig.height+50)
+shinyUI(
+  fluidPage(
+    fluidRow(column(6,
+                    align = "center",
+                    plotOutput("sampleplot",
+                            width = fig.width,
+                            height = fig.height+100)
+                    ),
+             column(6,
+                    align = "center",
+                    plotOutput("sampdistplot",
+                            width = fig.width,
+                            height = fig.height + 100)
+                    )
              ),
-    fluidRow(align = "center",
-             plotOutput("sampdistplot",
-                        width = fig.width,
-                        height = fig.height + 100)
-             ),
-    fluidRow(align = "center",
-             actionButton("smallsamplebutton",
-                          label = "Take single sample"),
-             actionButton("largesamplebutton",
-                          label = "Take 100 samples"),
-             actionButton("resetbutton",
-                          label = "Reset"))
-  )
-  
-
-))
+    fluidRow(column(4,
+                    align = "center",
+                    actionButton("smallsamplebutton",
+                            label = "Add a single sample")
+                    ),
+             column(4,
+                    align = "center",
+                    actionButton("largesamplebutton",
+                            label = "Add 100 samples")
+                    ),
+             column(4,
+                    align = "center",
+                    actionButton("resetbutton",
+                          label = "Reset")
+                    )
+            )
+    )
+)

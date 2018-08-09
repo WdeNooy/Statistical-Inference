@@ -186,7 +186,7 @@ shinyServer(function(input, output) {
         scale_y_continuous(name = "",
                            labels = c(),
                            limits = c(0, 15)) +
-        ggtitle("Last drawn sample") + 
+        ggtitle("Last drawn bootstrap sample") + 
         theme_general() +
         theme(line = element_blank(),
               legend.position  = "none")
@@ -195,16 +195,20 @@ shinyServer(function(input, output) {
   output$sampdistplot <- renderPlot({
       df <- data.frame(prop = samples$hist)
       ggplot(df, aes(x = prop)) + 
-        geom_line(data = data.frame(x = (0:20)/50, y = dbinom(0:20, 50, 0.2)), 
-                     aes(x, y)) +
+        geom_col(data = data.frame(x = (0:20)/50, y = dbinom(0:20, 50, 0.2)),
+                 aes(x, y), 
+                 fill = "Grey",
+                 color = "Black",
+                 alpha = .4,
+                 width = .02) +
         geom_histogram(fill = brewercolors["Yellow"],
                      color = "Grey",
                      alpha = .6,
                      binwidth = .02,
                      aes(y = ..count../sum(..count..))) + 
-        ggtitle("Proportions of yellow candies in all samples") +
+        ggtitle("Proportions of yellow candies in all bootstrap samples") +
           coord_cartesian(xlim = c(0, 0.4)) +
-          labs(x = "Proportion of yellow candies", y = "Density") +
+          labs(x = "Proportion of yellow candies", y = "Probability") +
         theme_general()
   })
 

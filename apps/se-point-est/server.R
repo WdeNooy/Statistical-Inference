@@ -53,9 +53,38 @@ shinyServer(function(input, output) {
   output$sampleplot <- renderPlot({
     
     #Display message if there is no data yet
-    validate(
-      need(length(samples$lastsample) != 0, "Please draw a sample")
-      )
+    if(length(samples$lastsample) == 0) {
+      #display initial, empty plot
+      ggplot(data = data.frame(x = 1.4, y = 4)) +
+        #Message
+        geom_text(aes(x = x, y = y, label = "Please draw a sample",
+                      color = unname(brewercolors["Red"]))) +
+        #Population Mean line
+        geom_vline(colour = "black",
+                   size = 1,
+                   aes(xintercept = mean,
+                       linetype = "Population Mean")) + 
+        #Specifing legend for linetypes
+        scale_linetype_manual(guide = guide_legend(title = ""),
+                              values = c("Population Mean" = "solid")) +
+        #Adjusting zoom
+        coord_cartesian(xlim = c(0,6)) +
+        #Setting breaks
+        scale_x_continuous(breaks = c(seq(0,6,by = .5))) + 
+        scale_y_continuous(breaks = NULL) + 
+        #Title and axis labels
+        ggtitle("Last sample") +
+        ylab("") + 
+        xlab("Candy weight") +
+        #General theme
+        theme_general() +
+        #Adjusting legend
+        theme(legend.position = "top",
+              legend.margin = margin(.1, .1, .1, .1, unit = "cm"),
+              legend.text = element_text(size = 9))
+        
+      } else {
+    
     #data frame
     df <- data.frame(cweight = samples$lastsample)
   
@@ -110,13 +139,66 @@ shinyServer(function(input, output) {
       theme(legend.position = "top",
             legend.margin = margin(.1, .1, .1, .1, unit = "cm"),
             legend.text = element_text(size = 9))
+      }
     })
+  
   #PLOT OF SAMPLING DISTRIBUTION
   output$sampdistplot <- renderPlot({
-    validate(
-      need(length(samples$hist) != 0, "")
-    )
-    
+    if(length(samples$hist) == 0) {
+      ggplot() +
+        #Normal distribution in background
+        stat_function(data = data.frame(x = seq(0,6,by = .1)),
+                      aes(x = x,
+                          fill = "True distribution"),
+                      color = "black",
+                      geom = "area",
+                      alpha = .3,
+                      #function for scaling distribution to be visible in plot
+                      fun = function(x, mean, sd, n, bw) {
+                        dnorm(x = x, mean = mean, sd = sd) * n * bw
+                      },
+                      args = c(
+                        mean = mean,
+                        sd = sd/sqrt(N),
+                        n = 50,
+                        bw = .2
+                      )) +
+        #Mean line
+        geom_vline(aes(xintercept = mean,
+                       linetype = "True mean"),
+                   size = 1) +
+        #Left standard error line
+        geom_vline(aes(xintercept = mean - sd/sqrt(N),
+                       linetype = "± 1 Standard error"),
+                   size = .5
+        ) +
+        #Right standard error line
+        geom_vline(aes(xintercept = mean + sd/sqrt(N),
+                       linetype = "± 1 Standard error"),
+                   size = .5
+        ) +
+        #Zoom level
+        coord_cartesian(xlim = c(1,5)) + 
+        #Tickmarks
+        scale_x_continuous(breaks = seq(0,6,by = .5)) + 
+        #Legend definitions
+        scale_fill_manual("",values = c("True distribution" = unname(brewercolors["Green"]))) +
+        scale_linetype_manual("",values = c("± 1 Standard error" = "dashed",
+                                            "True mean" = "solid")) +
+        #General theme
+        theme_general() + 
+        #Setting title and axis labels
+        ggtitle("Sampling distribution") +
+        ylab("Count") + 
+        xlab("Means of sample weights") +
+        #Legend position adjustment
+        guides(linetype = guide_legend(nrow = 2,reverse = TRUE)) + 
+        theme(legend.position = "top",
+              legend.margin = margin(0, 0, 0, 0, unit = "cm"),
+              legend.direction = "horizontal",
+              legend.text = element_text(size = 8))
+      
+    } else {
     binwidth = .2 #histogram bindwidth
     
     #data frame
@@ -154,7 +236,7 @@ shinyServer(function(input, output) {
                      linetype = "± 1 Standard error"),
                  size = .5
                  ) +
-      #Left standard error line
+      #Right standard error line
       geom_vline(aes(xintercept = mean + sd/sqrt(N),
                      linetype = "± 1 Standard error"),
                  size = .5
@@ -201,5 +283,6 @@ shinyServer(function(input, output) {
             legend.margin = margin(0, 0, 0, 0, unit = "cm"),
             legend.direction = "horizontal",
             legend.text = element_text(size = 8))
+    }
   })
 })
