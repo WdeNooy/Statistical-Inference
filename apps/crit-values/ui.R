@@ -1,5 +1,5 @@
 library(shiny)
-fig.width = 400
+fig.width = 420
 fig.height = 200
 shinyUI(
   fluidPage(

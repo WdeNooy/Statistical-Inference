@@ -14,7 +14,7 @@ shinyUI(
      ),
      fluidRow(align = "center",
               actionButton("sample",
-                           label = "Generate sampling distribution"))
+                           label = "Generate new sampling distribution"))
     )
   )
 )

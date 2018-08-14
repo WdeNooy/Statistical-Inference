@@ -1,65 +1,78 @@
-# Overview of tests with conditions/requirements and SPSS commands ; interactive decision/flow chart - show complete diagram and pressing a button or clicking a cell hides all choices/cells that are not up- and downstream from this cell.
-# Use visNetwork:: package (visHierarchicalLayout()) or networkD3:: package (diagonalNetwork()).
-library(visNetwork)
-nodes <- data.frame(id = 1:26, level = c(1, rep(2, 7), rep(3, 6), rep(4, 12)), 
-                    label = c("Research Question", 
-                              "Category Share", 
-                              "Overall Score Level", 
-                              "Score Variation", 
-                              "Score Level Change", 
-                              "Different Group Score Levels", 
-                              "Different Group Shares", 
-                              "Concurrent Score Levels", 
-                              "1 Category", 
-                              "3+ Categories", 
-                              "2 Groups", 
-                              "3+ Groups", 
-                              "Linear", 
-                              "Bend", 
-                              "binomial test", 
-                              "one-sample chi-squared test", 
-                              "one-sample t test", 
-                              "bootstrap test on one median", 
-                              "Levene's F test", 
-                              "paired-samples t test", 
-                              "independent-samples t test", 
-                              "analysis of variance: F test", 
-                              "chi-squared test", 
-                              "t test on Pearson correlation", 
-                              "Regression: F (model) & t test (coefficient)", 
-                              "test on Spearman's rho"), 
-                    title = c("What characteristics of your participants<br>are you interested in?", 
-                              "How many have ...?, Which part is ...?<br><b>Variables</b>: 1 dichotomy", 
-                              "How low/high is ...?<br><b>Variables</b>: 1 numeric", 
-                              "More (dis)agreement among ... than among ...? <br>Are scores more spread among ... than among ...?<br><b>Variables</b>: 1 categorical, 1 numeric", 
-                              "Does the score level increase/decrease ...?<br><b>Variables</b>: 1 numeric repeated", 
-                              "Does one group score higher than another group...?<br><b>Variables</b>: 1 categorical, 1 numeric", 
-                              "Do categories occur more/less <br>in one group than in another group...?<br><b>Variables</b>: 2 categorical", 
-                              "Does a score increase/decrease <br>if another score changes?<br><b>Variables</b>: 2+ numeric", 
-                              "What is the share of ...", 
-                              "Which categories occur<br>relatively frequently?", 
-                              "Does group ... score higher/<br>lower than group ...?", 
-                              "Do some groups score higher/<br>lower than other groups?", 
-                              "Can a straight line <br>represent the relation<br>between scores?", 
-                              "Is the relation between <br>scores clearly bend?", 
-                              "<b>Visual:</b> bar chart, pie chart<br><b>Measure:</b> proportion or percentage<br><b>Interpretation:</b> ... per cent of the ... have/are ... <br><b>Assumptions</b>: none", 
-                              "<b>Visual:</b> bar chart, pie chart<br><b>Measure:</b> relative frequencies<br><b>Interpretation:</b> ... per cent of the ... have/are ...<br>and/but ... per cent have/are ...<br><b>Assumptions:</b> expected frequencies<br>never below 1 and max 20% below 5", 
-                              "<b>Visual:</b> histogram<br><b>Measure:</b> one mean,<br>Cohen's <i>d</i><br><b>Interpretation:</b> the participants'<br>/respondents' average score<br>on ... is ... (M = ..., SD = ...)<br><b>Assumptions:</b> sample size above 30<br>or population normally<br>distributed; otherwise: bootstrap", 
-                              "<b>Visual:</b> boxplot<br><b>Measure:</b> one median<br><b>Interpretation:</b> half of the ...<br>have a score below/above ...<br><b>Assumptions:</b> none", 
-                              "<b>Visual:</b> error bar<br>chart, boxplot<br><b>Measure:</b> two variances<br>or standard deviations<br><b>Interpretation:</b> the scores on ... vary<BR>more/less among ... (SD/variance = ...) than<BR>among ... (SD/variance = ...)<br><b>Assumptions:</b> none", 
-                              "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> the average<br>score on ... increases/<br>decreases between ... (M = ..., SD = ...)<br>and ... (M = ..., SD = ...), this change is<br>small/medium/large<br><b>Assumptions:</b> sample size above 30<br>or population normally distributed;<br>otherwise: bootstrap", 
-                              "<b>Visual:</b> means plot<br>(error bar chart, boxplot)<br><b>Measure:</b> difference of<br>two means, Cohen's <i>d</i><br><b>Interpretation:</b> there is a small/<br>medium/large difference between<br>the average score on ...<br>among ... (M = ..., SD = ...)<br>and among ... (M = ..., SD = ...)<br><b>Assumptions:</b> sample size above<br>30 or population normally<br>distributed; otherwise: bootstrap", 
-                              "<b>Visual:</b> means plot<b><br>Measure:</b> variance in means,<br>eta or eta<sup2</sup>, differences<br>between pairs of means<br><b>Interpretation:</b> there are<BR>no/small/medium/large differences<br>among the average scores on ... .<br>Group ... (M = ..., SD = ...)<br>has a lower/higher score than<br>group ... (M = ..., SD = ...)<br><b>Assumptions:</b> groups of equal<br>size or groups with equal<br>population variances (Levene's F test)", 
-                              "<b>Visual:</b> stacked or<br>clustered bar chart<br><b>Measure:</b> Phi, Cramer's V,<br>Goodman & Kruskals tau,<br>Kendalls tau-b<br><b>Interpretation:</b> the association<BR>between ... and ... is weak/medium/<br>strong. ... occurs relatively<BR>frequently among group ... but ...<br>is relatively rare with group ...<br><b>Assumptions:</b> expected<BR> frequencies never below 1<br>and max 20% below 5, otherwise<br>exact test; in a 2x2 table,<br>use Fisher's exact test", 
-                              "<b>Visual:</b> scatterplot (with regression<br>line)<br><b>Measure:</b> (Pearson) correlation<br><b>Interpretation:</b> There is a weak/medium/<br>strong correlation between ... and ...:<br>the higher the score on ..., the<br>higher/lower the score on ... .<br><b>Assumptions:</b> none.", 
-                              "<b>Visual:</b> scatterplots (with regression line)<br><b>Measures</b> for multiple regression:<BR><I>R</I><sup>2</sup>, regression coefficients (b or b*)<br><b>Interpretation:</b> When ... increases by<BR>one unit, the predicted value of ...<BR>increases/decreases with ... .<BR>This effect is weak/medium/strong.<BR>The variance in ... and ... (and ...)<BR>accounts for ...% of the variance in ... .<br><b>Assumptions:</b> residuals normally<BR>distributed and homoscedastic", 
-                              "<b>Visual:</b> scatterplot (with regression line)<br><b>Measure:</b> (Spearman's) rho<br><b>Interpretation:</b> There is a weak/<BR>medium/strong rank correlation between ...<BR>and ...: The higher the score on ..., the<BR>higher/lower the score on ... .<br><b>Assumptions:</b> not relevant (SPSS uses<BR>t aproximation if applicable)"), 
-                    shape = "dot", size = 20, font.size = 42, shadow = "FALSE")
-edges <- data.frame(from = c(1, 1, 1, 1, 1, 1, 1, 2, 2, 6, 6, 8, 8, 9, 10, 3, 3, 4, 7, 5, 11, 12, 13, 13, 14), to = c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 20, 21, 22, 24, 25, 26), shadow = "TRUE")
-p <- visNetwork(nodes, edges, width = "100%") %>% 
-  visEdges(arrows = "to") %>% 
-  visHierarchicalLayout(direction = "LR", levelSeparation = 600) %>%
-  visOptions(highlightNearest = list(enabled = TRUE, algorithm = "hierarchical", 
-                                     degree = list(from = 3, to = 1))) %>%
-  visInteraction(dragNodes = FALSE)
-rm(nodes, edges)
+#Create a flow chart for selecting tests in SPSS.
+
+#Left-hand x positions of columns.
+x <- c(0.1, 0.275, 0.45, 0.6)
+#Top y positions
+y <- seq(from = 1, to = 0.05, length.out = 16)
+
+#Plot
+p <- ggplot() +
+  coord_cartesian(xlim = c(0,1), ylim = c(0,1)) +
+  #header
+  geom_text(aes(x = x[1], y = y[1], label = "Type of Dependent\nVariable", hjust = 0.5, vjust = 1)) +
+  geom_text(aes(x = x[2], y = y[1], label = "Number of\nIndependent Variables", hjust = 0.5, vjust = 1)) +
+  geom_text(aes(x = x[3], y = y[1], label = "Types of Independent \nVariables", hjust = 0.5, vjust = 1)) +
+  geom_text(aes(x = x[4], y = y[1], label = "Test", hjust = 0, vjust = 1)) +
+  #dichotomous outcome
+  geom_segment(aes(x = x[1], xend = x[2], y = y[4], yend = y[3])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[3], yend = y[3])) +
+  geom_segment(aes(x = x[1], xend = x[2], y = y[4], yend = y[4])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[4], yend = y[4])) +
+  geom_segment(aes(x = x[2], xend = x[3], y = y[4], yend = y[5])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[5], yend = y[5])) +
+  geom_label(aes(x = x[1], y = y[4], label = "Dichotomy\n(2 groups)", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[2], y = y[3], label = "0", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[3], label = "Binomial test, z test on proportion", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[2], y = y[4], label = "1", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[4], label = "Dichotomy", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[4], label = "Fisher exact test", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[5], label = "Categorical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[5], label = "Crosstabs chi-squared test", hjust = 0, vjust = 0.5)) +
+  #categorical outcome
+  geom_segment(aes(x = x[1], xend = x[2], y = y[7], yend = y[6])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[6], yend = y[6])) +
+  geom_segment(aes(x = x[1], xend = x[2], y = y[7], yend = y[7])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[7], yend = y[7])) +
+  geom_label(aes(x = x[1], y = y[7], label = "Categorical\n(3+ groups)", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[2], y = y[6], label = "0", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[6], label = "One-sample chi-squared test", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[2], y = y[7], label = "1", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[7], label = "Dichotomy/Categorical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[7], label = "Crosstabs chi-squared test", hjust = 0, vjust = 0.5)) +
+  #numerical outcomes
+  geom_segment(aes(x = x[1], xend = x[2], y = y[12], yend = y[8])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[8], yend = y[8])) +
+  geom_segment(aes(x = x[1], xend = x[2], y = y[12], yend = y[12])) +
+  geom_segment(aes(x = x[2], xend = x[3], y = y[12], yend = y[10])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[10], yend = y[9])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[10], yend = y[10])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[10], yend = y[11])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[12], yend = y[12])) +
+  geom_segment(aes(x = x[2], xend = x[3], y = y[12], yend = y[13])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[13], yend = y[13])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[13], yend = y[14])) +
+  geom_segment(aes(x = x[1], xend = x[2], y = y[12], yend = y[15])) +
+  geom_segment(aes(x = x[2], xend = x[4], y = y[15], yend = y[15])) +
+  geom_segment(aes(x = x[2], xend = x[3], y = y[15], yend = y[16])) +
+  geom_segment(aes(x = x[3], xend = x[4], y = y[16], yend = y[16])) +
+  geom_label(aes(x = x[2], y = y[8], label = "0", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[8], label = "One-sample t test, Bootstrap one median", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[9], label = "Independent samples t test (means)", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[10], label = "Dichotomy", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[10], label = "Paired-samples t test (means)", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[11], label = "Levene's F test (variances)", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[1], y = y[12], label = "Numerical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[2], y = y[12], label = "1", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[12], label = "Categorical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[12], label = "F test one-way ANOVA", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[13], label = "Numerical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[13], label = "Test on (Spearman/Pearson) correlation", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[14], label = "Regression coefficient t test", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[2], y = y[15], label = "2+", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[15], label = "Just categorical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[15], label = "F test on two-way/multi-way ANOVA", hjust = 0, vjust = 0.5)) +
+  geom_label(aes(x = x[3], y = y[16], label = "Also numerical", hjust = 0.5, vjust = 0.5)) +
+  geom_label(aes(x = x[4], y = y[16], label = "F test multiple regression model, \n t tests on regression coefficients", hjust = 0, vjust = 0.8)) +
+  scale_x_continuous(name = "", breaks = NULL) +
+  scale_y_continuous(name = "", breaks = NULL) +
+  theme_minimal()

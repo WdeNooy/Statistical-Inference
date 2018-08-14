@@ -32,9 +32,19 @@ shinyServer(function(input, output) {
   
   ## MAIN PLOT
   output$mainplot <- renderPlot({
-    validate(
-      need(data$sample != "", "Please draw a sample")
-    )
+    # validate(
+    #   need(data$sample != "", "Please draw a sample")
+    # )
+    if (length(data$sample) == 0) {
+      #Create an initial dataset
+      data$sd <<- runif(n = 1,
+                        min = minpopsd,
+                        max = maxpopsd)
+      data$sample <<- rnorm(N,
+                            mean =  2.8,
+                            sd = data$sd
+      )
+    }
     
     #Calculate the upper and lower 2.5% threshold
     lowerthres <-
@@ -118,7 +128,6 @@ shinyServer(function(input, output) {
       theme_general() + 
       #set legend to top of plot
       theme(legend.position = "top")
-    
   })
 })
 

@@ -721,7 +721,7 @@ The slope of the regression line, however, does not change no matter which value
 
 ### Instructions
 
-```{r SPSSregsimplerepeat, echo=FALSE, out.width="640px", fig.cap="(ref:regsimpleSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregsimple, echo=FALSE, out.width="640px", fig.cap="(ref:regsimpleSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/qgOLWulSERs", height = "360px")
 # Goal: asymmetric association as prediction
 # Example: consumers.sav, brand awareness by advertisement exposure
@@ -967,6 +967,45 @@ literacy predicts 0.42 additional units of parental supervision.
   
 Note that the t test on the regression coefficient is the same in a simple
 regression model if you use supervision or media literacy as outcome variable.
+```
+
+4. How well can we predict brand awareness with ad exposure? Use [consumers.sav](http://82.196.4.233:3838/data/consumers.sav) to answer this question.
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=ad_expo brand_aw  
+  /ORDER=ANALYSIS.  
+* Simple regression.  
+REGRESSION  
+  /MISSING LISTWISE  
+  /STATISTICS COEFF OUTS CI(95) R ANOVA  
+  /CRITERIA=PIN(.05) POUT(.10)  
+  /NOORIGIN   
+  /DEPENDENT brand_aw  
+  /METHOD=ENTER ad_expo.  
+  
+Check data:  
+  
+There are no impossible values.  
+  
+Check assumptions:  
+  
+* We need at least twenty observations (cases) for each predictor in the
+regression model. Our model contains only one predictor, so the 62 cases in
+our data set suffice for using the theoretical approximation (F and t
+distribution) here.
+* Other assumptions will be explained in the chapter on moderation with
+regression analysis, so let us not pay attention to the assumptions yet.
+  
+Interpret the results:  
+  
+Ad exposure predicts about one fifth of the variation in brand awareness
+scores, R2 = .21, F (1, 60) = 15.87, p < .001.
+The predictive effect of exposure to brand advertisements is moderately strong
+(b* = 0.46). An additional unit of exposure increases the predicted brand
+awareness with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].
 ```
 
 ## Different Lines for Different Groups {#categoricalmoderator}

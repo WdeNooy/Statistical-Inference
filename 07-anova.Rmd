@@ -222,7 +222,7 @@ If we want to test whether the difference that we find in the sample also applie
 
 A statistical test requires a single number that expresses how close the sample result is to the hypothesis. How can we express the equality of three or more population means in one number?
 
-In an independent-samples t test (Section \@ref(fig:level-differences)), it was easy to express the equality of the two group means as one number: Just take the difference of the two means. Subtraction, however, does not work for three or more groups.
+In an independent-samples t test, it is easy to express the equality of the two group means as one number: Just take the difference of the two means. Subtraction, however, does not work for three or more groups.
 
 It is easy to see that subtraction of three means may yield zero even if the means are not the same. Assume that the Clooney group scores 6 as average willingness to donate, the Jolie group scores 4, and the group without celebrity endorser score 2. If we subtract in this order, the result is 6 - 4 - 2 = 0. But the differences between means is not zero!
 
@@ -251,8 +251,6 @@ We have to correct for chance differences and this is done by taking the ratio o
 
 Our test statistic, then, is the ratio of two variances: between-groups variance and within-groups variance. The F distribution approximates the sampling distribution of the ratio of two variances, so we can use this probability distribution to test the significance of the group mean differences we observe in our sample. 
 
-Remember that we used the F distribution before for testing a ratio of two variances, namely, in Levene's F test for the null hypothesis that two groups have the same population variance (Section \@ref(Levene-2groups)). Now we use it to test if three or more means are equal in the population.
-
 Long story short: We test the substantive null hypothesis that all groups have the same population means in an analysis of variance. But behind the scenes, we actually test between-groups variance against within-groups variance. That is why it is called analysis of variance.
 
 ### Assumptions for the F test in analysis of variance {#anova-assumpt}
@@ -269,7 +267,7 @@ Situations where samples cannot be regarded as independent are the same as in th
 #### Homogeneous population variances
 The F test in analysis of variance assumes that the groups are drawn from the same population. This implies that they have the same average score on the outcome variable in the population as well as the same variance of outcome scores. The null hypothesis tests the equality of population means but we must assume that the groups have equal outcome variable variances in the population.
 
-We can use a statistical test to decide whether or not the population variances are equal (homogeneous). This is the same Levene's F test that we have used in combination with independent samples t tests (Section \@ref(comp-means)). The test's null hypothesis is that the population variances of the groups are equal. If we do _not_ reject the null hypothesis, we decide that the assumption of equal population variances is plausible.
+We can use a statistical test to decide whether or not the population variances are equal (homogeneous). This is Levene's F test, which is also used in combination with independent samples t tests. The test's null hypothesis is that the population variances of the groups are equal. If we do _not_ reject the null hypothesis, we decide that the assumption of equal population variances is plausible.
 
 The assumption of equal population variances is less important if group samples are more or less of equal size (a balanced design, see Section \@ref(balanced)). We use a rule of thumb that groups are of equal size if the size of the largest group is less than 10% (of the largest group) larger than the size of the smallest group. If this is the case, we do not care about the assumption of homogeneous population variances.
 
@@ -351,7 +349,17 @@ A statistically significant F test tells us that we may be quite confident that 
 
 ### Instructions
 
-Applying one-way analysis of variance in SPSS and interpreting the results is explained in Section \@ref(comp-means), see Video \@ref(fig:SPSS1way).
+```{r SPSS1way, echo=FALSE, out.width="640px", fig.cap="(ref:1waySPSS)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/1-kh9_pGI9k", height = "360px")
+# Execute one-way analysis of variance in SPSS with Analyze > Compare Means > One-Way ANOVA {or use general Linear Model also for one-way? (MCRS probably uses Compare Means because it only disucsses one-way ANOVA) - between & within variance not labeled as such!).
+# Goal: association as level differences between three or more groups: Does the endorser matter to the level of willingness to donate to a fund raiser?
+# Example: donors.sav, outcome is willingness to donate (post), predictor (grouping variable) is endorser (0, 1).
+# Technique: one-way ANOVA.
+# SPSS menu: Compare Means ; post hoc: Bonferroni ; options: descriptives, homogeneity of variance test, means plot.
+# Paste & Run.
+# Check assumptions: F test homogeneous population variances or groups of equal size ; post-hoc t tests: each group more than 30 observations or normally distributed.
+# Interpret output: F test on the null hypothesis that all groups have equal population means - point out between groups sum of squares? ; post-hoc t test for pairwise comparison of (population) means ; test result and significance, confidence interval.
+```
 
 ### Exercises
 
@@ -534,7 +542,7 @@ knitr::kable(df, caption = "Number of observations per subgroup in a balanced 3x
 rm(df)
 ```
 
-Table \@ref(tab:anova-balanced) shows an example of a balanced 3x2 factorial design. Each subgroup (cell) contains two participants (cases). If you remember the principles of statistical association and independence in contingency tables (Section \@ref(score-combi)), you know that equal distributions of frequencies across columns or across rows indicate statistical independence. In the example, the distributions are the same across columns (and rows), so the factors are statistically independent.
+Table \@ref(tab:anova-balanced) shows an example of a balanced 3x2 factorial design. Each subgroup (cell) contains two participants (cases). Equal distributions of frequencies across columns or across rows indicate statistical independence. In the example, the distributions are the same across columns (and rows), so the factors are statistically independent.
 
 In practice, it may not always be possible to have exactly the same number of observations for each subgroup. A participant may drop out from the experiment, a measurement may go wrong, and so on. If the numbers of observations are more or less the same for all subgroups, the factors are nearly independent, which is okay. So let us use the same rule of thumb for a balanced design as for the conditions of an F test in analysis of variance: If the size of the smallest subgroup is less than ten per cent smaller than the size of the largest group, we call a factorial design balanced.
 
