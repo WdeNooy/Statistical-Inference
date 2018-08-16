@@ -9,13 +9,13 @@ shinyServer(function(input, output) {
   #effect sizes
   d <- c(mean - 0.8*sd, mean - 0.5*sd, mean - 0.2*sd, mean, mean + 0.2*sd, mean + 0.5*sd, mean + 0.8*sd)
   dlabs <- c(
-    paste0("Strong\n", format(d[1], nsmall=2)),
-    paste0("Moderate\n", format(d[2], nsmall=2)),
-    paste0("Weak\n", format(d[3], nsmall=2)),
-    paste0("H_0\n", format(d[4], nsmall=2)),
-    paste0("Weak\n", format(d[5], nsmall=2)),
-    paste0("Moderate\n", format(d[6], nsmall=2)),
-    paste0("Strong\n", format(d[7], nsmall=2))
+    format(d[1], nsmall=2),
+    format(d[2], nsmall=2),
+    format(d[3], nsmall=2),
+    paste0(format(d[4], nsmall=2), "\nH_0"),
+    format(d[5], nsmall=2),
+    format(d[6], nsmall=2),
+    format(d[7], nsmall=2)
   )
   
   #Function for scaling and shifting the t-distribution
@@ -68,12 +68,6 @@ shinyServer(function(input, output) {
                 size = 5) +
       #Horizontal axis
       geom_hline(aes(yintercept = 0)) +
-      #Left vline
-      geom_vline(aes(xintercept = left,
-                     linetype = "Threshold")) +
-      #Right vline
-      geom_vline(aes(xintercept = right,
-                     linetype = "Threshold")) +
       #Mean vline
       geom_vline(aes(xintercept = d[1]),
                  colour = brewercolors["Red"]) +
@@ -82,39 +76,6 @@ shinyServer(function(input, output) {
       geom_vline(aes(xintercept = d[4])) +
       geom_vline(aes(xintercept = d[6]),
                  colour = brewercolors["Red"]) +
-      #p value label weak
-      geom_text(label = paste0("p", " == ", 
-                               format(round(2*pt((d[3]-mean)/se, df = df),
-                                            digits = 3), nsmall = 3)),
-                parse = TRUE,
-                aes(x = d[3] - 0.02,
-                    y =  0.45),
-                hjust = 1,
-                size = 5,
-                colour = brewercolors["Red"]) +
-      #p value label moderate
-      geom_text(label = paste0("p", " == ", 
-                               format(round(2*pt((d[2]-mean)/se, df = df),
-                                            digits = 3), nsmall = 3)),
-                parse = TRUE,
-                aes(x = d[6] + 0.02,
-                    y =  0.45),
-                hjust = 0,
-                size = 5,
-                colour = brewercolors["Red"]) +
-      #p value label strong
-      geom_text(label = paste0("p", " == ", 
-                               format(round(2*pt((d[1]-mean)/se, df = df),
-                                            digits = 3), nsmall = 3)),
-                parse = TRUE,
-                aes(x = d[1] - 0.02,
-                    y =  0.45),
-                hjust = 1,
-                size = 5,
-                colour = brewercolors["Red"]) +
-      #Definition of linetypes
-      scale_linetype_manual(name = "",
-                            values = c("Mean" = "solid", "Threshold" = "dashed")) +
       #Scaling and double axis definitions
       coord_cartesian(xlim = c(2.2, 3.4), ylim = c(0,0.5)) +
       scale_x_continuous(breaks = d, labels = dlabs) +

@@ -99,7 +99,8 @@ shinyServer(function(input, output) {
       ggtitle("Average willingness by endorser") + 
       #Theme settings
       theme_general() + 
-      theme(legend.position = "bottom")
+      theme(legend.position = c(0.5, 0), legend.direction = "horizontal",
+            legend.justification = c(0.5, 0), legend.background = element_blank())
   })
   
   #Output for total of nobody

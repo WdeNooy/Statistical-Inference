@@ -3,21 +3,21 @@
 
 ### Summary {-}
 
-If we analyze the effects of two or more predictors on an outcome variable in a regression model, the effect of a predictor is adjusted for the effects of other predictors. Each predictor only predicts the part of the outcome scores that cannot be predicted by the other predictors. If we predict newspaper reading time, for example, from age and interest in politics, age predicts the part of newspaper reading time that interest in politics cannot predict.
+If we analyze the effects of two or more predictors on a dependent variable in a regression model, the effect of a predictor is adjusted for the effects of other predictors. Each predictor only predicts the part of the outcome scores that cannot be predicted by the other predictors. If we predict newspaper reading time, for example, from age and interest in politics, age predicts the part of newspaper reading time that interest in politics cannot predict.
 
 Because of adjustment for other predictors, adding new predictors to a regression model may change the effects of all predictors. The effects can become stronger (the new variable was a suppressor), weaker, and even change direction (the new variable was a reinforcer, the effect was partly spurious). For example, adding respondents' news site use to the regression model predicting newspaper reading time from age may change the effect of age on newspaper reading time. For this reason, we cannot be sure that the regression estimates represent the true effects of the predictors.
 
-Indirect correlations play a central role here: The correlation of a predictor (age) with the outcome (newspaper reading time) due to the fact that the predictor (age) is correlated with another predictor (news site use) that is also correlated with the outcome (newspaper reading time). The size of the indirect correlation is simply the product of the correlation between the two predictors (age and news site use) and the standardized regression effect of the other predictor (news site use) on the outcome variable (newspaper reading time).
+Indirect correlations play a central role here: The correlation of a predictor (age) with the outcome (newspaper reading time) due to the fact that the predictor (age) is correlated with another predictor (news site use) that is also correlated with the outcome (newspaper reading time). The size of the indirect correlation is simply the product of the correlation between the two predictors (age and news site use) and the standardized regression effect of the other predictor (news site use) on the dependent variable (newspaper reading time).
 
-If we add a causal order among the predictors of our regression model, we obtain a causal model or path model. The causal model includes an indirect effect: The first predictor affects the scores on the second predictor, which affects the outcome scores. For example, age affects news site use, which affects newspaper reading time. In this path model, the second predictor (news site use) mediates the effect of the first predictor on the outcome variable. The second predictor is called a mediator.
+If we add a causal order among the predictors of our regression model, we obtain a causal model or path model. The causal model includes an indirect effect: The first predictor affects the scores on the second predictor, which affects the outcome scores. For example, age affects news site use, which affects newspaper reading time. In this path model, the second predictor (news site use) mediates the effect of the first predictor on the dependent variable. The second predictor is called a mediator.
 
 We can estimate a path model as a series of regression models. With additional software, we can also estimate the confidence interval of an indirect effect. The causal order underlying the path model, however, is an assumption that we make. A regression model shows the predictive effects, which need not be causal. We cannot prove that the predictive effects are causal. We can only think of arguments that make a causal effect plausible.
 
 ## Controlling for Effects of Other Predictors {#controlling}
 
-In a regression model, we use the variation in scores on predictor variables to predict the variation of scores in the outcome variable: Does a person with a higher score on a predictor also have a higher score or, on the contrary, a lower score on the outcome variable? A simple regression model contains only one predictor but a multiple regression model includes more than one.
+In a regression model, we use the variation in scores on independent variables to predict the variation of scores in the dependent variable: Does a person with a higher score on a predictor also have a higher score or, on the contrary, a lower score on the dependent variable? A simple regression model contains only one predictor but a multiple regression model includes more than one.
 
-For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two predictors (age and interest in politics) to predict the outcome variable (newspaper reading time). The two predictors can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which predictor is responsible for which part of the variation in outcome scores? 
+For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two predictors (age and interest in politics) to predict the dependent variable (newspaper reading time). The two predictors can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which predictor is responsible for which part of the variation in outcome scores? 
 
 ```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors for reading time are added to the model? The grey dots and lines represent the regression coefficients and their 95 per cent confidence intervals in a simple regression model predicting newspaper reading time. Blue dots and lines represent results in a multiple regression model including all selected predictors.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="530px"}
 # Goal: Show that regression coefficients change if new predictors are added to
@@ -111,7 +111,7 @@ predictor's blue effect must be equal to its gray effect.
 
 How does a multiple regression model control the effect of a predictor for the effects of all other predictors? Conceptually, the regression model first removes the variation in the outcome that is predicted by all other predictors. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular variable but not by any of the other predictors in the model.
 
-In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the outcome. It is the contribution to the prediction of the outcome variable over and above the predictions that we can make with all other predictors in the model. This is called a _partial effect_.
+In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the outcome. It is the contribution to the prediction of the dependent variable over and above the predictions that we can make with all other predictors in the model. This is called a _partial effect_.
 
 This is what we mean if we say that we are _controlling for all other predictors_ in our interpretation of a regression model. We are not controlling as in an experiment where we ensure that participants get a particular value on a predictor (treatment) variable. It is controlling in a statistical sense, using the data that we have collected.
 
@@ -119,14 +119,14 @@ This is what we mean if we say that we are _controlling for all other predictors
 
 It is important to note that the effect is only unique in comparison to the other predictors that are included in the model. It may well be that we did not include variables in the model that are actually responsible for part of the effects that are attributed to the predictors in the model. Such left-out variables are called _confounding variables_ or, for short, _confounders_.
 
-If we include a confounder as a new predictor in the model, the partial effects of old predictors change. In Figure \@ref(fig:mediation-multipleregression), for instance, this happens if you add news site use to a model containing age as a predictor for newspaper reading time. The effects of old predictors are adjusted to a new situation, namely a situation with an added new predictor. The new predictor helps to predict variation in the outcome variable, so the variation left to be explained by old predictors changes. In Section \@ref(confounders), we will learn that regression coefficients can go up and down if confounders are included in the model.
+If we include a confounder as a new predictor in the model, the partial effects of old predictors change. In Figure \@ref(fig:mediation-multipleregression), for instance, this happens if you add news site use to a model containing age as a predictor for newspaper reading time. The effects of old predictors are adjusted to a new situation, namely a situation with an added new predictor. The new predictor helps to predict variation in the dependent variable, so the variation left to be explained by old predictors changes. In Section \@ref(confounders), we will learn that regression coefficients can go up and down if confounders are included in the model.
 
 With non-experimental data, for example data on newspaper reading habits gathered with a survey, we must include all confounders to ensure that the estimated regression coefficients represent the effects of the predictors and not effects of confounders. In practical applications, we can only include a limited number of variables in our research and we do not always know what are the confounders. We should strive to include the most important confounders in our research project but we should always keep in mind that the predictive effects that we find may be due to variables not included in our regression model. If there are confounders, our model suffers from _omitted variable bias_.
 
 ## Indirect Correlation {#indirectcorrelation}
 
 ```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrow).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-# Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and outcome variable, hence, the indirect correlation is stronger.
+# Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and dependent variable, hence, the indirect correlation is stronger.
 # Display the simple (standardized) regression coefficient as a black arrow from Pol.Interest to Reading Time with the width of the arrow corresponding to the size of the effect. Label arrow with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arrow from Pol.Interest to reading Time on top of the black arrow with its width corresponding to the partial effect when controlling for the selected confounder.
 # Correlations and standardized coefficients that are in line with the example data file readers.sav:
 # Pol. Interest - Age: 0.12
@@ -155,9 +155,9 @@ time, it affects the effect of political interest on reading time most
 strongly.
 ```
 
-When is a variable a confounder and when is it a stronger confounder, changing the effect of another predictor a lot? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and outcome but is not (yet) included itself in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and outcome variable.
+When is a variable a confounder and when is it a stronger confounder, changing the effect of another predictor a lot? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and outcome but is not (yet) included itself in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and dependent variable.
 
-The size of the indirect correlation is equal to the product of the correlation between confounder and predictor and the correlation between confounder and outcome variable. In Figure \@ref(fig:mediation-indirectcorrelation), the correlation between age and interest in politics is .12 and the correlation between age and newspaper reading time is .88, the indirect correlation between interest in politics and reading time established by age is .12 * .88 = .11.
+The size of the indirect correlation is equal to the product of the correlation between confounder and predictor and the correlation between confounder and dependent variable. In Figure \@ref(fig:mediation-indirectcorrelation), the correlation between age and interest in politics is .12 and the correlation between age and newspaper reading time is .88, the indirect correlation between interest in politics and reading time established by age is .12 * .88 = .11.
 
 ### Multiplication of correlations
 Multiplication makes intuitively sense. If two predictors are perfectly correlated ($r = 1$), the first predictor can exactly predict the second predictor. As a consequence it can predict the outcome via the second predictor (indirect correlation) just as well as the second predictor can predict it itself. For example, if age is perfectly correlated with interest in politics ($r = 1$) and the correlation between interest in politics and newspaper reading time is .88, the latter correlation is exactly the same as the indirect correlation between age and reading time via interest in politics that we get through multiplication (1.00 * .88 = .88). Here, age predicts reading time via interest in politics just as well as interest in politics predicts reading time.
@@ -173,7 +173,7 @@ Once we add age as a new predictor to the regression model, the indirect correla
 
 The size of the change usually is closely related to the size of the indirect correlation, so the larger the indirect correlation, the more the regression coefficient of political interest changes if age (the former confounder) is included as a new predictor. This answers the second part of the question with which we started Section \@ref(indirectcorrelation): When is a variable a stronger confounder?
 
-If you love the details: The size of the change is not exactly the same as the size of the indirect correlation. It is equal to the correlation between the confounder (age) and the predictor (political interest) times the partial effect (standardized regression coefficient) of the confounder (age) on the outcome variable (newspaper reading time) that controls for the effect of the predictor (political interest). This quantity is subtracted from the effect of the predictor (political interest) if we add age as a new predictor to the regression model. 
+If you love the details: The size of the change is not exactly the same as the size of the indirect correlation. It is equal to the correlation between the confounder (age) and the predictor (political interest) times the partial effect (standardized regression coefficient) of the confounder (age) on the dependent variable (newspaper reading time) that controls for the effect of the predictor (political interest). This quantity is subtracted from the effect of the predictor (political interest) if we add age as a new predictor to the regression model. 
 
 ### Confounders are not included in the regression model
 Finally, it is important to remember again that a confounder, such as age in the present example, is a variable that is not included in our regression model. As long as it is not included, the indirect correlation between predictor (political interest) and outcome (newspaper reading time) due to the confounder (age) is not controlled for when the effect of the predictor is estimated. The estimated effect is not correct, it is confounded (confused) with the effect of the confounding variable.
@@ -221,7 +221,7 @@ of the direct effect, so the partial effect would be stronger if we include
 Interest in sports as a predictor in the regression model.
 ```
 
-In the preceding section, we learned that a partial effect expressed by a regression coefficient may change if a new predictor is added to the regression model. The partial effect of a predictor changes if the added variable is a confounder: It is correlated both with the predictor and outcome variable. In other words, there is an indirect correlation between the predictor and outcome due to the confounding variable.
+In the preceding section, we learned that a partial effect expressed by a regression coefficient may change if a new predictor is added to the regression model. The partial effect of a predictor changes if the added variable is a confounder: It is correlated both with the predictor and dependent variable. In other words, there is an indirect correlation between the predictor and outcome due to the confounding variable.
 
 The partial effect of a predictor can become stronger, weaker, or even change direction if we add a confounder to the regression model. The current section describes the two types of confounders that are responsible for these changes: suppressors and reinforcers.
 
@@ -387,7 +387,7 @@ Check assumptions:
 linear model seems to fit the data.
 * The variation in residuals is about the same at all levels of the predicted
 outcome, so the outcome is more or less equally well predicted at all levels
-of the outcome variable.
+of the dependent variable.
 * As a conclusion, there are no clear indications that the assumptions for a
 linear regression model are violated.
   
@@ -735,7 +735,7 @@ visNetwork(nodes, edges, width = "100%") %>%
 1. In the causal diagram depicted in Figure \@ref(fig:mediation-regression), click on a variable name to highlight the effects in a regression analysis with this variable as the outcome. How many regression analyses does the causal diagram include and what do the results mean?
 ```{r eval=FALSE, echo=TRUE}
 * There are four variables with incoming arrows in this model. Each of them can
-be an outcome variable in a regression model, so we can estimate four
+be a dependent variable in a regression model, so we can estimate four
 regression models.
 * The unstandardized and standardized regression coefficients tell us the
 (unstandardized or standardized) sizes of the direct effects in the path
@@ -770,9 +770,9 @@ coefficients of all effects that make up the indirect effect.
 calculated from the regression results. We use bootstrapping to this end.
 ```
 
-Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is an outcome variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the outcome variable. In other words, all variables that are causally antecedent to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are antecedent to it.
+Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is a dependent variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the dependent variable. In other words, all variables that are causally antecedent to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are antecedent to it.
 
-In the path diagram displayed in Figure \@ref(fig:mediation-regression), we would regress newspaper reading time, the final outcome variable, on all other variables. As a next step, we would predict news site use as outcome from all variables except reading time. 
+In the path diagram displayed in Figure \@ref(fig:mediation-regression), we would regress newspaper reading time, the final dependent variable, on all other variables. As a next step, we would predict news site use as outcome from all variables except reading time. 
 
 Note that we include education level as predictor of news site use and newspaper reading even if we did not draw a direct arrow. Education level is theorized to be causally prior to news use site, so it can have a direct effect. We hypothesized that it did not have a direct effect on news site use and reading time, so we omitted arrows in our hypothesized model. We must include education as a predictor to check that it does not have these direct effects.
 
@@ -781,7 +781,7 @@ A third regression model would predict political interest from education level a
 ### Requirements
 We can estimate mediation and path models with regression analysis if we meet the following requirements:
 
-1. Each variable used as an outcome is numeric. This is a general requirement of a linear regression model. In a path diagram, it means that all mediators and outcome variables must be numeric.
+1. Each variable used as an outcome is numeric. This is a general requirement of a linear regression model. In a path diagram, it means that all mediators and dependent variables must be numeric.
 
     For detail lovers: Variables with only incoming arrows may be dichotomous but that requires logistic regression, which we do not discuss.
 
@@ -793,7 +793,7 @@ We can estimate mediation and path models with regression analysis if we meet th
 
 ### Size of indirect effects {#size-indirect-effects}
 
-The regression results tell us the sizes and statistical significance of all direct effects on the outcome variable. Both unstandardized and standardized regression coefficients can be used to interpret effects in the usual way. But how do we obtain the size, confidence interval, and statistical significance of indirect effects?
+The regression results tell us the sizes and statistical significance of all direct effects on the dependent variable. Both unstandardized and standardized regression coefficients can be used to interpret effects in the usual way. But how do we obtain the size, confidence interval, and statistical significance of indirect effects?
 
 The size of an indirect effect is calculated in exactly the same way as the size of indirect correlations (Section \@ref(indirectcorrelation)): Just multiply the size of direct effects. This can be done with either the standardized regression coefficients or the unstandardized regression coefficients.
 
@@ -822,7 +822,7 @@ If people with more interest in politics use news sites more frequently, there i
 
 ### Parallel and serial mediation {#partialserialmediation}
 
-If the indirect effects of an antecedent variable on an outcome variable contain at most one mediator, we have _single mediation_ or _parallel mediation_. Figure \@ref(fig:mediationparallel) illustrates single and parallel mediation.
+If the indirect effects of an antecedent variable on a dependent variable contain at most one mediator, we have _single mediation_ or _parallel mediation_. Figure \@ref(fig:mediationparallel) illustrates single and parallel mediation.
 
 ```{r mediationparallel, echo=FALSE, fig.cap="Causal diagrams for single (left) and parallel mediation (right).", fig.asp=0.6, fig.show="hold", out.width="50%"}
 library(ggplot2)
@@ -856,7 +856,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-If any of the indirect effects between an antecedent and outcome variable contains two or more mediators, we are dealing with serial mediation. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
+If any of the indirect effects between an antecedent and dependent variable contains two or more mediators, we are dealing with serial mediation. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
 
 
 ```{r mediationserial, echo=FALSE, fig.cap="Causal diagram for serial mediation.", fig.asp=0.3}
@@ -1011,7 +1011,7 @@ This sounds like a paradox but it should not upset you. The unstandardized indir
 
 ## Controlling for Covariates
 
-We usually have theoretical reasons to expect mediation between one pair of variables, for example, political interest as mediator between age and newspaper reading time. At the same time, we know that our outcome variable and perhaps our mediator may depend on other variables. Newspaper reading time, for instance, may also depend on education. In this situation, we would use the other variables as covariates for which we want to control statistically.
+We usually have theoretical reasons to expect mediation between one pair of variables, for example, political interest as mediator between age and newspaper reading time. At the same time, we know that our dependent variable and perhaps our mediator may depend on other variables. Newspaper reading time, for instance, may also depend on education. In this situation, we would use the other variables as covariates for which we want to control statistically.
 
 ```{r causaldiagram4, echo=FALSE, fig.cap="Causal diagram for  interest in politics as mediator between age and newspaper reading time with education as covariate.", fig.asp=0.3}
 library(ggplot2)
@@ -1237,18 +1237,18 @@ The variables do not have impossible values.
   
 Check assumptions:  
   
-Regression model with newspaper reading time as outcome variable:  
+Regression model with newspaper reading time as dependent variable:  
   
 * The residuals are quite normally distributed.  
 * They are centered around zero at all levels of the predicted outcome, so a
 linear model seems to fit the data.
 * The variation in residuals is about the same at all levels of the predicted
 outcome, so the outcome is more or less equally well predicted at all levels
-of the outcome variable.
+of the dependent variable.
 * As a conclusion, there are no clear indications that the assumptions for a
 linear regression model are violated.
   
-Regression model with news site use as outcome variable:  
+Regression model with news site use as dependent variable:  
   
 * The residuals are quite normally distributed but they display a pattern of
 down-sloping strips. This is the consequence of the fact that the outcome
@@ -1259,7 +1259,7 @@ predicted outcome levels and that the variation is more or less equal for all
 predicted outcome levels. Because the residuals are organized in strips, the
 variation cannot be as large at the extreme right or extreme left as in the
 middle. But we may assume that this results from the discrete (integer)
-outcome variable instead of from a problem with homoscedasticity.
+dependent variable instead of from a problem with homoscedasticity.
   
 Results:  
   
@@ -1277,7 +1277,7 @@ unintelligble code.
   
 In the PROCESS menu:  
     
-* Select readingtime as Outcome Varible (Y).  
+* Select readingtime as dependent varible (Y).  
 * Select age as Independent Variable (X),  
 * Select newssite as M variable(s),  
 * Select 4 under Model Number (model with only one mediator).  
@@ -1466,7 +1466,7 @@ unintelligble code.
   
 In the PROCESS menu:  
     
-* Select medliter as Outcome Varible (Y).  
+* Select medliter as dependent varible (Y).  
 * Select age as Independent Variable (X).  
 * Select supervision as M variable(s).  
 * Select 4 under Model Number (model with only one mediator).  
@@ -1585,7 +1585,7 @@ the standardized predictive effect of age on political interest by the
 standardized predictive effect of political interest on reading time.
 ```
 
-2. How do the numbers tell you that the regression effect of political interest on newspaper reading time is controlled for age? Hint: In a regression model with only one predictor, the standardized regression effect is equal to the correlation between the predictor and outcome variable.
+2. How do the numbers tell you that the regression effect of political interest on newspaper reading time is controlled for age? Hint: In a regression model with only one predictor, the standardized regression effect is equal to the correlation between the predictor and dependent variable.
 ```{r eval=FALSE}
 * A simple regression model includes only one predictor, so it does not
 control for effects of other predictors.
@@ -1626,7 +1626,7 @@ the outcome via the mediator. As a result, no part of the correlation between
 mediator and outcome can be due to the indirect effect of the predictor. The
 mediator is responsible for the full correlation between mediator and outcome,
 so its standardized regression coefficient is equal to its correlation with
-the outcome variable.
+the dependent variable.
 * It is more difficult to find the value of the correlation between age and
 reading time that makes the regression effect zero. This effect is zero if the
 correlation between age and reading time is for 100% an indirect effect via
@@ -1691,7 +1691,7 @@ well below minus one.
 * We must estimate a regression model for each variable that has at least one
 predictor in the model.
 * So we need two regression models: one with newspaper reading time as outcome
-variable and the other with political interest as outcome variable.
+variable and the other with political interest as dependent variable.
 ```
 
 ## Take-Home Points  

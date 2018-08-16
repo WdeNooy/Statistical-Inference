@@ -1,6 +1,6 @@
 library(shiny)
-fig.width = 400
-fig.height = 300
+fig.width = 300
+fig.height = 250
 shinyUI(
   fluidPage(
     #CSS Styling for table vjust to be in middle
@@ -16,15 +16,9 @@ shinyUI(
       )
     ),
     
-    verticalLayout(
-      fluidRow(
+    fluidRow(column(7,
         align = "center",
-        plotOutput("mainplot",
-                   width = fig.width,
-                   height = fig.height)
-      ),
-      fluidRow(
-        align = "center",
+        br(),
         
         tags$table(
           style="width: auto;",
@@ -128,6 +122,12 @@ shinyUI(
             tags$td(textOutput("tottext"))
           ) 
         )
+      ),
+      column(5,
+             align = "center",
+             plotOutput("mainplot",
+                        width = fig.width,
+                        height = fig.height)
       )
     )
   )

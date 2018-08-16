@@ -1,13 +1,13 @@
 library(shiny)
-fig.height = 600
-fig.width = 500
+fig.height = 480
+fig.width = 400
 
 shinyUI(fluidPage(
   verticalLayout(
   fluidRow(align = "center",
            plotOutput("plot",
                       width = fig.width,
-                      height = 600)
+                      height = fig.height)
            ),
   fluidRow(align = "center",
            sliderInput("alpha", 

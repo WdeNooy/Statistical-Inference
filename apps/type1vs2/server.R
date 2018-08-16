@@ -20,7 +20,7 @@ shinyServer(function(input, output) {
     cb["yellow"] <- brewercolors["Yellow"]
     cb["green"] <- brewercolors["Green"]
     cb["blue"] <- brewercolors["Blue"]
-    par(mfrow=c(2,1), tck=-0.03, mar=c(5, 3.2, 4, 1), mgp=c(3, 0.5, 0), xaxs="i", yaxs="i", cex=1.2)
+    par(mfrow=c(2,1), tck=-0.03, mar=c(5, 3.2, 4, 1), mgp=c(3, 0.5, 0), xaxs="i", yaxs="i", cex=1)
     x=seq(-5, 5, length=1000)
     mu0=0
     muA=1.5

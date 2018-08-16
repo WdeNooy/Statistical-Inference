@@ -9,11 +9,11 @@ In the preceding chapter, we have learned that a confidence interval contains th
 
 The expectation is usually called a (research) hypothesis and it must be translated into statistical hypotheses about a population value (parameter): a null hypothesis and an alternative hypothesis. 
 
-We test a null hypothesis in the following way. We construct a sampling distribution in one of the ways we have learned in Chapter \@ref(probmodels) using the value specified in the null hypothesis as the imaginary population value. In other words, we act as if the null hypothesis is true. 
+We test a null hypothesis in the following way. We construct a sampling distribution in one of the ways we have learned in Chapter \@ref(probmodels) using the value specified in the null hypothesis as the hypothetical population value. In other words, we act as if the null hypothesis is true. 
 
 Then, we calculate the probability of drawing a sample such as the one we have drawn or a sample that differs even more from the hypothesized population value. If this probability (p value) is very low, say, below 5%, we reject the null hypothesis because our sample would be too unlikely if the null hypothesis is true. In this case, the test is statistically significant. The probability threshold that we use is called the significance level of the test.
 
-## A Binary Decision
+## A Binary Decision {#binarydecision}
 
 The overall goal of statistical inference is to increase our knowledge about a population, when we only have a random sample from that population. In Chapter \@ref(param-estim), we estimated population values that are plausible considering the sample that we have drawn. For instance, we looked for all plausible average weights of candies in the population using information about the weight of candies in our sample bag. This is what we do when we estimate a population value.  
 
@@ -27,7 +27,7 @@ Hypothesis testing, then, amounts to choosing one of two options: reject or not 
 
 A statistical test determines whether a statement about a population is plausible given a sample that is drawn from this population. In essence, a statistical test answers the question: Is the sample that we have drawn sufficiently plausible if the statement about the population would be true?
 
-We need several things to apply a statistical test:
+We need several ingredients to apply a statistical test:
 
 1. A statement about a population.
 
@@ -37,7 +37,7 @@ We need several things to apply a statistical test:
 
 4. A probability for the statement showing how plausible the statement is.
 
-This section discusses these four ingredients of a statistical test. The statement about a population is the null hypothesis of the test (Section \@ref(nullhypothesis)). The sample must contain the variable or variables addressed in the null hypothesis, so we discuss this in the section on the null hypothesis. We select a significance level, usually five per cent, as criterion to decide whether the null hypothesis is sufficiently plausible or not. In the latter case, we reject the null hypothesis. The values for which we reject the null hypothesis constitute the rejection region of the test (Section \@ref(sig-typeI)). Finally, we let the computer calculate a probability (p value) for drawing a sample that differs at least as much from the null hypothesis as the sample that we have drawn. If this probability is smaller than the selected significance level, the sample is in the rejection region, so we must reject the null hypothesis (Section \@ref(pvalue)). This concludes the statistical test.
+This section discusses these four ingredients of a statistical test. The statement about a population is the null hypothesis of the test (Section \@ref(nullhypothesis)). The sample must contain the variable or variables addressed in the null hypothesis, so we discuss the sample in the section on the null hypothesis. We select a significance level, usually five per cent, as criterion to decide whether the null hypothesis is sufficiently plausible or not. In the latter case, we reject the null hypothesis. The values for which we reject the null hypothesis constitute the rejection region of the test (Section \@ref(sig-typeI)). Finally, we let the computer calculate a probability (p value) for drawing a sample that differs at least as much from the null hypothesis as the sample that we have drawn. If this probability is smaller than the selected significance level, the sample is in the rejection region, so we must reject the null hypothesis (Section \@ref(pvalue)). This concludes the statistical test.
 
 ### The null hypothesis and the sample {#nullhypothesis}
 
@@ -57,27 +57,29 @@ The statement that a research wants to test is called a _research hypothesis_. I
 
 These are statements about populations: all households in a country, children, voters, adults, and consumers. As these examples illustrate, research hypotheses seldom refer to statistics such as means, proportions, variances, or correlations. Still, we need a statistic to test a hypothesis. The researcher must translate the research hypothesis into a new hypothesis that refers to a statistic in the population, for example, the population mean. The new hypothesis is called a _statistical hypothesis_.
 
-1. Which statistics are addressed in the research hypothesis examples above?
+1. Which statistics are addressed in the examples of research hypotheses above?
 
 ```{r eval=FALSE, echo=TRUE}
 * A television station reaches half of all households in a country: This
 hypothesis is about a proportion (share): half (50%) of all households.
 * Media literacy is below 5.5 (on a 10-point scale) among children: This
-hypothesis addresses a population mean, namely average media literacy.
+hypothesis probably addresses a population mean, namely average media
+literacy.
 * Opinions about immigrants are not equally polarized among young and old
 voters: It is not so easy to see, but this hypothesis is about variation in
-scores, namely the variance in opinion scores.
+scores, namely the variance in opinion scores among young voters and the
+variation among old voters.
 * The celebrity endorsing a fundraising campaign makes a difference to
 willingness to donate: People exposed to different endorsers are expected to
 have different (levels of) willingness to donate. We are probably going to
 compare the mean or median willingness across groups of people.
-* More exposure to brand advertisements increases brand awareness: This reads
-like a correlation or regression between brand advertisements and brand
-awareness.
+* More exposure to brand advertisements increases brand awareness: This
+probably refers to a correlation or regression between brand advertisements
+and brand awareness.
 ```
 
 
-The most important statistical hypothesis is called the _null hypothesis_ (_H_~0~). The null hypothesis specifies one value for a population statistic. For example, it hypothesizes that average media literacy in the population of children equals 5.5 on a scale from one to ten. If 5.5 distinguishes between sufficient and insufficient media literacy on a ten-point scale, it is interesting to know whether average media literacy of children is just sufficient or not.
+The most important statistical hypothesis is called the _null hypothesis_ (_H_~0~). _The null hypothesis specifies one value for a population statistic_. For example, it hypothesizes that average media literacy in the population of children equals 5.5 on a scale from one to ten. If 5.5 distinguishes between sufficient and insufficient media literacy on a ten-point scale, it is interesting to know whether average media literacy of children is just sufficient or not.
 
 We can test this statement about the population with a random sample of children drawn from the population in which we measure their media literacy. Once we have the measurements, we can calculate average media literacy in the sample. We can compare the sample average to the hypothesized average media literacy in the population. If they are not too far apart, we conclude that the null hypothesis is plausible. If they are too far apart, we don't think the null hypothesis is plausible and we reject it.
 
@@ -87,7 +89,7 @@ How far apart must the sample statistic value and the hypothesized population va
 
 We can construct a sampling distribution around the hypothesized population value. Remember (Section \@ref(expectedvalue)) that the population value is the expected value of the sampling distribution, that is, it's mean (if the estimator is unbiased). The sampling distribution, then, is centered around the population value specified in the null hypothesis. This sampling distribution tells us the probabilities of all possible sample outcomes _if the null hypothesis is true_. It allows us to identify the most unlikely samples, that is, the samples for which we reject the null hypothesis.
 
-Note that we can construct a sampling distribution for the null hypothesis only if the hypothesis specifies one value for the population statistic. If we would have multiple population values in our null hypothesis, we would have multiple sampling distributions: one for each value. This is why the null hypothesis must specify a single value!
+Note that we can construct a sampling distribution for the null hypothesis only if the hypothesis specifies one value for the population statistic. If we would have multiple population values in our null hypothesis, for example, average media literacy is 5.5, 5.0, or 4.5 in the population, we would have multiple sampling distributions: one for each value. This is why the null hypothesis must specify a single value.
 
 Let us assume that average media literacy is 3.9 in our sample. According to our null hypothesis, the population average is 5.5. If average media literacy of children in the population would really be 5.5, is our sample with 3.9 as average media literacy among the five per cent most unlikely samples? We can use a hypothetical sampling distribution with 5.5 as mean value to answer this question.
 
@@ -102,8 +104,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/nullsampling/", height="400px"
 ```{r eval=FALSE, echo=TRUE}
 * The null hypothesis: In the population of children, average media literacy
 is 5.5.
-* Be sure to mention that the null hypothesis concerns a population. It always
-does.
+* Be sure to mention that the null hypothesis concerns a population.
 * This example is about average media literacy, so the null hypothesis
 statistic is the average.
 * The average (middle) of the sampling distribution is 5.5. This must be the
@@ -134,8 +135,7 @@ situated in the right tail.
 * In the initial example, with average population media literacy hypothesized
 to be 5.5 and 3.9 as the sample mean, sample means below 4.07 or above 6.93
 are in the blue tails. They are statistically significantly different from the
-hypothesized population value. They are too different from the hypothesized
-population value.
+hypothesized population value.
 ```
 
 5. Is it always possible to formulate a null hypothesis such that the sample mean is statistically significant? Take some new samples and change the value of the null hypothesis to check your answer.
@@ -145,7 +145,7 @@ population value.
 the centre of the sampling distribution moves left or right. And so do the
 blue tails that indicate statistically significant results.
 * Thus, it is always possible to find a hypothesized population value for
-which the sample mean ends up in a blue tail, that is, being statistically
+which the sample mean ends up in a blue tail, so it is statistically
 significant.
 ```
 
@@ -156,19 +156,15 @@ Nothing is special about a significance level of five per cent. We could have
 used any other cutoff value. It is just a convention to use this level.
 ```
 
-The values for the sample statistic for which the test is statistically significant, so that the null hypothesis is rejected, is called the _rejection region_. If the sample statistic is in the rejection region of a test, we reject the null hypothesis, and the test is statistically significant. 
+The values for the sample statistic for which the test is statistically significant constitue the _rejection region_ of the test. If the sample statistic is in the rejection region, we reject the null hypothesis. Note that the rejection region has two separate parts: a part in the left tail and a part in the right tail of the sampling distribution. Average media literacy can be too low to maintain the null hypothesis that it is 5.5 in the population, but it can also be too high. The threshold value of five per cent is divided into two halves of 2.5% per cent; one for each tail.
 
-Note that the rejection region has two separate parts: a part in the left tail and a part in the right tail of the sampling distribution. Average media literacy can be too low to maintain the null hypothesis that it is 5.5 in the population, but it can also be too high. The threshold value of 5% is divided into two halves of 2.5%, one for each tail.
-
-If the sample statistic is in the rejection region, we have to reject the null hypothesis. Those are the rules of the game. However, our conclusion that the null hypothesis is wrong can be a mistake because the null hypothesis may still be true. For example, average media literacy is really 5.5 in the population but we were so unfortunate to draw a sample of children with very low media literacy scores. This error is called a _Type I error_: rejecting a hypothesis that is actually true.
+If the sample statistic is in the rejection region, we have to reject the null hypothesis. Those are the rules of the game. However, our conclusion that the null hypothesis is wrong can be a mistake because the null hypothesis may still be true. For example, average media literacy is really 5.5 in the population, but we were so unfortunate to draw a sample of children with very low media literacy scores. This error is called a _Type I error_: rejecting a hypothesis that is actually true.
 
 We don’t know whether or when we make this error. We cannot entirely avoid this error because samples can be very different from the population from which they are drawn, as we learned in Chapter \@ref(samp-dist). Thankfully, however, we know the probability that we make this error. This probability is the significance level.  
 
 You should understand the exact meaning of probabilities here. A significance level of .05 allows five per cent of all possible samples to be so different from the population that we reject the null hypothesis even if it is true. 
 
-In other words, if we draw a lot of samples and decide on the null hypothesis for each sample, we would reject a true null hypothesis in five per cent of our decisions. So we have a five per cent chance of making a Type I error. 
-
-We decide on that probability when we select the confidence level of the test. We think that .05 is an acceptable probability for making this type of error. However, we do not know whether our sample belongs to the five per cent.
+In other words, if we draw a lot of samples and decide on the null hypothesis for each sample, we would reject a true null hypothesis in five per cent of our decisions. So we have a five per cent chance of making a Type I error. We decide on that probability when we select the confidence level of the test. We think that .05 is an acceptable probability for making this type of error.
 
 ### p Value {#pvalue}
 
@@ -180,23 +176,23 @@ How do we know that the sample that we have drawn is among the five percent most
 knitr::include_app("http://82.196.4.233:3838/apps/twosided/", height="400px")
 ```
 
-1. What does the number to the solid red vertical line represent in Figure \@ref(fig:twosided)?
+1. What does the number next to the solid red vertical line represent in Figure \@ref(fig:twosided)?
 
 ```{r eval=FALSE, echo=TRUE}
 * It represents the probability (p value) of drawing a sample with mean media
-literacy below 3.9 if the null hypothesis is true that the average is 5.50 in
-the population.
+literacy below 3.9 if the null hypothesis is true that the population average
+is 5.50.
 * In a later section, we will see that this is a one-sided p value, more
 precisely, a left-sided p value.
-* Please, do not forget to add that this is the probability only if the null
-hypothesis is true. See Question 4.
+* Please, do not forget to mention that this is the probability only if the
+null hypothesis is true. See Question 4.
 ```
 
-2. What is the relation between the number to the solid red vertical line and the two-sided p value reported in the figure? Pay attention to the dashed red vertical line in your answer.
+2. What is the relation between the number next to the solid red vertical line and the two-sided p value reported in the figure? Pay attention to the dashed red vertical line in your answer.
 
 ```{r eval=FALSE, echo=TRUE}
-* The two-sided p value is twice the (one-sided) p value reported as number to
-the solid red line. Note that rounding errors occur.
+* The two-sided p value is twice the (one-sided) p value reported as number
+next to the solid red line. Note that rounding errors occur.
 * The two-sided p value tells us the probability of drawing a sample with
 average media literacy at least as different from the hypothesized value as the
 sample mean that we have found.
@@ -208,12 +204,12 @@ population value.
 that are at least 1.6 HIGHER than the hypothesized population mean. These
 samples are at least as far away from the hypothesis as the sample mean that we
 have observed.
-* The dashed red line cuts off the same size of the right tail as the solid red
-line cuts off from the left tail (in the initial situation of the figure). In
-other words, it represents the same probability.
+* The dashed red line cuts off the same size from the right tail as the solid
+red line cuts off from the left tail (in the initial situation of the figure).
+In other words, it represents the same probability.
 * The two-sided p value sums the probabilities cut off from the left tail and
-the right tail. As a result, it is twice the probability reported for the solid
-red line.
+the right tail. As a result, it is twice the probability reported for the left
+tail.
 ```
 
 3. Is the test on average media literacy statistically significant in the initial situation of Figure \@ref(fig:twosided)? If so, at which significance level? Use the rejection region, the number to the vertical red line, and the two-sided p value to motivate your answer.
@@ -225,10 +221,10 @@ blue tails, so the test is statistically significant. The total probability of
 the two blue tails is five per cent, so this is the significance level.
 * (left-sided) p Value: The probability to draw a sample with 3.9 average media
 literacy (.015) is less than the probability associated with the rejection
-region in the left tail (.025) - if the null hypothesis is true. So the test is
-statistically significant.
-* Two-sided p value: The two-sided p value is below five percent (if the null
-hypothesis is true), so the test is statistically significant at the five
+region in the left tail (.025) if the null hypothesis is true. So the test is
+statistically significant at the 2 * .025 = .05 level..
+* Two-sided p value: The two-sided p value is below five percent if the null
+hypothesis is true, so the test is statistically significant at the five
 percent significance level.
 ```
 
@@ -245,9 +241,9 @@ test depend on the value of the population statistic that we specify in the
 null hypothesis.
 ```
 
-In the previous section, we learned that a test is statistically significant, so we must reject the null hypothesis, if the sample statistic is in the rejection region. Statistically software, however, usually does not report the rejection region for the sample statistic. Instead, it reports the _p value_ of the test, which is sometimes referred to as _significance_ or _Sig._ in SPSS. 
+In the previous section, we learned that a test is statistically significant if the sample statistic is in the rejection region. Statistically software, however, usually does not report the rejection region for the sample statistic. Instead, it reports the _p value_ of the test, which is sometimes referred to as _significance_ or _Sig._ in SPSS. 
 
-A p value is the probability that a sample is drawn with a value for the sample statistic that is at least as different from the hypothesized population value as the statistic value in the observed sample. In other words, the p value tells us which proportion of all possible samples are less similar to the hypothesized population value than our observed sample if the null hypothesis is true. If this proportion is very small, say less than five percent, the sample that we have drawn is among the unlikely samples. 
+A p value is the probability that a sample is drawn with a value for the sample statistic that is at least as different from the hypothesized population value as the value in the observed sample. In other words, the p value tells us which proportion of all possible samples are less similar to the hypothesized population value than our observed sample if the null hypothesis is true. If this proportion is very small, say less than five percent, the sample that we have drawn is among the unlikely samples. 
 
 And what do we do if our sample is among the unlikely ones? We reject the null hypothesis because the test is statistically significant. The decision rule is quite simple if we know the p value of a test: If the p value is below the significance level (usually .05), we reject the null hypothesis. Otherwise, we do not reject it.
 
@@ -265,9 +261,9 @@ If the dice is biased, we don't know the probability of throwing sixes. In the s
 
 The null hypothesis is central to significance testing. If the test is statistically significant, that is, if the p value is below the significance level, we reject the null hypothesis.
 
-Statistical hypotheses, however, come in pairs: a null hypothesis (_H_~0~) and an _alternative hypothesis_ (_H_~1~ or _H_~A~). The alternative hypothesis covers all situations not covered by the null hypothesis. The null hypothesis stating that average media literacy in a population of children is 5.5, is paired with the alternative hypothesis that states the average is not 5.5. Thus, we cover all possible outcomes.
+Statistical hypotheses, however, come in pairs: a null hypothesis (_H_~0~) and an _alternative hypothesis_ (_H_~1~ or _H_~A~). _The alternative hypothesis covers all situations not covered by the null hypothesis_. The null hypothesis stating that average media literacy in a population of children is 5.5, is paired with the alternative hypothesis stating that the average is not 5.5. In this way, we cover all possible outcomes.
 
-If we reject the null hypothesis, we say that we accept the alternative hypothesis. We believe that the alternative hypothesis is true, because we do not believe that the null hypothesis is true. Of course, we know that our belief can be mistaken. There is five per cent chance that we rejected a null hypothesis that is actually true (Type I error). Accepting the alternative hypothesis does not mean that this hypothesis is true. Please, never forget this.
+If we reject the null hypothesis, we say that we accept the alternative hypothesis. We believe that the alternative hypothesis is true, because we do not believe that the null hypothesis is true. Of course, we know that our belief can be mistaken. There is five per cent chance that we rejected a null hypothesis that is actually true (Type I error, Section \@ref(sig-typeI)). Accepting the alternative hypothesis does not mean that this hypothesis is true. Please, never forget this.
 
 1. Have another look at the research hypotheses. Which ones are null hypotheses, which ones are alternative hypotheses? Remember: A null hypothesis must specify a value for the population statistic that we are interested in.
 
@@ -290,53 +286,50 @@ a country. It specifies one particular value, namely 'half', that is 50% or
 hypothesis addresses a population mean. It expects some value below 5.5. This
 can be more than one value, so this is an alternative hypothesis.
 * Opinions about immigrants are not equally polarized among young and old
-voters: It is not so easy to see, but this hypothesis is about variation in
-scores, for example the variance in opinion scores. There is a variance for
-young voters and a variance for old voters in the population and they are
-expected not to be equal. The difference in variances, which is the statistic
-that we are interested in here, is not expected to be zero. It is expected to
-be anything but zero. This can be more than one value, so this is an
-alternative hypothesis.
+voters: This hypothesis is about variation in scores, for example the variance
+in opinion scores. There is a variance for young voters and a variance for old
+voters in the population and they are expected not to be equal. The difference
+in variances, which is the statistic that we are interested in here, is not
+expected to be zero. It is expected to be anything but zero. This can be more
+than one value, so this is an alternative hypothesis.
 * The celebrity endorsing a fundraising campaign makes a difference to
-willingness to donate: People exposed to different endorsers are expected to
-have different (levels of) willingness to donate. We are probably going to
-compare the mean willingness across groups of people. The means are not
-expected to be the same, but it is not said what exectly their differences are.
+willingness to donate: We are probably going to compare the mean willingness
+across groups of people. The means are not expected to be the same, but the
+exact difference is not specified. It can be any number other than zero.
 Again, this is the alternative hypothesis.
-* More exposure to brand advertisements increases brand awareness: This reads
-like a correlation or regression. We expect a positive association, but the
-researcher does not specify a value for the expected association, so this is an
-alternative hypothesis.
+* More exposure to brand advertisements increases brand awareness: We expect a
+positive association, but the researcher does not specify a value for the
+expected association, so this is an alternative hypothesis.
 ```
 
 The alternative hypothesis is mainly of interest because it usually represents the research hypothesis (but not always as some statistics textbooks would have us believe). Most of the research hypotheses in social research are alternative hypotheses because our theories tell us to expect differences or changes but not the size of differences or changes.
 
-Not knowing which precise difference or association to expect, researchers usually formulate the research hypothesis that there is a difference or association. Because a particular value for the difference or association cannot be specified, these research hypotheses are alternative hypotheses. The associated null hypothesis is that there is no difference or no association. It equates the population statistic to one value, namely zero. This type of null hypothesis is called a _nil hypothesis_ or just plainly _the nil_. 
+Not knowing which precise difference or association to expect, we usually formulate the research hypothesis that there is a difference or association. Because a particular value for the difference or association cannot be specified, these research hypotheses are alternative hypotheses. The associated null hypothesis is that there is no difference or no association. It equates the population statistic to one value, namely zero. This type of null hypothesis is called a _nil hypothesis_ or just plainly _the nil_. 
 
-When groups have the same average scores on an outcome variable, for example, willingness to donate to a charity, the differences between the group averages are hypothesized to be zero. If there is no correlation between exposure and brand awareness in the population, the correlation coefficient (Spearman's rho or Pearson's correlation coefficient) or regression coefficient ($b$ or $b^*$) is hypothesized to be zero. For all measures of association, zero means that there is no association.
+When groups have the same average scores on a dependent variable, for example, willingness to donate to a charity, the differences between the group averages are hypothesized to be zero. If there is no correlation between exposure and brand awareness in the population, the correlation coefficient (Spearman's rho or Pearson's correlation coefficient) or regression coefficient ($b$ or $b^*$) is hypothesized to be zero. For all measures of association, zero means that there is no association.
 
-If the research hypothesis is the alternative hypothesis, we have to formulate the null hypothesis ourselves. This is very important, because the null hypothesis is actually tested. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero (see Section \@ref(nullSPSS)).
+If the research hypothesis is the alternative hypothesis, we have to formulate the null hypothesis ourselves. This is very important, because the null hypothesis is actually tested. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero (see Section \@ref(nullSPSS) on null hypotheses in SPSS).
 
 ## One-Sided and Two-Sided Tests {#one-twosidedtests}
 
 In the preceding section, you may have felt a bit awkward when you were determining whether a research hypothesis is a null hypothesis or an alternative hypothesis. The research hypothesis stating that average media literacy is below 5.5 in the population, for example, represents the alternative hypothesis because it does not fix the hypothesized population value to one number. The accompanying null hypothesis must cover all other options, so it must state that the population mean is 5.5 or higher. But this null hypothesis does not specify one value as it should, right?
 
-This null hypothesis is slightly different from the ones we have encountered so far, which equated the population value to a single value, usually zero. If the null hypothesis equates a parameter to a single value, the null hypothesis can be rejected if the sample statistic is either too high or too low. There are two ways of rejecting the null hypothesis, so this type of hypothesis is called _two-sided_ or _two-tailed_.
+This null hypothesis is slightly different from the ones we have encountered so far, which equated the population value to a single value. If the null hypothesis equates a parameter to a single value, the null hypothesis can be rejected if the sample statistic is either too high or too low. There are two ways of rejecting the null hypothesis, so this type of hypothesis and test are called _two-sided_ or _two-tailed_.
 
-By contrast, the null hypothesis stating that the population mean is 5.5 or higher is a _one-sided_ or _one-tailed_ hypothesis. It can only be rejected if the sample statistic is at one side of the spectrum: only below (left-sided) or only above (right-sided) the hypothesized population value. In this example, the null hypothesis is only rejected if the sample mean is well below the hypothesized population value. A test of a one-sided null hypothesis is called a _one-sided test_. 
+By contrast, the null hypothesis stating that the population mean is 5.5 or higher is a _one-sided_ or _one-tailed_ hypothesis. It can only be rejected if the sample statistic is at one side of the spectrum: only below (left-sided) or only above (right-sided) the hypothesized population value. In the media literacy example, the null hypothesis is only rejected if the sample mean is well below the hypothesized population value. A test of a one-sided null hypothesis is called a _one-sided test_. 
 
 ```{r nonsig-1sided, fig.cap="One-sided and two-sided tests of a null hypothesis.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Display the sampling distribution of average media literacy as a normal curve with 5% two-sided significance areas dark blue and 5% one-sided significance areas light blue. Generate randomly one out of six possible values for the sample mean: (from left to right) in the 0-2.5% region, 2.5%-5%, 5%-50%, 50%-95%, 95%-97.5%, 97.5%-100%. Let the user select the answers (Yes/No) to three questions: Is this sample mean significant at a 5% significance level? "Left-sided test?", "Right-sided test?",  "Two-sided test?". Give feedback when the user presses the submit button. 
 knitr::include_app("http://82.196.4.233:3838/apps/nonsig-1sided/", height="310px")
 ```
 
-1. The sampling distribution in Figure \@ref(fig:nonsig-1sided) contains dark blue tails that represent 2.5% of the sampling distribution and light blue tails representing 5% of the sampling distribution. Note that the light blue 5% tails include the 2.5% tails. Which coloured tails do we use for a two-sided test, a left-sided test, and a right-sided test at a 5% significance level?
+1. The sampling distribution in Figure \@ref(fig:nonsig-1sided) contains dark-blue tails that represent 2.5 per cent of the sampling distribution and light-blue tails representing five per cent of the sampling distribution. Note that the light-blue (5%) tails include the dark-blue (2.5%) tails. Which coloured tails do we use for a two-sided test, a left-sided test, and a right-sided test at a five per cent significance level?
 
 ```{r eval=FALSE, echo=TRUE}
 * As we learned in a previous section, a two-sided test divides the total
-significance level into two halves, one halve for each tail of the sampling
-distribution. The dark blue tails, each representing 2.5%, then, are used for a
-two-tailed test at 5% significance level.
+significance level into two parts, one half for each tail of the sampling
+distribution. The dark blue tails, each representing 2.5 per cent, then, are
+used for a two-tailed test at five epr cent significance level.
 * A one-tailed test takes into account sample outcomes either below the
 hypothesized value or above the hypothesized value. It assigns the full
 significance level (5%) to one tail, so it uses the light blue tails (which
@@ -348,38 +341,40 @@ test only uses the tail at the right.
 2. Practice recognizing significant test results in Figure \@ref(fig:nonsig-1sided). Draw some samples and decide if a two-sided, right-sided, or left-sided test is statistically significant at the 5% significance level.
 
 ```{r eval=FALSE, echo=TRUE}
-* If the sample mean is in a dark blue tail, a two-sided test is statistically
-significant.
-* If the sample mean is in the light or dark blue tail at the right, a
-right-sided test is statistically significant but a left-sided test is not.
-* If the sample mean is in the light or dark blue tail at the left, a
-left-sided test is statistically significant but a right-sided test is not.
+* If the sample mean falls within a dark-blue tail, a two-sided test is
+statistically significant.
+* If the sample mean is falls within the light (or dark-blue) tail at the
+right, a right-sided test is statistically significant but a left-sided test
+is not.
+* If the sample mean is falls within the light (or dark-blue) tail at the
+left, a left-sided test is statistically significant but a right-sided test is
+not.
 ```
 
-3. In which situation is a one-sided test statistically significant whereas a two-sided test is not statistically significant at the 5% significance level?
+3. In which situation is a one-sided test statistically significant whereas a two-sided test is not statistically significant at the five per cent significance level?
 
 ```{r eval=FALSE, echo=TRUE}
-* If the sample mean is in the light blue part of the tail at the right but not
-in the dark blue part, a right-sided test is statistically significant but a
+* If the sample mean is in the light-blue part of the tail at the right but not
+in the dark-blue part, a right-sided test is statistically significant but a
 two-sided test is not.
-* If the sample mean is in the light blue part of the tail at the left but not
-in the dark blue part, a left-sided test is statistically significant but a
+* If the sample mean is in the light-blue part of the tail at the left but not
+in the dark-blue part, a left-sided test is statistically significant but a
 two-sided test is not.
 ```
 
-4. In which situation is a one-sided test not statistically significant whereas a two-sided test is statistically significant at the 5% significance level?
+4. In which situation is a one-sided test not statistically significant whereas a two-sided test is statistically significant at the five per cent significance level?
 
 ```{r eval=FALSE, echo=TRUE}
 * A one-sided test is more easily statistically significant because the 5% part
 of the tail is wider than the 2.5% part of the tail. But a one-sided test
 requires that the sample outcome is on the right side of the hypothesized
-value. But if it is on the wrong side, it can never be significant in a
+value. If it is on the wrong side, it can never be significant in a
 one-tailed test. After all, the researcher has excluded the possibility that
 the true population value is on the wrong side.
-* If the sample mean is in the dark blue tail at the right, a two-sided test
+* If the sample mean is in the dark-blue tail at the right, a two-sided test
 is statistically significant but a left-sided test is not. The right tail is
 the wrong side for a left-sided hypothesis.
-* If the sample mean is in the dark blue tail at the left, a two-sided test is
+* If the sample mean is in the dark-blue tail at the left, a two-sided test is
 statistically significant but a right-sided test is not. The left tail is the
 wrong side for a right-sided hypothesis.
 ```
@@ -396,15 +391,16 @@ If there is a possibility that the score may also be higher than 5.5 and it is d
 knitr::include_app("http://82.196.4.233:3838/apps/sign-left/", height="400px")
 ```
 
-1. Figure \@ref(fig:sign-left) shows the sampling distribution and the rejection region for a left-sided test at 5% significance level. If we reject the null hypothesis that average media literacy in the population is 5.5, do we also reject a null hypothesis that this average is larger than 5.5? Change the slider to demonstrate your answer.
+1. Figure \@ref(fig:sign-left) shows the sampling distribution and the rejection region for a left-sided test at five per cent significance level. If we reject the null hypothesis that average media literacy in the population is 5.5, do we also reject a null hypothesis that this average is larger than 5.5? Change the slider to demonstrate your answer.
 
 ```{r eval=FALSE, echo=TRUE}
 * Yes. If a left-sided test is situated in the rejection region with the null
 hypothesis that the population mean is 5.5, a left-sided test is also situated
 in the rejection region for higher values of the hypothesized population mean.
 * The sampling distribution shifts to the right if we use a higher value for
-the hypothesized population mean. The observed sample mean remains in the blue
-tail.
+the hypothesized population mean. The observed sample mean remains in the left
+blue tail, which extends infinitely to the left, even if we cannot see that
+clearly in the figure.
 ```
 
 You may wonder how a one-sided null hypothesis equates the parameter of interest with one value as it should. The special value here is 5.5. If we can reject the null hypothesis stating that the population mean is 5.5 because our sample mean is sufficiently lower than 5.5, we can also reject any hypothesis involving population means higher than 5.5. 
@@ -413,7 +409,11 @@ In other words, if you want to know if the value is not 5.5 or more, it is enoug
 
 ### One-sided -- two-sided distinction is not always relevant
 
-Note that the difference between one-sided and two-sided tests is only useful if we test a statistic against a particular value or if we test the difference between two groups. In the first situation, we may rule out the possibility that the population value is higher (or lower) than the hypothesized value if we have good reasons to believe that it can only be lower (or higher). In the second situation, we may expect that one group can only score higher than the other group and not the other way around.  
+Note that the difference between one-sided and two-sided tests is only useful if we test a statistic against one particular value or if we test the difference between two groups. 
+
+In the first situation, for example, if we test the null hypothesis that average media literacy is 5.5 in the population, we may rule out the possibility that the population value is higher (lower) than the hypothesized value if we have good reasons to believe that it can only be lower (higher). Another example is a test on a regression coefficient or correlation coefficient. If we assume that exposure to brand advertisements can increase but not decrease brand awareness among consumers, we apply a right-sided test because we are only interested in positive values (larger than the hypothesized zero correlation).
+
+In the second situation, we compare the scores of two groups on a dependent variable. If we compare variation in opinion scores between young and old voters, for example, we may expect that one group can only score higher (more variation: more polarized) than the other group but not the other way around. Again, a one-sided tst can be applied.
 
 In contrast, we cannot meaningfully formulate a one-sided null hypothesis if we are comparing three groups or more. Even if we expect that Group A can only score higher than Group B and Group C, what about the difference between Group B and Group C? If we can't have meaningful one-sided null hypotheses, we cannot meaningfully distinguish between one-sided and two-sided null hypotheses.  
 
@@ -421,7 +421,7 @@ In contrast, we cannot meaningfully formulate a one-sided null hypothesis if we 
 
 Statistical software like SPSS usually reports either one-sided or two-sided p values. What if a one-sided p value is reported but you need a two-sided p value or the other way around?
 
-In Figure \@ref(fig:1-2sidedpvalues), the sample mean is 5.15 and we have .042 probability to find a sample mean of 5.15 or less if the null hypothesis is true. This probability is the surface under the curve to the left of the red line representing the sample mean. It is the one-sided p value that we obtain if we only take into account the possibility that the population mean can be smaller than the hypothesized value. We are only interested in the tail of the sampling distribution on the left.
+In Figure \@ref(fig:1-2sidedpvalues), the sample mean is 5.15 and we have .042 probability to find a sample mean of 5.15 or less if the null hypothesis is true. This probability is the surface under the curve to the left of the red line representing the sample mean. It is the one-sided p value that we obtain if we only take into account the possibility that the population mean can be smaller than the hypothesized value. We are only interested in the left tail of the sampling distribution.
 
 ```{r 1-2sidedpvalues, eval=TRUE, echo=FALSE, fig.cap="Halve a two-sided p value to obtain a one-sided p value, double a one-sided p value to obtain a two-sided p value."}
 knitr::include_graphics("figures/CH4.1_2sidedpvalues.png")
@@ -429,15 +429,15 @@ knitr::include_graphics("figures/CH4.1_2sidedpvalues.png")
 
 In a two-sided test, we have to reckon with two different types of outcomes. Our sample oucome can be smaller or larger than the hypothesized population value. As a consequence, the p value must cover samples at opposite sides of the sampling distribution. We should not only reckon with sample means that are less than 5.15 but also with sample means that are just as much larger than the hypothesized population value. So we have to take into account a probability of .042 for the right tail of the distribution as well in Figure \@ref(fig:1-2sidedpvalues). We can double the one-sided p value to obtain the two-sided p value.
 
-In contrast, if our statistical software tells us the two-sided p value and we want to have the one-sided p value, we can simply halve the two-sided p value. The two-sided p value is divided equally between the left and right tails. If we are interested in just one tail, we can ignore the half of the p value that is situated in the other tail. 
+In contrast, if our statistical software tells us the two-sided p value and we want to have the one-sided p value, we can simply halve the two-sided p value. The two-sided p value is divided equally between the left and right tails. If we are interested in just one tail, we can ignore the half of the p value that is situated in the other tail. Of course, this only makes sense if a one-sided test makes sense.
 
-Be careful if you divide a two-sided p value to obtain a one-sided p value. If your left-sided test hypothesizes that average media literacy is below 5.5 but your sample mean is above 5.5, your left-sided test can never be significant. After all, your sample result is fully in line with the null hypothesis. Check that the sample outcome is really at the right side of the hypothesized population value.
+Be careful if you divide a two-sided p value to obtain a one-sided p value. If your left-sided test hypothesizes that average media literacy is below 5.5 but your sample mean is well above 5.5, the two-sided p value can be below .05. But your left-sided test can never be significant because a sample mean above 5.5 is fully in line with the null hypothesis. Check that the sample outcome is at the correct side of the hypothesized population value.
 
 ## Testing a Null Hypothesis with a Theoretical Probability Distribution
 
-The preceding sections taught us how to execute a significance test. Formulate a null hypothesis that equates a population characteristic (parameter) to a particular value, which is a boundary value in the case of a one-sided test. Then construct a sampling distribution with the hypothesized (boundary) value as centre and use it to calculate a p value. If the p value is below the significance level ($\alpha$), the test is statistically significant and we reject the null hypothesis.
+The preceding sections taught us how to execute a significance test. Formulate a null hypothesis that equates a population characteristic (parameter) to a particular value, which is a boundary value in the case of a one-sided test. Then construct a sampling distribution with the hypothesized (boundary) value as centre and use it to calculate a p value. If the p value is below the significance level ($\alpha$), the test is statistically significant, so we reject the null hypothesis.
 
-We have not discussed yet how we construct the sampling distribution. Chapter \@ref(probmodels) presented three ways: bootstrapping, an exact approach, and approximation of the sampling distribution with a theoretical probability distribution. The last option is the most popular, so let us discuss it here. Exact approaches and bootstrapping are discussed in the next section.
+We have not discussed yet how we construct the sampling distribution. Chapter \@ref(probmodels) presented three ways: bootstrapping, an exact approach, and approximation of the sampling distribution with a theoretical probability distribution. The last option is the most popular, so let us discuss it first Exact approaches and bootstrapping are discussed in the next section.
 
 A theoretical probability distribution links sample outcomes such as a sample mean to probabilities by means of a _test statistic_. A test statistic is named after the theoretical probability distribution to which it belongs: _z_ for the standard-normal or _z_ distribution, _t_ for the _t_ distribution, _F_ for the _F_ distribution and, you guessed it, chi-squared for the chi-squared distribution.  
 
@@ -466,7 +466,7 @@ the hypothesized or true population mean.
 ```{r eval=FALSE, echo=TRUE}
 * t~c~ is the value of the test statistic t that separates the most unlikely
 or most extreme samples from the most likely samples.
-* It is called the critical value (of the test statistic).
+* It is called the critical value of the test statistic.
 ```
 
 3. Why does the distribution become more pointed when sample size increases?
@@ -476,8 +476,9 @@ or most extreme samples from the most likely samples.
 results. More sample means are close to the true population mean.
 * In technical terms, the variation of sample means decreases with larger
 sample size; sample means are more alike. The standard deviation of the
-sampling distribution is called the standard error (see the preceding
-chapter). A distribution of larger samples has a smaller standard error.
+sampling distribution measures the variation of sample means. It is the
+standard error of the sampling distribution (see the preceding chapter). A
+distribution of larger samples has a smaller standard error.
 ```
 
 4. Is there a fixed relation between the t values (top axis) and the values for average sample media literacy (bottom axis)? Change the sample size to find the answer.
@@ -499,27 +500,27 @@ A test statistic is calculated from the sample statistic that we want to test, f
 
 The exact formula and calculation of a test statistic is not important to us. Just note that the test statistic is zero if the sample outcome is equal to the hypothesized population value. In Figure \@ref(fig:crit-df), for example, the t value of a sample with mean 5.5 is zero if the hypothesized population mean is 5.5. The larger the difference between the observed value (sample outcome) and the expected value (hypothesized population value), the more extreme the value of the test statistic, the less likely (lower p value) it is that we draw a sample with the observed outcome or an outcome even more different from the expected value, and, finally, the more likely we are to reject the null hypothesis.
 
-We reject the null hypothesis if the test statistic is in the _rejection region_. The value of the test statistic where the rejection region starts, is called the _critical value_ of the test. In Section \@ref(crit-values), we learned that 1.96 is the critical value of z for a two-sided test at 5% significance level in a standard-normal distribution. In a z test, then, a sample z value above 1.96 or below -1.96 indicates a significant test result.
+We reject the null hypothesis if the test statistic is in the _rejection region_. The value of the test statistic where the rejection region starts, is called the _critical value_ of the test statistic. In Section \@ref(crit-values), we learned that 1.96 is the critical value of z for a two-sided test at five per cent significance level in a standard-normal distribution. In a z test, then, a sample z value above 1.96 or below -1.96 indicates a statistically significant test result.
 
 Probability distributions other than the standard-normal distribution, however, do not have fixed critical values. Their critical values depend on the _degrees of freedom_ of the test, usually abbreviated to _df_. The degrees of freedom of a test may depend on sample size, the number of groups that we compare, or the number of rows and columns in a contingency table. We don't need to worry about this. 
 
-The t distribution is an example of a probability distribution for which the critical values depend on the degrees of freedom of the test. In this case, the degrees of freedom are determined by sample size. Larger samples have more degrees of freedom but they have slightly lower critical values. For samples that are not too small, however, the critical values of t are near 2. You may have noticed this in Figure \@ref(fig:crit-df).
+The t distribution is an example of a probability distribution for which the critical values depend on the degrees of freedom of the test. In this case, the degrees of freedom are determined by sample size. Larger samples have more degrees of freedom and, as a consequence, they have slightly lower critical values. For samples that are not too small the critical values of t are near 2. You may have noticed this in Figure \@ref(fig:crit-df).
 
-APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header "df", you should include the number between brackets after the name of the test statistic. If, for example, a t test has 18 degrees of freedom and the t value is 0.63, you report: _t_ (18) = 0.63. Note that the _F_ test statistic has two degrees of freedom, both of which should be reported (separated by a comma), for example, _F_ (2, 87) = 3.13.
+APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header _df_, you should include the number between brackets after the name of the test statistic. If, for example, a t test has 18 degrees of freedom and the t value is 0.63, you report: _t_ (18) = 0.63. Note that the _F_ test statistic has two degrees of freedom, both of which should be reported (separated by a comma), for example, _F_ (2, 87) = 3.13.
 
 ## Testing a Null Hypothesis with an Exact Approach or Bootstrapping
 
-Exact approaches calculate probabilities for discrete outcomes. In the candy example, the number of yellow candies in a sample bag of ten candies is a discrete out. With the binomial formula, the exact probability of zero yellow candies can be calculated, the probability of one yellow candy, two yellow candies, and so on (see Figure \@ref(fig:exactapproachfigure)). 
+Exact approaches calculate probabilities for discrete outcomes. In the candy example, the number of yellow candies in a sample bag of ten candies is a discrete outcome. With the binomial formula, the exact probability of zero yellow candies can be calculated, the probability of one yellow candy, two yellow candies, and so on (see Figure \@ref(fig:exactapproachfigure)). 
 
-Let us image that our sample bag contains six yellow candies and we hypothesize that twenty per cent of the candies are yellow in the population. The p value of our sample outcome (six yellow candies) if our null hypothesis is true (proportion of yellow candies is 0.2 in the population) sums the probabilities of drawing a sample bag with six, seven, eight, nine, or ten yellow candies. The p value happens to be .006 (Figure \@ref(fig:exactapproachfigure) suggests .007 but that is a matter of rounding error). This is the right-sided probability if we assume that the proportion of yellow candies in the population can only be larger than 0.2.
+Let us image that our sample bag contains six yellow candies and we hypothesize that twenty per cent of the candies are yellow in the population. The p value of our sample outcome (six yellow candies) sums the probabilities of drawing a sample bag with six, seven, eight, nine, or ten yellow candies from a population in which twenty per cent of the candies are yellow (our null hypothesis). The p value happens to be .006, even though Figure \@ref(fig:exactapproachfigure) suggests .007 but that is a matter of rounding error. This is the right-sided p value if we assume that our hypothesis is true.
 
-With the p value, we execute the significaqnce test as usual. The p value is well below the significance level of .050, so we reject the null hypothesis that twenty per cent of al lcandie sin the population are yellow.
+With the p value, we execute the significance test as usual. The p value is well below the significance level of .05, so we reject the null hypothesis that twenty per cent of all candies in the population are yellow.
 
-The situation is slightly more complicated if we want to execute a significance test with a sampling distribution created with bootstrapping. To understand the testing procedure with bootstrapping, we first have to discuss the relation between null-hypothesis testing and confience intervals.
+The situation is slightly more complicated if we want to execute a significance test with a sampling distribution created with bootstrapping. To understand the testing procedure with bootstrapping, we first have to discuss the relation between null-hypothesis testing and confidence intervals.
 
-### Relation between null-hypothesis tests and confidence interval {#null-ci0}
+### Relation between null-hypothesis tests and confidence intervals {#null-ci0}
 
-The top of Figure \@ref(fig:null-ci) shows media literacy scores in a random sample of children and their average media literacy score (red). The hypothesized average media literacy in the population of children is shown on the bottom axis. The curve represents the sampling distribution if the null hypothesis is true. The coloured areas under the curve represent 2.5% of the total area each.
+The top of Figure \@ref(fig:null-ci) shows media literacy scores in a random sample of children and their average media literacy score (red). The hypothesized average media literacy in the population of children is shown on the bottom axis. The curve represents the sampling distribution if the null hypothesis is true.
 
 ```{r null-ci, fig.cap="How does null hypothesis significance relate to confidence intervals?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
 # Draw three horizontal lines, the top line labeled 'population', the middle one labeled 'sampling distribution', and the bottom line labeled 'sample'. All lines have a numerical scale (1-10). Add a normal curve to the sampling distribution axis with 2.5% of each tail area coloured and the mean indicated by a vertical line extending to the population axis and labeled there by 'Mean = <number>'. Generate a sample mean within the range [4.5, 6.5] and mark it with a number on the lower line and a vertical line from the sample to well above the sampling distribution line (so it cuts through the normal curve). Add a slider to adjust the hypothesized population mean (range [3, 7]). The slider adjusts the horizontal position of the normal curve and population mean.
@@ -535,7 +536,7 @@ lower bound of the 95% confidence interval. It is the lowest hypothesized
 population value for which the observed sample mean is not statistically
 significant.
 * Make the boundary of the left tail meet the sample mean (red line): this
-population value is the upper bound of the confidence interval.  It is the
+population value is the upper bound of the confidence interval. It is the
 highest hypothesized population value for which the observed sample mean is
 not statistically significant.
 ```
@@ -544,8 +545,9 @@ not statistically significant.
 
 ```{r eval=FALSE, echo=TRUE}
 * A confidence interval contains all (hypothetical) values of the population
-parameter---here: the population mean---for which the observed sample is
-plausible, for example, if it has 95% probability to occur.
+value---here: the population mean---for which the observed sample is
+plausible, for example, it is among the 95% of samples with values closest
+to the population value.
 * We reject a null hypothesis if the sample is NOT plausible when the null
 hypothesis is true. So we reject null hypotheses if the hypothesized population
 value is OUTSIDE the confidence interval. If it is INSIDE the confidence
@@ -554,13 +556,15 @@ interval, we do NOT reject the null hypothesis.
 
 Do you remember how we constructed a confidence interval in Chapter \@ref(param-estim)? We looked for all population values for which the sample outcome is sufficiently plausible. Sufficiently plausible means that our observed sample outcome is among the sample outcomes that are closest to the population value. By convention, we use a confidence level of 95 per cent, which means that our observed sample is among the 95 per cent of all samples that have outcomes closest to the population value.
 
-In short, a 95% confidence interval contains all population values for which the observed sample outcome has 95 per cent probability. But wait a minute. If the sample outcome is among the 95 per cent in the middle, it is not among the extreme five percent of all samples. This is simply another way of saying that the observed sample outcome is not statistically significant at the five per cent level. A 95% confidence interval contains all population values that we could hypothesize for which our sample outcome is not statistically significant.
+But wait a minute. If the sample outcome is among the 95 per cent of samples in the middle of the sampling distribution, it is not among the extreme five percent of all samples. This is simply another way of saying that the observed sample outcome is not statistically significant at the five per cent level. A 95% confidence interval contains all population values that we could hypothesize for which our sample outcome is not statistically significant.
 
 > A 95% confidence interval contains all null hypotheses that would not be rejected with the current sample at the 5% significance level, two-sided.
 
 If we know the 95% confidence interval, we can immediately see if our null hypothesis must be rejected or not. If the population value in our null hypothesis lies within the 95% confidence interval, the null hypothesis is NOT rejected. The sample that we have drawn is sufficiently plausible if our null hypothesis is true. In contrast, we must reject the null hypothesis is the hypothesized population value is NOT in the 95% confidence interval. 
 
-Let us assume, for example, that average media literacy in our sample is 3.0 and that the 95% confidence interval for average media literacy ranges from 1.0 to 5.0. Remember that the sample outcome is in the middle of the confidence interval if we use a theoretical probability distribution. A null hypothesis specifying 2.5 as population average must not be rejected because 2.5 is in between 1.0 and 5.0, that is, inside the 95% confidence interval. If our null hypothesis says that average media literacy in the population is 5.5, we must reject this null hypothesis because it is outside the 95% confidence interval. The null hypothesis that average media literacy in the population is 0.0 must be rejected for the same reason. Note that the hypothesized value can be too high or too low, so the hypothesis test is two-sided.
+Let us assume, for example, that average media literacy in our sample is 3.0 and that the 95% confidence interval for average media literacy ranges from 1.0 to 5.0. A null hypothesis specifying 2.5 as population average must not be rejected at the five percent significance level, because 2.5 is in between 1.0 and 5.0, that is, inside the 95% confidence interval. If our null hypothesis says that average media literacy in the population is 5.5, we must reject this null hypothesis because it is outside the 95% confidence interval. The null hypothesis that average media literacy in the population is 0.0 must be rejected for the same reason. 
+
+Note that the hypothesized value can be too high or too low for the confidence interval, so a hypothesis test using a confidence interval is always two-sided.
 
 ### Testing a null hypothesis with bootstrapping  
 
@@ -582,15 +586,15 @@ Testing a null hypothesis consists of several steps, which are summarized below,
 
 1. Specify the statistical hypotheses.  
 
-In the first step, translate the research hypothesis into a null and alternative hypothesis. This requires choosing the right statistics for testing the research hypothesis (Section \@ref(nullhypothesis)) and choosing between a one-sided or two-sided test if applicable (Section \@ref(one-twosidedtests)).  
+In the first step, translate the research hypothesis into a null and alternative hypothesis. This requires choosing the right statistic for testing the research hypothesis (Section \@ref(nullhypothesis)) and choosing between a one-sided or two-sided test if applicable (Section \@ref(one-twosidedtests)).  
 
 2. Select the significance level of the test.  
 
-Before we execute the test, we have to choose the maximum probability of rejecting the null hypothesis if it is actually true. This, as we know now, is the significance level. We almost always select .05 (5%) as the significance level. If we have a very large sample, e.g., several thousands of cases, we may select a lower significance level, for instance, 0.01. See Chapter \@ref(power) for more details.  
+Before we execute the test, we have to choose the maximum probability of rejecting the null hypothesis if it is actually true. This is the significance level of the test. We almost always select .05 (5%) as the significance level. If we have a very large sample, e.g., several thousands of cases, we may select a lower significance level, for instance, 0.01. See Chapter \@ref(power) for more details.  
 
-3. Select how the sampling distribution is going to be created.  
+3. Select how the sampling distribution is created.  
 
-Are you going to use bootstrapping, an exact approach, or a theoretical probability distribution? Theoretical probability distributions are the most common choice and we focus on these, here. We have to know which theoretical probability distribution can be used for which test. If you are working with statistical software, you automatically select the correct probability distribution by selecting the correct test. For example, a test on the means of two independent samples in SPSS uses the t distribution.
+Are you going to use bootstrapping, an exact approach, or a theoretical probability distribution? Theoretical probability distributions are the most common choice. We have to know which theoretical probability distribution can be used for which test. If you are working with statistical software, you automatically select the correct probability distribution by selecting the correct test. For example, a test on the means of two independent samples in SPSS uses the t distribution.
 
 4. Execute the test.  
 
@@ -606,7 +610,7 @@ The ultimate goal of the test is to increase our knowledge. To this end, we have
 
 ### Reporting to fellow scientists
 
-Fellow scientists need to be able to see the exact statistical test results. According to APA6, we should report the test statistic, the associated degrees of freedom (if any), the value of the test statistic, the p value of the test statistic, and the confidence interval (if any). APA6 requires a particular format for presenting statistical results and it demands that the results are included at the end of a sentence.  
+Fellow scientists need to be able to see the exact statistical test results. According to [APA6](http://www.apastyle.org/), we should report the test statistic, the associated degrees of freedom (if any), the value of the test statistic, the p value of the test statistic, and the confidence interval (if any). APA6 requires a particular format for presenting statistical results and it demands that the results are included at the end of a sentence.  
 
 The statistical results for a _t_ test on one mean, for example, would be:  
 
@@ -616,7 +620,7 @@ The statistical results for a _t_ test on one mean, for example, would be:
 
 * The value of the test statistic is 2.73 in this example.
 
-* The p value is .004. Note that we report all results with two decimal places except probabilities, which are reported with three decimals. We are usually interested in small probabilities---less than .05---so we need the third decimal here.
+* The p value is .004. Note that we report all results with two decimal places except probabilities, which are reported with three decimals. We are usually interested in small probabilities---less than .05---so we need the third decimal here. If SPSS rounds the p value to .000, report: _p_ < .001.
 
 * The 95% confidence interval is 4.13 to 4.87, so with 95% confidence we state that the population mean is between 4.13 and 4.87.
 
@@ -630,7 +634,7 @@ For fellow scientists and especially for the general reader, it is important to 
 
 * What are the variables?  
 
-* What are the relevant sample statistics?  
+* What are the values of the relevant sample statistics?  
 
 * Which comparison(s) do you make?  
 
@@ -638,7 +642,7 @@ For fellow scientists and especially for the general reader, it is important to 
 
 * If the results are significant, how large are the differences or associations?  
 
-A test on one proportion, for instance, the proportion of all households reached by a television station, could be reported as follows:  
+A test on one proportion, for example, the proportion of all households reached by a television station, could be reported as follows:  
 
 > "The television station reaches significantly and substantially (_p_ = .61) more than half of all households in Greece, _z_ = 4.01, _p_ < .001."  
 
@@ -661,21 +665,21 @@ p
 rm(p, x, y)
 ```
 
-Statistics such as means, proportions, variances, and correlations are calculated on variables. To translate a research hypothesis into a statistical hypothesis, the researchers has to recognize the dependent and independent variables addressed by the research hypothesis and their variable types, mainly distinguishing between dichotomies (two groups), categorical (three or more groups), and numerical. Once you have identified these, the flow chart in Figure \@ref(fig:flowchart) helps you to identify the right statistical test.
+Statistics such as means, proportions, variances, and correlations are calculated on variables. To translate a research hypothesis into a statistical hypothesis, the researcher has to recognize the dependent and independent variables addressed by the research hypothesis and their variable types. The main  distinction is between dichotomies (two groups), categorical (three or more groups), and numerical variables. Once you have identified the variables, the flow chart in Figure \@ref(fig:flowchart) helps you to identify the right statistical test.
 
-If possible, SPSS uses a theoretical probability distribution to approximate the sampling distribution. It will select the appropriate sampling distribution and in some cases, such as a test on a contingency table with two rows and two columns, SPSS automatically includes an exact test because the theoretical approximation cannot be relied on.
+If possible, SPSS uses a theoretical probability distribution to approximate the sampling distribution. It will select the appropriate sampling distribution. In some cases, such as a test on a contingency table with two rows and two columns, SPSS automatically includes an exact test because the theoretical approximation cannot be relied on.
 
-SPSS does not allow the user to specify the null hypothesis of the test if the test involves two or more variables, that is, at least one dependent variable and one independent variable. Here, SPSS uses the nill hypothesis, assuming that the population value of interest is zero. For example, SPSS tests the null hypothesis that males and females have the same average willingness to donate to a charity if we apply an independent samples t test. Imagine that we know from previous research that females tend to score one point higher on the willingness score than males. It would not be very interesting to reject the nil hypothesis. Instead, we would like to test the null hypothesis that the average difference between females and males is 1.00. We cannot change the null hypothesis of this t test in SPSS, but we can use the confidence interval to test our null hypothesis as explained in Section \@ref(null-ci0). 
+SPSS does not allow the user to specify the null hypothesis of the test if the test involves two or more variables, that is, at least one dependent variable and one independent variable. Here, SPSS uses the nil hypothesis, assuming that the population value of interest is zero. For example, SPSS tests the null hypothesis that males and females have the same average willingness to donate to a charity if we apply an independent samples t test. 
+
+Imagine that we know from previous research that females tend to score one point higher on the willingness score than males. It would not be very interesting to reject the nil hypothesis. Instead, we would like to test the null hypothesis that the average difference between females and males is 1.00. We cannot change the null hypothesis of this t test in SPSS, but we can use the confidence interval to test our null hypothesis as explained in Section \@ref(null-ci0). 
 
 In SPSS, the analyst has to specify the null hypothesis in tests on one variable, namely tests on one proportion, one mean, or one categorical variable. The following instructions explain how to do this.
 
 ### Instructions
 
-A proportion is the statistic best suited to test research hypotheses addressing the share of a category or entity in the population. The hypothesis that a television station reaches half of all households in a country provides an example. All households in the country constitute the population. The share of the television station is the proportion or percentage of all households watching this television station.  
+A proportion is the statistic best suited to test research hypotheses addressing the share of a category in the population. The hypothesis that a television station reaches half of all households in a country provides an example. All households in the country constitute the population. The share of the television station is the proportion or percentage of all households watching this television station.  
 
-If we want to use a statistic, we need to know the variable and cases (units of analysis) for which the statistic must be calculated. In this example, a household does or does not watch the television station, so our variable is a dichotomy with the two categories ("No, does not watch this station", "Yes, watches this station") usually coded as 0 versus 1 or 1 versus 2.  
-
-Each household provides an observation, namely either the score 0 or the score 1 on this variable or no score if there are missing values. To test the research hypothesis that a television station reaches half of all households in a country, we have to formulate a statistical hypothesis about the proportion---of households viewing this television station---in the population---all households in this country. For example, the researcher's statistical hypothesis could be that the proportion in the population is 0.5. 
+If we have a data set on households containing a variable indicating whether or not a household watches the television station, we can test the research hypothesis. The statistical null hypothesis is that the proportion of households watching the television station is 0.5 in the population.
 
 ```{r SPSSbinomial, echo=FALSE, out.width="640px", fig.cap="(ref:binomialSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/cA0idFxW-J4", height = "360px")
@@ -693,7 +697,7 @@ knitr::include_url("https://www.youtube.com/embed/cA0idFxW-J4", height = "360px"
 # The one-sided versus two-sided output is not discussed in the video.
 ```
 
-We can also be interested in more than two categories, for instance, does the television station reach the same share of all households in the north, east, south, and west of the country? This translates into a statistical hypothesis containing three or more proportions in the population. If 30% of households in the population are situated in the west, 25 % in the south and east, and 20% in the north, we would expect these proportions in the sample if all regions are equally represented. Our statistical hypothesis is actually a relative frequency distribution, such as, for instance, in Table \@ref(tab:hypo-freq).
+We can also be interested in more than one category, for instance, in which regions are the households located: in the north, east, south, and west of the country? This translates into a statistical hypothesis containing two or more proportions in the population. If 30% of households in the population are situated in the west, 25 % in the south and east, and 20% in the north, we would expect these proportions in the sample if all regions are equally represented. Our statistical hypothesis is actually a relative frequency distribution, such as, for instance, in Table \@ref(tab:hypo-freq).
 
 ```{r hypo-freq, echo=FALSE}
 knitr::kable(data.frame(Region = c("North", "East", "South", "West"), HP = c(0.20, 0.25, 0.25, 0.30)), digits = 2, caption = "Statistical hypothesis about four proportions as a frequency table.", col.names = c("Region", "Hypothesized Proportion"))
@@ -701,7 +705,9 @@ knitr::kable(data.frame(Region = c("North", "East", "South", "West"), HP = c(0.2
 
 A test for this type of statistical hypothesis is called a one-sample chi-squared test. It is up to the researcher to specify the hypothesized proportions for all categories. This is not a simple task: What reasons do you have to expect particular values, say a region's share of thirty per cent of all households instead of twenty-five per cent?
 
-The test is mainly used if the researcher has information on the proportions of the categories in the population. If we draw a sample from all citizens of a country, we usually know the frequency distribution of sex, age, educational level, and so on of all citizens from the national bureau of statistics. With the bureau's information, we can test if the respondents in our sample have the same distribution with respect to sex, age, or educational level as the population; just use the population proportions in the hypothesis. If they do, the sample is _representative_ (see Section \@ref(representative)) of the population with respect to sex, age, or educational level. This is an important check on the representativeness of our sample.
+The test is mainly used if the researcher knows the true proportions of the categories in the population. If we draw a sample from all citizens of a country, we usually know the frequency distribution of sex, age, educational level, and so on of all citizens from the national bureau of statistics. With the bureau's information, we can test if the respondents in our sample have the same distribution with respect to sex, age, or educational level as the population; just use the official population proportions in the hypothesis. 
+
+If the proportions in the sample have the same distribution as in the population, the sample is _representative_ (see Section \@ref(representative)) of the population with respect to sex, age, or educational level. This is an important check on the representativeness of our sample.
 
 ```{r SPSSchisq1, echo=FALSE, out.width="640px", fig.cap="(ref:chisq1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/S8I5o_3p6ro", height = "360px")
@@ -715,11 +721,7 @@ knitr::include_url("https://www.youtube.com/embed/S8I5o_3p6ro", height = "360px"
 
 ```
 
-Research hypotheses that focus on the level of scores are usually best tested with the mean or another measure of central tendency such as the median value. For example, the hypothesis that media literacy is below a particular standard (e.g., 5.5 on a 10-point scale) among children refers to a level: the level of media literacy scores. 
-
-The hypothesis probably does not argue that all children have a media literacy score below 5.5. Instead, it means to say that the overall level is below this standard. The center of the distribution offers a good indication of the general score level.
-
-For a numeric (interval or ratio measurement level) variable such as the 10-point scale in the example, the mean is a good measure of the distribution's center. In this example, our statistical hypothesis would be that average media literacy score of all children in the population is (below) 5.5.  
+Finally, we have the significance test on one mean, which we have used in the example of average media literacy throughout this chapter. For a numeric (interval or ratio measurement level) variable such as the 10-point scale in this example, the mean is a good measure of the distribution's center. Our statistical hypothesis would be that average media literacy score of all children in the population is (below) 5.5.  
 
 ```{r SPSS1mean, echo=FALSE, out.width="640px", fig.cap="(ref:1meanSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/Bx0eiqfVfaw", height = "360px")
@@ -751,13 +753,15 @@ Variable tv_reach is a dichotomy as it should be for this test.
     
 Interpret the results:  
   
-We have to reject the null hypothesis that the TV station does not reach at
-least fourty per cent of all households, p = .039 (one-sided).
+The proportion of households not reached in the sample (p = 0.48) is above
+fourty per cent. We have to reject the null hypothesis that the TV station
+reaches at most fourty per cent of all households, p = .039 (one-sided).
 
 Note that SPSS applies a two-sided test if the proportion in the null
 hypothesis is .50, but it applies a one-sided test in all other situations.
-This is a left-sided test if the hypothesized proportion is smaller than .50
-and it is a right-sided test if the hypothesized proportion is larger than .50.
+This is a left-sided test if the sample proportion is smaller than the
+hypothesized proportion and it is a right-sided test if the sample proportion
+is larger than the hypothesized proportion.
 ```
 
 2. Test the hypothesis that the TV station reaches 55 per cent of all households in the population.
@@ -781,8 +785,9 @@ Variable tv_reach is a dichotomy as it should be for this test.
     
 Interpret the results:  
   
-We cannot reject the null hypothesis that the TV station reaches   
-at least 55 per cent of all households, p = .260 (one-sided).  
+With 52 per cent of all households reached in the sample, we cannot reject the
+null hypothesis that the TV station reaches at least 55 per cent of all
+households, p = .260 (one-sided).
 ```  
   
 3. Does half of the households have an income of at most 40,000?   
@@ -898,11 +903,14 @@ Interpret the results:
   
 In the sample, average parental supervision is 5.36 (SD = 1.94) on a scale
 from 1 to 10. We are rather confident that the true average supervision score
-in the population is around 5.5, more specifically, between 4.94 and 5.77, t
-(85) = -0.68, p = .498, 95%CI[4.94; 5.77].
+in the population is around 5.5, more specifically, between 4.94 and 5.77. A
+test is not statistically significant, t (85) = -0.68, p = .498, 95%CI[4.94;
+5.77].
   
 Note that we have to add the confidence interval limits to the test value
-(here: 5.5) to obtain the confidence interval for the population mean.
+(here: 5.5) to obtain the confidence interval for the population mean. SPSS
+reports the confidence interval for the difference between the hypothesized
+population mean and the sample mean.
 ```
 
 6. If you would test the hypothesis that average parental supervision in the population is 4.5, would the test be statistically significant according to the confidence interval reported for Exercise 5? Check your answer by carrying out the test.
@@ -962,37 +970,33 @@ the null hypothesis, whereas the significance test does.
 
 ## Capitalization on Chance {#cap-chance}
 
-The relation between null hypothesis testing and confidence intervals may have given the impression that one could test a range of null hypotheses using just one sample and one confidence interval. For instance, we could simultaneously test the null hypotheses that average media literacy among children is 5.5, 4.5, or 3.5. Just check if these values are inside or outside the confidence interval and you are done?  
+The relation between null hypothesis testing and confidence intervals (Section \@ref(null-ci0)) may have given the impression that we can test a range of null hypotheses using just one sample and one confidence interval. For instance, we couldan simultaneously test the null hypotheses that average media literacy among children is 5.5, 4.5, or 3.5. Just check if these values are inside or outside the confidence interval and we are done, right?  
 
-This impression is wrong. The probabilities that we calculate using one sample assume that we only apply one test to the data. If we test the original null hypothesis that average media literacy is 5.5, we run a risk of five per cent to reject the null hypothesis if the null hypothesis is true.  
+This impression is wrong. The probabilities that we calculate using one sample assume that we only apply one test to the data. If we test the original null hypothesis that average media literacy is 5.5, we run a risk of five per cent to reject the null hypothesis if the null hypothesis is true. The significance level is the probability of making a Type I error (Section \@ref(sig-typeI)). 
 
-If we apply a second test to the same sample, for example, testing the null hypothesis that average media literacy is 4.5, we again run this risk of five per cent. But the risk of rejecting at least one true null hypothesis increases dramatically if we do two tests. This risk is 9.75 per cent, namely one minus the risk of rejecting no true null hypothesis, which is 1 - .95 * .95 = .0975.
+If we apply a second test to the same sample, for example, testing the null hypothesis that average media literacy is 4.5, we again run this risk of five per cent. The probability of not rejecting a true null hypothesis is .95, so the probability of not rejecting two true null hypotheses is .95 * .95  = 0.9025. The risk of rejecting at least one true null hypothesis in two tests is 1 - 0.9025 = .0975. This risk is dramatically higher than the significance level (.05) that we want to use. The situation becomes even worse if we do three or more tests on the same sample. 
 
-The situation becomes even worse if we do three or more tests on the same sample. The total level of rejecting at least one null hypothesis that is true increases well above the significance level that we want to maintain, namely five per cent.
-
-The phenomenon that we are dealing with probabilities of making Type I errors that are higher (_inflated Type I errors_) than the significance level that we want to use, is referred to as _capitalization on chance_. Applying more than one test to the same data is one way to capitalize on chance. If you do a lot of tests on the same data, it is very rare not to find some statistically significant results even if all null hypotheses are true.  
+The phenomenon that we are dealing with probabilities of making Type I errors that are higher (*inflated Type I errors*) than the significance level that we want to use, is referred to as _capitalization on chance_. Applying more than one test to the same data is one way to capitalize on chance. If you do a lot of tests on the same data, it is very rare not to find some statistically significant results even if all null hypotheses are true.  
 
 ### Capitalization on chance in post-hoc tests  
-This type of capitalization on chance may occur, for example, in an analysis of variance. To test the research hypothesis that the celebrity endorsing a fundraising campaign makes a difference to people's willingness to donate, we may organize an experiment using four versions of a video clip as the treatment, each clip featuring a different celebrity endorsing the campaign. This results in four groups of participants, each group having an average score on their willingness to donate. As a first step, we test the null hypothesis that all groups have equal population means using an _F_ test (analysis of variance).  
 
-If this test is statistically significant, we reject the null hypothesis and conclude that at least two groups have different population means. The next question is: Which groups, that is, endorsement by which celebrities, display a different willingness to donate? To answer this question, we must do post-hoc _t_ tests on pairs of groups. With four groups, we have six pairs of groups, so we have six _t_ tests on independent means. The probability of rejecting at least one true null hypothesis of no difference is much higher than five per cent if we use a significance level of five per cent for each single _t_ test.  
+This type of capitalization on chance may occur, for example, in an analysis of variance. To test the research hypothesis that the celebrity endorsing a fundraising campaign makes a difference to people's willingness to donate, we may organize an experiment using three versions of a video clip as the treatment, each clip featuring a different celebrity endorsing the campaign. This results in three groups of participants, each group having an average score on their willingness to donate. As a first step, we test the null hypothesis that all groups have equal population means using an _F_ test (analysis of variance).  
+
+If this test is statistically significant, we reject the null hypothesis and conclude that at least two groups have different population means. The next question is: Which groups, that is, endorsement by which celebrities, display a different willingness to donate? To answer this question, we must do post-hoc _t_ tests on pairs of groups. With three groups (A, B, and C), we have three pairs of groups (AB, AC, and BC), so we have three _t_ tests on independent means. The probability of rejecting at least one true null hypothesis of no difference is much higher than five per cent if we use a significance level of five per cent for each single _t_ test.  
 
 ### Correcting for capitalization on chance  
-We can correct in several ways for this type of capitalization on chance; one such way is by applying the Bonferroni correction. This correction merely divides the significance level that we use for each test by the number of tests that we do. In our example, we do six _t_ tests, so we divide the significance level of five per cent by six. The resulting significance level for each _t_ test is .008. If a _t_ test's p value is below .008, we reject the null hypothesis, but we do not reject it otherwise.
 
-The Bonferroni correction is a rather coarse correction, which is not entirely accurate. However, it has a simple logic that directly links to the problem of capitalization on chance. Therefore, it is a good technique to help understand the problem, which is the main goal we want to attain, here. We will skip better but more complicated alternatives to Bonferroni correction.
+We can correct in several ways for this type of capitalization on chance; one such way is by applying the Bonferroni correction. This correction merely divides the significance level that we use for each test by the number of tests that we do. In our example, we do three _t_ tests on pairs of groups, so we divide the significance level of five per cent by three. The resulting significance level for each _t_ test is .0167. If a _t_ test's p value is below .0167, we reject the null hypothesis, but we do not reject it otherwise.
+
+The Bonferroni correction is a rather coarse correction, which is not entirely accurate. However, it has a simple logic that directly links to the problem of capitalization on chance. Therefore, it is a good technique to help understand the problem, which is the main goal we want to attain, here. We will skip better, but more complicated alternatives to Bonferroni correction.
 
 Note that we need not apply a correction if we specify a hypothesis beforehand about the two groups that we expect to differ. In the example of celebrity endorsement, we would not have to apply the Bonferroni correction to the _t_ test on the mean difference between participants confronted to Celebrity A and Celebrity C if we had hypothesized that the willingness to donate differs here. Of course, we could have skipped the analysis of variance and gone straight to the _t_ test with such a hypothesis.
 
-### Specifying hypotheses afterwards  
-Capitalization on chance occurs if we apply different tests to the same variables in the same sample. This occurs in exploratory research in which we do not specify hypotheses beforehand but try out different predictors or different outcome variables. 
+### Specifying hypotheses afterwards
 
-It occurs more strongly if we first have a look at our sample data and then formulate an hypothesis. Knowing the sample outcome, it is easy to specify a null hypothesis that will be rejected. This is plain cheating and it should be avoided at all times.
+Capitalization on chance occurs if we apply different tests to the same variables in the same sample. This occurs in exploratory research in which we do not specify hypotheses beforehand but try out different independent variables or different dependent variables. 
 
-### Advantages of using confidence intervals  
-If we cannot use the confidence interval to test a range of null hypotheses, what, then, is the added value of a confidence interval over a single null hypothesis test? The confidence interval tells us the plausible values of the parameter rather than whether or not it is one particular value. Putting it simply, we just know more from a confidence interval than from a null hypothesis test.
-
-We could use the additional information, if we were to do a new null hypothesis test on a new sample. We would have a better idea of plausible null hypotheses. We could, for instance, test whether media literacy is 4.49, the middle of the confidence interval in our previous research project. A confidence interval helps us to be more specific in the next study addressing our topic, whether this study is carried out by ourselves or by our colleagues.
+It occurs more strongly if we first have a look at our sample data and then formulate the hypothesis. Knowing the sample outcome, it is easy to specify a null hypothesis that will be rejected. This is plain cheating and it must be avoided at all times.
 
 ## Test Your Understanding
 
@@ -1008,7 +1012,7 @@ Figure \@ref(fig:hypo-testing) displays a random sample of media literacy scores
 ```{r eval=FALSE}
 * The null hypothesis is that average media literacy
 score in the population is 5.5. This is not a nil
-hypothesis because the value is not zero.
+hypothesis because the hypothesized value is not zero.
 * The significance level is split between the two tails
 of the sampling distribution, so a two-sided test is
 intended. The alternative hypothesis of this two-sided
@@ -1027,15 +1031,14 @@ the red line.
 two-sided test, it is the twice this surface because it also includes the same
 part of the tail at the other side of the distribution.
 * So yes, it makes a difference to the p value whether you test one-sided or
-two-sided. That is, if it makes sense to distinguish between a one-sided and
-two-sided test.
+two-sided.
 ```
 
-3. What represents the significance level and rejection region in Figure \@ref(fig:hypo-testing)?
+3. What part of Figure \@ref(fig:hypo-testing) represents the significance level and rejection region?
 
 ```{r eval=FALSE}
 * The surface of the blue tails represent the significance level of the test.
-Each tail contains 2.5% of the surface, so the significane level is 5%.
+Each tail contains 2.5% of the surface, so the significance level is 5%.
 * The rejection region contains the sample statistic values under the blue
 tails. Graphically speaking, the rejection region consists of the segments of
 the horizontal axis under the blue tails. These are the sample average media
@@ -1046,10 +1049,10 @@ believe that the hypothesized mean is the true population mean.
 4. Is the test statistically significant? How do you decide?
 
 ```{r eval=FALSE}
-* If the sample mean (red line) is in the blue tails (rejection region) of the
-sampling distribution, the null hypothesis must be rejected.
+* If the sample mean (red line) falls within a blue tail (rejection region)
+of the sampling distribution, the null hypothesis must be rejected.
 * Note that the blue tails extend infinitely away from the hypothesized value
-but the density becomes quickly so small that you can't see the blue surface
+but the density becomes quickly so small that you can not see the blue surface
 everywhere.
 ```
 
@@ -1071,23 +1074,23 @@ change the centre of the distribution, so it moves to the left or right.
 because you can always find a null hypothesis that is statistically
 significant. Just move you null hypothesis so your sample mean (red) ends up
 in the (blue) region outside the critical values.
-* You do not offer the data a fair chance to proof that your null hypothesis is
-wrong when you (re)formulate the null hypothesis when you know your sample.
+* You do not offer the data a fair chance to prove that your null hypothesis is
+wrong if you (re)formulate the null hypothesis when you know your sample.
 * This would be an example of capitalization on chance.
 ```
 
 ## Take-Home Points  
 
-* We use a statistical test if we want to decide on a null hypothesis: reject or not reject? Usually, this boils down to the question:  "Is there or is there not an effect (difference, association) in the population?"  
+* We use a statistical test if we want to decide on a null hypothesis: reject or not reject? Usually, this boils down to the question: Is there or is there not an effect (difference, association) in the population?  
 
 * The decision rules should be specified beforehand: Decide on the direction of the test (one-sided or two-sided) and the significance level.
 
 * The null and alternative hypotheses always concern a population statistic. Together they cover all possible outcomes for the statistic. The null hypothesis always specifies one (boundary) value for the population statistic. 
 
-* We reject the null hypothesis if a test is statistically significant. This means that the probability of drawing a sample with the current or a more extreme outcome (even more inconsistent with the null hypothesis) for the test statistic is below the significance level.
+* We reject the null hypothesis if a test is statistically significant. This means that the probability of drawing a sample with the current or a more extreme outcome (even more inconsistent with the null hypothesis) is below the significance level.
 
-* The 95% confidence interval includes all null hypotheses that would _not_ be rejected in a two-sided test at 5% significance level. It contains the population values that are not sufficiently contradicted by the data.
+* The 95% confidence interval includes all null hypotheses that would _not_ be rejected in a two-sided test at five per cent significance level. It contains the population values that are not sufficiently contradicted by the data.
 
-* The calculated p value is only correct if the same data is used for no more than one null hypothesis test and the null hypothesis was formulated beforehand.
+* The calculated p value is only correct if the data is used for no more than one null hypothesis test and the null hypothesis was formulated beforehand.
 
 * If the same data is used for more null hypotheses tests, the probability of a Type I error increases. We obtain too many significant results, which is called capitalization on chance.

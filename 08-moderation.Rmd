@@ -1,5 +1,5 @@
 # Moderation with Regression Analysis {#moderation}
-> Key concepts: interaction variable, covariate, outcome, regression equation, dummy variables, normally distributed residuals, linearity, homoscedasticity, independent observations, statistical diagram, common support, simple slope, conditional effect, mean-centering.
+> Key concepts: interaction variable, covariate, regression equation, dummy variables, normally distributed residuals, linearity, homoscedasticity, independent observations, statistical diagram, common support, simple slope, conditional effect, mean-centering.
 
 ```{r eval=FALSE, echo=FALSE}
 * Add SPSS video explaining how to report regression results? See Fam?
@@ -7,11 +7,11 @@
 
 ### Summary {-}
 
-> My outcome is numeric but at least one predictor is also numeric, so I cannot apply analysis of variance. How can I investigate moderation with regression analysis?
+> My dependent variable is numeric but at least one predictor is also numeric, so I cannot apply analysis of variance. How can I investigate moderation with regression analysis?
 
-The linear regression model is a powerful and very popular tool for predicting a numeric outcome variable from one or more predictor variables. In this chapter, we use regression to evaluate the effects of an anti-smoking campaign. We predict attitude towards smoking from exposure to the anti-smoking campaign (numeric), time spent with smokers (numeric), and the respondent's smoking status (categorical). 
+The linear regression model is a powerful and very popular tool for predicting a numeric dependent variable from one or more independent variables. In this chapter, we use regression to evaluate the effects of an anti-smoking campaign. We predict attitude towards smoking from exposure to the anti-smoking campaign (numeric), time spent with smokers (numeric), and the respondent's smoking status (categorical). 
 
-Regression coefficients, that is, the slopes of regression lines, are the effects in a regression model. They show the predicted difference in the outcome for a one unit difference in the predictor (exposure, time spent with smokers) or the predicted mean difference for two categories (smokers versus non-smokers). 
+Regression coefficients, that is, the slopes of regression lines, are the effects in a regression model. They show the predicted difference in the dependent variable for a one unit difference in the predictor (exposure, time spent with smokers) or the predicted mean difference for two categories (smokers versus non-smokers). 
 
 But what if the predictive effect is not the same in all contexts? For example, exposure to an anti-smoking campaign may generally generate a more negative attitude towards smoking. The effect, however, is probably different for people who smoke than for people who do not smoke. In this case, the effect of campaign exposure on attitude towards smoking is moderated by context: Whether or not the person exposed to the campaign is a smoker.
 
@@ -19,14 +19,14 @@ Different effect sizes for different contexts are different regression coefficie
 
 As a predictor in the model, an interaction variable has a confidence interval and a p value. The confidence interval tells us the plausible values for the size of the interaction effect in the population. The p value tests the null hypothesis that there is no interaction effect at all in the population.
 
-To interpret the interaction effect, we must determine the size of the effect of the predictor on the outcome variable for several interesting values of the moderator. If the moderator is categorical, we want to know the effect (simple slope) within each category of the moderator. For example, the effect of campaign exposure on smoking attitude for smokers and the effect for non-smokers. 
+To interpret the interaction effect, we must determine the size of the effect of the predictor on the dependent variable for several interesting values of the moderator. If the moderator is categorical, we want to know the effect (simple slope) within each category of the moderator. For example, the effect of campaign exposure on smoking attitude for smokers and the effect for non-smokers. 
 
 The moderator can also be a continuous variable, for example, the time a person spends with people who smoke. In this case, we may look at the effect for the mean value of the moderator (moderate score level) and one standard deviation below (low level) or above (high level) the mean.
 
 An interaction effect in a regression model closely resembles an interaction effect in analysis of variance. In contrast, the effect of a single predictor in a regression model is not a main effect as in analysis of variance. It is a conditional effect, namely the effect for one particular value of the moderator (context). To understand this, we must pay close attention to the regression equation.
 
 ```{r SPSS-PROCESS, eval=FALSE, echo=FALSE}
-# TERMINOLOGY: predictor (X, cause), moderator (M, represents context), covariate (C, control), outcome (Y).
+# TERMINOLOGY: predictor (X, cause), moderator (M, represents context), covariate (C, control), dependent variable (Y).
 
 # SPSS versus PROCESS:
 # + SPSS: visual checks on residuals: normal distribution and zpred by zresid (linearity, homoscedasticity)
@@ -67,7 +67,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-Figure \@ref(fig:concept-smoke) summarizes some hypothesized causes of the attitude towards  smoking. A regression model translates this conceptual diagram into a statistical model. The statistical regression model is a mathematical function with the outcome variable (also known as the dependent variable, usually referred to with the letter $y$) as the sum of a constant ($a$), the effects ($b$) of predictors ($x$), which are _predictive effects_, and an error term ($e$), which is also called the _residuals_, see Equation \@ref(eq:regression).
+Figure \@ref(fig:concept-smoke) summarizes some hypothesized causes of the attitude towards  smoking. A regression model translates this conceptual diagram into a statistical model. The statistical regression model is a mathematical function with the dependent variable (also known as the outcome variable, usually referred to with the letter $y$) as the sum of a constant ($a$), the effects ($b$) of predictors ($x$), which are _predictive effects_, and an error term ($e$), which is also called the _residuals_, see Equation \@ref(eq:regression).
 
 \begin{equation} 
 \small
@@ -94,7 +94,7 @@ Let us first have a close look at a simple regression equation, that is, a regre
 ```{r regression-coefficients, eval=TRUE, echo=FALSE, fig.cap="What is the meaning of the regression equation?"}
 # REPLACED BY STATIC IMAGE
 
-# Goal: Refresh interpretation of the unstandardized and standardized regression coefficient by manipulating the standard deviation of the outcome variable (minimum value is sd(x) * |b|).
+# Goal: Refresh interpretation of the unstandardized and standardized regression coefficient by manipulating the standard deviation of the dependent variable (minimum value is sd(x) * |b|).
 # Generate data (N = 40) from a regression model (see below). Plot attitude (y) against (x), add regression line (fixed slope), and vertical lines from x = 5 and x = 6 to regression line and horizontal lines from where they meet the regression lines to the Y axis. The sd of the error term can be scaled (s) in the range [.5, 2] (larger error produces larger SD of y). Calculate the standardized coefficient (beta) and display as label in plot. Display the regression equation (y = 2.4 + -0.6*x + e). If the scale of the error term is changed, update the dots in the scatterplot and beta.
 # # Generate predictor.
 # x <- seq(from = 0.5, to = 9.5, length.out = 20)
@@ -116,7 +116,7 @@ Let us first have a close look at a simple regression equation, that is, a regre
   expo = -0.25 #regression coefficient
   set.seed(4932)
   exposure <- runif(n) * 10
-  # Create outcome.
+  # Create dependent variable.
   set.seed(390)
   attitude <- expo * exposure + rnorm(n, mean = const, sd = 1.4)
   # Collect in data frame.
@@ -150,7 +150,7 @@ Let us first have a close look at a simple regression equation, that is, a regre
 
 ```{r eval=FALSE, echo=TRUE}
 * The constant of a regression equation, represented by the symbol a, is the
-predicted value of the outcome variable if all predictors are zero.
+predicted value of the dependent variable if all predictors are zero.
 * Graphically, this is where the regression line cuts the vertical (y) axis.
 * In the plot, a is 1.4 according to the equations and the regression line cuts
 the vertical axis at 1.4 as it should.
@@ -160,15 +160,15 @@ the vertical axis at 1.4 as it should.
 
 ```{r eval=FALSE, echo=TRUE}
 * An unstandardized regression coefficient, denoted by the symbol b, tells us
-the predicted difference in the outcome for a difference of one unit in the
-predictor variable.
+the predicted difference in the dependent variable for a difference of one unit in the
+independent variable.
 * According to the equations, the predicted attitude decreases by 0.25 for a one
 unit difference (4 to 5) in exposure.
 * This is the decrease from 0.40 to 0.15 signalled by the horizontal line
 segments.
 ```
 
-Good understanding of the regression equation is necessary for understanding moderation in regression models. So let us have a close look at an example equation (Eq. \@ref(eq:regrexample)). The outcome variable attitude towards smoking is predicted from a constant and three predictor variables.
+Good understanding of the regression equation is necessary for understanding moderation in regression models. So let us have a close look at an example equation (Eq. \@ref(eq:regrexample)). The dependent variable attitude towards smoking is predicted from a constant and three independent variables.
 
 \begin{equation}
 \small
@@ -179,7 +179,7 @@ Good understanding of the regression equation is necessary for understanding mod
 
 The constant adds a fixed quantity to the predicted attitude for all participants. It adjusts the overall level of the predicted attitude. 
 
-More precisely, the constant is the predicted attitude if a person scores zero on all predictor variables. To see this, plug in zero for all predictors in the equation (Eq. \@ref(eq:regsmokedummy)) and remember that zero times something is zero. This reduces the equation to the constant and the _error term_ $e$. The error term is the error of our prediction, also known as the _residual_. It does not help to predict the outcome, so the constant is the only remaining predictor.
+More precisely, the constant is the predicted attitude if a person scores zero on all independent variables. To see this, plug in zero for all predictors in the equation (Eq. \@ref(eq:regsmokedummy)) and remember that zero times something is zero. This reduces the equation to the constant and the _error term_ $e$. The error term is the error of our prediction, also known as the _residual_. It does not help to predict the dependent variable, so the constant is the only remaining predictor.
 
 \begin{equation}
 \small
@@ -194,7 +194,7 @@ More precisely, the constant is the predicted attitude if a person scores zero o
 
 For all persons scoring zero on exposure, smoking status, and contact with smokers, the predicted attitude equals the value of the regression constant. This interpretation only makes sense if the predictors can be zero. If they include, for instance, scales ranging from one to seven, there are no persons with zero scores on all predictors and the constant has no meaning.
 
-The regression coefficients $b$ represent the predicted difference in the outcome for a difference of one unit in the predictor. For example, plug in the values 5 and 4 for the _exposure_ predictor in the equation. If we take the difference of the two equations, we are left with $b_1$. All other terms in the two equations cancel out (except, perhaps, the error term $e$).
+The regression coefficients $b$ represent the predicted difference in the dependent variable for a difference of one unit in the predictor. For example, plug in the values 5 and 4 for the _exposure_ predictor in the equation. If we take the difference of the two equations, we are left with $b_1$. All other terms in the two equations cancel out (except, perhaps, the error term $e$).
 
 \begin{equation}
 \small
@@ -211,9 +211,9 @@ We will be plugging in values for predictors in the regression equation a lot in
 
 ### Continuous predictors
 
-In a linear regression, the outcome variable ($y$) must be numeric and in principle continuous. There are regression models for other types of outcomes, for instance, logistic regression for a dichotomous (0/1) outcome and Poisson regression for a count outcome, but we will not discuss them.
+In a linear regression, the dependent variable ($y$) must be numeric and in principle continuous. There are regression models for other types of dependent variables, for instance, logistic regression for a dichotomous (0/1) dependent variable and Poisson regression for a count dependent variable, but we will not discuss them.
 
-The predictor variables must be either numeric or dichotomous. If exposure is measured as a scale, for instance ranging from zero to ten, the interpretation of the effect of exposure ($b_1$) is the one that we have encountered in the preceding section: the predicted difference in attitude (outcome variable) for a one unit difference in exposure (predictor variable) while all other predictor values do not change (are held constant).
+The independent variables must be either numeric or dichotomous. If exposure is measured as a scale, for instance ranging from zero to ten, the interpretation of the effect of exposure ($b_1$) is the one that we have encountered in the preceding section: the predicted difference in attitude (dependent variable) for a one unit difference in exposure (independent variable) while all other predictor values do not change (are held constant).
 
 Whether this predicted difference is small or large depends on the practical context: Is a small decrease in attitude towards smoking worth the effort of the campaign? If we want to apply a rule of thumb for the strength of the effect, we usually look at the standardized regression coefficient ($b^*$ according to APA6, _Beta_ in SPSS output). See Section \@ref(assoc-size) for some rules of thumb for effect size interpretation.
 
@@ -307,11 +307,11 @@ Regression equation \@ref(eq:regdicho0) represents all non-smokers. Their smokin
 
 It does not make sense to interpret the regression coefficient of smoking status ($b_2$) as predicted difference in attitude for a difference of one 'more' smoking status. After all, the 0 and 1 scores do not mean that there is one unit 'more' smoking. Instead, the coefficient indicates that we are dealing with different groups: smokers versus non-smokers. We have to interpret the effect as a difference between two groups. More specifically, as the mean difference between the attitude of the group represented by the score 1 and the attitude of the _reference group_ represented by score 0.
 
-If you compare the final equations for smokers (Eq. \@ref(eq:regdicho1)) and non-smokers (Eq. \@ref(eq:regdicho0)), the only difference is $b_2$, which is present for smokers but absent for non-smokers. It is the difference between the average outcome score (attitude) for smokers and the average outcome score (attitude) non-smokers. This is exactly the same as in an independent-samples t test!
+If you compare the final equations for smokers (Eq. \@ref(eq:regdicho1)) and non-smokers (Eq. \@ref(eq:regdicho0)), the only difference is $b_2$, which is present for smokers but absent for non-smokers. It is the difference between the average score on the dependent variable (attitude) for smokers and the average score for non-smokers. This is exactly the same as in an independent-samples t test!
 
 Imagine that $b_2$ equals 1.6. This indicates that the average attitude towards smoking among smokers is 1.6 units above the average attitude among non-smokers. Is this a small or large effect? In the case of a dichotomous predictor, we should __not__ use the standardized regression coefficient to evaluate effect size. The standardized coefficient depends on the distribution of 1s and 0s, that is, which part of the respondents are smokers. But this should be irrelevant to the size of the effect. 
 
-Therefore, it is recommended to interpret only the unstandardized regression coefficient for a dichotomous predictor. Interpret it as the difference in average outcome scores for two groups as we have done in the preceding paragraph.
+Therefore, it is recommended to interpret only the unstandardized regression coefficient for a dichotomous predictor. Interpret it as the difference in average scores for two groups as we have done in the preceding paragraph.
 
 ### A categorical predictor and dummy variables {#categorical-predictor}
 
@@ -320,7 +320,7 @@ How about a categorical variable, that is, a variable containing three or more g
 ```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Understanding effects of dummy variables by manipulating the reference
 # group.
-# Generate numerical outcome data (attitude, range [-5, 5]) for a categorical
+# Generate numerical dependent variable data (attitude, range [-5, 5]) for a categorical
 # predictor with 3 categories: (1) non-smoker, (2) former smoker, (3) smoker,
 # and a random choice of one of the following scenarios:
 #* (1 M = -1.7, SD = 1) < (2) = (3 M = 0.75, SD = 1) {initial situation},
@@ -365,7 +365,7 @@ smoking or are smoking. The comparison between the latter two is not included.
 non-reference groups from the p values of the differences between these groups
 and the reference group. Remember that a p value depends on both effect size
 (difference between group means) and on the standard error. The latter depends
-on the variance of the outcome variable per group (in the population) and on
+on the variance of the dependent variable per group (in the population) and on
 sample size per group.
 * The solution is to re-estimate the regression model with one of the groups
 that you want to compare as reference group. In this figure, you can do this by
@@ -414,11 +414,11 @@ We cannot include a dummy variable as a predictor that is perfectly predictable 
 
 The category or group that is left out of the regression model is the _reference group_. Remember that non-smokers were the reference group in the preceding section because the regression equation did not include a dichotomous predictor on which the non-smokers scored 1. The two groups were represented by only one dichotomy. As you see, we used one dummy less than the number of groups (two).
 
-The interpretation of the effects (regression coefficients) for the included dummies is the same as for a single dichotomous predictor such as smoker versus non-smoker. It is the difference between average outcome score of the group scoring 1 on the dummy variable and the average outcome score of the reference group.
+The interpretation of the effects (regression coefficients) for the included dummies is the same as for a single dichotomous predictor such as smoker versus non-smoker. It is the difference between average score of the group scoring 1 on the dummy variable and the average score of the reference group on the dependent variable.
 
 If we exclude the dummy variable for the respondents who never smoked, the regression weight of the dummy variable for the Former Smoker Group gives the average difference between former smokers and non-smokers. If the regression weight is negative, for instance -0.8, former smokers have a more negative attitude towards smoking than non-smokers. If the difference is positive, former smokers have a more positive attitude towards smoking. 
 
-Which group should we use as reference category, that is, which dummy should not be used in the regression model? This is hard to say in general. If one group is of greatest interest to us, we could use this as the reference group, so all dummy variable effects express differences with this group. Alternatively, if we expect a particular ranking in average outcome scores, we may pick the group at the highest, lowest or middle rank as the reference group. If you can't decide, run the regression model several times with a different reference group.
+Which group should we use as reference category, that is, which dummy should not be used in the regression model? This is hard to say in general. If one group is of greatest interest to us, we could use this as the reference group, so all dummy variable effects express differences with this group. Alternatively, if we expect a particular ranking of the average scores, we may pick the group at the highest, lowest or middle rank as the reference group. If you can't decide, run the regression model several times with a different reference group.
 
 ### Sampling distributions and assumptions {#regr-inference}
 
@@ -444,7 +444,7 @@ Which group should we use as reference category, that is, which dummy should not
 3. What happens if you draw samples of larger size? Think of what you learned in preceding chapters. Formulate your answer before you change sample size in Figure \@ref(fig:regression-sampling).
 ```
 
-If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the outcomes for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results. The confidence interval gives us bounds for the population value of the unstandardized regression coefficient. The p value is used to test the _null hypothesis that the unstandardized regression coefficient is zero in the population_.
+If we are working with a random sample or we have other reasons to believe that our data could have been different due to chance (Section \@ref(no-random-sample)), we should not just interpret the results for the data set that we collected. We should apply statistical inference---confidence intervals and significance tests---to our results. The confidence interval gives us bounds for the population value of the unstandardized regression coefficient. The p value is used to test the _null hypothesis that the unstandardized regression coefficient is zero in the population_.
 
 Each regression coefficient as well as the constant may vary from  sample to sample drawn from the same population, so we should devise a sampling distribution for each of them. These sampling distributions happen to have a t distribution under particular assumptions.
 
@@ -453,7 +453,7 @@ Chapters \@ref(param-estim) and \@ref(hypothesis) have extensively discussed how
 #### Independent observations
 The two most important assumptions require that the observations are _independent and identically distributed_. These requirements arise from probability theory. If they are violated, the statistical results should not be trusted.
 
-Each observation, for instance, a measurement on a respondent, must be independent of all other observations. This respondent's outcome variable score is not allowed to depend on outcome scores of other respondents.
+Each observation, for instance, a measurement on a respondent, must be independent of all other observations. This respondent's dependent variable score is not allowed to depend on scores of other respondents.
 
 It is hardly possible to check that our observations are independent. We usually have to assume that this is the case. But there are situations in which we should not make this assumption. In time series data, for example, the daily amount of political news, we usually have trends, cyclic movements, or issues that affect the amount of news over a period of time. As a consequence, the amount and contents of political news on one day may depend on the amount and contents of political news on the preceding days.
 
@@ -481,7 +481,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/resid-normal/", height="480px"
 
 ```{r eval=FALSE, echo=TRUE}
 * A red line depicts the residual or prediction error: The difference between
-the actual outcome score (attitude) for a respondent (dot) and the outcome
+the actual dependent variable score (attitude) for a respondent (dot) and the dependent variable
 score predicted by the regression line (blue) for the predictor score
 (exposure) of the respondent.
 ```
@@ -506,17 +506,17 @@ histogram.
 
 If we sample from a population where attitude towards smoking depends on exposure, smoking status, and contact with smokers, we will be able to predict attitude from the predictors in our sample. Our predictions will not be perfect, sometimes too high and sometimes to low. The differences between predicted and observed attitude scores are the residuals. 
 
-If our sample is truly a random sample with independent and identically distributed observations, our predictions should be equally bad or equally well for each value of the outcome variable, that is, attitude in our example. More specifically, the sizes of our errors (residuals) should be normally distributed for each attitude level (according to the central limit theorem). 
+If our sample is truly a random sample with independent and identically distributed observations, our predictions should be equally bad or equally well for each value of the dependent variable, that is, attitude in our example. More specifically, the sizes of our errors (residuals) should be normally distributed for each attitude level (according to the central limit theorem). 
 
-So for all possible values of the outcome variable, we must collect the residuals for the observations that have this score on the outcome variable. For example, we should select all respondents who score 4.5 on the attitude towards smoking scale. Then, we select the residuals for these respondents and see whether they are approximately normally distributed.
+So for all possible values of the dependent variable, we must collect the residuals for the observations that have this score on the dependent variable. For example, we should select all respondents who score 4.5 on the attitude towards smoking scale. Then, we select the residuals for these respondents and see whether they are approximately normally distributed.
 
-Usually, we do not have more than one observation (if any) for each single outcome score, so we cannot practically apply this check. Instead, we use a simple and coarse approach: Are all residuals normally distributed?
+Usually, we do not have more than one observation (if any) for each single dependent variable score, so we cannot practically apply this check. Instead, we use a simple and coarse approach: Are all residuals normally distributed?
 
 A histogram with an added normal curve helps us to evaluate the distribution of the residuals. If the curve more or less follows the histogram, we conclude that the assumption of identically distributed observations is plausible. If not, we conclude that the assumption is not plausible and we warn the reader that the results can be biased.
 
 #### Linearity and prediction errors
 
-The regression models that we discuss assume that the association between the predictor and outcome variables is linear. Residuals of the regression model help us to see whether this is the case.
+The regression models that we discuss assume that the association between the predictor and dependent variables is linear. Residuals of the regression model help us to see whether this is the case.
 
 ```{r pred-linearity, fig.cap="How do residuals tell us whether the relation is linear?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating the shape of the association.
@@ -559,22 +559,22 @@ residuals, followed by a set of positive residuals.
 At all levels of exposure and, hence, at all predicted levels of attitude, we
 may encounter both positive and negative residuals. In the residuals by
 predicted values plot, we have positive and negative residuals everywhere. We
-may underestimate as well as overestimate the outcome variable everywhere.
+may underestimate as well as overestimate the dependent variable everywhere.
 ```
 
-The other two assumptions that we use tell us about problems in our model rather than problems in our statistical inferences. Our linear regression model assumes a linear effect of the predictors on the outcome variable (_linearity_) and it assumes that we can predict the outcome equally well or equally badly for all levels of the outcome variable (_homoscedasticity_). 
+The other two assumptions that we use tell us about problems in our model rather than problems in our statistical inferences. Our linear regression model assumes a linear effect of the predictors on the dependent variable (_linearity_) and it assumes that we can predict the dependent variable equally well or equally badly for all levels of the dependent variable (_homoscedasticity_). 
 
 The regression models that we estimate assume a linear model. This means that an additional unit of the predictor always increases the predicted value by the same amount. If our regression coefficient for the effect of exposure on attitude is -0.25, an exposure score of one predicts a 0.25 more negative attitude towards smoking than zero exposure. Exposure score five predicts the same difference in attitude than score four, exposure score 10 predicts the same difference in comparison to exposure score nine, and so on. As a consequence of the linearity assumption, we can graph a regression model as a straight line.
 
-The relation between a predictor and outcome variable, for example, exposure and attitude towards smoking, need not be linear. It can be curved or have some other fancy shape. Then, the linearity assumption is not met. A straight regression line does not nicely fit the data.
+The relation between a predictor and dependent variable, for example, exposure and attitude towards smoking, need not be linear. It can be curved or have some other fancy shape. Then, the linearity assumption is not met. A straight regression line does not nicely fit the data.
 
-We can see this in a graph showing the (standardized) residuals (vertical axis) against the (standardized) predicted values of the outcome variable (on the horizontal axis). Note that the residuals represent prediction errors. If our regression predictions are systematically too low at some levels of the outcome variable and too high at other levels, the residuals are not nicely distributed around zero for all predicted levels of the outcome variable. This is what you see if the association is curved or U-shaped.
+We can see this in a graph showing the (standardized) residuals (vertical axis) against the (standardized) predicted values of the dependent variable (on the horizontal axis). Note that the residuals represent prediction errors. If our regression predictions are systematically too low at some levels of the dependent variable and too high at other levels, the residuals are not nicely distributed around zero for all predicted levels of the dependent variable. This is what you see if the association is curved or U-shaped.
 
-This indicates that our linear model does not fit the data. If it would fit, the average prediction error is zero for all predicted outcome levels. Graphically speaking, our linear model matches the data if positive prediction errors (residuals) are more or less balanced by negative prediction errors everywhere along the regression line.
+This indicates that our linear model does not fit the data. If it would fit, the average prediction error is zero for all predicted levels of the dependent variable. Graphically speaking, our linear model matches the data if positive prediction errors (residuals) are more or less balanced by negative prediction errors everywhere along the regression line.
 
 #### Homoscedasticity and prediction errors
 
-The plot of residuals by predicted values of the outcome variable tells us more than whether a linear model fits the data.
+The plot of residuals by predicted values of the dependent variable tells us more than whether a linear model fits the data.
 
 ```{r pred-homoscedasticity, fig.cap="How do residuals tell us that we predict all values equally well?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating homoscedasticity.
@@ -623,20 +623,20 @@ vertical diameter of the dot cloud is more or less equal from left to right.
 * This is how we like the plot to look.
 ```
 
-The other assumption states that we can predict the outcome variable equally well at all outcome variable levels. In other words, the prediction errors (residuals) are more or less the same at all levels of the outcome variable. If we have large prediction errors at some levels of the outcome variable, we should also have large prediction errors at other levels. As a result, the vertical width of the residuals by predictions scatter plot should be more or less the same from left to right. 
+The other assumption states that we can predict the dependent variable equally well at all dependent variable levels. In other words, the prediction errors (residuals) are more or less the same at all levels of the dependent variable. If we have large prediction errors at some levels of the dependent variable, we should also have large prediction errors at other levels. As a result, the vertical width of the residuals by predictions scatter plot should be more or less the same from left to right. 
 
-If the prediction errors are not more or less equal for all levels of the predicted outcome, our model is better at predicting some values than other values. For example, low values can be predicted better than high values of the outcome variable. This may signal, among other things, that we need to include moderation in the model.
+If the prediction errors are not more or less equal for all levels of the predicted outcome, our model is better at predicting some values than other values. For example, low values can be predicted better than high values of the dependent variable. This may signal, among other things, that we need to include moderation in the model.
 
 
 ```{r eval=FALSE, echo=FALSE}
 #DROPPED
 
-Why do we use the residuals and predicted values instead of a scatterplot for each outcome-predictor variable pair to assess linearity and homoscedasticity? The reason is that some predictors may predict low outcome values and other predictors may predict high outcome values. This is perfectly OK if together they predict low and high outcome values equally well.
+Why do we use the residuals and predicted values instead of a scatterplot for each outcome-independent variable pair to assess linearity and homoscedasticity? The reason is that some predictors may predict low outcome values and other predictors may predict high outcome values. This is perfectly OK if together they predict low and high outcome values equally well.
 ```
 
 ### Visualizing predictions
 
-A line in a scatterplot is a nice visualization of a regression model. The regression line represents the predicted values of the outcome variable for all values of the predictor. 
+A line in a scatterplot is a nice visualization of a regression model. The regression line represents the predicted values of the dependent variable for all values of the predictor. 
 
 In a simple regression model, we have just one predictor, so we have only one regression line. In a multiple regression model, we can draw a lot of regression lines even if we use the same predictor.
 
@@ -689,13 +689,13 @@ value for smokers is 1 on Smoker.
 * Contact = 2.833.
 ```
 
-The regression equation without the error term $e$ predicts the outcome variable scores from the predictor scores. Plug in values for the predictor variables and you can calculate the predicted outcome score. Figure \@ref(fig:regression-predict), for instance, shows a regression equation for the effects of exposure, smoking status, and contact with smokers on attitude towards smoking. If you plug in a score of 4 for exposure, 0 for smoking status (non-smoker), and 6 for contact with smokers, the predicted attitude is 0.65 + -0.6 * 4 + 0.5 * 0 + 0.15 * 6 = -0.85.
+The regression equation without the error term $e$ predicts the dependent variable scores from the predictor scores. Plug in values for the independent variables and you can calculate the predicted outcome score. Figure \@ref(fig:regression-predict), for instance, shows a regression equation for the effects of exposure, smoking status, and contact with smokers on attitude towards smoking. If you plug in a score of 4 for exposure, 0 for smoking status (non-smoker), and 6 for contact with smokers, the predicted attitude is 0.65 + -0.6 * 4 + 0.5 * 0 + 0.15 * 6 = -0.85.
 
-If we focus on the relation between one predictor and the outcome variable, the predicted values can be represented by a straight line in a scatter plot. By convention, we display the predictor on the horizontal axis and the outcome variable on the vertical axis of the scatter plot. 
+If we focus on the relation between one predictor and the dependent variable, the predicted values can be represented by a straight line in a scatter plot. By convention, we display the predictor on the horizontal axis and the dependent variable on the vertical axis of the scatter plot. 
 
 In a simple regression, we only have one predictor, so we can only draw one regression line. In multiple regression, however, we have several predictors. We can draw regression lines for each predictor and, importantly, we can draw different regression lines for the same predictor.
 
-If we want to draw the regression line for the predictive effect of one predictor in a multiple regression model, we regard the other predictors as covariates. Let us define a _covariate_ as a variable that may predict the outcome but is not our prime interest, so we mainly want to control for its effects. For example, if we focus on the predictive effect of exposure on attitude towards smoking, exposure is our predictor and smoking status and contact with smokers are covariates. 
+If we want to draw the regression line for the predictive effect of one predictor in a multiple regression model, we regard the other predictors as covariates. Let us define a _covariate_ as a variable that may predict the dependent variable but is not our prime interest, so we mainly want to control for its effects. For example, if we focus on the predictive effect of exposure on attitude towards smoking, exposure is our predictor and smoking status and contact with smokers are covariates. 
 
 Note that the distinction between predictor and covariates is temporary. As soon as we focus on another variable, that variable becomes the predictor and the other predictors become covariates. The distinction between predictor and covariate is just terminology to show on which variable we focus.
 
@@ -805,7 +805,7 @@ Check assumptions:
 * The distribution of the residuals is (left) skewed rather than normal. This
 is not good.
 * The residuals are nicely centered around zero at all predicted levels of the
-outcome variable, so the association seems to be linear.
+dependent variable, so the association seems to be linear.
 * The residuals are evenly spread around zero at all predicted levels.
 Perhaps, the spread is slightly larger at low predicted values. In all,
 however, prediction accuracy seems to be more or less the same at all levels
@@ -966,7 +966,7 @@ predicts 0.31 additional units of media literacy. One additional unit of media
 literacy predicts 0.42 additional units of parental supervision.
   
 Note that the t test on the regression coefficient is the same in a simple
-regression model if you use supervision or media literacy as outcome variable.
+regression model if you use supervision or media literacy as dependent variable.
 ```
 
 4. How well can we predict brand awareness with ad exposure? Use [consumers.sav](http://82.196.4.233:3838/data/consumers.sav) to answer this question.
@@ -1016,19 +1016,19 @@ In analysis of variance (Chapter \@ref(anova)), the main effect of living among 
 
 What if the effect of living among smokers on attitude may be different in different contexts, e.g., for people who smoke themselves, used to smoke, or never smoked (*smoking status*)? To model this, we added an interaction effect to the main effects in Chapter \@ref(anova).  
 
-The interaction effect tells us whether the attitude difference between, on the one hand, people living among smokers and, on the other hand, people living among non-smokers is different for smokers, former smokers, and non-smokers. In a conceptual diagram, the interaction effect is represented by an arrow pointing at another arrow. The moderator (smoking status) changes the relation between the predictor (living among smokers) and the outcome (attitude towards smoking).
+The interaction effect tells us whether the attitude difference between, on the one hand, people living among smokers and, on the other hand, people living among non-smokers is different for smokers, former smokers, and non-smokers. In a conceptual diagram, the interaction effect is represented by an arrow pointing at another arrow. The moderator (smoking status) changes the relation between the predictor (living among smokers) and the dependent variable (attitude towards smoking).
 
 ```{r moderator-concept2, echo=FALSE, fig.cap="Conceptual diagram of moderation.", fig.asp=0.3}
-library(ggplot2)
 # Create coordinates for the variable names.
-variables <- data.frame(x = c(0.3, 0.5, 0.7), 
+variables <- data.frame(x = c(0.35, 0.5, 0.65), 
                         y = c(.1, .3, .1),
-                        label = c("Predictor", "Moderator", "Outcome"))
+                        hjust = c(1, 0.5, 0),
+                        label = c("Predictor", "Moderator", "Dependent variable"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.04, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3], yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[2], yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_label(aes(label=label)) + 
-  coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
+  geom_label(aes(label=label, hjust = hjust)) + 
+  coord_cartesian(xlim = c(0.3, 0.8), ylim = c(0, 0.4)) +
   theme_void()
 # Cleanup.
 rm(variables)
@@ -1036,7 +1036,7 @@ rm(variables)
 
 What if living among smokers is a numerical variable, for example, counting the number of times the respondent is in the company of a smoker? How can we investigate if the effect of this numerical predictor on attitude is moderated by the respondent's smoking status?
 
-Analysis of variance (ANOVA), as discussed in Chapter \@ref(anova), investigates the effects of categorical variables on a numeric outcome variable. It cannot handle numeric predictors or numeric covariates. Although there are ways to include numeric covariates in analysis of variance, for instance, in the analysis of covariance (ANCOVA), we use regression analysis if we have at least one numerical predictor or covariate and a numerical outcome. 
+Analysis of variance (ANOVA), as discussed in Chapter \@ref(anova), investigates the effects of categorical variables on a numeric dependent variable. It cannot handle numeric predictors or numeric covariates. Although there are ways to include numeric covariates in analysis of variance, for instance, in the analysis of covariance (ANCOVA), we use regression analysis if we have at least one numerical predictor or covariate and a numerical dependent variable. 
 
 In the current section, we discuss regression models with a numerical predictor and a categorical moderator. A later section (Section \@ref(cont-moderator-regression)), presents regression models in which both the predictor and moderator are numeric.
 
@@ -1073,7 +1073,7 @@ Our current question is: Does exposure to the campaign have the same effect for 
 
 Our moderator (smoker vs. non-smoker) is a dichotomous variable but our predictor (exposure) is numeric, so we cannot use analysis of variance. Instead, we use regression analysis, which allows numeric predictors. 
 
-In the context of a regression model, moderation means __different slopes for different groups__. The slope of the regression line is the regression coefficient, which expresses the effect of the predictor on the outcome variable. If we have different effects in different contexts (moderation), we must have different regression coefficients for different groups.
+In the context of a regression model, moderation means __different slopes for different groups__. The slope of the regression line is the regression coefficient, which expresses the effect of the predictor on the dependent variable. If we have different effects in different contexts (moderation), we must have different regression coefficients for different groups.
 
 ### Interaction variable {#interaction-variable}
 
@@ -1365,7 +1365,7 @@ If we would like to know whether the exposure effect for former smokers is signi
 
 ### Common support {#commonsupportdichotomous}
 
-In a regression model with moderation, we have to interpret the effect of a predictor involved in the interaction at a particular value of the moderator (Section \@ref(conditional-effects)). The estimated effect at a particular value of the moderator can only be trusted if there are quite some observations at or near this value of the moderator. In addition, these observations should cover the full range of values on the predictor. After all, the effect that we estimate must tell us whether higher values on the predictor go together with higher (or lower) values on the outcome.
+In a regression model with moderation, we have to interpret the effect of a predictor involved in the interaction at a particular value of the moderator (Section \@ref(conditional-effects)). The estimated effect at a particular value of the moderator can only be trusted if there are quite some observations at or near this value of the moderator. In addition, these observations should cover the full range of values on the predictor. After all, the effect that we estimate must tell us whether higher values on the predictor go together with higher (or lower) values on the dependent variable.
 
 For example, we need quite some observations for smokers to estimate the conditional effect of exposure on attitude for smokers. If there are hardly any smokers in our sample, we cannot estimate the effect of exposure on attitude for them in a reliable way. Even if we have quite some observations for smokers but all smokers have low exposure, we cannot say much about the effect of exposure on attitude for them. If we cannot say much about the effect within this group, we cannot say much about the difference between this effect and effects for other groups. In short, the moderation model is problematic here.
 
@@ -1425,7 +1425,7 @@ regression effect for this group is not to be trusted.
 
 The variation of predictor scores for a particular value of the moderator is called _common support_ [@RefWorks:3838]. If common support for predictors involved in moderation is bad, we should hesitate to draw conclusions from the estimated effects. Guidelines for good common support are hard to give. Common support is usually acceptable if there are observations over the entire range of the predictor. 
 
-It is recommended to check the number of observations per value of the moderator. For a categorical moderator, such as smoking status, a scatter plot of outcome (vertical axis) by predictor (horizontal axis) with dots coloured according to the moderator category may do the job. Check that there are observations for more or less all values of the predictor. In Figure \@ref(fig:scatter-moderated), observations in each moderator category (dot colour) range from low to high predictor values.
+It is recommended to check the number of observations per value of the moderator. For a categorical moderator, such as smoking status, a scatter plot of the dependent variable (vertical axis) by predictor (horizontal axis) with dots coloured according to the moderator category may do the job. Check that there are observations for more or less all values of the predictor. In Figure \@ref(fig:scatter-moderated), observations in each moderator category (dot colour) range from low to high predictor values.
 
 ```{r scatter-moderated, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="The effects of exposure to the anti-smoking campaign on attitude towards smoking among smokers and non-smokers."}
 # Read data,
@@ -1510,7 +1510,7 @@ knitr::include_url("https://www.youtube.com/embed/qZbdMdNoldI", height = "360px"
 #   - {skip} No covariates: Graphs > Regression Variable Plots: outcome on Y, predictor on X, categorical moderator in Color by, Options>Scatterplot Fit Lines > Linear and Grouping > Fit line for each categorical colour group
 #   - With covariates: 
 #     - create scatterplot with Graphs > Legacy Dialogs > Scatter/Dot > Simple Scatter
-#     - select outcome variable under Y Axis: and (numeric) predictor under X Axis: 
+#     - select dependent variable under Y Axis: and (numeric) predictor under X Axis: 
 #     - select (original) categorical moderator under Set Markers by: (colours the observations according to moderator value, useful for inspecting common support)
 #     - Paste & Run 
 #     - display the mean values of covariates with Analyze > Descriptive Statistics > Fequencies ; select Statistics > Mean
@@ -1839,7 +1839,7 @@ smokers with high exposure are rare.
 
 ## A Continuous Moderator {#cont-moderator-regression}
 
-With a categorical moderator, it is quite obvious for which values of the moderator we are going to calculate and depict the effect of the predictor on the outcome. If smoking status moderates the effect of exposure on attitude towards smoking, we will inspect a regression line for each smoking status category: smokers, former smokers, and non-smokers. But what if the moderator is a continuous, numeric variable, for example, the intensity of contact with smokers?
+With a categorical moderator, it is quite obvious for which values of the moderator we are going to calculate and depict the effect of the predictor on the dependent variable. If smoking status moderates the effect of exposure on attitude towards smoking, we will inspect a regression line for each smoking status category: smokers, former smokers, and non-smokers. But what if the moderator is a continuous, numeric variable, for example, the intensity of contact with smokers?
 
 ```{r continuous-moderator, fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="440px"}
 # Goal: Understand that there is a conditional effect for each value of the moderator by gradually changing the moderator value & understanding the linearity of the effect: a fixed slope change for a fixed difference in moderator values.
@@ -1852,7 +1852,7 @@ With a categorical moderator, it is quite obvious for which values of the modera
 # # Create moderator.
 # set.seed(4321)
 # contact <- 0.12*(10 - exposure) + rnorm(n, mean = 4.5, sd = 2)
-# # Create outcome.
+# # Create dependent variable.
 # set.seed(390)
 # attitude <- -0.26*exposure + 0.15*contact + 0.04*exposure*contact + rnorm(n, mean = 2, sd = 0.5)
 knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height="550px")
@@ -2074,7 +2074,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-interaction-visuali
 * The important thing is to understand that a regression line that depends on
 few observations is not very trustworthy. The line usually does not represent
 the observations well. In addition, these few observations may have different
-predictor and outcome values in a new sample, so the regression line may be
+predictor and dependent variable values in a new sample, so the regression line may be
 quite different at this moderator value in a new sample.
 * The minimum and maximum value observed in the current sample represent
 regression lines that are quite outside the dot cloud. They are based on very
@@ -2235,7 +2235,7 @@ contact <- 0.12*(10 - exposure) + rnorm(n, mean = 4.5, sd = 2)
 # Mean-centered predictors.
 exposure_mc <- exposure - mean(exposure)
 contact_mc <- contact - mean(contact)
-# Create outcome for mean-centered numeric predictor and moderator.
+# Create dependent variable for mean-centered numeric predictor and moderator.
 set.seed(390)
 attitude <- -0.26*exposure_mc + 0.25*contact_mc + 0.08*exposure_mc*contact_mc - 1.6*former + 0.06*smoker - 0.12*former*exposure_mc + 0.05*smoker*exposure_mc + rnorm(n, mean = -1, sd = 1)
 # Regression.
@@ -2290,9 +2290,9 @@ _Note_. _N_ = `r n`. CI = confidence interval.
 
 If we report a regression model, we first present the significance test and predictive power of the entire regression model. We may report that the regression model is statistically significant, F (`r resultsF[[1,4]]`, `r resultsF[[2,4]]`) = `r report_n(as.numeric(resultsF[[1,6]]),2)`, p `r ifelse(resultsF[[1,7]] == "0.000", "< 0.001", paste0("=", resultsF[[1,7]]))`, so the regression model very likely helps to predict attitude towards smoking in the population. Retrieve the test information from SPSS; the APA6-style table (Table \@ref(tab:report-moderation-table)) only reports the F value and its significance level.
 
-How well does the regression model predict attitude towards smoking? The effect size of a regression model or its predictive power is summarized by $R^2$ (_R Square_), which is the proportion of the variation in the outcome variable scores (attitude towards smoking) that can be predicted with the regression model. In this example, $R^2$ is `r report_n(summ$r.squared, 2)`, so the regression model predicts `r report_n(summ$r.squared * 100, 0)`% of the variance in attitude towards smoking among the respondents. In communication research, $R^2$ is usually smaller. 
+How well does the regression model predict attitude towards smoking? The effect size of a regression model or its predictive power is summarized by $R^2$ (_R Square_), which is the proportion of the variation in the dependent variable scores (attitude towards smoking) that can be predicted with the regression model. In this example, $R^2$ is `r report_n(summ$r.squared, 2)`, so the regression model predicts `r report_n(summ$r.squared * 100, 0)`% of the variance in attitude towards smoking among the respondents. In communication research, $R^2$ is usually smaller. 
 
-$R^2$ tells us how well the regression model predicts the outcome variable in the sample. Every predictor that we add to the regression model helps to predict results in the sample even if the predictor does not help to predict the outcome in the population. For a better idea of the predictive power of the regression model in the population, we may use _Adjusted R Square_. Adjusted R Square is usually slightly lower than R Square. In the example, Adjusted R Square is `r report_n(summ$adj.r.squared, 2)` (not reported in Table \@ref(tab:report-moderation-table)).
+$R^2$ tells us how well the regression model predicts the dependent variable in the sample. Every predictor that we add to the regression model helps to predict results in the sample even if the predictor does not help to predict the dependent variable in the population. For a better idea of the predictive power of the regression model in the population, we may use _Adjusted R Square_. Adjusted R Square is usually slightly lower than R Square. In the example, Adjusted R Square is `r report_n(summ$adj.r.squared, 2)` (not reported in Table \@ref(tab:report-moderation-table)).
 
 As a next step, we discuss the size, statistical significance, and confidence intervals of the regression coefficients. If a predictor is involved in one or more interaction effects, we must be very clear about the reference value and reference group to which the effect applies.
 
@@ -2450,12 +2450,11 @@ violated.
 outcome. This supports a linear model. Note that it is not a problem that the
 residuals tend to be further from zero if they are below zero.
 * Prediction errors seem to be more or less of equal size at different levels
-of the outcome variable, so the assumpion of homoscedasticity seems to be met.
+of the dependent variable, so the assumpion of homoscedasticity seems to be met.
   
 Interpret the results:  
   
-* The regression model predicts 21 per cent of the variation in the outcome
-variable, F (4, 80) = 5.44, p = .001.
+* The regression model predicts 21 per cent of the variation in the dependent variable, F (4, 80) = 5.44, p = .001.
 * None of the regression coefficients, however, is statistically significant.
 We are not confident that the directions of the estimated effects are the true
 directions; they may have the opposite direction in the population.
