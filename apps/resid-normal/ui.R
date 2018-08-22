@@ -1,22 +1,24 @@
 library(shiny)
 
-fig.width = 400
+fig.width = 360
 fig.height = 220
 shinyUI(
   fluidPage(
-    verticalLayout(
-      fluidRow(align = "center",
-               plotOutput("scatterplot",
+      fluidRow(column(6,
+                      align = "center",
+                      plotOutput("scatterplot",
                           brush = "scatterbrush",
                           width = fig.width,
                           height = fig.height
-               )
-      ),
-      fluidRow(align = "center",
-               plotOutput("residplot",
+                      )
+              ),
+              column(6,
+                      align = "center",
+                      plotOutput("residplot",
                           width = fig.width,
                           height = fig.height
-               )
+                    )
+              )
       ),
       fluidRow(align = "center",
                actionButton("samplebutton",
@@ -24,6 +26,5 @@ shinyUI(
                )
       )
     )
-  )
 )
 

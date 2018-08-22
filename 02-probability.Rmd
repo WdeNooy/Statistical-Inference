@@ -317,7 +317,8 @@ d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"),
                 Combinations = c("tail-tail-tail", "tail-tail-head", "head-tail-tail", "tail-head-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"),
                 Probability_of_combination = c("1/2 * 1/2 * 1/2 = 1/8 =  .125", "1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125","1/2 * 1/2 * 1/2 = 1/8 =  .125", ""),
                 Probability_of_outcome = c("1/8 =  .125", "", "", "3/8 =  .375", "", "", "3/8 =  .375", "1/8 =  .125", "1.000"))
-knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Outcome", "Combination", "Probability: Combination", "Probability: Outcome"), align = c("l", "l", "l", "r"))
+knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Outcome", "Combination", "Probability: Combination", "Probability: Outcome"), align = c("l", "l", "l", "r")) %>%
+  kable_styling(font_size = 12, full_width = F)
 ```
 
 1. Explain the meaning of the entries in the column __Combination__ and how they relate to the entries in the __Outcome__ column.  
@@ -560,7 +561,8 @@ Apart from the normal distribution, there are several other theoretical probabil
 For most of these theoretical probability distributions, sample size is important. The larger the sample, the better. There are additional conditions that must be satisfied such as the distribution of the variable in the population. The rules of thumb are summarized in Table \@ref(tab:thumb). Bootstrapping and exact tests can be used if conditions for theoretical probability distributions have not been met. Special conditions apply to regression analysis (see Chapter \@ref(moderation), Section \@ref(regr-inference)).
 
 ```{r thumb, echo=FALSE, screenshot.opts=list(delay = 2)}
-knitr::kable(rbind(c("Binomial distribution", "proportion", "-", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", "-"), c("(Standard) normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known (for each group)"), c("t distribution", "one or two means", "> 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "20+ per independent variable", "See Chapter 8."), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." )
+knitr::kable(rbind(c("Binomial distribution", "proportion", "-", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", "-"), c("(Standard) normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known (for each group)"), c("t distribution", "one or two means", "> 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "20+ per independent variable", "See Chapter 8."), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." ) %>%
+  kable_styling(font_size = 12)
 ```
 
 ### Checking conditions  
@@ -757,7 +759,8 @@ distribution that does not resemble the true sampling distribution.
 ####Exact approach.
 d <- data.frame(Outcome = c(0,1,1,1,2,2,2,3,"Total"), 
                 Combinations = c("tail-tail-tail", "tail-tail-head", "tail-head-tail", "head-tail-tail", "head-head-tail", "head-tail-head", "tail-head-head", "head-head-head", "8"))
-knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Number of heads", "Combination"), align = c("l", "l"))
+knitr::kable(d, caption = "Number of heads for a toss of three coins.", col.names = c("Number of heads", "Combination"), align = c("l", "l")) %>%
+  kable_styling(font_size = 12, full_width = F)
 ```
 
 4. Calculate the exact probability distribution of the number of heads in a toss of three fair coins (Table \@ref(tab:models-summary-3)).

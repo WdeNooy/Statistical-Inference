@@ -5,26 +5,27 @@ fig.height = 400
 
 shinyUI(
   fluidPage(
-    verticalLayout(
-      fluidRow(align = "center",
-               plotOutput("mainplot",
-                          width = fig.width,
-                          height = fig.height
-               )
-      ),
-      fluidRow(aligh = "center",
-               div(
-                 checkboxGroupInput("predcheckbox",
+    fluidRow(column(3,
+                    br(), br(),
+                    aligh = "left",
+                    div(
+                      checkboxGroupInput("predcheckbox",
                                   label = "Predictors",
                                   choices = c("Age" = "age",
                                               "Education" = "education",
                                               "Pol. Interest" = "polinterest",
                                               "News site use" = "newssite"),
-                                  inline = TRUE
+                                  inline = FALSE
                                   )
-                 ,align = "center"
-               )
-      )
+                      )
+                    ),
+             column(9,
+                    align = "center",
+                    plotOutput("mainplot",
+                          width = fig.width,
+                          height = fig.height
+                          )
+                    )
+             )
     )
-  )
 )

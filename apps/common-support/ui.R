@@ -1,36 +1,35 @@
-fig.width = 400
+fig.width = 350
 fig.height = 220
 shinyUI(
   fluidPage(
-    verticalLayout(
-      fluidRow(align = "center",
-               plotOutput("scatterplot",
+    fluidRow(column(6,
+                    align = "center",
+                    div(
+                      selectInput("selectinput",
+                                  label = "Choose group",
+                                  choices = c("All", "Smoker", "Former smoker", "Non-smoker"),
+                                  selected = "All"            
+                      ), 
+                      align = "center"
+                    ),
+                    align = "center",
+                    plotOutput("scatterplot",
                           width = fig.width,
                           height = fig.height
-               )
-     ),
-     fluidRow(align = "center",
-              div(
-                selectInput("selectinput",
-                            label = "Choose group",
-                            choices = c("All", "Smoker", "Former smoker", "Non-smoker"),
-                            selected = "All"
-                            
-                ), 
-                align = "center"
-              )
-     ),
-     fluidRow(align = "center",
-              plotOutput("histogram",
+                    )
+              ),
+              column(6, 
+                     br(),
+                     actionButton("samplebtn",
+                                  label = "Take new sample"
+                     ),
+                     br(), br(),
+                     align = "center",
+                     plotOutput("histogram",
                          width = fig.width,
                          height = fig.height
+                    )
               )
-     ),
-     fluidRow(align = "center",
-              actionButton("samplebtn",
-                           label = "Take new sample"
-              )
-    )
     )
   )
 )

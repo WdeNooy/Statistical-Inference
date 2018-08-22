@@ -1,31 +1,29 @@
 library(shiny)
 
-fig.width = 400
-fig.height = 350
+fig.width = 450
+fig.height = 320
 shinyUI(
   fluidPage(
-    verticalLayout(
-      fluidRow(align = "center",
-               plotOutput("scatterplot",
-                          brush = "scatterbrush",
-                          width = fig.width,
-                          height = fig.height
-               )
-      ),
-      fluidRow(align = "center",
-               selectInput("selector",
-                            "Select reference group",
-                           choices = c( "Never smoked", "Stopped smoking","Smoking")
-                           
-               )
-      ),
-      fluidRow(align = "center",
-               actionButton("samplebutton",
-                            "New Plot"
-               )
-      )
+    fluidRow(column(4,
+                    br(),
+                    align = "center",
+                    br(),
+                    selectInput("selector",
+                                "Select reference group",
+                                choices = c( "Never smoked", "Stopped smoking","Smoking")
+                                
+                    ),
+                    actionButton("samplebutton", "New Plot"
+                                 )
+            ),
+             column(8, 
+                    align = "center",
+                    plotOutput("scatterplot",
+                        brush = "scatterbrush",
+                        width = fig.width,
+                        height = fig.height
+                    )
+            )
     )
   )
 )
-
-

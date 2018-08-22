@@ -536,7 +536,8 @@ In an experiment, we can ensure that factors are independent if we have the same
 df <- data.frame(Female = rep(2, 3), Male = rep(2, 3))
 row.names(df) <- c("Clooney", "Jolie", "No endorser")
 # Display table.
-knitr::kable(df, caption = "Number of observations per subgroup in a balanced 3x2 factorial design.")
+knitr::kable(df, caption = "Number of observations per subgroup in a balanced 3x2 factorial design.") %>%
+  kable_styling(font_size = 12, full_width = F, position = "float_right")
 # Cleanup.
 rm(df)
 ```
@@ -891,7 +892,8 @@ results[5,] <- c(round(sum(results[,2]), digits = 2), sum(results[,3]), NA, NA, 
 row.names(results)[5] <- "Total"
 results$`round(results[, 5], digits = 3)`[results$`round(results[, 5], digits = 3)` < 0.001] <- "< 0.001"
 options(knitr.kable.NA = '')
-knitr::kable(results, caption = "An example of a table summarizing results of a two-way analysis of variance.", col.names = c("Sum of Squares", "df", "Mean Square", "F", "p"), align = rep("r", 5)) 
+knitr::kable(results, caption = "An example of a table summarizing results of a two-way analysis of variance.", col.names = c("Sum of Squares", "df", "Mean Square", "F", "p"), align = rep("r", 5))  %>%
+  kable_styling(font_size = 12, full_width = F)
 # Cleanup.
 rm(results, donors)
 ```

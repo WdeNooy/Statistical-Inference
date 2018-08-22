@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
   ##OUTPUT OF HEADER 
   output$headtext <-renderText(paste("Attitude predicted from Exposure for Contact set to",
                                              input$modvalueslider))
-  slidertemp <- numeric()
+  slidertemp <- 0
   ##MAIN PLOT##
   output$mainplot <- renderPlot({
     
@@ -80,11 +80,11 @@ shinyServer(function(input, output) {
   output$formulaui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude = 0.4 + (-0.26 + 0.04 * }\\color{blue}{",
+        paste("$$\\small{\\color{black}{attitude = 0.4 + (-0.26 + 0.04 * }\\color{blue}{",
               input$modvalueslider,
               "}\\color{black}{)*exposure + 0.15*}\\color{blue}{",
               input$modvalueslider,
-              "}$$")
+              "}}$$")
       )
     )
   })
