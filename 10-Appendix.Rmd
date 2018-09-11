@@ -1,0 +1,467 @@
+# Appendix: Test Overview {-}
+
+This appendix offers an overview over all statistical tests in the Bachelor programme Communication Science at the University of Amsterdam.
+
+## Formulating Statistical Hypotheses {-}
+
+A _research hypothesis_ is a statement about the empirical world that can be tested against data. Communication scientists, for instance, may hypothesize that:  
+
+* a television station reaches half of all households in a country,
+
+* media literacy is below a particular standard (for instance, 5.5 on a 10-point scale) among children,  
+
+* opinions about immigrants are not equally polarized among young and old voters,  
+
+* the celebrity endorsing a fundraising campaign makes a difference to people's willingness to donate,  
+
+* more exposure to brand advertisements increases brand awareness,
+
+* and so on.  
+
+As these examples illustrate, research hypotheses seldom refer to statistics such as means, proportions, variances, or correlations. Still, we need such statistics to test a hypothesis. The researcher must translate the hypothesis into a new hypothesis specifying a statistic in the population, for example, the population mean. The new hypothesis is called a _statistical hypothesis_.  
+
+Translating the research hypothesis into a statistical hypothesis is perhaps the most creative part of statistical analysis, which is just a fancy way of saying that it is difficult to give general guidelines stating which statistic fits which research hypothesis. All we can do is give some hints.  
+
+Research questions usually address shares, score levels, associations, or score variation. If a research question talks about how frequent some characteristic occurs (How many candies are yellow?) or which part has a particular characteristic (Which percentage of all candies are yellow?), we are dealing with one or two categorical variables. Here, we need a binomial, chi-squared, or exact test (see Figure \@ref(fig:choice-diagram)choice-diagram-copy2).
+
+If a research question asks how high a group scores or whether one group scores higher then another group, we are dealing with score levels. The variable of central interest usually is numerical (interval or ratio measurement level) and we are concerned with mean or median scores. There is a range of tests that we can apply, depending on the number of groups that we want to compare (one, two, three or more): t tests or analysis of variance. 
+
+Instead of comparing mean scores of groups, a research question about score levels can address associations between numerical variables, for example, Are heavier candies more sticky? Here, the score level on one variable (candy weight) is linked to the score level on another variable (candy stickiness). This is where we use correlations or regression analysis.
+
+Finally, a research question may address the variation of numeric scores, for example, Does the weight of yellow candies vary more strongly than the weight of red candies? Variance is the statistic that we use to measure variation in numeric scores.
+
+```{r choice-diagram-copy2, fig.width=9, echo=FALSE, fig.cap="Flow chart for selecting a test in SPSS."}
+source("flowchart.R")
+p
+rm(p)
+```
+
+## Proportions: shares {-}
+
+A proportion is the statistic best suited to test research hypotheses addressing the share of a category or entity in the population. The hypothesis that a television station reaches half of all households in a country provides an example. All households in the country constitute the population. The share of the television station is the proportion or percentage of all households watching this television station.  
+
+If we want to use a statistic, we need to know the variable and cases (units of analysis) for which the statistic must be calculated. In this example, a household does or does not watch the television station, so our variable is a dichotomy with the two categories ("No, does not watch this station", "Yes, watches this station") usually coded as 0 versus 1 or 1 versus 2.  
+
+Each household provides an observation, namely either the score 0 or the score 1 on this variable or no score if there are missing values. To test the research hypothesis that a television station reaches half of all households in a country, we have to formulate a statistical hypothesis about the proportion---of households viewing this television station---in the population---all households in this country. For example, the researcher's statistical hypothesis could be that the proportion in the population is 0.5.  
+
+We can also be interested in more than two categories, for instance, does the television station reach the same share of all households in the north, east, south, and west of the country? This translates into a statistical hypothesis containing three or more proportions in the population. If 30% of households in the population are situated in the west, 25 % in the south and east, and 20% in the north, we would expect these proportions in the sample if all regions are equally represented. Our statistical hypothesis is actually a relative frequency distribution, such as, for instance, in Table \@ref(tab:hypo-freq2).
+
+```{r hypo-freq2, echo=FALSE}
+knitr::kable(data.frame(Region = c("North", "East", "South", "West"), HP = c(0.20, 0.25, 0.25, 0.30)), digits = 2, caption = "Statistical hypothesis about four proportions as a frequency table.", col.names = c("Region", "Hypothesized Proportion")) %>%
+  kable_styling(font_size = 12, full_width = F, position = "float_right")
+```
+
+A test for this type of statistical hypothesis is called a one-sample chi-squared test. It is up to the researcher to specify the hypothesized proportions for all categories. This is not a simple task: What reasons do we have to expect particular values, say a region's share of thirty per cent of all households instead of twenty-five per cent?
+
+The test is mainly used if the researcher has information on the proportions of the categories in the population. If we draw a sample from all citizens of a country, we usually know the frequency distribution of sex, age, educational level, and so on, for all citizens from the national bureau of statistics. With the bureau's information, we can test if the respondents in our sample have the same distribution with respect to sex, age, or educational level as the population; just use the population proportions in the hypothesis. If they do, the sample is _representative_ (see Section \@ref(representative)) of the population with respect to sex, age, or educational level. This is an important check on the representativeness of our sample.
+
+### Testing proportions in SPSS {-}
+
+For a binomial test, see the video in Figure \@ref(fig:SPSSbinomial). A one-sample chi-squared test is explained in the video of Figure \@ref(fig:SPSSchisq1). Exercises are available in Section \@ref(nullSPSS).
+
+## Mean and median: level {-}
+Research hypotheses that focus on the level of scores are usually best tested with the mean or another measure of central tendency such as the median value. For example, the hypothesis that media literacy is below a particular standard (e.g., 5.5 on a 10-point scale) among children refers to a level: the level of media literacy scores. 
+
+The hypothesis probably does not argue that all children have a media literacy score below 5.5. Instead, it means to say that the overall level is below this standard. The center of the distribution offers a good indication of the general score level.
+
+For a numeric (interval or ratio measurement level) variable such as the 10-point scale in the example, the mean is a good measure of the distribution's center. In this example, our statistical hypothesis would be that average media literacy score of all children in the population is (below) 5.5.  
+
+### Testing one mean or median in SPSS {-}
+
+The one-sample t test in SPSS is explained in Figure \@ref(fig:SPSS1mean). Exercises are available in Section \@ref(nullSPSS).
+
+## Variance: (dis)agreement {-}
+Although rare, research hypotheses may focus on the variation in scores rather than on score level. The hypothesis about polarization provides an example. Polarization means that we have scores well above the center and well below the center rather than all scores concentrated in the middle. If voters' opinions about immigrants are strongly polarized, we have a lot of voters strongly in favour of admitting immigrants as well as many voters strongly opposed to admitting immigrants.  
+
+For a numeric variable, the variance or standard deviation---the latter is just the square root of the former---is the appropriate statistic to test a hypothesis about polarization. The research hypothesis concerns the variation of scores in two groups, for instance, young versus old voters. The statistical hypothesis would be that the variance in opinions in the population of young voters is different from the variance in the population of old voters.  
+
+### Testing two variances in SPSS {-}
+
+#### Instructions {-}
+
+```{r SPSSLevene, echo=FALSE, out.width="640px", fig.cap="Levene's F test on equal variances in SPSS", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px")
+# Levene's F test for the null hypothesis that two groups have equal population variances is part of the independent-samples t test. 
+
+# The output in Figure \@ref(fig:Levene-output) shows that the polarization (variation) in attitudes towards immigrants is not the same among young and old voters, _F_ = 4.99, _p_ = .029. Polarization is stronger among old voters (_SD_ = 2.06) than among young voters (_SD_ = 1.26). 
+# 
+# In a similar way, we can test if two, three or more groups have equal population variances with Levene's F test using the option _Homogeneity of variance test_ in a one-way analysis of variance (command _Analyze >  COMPARE MEANS > ONE-WAY ANOVA_).
+
+```
+
+#### Exercises {-}
+
+1. Data set [voters.sav](http://82.196.4.233:3838/data/voters.sav) contains information about the age and attitude towards immigration among a random sample of voters. Is the attitude towards immigrants equally polarized among young (under 30) and old (30+) voters? Justify your answer with a statistical test.
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=age_group immigrant  
+  /ORDER=ANALYSIS.  
+* Independent-samples t test with Levene s test.  
+T-TEST GROUPS=age_group(1 2)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=immigrant  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants is more polarized among  
+older voters (SD = 2.06) than among young voters (SD = 1.26).  
+The difference in variation is statistically significant,  
+F = 4.99, p = .029.  
+Note that SPSS does not report the (two) degrees of freedom  
+of the F test, so we cannot report them either.   
+SPSS, however, does report the degrees of freedom of Levene's F test in a  
+one-way analysis of variance. We could have used that approach here as well.  
+```
+
+2. Use the data of Exercise 1. Create a new variable grouping voter's age with classes 18-35, 36-65, and 66+ years. Is the attitude towards immigrants equally polarized among these three age groups in the population? Justify your answer with a statistical test.
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=age immigrant  
+  /ORDER=ANALYSIS.  
+* Group age.  
+RECODE age (Lowest thru 35=1) (36 thru 65=2)  
+  (66 thru Highest=3) INTO age3.  
+VARIABLE LABELS  age3 'Voter ages in three groups'.  
+EXECUTE.  
+* Define Variable Properties.  
+*age3.  
+VALUE LABELS age3  
+  1.00 '18-35'  
+  2.00 '36-65'  
+  3.00 '66+'.  
+EXECUTE.  
+* ANOVA with descriptives.  
+ONEWAY immigrant BY age3  
+  /STATISTICS DESCRIPTIVES HOMOGENEITY   
+  /MISSING ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants seems to be more polarized   
+among middle-aged (SD = 2.17) and aged voters (SD = 2.06)   
+than among young voters (SD = 1.37).   
+The difference in variation, however, is not statistically   
+significant, F (2, 63) = 2.77, p = .070.  
+This result seems to contradict the statistically significant  
+test result that we found in Exercise 1, comparing only young   
+to old voters. There is no contradiction, however. We merely  
+see that the classification into groups can matter to the   
+significance of results.  
+```
+
+## Association: relations between characteristics {-}
+
+Finally, research hypotheses may address the relation between two or more variables. Relations between variables are at stake if the research hypothesis states or implies that one (type of) characteristic is related to another (type of) characteristic. The statistical name for a relation between variables is _association_.  
+
+Take, for example, an analysis of the effect of a celebrity endorser on the willingness to donate. Here, the endorser to whom a person is exposed (one characteristic) is related to this person's willingness to donate (another characteristic). Another example: If exposure to the campaign increases willingness to donate, a person's willingness to donate is positively related to this person's exposure to the campaign.  
+
+### Score level differences {-}
+
+Association comes in two related flavors: a difference in score level between groups or the predominance of particular combinations of scores on different variables.
+
+The relation between the endorser's identity and willingness to donate is an example of the first flavor. All people are confronted with one of the celebrities as endorser of the fund-raising campaign. This is captured by a categorical variable: the endorsing celebrity. 
+
+The categorical variable clusters people into groups: One group is confronted with Celebrity A, another group with Celebrity B, and so on. If the celebrity matters to the willingness to donate, the general level of donation willingness should be higher in the group exposed to one celebrity than in the group exposed to another celebrity.
+
+Thus, we return to statistics needed to test research hypotheses about score levels, namely measures of central tendency. If willingness to donate is a numeric variable, we can use group means to test the association between endorsing celebrity (grouping variable) and willingness to donate (score variable). The statistical hypothesis would then be that group means are not equal in the population of all people. 
+
+If you closely inspect the choice diagram in Figure \@ref(fig:choice-diagram-copy2), you will see that we prefer to use a _t_ distribution if we compare two different groups (independent-samples t test) or two repeated observations for the same group (paired-samples t test). By contrast, if we have three or more groups, we use analysis of variance with an _F_ distribution. 
+
+### Comparing means in SPSS {-}
+
+#### Instructions {-}
+
+```{r SPSSTindep, echo=FALSE, out.width="640px", fig.cap="Independent samples t test on two means", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/g4O0oTVm-Tk", height = "360px")
+# Goal: association as level differences between groups: are females more wiling to donate to a fund raiser than males?
+# Example: donors.sav, outcome is willingness to donate (post), predictor (grouping variable) is sex (0, 1).
+# Technique: independent-samples t test.
+# SPSS menu: Compare Means ; options: check level of confidence interval.
+# Paste & Run.
+# Interpret output: choose right row in test table depending on Levene's F test ; test result and significance, confidence interval.
+# Check assumptions: each group more than 30 observations or normally distributed (histogram panelled by sex).
+```
+
+----
+
+```{r SPSSTpaired, echo=FALSE, out.width="640px", fig.cap="Paired samples t test on two means", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/7mGKG3mLqN0", height = "360px")
+# Goal: Association as score level change (due to intermediary treatment).
+# Example: donors.sav, outcome is willingness to donate post and prior exposure to a fund raiser campaign.
+# Technique: paired-samples t test ; repeated measurements.
+# SPSS menu: Compare Means ; second selected variable will be subtracted form the first, so post-pre is better combination; options: check level of confidence interval.
+# Paste & Run.
+# Interpret output: test result and significance, confidence interval.
+# Check assumptions: each measurement more than 30 observations or normally distributed (histogram per variable).
+```
+
+----
+
+For an instruction and exercises on one-way analysis of variance, see Figure \@ref(fig:SPSS1way) and Section \@ref(onewaySPSS). For two-way analysis of variance, see Section \@ref(twowaySPSS) (instructions and exercises).
+
+#### Exercises {-}
+
+1. Is willingness to donate at the end of the campaign higher for those who remember the campaign than for those who do not remember it?
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=willing_post remember  
+  /ORDER=ANALYSIS.  
+* Independent-samples t test.  
+T-TEST GROUPS=remember(0 1)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=willing_post  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+Sample sizes (N = 66 and N = 77) are of sufficient  
+size not to worry about the shape of the distribution  
+of willingness in the population.  
+  
+Interpret the results:  
+  
+Willingness to donate at the end of the campaign is significantly   
+higher for those who remember the campaign (M = 4.94, SD = 1.60)   
+than for those who do not remember it (M = 4.24, SD = 1.65),   
+t (141) = -2.57, p = .011, 95%CI[-1.24, -0.16].   
+Willingness is 0.16 to 1.24 points higher on a 10-point scale for   
+those who remember the campaign. Considering the range of the   
+scale, this is quite a small difference.  
+```
+
+2. Did willingness to donate increase in the population between the start and the end of the campaign?
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=willing_post willing_pre  
+  /ORDER=ANALYSIS.  
+* Paired-samples t test.  
+T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
+  /CRITERIA=CI(.9500)  
+  /MISSING=ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the two variables.  
+  
+Check assumptions:  
+  
+Sample size is sufficiently large (N = 143).  
+  
+Interpret the results:  
+  
+There is a small but statistically significant increase in  
+the willingness to donate over the duration of the experiment
+(from M = 4.49, SD = 1.65 to M = 4.62, SD = 1.66),  
+t (142) = 5.74, p < .001, 95%CI[0.08; 0.17].  
+Average willingness to donate is 0.08 to 0.17 units higher  
+at the end of the experiment than at the start. This is a   
+very small difference on a 10-point scale.  
+```
+
+### Combinations of scores {-}
+
+The other flavor of association represents situations in which some combinations of scores on different variables are much more common than other combinations of scores. 
+
+Think of the hypothesis that brand awareness is related to exposure to advertisements for that brand. If the hypothesis is true, people with high exposure and high brand awareness should occur much more often than people with high exposure and low brand awareness or low exposure and high brand awareness.
+
+The two variables here are exposure and brand awareness. One combination of scores on the two variables is high exposure combined with high brand awareness. This combination should be more common than high exposure combined with low brand awareness.  
+
+Measures of association are statistics that put a number to the pattern in combinations of scores. The exact statistic that we use depends on the measurement level of the variables. For numerical variables, measured at the interval or ratio level, we use Pearson's correlation coefficient or the regression coefficient. For ordinal variables with quite a lot of different scores, we use Spearman's rank correlation. 
+
+For categorical variables, measured at the nominal or ordinal level, chi-squared indicates whether variables are statistically associated. The larger chi-squared, the more likely we are to conclude that the variables are associated in the population. If variables are not associated, they are said to be _statistically independent_.
+
+Several measures exist that express the strength of the association between two categorical variables. We use Phi and Cramer's V (two nominal variables, symmetric association), Goodman & Kruskals tau (two nominal variables, asymmetric association), Kendalls tau-b (two categorical ordinal variables, symmetric association), and Somers' d (two categorical ordinal variables, asymmetric association).
+
+### Testing associations in SPSS {-}
+
+#### Instructions {-}
+
+```{r SPSScorrelation, echo=FALSE, out.width="640px", fig.cap="Test on a correlation", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/2g3Oyfe76h0", height = "360px")
+# Goal: association as combinations of scores
+# Example: consumers.sav, brand awareness by advertisement exposure
+# Technique: Pearson and Spearman correlations for two numeric variables
+# Check data: check linearity in scatterplot, add lines for means to explain combinations of scores that determine the correlation, add regression line to point out the influence of a bivariate outlier ; Spearman's rank correlation is less sensative to bivariate outliers
+# SPSS menu: Correlate > Bivariate
+# Paste & Run.
+# Interpret output: size and statistical significance, no confidence interval  ; use bootstrapping for a confidence interval (see other video)
+# Check assumptions: for using t distribution, Pearson: histograms with normal distribution (mention don't show), Spearman: samples size over 30 
+```
+
+----
+
+```{r SPSSchisqcross, echo=FALSE, out.width="640px", fig.cap="Chi-squared test on a contingency table (crosstab)", dev="png", screenshot.opts = list(delay = 5)}
+knitr::include_url("https://www.youtube.com/embed/Nqtg8q-S0k8", height = "360px")
+# Goal: association as relatively frequent/infrequent category combinations
+# Example: consumers.sav, word of mouth and sex
+# Technique: cross-tabulation
+# SPSS menu: Descriptive Statistics > Crosstabs with option Display clustered bar charts ; Statistics: chi square ; Phi and Cramer's V (two nominal variables, symmetric association), Goodman & Kruskals tau (two nominal variables, asymmetric association), Kendalls tau-b (with lambda: two categorical ordinal variables, symmetric association), and Somers' d (two categorical ordinal variables, symmetric association) ; Cells: column percentages and expected frequencies
+# Paste & Run.
+# Check assumptions: 2x2 table so Fisher's exact test ; larger tables: sufficient number of expected observations in each cell, a minimum of one and at least 80% above five
+# Interpret output: statistical test ; association size ; association contents
+```
+
+----
+
+For regression analysis (instructions and exercises), see Section \@ref(SPSS-regression).
+
+#### Exercises {-}
+
+1. In the population of all consumers, is brand awareness linked to exposure to advertisements for the brand? Use [consumers.sav](http://82.196.4.233:3838/data/consumers.sav) to answer this question.
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=ad_expo brand_aw  
+  /ORDER=ANALYSIS.  
+* Check if the association can be linear.  
+GRAPH  
+  /SCATTERPLOT(BIVAR)=ad_expo WITH brand_aw  
+  /MISSING=LISTWISE.  
+* Correlations.  
+CORRELATIONS  
+  /VARIABLES=ad_expo brand_aw  
+  /PRINT=TWOTAIL NOSIG  
+  /MISSING=PAIRWISE.  
+NONPAR CORR  
+  /VARIABLES=ad_expo brand_aw  
+  /PRINT=SPEARMAN TWOTAIL NOSIG  
+  /MISSING=PAIRWISE.  
+  
+Check data:  
+  
+There are no impossible values that must be changed  
+into missing values.  
+  
+Check assumptions:  
+  
+Can the association be linear? If we check a scatterplot  
+of the two variables, the points do not clearly display  
+a curved shape. But there is one point that may distort  
+a linear association because it is far away from the   
+other points, namely a consumer with an exposure score  
+near one. If the rank correlation is substantially  
+higher than the Pearson correlation, this single  
+observation may be responsible.  
+  
+Interpret the results:  
+  
+Brand awareness is statistically signficantly associated  
+with exposure to advertisements for the brand, r = .46,  
+p < .001. More exposure tends to go together with more  
+brand awareness.  
+```
+
+2. How well can we predict brand awareness with ad exposure?
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=ad_expo brand_aw  
+  /ORDER=ANALYSIS.  
+* Simple regression.  
+REGRESSION  
+  /MISSING LISTWISE  
+  /STATISTICS COEFF OUTS CI(95) R ANOVA  
+  /CRITERIA=PIN(.05) POUT(.10)  
+  /NOORIGIN   
+  /DEPENDENT brand_aw  
+  /METHOD=ENTER ad_expo.  
+  
+Check data:  
+  
+There are no impossible values.  
+  
+Check assumptions:  
+  
+* We need at least twenty observations (cases) for each predictor in the
+regression model. Our model contains only one predictor, so the 62 cases in
+our data set suffice for using the theoretical approximation (F and t
+distribution) here.
+* Other assumptions will be explained in the chapter on moderation with
+regression analysis, so let us not pay attention to the assumptions yet.
+  
+Interpret the results:  
+  
+Ad exposure predicts about one fifth of the   
+variation in brand awareness scores, R2 = .21,   
+F (1, 60) = 15.87, p < .001.  
+The predictive effect of exposure to brand advertisements   
+is moderately strong (b* = 0.46). An additional  
+unit of exposure increases the predicted brand awareness  
+with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].  
+```
+
+3. Does word of mouth involve women rather than men? Interpret the contents, strength, and statistical significance of the association.
+
+```{r eval=FALSE, echo=TRUE}
+SPSS syntax:  
+  
+* Contingency table with chi-squared test and measure of association.  
+CROSSTABS  
+  /TABLES=wom BY gender  
+  /FORMAT=AVALUE TABLES  
+  /STATISTICS=CHISQ PHI LAMBDA   
+  /CELLS=COUNT COLUMN   
+  /COUNT ROUND CELL  
+  /BARCHART.  
+  
+Check data:  
+  
+There are no impossible values on the two categorical   
+variables.  
+  
+Check assumptions:  
+  
+This is a 2x2 contingency table so we have to use (Fisher)  
+exact test. This test makes no assumptions.  
+  
+Interpret the results:  
+  
+There is no statistically significant association between  
+word of mouth and sex, p = .161 (Fisher exact), Goodman &  
+Kruskal tau = .05. We cannot confidently conclude that  
+either females or males experience word of mouth more  
+frequently.  
+  
+Note that a one-sided test is possible too. The p value  
+of a one-sided exact test is .080 here.  
+```
+

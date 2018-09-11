@@ -24,7 +24,9 @@ In Figure \@ref(fig:bootstrapping), an initial sample has been drawn from a popu
 1. How large is a bootstrap sample in Figure \@ref(fig:bootstrapping)? Use the _Bootstrap one sample_ button.
 
 ```{r eval=FALSE, echo=TRUE}
-* A bootstrap sample must be just as large as the initial sample. 
+* A bootstrap sample must be just as large as the initial sample. In this
+example, the initial sample contains fifty candies, so the bootstrap sample
+must also contain fifty candies.
 * As we will find out later, the size of a sample is very important to the
 sampling distribution, so we must draw bootstrap samples with exactly the same
 number of observations as the initial sample.
@@ -42,21 +44,26 @@ as a grey histogram at the bottom of the figure.
 3. Does the bootstrap sampling distribution resemble the true sampling distribution? Use the "Bootstrap 1000 samples" button and justify your answer.  
 
 ```{r eval=FALSE, echo=TRUE}
-* That depends. If the proportion of yellow candies in the original sample is
-close to .2, that is, ten out of fifty candies in the sample are yellow, the
-bootstrapped sampling distribution (yellow histogram) is very similar to the
-true (exact) sampling distribution (grey histogram).
-* If there are much less or many more than ten yellow candies in the sample,
-however, the bootstrapped sampling distribution is quite different from the
-true sampling distribution. Especially the mean (horizontal location) of the
-bootstrapped sampling distribution is different. The shape of the distribution
-may still be nearly the same.
+* The proportion of yellow candies in the (first) initial sample is .2, that
+is, ten out of fifty candies in the sample are yellow.
+* The initial sample is representative of the population with respect to candy
+colour, because the proportion of yellow candies in the population is also .2.
+* As a result, the bootstrapped sampling distribution (yellow histogram) is
+very similar to the true (exact) sampling distribution (grey histogram).
 ```
 
 4. Draw a new initial sample. This sample is probably less representative of the distribution of candy colour in the population. What happens to the bootstrap samples and the bootstrap sampling distribution?
 
 ```{r eval=FALSE, echo=TRUE}
-* See the answer to Exercise 3.
+* If the proportion of yellow candies in the original sample is
+close to .2, that is, ten out of fifty candies in the sample are yellow, the
+bootstrapped sampling distribution (yellow histogram) is very similar to the
+true (exact) sampling distribution (grey histogram).
+* If there are considerably less or more than ten yellow candies in the sample,
+however, the bootstrapped sampling distribution is quite different from the
+true sampling distribution. Especially the mean (horizontal location) of the
+bootstrapped sampling distribution is different. The shape of the distribution
+may still be nearly the same.
 * Note that the true sampling distribution, represented by the grey histogram,
 remains the same because the proportion of yellow candies in the population
 remains the same, namely 20 per cent.
@@ -113,7 +120,7 @@ You may wonder whether it is OK to sample with replacement when we are bootstrap
 
 In this calculation, we assume that the probability to draw a yellow candy remains the same while we are sampling. This assumption is very convenient because it simplifies the calculation of probabilities. The probability of sampling the first yellow candy is assumed to be .200 and for the second yellow candy as well. We act as if the proportion of yellow candies in the population remains the same, namely 20 per cent, after we have sampled the first yellow candy. This can only be true if the yellow candy that we have sampled from is immediately replaced by a new yellow candy the population. Otherwise, the proportion of yellow candies in the population would decrease when we sample the first yellow candy. The probability of sampling a second yellow candy would be slightly lower than .200.
 
-### Calculating probabilities without replacement 
+### Calculating probabilities without replacement
 
 In practice, however, we never want the same respondent to participate twice in our research because this would not yield new information. In actual research, then, we sample _without_ replacement. A respondent does not risk being sampled more than once.
 
@@ -121,9 +128,9 @@ How about calculating probabilities if we sample without replacement? If we do n
 
 If the population is large, the decrease in the probability is too small to be in any way relevant. For instance, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992. The difference between the two probabilities (0,0000008) is negligible. 
 
-As you can see, calculating probabilities becomes complicated if we sample without replacement because each new draw has a new probability for drawin a yellow candy. But we can ignore the complications if the population is much larger than the sample because the probabilities hardly differ from the simple probabilities that we have if we sample with replacement. 
+As you can see, calculating probabilities becomes complicated if we sample without replacement because each new draw has a new probability for drawing a yellow candy. But we can ignore the complications if the population is much larger than the sample because the probabilities hardly differ from the simple probabilities that we have if we sample with replacement. 
 
-In practice, then, we always sample _without_ replacement but our statistical software calculates probabilities as if we sampled _with_ replacement. This is perfectly fine as long as the population is much larger than the sample. If the sample contains a large share of the population, however, we should not trust the probabilities that our software reports.
+In an empirical research project, then, we always sample respondents (and so on) _without_ replacement but our statistical software calculates probabilities as if we sampled _with_ replacement. This is perfectly fine as long as the population is much larger than the sample. If the sample contains a large share of the population, however, we should not trust the probabilities that our software reports.
 
 ### Limitations to bootstrapping  
 
@@ -304,6 +311,8 @@ Interpret the results:
 Median candy weight in the sample is 2.81 gram. With   
 95% confidence, we expect median candy weight to be   
 between 2.78 and 2.92 grams in the population of all candies.  
+The 95% interval borders can be slightly different because
+bootstrapping takes random samples.
 ```
 
 ## Exact Approaches to the Sampling Distribution
@@ -446,7 +455,8 @@ Interpret the results:
   
 There is a moderate association (Cramer's V = .27) between   
 candy colour and candy stickiness, which is   
-not statistically significant, p = .480 (exact).   
+not statistically significant, p = .480 (exact) or
+p = .555 (exact).   
 Candy colour does not seem relevant to having spots.  
 ```
 
