@@ -61,11 +61,11 @@ Clooney as endorser, Jolie as endorser, or no celebrity endorser.
 between-groups variance, the larger eta-squared.
 * For those of you who love the details: Between-groups variance squares the
 distances (actually the distances between group means and the grand mean but
-that is not relevant here). As a consequence, a long red arrow contributes
-more to between-groups variance than two short arrows that are just as long as
-the long arrow if they are summed. This is the reason that eta-squared
-increases if the group in the middle moves closer to the top group (or, from
-some point, closer to the bottom group).
+that is not relevant here) before taking the average. As a consequence, a long
+red arrow contributes more to between-groups variance than two short arrows
+that are just as long as the long arrow if they are summed. This is the reason
+that eta-squared increases if the group in the middle moves closer to the top
+group (or, from some point, closer to the bottom group).
 ```
 
 A group's average score on the dependent variable represents the group's score level. The group averages in Figure \@ref(fig:anova-means) tell us for which celebrity the average willingness to donate is higher and for which situation it is lower.
@@ -119,8 +119,8 @@ example, the left-most orange dot represents the willingness score of a
 participant who was exposed to Clooney as endorser. The orange line represents
 the average willingness score of the participants who were exposed to Clooney.
 The red arrow is the difference between the individual's willingness score and
-the mean score of it's group. Squaring and summing the solid red arrows
-(within-groups differences) yields the within-groups variance.
+the mean score of it's group. Squaring, summing, and averaging the solid red
+arrows (within-groups differences) yields the within-groups variance.
 ```
 
 2. What do the solid black arrows represent?
@@ -129,16 +129,16 @@ the mean score of it's group. Squaring and summing the solid red arrows
 score, for instance, the average willingness score of all participants who were
 exposed to Clooney, and the average score of all participants (the grand or
 overall mean).
-* If we square and sum these differences, we get the variance of group means,
-which is called the between-groups variance.
+* If we square, sum, and average these differences, we get the variance of
+group means, which is called the between-groups variance.
 ```
 
 3. What do the dotted black arrows in Figure \@ref(fig:anova-between) represent?
 ```{r eval=FALSE, echo=TRUE}
 * The dotted black arrows represent the difference between individual
 willingness scores and the average willingness scores of all participants.
-Square and average them to get the overall variance. Take the square root of the
-variance to obtain the overall standard deviation.
+Square, sum, and average them to get the overall variance. Take the square
+root of the variance to obtain the overall standard deviation.
 ```
 
 4. Which arrows relate to effect size eta^2^? Change group means (and press the _Update graph_ button) to verify your expectation.
@@ -156,13 +156,13 @@ dotted black arrows are not clearly related to eta-squared.
 
 Let us assume that we have measured the willingness to donate for a sample of 12 participants in our study as depicted in Figure \@ref(fig:anova-between). Once we have our data, we first have a look at the percentage of variance that is explained, eta^2^. What does it mean if we say that a percentage of the variance is explained when we interpret eta^2^? 
 
-The variance that we want to explain consists of the differences between the scores of the participants on the dependent variable and the overall or grand mean of all outcome scores. Remember that a variance measures deviations from the mean. The dotted black arrows in Figure \@ref(fig:anova-between) express the distances between outcome scores and the grand average. Squaring and averaging these distances over all observations gives us the total variance in outcome scores.
+The variance that we want to explain consists of the differences between the scores of the participants on the dependent variable and the overall or grand mean of all outcome scores. Remember that a variance measures deviations from the mean. The dotted black arrows in Figure \@ref(fig:anova-between) express the distances between outcome scores and the grand average. Squaring, summing, and averaging these distances over all observations gives us the total variance in outcome scores.
 
 The goal of our experiment is to explain why some of our participants have a willingness to donate that is far above the grand mean (horizontal black line in Figure \@ref(fig:anova-between)) while others score a lot lower. We hypothesized that participants are influenced by the endorser they have seen. If an endorser is more effective, the overall level of willingness should be higher. In other words, the average willingness should be higher for participants confronted with this endorser.
 
 Group average willingness is what we can predict from the experimental treatment. If we know the group to which a participant belongs---which celebrity she saw endorsing the fundraising campaign---we can use the average outcome score for the group as the predicted outcome for each group member---her willingness to donate due to the endorser she saw. The predicted group scores are represented by the coloured horizontal lines for group means in Figure \@ref(fig:anova-between).
 
-Now what part of the variance in outcome scores (dotted black arrows in Figure \@ref(fig:anova-between)) is explained by the experimental treatment? If we use the experimental treatment as predictor of willingness to donate, we predict that a participant's willingness equals her group average (horizontal coloured line) instead of the overall average (horizontal black line), which we use if we do not take into account the participant's experimental treatment. 
+Now what part of the variance in outcome scores (dotted black arrows in Figure \@ref(fig:anova-between)) is explained by the experimental treatment? If we use the experimental treatment as predictor of willingness to donate, we predict that a participant's willingness equals her group average (horizontal coloured line) instead of the overall average (horizontal black line), which we use if we do not take into account the participant's experimental treatment.
 
 So the difference between the overall average and the group average is what we predict and explain by the experimental treatment. This difference is represented by the solid black arrows in Figure \@ref(fig:anova-between). The variance of the predicted scores is obtained if we average the squared sizes of the solid black arcs for all participants. This variance is called the _between-groups variance_.
 
@@ -229,7 +229,7 @@ It is easy to see that subtraction of three means may yield zero even if the mea
 Instead of subtraction, 
 ```
 
-We use the variation in group means as the number to express the size of differences between group means. If all groups have the same average outcome score, the between-groups variance is zero. The larger the differences, the larger the between-groups variance (see Section \@ref(between-variance)).
+We use the variance in group means as the number to express the size of differences between group means. If all groups have the same average outcome score, the between-groups variance is zero. The larger the differences, the larger the between-groups variance (see Section \@ref(between-variance)).
 
 ```{r skipped4, eval=FALSE, echo=FALSE}
 # Skipped to simplify the explanation of ANOVA.
@@ -275,7 +275,7 @@ The assumption of equal population variances is less important if group samples 
 
 Analysis of variance tests the null hypothesis of equal population means but it does not yield confidence intervals for group means. It does not always tell us which groups score significantly higher or lower.
 
-```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population? The p values belong to independent t tests on a the means of two groups.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="525px"}
+```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population? The p values belong to independent t tests on the means of two groups.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="525px"}
 # Goal: Sensitize students to the need for and problems with post-hoc tests.
 # Generate and display a sample as in the app anova-means with option to change
 # group means.
@@ -315,7 +315,8 @@ boundary.
 3. Is it okay that we apply both an F test and several t tests to the same group differences?
 
 ```{r eval=FALSE, echo=TRUE}
-* This is okay provided that we correct for capitalization on chance (see a preceding chapter).
+* This is okay provided that we correct for capitalization on chance (see a
+preceding chapter).
 ```
 
 If the F test is statistically significant, we reject the null hypothesis that all groups have the same population mean on the dependent variable. In our current example, we reject the null hypothesis that average willingness to donate is equal for people who saw George Clooney, Angelina Jolie, or no endorser for the fund raiser. In other words, we _reject_ the null hypothesis that the endorser does _not_ matter to willingness to donate.
@@ -383,10 +384,11 @@ There are no impossible values on the variables.
   
 Check assumptions:  
   
-The three groups are more or less of equal size: The largest difference is 4  
-participants, which is less than ten per cent of the smallest group (N = 45).  
-Anyway, we may assume equal population variances, Levene F (2, 140) = .02, p =  
-.978.  
+The three groups are more or less of equal size: The largest difference is 4
+participants, which is less than ten per cent of the smallest group (N = 45).
+Anyway, we may assume equal population variances, Levene F (2, 140) = .02, p =
+.978. Note that the results of this test can be slightly different in
+different versions of SPSS.
   
 Interpret the results:  
   
@@ -434,9 +436,10 @@ There are no impossible scores on the two variables.
   
 Check assumptions:  
   
-The Levene test is not statistically significant, F (2, 82) = 2.82, p = .066,  
-so we assume that smoking attitude for the three groups have equal  
-population variances.  
+The Levene test is not statistically significant, F (2, 82) = 2.82, p = .066,
+so we assume that smoking attitude for the three groups have equal population
+variances. Note that different versions of SPSS may give slightly different
+results, but the test is never statistically significant.
   
 Interpret the results:  
   
@@ -514,7 +517,7 @@ endorser and sex. The graph will show the means of subgroups: females exposed to
 Clooney, males exposed to Clooney, males exposed to Jolie, and so on.
 ```
 
-In the preceding section, we have looked at the effect of a single factor on willingness to donate, namely, the endorser to whom participants are exposed. Thus, we take into account two variables: one independent variable and one dependent variable. This is an example of bivariate analysis.
+In the preceding section, we have looked at the effect of a single factor on willingness to donate, namely, the endorser to whom participants are exposed. Thus, we take into account two variables: one independent variable and one dependent variable. This is an example of _bivariate analysis_.
 
 Usually, however, we expect an outcome to depend on more than one variable. Willingness to donate does not depend only on the celebrity endorsing a fundraising campaign. It is easy to think of more factors, such as a person's available budget, her personal level of altruism, and so on. 
 
@@ -588,7 +591,7 @@ rm(variables)
 
 ### Types of moderation
 
-Moderation as different effects for different groups is best interpreted using a cross-tabulation of group means, which is visualized as a means plot. In a group means table, the __Totals__ row and column contain the means for each factor separa tely, for example the means for males and females (factor sex) or the means for the endorsers (factor endorser). These means represent the main effects. The means in the cells of the table are the means of the subgroups, which represent moderation. Draw them in a means plot for easy interpretation.
+Moderation as different effects for different groups is best interpreted using a cross-tabulation of group means, which is visualized as a means plot. In a group means table, the __Totals__ row and column contain the means for each factor separately, for example the means for males and females (factor sex) or the means for the endorsers (factor endorser). These means represent the main effects. The means in the cells of the table are the means of the subgroups, which represent moderation. Draw them in a means plot for easy interpretation.
 
 In a means plot, we use the groups on the predictor on the horizontal axis, for example, the three endorsers. The average score on the dependent variable is used as the vertical axis. Finally, we plot the average scores for every predictor-moderator group, for instance, an endorser-sex combination, and we link the means that belong to the same moderator group, for example, the means for females and the means for males (Figure \@ref(fig:anova-moderation)).
 
@@ -826,7 +829,7 @@ males for another endorser.
 
 Interpretation of moderation requires some training because we must abstract from main effects. The fact that females score on average higher than males is irrelevant to moderation but it does affect all subgroup mean scores. So the fact that the red line is above the blue line in Figure \@ref(fig:anova-interaction) is not relevant to moderation.
 
-Moderation concerns the differences between subgroups that remain if we remove the overall differences between groups, that is, the differences that are captured by the main effects. The remaining differences between subgroup average scores provide us with a between-groups variance. In addition, the variation of outcome scores within subgroups yield a within-groups variance. Note that within-groups variance is not visible in Figure \@ref(fig:anova-interaction) because the willingness scores of the participants are not shown.
+Moderation concerns the differences between subgroups that remain if we remove the overall differences between groups, that is, the differences that are captured by the main effects. The remaining differences between subgroup average scores provide us with a between-groups variance. In addition, the variation of outcome scores within subgroups yields a within-groups variance. Note that within-groups variance is not visible in Figure \@ref(fig:anova-interaction) because the willingness scores of the participants are not shown.
 
 We can use the between-groups and within-groups variances to execute an F test just like the F test we use for main effects. The null hypothesis of the F test on an interaction effect states that the subgroups have the same population averages if we correct for the main effects. Our statistical software takes care of this correction.
 
@@ -873,7 +876,7 @@ For the statistically informed reader, you should include the following informat
 
 * For each effect report eta-squared (eta^2^) and interpret it in terms of effect size. If you have to calculate eta-squared by hand, divide the between-groups sum of squares of an effect by the total sum of squares (SPSS: corrected total).
 
-* For each effect worth interpretation, clarify which group or subgroup scores higher. Report the group means and their standard deviations or the mean difference (from the post-hoc tests) for comparisons between groups as well as their p values here.
+* For each effect worth interpretation, clarify which group or subgroup scores higher. Report the group means and their standard deviations or the mean difference with its confidence interval and p value (from the post-hoc tests) here. Note that the SPSS menu only supplies post-hoc tests for main effects of factors with more than two levels (groups).
 
 * Pay special attention to an interaction effect. Explain how an effect (differences between groups) of the predictor differs across groups on the moderator. This results in sentences containing three variables. For example: "Clooney as endorser increases willingness to donate more among women than among men." Do you recognize the three variables (predictor, moderator, and dependent variable) here?
 
@@ -947,9 +950,11 @@ There are no impossible values on the three variables.
   
 Check assumptions:  
   
-All six subgroups are of nearly equal size and/or the Levene test on  
-homogeneity of variances is not statistically significant, F (5, 137) = 0.43,  
-p = .825, so the most important assumptions are met.  
+All six subgroups are of nearly equal size and/or the Levene test on
+homogeneity of variances is not statistically significant, F (5, 137) = 0.43,
+p = .825, so the most important assumptions are met. Note that different
+versions of SPSS may give slightly different results, but the p values are all
+around .830.
   
 Interpret the results:  
   
@@ -1002,7 +1007,9 @@ Check assumptions:
   
 The six subggroups are not nearly of equal size but the Levene test on  
 homogeneity of variances is not statistically significant, F (5, 137) = 0.06,  
-p = .997, so the most important assumptions are met.  
+p = .997, so the most important assumptions are met. Note that different
+versions of SPSS may give slightly different results, but the p values are all
+around .997. 
   
 Interpret the results for the interaction effect:  
   
@@ -1022,7 +1029,7 @@ Note that eta2 was calculated by hand, dividing the sum of squares of the
 interaction effect by the sum of squares of the corrected total.  
 ```
 
-3. Data set [smokers.sav](http://82.196.4.233:3838/data/smokers.sav) contains information about smoking on a random sample of adults. Does the attitude towards smoking depend on the adult's smoking behaviour (smoker, former smoker, or non-smoker) and on exposure to an anti-smoking campaign? 
+3. Data set [smokers.sav](http://82.196.4.233:3838/data/smokers.sav) contains information about smoking for a random sample of adults. Does the attitude towards smoking depend on the adult's smoking behaviour (smoker, former smoker, or non-smoker) and on exposure to an anti-smoking campaign? 
   Recode exposure scores into three groups: low exposure (scores 3 or less), medium exposure (scores 3 to 7), and high exposure (scores above 7).
 
 ```{r eval=FALSE, echo=TRUE}
@@ -1058,13 +1065,17 @@ All values on the variables seem to be valid.
   
 Check assumptions:  
   
-* The six subgroups (defined by combinations of smoking status and exposure)  
-are definitely not of equal size. The test on homogeneity of variances is  
-statistically significant, F (8, 76) = 2.17, p = .039.  
-* We are quite confident that the variance of smoking attitude in the  
-population is unequal for all subgroups.  
-* We do not meet the assumptions, so we should report this as a disclaimer  
-with our results.  
+* The nine subgroups (defined by combinations of smoking status and exposure)
+are definitely not of equal size. The test on homogeneity of variances is
+statistically significant, F (8, 76) = 2.17, p = .039 according to SPSS V24.
+SPSS V25, however, reports four versions of the test with F values ranging
+between 1.849 and 2.109 and p values ranging from .053 to .091. None of these
+is statistically significant at the .05 level. Which makes you realize again
+that statistical significance is a tricky criterion.
+* We are quite confident that the variance of smoking attitude in the
+population is (un)equal for all subgroups.  
+* We do not meet the assumptions (or we do, if we believe SPSS V25), so we
+should report this as a disclaimer with our results.
   
 Interpret the results:  
   
@@ -1088,7 +1099,7 @@ non-smokers (M = 0.64, SD = 1.17, difference: p < .001).
 significant (p = 1.000). Smoking status accounts for 25 per cent of the  
 differences in smoking attitude.  
   
-* There is a weak (eta2 = 0.13) and statistically significant interaction  
+* There is a moderate (eta2 = 0.13) and statistically significant interaction  
 effect of smoking status with exposure on attitude towards smoking.  
 * If we inspect the means plot, we see that the effect of exposure on attitude
 is moderated by smoking status. Former smokers with low exposure are much more

@@ -175,8 +175,10 @@ of the game called null hypothesis significance testing.
 * This is the case for confidence intervals C, E, and F.
 * If we can reject the null hypothesis, we would be confident that there is an
 effect of exposure on brand awareness in the population. But this can be a
-tiny effect (intervals B and C) or a large effect (interval F). In case of a
-tiny effect, would we recommend to use the advertisement?
+tiny effect (interval C), a large effect (interval F), or an effect that is
+weak to moderate (interval E) if we only interpret the effect size in the
+sample as point estimate of the effect in the population. In case of a tiny
+effect, would we recommend to use the advertisement?
 ```
 
 2. Would you advise the company to use the advertisement based on the confidence intervals in Figure \@ref(fig:ci-nullhyp)?
@@ -222,7 +224,7 @@ In a similar way, a very narrow confidence interval including the null hypothesi
 
 Using confidence intervals in this way, we avoid the problem that statistically non-significant effects are not published. Not publishing non-significant results, either because of self-selection by the researcher or selection by journal editors and reviewers, offers a misleading view of research results.
 
-If results are not published, they cannot be used to design new research projects. For example, effect sizes that are not statistically significant are just as helpful to determine sample size as statistically significant effect sizes. an independent variable without statistically significant effect may have a significant effect in a new research project and should not be discarded if the potential effect size is so substantial that it is practically significant. Moreover, combining results from several research projects helps making more precise estimates of population values, which brings us to meta-analysis.
+If results are not published, they cannot be used to design new research projects. For example, effect sizes that are not statistically significant are just as helpful to determine sample size as statistically significant effect sizes. An independent variable without statistically significant effect may have a significant effect in a new research project and should not be discarded if the potential effect size is so substantial that it is practically significant. Moreover, combining results from several research projects helps making more precise estimates of population values, which brings us to meta-analysis.
 
 ### Meta-analysis 
 Meta-analysis is a method that capitalizes on previous knowledge. In this method, we collect previous studies on the same topic that use the same or highly similar variables. Combining the results of these studies, we can make statements with higher precision about the population. Basically, we combine the separate samples used for each single study into a large sample, which reduces the uncertainty and allows more precise inferences about the population.
@@ -243,7 +245,7 @@ Bayesian inference uses a concept of probability that is fundamentally different
 
 Again, think of predicting the weather. I am not saying to myself: "Let us assume that tomorrow will be a rainy day. If this is correct, what is the probability that the weather today looks like it does?" Instead, I think of the probability that it will rain tomorrow. Bayesian probabilities are much more in line with our everyday concept of probability than the dice-based probabilities of frequentist inference. 
 
-Due to this more intuitive notion of probability, the _credible interval_, which is the Bayesian equivalent of the confidence interval, means what we would like the confidence interval to mean, namely the interval within which the population value is located with the selected probability.  
+Remember that we are not allowed to interpret the 95% confidence interval as the interval within which the parameter lies with 95%  probability (Chapter \@ref(param-estim))? This is because a parameter does not have a probability in frequentist inference. The _credible interval_ is the Bayesian equivalent of the confidence interval. In Bayesian inference, a parameter has a probability, so we are allowed to say that the parameter lies within the credible interval with 95% probability. This interpretation is much more in line with our intuitive notion of probabilities.
 
 Bayesian inference is intuitively appealing but it has not yet spread widely in the social and behavioral sciences. Therefore, I merely mention this strand of statistical inference and I refrain from giving details. Its popularity, however, is increasing, so you may come in contact with Bayesian inference sooner or later.
 
@@ -253,11 +255,11 @@ In our approach to statistical inference, we have assumed all the time that we c
 
 What if I do not have a random sample? Can I still estimate confidence intervals or test null hypotheses? If you carefully read reports of scientific research, you will encounter examples of statistical inference on non-random samples or data that are not samples at all but rather represent an entire population, for instance, all people visiting a particular web site. Statistical inference is clearly being applied to data that are not sampled at random from an observable population. The fact that it happens, however, is not a guarantee that it is right.
 
-We should note that statistical inference based on a random sample is the most convincing type of inference because we exactly know the nature of the uncertainty in the data, namely the chance introduced by our random sampling. Think of exact methods for creating a sampling distribution. If we know the distribution of candy colours in the population of all candies, we can calculate the exact probability of drawing a sample bag with, for example, 25 per cent of all candies being yellow if we carefully draw the sample at random.
+We should note that statistical inference based on a random sample is the most convincing type of inference because we know the nature of the uncertainty in the data, namely chance variation introduced by random sampling. Think of exact methods for creating a sampling distribution. If we know the distribution of candy colours in the population of all candies, we can calculate the exact probability of drawing a sample bag with, for example, 25 per cent of all candies being yellow if we carefully draw the sample at random.
 
 We can calculate the probability because we understand the process of random sampling. For example, we know that each candy has the same probability to be included in the sample. The uncertainty or probabilities arise from the way we designed our data collection, namely as a random sample from a much larger population.
 
-In summary, we work with a concrete population and we know how chance affects our sample if we draw a random sample. We do not have a concrete population and we do not know the workings of chance if we want to apply statistical inference to data that are not collected as a random sample. In this situation, we have to substantiate the claim that our data set can be regarded as a random sample. 
+In summary, we work with an observable population and we know how chance affects our sample if we draw a random sample. We do not have an observable population or we do not know the workings of chance if we want to apply statistical inference to data that are not collected as a random sample. In this situation, we have to substantiate the claim that our data set can be regarded as a random sample. 
 
 ### Theoretical population
 Sometimes, we have data for a population instead of a sample. For example, we have data on all visitors of our website because our website logs visits. If we investigate all people visiting a particular website, what is the wider population? 
@@ -307,7 +309,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/sig-effect-power/", height="30
 Figure \@ref(fig:power-problem) displays the sampling distribution for candy weight under the null hypothesis that average candy weight is 2.8 in the population. The horizontal axis shows average candy weight and the standardized effect size (Cohen's d) in a sample: weak, moderate, or strong. Five samples are drawn from a population with the average candy weight specified by the top slider. The samples' average candy weights are represented by coloured dots on the horizontal axis.
 
 1. Which sample means are statistically significant (5% two-sided) and which are not?
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 * The sample means (coloured dots) that are in the rejection regions (average
 candy weight scores beneath the blue tails), are statistically significant.
 The sample means in between the two blue tails are not statistically
@@ -316,7 +318,7 @@ null hypothesis.
 ```
 
 2. Is the null hypothesis true for samples with non-significant mean scores?
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 * The null hypothesis is usually not true for samples with non-significant
 mean scores. It is only true if the true population mean is equal to the
 hypothesized population mean. In this example, the true population mean is
@@ -332,7 +334,7 @@ effect) if our test result is not statistically significant.
 ```
 
 3. What happens to the statistical significance of the sample means and to test power if you change sample size?
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 * The larger the sample, the more often sample means are statistically
 significant (in the blue tail).
 * Statistical significance, then, tells us perhaps more about sample size than
