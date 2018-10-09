@@ -19,7 +19,7 @@ shinyServer(function(input, output) {
   attitude <-  -0.26 * exposure + 0.15 * contact + 0.04 * exposure * contact + rnorm(n, mean = 0.4, sd = 0.9) 
 
   #Function for calculating attitude line
-  attfun <- function(exposure, contact, constant = 0.4, betaexposure = -0.26,betacontact = 0.15,betamoderation = 0.04){
+  attfun <- function(exposure, contact, constant = 0.40, betaexposure = -0.26,betacontact = 0.14,betamoderation = 0.04){
     betaexposure*exposure + betacontact*contact + betamoderation*contact*exposure + constant
   }
   
@@ -51,7 +51,7 @@ shinyServer(function(input, output) {
       stat_function(
         fun = attfun,
         args = list(contact = 0, 
-                    constant = 0.4 + 0.15 * input$modcenterslider/2,
+                    constant = 0.40 + 0.14 * input$modcenterslider/2,
                     betaexposure = -0.26 + 0.04 * input$modcenterslider/2),
         n = 500,
         alpha = 1,
@@ -61,13 +61,13 @@ shinyServer(function(input, output) {
                          values = c("Contact centered = 0" = unname(brewercolors["Red"]),
                                     "Contact = 0" = unname(brewercolors["Blue"])),
                          labels = c(paste("Contact =", input$modvalueslider), "Contact centered = 0")) +
-      geom_text(aes(x = 5, y = -4.0, color = "Contact centered = 0"), size = 2.8,
-                label = paste("Attitude = ",  0.4 + 0.15 * input$modcenterslider/2,
-                              " + ", -0.26 + 0.04 * input$modcenterslider/2,
-                              " * Exposure + 0.15 * Contact + 0.04 * Contact * Exposure"),
+      geom_text(aes(x = 5, y = -4.0, color = "Contact centered = 0"), size = 2.6,
+                label = paste("Attitude = ", format(0.40 + 0.14 * input$modcenterslider/2, nsmall = 2),
+                              " + ", format(-0.26 + 0.04 * input$modcenterslider/2, nsmall = 2),
+                              " * Exposure + 0.14 * Contact_c (0) + 0.04 * Contact_c (0) * Exposure"),
                 show.legend = FALSE) +
-      geom_text(aes(x = 5, y = -4.8, color = "Contact = 0"), size = 2.8,
-                label = paste0("Attitude = 0.4 + -0.26 * Exposure + 0.15 * Contact (",
+      geom_text(aes(x = 5, y = -4.8, color = "Contact = 0"), size = 2.6,
+                label = paste0("Attitude = 0.40 + -0.26 * Exposure + 0.14 * Contact (",
                               input$modvalueslider,
                               ") + 0.04 * Contact (", input$modvalueslider,
                               ") * Exposure"),
