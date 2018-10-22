@@ -365,12 +365,12 @@ two-sided test is not.
 4. In which situation is a one-sided test not statistically significant whereas a two-sided test is statistically significant at the five per cent significance level?
 
 ```{r eval=FALSE}
-* A one-sided test is more easily statistically significant because the 5% part
-of the tail is wider than the 2.5% part of the tail. But a one-sided test
+* A one-sided test is more easily statistically significant because the 5%
+part of the tail is wider than the 2.5% part of the tail. But a one-sided test
 requires that the sample outcome is on the right side of the hypothesized
-value. If it is on the wrong side, it can never be significant in a
-one-tailed test. After all, the researcher has excluded the possibility that
-the true population value is on the wrong side.
+value. If it is on the wrong side, it can never be significant in a one-tailed
+test. If the researcher wants to reject the null hypothesis only if the sample
+outcome is too high, she will not reject it if the sample outcome is too low.
 * If the sample mean is in the dark-blue tail at the right, a two-sided test
 is statistically significant but a left-sided test is not. The right tail is
 the wrong side for a left-sided hypothesis.
@@ -379,9 +379,9 @@ statistically significant but a right-sided test is not. The left tail is the
 wrong side for a right-sided hypothesis.
 ```
 
-In a left-sided test of the media literacy hypothesis, the researcher is not interested in demonstrating that average media literacy among children can be larger than 5.5 because she rules out the possibility. For instance, she believes that average media literacy among children cannot be substantially higher than 5.5. The researcher brings prior knowledge about the world to bear that has convinced her that average media literacy among children can only be lower than 5.5 on average in the population. 
+In a left-sided test of the media literacy hypothesis, the researcher is not interested in demonstrating that average media literacy among children can be larger than 5.5. She only wants to test if it is below 5.5, perhaps because an average score below 5.5 is alarming and requires an intervention, or because prior knowledge about the world has convinced her that average media literacy among children can only be lower than 5.5 on average in the population. 
 
-If there is a possibility that the score may also be higher than 5.5 and it is deemed important to note values well over 5.5 and values well below 5.5, the research and null hypotheses should be two-sided. Then, a sample average well above 5.5 would also have resulted in a rejection of the null hypothesis. In a left-sided test, however, a high sample outcome cannot reject the null hypothesis. 
+If it is deemed important to note values well over 5.5 as well as values well below 5.5, the research and null hypotheses should be two-sided. Then, a sample average well above 5.5 would also have resulted in a rejection of the null hypothesis. In a left-sided test, however, a high sample outcome cannot reject the null hypothesis. 
 
 ### Boundary value as hypothesized population value
 
@@ -411,9 +411,9 @@ In other words, if you want to know if the value is not 5.5 or more, it is enoug
 
 Note that the difference between one-sided and two-sided tests is only useful if we test a statistic against one particular value or if we test the difference between two groups. 
 
-In the first situation, for example, if we test the null hypothesis that average media literacy is 5.5 in the population, we may rule out the possibility that the population value is higher (lower) than the hypothesized value if we have good reasons to believe that it can only be lower (higher). Another example is a test on a regression coefficient or correlation coefficient. If we assume that exposure to brand advertisements can increase but not decrease brand awareness among consumers, we apply a right-sided test because we are only interested in positive values (larger than the hypothesized zero correlation).
+In the first situation, for example, if we test the null hypothesis that average media literacy is 5.5 in the population, we may only be interested in showing that the population value is lower than the hypothesized value. Another example is a test on a regression coefficient or correlation coefficient. According to the null hypothesis, the coefficient is zero in the population. If we only want to use a brand advertisement if exposure to the advertisement increases brand awareness among consumers, we apply a right-sided test to the coefficient for the effect of exposure on brand awareness because we are only interested in a positive effect (larger than the zero).
 
-In the second situation, we compare the scores of two groups on a dependent variable. If we compare variation in opinion scores between young and old voters, for example, we may expect that one group can only score higher (more variation: more polarized) than the other group but not the other way around. Again, a one-sided test can be applied.
+In the second situation, we compare the scores of two groups on a dependent variable. If we compare average media literacy after an intervention to media literacy before the intervention (paired-samples t test), we must demonstrate an increase in media literacy before we are going to use the intervention on a large scale. Again, a one-sided test can be applied.
 
 In contrast, we cannot meaningfully formulate a one-sided null hypothesis if we are comparing three groups or more. Even if we expect that Group A can only score higher than Group B and Group C, what about the difference between Group B and Group C? If we can't have meaningful one-sided null hypotheses, we cannot meaningfully distinguish between one-sided and two-sided null hypotheses.  
 
@@ -506,7 +506,7 @@ Probability distributions other than the standard-normal distribution, however, 
 
 The t distribution is an example of a probability distribution for which the critical values depend on the degrees of freedom of the test. In this case, the degrees of freedom are determined by sample size. Larger samples have more degrees of freedom and, as a consequence, they have slightly lower critical values. For samples that are not too small the critical values of t are near 2. You may have noticed this in Figure \@ref(fig:crit-df).
 
-APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header _df_, you should include the number between brackets after the name of the test statistic. If, for example, a t test has 18 degrees of freedom and the t value is 0.63, you report: _t_ (18) = 0.63. Note that the _F_ test statistic has two degrees of freedom, both of which should be reported (separated by a comma), for example, _F_ (2, 87) = 3.13.
+APA6 requires us to report the degrees of freedom. If SPSS reports the degrees of freedom, usually in a column with the header _df_, you should include the number between brackets after the name of the test statistic. If, for example, a t test has 18 degrees of freedom and the t value is 0.63, you report: _t_ (18) = 0.63. Note that the _F_ test statistic has two degrees of freedom, both of which should be reported (separated by a comma and a blank space), for example, _F_ (2, 87) = 3.13.
 
 ## Testing a Null Hypothesis with an Exact Approach or Bootstrapping
 
@@ -560,9 +560,9 @@ But wait a minute. If the sample outcome is among the 95 per cent of samples in 
 
 > A 95% confidence interval contains all null hypotheses that would not be rejected with the current sample at the 5% significance level, two-sided.
 
-If we know the 95% confidence interval, we can immediately see if our null hypothesis must be rejected or not. If the population value in our null hypothesis lies within the 95% confidence interval, the null hypothesis is NOT rejected. The sample that we have drawn is sufficiently plausible if our null hypothesis is true. In contrast, we must reject the null hypothesis is the hypothesized population value is NOT in the 95% confidence interval. 
+If we know the 95% confidence interval, we can immediately see if our null hypothesis must be rejected or not. If the population value in our null hypothesis lies within the 95% confidence interval, the null hypothesis is NOT rejected. The sample that we have drawn is sufficiently plausible if our null hypothesis is true. In contrast, we must reject the null hypothesis if the hypothesized population value is NOT in the 95% confidence interval. 
 
-Let us assume, for example, that average media literacy in our sample is 3.0 and that the 95% confidence interval for average media literacy ranges from 1.0 to 5.0. A null hypothesis specifying 2.5 as population average must not be rejected at the five percent significance level, because 2.5 is in between 1.0 and 5.0, that is, inside the 95% confidence interval. If our null hypothesis says that average media literacy in the population is 5.5, we must reject this null hypothesis because it is outside the 95% confidence interval. The null hypothesis that average media literacy in the population is 0.0 must be rejected for the same reason. 
+Let us assume, for example, that average media literacy in our sample is 3.0 and that the 95% confidence interval for average media literacy ranges from 1.0 to 5.0. A null hypothesis specifying 2.5 as population average must not be rejected at the five percent significance level because 2.5 is in between 1.0 and 5.0, that is, inside the 95% confidence interval. If our null hypothesis says that average media literacy in the population is 5.5, we must reject this null hypothesis because it is outside the 95% confidence interval. The null hypothesis that average media literacy in the population is 0.0 must be rejected for the same reason. 
 
 Note that the hypothesized value can be too high or too low for the confidence interval, so a hypothesis test using a confidence interval is always two-sided.
 
@@ -620,9 +620,9 @@ The statistical results for a _t_ test on one mean, for example, would be:
 
 * The value of the test statistic is 2.73 in this example.
 
-* The p value is .004. Note that we report all results with two decimal places except probabilities, which are reported with three decimals. We are usually interested in small probabilities---less than .05---so we need the third decimal here. If SPSS rounds the p value to .000, report: _p_ < .001.
+* The p value is .004. Note that we report all results with two decimal places except probabilities, which are reported with three decimals. We are usually interested in small probabilities---less than .05---so we need the third decimal here. If SPSS rounds the p value to .000, report: _p_ < .001. Add (one-sided) after the p value if the test is one-sided.
 
-* The 95% confidence interval is 4.13 to 4.87, so with 95% confidence we state that the population mean is between 4.13 and 4.87.
+* The 95% confidence interval is 4.13 to 4.87, so with 95% confidence we state that the population mean is between 4.13 and 4.87. Add (bootstrapped) after the confidence interval if the confidence interval is bootstrapped.
 
 Not all tests produce all results reported in the example above. For example, a _z_ test does not have degrees of freedom and _F_ or chi-squared tests do not have confidence intervals. Exact tests or bootstrap tests usually do not have a test statistic. Just report the items that your statistical software produces, and give them in the correct format.
 
