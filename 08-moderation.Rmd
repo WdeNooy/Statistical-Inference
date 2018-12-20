@@ -913,10 +913,10 @@ Answer to Exercise 1.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=exposure attitude  
   /ORDER=ANALYSIS.  
-* Simple regression analysis with assumption checks.  
+\* Simple regression analysis with assumption checks.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -924,7 +924,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT attitude  
   /METHOD=ENTER exposure  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data:  
@@ -948,7 +948,7 @@ Interpret the results:
 well, *R*^2^ = .17, *F* (1, 83) = 16.73, *p* < .001.
 * One additional unit of exposure decreases the predicted attitude by 0.12 to
 0.34 points, *t* = -4.09, *p* < .001, 95%CI[-0.34; -0.12]. This is a moderate to
-strong effect (b* = -.41). [<img src="icons/2question.png" width=161px align="right">](#question8.2.1)
+strong effect (*b\** = -.41). [<img src="icons/2question.png" width=161px align="right">](#question8.2.1)
 ```
 
 <A name="answer8.2.2"></A>
@@ -957,22 +957,22 @@ Answer to Exercise 2.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=exposure status3 contact attitude  
   /ORDER=ANALYSIS.  
 
-* Create dummy variables for status3.  
-* With Transform > Create Dummy Variables. 
-* ENSURE THAT MEASUREMENT LEVEL IS SET TO NOMINAL OR ORDINAL.  
-* Define Variable Properties.  
-*status3.  
+\* Create dummy variables for status3.  
+\* With Transform > Create Dummy Variables. 
+\* ENSURE THAT MEASUREMENT LEVEL IS SET TO NOMINAL OR ORDINAL.  
+\* Define Variable Properties.  
+\*status3.  
 VARIABLE LEVEL  status3(ORDINAL).  
 EXECUTE.  
 SPSSINC CREATE DUMMIES VARIABLE=status3   
 ROOTNAME1=status   
 /OPTIONS ORDER=A USEVALUELABELS=YES USEML=YES OMITFIRST=NO.  
 
-* If your SPSS version does not have this command, use Recode.
+\* If your SPSS version does not have this command, use Recode.
 RECODE status3 (1=1) (ELSE=0) INTO status_2.
 VARIABLE LABELS  status_2 'Former smoker'.
 EXECUTE.
@@ -980,7 +980,7 @@ RECODE status3 (2=1) (ELSE=0) INTO status_3.
 VARIABLE LABELS  status_3 'Smoker'.
 EXECUTE.
 
-* Multiple regression analysis with assumption checks.  
+\* Multiple regression analysis with assumption checks.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -988,7 +988,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT attitude  
   /METHOD=ENTER exposure status_2 status_3 contact  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data:  
@@ -1038,25 +1038,25 @@ appropriate choice. If you think one variable may depend on another, a
   
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=medliter supervision  
   /ORDER=ANALYSIS.  
-* Set supervision 25 to missing.  
-* Define Variable Properties.  
-*supervision.  
+\* Set supervision 25 to missing.  
+\* Define Variable Properties.  
+\*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-* Undirected: correlation (linear?).  
-* Check scatterplot.  
+\* Undirected: correlation (linear?).  
+\* Check scatterplot.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=supervision WITH medliter  
   /MISSING=LISTWISE.  
-* Correlations.  
+\* Correlations.  
 CORRELATIONS  
   /VARIABLES=medliter supervision  
   /PRINT=TWOTAIL NOSIG  
   /MISSING=PAIRWISE.  
-* Simple regression: media literacy dependent.  
+\* Simple regression: media literacy dependent.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -1064,9 +1064,9 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT medliter  
   /METHOD=ENTER supervision  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
-* Simple regression: parental supervision dependent.  
+\* Simple regression: parental supervision dependent.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -1074,7 +1074,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT supervision  
   /METHOD=ENTER medliter  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data:  
@@ -1108,10 +1108,10 @@ Answer to Exercise 4.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=ad_expo brand_aw  
   /ORDER=ANALYSIS.  
-* Simple regression.  
+\* Simple regression.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -1119,7 +1119,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT brand_aw  
   /METHOD=ENTER ad_expo
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data:  
@@ -1356,7 +1356,7 @@ knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking
 # Helper function for displaying results within the text.
 source("report_n.R")
 #Cleanup (partial).
-rm(smokers, model_1, smokers, ci, results_2, model_2, z_attitude, z_status2, z_expostatus2, z_exposure)
+rm(smokers, model_1, ci, results_2, model_2, z_attitude, z_status2, z_expostatus2, z_exposure)
 ```
 
 In Table \@ref(tab:dich-moderator-output), non-smokers are the reference group because they are coded 0 on the _Status_ variable. As a consequence, the regression coefficient for exposure gives us the effect of exposure on smoking attitude for non-smokers. It's value is `r report_n(results[2, 1], digits = 2)`, so an additional unit of exposure predicts a smoking attitude among non-smokers that is `r report_n(abs(results[2, 1]), digits = 2)` points more negative. More exposure to the campaign goes together with a more negative attitude towards smoking for non-smokers. The p value for this effect tests the null hypothesis that the effect is zero in the population. If we reject this null hypothesis, the exposure effect is statistically significant for non-smokers.
@@ -1479,7 +1479,7 @@ options(knitr.kable.NA = '')
 knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking for three smoking status groups: regression analysis results.") %>%
   kable_styling(font_size = 12, full_width = F)
 # Cleanup.
-rm(smokers, model_1, smokers, ci, results)
+rm(smokers, model_1, ci, results)
 ```
 
 Remember that the effects of predictors that are included in interactions are conditional effects: effects for the reference group or reference value on the other variable involved in the interaction. The p value for Exposure tests the hypothesis that the exposure effect for people who never smoked is zero in the population. For the two dummy variables Former smoker and Smoker, the null hypothesis is tested that they have the same average attitude in the population as the non-smokers (reference group) if they are not exposed to the anti-smoking campaign (zero exposure).
@@ -1617,10 +1617,7 @@ Answer to Question 3.
 Answer to Question 4. 
 
 * The answer depends on the sample that was drawn.
-* For one moderator (smoking status) group, the predictor (exposure) may have
-scores for the entire range, that is, from 0 to 10. But scores may also be
-available only for part of this range, for example, from 1 to 6 or from 4 to
-8. [<img src="icons/2question.png" width=161px align="right">](#question8.3.4)
+* For one moderator (smoking status) group, the predictor (exposure) may have scores for the entire range, that is, from 0 to 10. But scores may also be available only for part of this range, for example, from 1 to 6 or from 4 to 8. [<img src="icons/2question.png" width=161px align="right">](#question8.3.4)
 ```
   
 <A name="answer8.3.5"></A>
@@ -1735,14 +1732,14 @@ Answer to Exercise 1.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=exposure status2 contact attitude  
   /ORDER=ANALYSIS.  
-* Compute interaction variable.  
-COMPUTE expo_status=exposure * status2.  
-VARIABLE LABELS  expo_status 'Interaction exposure * smoker'.  
+\* Compute interaction variable.  
+COMPUTE expo_status=exposure \* status2.  
+VARIABLE LABELS  expo_status 'Interaction exposure \* smoker'.  
 EXECUTE.  
-* Multiple regression.  
+\* Multiple regression.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -1750,7 +1747,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT attitude  
   /METHOD=ENTER exposure status2 expo_status contact  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data:  
@@ -1789,7 +1786,8 @@ exposed to the campaign, on average a circa 2 (0.5 to 3.4) points more
 positive the attitude, and this difference is statistically significant, 
 *b* = 1.98, *t* = 2.72, *p* = .008, 95%CI[0.53, 3.43].
   
-Remember:   
+Remember: 
+
 * In the presence of an interaction effect, the effect of a predictor is the
 effect for the reference group or value on the moderator. It is NOT an overall
 or average effect as in analysis of variance.
@@ -1809,23 +1807,23 @@ Answer to Exercise 2.
 values of the moderator. Plug in the estimated values of the regression
 coefficients and the means of covariates (here: average contact with smokers).
 
-* SPSS syntax to get the average value of contact with smokers:
+\* SPSS syntax to get the average value of contact with smokers:
 FREQUENCIES VARIABLES=contact  
  /FORMAT=NOTABLE  
  /STATISTICS=MEAN  
  /ORDER=ANALYSIS.  
 
 * Copy the equation from the SPSS output:  
-attitude = constant + -.118*exposure + 1.982*status + -.329*exposure*status + .152*contact  
+attitude = constant + -.118\*exposure + 1.982\*status + -.329\*exposure\*status + .152\*contact  
 
 * Plug in the average value of the covariate: 
-attitude = -.087 + -.118*exposure + 1.982*status + -.329*exposure*status + .152*5.091  
+attitude = -.087 + -.118\*exposure + 1.982\*status + -.329\*exposure\*status + .152\*5.091  
 
 * Calculate the product for the covariate:
-attitude = -.087 + -.118*exposure + 1.982*status + -.329*exposure*status +.774  
+attitude = -.087 + -.118\*exposure + 1.982\*status + -.329\*exposure\*status +.774  
 
 * And add the result for the covariate to the intercept (constant):
-attitude = .687 + -.118*exposure + 1.982*status + -.329*exposure*status  
+attitude = .687 + -.118\*exposure + 1.982\*status + -.329\*exposure\*status  
 
 * Use the resulting equation to create a simple regression equation for each
 category of the moderator. Remember that a simple regression equation contains
@@ -1833,19 +1831,19 @@ only one independent variable.
 
 * Replace status by 0 for non-smokers:  
   
-attitude = .687 + -.118*exposure + 1.982*0 + -.329*exposure*0  
+attitude = .687 + -.118\*exposure + 1.982\*0 + -.329\*exposure\*0  
   
-attitude = .687 + -.118*exposure  
+attitude = .687 + -.118\*exposure  
   
 * Replace status by 1 for smokers:
   
-attitude = .687 + -.118*exposure + 1.982*1 + -.329*exposure*1  
+attitude = .687 + -.118\*exposure + 1.982\*1 + -.329\*exposure\*1  
   
-attitude = .687 + 1.982 + -.118*exposure + -.329*exposure  
+attitude = .687 + 1.982 + -.118\*exposure + -.329\*exposure  
   
-attitude = 2.669 + (-.118 + -.329)*exposure  
+attitude = 2.669 + (-.118 + -.329)\*exposure  
   
-attitude = 2.669 + -.447*exposure  
+attitude = 2.669 + -.447\*exposure  
   
 * Finally, create a scatterplot of attitude by exposure, colouring the dots by
 smoking status. Use the calculated two equations in the SPSS Chart Editor to
@@ -1855,7 +1853,7 @@ the lines with the colours of the dots in the scatterplot.
   
 SPSS syntax:  
   
-* Scatterplot with dots coloured by smoking status.  
+\* Scatterplot with dots coloured by smoking status.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=exposure WITH attitude BY status2  
   /MISSING=LISTWISE.  
@@ -1880,7 +1878,7 @@ Answer to Exercise 3.
 
 SPSS syntax:  
   
-* Histogram of predictor (exposure) for each smoking status.  
+\* Histogram of predictor (exposure) for each smoking status.  
 GRAPH  
   /HISTOGRAM=exposure  
   /PANEL ROWVAR=status2 ROWOP=CROSS.  
@@ -1902,42 +1900,42 @@ Answer to Exercise 4.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=exposure status3 contact attitude  
   /ORDER=ANALYSIS.  
-* Create dummies and interaction variables.  
+\* Create dummies and interaction variables.  
 
-* With Create Dummy Variables.  
-* ENSURE THAT MEASUREMENT LEVEL IS SET TO NOMINAL OR ORDINAL.
-* SELECT THE PREDICTOR AND MODERATOR FOR CREATING DUMMY VARIABLES.
-* ADD A ROOTNAME FOR BOTH PREDICTOR AND MODERATOR.
-* CHECK THE BOX FOR TWO-WAY INTERACTIONS AND ADD A ROOTNAME.
-* Define Variable Properties.  
-*status3.  
+\* With Create Dummy Variables.  
+\* ENSURE THAT MEASUREMENT LEVEL IS SET TO NOMINAL OR ORDINAL.
+\* SELECT THE PREDICTOR AND MODERATOR FOR CREATING DUMMY VARIABLES.
+\* ADD A ROOTNAME FOR BOTH PREDICTOR AND MODERATOR.
+\* CHECK THE BOX FOR TWO-WAY INTERACTIONS AND ADD A ROOTNAME.
+\* Define Variable Properties.  
+\*status3.  
 VARIABLE LEVEL  status3(ORDINAL).  
 EXECUTE.  
 SPSSINC CREATE DUMMIES VARIABLE=exposure status3   
 ROOTNAME1=exposure, status ROOTNAME2=expo_status   
 /OPTIONS ORDER=A USEVALUELABELS=YES USEML=YES OMITFIRST=NO.  
 
-* With Recode.  
+\* With Recode.  
 RECODE status3 (1=1) (ELSE=0) INTO status_3.  
 VARIABLE LABELS  status_3 'Former smoker'.  
 EXECUTE.  
 RECODE status3 (2=1) (ELSE=0) INTO status_4.  
 VARIABLE LABELS  status_4 'Smoker'.  
 EXECUTE.  
-* Interaction variables (same name as those given by Create Dummy Variables).  
-COMPUTE expo_status_2_2=exposure * status_3.  
-VARIABLE LABELS  expo_status_2_2 'expo * formersmoker'.  
+\* Interaction variables (same name as those given by Create Dummy Variables).  
+COMPUTE expo_status_2_2=exposure \* status_3.  
+VARIABLE LABELS  expo_status_2_2 'expo \* formersmoker'.  
 EXECUTE.  
-COMPUTE expo_status_2_3=exposure * status_4.  
-VARIABLE LABELS  expo_status_2_3 'expo * smoker'.  
+COMPUTE expo_status_2_3=exposure \* status_4.  
+VARIABLE LABELS  expo_status_2_3 'expo \* smoker'.  
 EXECUTE.  
 
-* Multiple regression.  
-* Statistic Descriptives is added to get the means that we need  
-* to plug into the regression equation in the moderation plot.  
+\* Multiple regression.  
+\* Statistic Descriptives is added to get the means that we need  
+\* to plug into the regression equation in the moderation plot.  
 REGRESSION  
   /DESCRIPTIVES MEAN STDDEV CORR SIG N  
   /MISSING LISTWISE  
@@ -1946,13 +1944,13 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT attitude  
   /METHOD=ENTER exposure status_3 status_4 expo_status_2_2 expo_status_2_3 contact  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
-* Scatterplot with dots coloured by smoking status.  
+\* Scatterplot with dots coloured by smoking status.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=exposure WITH attitude BY status3  
   /MISSING=LISTWISE.  
-* Histogram of predictor (exposure) for each smoking status.  
+\* Histogram of predictor (exposure) for each smoking status.  
 GRAPH  
   /HISTOGRAM=exposure  
   /PANEL ROWVAR=status3 ROWOP=CROSS.  
@@ -1960,43 +1958,43 @@ GRAPH
 * Write out the regression equations for all three groups of the moderator.
 Plug in the estimated values of the constant and the regression coefficients.
   
-attitude = .550 + -.137*exposure + -1.139*former + 1.223*smoker + 
-  -.402*exposure*former + -.304*exposure*smoker + .171*contact  
+attitude = .550 + -.137\*exposure + -1.139\*former + 1.223\*smoker + 
+  -.402\*exposure\*former + -.304\*exposure\*smoker + .171\*contact  
   
 Plug in the means of covariates and add to constant:  
     
-attitude = .550 + -.137*exposure + -1.139*former + 1.223*smoker + 
-  -.402*exposure*former + -.304*exposure*smoker + .171*5.091  
+attitude = .550 + -.137\*exposure + -1.139\*former + 1.223\*smoker + 
+  -.402\*exposure\*former + -.304\*exposure\*smoker + .171\*5.091  
   
-attitude = 1.421 + -.137*exposure + -1.139*former + 1.223*smoker + 
-  -.402*exposure*former + -.304*exposure*smoker  
+attitude = 1.421 + -.137\*exposure + -1.139\*former + 1.223\*smoker + 
+  -.402\*exposure\*former + -.304\*exposure\*smoker  
   
 Non-smokers (former = 0, smoker = 0):  
   
-attitude = 1.421 + -.137*exposure + -1.139*0 + 1.223*0 + -.402*exposure*0 + 
-  -.304*exposure*0  
+attitude = 1.421 + -.137\*exposure + -1.139\*0 + 1.223\*0 + -.402\*exposure\*0 + 
+  -.304\*exposure\*0  
   
-attitude = 1.421 + -.137*exposure  
+attitude = 1.421 + -.137\*exposure  
   
 Former smokers (former = 1, smoker = 0):  
   
-attitude = 1.421 + -.137*exposure + -1.139*1 + 1.223*0 + -.402*exposure*1 + 
-  -.304*exposure*0  
+attitude = 1.421 + -.137\*exposure + -1.139\*1 + 1.223\*0 + -.402\*exposure\*1 + 
+  -.304\*exposure\*0  
   
-attitude = 1.421 + -1.139 + -.137*exposure + -.402*exposure  
+attitude = 1.421 + -1.139 + -.137\*exposure + -.402\*exposure  
   
-attitude = 0.282 + (-.137 + -.402)*exposure  
+attitude = 0.282 + (-.137 + -.402)\*exposure  
   
-attitude = 0.282 + -.539*exposure  
+attitude = 0.282 + -.539\*exposure  
   
 Smokers (former = 0, smoker = 1):  
   
-attitude = 1.421 + -.137*exposure + -1.139*0 + 1.223*1 + -.402*exposure*0 + 
-  -.304*exposure*1  
+attitude = 1.421 + -.137\*exposure + -1.139\*0 + 1.223\*1 + -.402\*exposure\*0 + 
+  -.304\*exposure\*1  
   
-attitude = 1.421 + 1.223 + (-.137 + -.304)*exposure  
+attitude = 1.421 + 1.223 + (-.137 + -.304)\*exposure  
   
-attitude = 2.644 + -.441*exposure  
+attitude = 2.644 + -.441\*exposure  
   
 * Create a scatterplot of attitude by exposure, colouring the dots by smoking
 status.
@@ -2296,7 +2294,7 @@ knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking
 # Helper function for displaying results within the text.
 source("report_n.R")
 # Partial cleanup.
-rm(smokers, model_1, smokers, ci, results_2, model_2, z_attitude, z_contact, z_status2, z_expocontact, z_exposure)
+rm(smokers, model_1, ci, results_2, model_2, z_attitude, z_contact, z_status2, z_expocontact, z_exposure)
 ```
 
 The regression model yields a p value and confidence interval for the predictor at the reference value of the moderator. In the model estimated in Table \@ref(tab:cont-moderator-output), for instance, we obtain a p value of `r report_n(results[2,5], 3)` and a 95% confidence interval of [`r report_n(results[2,6],2)`, `r report_n(results[2,7],2)`] for the effect of exposure on attitude. This is the conditional effect of exposure on attitude for cases that score zero on the moderator variable (contact with smokers).
@@ -2695,16 +2693,16 @@ Answer to Exercise 1.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=exposure status2 contact attitude  
   /ORDER=ANALYSIS.  
-* Compute interaction variable.  
-COMPUTE expo_contact=exposure * contact.  
-VARIABLE LABELS  expo_contact 'Interaction exposure * contact'.  
+\* Compute interaction variable.  
+COMPUTE expo_contact=exposure \* contact.  
+VARIABLE LABELS  expo_contact 'Interaction exposure \* contact'.  
 EXECUTE.  
-* Multiple regression.  
-* Statistic Descriptives is added to get the means that we need  
-* to plug into the regression equation in the moderation plot.  
+\* Multiple regression.  
+\* Statistic Descriptives is added to get the means that we need  
+\* to plug into the regression equation in the moderation plot.  
 REGRESSION  
   /DESCRIPTIVES MEAN STDDEV CORR SIG N  
   /MISSING LISTWISE  
@@ -2713,7 +2711,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT attitude  
   /METHOD=ENTER exposure contact expo_contact status2  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data:  
@@ -2771,7 +2769,7 @@ Answer to Exercise 2.
 
 SPSS syntax:  
   
-* Create scatterplot.  
+\* Create scatterplot.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=exposure WITH attitude  
   /MISSING=LISTWISE.  
@@ -2784,41 +2782,41 @@ covariates, and three values for the moderator using its M and SD.
   
 The initial equation for non-smokers (status = 0):  
   
-attitude = .648 + -.265*exposure + .072*contact + 
-  .018*exposure*contact + 0.533*status  
+attitude = .648 + -.265\*exposure + .072\*contact + 
+  .018\*exposure\*contact + 0.533\*status  
   
-attitude = .648 + -.265*exposure + .072*contact + 
-  .018*exposure*contact + 0.533*0  
+attitude = .648 + -.265\*exposure + .072\*contact + 
+  .018\*exposure\*contact + 0.533\*0  
   
-attitude = .648 + (-.265 + .018*contact)*exposure + .072*contact  
+attitude = .648 + (-.265 + .018\*contact)\*exposure + .072\*contact  
   
 The equation with Contact = M - SD  
   
-attitude = .648 + (-.265 + .018*(5.091 - 1.974))*exposure + .072*(5.091 - 1.974)  
+attitude = .648 + (-.265 + .018\*(5.091 - 1.974))\*exposure + .072\*(5.091 - 1.974)  
   
-attitude = .648 + (-.265 + .018*3.117)*exposure + .072*3.117  
+attitude = .648 + (-.265 + .018\*3.117)\*exposure + .072\*3.117  
   
-attitude = .648 + (-.265 + .056)*exposure + .224  
+attitude = .648 + (-.265 + .056)\*exposure + .224  
   
-attitude = .872 + -.209*exposure  
+attitude = .872 + -.209\*exposure  
   
 The equation with Contact = M  
   
-attitude = .648 + (-.265 + .018*5.091)*exposure + .072*5.091  
+attitude = .648 + (-.265 + .018\*5.091)\*exposure + .072\*5.091  
   
-attitude = .648 + (-.265 + .092)*exposure + .367  
+attitude = .648 + (-.265 + .092)\*exposure + .367  
   
-attitude = 1.015 + -.173*exposure  
+attitude = 1.015 + -.173\*exposure  
   
 The equation with Contact = M + SD  
   
-attitude = .648 + (-.265 + .018*(5.091 + 1.974))*exposure + .072*(5.091 + 1.974)  
+attitude = .648 + (-.265 + .018\*(5.091 + 1.974))\*exposure + .072\*(5.091 + 1.974)  
   
-attitude = .648 + (-.265 + .018*7.065)*exposure + .072*7.065  
+attitude = .648 + (-.265 + .018\*7.065)\*exposure + .072\*7.065  
   
-attitude = .648 + (-.265 + .127)*exposure + .509  
+attitude = .648 + (-.265 + .127)\*exposure + .509  
   
-attitude = 1.157 + -.138*exposure  
+attitude = 1.157 + -.138\*exposure  
   
 Interpret the results:  
     
@@ -2832,28 +2830,28 @@ Answer to Exercise 3.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=exposure status2 contact attitude  
   /ORDER=ANALYSIS.  
-* Mean-center predictor and moderator.  
-* Ask for means of predictor and exposure.  
+\* Mean-center predictor and moderator.  
+\* Ask for means of predictor and exposure.  
 FREQUENCIES VARIABLES=exposure contact  
   /FORMAT=NOTABLE  
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
-* Subtract mean from variable.  
+\* Subtract mean from variable.  
 COMPUTE exposure_c=exposure - 4.866.  
 VARIABLE LABELS  exposure_c 'Exposure (mean-centered)'.  
 COMPUTE contact_c=contact - 5.091.  
 VARIABLE LABELS  contact_c 'Contact (mean-centered)'.  
 EXECUTE.  
-* Compute new interaction variable.  
-COMPUTE expo_contact_c=exposure_c * contact_c.  
-VARIABLE LABELS  expo_contact_c 'Interaction exposure * contact  (mean-centered)'.  
+\* Compute new interaction variable.  
+COMPUTE expo_contact_c=exposure_c \* contact_c.  
+VARIABLE LABELS  expo_contact_c 'Interaction exposure \* contact  (mean-centered)'.  
 EXECUTE.  
-* Multiple regression.  
-* Statistic Descriptives is added to get the means that we need  
-* to plug into the regression equation in the moderation plot.  
+\* Multiple regression.  
+\* Statistic Descriptives is added to get the means that we need  
+\* to plug into the regression equation in the moderation plot.  
 REGRESSION  
   /DESCRIPTIVES MEAN STDDEV CORR SIG N  
   /MISSING LISTWISE  
@@ -2862,7 +2860,7 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT attitude  
   /METHOD=ENTER exposure_c contact_c expo_contact_c status2  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
   
 Check data: See Exercise 1.  
@@ -2907,10 +2905,10 @@ Answer to Exercise 4.
 
 SPSS syntax:  
   
-* Group the moderator.  
-* Visual Binning with:
-* Make Cutpoints > Equal Percentiles > Number of Cutpoints: 2.
-*contact.  
+\* Group the moderator.  
+\* Visual Binning with:
+\* Make Cutpoints > Equal Percentiles > Number of Cutpoints: 2.
+\*contact.  
 RECODE  contact (MISSING=COPY)  
   (LO THRU 4.25076386584132=1)  
   (LO THRU 5.83711577142397=2)   
@@ -2920,17 +2918,14 @@ FORMATS  contact_3 (F5.0).
 VALUE LABELS  contact_3 1 '' 2 '' 3 ''.  
 VARIABLE LEVEL  contact_3 (ORDINAL).  
 EXECUTE.  
-* Histograms of the predictor for each moderator group.  
+\* Histograms of the predictor for each moderator group.  
 GRAPH  
   /HISTOGRAM=exposure  
   /PANEL ROWVAR=contact_3 ROWOP=CROSS.  
   
 Interpret the results:  
 
-* Coverage of the exposure predictor is poor at low contact levels. Especially
-low exposure hardly occurs at low contact level. This explains the high
-standard error for the exposure effect in Exercise 1 as explained in Exercise
-3. [<img src="icons/2question.png" width=161px align="right">](#question8.7.4)
+* Coverage of the exposure predictor is poor at low contact levels. Especially low exposure hardly occurs at low contact level. This explains the high standard error for the exposure effect in Exercise 1 as explained in Exercise 3. [<img src="icons/2question.png" width=161px align="right">](#question8.7.4)
 ```
 
 <A name="answer8.7.5"></A>
@@ -2939,45 +2934,45 @@ Answer to Exercise 5.
 
 SPSS syntax:  
     
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=medliter sex age supervision  
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
-* Set impossible values to missing.  
-* Define Variable Properties.  
-*sex.  
+\* Set impossible values to missing.  
+\* Define Variable Properties.  
+\*sex.  
 MISSING VALUES sex(1).  
-*supervision.  
+\*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-* Turn sex into a 0/1 variable.  
+\* Turn sex into a 0/1 variable.  
 RECODE sex (2=0) (3=1) INTO girl.  
 VARIABLE LABELS  girl 'The child is a girl.'.  
 EXECUTE.  
-* Mean-center predictor and moderator.  
-* Ask for means of predictor and exposure.  
+\* Mean-center predictor and moderator.  
+\* Ask for means of predictor and exposure.  
 FREQUENCIES VARIABLES=age supervision  
   /FORMAT=NOTABLE  
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
-* Subtract mean from variable.  
+\* Subtract mean from variable.  
 COMPUTE age_c=age - 8.609.  
 VARIABLE LABELS  age_c 'Age (mean-centered)'.  
 COMPUTE supervision_c=supervision - 5.358.  
 VARIABLE LABELS  supervision_c 'Supervision (mean-centered)'.  
 EXECUTE.  
-* Check mean centering.  
+\* Check mean centering.  
 FREQUENCIES VARIABLES=age_c supervision_c  
   /FORMAT=NOTABLE  
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
-* Compute interaction variable.  
-COMPUTE age_supervision_c=age_c * supervision_c.  
-VARIABLE LABELS  age_supervision_c 'Interaction age * supervision (mean-centered)'.  
+\* Compute interaction variable.  
+COMPUTE age_supervision_c=age_c \* supervision_c.  
+VARIABLE LABELS  age_supervision_c 'Interaction age \* supervision (mean-centered)'.  
 EXECUTE.  
-* Multiple regression.  
-* Statistic Descriptives is added to get the means that we need  
-* to plug into the regression equation in the moderation plot.  
+\* Multiple regression.  
+\* Statistic Descriptives is added to get the means that we need  
+\* to plug into the regression equation in the moderation plot.  
 REGRESSION  
   /DESCRIPTIVES MEAN STDDEV CORR SIG N  
   /MISSING LISTWISE  
@@ -2986,14 +2981,14 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT medliter  
   /METHOD=ENTER girl age_c supervision_c age_supervision_c  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
-* Create scatterplot for moderation plot.  
-* Use the mean-centered variable.  
+\* Create scatterplot for moderation plot.  
+\* Use the mean-centered variable.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=supervision_c WITH medliter  
   /MISSING=LISTWISE.  
-* Manually add three regression lines.  
+\* Manually add three regression lines.  
     
 Check data:  
   
@@ -3036,35 +3031,35 @@ literacy by mean-centered parental supervision.
   
 Estimated regression equation:   
     
-medliter = 4.325 + 0.193 * girl + 0.176 * age_centered + 0.292 * supervision_centered + 
-  0.025 * age_c * supervision_c  
+medliter = 4.325 + 0.193 \* girl + 0.176 \* age_centered + 0.292 \* supervision_centered + 
+  0.025 \* age_c \* supervision_c  
   
 With rearranged terms and sex plugged in for boys:  
   
-medliter = 4.325 + 0.193 * 0 + 0.176 * age_centered + 
-  (0.292  + 0.025 * age_c) * supervision_centered  
+medliter = 4.325 + 0.193 \* 0 + 0.176 \* age_centered + 
+  (0.292  + 0.025 \* age_c) \* supervision_centered  
   
 Age at M - SD (mean-centered so M = 0, SD = 1.937) for boys:  
   
-medliter = 4.325 + 0.176*(0 - 1.937) + (0.292 + 0.025*(0 - 1.937))*supervision  
+medliter = 4.325 + 0.176\*(0 - 1.937) + (0.292 + 0.025\*(0 - 1.937))\*supervision  
   
-medliter = 4.325 + -0.341 + (0.292 + -0.048)*supervision  
+medliter = 4.325 + -0.341 + (0.292 + -0.048)\*supervision  
   
-medliter = 3.984 + 0.244*supervision  
+medliter = 3.984 + 0.244\*supervision  
     
 Age at M (M = 0) for boys:  
   
-medliter = 4.325 + .176*(0) + (0.292 + .025*(0))*supervision  
+medliter = 4.325 + .176\*(0) + (0.292 + .025\*(0))\*supervision  
   
-medliter = 4.325 + 0.292*supervision  
+medliter = 4.325 + 0.292\*supervision  
   
 Age at M + SD (M = 0, SD = 1.937) for boys:  
   
-medliter = 4.325 + .176*(0 + 1.937) + (0.292 + 0.025*(0 + 1.937))*supervision  
+medliter = 4.325 + .176\*(0 + 1.937) + (0.292 + 0.025\*(0 + 1.937))\*supervision  
   
-medliter = 4.325 + 0.341 + (0.292 + 0.048)*supervision  
+medliter = 4.325 + 0.341 + (0.292 + 0.048)\*supervision  
   
-medliter = 4.666 + 0.340*supervision  
+medliter = 4.666 + 0.340\*supervision  
   
 Note: Age was mean-centered for all 87 cases but the regression model only
 uses the 85 cases without a missing value on any of the variables. As a
@@ -3083,38 +3078,38 @@ Answer to Exercise 6.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=medliter sex supervision  
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
-* Set impossible values to missing.  
-* Define Variable Properties.  
-*sex.  
+\* Set impossible values to missing.  
+\* Define Variable Properties.  
+\*sex.  
 MISSING VALUES sex(1).  
-*supervision.  
+\*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-* Turn sex into a 0/1 variable.  
+\* Turn sex into a 0/1 variable.  
 RECODE sex (2=0) (3=1) INTO girl.  
 VARIABLE LABELS  girl 'The child is a girl.'.  
 EXECUTE.  
-* Mean-center the predictor.  
-* Ask for means of parental supervision.  
+\* Mean-center the predictor.  
+\* Ask for means of parental supervision.  
 FREQUENCIES VARIABLES=supervision  
   /FORMAT=NOTABLE  
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
-* Subtract mean from variable.  
+\* Subtract mean from variable.  
 COMPUTE supervision_c=supervision - 5.358.  
 VARIABLE LABELS  supervision_c 'Supervision (mean-centered)'.  
 EXECUTE.  
-* Compute interaction variable.  
-COMPUTE girl_supervision_c=girl * supervision_c.  
-VARIABLE LABELS  girl_supervision_c 'Interaction girl * supervision (mean-centered)'.  
+\* Compute interaction variable.  
+COMPUTE girl_supervision_c=girl \* supervision_c.  
+VARIABLE LABELS  girl_supervision_c 'Interaction girl \* supervision (mean-centered)'.  
 EXECUTE.  
-* Multiple regression.  
-* Statistic Descriptives is added to get the means that we need  
-* to plug into the regression equation in the moderation plot.  
+\* Multiple regression.  
+\* Statistic Descriptives is added to get the means that we need  
+\* to plug into the regression equation in the moderation plot.  
 REGRESSION  
   /DESCRIPTIVES MEAN STDDEV CORR SIG N  
   /MISSING LISTWISE  
@@ -3123,20 +3118,20 @@ REGRESSION
   /NOORIGIN   
   /DEPENDENT medliter  
   /METHOD=ENTER girl supervision_c girl_supervision_c  
-  /SCATTERPLOT=(*ZRESID ,*ZPRED)  
+  /SCATTERPLOT=(\*ZRESID ,\*ZPRED)  
   /RESIDUALS HISTOGRAM(ZRESID).  
-* Scatterplot with dots coloured by sex.  
-* Use the mean-centered predictor.  
+\* Scatterplot with dots coloured by sex.  
+\* Use the mean-centered predictor.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=supervision_c WITH medliter BY girl  
   /MISSING=LISTWISE.  
-* Note: This model does not contain a covariate, so SPSS can draw the lines.  
-* Provided that your SPSS installation contains the command:
-* Graphs > Regression Variable Plots.  
-* Color by: sex.  
-* With options: Scatterplot Fit Lines: Linear,  
-*    Grouping: Fit Line for each categorical colour group.  
-* Use the mean-centered or not mean-centered predictor.  
+\* Note: This model does not contain a covariate, so SPSS can draw the lines.  
+\* Provided that your SPSS installation contains the command:
+\* Graphs > Regression Variable Plots.  
+\* Color by: sex.  
+\* With options: Scatterplot Fit Lines: Linear,  
+\*    Grouping: Fit Line for each categorical colour group.  
+\* Use the mean-centered or not mean-centered predictor.  
 STATS REGRESS PLOT YVARS=medliter XVARS=supervision_c COLOR=sex   
 /OPTIONS CATEGORICAL=BARS GROUP=1 INDENT=15 YSCALE=75   
 /FITLINES LINEAR APPLYTO=GROUP.  
@@ -3145,7 +3140,8 @@ Check data: See Exercise 5.
   
 Check assumptions:  
   
-As with the regression model in Exercise 5.  
+As with the regression model in Exercise 5. 
+
 * The residuals are quite normally distributed and centered around zero for
 all levels of the predicted scores (linearity).
 * The variation in residuals seems to be a bit larger at higher predicted
@@ -3169,23 +3165,23 @@ mean-centered supervision variable and the following equations:
   
 Equation for boys (girl = 0):  
   
-medliter = 4.374 + 0.125*girl + 0.389*supervision_c + -0.134*girl*supervision_c  
+medliter = 4.374 + 0.125\*girl + 0.389\*supervision_c + -0.134\*girl\*supervision_c  
   
-medliter = 4.374 + 0.125*0 + (0.389 + -0.134*girl)*supervision_c  
+medliter = 4.374 + 0.125\*0 + (0.389 + -0.134\*girl)\*supervision_c  
   
-medliter = 4.374 + (0.389 + -0.134*0)*supervision_c  
+medliter = 4.374 + (0.389 + -0.134\*0)\*supervision_c  
   
-medliter = 4.374 + 0.389*supervision_c  
+medliter = 4.374 + 0.389\*supervision_c  
   
 Equation for girls (girl = 1):  
   
-medliter = 4.374 + 0.125*girl + 0.389*supervision_c + -0.134*girl*supervision_c  
+medliter = 4.374 + 0.125\*girl + 0.389\*supervision_c + -0.134\*girl\*supervision_c  
   
-medliter = 4.374 + 0.125*1 + (0.389 + -0.134*girl)*supervision_c  
+medliter = 4.374 + 0.125\*1 + (0.389 + -0.134\*girl)\*supervision_c  
   
-medliter = 4.499 + (0.389 + -0.134*1)*supervision_c  
+medliter = 4.499 + (0.389 + -0.134\*1)\*supervision_c  
   
-medliter = 4.499 + 0.255*supervision_c [<img src="icons/2question.png" width=161px align="right">](#question8.7.6)
+medliter = 4.499 + 0.255\*supervision_c [<img src="icons/2question.png" width=161px align="right">](#question8.7.6)
 ```
 
 ## Test Your Understanding

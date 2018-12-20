@@ -22,7 +22,7 @@ As these examples illustrate, research hypotheses seldom refer to statistics suc
 
 Translating the research hypothesis into a statistical hypothesis is perhaps the most creative part of statistical analysis, which is just a fancy way of saying that it is difficult to give general guidelines stating which statistic fits which research hypothesis. All we can do is give some hints.  
 
-Research questions usually address shares, score levels, associations, or score variation. If a research question talks about how frequent some characteristic occurs (How many candies are yellow?) or which part has a particular characteristic (Which percentage of all candies are yellow?), we are dealing with one or two categorical variables. Here, we need a binomial, chi-squared, or exact test (see Figure \@ref(fig:choice-diagram)choice-diagram-copy2).
+Research questions usually address shares, score levels, associations, or score variation. If a research question talks about how frequent some characteristic occurs (How many candies are yellow?) or which part has a particular characteristic (Which percentage of all candies are yellow?), we are dealing with one or two categorical variables. Here, we need a binomial, chi-squared, or exact test (see Figure \@ref(fig:choice-diagram-copy2).
 
 If a research question asks how high a group scores or whether one group scores higher then another group, we are dealing with score levels. The variable of central interest usually is numerical (interval or ratio measurement level) and we are concerned with mean or median scores. There is a range of tests that we can apply, depending on the number of groups that we want to compare (one, two, three or more): t tests or analysis of variance. 
 
@@ -101,6 +101,95 @@ knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px"
 2. Use the data of Exercise 1. Create a new variable grouping voter's age with classes 18-35, 36-65, and 66+ years. Is the attitude towards immigrants equally polarized among these three age groups in the population? Justify your answer with a statistical test. [<img src="icons/2answer.png" width=115px align="right">](#answer10.2)
 ```
 
+### Answers {-}
+
+<A name="answer10.1"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 1. 
+
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=age_group immigrant  
+  /ORDER=ANALYSIS.  
+\* Independent-samples t test with Levene s test.  
+T-TEST GROUPS=age_group(1 2)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=immigrant  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants is more polarized among  
+older voters (SD = 2.06) than among young voters (SD = 1.26).  
+The difference in variation is statistically significant,  
+F = 4.99, p = .029.  
+Note that SPSS does not report the (two) degrees of freedom  
+of the F test, so we cannot report them either.   
+SPSS, however, does report the degrees of freedom of Levene's F test in a  
+one-way analysis of variance. We could have used that approach here as well. [<img src="icons/2question.png" width=161px align="right">](#question10.1)
+```
+
+<A name="answer10.2"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 2. 
+
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=age immigrant  
+  /ORDER=ANALYSIS.  
+\* Group age.  
+RECODE age (Lowest thru 35=1) (36 thru 65=2)  
+  (66 thru Highest=3) INTO age3.  
+VARIABLE LABELS  age3 'Voter ages in three groups'.  
+EXECUTE.  
+\* Define Variable Properties.  
+\*age3.  
+VALUE LABELS age3  
+  1.00 '18-35'  
+  2.00 '36-65'  
+  3.00 '66+'.  
+EXECUTE.  
+\* ANOVA with descriptives.  
+ONEWAY immigrant BY age3  
+  /STATISTICS DESCRIPTIVES HOMOGENEITY   
+  /MISSING ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants seems to be more polarized   
+among middle-aged (*SD* = 2.17) and aged voters (*SD* = 2.06)   
+than among young voters (*SD* = 1.37).  
+
+The difference in variation, however, is not statistically   
+significant, *F* (2, 63) = 2.77, *p* = .070.
+
+This result seems to contradict the statistically significant  
+test result that we found in Exercise 1, comparing only young   
+to old voters. There is no contradiction, however. We merely  
+see that the classification into groups can matter to the   
+significance of results. [<img src="icons/2question.png" width=161px align="right">](#question10.2)
+```
+
 ## Association: relations between characteristics {-}
 
 Finally, research hypotheses may address the relation between two or more variables. Relations between variables are at stake if the research hypothesis states or implies that one (type of) characteristic is related to another (type of) characteristic. The statistical name for a relation between variables is _association_.  
@@ -161,6 +250,77 @@ For an instruction and exercises on one-way analysis of variance, see Figure \@r
 <A name="question10.4"></A>
 ```{block2, type='rmdquestion'}
 4. Did willingness to donate increase in the population between the start and the end of the campaign? [<img src="icons/2answer.png" width=115px align="right">](#answer10.4)
+```
+
+### Answers {-}
+
+<A name="answer10.3"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 3. 
+
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=willing_post remember  
+  /ORDER=ANALYSIS.  
+\* Independent-samples t test.  
+T-TEST GROUPS=remember(0 1)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=willing_post  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+Sample sizes (*N* = 66 and *N* = 77) are of sufficient  
+size not to worry about the shape of the distribution  
+of willingness in the population.  
+  
+Interpret the results:  
+  
+Willingness to donate at the end of the campaign is significantly   
+higher for those who remember the campaign (*M* = 4.94, *SD* = 1.60)   
+than for those who do not remember it (*M* = 4.24, *SD* = 1.65),   
+*t* (141) = -2.57, *p* = .011, 95%CI[-1.24, -0.16].   
+Willingness is 0.16 to 1.24 points higher on a 10-point scale for   
+those who remember the campaign. Considering the range of the   
+scale, this is quite a small difference. [<img src="icons/2question.png" width=161px align="right">](#question10.3)
+```
+
+<A name="answer10.4"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 4. 
+
+SPSS syntax:  
+  
+\* Check data.  
+FREQUENCIES VARIABLES=willing_post willing_pre  
+  /ORDER=ANALYSIS.  
+\* Paired-samples t test.  
+T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
+  /CRITERIA=CI(.9500)  
+  /MISSING=ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the two variables.  
+  
+Check assumptions:  
+  
+Sample size is sufficiently large (*N* = 143).  
+  
+Interpret the results:  
+  
+There is a small but statistically significant increase in  
+the willingness to donate over the duration of the experiment
+(from *M* = 4.49, *SD* = 1.65 to *M* = 4.62, *SD* = 1.66),  
+*t* (142) = 5.74, *p* < .001, 95%CI[0.08; 0.17].  
+Average willingness to donate is 0.08 to 0.17 units higher  
+at the end of the experiment than at the start. This is a   
+very small difference on a 10-point scale. [<img src="icons/2question.png" width=161px align="right">](#question10.4)
 ```
 
 ### Combinations of scores {-}
@@ -227,163 +387,7 @@ For regression analysis (instructions and exercises), see Section \@ref(SPSS-reg
 7. Does word of mouth involve women rather than men? Interpret the contents, strength, and statistical significance of the association. [<img src="icons/2answer.png" width=115px align="right">](#answer10.7)
 ```
 
-## Answers {-}
-
-<A name="answer10.1"></A>
-```{block2, type='rmdanswer'}
-Answer to Exercise 1. 
-
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=age_group immigrant  
-  /ORDER=ANALYSIS.  
-* Independent-samples t test with Levene s test.  
-T-TEST GROUPS=age_group(1 2)  
-  /MISSING=ANALYSIS  
-  /VARIABLES=immigrant  
-  /CRITERIA=CI(.95).  
-  
-Check data:  
-  
-There are no impossible values on the variables.  
-  
-Check assumptions:  
-  
-There are no assumptions that we have to check for  
-the Levene test.  
-  
-Interpret the results:  
-  
-The attitude towards immigrants is more polarized among  
-older voters (SD = 2.06) than among young voters (SD = 1.26).  
-The difference in variation is statistically significant,  
-F = 4.99, p = .029.  
-Note that SPSS does not report the (two) degrees of freedom  
-of the F test, so we cannot report them either.   
-SPSS, however, does report the degrees of freedom of Levene's F test in a  
-one-way analysis of variance. We could have used that approach here as well. [<img src="icons/2question.png" width=161px align="right">](#question10.1)
-```
-
-<A name="answer10.2"></A>
-```{block2, type='rmdanswer'}
-Answer to Exercise 2. 
-
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=age immigrant  
-  /ORDER=ANALYSIS.  
-* Group age.  
-RECODE age (Lowest thru 35=1) (36 thru 65=2)  
-  (66 thru Highest=3) INTO age3.  
-VARIABLE LABELS  age3 'Voter ages in three groups'.  
-EXECUTE.  
-* Define Variable Properties.  
-*age3.  
-VALUE LABELS age3  
-  1.00 '18-35'  
-  2.00 '36-65'  
-  3.00 '66+'.  
-EXECUTE.  
-* ANOVA with descriptives.  
-ONEWAY immigrant BY age3  
-  /STATISTICS DESCRIPTIVES HOMOGENEITY   
-  /MISSING ANALYSIS.  
-  
-Check data:  
-  
-There are no impossible values on the variables.  
-  
-Check assumptions:  
-  
-There are no assumptions that we have to check for  
-the Levene test.  
-  
-Interpret the results:  
-  
-The attitude towards immigrants seems to be more polarized   
-among middle-aged (*SD* = 2.17) and aged voters (*SD* = 2.06)   
-than among young voters (*SD* = 1.37).  
-
-The difference in variation, however, is not statistically   
-significant, *F* (2, 63) = 2.77, *p* = .070.
-
-This result seems to contradict the statistically significant  
-test result that we found in Exercise 1, comparing only young   
-to old voters. There is no contradiction, however. We merely  
-see that the classification into groups can matter to the   
-significance of results. [<img src="icons/2question.png" width=161px align="right">](#question10.2)
-```
-
-<A name="answer10.3"></A>
-```{block2, type='rmdanswer'}
-Answer to Exercise 3. 
-
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=willing_post remember  
-  /ORDER=ANALYSIS.  
-* Independent-samples t test.  
-T-TEST GROUPS=remember(0 1)  
-  /MISSING=ANALYSIS  
-  /VARIABLES=willing_post  
-  /CRITERIA=CI(.95).  
-  
-Check data:  
-  
-There are no impossible values on the variables.  
-  
-Check assumptions:  
-  
-Sample sizes (*N* = 66 and *N* = 77) are of sufficient  
-size not to worry about the shape of the distribution  
-of willingness in the population.  
-  
-Interpret the results:  
-  
-Willingness to donate at the end of the campaign is significantly   
-higher for those who remember the campaign (*M* = 4.94, *SD* = 1.60)   
-than for those who do not remember it (*M* = 4.24, *SD* = 1.65),   
-*t* (141) = -2.57, *p* = .011, 95%CI[-1.24, -0.16].   
-Willingness is 0.16 to 1.24 points higher on a 10-point scale for   
-those who remember the campaign. Considering the range of the   
-scale, this is quite a small difference. [<img src="icons/2question.png" width=161px align="right">](#question10.3)
-```
-
-<A name="answer10.4"></A>
-```{block2, type='rmdanswer'}
-Answer to Exercise 4. 
-
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=willing_post willing_pre  
-  /ORDER=ANALYSIS.  
-* Paired-samples t test.  
-T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
-  /CRITERIA=CI(.9500)  
-  /MISSING=ANALYSIS.  
-  
-Check data:  
-  
-There are no impossible values on the two variables.  
-  
-Check assumptions:  
-  
-Sample size is sufficiently large (*N* = 143).  
-  
-Interpret the results:  
-  
-There is a small but statistically significant increase in  
-the willingness to donate over the duration of the experiment
-(from *M* = 4.49, *SD* = 1.65 to *M* = 4.62, *SD* = 1.66),  
-*t* (142) = 5.74, *p* < .001, 95%CI[0.08; 0.17].  
-Average willingness to donate is 0.08 to 0.17 units higher  
-at the end of the experiment than at the start. This is a   
-very small difference on a 10-point scale. [<img src="icons/2question.png" width=161px align="right">](#question10.4)
-```
+### Answers {-}
 
 <A name="answer10.5"></A>
 ```{block2, type='rmdanswer'}
@@ -391,14 +395,14 @@ Answer to Exercise 5.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=ad_expo brand_aw  
   /ORDER=ANALYSIS.  
-* Check if the association can be linear.  
+\* Check if the association can be linear.  
 GRAPH  
   /SCATTERPLOT(BIVAR)=ad_expo WITH brand_aw  
   /MISSING=LISTWISE.  
-* Correlations.  
+\* Correlations.  
 CORRELATIONS  
   /VARIABLES=ad_expo brand_aw  
   /PRINT=TWOTAIL NOSIG  
@@ -438,10 +442,10 @@ Answer to Exercise 6.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=ad_expo brand_aw  
   /ORDER=ANALYSIS.  
-* Simple regression.  
+\* Simple regression.  
 REGRESSION  
   /MISSING LISTWISE  
   /STATISTICS COEFF OUTS CI(95) R ANOVA  
@@ -475,7 +479,7 @@ Answer to Exercise 7.
 
 SPSS syntax:  
   
-* Contingency table with chi-squared test and measure of association.  
+\* Contingency table with chi-squared test and measure of association.  
 CROSSTABS  
   /TABLES=wom BY gender  
   /FORMAT=AVALUE TABLES  

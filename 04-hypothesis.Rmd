@@ -933,11 +933,11 @@ Answer to Exercise 1.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=tv_reach  
   /ORDER=ANALYSIS.  
-* Binomial test.  
-* Note: The test is one-sided if the test proportion is not 0.50.  
+\* Binomial test.  
+\* Note: The test is one-sided if the test proportion is not 0.50.  
 NPAR TESTS  
   /BINOMIAL (0.40)=tv_reach  
   /MISSING ANALYSIS.  
@@ -979,11 +979,11 @@ Answer to Exercise 2.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=tv_reach  
   /ORDER=ANALYSIS.  
-* Binomial test.  
-* Hint: Test the proportion of households not reached because   
+\* Binomial test.  
+\* Hint: Test the proportion of households not reached because   
   this is the first category: 1 - 0.55 = 0.45.  
 NPAR TESTS  
   /BINOMIAL (0.45)=tv_reach  
@@ -997,7 +997,7 @@ Interpret the results:
   
 With 52 per cent of all households reached in the sample, we cannot reject the
 null hypothesis that the TV station reaches at least 55 per cent of all
-households, p = .260 (one-sided). [<img src="icons/2question.png" width=161px align="right">](#question4.8.2)
+households, *p* = .260 (one-sided). [<img src="icons/2question.png" width=161px align="right">](#question4.8.2)
 ```
 
 <A name="answer4.8.3"></A>
@@ -1006,11 +1006,11 @@ Answer to Exercise 3.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=income  
   /ORDER=ANALYSIS.  
-* Binomial test.  
-* Use the cut off option in the binomial test.  
+\* Binomial test.  
+\* Use the cut off option in the binomial test.  
 NPAR TESTS  
   /BINOMIAL (0.50)=income (40000)  
   /MISSING ANALYSIS.  
@@ -1025,9 +1025,7 @@ There are no assumptions for the binomial test.
   
 Interpret the results:  
   
-The proportion of households with an income of at most 40,000   
-is significantly less than fifty per cent, p = .022. It is   
-39 per cent in the sample. [<img src="icons/2question.png" width=161px align="right">](#question4.8.3)
+The proportion of households with an income of at most 40,000 is significantly less than fifty per cent, *p* = .022. It is 39 per cent in the sample. [<img src="icons/2question.png" width=161px align="right">](#question4.8.3)
 ```
 
 <A name="answer4.8.4"></A>
@@ -1036,22 +1034,22 @@ Answer to Exercise 4.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=income  
   /ORDER=ANALYSIS.  
-* Recoding income into groups.  
+\* Recoding income into groups.  
 RECODE income (Lowest thru 30000=1) (30000  thru 50000=2)  
   (50000 thru Highest=3) INTO income_group.  
 VARIABLE LABELS  income_group 'Grouped income'.  
 EXECUTE.  
-* Define Variable Properties.  
-*income_group.  
+\* Define Variable Properties.  
+\*income_group.  
 VALUE LABELS income_group  
   1.00 'low'  
   2.00 'medium'  
   3.00 'high'.  
 EXECUTE.  
-* one-sample chi-squared test.  
+\* one-sample chi-squared test.  
 NPAR TESTS  
   /CHISQUARE=income_group  
   /EXPECTED=20 50 30  
@@ -1074,7 +1072,7 @@ Interpret the results:
   
 The distribution of incomes over income groups in the sample does not differ
 in a statistically significant way from the distribution in the population
-according to the National Bureau of Statistics, chi-squared (2) = 3.40, p =
+according to the National Bureau of Statistics, *chi-squared* (2) = 3.40, *p* =
 .182.
 In other words, we have no reason to believe that our sample is not
 representative of the population with regards to income. [<img src="icons/2question.png" width=161px align="right">](#question4.8.4)
@@ -1086,15 +1084,15 @@ Answer to Exercise 5.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=supervision  
   /ORDER=ANALYSIS.  
-* Set imposible value (25) to missing.  
-* Define Variable Properties.  
-*supervision.  
+\* Set imposible value (25) to missing.  
+\* Define Variable Properties.  
+\*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-* One-sample t test.  
+\* One-sample t test.  
 T-TEST  
   /TESTVAL=5.5  
   /MISSING=ANALYSIS  
@@ -1103,22 +1101,15 @@ T-TEST
   
 Check data:  
       
-There is one impossible value for parental supervision,  
-namely 25. This value must be made missing.  
+There is one impossible value for parental supervision, namely 25. This value must be made missing.  
   
 Check assumptions:  
   
-Sample size (N = 86) is well over 30, so we need not worry  
-about the shape of the variable distribution in the  
-population.  
+Sample size (N = 86) is well over 30, so we need not worry about the shape of the variable distribution in the population.  
     
 Interpret the results:  
   
-In the sample, average parental supervision is 5.36 (SD = 1.94) on a scale
-from 1 to 10. We are rather confident that the true average supervision score
-in the population is around 5.5, more specifically, between 4.94 and 5.77. A
-test is not statistically significant, t (85) = -0.68, p = .498, 95%CI[4.94;
-5.77].
+In the sample, average parental supervision is 5.36 (*SD* = 1.94) on a scale from 1 to 10. We are rather confident that the true average supervision score in the population is around 5.5, more specifically, between 4.94 and 5.77. A test is not statistically significant, *t* (85) = -0.68, *p* = .498, 95%CI[4.94; 5.77].
   
 Note that we have to add the confidence interval limits to the test value
 (here: 5.5) to obtain the confidence interval for the population mean. SPSS
@@ -1144,15 +1135,15 @@ already know the result.
 
 SPSS syntax:  
   
-* Check data.  
+\* Check data.  
 FREQUENCIES VARIABLES=supervision  
   /ORDER=ANALYSIS.  
-* Set imposible value (25) to missing.  
-* Define Variable Properties.  
-*supervision.  
+\* Set imposible value (25) to missing.  
+\* Define Variable Properties.  
+\*supervision.  
 MISSING VALUES supervision(25.00).  
 EXECUTE.  
-* One-sample t test.  
+\* One-sample t test.  
 T-TEST  
   /TESTVAL=4.5  
   /MISSING=ANALYSIS  
@@ -1161,25 +1152,17 @@ T-TEST
   
 Check data:  
   
-There is one impossible value for parental supervision,  
-namely 25. This value must be made missing.  
+There is one impossible value for parental supervision, namely 25. This value must be made missing.  
   
 Check assumptions:  
   
-Sample size (N = 86) is well over 30, so we need not worry  
-about the shape of the variable distribution in the  
-population.  
+Sample size (N = 86) is well over 30, so we need not worry about the shape of the variable distribution in the population.  
   
 Interpret the results:  
   
-The average parental supervision score in the sample   
-(M = 5.36, SD = 1.94) makes us doubt that the true  
-average supervision score in the population is 4.5 or  
-thereabouts, t (85) = 4.10, p < .001, 95%CI[4.94; 5.77].  
+The average parental supervision score in the sample (*M* = 5.36, *SD* = 1.94) makes us doubt that the true average supervision score in the population is 4.5 or thereabouts, *t* (85) = 4.10, *p* < .001, 95%CI[4.94; 5.77].
   
-Note that we obtain the same confidence interval as in  
-Exercise 1. The confidence interval does not depend on   
-the null hypothesis, whereas the significance test does. [<img src="icons/2question.png" width=161px align="right">](#question4.8.6)
+Note that we obtain the same confidence interval as in Exercise 1. The confidence interval does not depend on the null hypothesis, whereas the significance test does. [<img src="icons/2question.png" width=161px align="right">](#question4.8.6)
 ```
 
 ## Capitalization on Chance {#cap-chance}
