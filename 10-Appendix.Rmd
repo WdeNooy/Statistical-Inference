@@ -91,87 +91,14 @@ knitr::include_url("https://www.youtube.com/embed/8k-OIXiRdCc", height = "360px"
 
 #### Exercises {-}
 
-1. Data set [voters.sav](http://82.196.4.233:3838/data/voters.sav) contains information about the age and attitude towards immigration among a random sample of voters. Is the attitude towards immigrants equally polarized among young (under 30) and old (30+) voters? Justify your answer with a statistical test.
-
-```{r eval=FALSE}
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=age_group immigrant  
-  /ORDER=ANALYSIS.  
-* Independent-samples t test with Levene s test.  
-T-TEST GROUPS=age_group(1 2)  
-  /MISSING=ANALYSIS  
-  /VARIABLES=immigrant  
-  /CRITERIA=CI(.95).  
-  
-Check data:  
-  
-There are no impossible values on the variables.  
-  
-Check assumptions:  
-  
-There are no assumptions that we have to check for  
-the Levene test.  
-  
-Interpret the results:  
-  
-The attitude towards immigrants is more polarized among  
-older voters (SD = 2.06) than among young voters (SD = 1.26).  
-The difference in variation is statistically significant,  
-F = 4.99, p = .029.  
-Note that SPSS does not report the (two) degrees of freedom  
-of the F test, so we cannot report them either.   
-SPSS, however, does report the degrees of freedom of Levene's F test in a  
-one-way analysis of variance. We could have used that approach here as well.  
+<A name="question10.1"></A>
+```{block2, type='rmdquestion'}
+1. Data set [voters.sav](http://82.196.4.233:3838/data/voters.sav) contains information about the age and attitude towards immigration among a random sample of voters. Is the attitude towards immigrants equally polarized among young (under 30) and old (30+) voters? Justify your answer with a statistical test. [<img src="icons/2answer.png" width=115px align="right">](#answer10.1)
 ```
 
-2. Use the data of Exercise 1. Create a new variable grouping voter's age with classes 18-35, 36-65, and 66+ years. Is the attitude towards immigrants equally polarized among these three age groups in the population? Justify your answer with a statistical test.
-
-```{r eval=FALSE}
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=age immigrant  
-  /ORDER=ANALYSIS.  
-* Group age.  
-RECODE age (Lowest thru 35=1) (36 thru 65=2)  
-  (66 thru Highest=3) INTO age3.  
-VARIABLE LABELS  age3 'Voter ages in three groups'.  
-EXECUTE.  
-* Define Variable Properties.  
-*age3.  
-VALUE LABELS age3  
-  1.00 '18-35'  
-  2.00 '36-65'  
-  3.00 '66+'.  
-EXECUTE.  
-* ANOVA with descriptives.  
-ONEWAY immigrant BY age3  
-  /STATISTICS DESCRIPTIVES HOMOGENEITY   
-  /MISSING ANALYSIS.  
-  
-Check data:  
-  
-There are no impossible values on the variables.  
-  
-Check assumptions:  
-  
-There are no assumptions that we have to check for  
-the Levene test.  
-  
-Interpret the results:  
-  
-The attitude towards immigrants seems to be more polarized   
-among middle-aged (SD = 2.17) and aged voters (SD = 2.06)   
-than among young voters (SD = 1.37).   
-The difference in variation, however, is not statistically   
-significant, F (2, 63) = 2.77, p = .070.  
-This result seems to contradict the statistically significant  
-test result that we found in Exercise 1, comparing only young   
-to old voters. There is no contradiction, however. We merely  
-see that the classification into groups can matter to the   
-significance of results.  
+<A name="question10.2"></A>
+```{block2, type='rmdquestion'}
+2. Use the data of Exercise 1. Create a new variable grouping voter's age with classes 18-35, 36-65, and 66+ years. Is the attitude towards immigrants equally polarized among these three age groups in the population? Justify your answer with a statistical test. [<img src="icons/2answer.png" width=115px align="right">](#answer10.2)
 ```
 
 ## Association: relations between characteristics {-}
@@ -197,7 +124,7 @@ If you closely inspect the choice diagram in Figure \@ref(fig:choice-diagram-cop
 #### Instructions {-}
 
 ```{r SPSSTindep, echo=FALSE, out.width="640px", fig.cap="Independent samples t test on two means", dev="png", screenshot.opts = list(delay = 5)}
-knitr::include_url("https://www.youtube.com/embed/g4O0oTVm-Tk", height = "360px")
+knitr::include_url("https://www.youtube.com/embed/ZHUvCvEaHa0", height = "360px")
 # Goal: association as level differences between groups: are females more wiling to donate to a fund raiser than males?
 # Example: donors.sav, outcome is willingness to donate (post), predictor (grouping variable) is sex (0, 1).
 # Technique: independent-samples t test.
@@ -210,7 +137,7 @@ knitr::include_url("https://www.youtube.com/embed/g4O0oTVm-Tk", height = "360px"
 ----
 
 ```{r SPSSTpaired, echo=FALSE, out.width="640px", fig.cap="Paired samples t test on two means", dev="png", screenshot.opts = list(delay = 5)}
-knitr::include_url("https://www.youtube.com/embed/7mGKG3mLqN0", height = "360px")
+knitr::include_url("https://www.youtube.com/embed/9XknCGbX_gE", height = "360px")
 # Goal: Association as score level change (due to intermediary treatment).
 # Example: donors.sav, outcome is willingness to donate post and prior exposure to a fund raiser campaign.
 # Technique: paired-samples t test ; repeated measurements.
@@ -226,71 +153,14 @@ For an instruction and exercises on one-way analysis of variance, see Figure \@r
 
 #### Exercises {-}
 
-1. Is willingness to donate at the end of the campaign higher for those who remember the campaign than for those who do not remember it?
-
-```{r eval=FALSE}
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=willing_post remember  
-  /ORDER=ANALYSIS.  
-* Independent-samples t test.  
-T-TEST GROUPS=remember(0 1)  
-  /MISSING=ANALYSIS  
-  /VARIABLES=willing_post  
-  /CRITERIA=CI(.95).  
-  
-Check data:  
-  
-There are no impossible values on the variables.  
-  
-Check assumptions:  
-  
-Sample sizes (N = 66 and N = 77) are of sufficient  
-size not to worry about the shape of the distribution  
-of willingness in the population.  
-  
-Interpret the results:  
-  
-Willingness to donate at the end of the campaign is significantly   
-higher for those who remember the campaign (M = 4.94, SD = 1.60)   
-than for those who do not remember it (M = 4.24, SD = 1.65),   
-t (141) = -2.57, p = .011, 95%CI[-1.24, -0.16].   
-Willingness is 0.16 to 1.24 points higher on a 10-point scale for   
-those who remember the campaign. Considering the range of the   
-scale, this is quite a small difference.  
+<A name="question10.3"></A>
+```{block2, type='rmdquestion'}
+3. Is willingness to donate at the end of the campaign higher for those who remember the campaign than for those who do not remember it? [<img src="icons/2answer.png" width=115px align="right">](#answer10.3)
 ```
 
-2. Did willingness to donate increase in the population between the start and the end of the campaign?
-
-```{r eval=FALSE}
-SPSS syntax:  
-  
-* Check data.  
-FREQUENCIES VARIABLES=willing_post willing_pre  
-  /ORDER=ANALYSIS.  
-* Paired-samples t test.  
-T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
-  /CRITERIA=CI(.9500)  
-  /MISSING=ANALYSIS.  
-  
-Check data:  
-  
-There are no impossible values on the two variables.  
-  
-Check assumptions:  
-  
-Sample size is sufficiently large (N = 143).  
-  
-Interpret the results:  
-  
-There is a small but statistically significant increase in  
-the willingness to donate over the duration of the experiment
-(from M = 4.49, SD = 1.65 to M = 4.62, SD = 1.66),  
-t (142) = 5.74, p < .001, 95%CI[0.08; 0.17].  
-Average willingness to donate is 0.08 to 0.17 units higher  
-at the end of the experiment than at the start. This is a   
-very small difference on a 10-point scale.  
+<A name="question10.4"></A>
+```{block2, type='rmdquestion'}
+4. Did willingness to donate increase in the population between the start and the end of the campaign? [<img src="icons/2answer.png" width=115px align="right">](#answer10.4)
 ```
 
 ### Combinations of scores {-}
@@ -342,9 +212,183 @@ For regression analysis (instructions and exercises), see Section \@ref(SPSS-reg
 
 #### Exercises {-}
 
-1. In the population of all consumers, is brand awareness linked to exposure to advertisements for the brand? Use [consumers.sav](http://82.196.4.233:3838/data/consumers.sav) to answer this question.
+<A name="question10.5"></A>
+```{block2, type='rmdquestion'}
+5. In the population of all consumers, is brand awareness linked to exposure to advertisements for the brand? Use [consumers.sav](http://82.196.4.233:3838/data/consumers.sav) to answer this question. [<img src="icons/2answer.png" width=115px align="right">](#answer10.5)
+```
 
-```{r eval=FALSE}
+<A name="question10.6"></A>
+```{block2, type='rmdquestion'}
+6. How well can we predict brand awareness with ad exposure? [<img src="icons/2answer.png" width=115px align="right">](#answer10.6)
+```
+
+<A name="question10.7"></A>
+```{block2, type='rmdquestion'}
+7. Does word of mouth involve women rather than men? Interpret the contents, strength, and statistical significance of the association. [<img src="icons/2answer.png" width=115px align="right">](#answer10.7)
+```
+
+## Answers {-}
+
+<A name="answer10.1"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 1. 
+
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=age_group immigrant  
+  /ORDER=ANALYSIS.  
+* Independent-samples t test with Levene s test.  
+T-TEST GROUPS=age_group(1 2)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=immigrant  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants is more polarized among  
+older voters (SD = 2.06) than among young voters (SD = 1.26).  
+The difference in variation is statistically significant,  
+F = 4.99, p = .029.  
+Note that SPSS does not report the (two) degrees of freedom  
+of the F test, so we cannot report them either.   
+SPSS, however, does report the degrees of freedom of Levene's F test in a  
+one-way analysis of variance. We could have used that approach here as well. [<img src="icons/2question.png" width=161px align="right">](#question10.1)
+```
+
+<A name="answer10.2"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 2. 
+
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=age immigrant  
+  /ORDER=ANALYSIS.  
+* Group age.  
+RECODE age (Lowest thru 35=1) (36 thru 65=2)  
+  (66 thru Highest=3) INTO age3.  
+VARIABLE LABELS  age3 'Voter ages in three groups'.  
+EXECUTE.  
+* Define Variable Properties.  
+*age3.  
+VALUE LABELS age3  
+  1.00 '18-35'  
+  2.00 '36-65'  
+  3.00 '66+'.  
+EXECUTE.  
+* ANOVA with descriptives.  
+ONEWAY immigrant BY age3  
+  /STATISTICS DESCRIPTIVES HOMOGENEITY   
+  /MISSING ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+There are no assumptions that we have to check for  
+the Levene test.  
+  
+Interpret the results:  
+  
+The attitude towards immigrants seems to be more polarized   
+among middle-aged (*SD* = 2.17) and aged voters (*SD* = 2.06)   
+than among young voters (*SD* = 1.37).  
+
+The difference in variation, however, is not statistically   
+significant, *F* (2, 63) = 2.77, *p* = .070.
+
+This result seems to contradict the statistically significant  
+test result that we found in Exercise 1, comparing only young   
+to old voters. There is no contradiction, however. We merely  
+see that the classification into groups can matter to the   
+significance of results. [<img src="icons/2question.png" width=161px align="right">](#question10.2)
+```
+
+<A name="answer10.3"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 3. 
+
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=willing_post remember  
+  /ORDER=ANALYSIS.  
+* Independent-samples t test.  
+T-TEST GROUPS=remember(0 1)  
+  /MISSING=ANALYSIS  
+  /VARIABLES=willing_post  
+  /CRITERIA=CI(.95).  
+  
+Check data:  
+  
+There are no impossible values on the variables.  
+  
+Check assumptions:  
+  
+Sample sizes (*N* = 66 and *N* = 77) are of sufficient  
+size not to worry about the shape of the distribution  
+of willingness in the population.  
+  
+Interpret the results:  
+  
+Willingness to donate at the end of the campaign is significantly   
+higher for those who remember the campaign (*M* = 4.94, *SD* = 1.60)   
+than for those who do not remember it (*M* = 4.24, *SD* = 1.65),   
+*t* (141) = -2.57, *p* = .011, 95%CI[-1.24, -0.16].   
+Willingness is 0.16 to 1.24 points higher on a 10-point scale for   
+those who remember the campaign. Considering the range of the   
+scale, this is quite a small difference. [<img src="icons/2question.png" width=161px align="right">](#question10.3)
+```
+
+<A name="answer10.4"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 4. 
+
+SPSS syntax:  
+  
+* Check data.  
+FREQUENCIES VARIABLES=willing_post willing_pre  
+  /ORDER=ANALYSIS.  
+* Paired-samples t test.  
+T-TEST PAIRS=willing_pre WITH willing_post (PAIRED)  
+  /CRITERIA=CI(.9500)  
+  /MISSING=ANALYSIS.  
+  
+Check data:  
+  
+There are no impossible values on the two variables.  
+  
+Check assumptions:  
+  
+Sample size is sufficiently large (*N* = 143).  
+  
+Interpret the results:  
+  
+There is a small but statistically significant increase in  
+the willingness to donate over the duration of the experiment
+(from *M* = 4.49, *SD* = 1.65 to *M* = 4.62, *SD* = 1.66),  
+*t* (142) = 5.74, *p* < .001, 95%CI[0.08; 0.17].  
+Average willingness to donate is 0.08 to 0.17 units higher  
+at the end of the experiment than at the start. This is a   
+very small difference on a 10-point scale. [<img src="icons/2question.png" width=161px align="right">](#question10.4)
+```
+
+<A name="answer10.5"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 5. 
+
 SPSS syntax:  
   
 * Check data.  
@@ -383,14 +427,15 @@ observation may be responsible.
 Interpret the results:  
   
 Brand awareness is statistically signficantly associated  
-with exposure to advertisements for the brand, r = .46,  
-p < .001. More exposure tends to go together with more  
-brand awareness.  
+with exposure to advertisements for the brand, *r* = .46,  
+*p* < .001. More exposure tends to go together with more  
+brand awareness. [<img src="icons/2question.png" width=161px align="right">](#question10.5)
 ```
 
-2. How well can we predict brand awareness with ad exposure?
+<A name="answer10.6"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 6. 
 
-```{r eval=FALSE}
 SPSS syntax:  
   
 * Check data.  
@@ -420,18 +465,14 @@ regression analysis, so let us not pay attention to the assumptions yet.
   
 Interpret the results:  
   
-Ad exposure predicts about one fifth of the   
-variation in brand awareness scores, R2 = .21,   
-F (1, 60) = 15.87, p < .001.  
-The predictive effect of exposure to brand advertisements   
-is moderately strong (b* = 0.46). An additional  
-unit of exposure increases the predicted brand awareness  
-with 0.4 points, t = 3.98, p < .001, 95%[0.22; 0.67].  
+Ad exposure predicts about one fifth of the variation in brand awareness scores, *R*^2^ = .21, *F* (1, 60) = 15.87, *p* < .001.  
+The predictive effect of exposure to brand advertisements is moderately strong (*b\** = 0.46). An additional unit of exposure increases the predicted brand awareness with 0.4 points, *t* = 3.98, *p* < .001, 95%[0.22; 0.67]. [<img src="icons/2question.png" width=161px align="right">](#question10.6)
 ```
 
-3. Does word of mouth involve women rather than men? Interpret the contents, strength, and statistical significance of the association.
+<A name="answer10.7"></A>
+```{block2, type='rmdanswer'}
+Answer to Exercise 7. 
 
-```{r eval=FALSE}
 SPSS syntax:  
   
 * Contingency table with chi-squared test and measure of association.  
@@ -455,13 +496,7 @@ exact test. This test makes no assumptions.
   
 Interpret the results:  
   
-There is no statistically significant association between  
-word of mouth and sex, p = .161 (Fisher exact), Goodman &  
-Kruskal tau = .05. We cannot confidently conclude that  
-either females or males experience word of mouth more  
-frequently.  
+There is no statistically significant association between word of mouth and sex, *p* = .161 (Fisher exact), Goodman & Kruskal tau = .05. We cannot confidently conclude that either females or males experience word of mouth more frequently.  
   
-Note that a one-sided test is possible too. The p value  
-of a one-sided exact test is .080 (one-sided) here.  
+Note that a one-sided test is possible too. The p value of a one-sided exact test is .080 (one-sided) here. [<img src="icons/2question.png" width=161px align="right">](#question10.7)
 ```
-
