@@ -27,7 +27,7 @@ Celebrity endorsement theory states that celebrities who publicly state that the
 
 Imagine that we want to test if the celebrity who endorses a fund raiser in a fund-raising campaign makes a difference to people's willingness to donate. We will be using the celebrities George Clooney and Angelina Jolie, and we will compare campaigns with one of them to a campaign without celebrity endorsement.
 
-```{r clooneyjolie, echo=FALSE, out.width="50%", fig.cap="George Clooney and Angelina Jolie."}
+```{r clooneyjolie, echo=FALSE, out.width="50%", fig.cap="George Clooney and Angelina Jolie. Photo Clooney by Angela George [CC BY-SA 3.0](https://upload.wikimedia.org/wikipedia/commons/3/32/GeorgeClooneyHWoFJan12.jpg). Photo Jolie by Foreign and Commonwealth Office [CC BY 2.0](https://upload.wikimedia.org/wikipedia/commons/a/ad/Angelina_Jolie_2_June_2014_%28cropped%29.jpg), via Wikimedia Commons."}
 # Include portraits: Clooney, Jolie.
 knitr::include_graphics("figures/ClooneyJolie.png")
 ```
@@ -293,7 +293,7 @@ This situation illustrates the limitations of null hypothesis significance tests
 
 A statistically significant F test tells us that we may be quite confident that at least two group means are different in the population. If none of the post-hoc t tests is statistically significant, we should note that it is difficult to pinpoint the differences. Nevertheless, we should report the sample means of the groups (and their standard deviations) as well as the confidence intervals of their differences as reported in the post-hoc test. The two groups that have most different sample means are most likely to have different population means.
 
-  ### Answers {-}
+### Answers {-}
 
 <A name="answer7.1.1"></A>
 ```{block2, type='rmdanswer'}
@@ -573,8 +573,9 @@ In an experiment, we can ensure that factors are independent if we have the same
 df <- data.frame(Female = rep(2, 3), Male = rep(2, 3))
 row.names(df) <- c("Clooney", "Jolie", "No endorser")
 # Display table.
-knitr::kable(df, caption = "Number of observations per subgroup in a balanced 3x2 factorial design.") %>%
-  kable_styling(font_size = 12, full_width = F, position = "float_right")
+knitr::kable(df, booktabs = TRUE, caption = "Number of observations per subgroup in a balanced 3x2 factorial design.") %>%
+  kable_styling(font_size = 12, full_width = F, position = "float_right",
+                latex_options = c("HOLD_position"))
 # Cleanup.
 rm(df)
 ```
@@ -1011,8 +1012,9 @@ results[5,] <- c(round(sum(results[,2]), digits = 2), sum(results[,3]), NA, NA, 
 row.names(results)[5] <- "Total"
 results$`round(results[, 5], digits = 3)`[results$`round(results[, 5], digits = 3)` < 0.001] <- "< 0.001"
 options(knitr.kable.NA = '')
-knitr::kable(results, caption = "An example of a table summarizing results of a two-way analysis of variance.", col.names = c("Sum of Squares", "df", "Mean Square", "F", "p"), align = rep("r", 5))  %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(results, booktabs = TRUE, caption = "An example of a table summarizing results of a two-way analysis of variance.", col.names = c("Sum of Squares", "df", "Mean Square", "F", "p"), align = rep("r", 5))  %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 # Cleanup.
 rm(results, donors)
 ```
@@ -1323,9 +1325,9 @@ willingness between females and males are the same for all endorsers. [<img src=
 ```{block2, type='rmdanswer', echo=ch7}
 Answer to Question 4. 
 
-* Eta^2 gives the proportion of variance in the dependent variable that is
+* Eta^2^ gives the proportion of variance in the dependent variable that is
 predicted or explained by the factor.
-* When the app is just loaded, eta^2 for the endorser effect is 0.47. The
+* When the app is just loaded, eta^2^ for the endorser effect is 0.47. The
 differences between participants' willingness to donate scores in the sample can
 be predicted for 47 per cent by the endorser that they were exposed to. [<img src="icons/2question.png" width=161px align="right">](#question7.7.4)
 ```

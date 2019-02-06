@@ -321,8 +321,9 @@ A _categorical variable_ contains three or more categories or groups. We can cre
 knitr::kable(rbind(c("1 - Never smoked", "1", "0", "0"), 
                    c("2 - Former smoker", "0", "1", "0"),
                    c("3 - Smoker", "0", "0", "1")), 
-             col.names = c("Original categorical variable:", "neversmoked", "smokesnomore", "smoking"), caption = "Dummy variables for a categorical independent variable: One dummy variable is superfluous.", align = c("l", "c", "c", "c")) %>%
-  kable_styling(font_size = 12, full_width = F, position = "float_right")
+             col.names = c("Original categorical variable:", "neversmoked", "smokesnomore", "smoking"), caption = "Dummy variables for a categorical independent variable: One dummy variable is superfluous.", align = c("l", "c", "c", "c"), booktabs = TRUE) %>%
+  kable_styling(font_size = 12, full_width = F, position = "float_right",
+                latex_options = c("scale_down", "HOLD_position"))
 ```
 
 If we want to include a categorical independent variable in a regression model, we must use all dummy variables as independent variables __except one__. In the example, we must include two out of the three dummy variables. We cannot include all three dummy variables because the score on the third dummy variable is determined by the score on the first two dummy variables. 
@@ -1351,8 +1352,10 @@ results[1, 3] <- NA
 attributes(results)$dimnames[[2]] <- c("B", "Std. Error", "Beta", "t", "Sig.", "Lower Bound", "Upper Bound")
 # Table.
 options(knitr.kable.NA = '')
-knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking: regression analysis results.") %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(results, digits = 3, booktabs = TRUE,
+             caption = "Predicting attitude towards smoking: regression analysis results.") %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 # Helper function for displaying results within the text.
 source("report_n.R")
 #Cleanup (partial).
@@ -1476,8 +1479,10 @@ results <- cbind(results, ci)
 attributes(results)$dimnames[[2]] <- c("B", "Std. Error", "t", "Sig.", "Lower Bound", "Upper Bound")
 # Table.
 options(knitr.kable.NA = '')
-knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking for three smoking status groups: regression analysis results.") %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(results, digits = 3, booktabs = TRUE,
+             caption = "Predicting attitude towards smoking for three smoking status groups: regression analysis results.") %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 # Cleanup.
 rm(smokers, model_1, ci, results)
 ```
@@ -2289,8 +2294,10 @@ results[1, 3] <- NA
 attributes(results)$dimnames[[2]] <- c("B", "Std. Error", "Beta", "t", "Sig.", "Lower Bound", "Upper Bound")
 # Table.
 options(knitr.kable.NA = '')
-knitr::kable(results, digits = 3, caption = "Predicting attitude towards smoking: regression analysis results with exposure and contact mean-centered.") %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(results, digits = 3, booktabs = TRUE,
+             caption = "Predicting attitude towards smoking: regression analysis results with exposure and contact mean-centered.") %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 # Helper function for displaying results within the text.
 source("report_n.R")
 # Partial cleanup.
@@ -2529,14 +2536,15 @@ Exposure, in our example, has a negative predictive effect on attitude towards s
 ```{r report-moderation-table, echo=FALSE}
 # Table.
 options(knitr.kable.NA = '')
-knitr::kable(table, align = c("l", "c"),
+knitr::kable(table, booktabs = TRUE, align = c("l", "c"),
              caption = "Predicting attitude towards smoking. Results in APA6 style. Exposure and contact are mean-centered.") %>%
   footnote(general = "_N_ = 150. CI = confidence interval.",
            symbol =  "*\\* _p_ < .05. \\*\\* _p_ < .01. \\*** _p_ < .001.",
            general_title = "Note.", title_format = c("italic"),
            symbol_title = "",
            footnote_as_chunk = T) %>%
-  kable_styling(font_size = 12, full_width = F, position = "float_right")
+  kable_styling(font_size = 12, full_width = F, position = "float_right",
+                latex_options = c("HOLD_position"))
 ```
 
 Instead of presenting the numerical results in the text, we may summarize them in an APA6 style table, such as Table \@ref(tab:report-moderation-table). Note that t and p values are not reported in this table, the focus is on the confidence intervals. The significance level is indicated by stars.

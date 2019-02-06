@@ -27,8 +27,9 @@ This chapter reviews concepts that are central to understanding what statistical
 Table \@ref(tab:thumb) in Chapter \@ref(probmodels) shows the conditions that must be satisfied if we want to use a theoretical probability distribution to approximate a sampling distribution. Only if the conditions are met, the theoretical probability distribution resembles the sampling distribution sufficiently for using the former as approximation of the latter.
 
 ```{r thumbsize, echo=FALSE, screenshot.opts=list(delay = 2)}
-knitr::kable(rbind(c("Binomial distribution", "proportion", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)"), c("(Standard) normal distribution", "one or two means", "> 100"), c("t distribution", "one or two means", "each group > 30"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30"), c("t distribution", "regression coefficient", "20+ per independent variable"), c("F distribution", "3+ means", " all groups are more or less of equal size"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5")), col.names = c("Distribution", "Sample statistic", "Minimum sample size"), caption = "Rules of thumb for minimum sample sizes." ) %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(rbind(c("Binomial distribution", "proportion", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)"), c("(Standard) normal distribution", "one or two means", "> 100"), c("t distribution", "one or two means", "each group > 30"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30"), c("t distribution", "regression coefficient", "20+ per independent variable"), c("F distribution", "3+ means", " all groups are more or less of equal size"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5")), col.names = c("Distribution", "Sample statistic", "Minimum sample size"), caption = "Rules of thumb for minimum sample sizes.", booktabs = TRUE) %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 ```
 
 Conditions often include sample size. Table \@ref(tab:thumbsize) reproduces the size requirements from Table \@ref(tab:thumb). If you plan to do a t test, either on its own or in post-hoc tests after analysis of variance, each group should contain more than thirty cases. So if you intend to apply t tests, recruit more than thirty participants for each experimental group or more than thirty respondents for each group in your survey. If you have to reckon with non-response, that is, sampled participants or respondents unwilling to participate in your research, you should recruit more participants or respondents to have more than thirty observations in the end.
@@ -61,7 +62,7 @@ A larger sample offers more precision, so the difference between our sample outc
 <div style="column-count: 2; -moz-column-count: 2">
 Of course, the size of the difference between our sample outcome and the hypothesized population value matters as well. This difference is called _effect size_. If average candy weight in our sample bag deviates more from the average weight that we expect according to the null hypothesis, we are more likely to reject the null hypothesis. If we think of our statistical test as a security metal detector, our test will pick up larger amounts of metal more easily.
 
-![Security metal detector](figures/metaldetector.png)
+![Security metal detector. [Jason Lander from Portland, United States, Wikimedia CommonsCC BY 2.0](https://upload.wikimedia.org/wikipedia/commons/c/c0/Security_%282363676375%29.jpg)](figures/metaldetector.jpg)
 </div>
 
 The probability of rejecting a null hypothesis, then, depends both on sample size and effect size, that is, the difference between what we expect (null hypothesis) and what we find (sample outcome). 
@@ -371,7 +372,7 @@ We do not know whether average candy weight is 2.9 grams in the true population.
 Our habit of formulating a null hypothesis and an alternative hypothesis for all situations not covered by the null hypothesis is generally attributed to the statistician R.A. Fisher. This, however, is not entirely correct [see, e.g., @RefWorks:3931]. Fisher introduced the concept of a null hypothesis [@RefWorks:3932: 18] but not the concept of an alternative hypothesis.
 The statisticians Jerzy Neyman and Egon Pearson introduced the idea of working with two or more hypotheses. But the two hypotheses do not cover all possible population values and they were usually not called a null and alternative hypothesis. They specify two or more different population values. A statistical test is used to determine which of the hypotheses fits the sample best. [@RefWorks:3906]
 
-![Egon Pearson](figures/egonpearson.png)
+![Egon Pearson. Photo by Grasso Luigi [Wikimedia Commons, CC BY-SA 4.0](https://upload.wikimedia.org/wikipedia/commons/a/a2/Egon_Pearson.jpg)](figures/egonpearson2.png)
 </div>
 ---- 
 
@@ -429,8 +430,9 @@ The probability that we make a Type II error if there is a small effect is expre
 Table \@ref(tab:errortable) summarizes the four possible situations that may arise if we test a null hypothesis. The null hypothesis may be true or false and we may or may not reject the null hypothesis.
 
 ```{r errortable, echo=FALSE, screenshot.opts=list(delay = 2)}
-knitr::kable(rbind(c("Null is rejected", "Type I error, Significance level (alpha)", "No error, Power (1 - beta)"), c("Null is not rejected", "No error, (1 - alpha)", "Type II error, (beta)")), col.names = c("  ", "Null is true", "Null is false"), caption = "Error types and their probabilities.") %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(rbind(c("Null is rejected", "Type I error, Significance level (alpha)", "No error, Power (1 - beta)"), c("Null is not rejected", "No error, (1 - alpha)", "Type II error, (beta)")), col.names = c("  ", "Null is true", "Null is false"), caption = "Error types and their probabilities.", booktabs = TRUE) %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 ```
 
 ### Power of the test  

@@ -934,8 +934,10 @@ results <- rbind(
   c("", round(model_3$coefficients[2], digits=2), "*", round(model_4$coefficients[5], digits=2), "", "", "", "", "=", round(model_3$coefficients[2]*model_4$coefficients[5], digits=2)),
   c("", "Total Effect", "", "", "", "", "", "", "=", round(model_4$coefficients[2] + model_1$coefficients[2]*model_4$coefficients[3] + model_1$coefficients[2]*model_2$coefficients[3]*model_4$coefficients[4] + model_1$coefficients[2]*model_2$coefficients[3]*model_3$coefficients[4]*model_4$coefficients[5] + model_1$coefficients[2]*model_3$coefficients[3]*model_4$coefficients[5] + model_2$coefficients[2]*model_4$coefficients[4] + model_2$coefficients[2]*model_3$coefficients[4]*model_4$coefficients[5] + model_3$coefficients[2]*model_4$coefficients[5], digits=2))
   )
-knitr::kable(results, caption = "All unstandardized direct and indirect effects of age on newspaper reading time.", col.names = c("", "Effect","", "Effect","", "Effect","", "Effect","", "Total size"), align = c("l", "c", "c", "c", "c", "c", "c", "c", "r")) %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(results, booktabs = TRUE,
+             caption = "All unstandardized direct and indirect effects of age on newspaper reading time.", col.names = c("", "Effect","", "Effect","", "Effect","", "Effect","", "Total size"), align = c("l", "c", "c", "c", "c", "c", "c", "c", "r")) %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 ```
 
 Table \@ref(tab:age-indirect) lists all direct and indirect effects of age on newspaper reading time in Figure \@ref(fig:pathdiagram-unstandardized). We can trace eight different paths from age to newspaper reading time. For each path, we multiply the unstandardized effect sizes. 
@@ -1003,8 +1005,10 @@ results <- rbind(
   c("Age - News Site Use - Reading Time", "1.44", ".42", ".60", "2.23")
 )
 
-knitr::kable(results, caption = "Bootstrap results for unstandardized indirect effects in a model with two mediators. Effect size, standard error, lower and upper levels of the 95\\% confidence interval.", col.names = c("", "Effect", "Boot SE", "BootLLCI", "BootULCI"), align = c("l", "r", "r", "r", "r"))  %>%
-  kable_styling(font_size = 12, full_width = F)
+knitr::kable(results, booktabs = TRUE,
+             caption = "Bootstrap results for unstandardized indirect effects in a model with two mediators. Effect size, standard error, lower and upper levels of the 95\\% confidence interval.", col.names = c("", "Effect", "Boot SE", "BootLLCI", "BootULCI"), align = c("l", "r", "r", "r", "r"))  %>%
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
 
  # Cleanup.
 rm(results)
@@ -1161,11 +1165,13 @@ results <- rbind(
   c("**Indirect Effect**", "", "", ""),
   c("Age > News Site Use > Reading Time", "1.44", "", "[0.61; 2.17]")
 )
-knitr::kable(results, caption = "Unstandardized effects in a model regressing newspaper reading time on age with one mediator (News Site Use) and two covariates (Education, Political Interest). OLS estimates for direct effects, bootstrap results for indirect effects, using 5,000 bootstraps and a bias-corrected method.", col.names = c("", "B", "", "95% CI"), align = c("l", "r", "l", "c")) %>%
+knitr::kable(results, booktabs = TRUE,
+             caption = "Unstandardized effects in a model regressing newspaper reading time on age with one mediator (News Site Use) and two covariates (Education, Political Interest). OLS estimates for direct effects, bootstrap results for indirect effects, using 5,000 bootstraps and a bias-corrected method.", col.names = c("", "B", "", "95% CI"), align = c("l", "r", "l", "c")) %>%
   footnote(general = "\\* _p_ < .05. \\*\\* _p_ < .01. \\*** _p_ < .001.",
            general_title = "Note.", title_format = c("italic"),
            footnote_as_chunk = T) %>%
-  kable_styling(font_size = 12, full_width = F)
+  kable_styling(font_size = 12, full_width = F,
+                latex_options = c("scale_down", "HOLD_position"))
  # Cleanup.
 rm(results)
 ```
@@ -1820,7 +1826,7 @@ reading time to 0.1, the correlation between age and political interest to 0.4
 and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25
 = 0.1.
 * In the plot, the standardized regression coefficient for the effect of
-political interest on reading time (b_MO) should become zero. There is no
+political interest on reading time (b~MO~) should become zero. There is no
 effect if we control for age even though the correlation is 0.1.
 * Note that the standardized regression effect of political interest on
 reading time need not be zero if the correlation between these two variables
