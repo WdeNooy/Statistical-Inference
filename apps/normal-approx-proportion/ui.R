@@ -17,7 +17,7 @@ shinyUI(
                     ),
                     align = "center",
                     sliderInput("propslider",
-                                label = "Sample proportion",
+                                label = "Population proportion",
                                 min = 0,
                                 max = 1,
                                 step = 0.05,
