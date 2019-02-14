@@ -75,10 +75,12 @@ shinyServer(function(input, output) {
       #95% most likely sample means
       geom_segment(aes(x = (xhigh + xlow)/2, xend = xlow, 
                        y = ypop - psize/100, yend = ypop/1.6), data = smean,
-                   alpha = ifelse(smean$ypop == ymin, 0, 1)) +
+                   alpha = ifelse(smean$ypop == ymin, 0, 1),
+                   colour = smean$colour) +
       geom_segment(aes(x = (xhigh + xlow)/2, xend = xhigh, 
                        y = ypop - psize/100, yend = ypop/1.6), data = smean,
-                   alpha = ifelse(smean$ypop == ymin, 0, 1)) +
+                   alpha = ifelse(smean$ypop == ymin, 0, 1),
+                   colour = smean$colour) +
       geom_segment(aes(x = xlow, xend = xhigh, 
                        y = ypop/1.6, yend = ypop/1.6), data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
