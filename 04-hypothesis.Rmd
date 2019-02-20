@@ -334,7 +334,7 @@ The null hypothesis is central to significance testing. If the test is statistic
 
 Statistical hypotheses, however, come in pairs: a null hypothesis (_H_~0~) and an _alternative hypothesis_ (_H_~1~ or _H_~A~). _The alternative hypothesis covers all situations not covered by the null hypothesis_. The null hypothesis stating that average media literacy in a population of children is 5.5, is paired with the alternative hypothesis stating that the average is not 5.5. In this way, we cover all possible outcomes.
 
-If we reject the null hypothesis, we say that we accept the alternative hypothesis. We believe that the alternative hypothesis is true, because we do not believe that the null hypothesis is true. Of course, we know that our belief can be mistaken. There is five per cent chance that we rejected a null hypothesis that is actually true (Type I error, Section \@ref(sig-typeI)). Accepting the alternative hypothesis does not mean that this hypothesis is true. Please, never forget this.
+If we reject the null hypothesis, we say that our data lend support to the alternative hypothesis. We doubt that the null hypothesis is true. Of course, we know that we can be mistaken. There is five per cent chance that we reject a null hypothesis that is actually true (Type I error, Section \@ref(sig-typeI)). Rejecting the null hypothesis does not mean that this hypothesis is false or that the alternative hypothesis is true. Please, never forget this.
 
 <A name="question4.3.1"></A>
 ```{block2, type='rmdquestion'}
@@ -463,7 +463,7 @@ In Figure \@ref(fig:1-2sidedpvalues), the sample mean is 5.15 and we have .042 p
 knitr::include_graphics("figures/CH4.1_2sidedpvalues.png")
 ```
 
-In a two-sided test, we have to reckon with two different types of outcomes. Our sample oucome can be smaller or larger than the hypothesized population value. As a consequence, the p value must cover samples at opposite sides of the sampling distribution. We should not only reckon with sample means that are less than 5.15 but also with sample means that are just as much larger than the hypothesized population value. So we have to take into account a probability of .042 for the right tail of the distribution as well in Figure \@ref(fig:1-2sidedpvalues). We can double the one-sided p value to obtain the two-sided p value.
+In a two-sided test, we have to reckon with two different types of outcomes. Our sample outcome can be smaller or larger than the hypothesized population value. As a consequence, the p value must cover samples at opposite sides of the sampling distribution. We should not only reckon with sample means that are less than 5.15 but also with sample means that are just as much larger than the hypothesized population value. So we have to take into account a probability of .042 for the right tail of the distribution as well in Figure \@ref(fig:1-2sidedpvalues). We can double the one-sided p value to obtain the two-sided p value.
 
 In contrast, if our statistical software tells us the two-sided p value and we want to have the one-sided p value, we can simply halve the two-sided p value. The two-sided p value is divided equally between the left and right tails. If we are interested in just one tail, we can ignore the half of the p value that is situated in the other tail. Of course, this only makes sense if a one-sided test makes sense.
 
@@ -493,10 +493,10 @@ Answer to Question 2.
 
 * If the sample mean falls within a dark-blue tail, a two-sided test is
 statistically significant.
-* If the sample mean is falls within the light (or dark-blue) tail at the
+* If the sample mean falls within the light (or dark-blue) tail at the
 right, a right-sided test is statistically significant but a left-sided test
 is not.
-* If the sample mean is falls within the light (or dark-blue) tail at the
+* If the sample mean falls within the light (or dark-blue) tail at the
 left, a left-sided test is statistically significant but a right-sided test is
 not. [<img src="icons/2question.png" width=161px align="right">](#question4.4.2)
 ```
@@ -630,7 +630,7 @@ results. More sample means are close to the true population mean.
 * In technical terms, the variation of sample means decreases with larger
 sample size; sample means are more alike. The standard deviation of the
 sampling distribution measures the variation of sample means. It is the
-standard error of the sampling distribution (see the preceding chapter). A
+standard error of the sampling distribution (see Section \@ref(standard-error)). A
 distribution of larger samples has a smaller standard error. [<img src="icons/2question.png" width=161px align="right">](#question4.5.3)
 ```
 
@@ -653,9 +653,13 @@ Answer to Question 5.
 
 ## Testing a Null Hypothesis with an Exact Approach or Bootstrapping
 
-Exact approaches calculate probabilities for discrete outcomes. In the candy example, the number of yellow candies in a sample bag of ten candies is a discrete outcome. With the binomial formula, the exact probability of zero yellow candies can be calculated, the probability of one yellow candy, two yellow candies, and so on (see Figure \@ref(fig:exactapproachfigure)). 
+Exact approaches calculate probabilities for discrete outcomes. In the candy example, the number of yellow candies in a sample bag of ten candies is a discrete outcome. With the binomial formula, the exact probability of zero yellow candies can be calculated, the probability of one yellow candy, two yellow candies, and so on (see Figure \@ref(fig:exactapproachfigure2)). 
 
-Let us image that our sample bag contains six yellow candies and we hypothesize that twenty per cent of the candies are yellow in the population. The p value of our sample outcome (six yellow candies) sums the probabilities of drawing a sample bag with six, seven, eight, nine, or ten yellow candies from a population in which twenty per cent of the candies are yellow (our null hypothesis). The p value happens to be .006, even though Figure \@ref(fig:exactapproachfigure) suggests .007 but that is a matter of rounding error. This is the right-sided p value if we assume that our hypothesis is true.
+```{r exactapproachfigure2, eval=TRUE, echo=FALSE, out.width="300px", fig.cap="Probabilities of a sample with a particular number of yellow candies if 20 per cent of the candies are yellow in the population."}
+knitr::include_graphics("figures/exactapproach.png")
+```
+
+Let us imagine that our sample bag contains six yellow candies and we hypothesize that twenty per cent of the candies are yellow in the population. The p value of our sample outcome (six yellow candies) sums the probabilities of drawing a sample bag with six, seven, eight, nine, or ten yellow candies from a population in which twenty per cent of the candies are yellow (our null hypothesis). The p value happens to be .006, even though Figure \@ref(fig:exactapproachfigure2) suggests .007 but that is a matter of rounding error. This is the right-sided p value if we assume that our hypothesis is true.
 
 With the p value, we execute the significance test as usual. The p value is well below the significance level of .05, so we reject the null hypothesis that twenty per cent of all candies in the population are yellow.
 
@@ -858,7 +862,7 @@ knitr::include_url("https://www.youtube.com/embed/4ml3ffYxgWM", height = "360px"
 # The one-sided versus two-sided output is not discussed in the video.
 ```
 
-We can also be interested in more than one category, for instance, in which regions are the households located: in the north, east, south, and west of the country? This translates into a statistical hypothesis containing two or more proportions in the population. If 30% of households in the population are situated in the west, 25 % in the south and east, and 20% in the north, we would expect these proportions in the sample if all regions are equally represented. Our statistical hypothesis is actually a relative frequency distribution, such as, for instance, in Table \@ref(tab:hypo-freq).
+We can also be interested in more than one category, for instance, in which regions are the households located: in the north, east, south, and west of the country? This translates into a statistical hypothesis containing two or more proportions in the population. If 30% of households in the population are situated in the west, 25 % in the south and east, and 20% in the north, we would expect these proportions in the sample if all regions are equally well-represented. Our statistical hypothesis is actually a relative frequency distribution, such as, for instance, in Table \@ref(tab:hypo-freq).
 
 ```{r hypo-freq, echo=FALSE}
 knitr::kable(data.frame(Region = c("North", "East", "South", "West"), HP = c(0.20, 0.25, 0.25, 0.30)), digits = 2, caption = "Statistical hypothesis about four proportions as a frequency table.", col.names = c("Region", "Hypothesized Proportion"), booktabs = TRUE) %>%
@@ -949,9 +953,7 @@ Variable tv_reach is a dichotomy as it should be for this test.
     
 Interpret the results:  
   
-The proportion of households not reached in the sample (p = 0.48) is above
-fourty per cent. We have to reject the null hypothesis that the TV station
-reaches at most fourty per cent of all households, p = .039 (one-sided).
+The proportion of households not reached in the sample (p = 0.48; double-click the binomial test output and a proportion within it to see more than one decimal place) is above fourty per cent. We have to reject the null hypothesis that the TV station reaches at most fourty per cent of all households, p = .039 (one-sided).
 
 Note that SPSS applies a two-sided test if the proportion in the null
 hypothesis is .50, but it applies a one-sided test in all other situations.
