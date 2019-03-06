@@ -171,7 +171,7 @@ Following up on a report commissioned by the American Psychological Association 
 
 Estimation is becoming more important: Assessing the precision of our statements about the population rather than deciding pro or con our hypothesis about the population. This is an important step forward and it is easy to accomplish if your statistical software reports confidence intervals.  
 
-```{r ci-nullhyp, eval=TRUE, echo=FALSE, fig.cap="What is the most sensible interpretation of the results represented by the confidence interval ?"}
+```{r ci-nullhyp, eval=TRUE, echo=FALSE, fig.cap="What is the most sensible interpretation of the results represented by the confidence interval for the regression coefficient, which estimates brand awareness from campaign exposure?"}
 #REPLACED BY STATIC IMAGE
 
 # Display an x-axis labeled "Effect size" with values "none
@@ -196,15 +196,17 @@ ggplot2::ggplot(d) +
   geom_hline(yintercept = 0, colour = brewercolors["Red"]) +
   geom_text(aes(x = x, y = ub95, label = lab), nudge_y = 0.15) +
   scale_x_continuous(name = "", breaks = NULL) +
-  scale_y_continuous(name = "Standardized effect size", 
-                     breaks = c(-3, -2, -1, -0.3, 0, 0.3, 1, 2, 3),
-                     labels = c("-0.8\nstrong", "-0.5\nmoderate", "-0.2\nweak", "\ntiny", "0\nH0", "\ntiny", "0.2\nweak", "0.5\nmoderate", "0.8\nstrong")) +
+  scale_y_continuous(name = "Unstandardized effect size (b)", 
+                     breaks = c(-2, -1, 0, 0.3, 1.55, 2.5),
+                     sec.axis = sec_axis(~./5.6, name = "Standardized effect size (b*)",
+                     breaks = c(-0.3, -0.1, 0, 0.1, 0.3, 0.5),
+                     labels = c("-0.3\nmoderate", "-0.1\nweak", "0\nH0", "0.1\nweak", "0.3\nmoderate", "0.5\nstrong"))) +
   coord_flip() +
   theme_general()
 rm(d)
 ```
 
-Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population value, for instance, the effect of exposure to advertisements on brand awareness, and the sample result as point estimate (dot). The horizontal axis is labeled by the size of the effect: the difference between the effect in the sample and the absence of an effect according to the null hypothesis. 
+Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population value, for instance, the effect of exposure to advertisements on brand awareness, and the sample result as point estimate (dot). The horizontal axis is labeled by the size of the effect: the difference between the effect in the sample and the absence of an effect according to the null hypothesis.
 
 <A name="question6.2.1"></A>
 ```{block2, type='rmdquestion'}
@@ -219,6 +221,10 @@ Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population val
 A confidence interval shows us whether or not our null hypothesis must be rejected (see Section \@ref(null-ci0)). The rule is simple: If the value of the null hypothesis is within the confidence interval, the null hypothesis must not be rejected. By the way, note that a confidence interval allows us to test a null hypothesis other than the nil (Section \@ref(strawmen)). If we hypothesize that the effect of exposure on brand awareness is 0.1, we reject the hypothesis if the confidence interval of the regression coefficient does not include 0.1.
 
 At the same time, however, confidence intervals allow us to draw a more nuanced conclusion. A confidence interval displays our uncertainty about the result. If the confidence interval is wide, we are quite uncertain about the true population value. If a wide confidence interval includes the null hypothesis near one of its boundaries (e.g., Confidence Interval D in Figure \@ref(null-ci0)), we do not reject the null hypothesis but it still is plausible that the population value is substantially larger (or substantially smaller) than the hypothesized value. 
+
+For example, we could interpret Confidence Interval D in Figure \@ref(fig:ci-nullhyp) in the following way:
+
+The effect of exposure to advertisements on brand awareness is not statistically significant, _t_ (23) = 1.62, _p_ = .119, 95%CI[-0.1, 3.2], so we are not sufficiently confident that there is an effect in the population. We should note, however, that the sample is small (N = 25-- this number is not included in the figure--), so test power is probably low, meaning that it is difficult to reject a false null hypothesis. On the basis of the confidence interval we conclude that the effect can be weak and negative, but the plausible effects are predominantly positive, including strong positive effects. One additional daily exposure may decrease predicted brand awareness by 0.1, but it may also increase brand awareness by up to 3.2 points on a scale from 1 (unaware of the brand) to 7 (highly aware of the brand). The latter effect is substantial: A single additional exposure to advertisements would lead to a substantial change in brand awareness. Overall, the effect is expected to be of moderate size (_b_* = 0.28).
 
 We should report that the population value seems to be larger (smaller) than specified in the null hypothesis but that we do not have sufficient confidence in this result because the test is not statistically significant. This is better than reporting that there is no difference because the statistical test is not significant.  
 
@@ -241,6 +247,10 @@ Or it might be:
 ---- 
 
 In a similar way, a very narrow confidence interval including the null hypothesis (e.g., Confidence Interval B in Figure \@ref(null-ci0)) and a very narrow confidence interval near the null hypothesis but excluding it (e.g., Confidence Interval C in Figure \@ref(null-ci0)) should not yield opposite conclusions because the statistical test is significant in the second but not in the first situation. After all, even for the significant situation, we know with high confidence (narrow confidence interval) that the population value is close to the hypothesized value.
+
+For example, we could interpret Confidence Interval C in Figure \@ref(fig:ci-nullhyp) in the following way:
+
+The effect of exposure to advertisements on brand awareness is statistically significant, _t_ (273) = 3.67, _p_ < .001, 95%CI[0.1, 0.5]. On the basis of the confidence interval we are confident that the effect is positive but small (_b_* = 0.05). One additional daily exposure increases predicted brand awareness by 0.1 to 0.5 on a scale from 1 (unaware of the brand) to 7 (highly aware of the brand). We need a lot of additional exposure to advertisements before brand awareness changes substantially.
 
 Using confidence intervals in this way, we avoid the problem that statistically non-significant effects are not published. Not publishing non-significant results, either because of self-selection by the researcher or selection by journal editors and reviewers, offers a misleading view of research results.
 
@@ -281,9 +291,9 @@ of the game called null hypothesis significance testing.
 * This is the case for confidence intervals C, E, and F.
 * If we can reject the null hypothesis, we would be confident that there is an
 effect of exposure on brand awareness in the population. But this can be a
-tiny effect (interval C), a large effect (interval F), or an effect that is
+(very) weak effect (interval C), a large effect (interval F), or an effect that is
 weak to moderate (interval E) if we only interpret the effect size in the
-sample as point estimate of the effect in the population. In case of a tiny
+sample as point estimate of the effect in the population. In case of a (very) weak
 effect, would we recommend to use the advertisement? [<img src="icons/2question.png" width=161px align="right">](#question6.2.1)
 ```
   
@@ -299,7 +309,7 @@ that there is a substantial positive effect in the population. This is the
 most important reason for using the advertisement.
 * Interval F offers the most convincing evidence for a substantial positive
 effect. Intervals D and E also suggest a positive effect but we are not so
-sure about the size of the effect: it may be tiny or perhaps even absent but
+sure about the size of the effect: it may be weak or perhaps even absent but
 it can also be moderate to strong. [<img src="icons/2question.png" width=161px align="right">](#question6.2.2)
 ```
   
