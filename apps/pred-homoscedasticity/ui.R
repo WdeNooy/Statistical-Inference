@@ -10,7 +10,7 @@ shinyUI(
                     br(),
                     br(),
                     sliderInput("residslider",
-                                "Adjust homoscedasticity",
+                                label = "Adjust the distribution of errors: 0 = homoscedastic",
                                 value = .5,
                                 min = -1,
                                 max = 1,
