@@ -1,5 +1,5 @@
 # Mediation with Regression Analysis {#mediation}
-> Key concepts: partial effect, statistical controlling for effects of other predictors, indirect correlation, confounders, suppression and suppressor, spuriousness and reinforcer, causality, causal and time order, common cause, antecedent variable, direct, indirect, and total effects, causal model, path diagram and path model, parallel and serial mediation, partial mediation, covariate, controlling mediator values.
+> Key concepts: partial effect, statistically controlling for effects of other predictors, indirect correlation, confounders, suppression and suppressor, spuriousness and reinforcer, causality, causal and time order, common cause, antecedent variable, direct, indirect, and total effects, causal model, path diagram and path model, parallel and serial mediation, partial mediation, covariate, controlling mediator values.
 
 ### Summary {-}
 
@@ -19,7 +19,7 @@ We can estimate a path model as a series of regression models. With additional s
 
 ## Controlling for Effects of Other Predictors {#controlling}
 
-In a regression model, we use the variation in scores on independent variables to predict the variation of scores in the dependent variable: Does a person with a higher score on an independent variable also have a higher score or, on the contrary, a lower score on the dependent variable? A simple regression model contains only one independent variable but a multiple regression model includes more than one.
+In a regression model, we use the variation in scores on independent variables to predict the variation of scores on the dependent variable: Does a person with a higher score on an independent variable also have a higher score or, on the contrary, a lower score on the dependent variable? A simple regression model contains only one independent variable but a multiple regression model includes more than one.
 
 For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two independent variables (age and interest in politics) to predict the dependent variable (newspaper reading time). The two independent variables can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which independent variable is responsible for which part of the variation on the dependent variable? 
 
@@ -89,17 +89,15 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/"
 
 ### Partial effect  
 
-How does a multiple regression model control the effect of an independent variable for the effects of all other independent variables? Conceptually, the regression model first removes the variation in the dependent variable that is predicted by all other independent variables. Then it determines how well the variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular independent variable but not by any of the other independent variables in the model.
+How does a multiple regression model control the effect of an independent variable for the effects of all other independent variables? Conceptually, the regression model first removes the variation in the dependent variable that is predicted by all other independent variables. Then it determines how well the remaining independent variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular independent variable but not by any of the other independent variables in the model.
 
-In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the dependent variable. It is the contribution to the prediction of the dependent variable over and above the predictions that we can make with all other independent variables in the model. This is called a _partial effect_.
-
-This is what we mean if we say that we are _controlling for all other independent variables_ in our interpretation of a regression model. We are not controlling as in an experiment where we ensure that participants get a particular value on an independent (treatment) variable. It is controlling in a statistical sense, using the data that we have collected.
+In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the dependent variable. It is the contribution to the prediction of the dependent variable over and above the predictions that we can make with all other independent variables in the model. This is called a _partial effect_. This is what we mean if we say that we are _controlling for all other independent variables_ in our interpretation of a regression model. 
 
 ### Confounding variables
 
 It is important to note that the effect is only unique in comparison to the other independent variables that are included in the model. It may well be that we did not include variables in the model that are actually responsible for part of the effects that are attributed to the independent variables in the model. Such left-out variables are called _confounding variables_ or, for short, _confounders_.
 
-If we include a confounder as a new independent variable in the model, the partial effects of other independent variables in the model change. In Figure \@ref(fig:mediation-multipleregression), for instance, this happens if you add news site use to a model containing age as a predictor for newspaper reading time. The effects of other independent variables are adjusted to a new situation, namely a situation with an added new independent variable. The new independent variable helps to predict variation in the dependent variable, so the variation left to be explained by other predictors changes. In Section \@ref(confounders), we will learn that regression coefficients can increase and decrease if confounders are included in the model.
+If we include a confounder as a new independent variable in the model, the partial effects of other independent variables in the model change. In Figure \@ref(fig:mediation-multipleregression), for instance, this happens if you add news site use to a model containing age as a predictor for newspaper reading time. The effects of other independent variables are adjusted to a new situation, namely a situation with news site use as a new independent variable. News site use helps to predict variation in the dependent variable, so the variation left to be explained by age changes. In Section \@ref(confounders), we will learn that regression coefficients can increase and decrease if confounders are included in the model.
 
 With non-experimental data, for example data on newspaper reading habits gathered in a survey, we must include all confounders to ensure that the estimated regression coefficients represent the effects of the independent variables and not effects of confounders. In practical applications, we can only include a limited number of variables in our research and we do not always know what the confounders are. We should strive to include the most important confounders in our research project but we should always keep in mind that the predictive effects that we find may be due to variables not included in our regression model. If there are confounders, our model suffers from _omitted variable bias_.
 
@@ -151,7 +149,7 @@ effect. [<img src="icons/2question.png" width=161px align="right">](#question9.1
   
 ## Indirect Correlation {#indirectcorrelation}
 
-```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrow).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and dependent variable, hence, the indirect correlation is stronger.
 # Display the simple (standardized) regression coefficient as a black arrow from Pol.Interest to Reading Time with the width of the arrow corresponding to the size of the effect. Label arrow with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arrow from Pol.Interest to reading Time on top of the black arrow with its width corresponding to the partial effect when controlling for the selected confounder.
 # Correlations and standardized coefficients that are in line with the example data file readers.sav:
@@ -165,23 +163,17 @@ effect. [<img src="icons/2question.png" width=161px align="right">](#question9.1
 # Pol. Interest -> Reading Time with Age: 0.04
 # Pol. Interest -> Reading Time with Educ: 0.19
 # Pol. Interest -> Reading Time with News: 0.15
-knitr::include_app("http://82.196.4.233:3838/apps/mediation-indirectcorrelation/", height="370px")
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-indirectcorrelation/", height="305px")
 ```
 
 <A name="question9.2.1"></A>
 ```{block2, type='rmdquestion'}
-1. Which variable confounds the effect of political interest on newspaper reading time most? And why is that so? After formulating your answer, add confounders to the model in Figure \@ref(fig:mediation-indirectcorrelation) to check if you are right. [<img src="icons/2answer.png" width=115px align="right">](#answer9.2.1)
+1. Which variable confounds the effect of political interest on newspaper reading time most? And why is that so? Add confounders to the model in Figure \@ref(fig:mediation-indirectcorrelation) and try to explain why the change is small or large. [<img src="icons/2answer.png" width=115px align="right">](#answer9.2.1)
 ```
 
 When is a variable a confounder and when is it a stronger confounder, changing the effect of another predictor a lot? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and dependent variable but is not (yet) included itself in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and dependent variable.
 
 The size of the indirect correlation is equal to the product of the correlation between confounder and predictor and the correlation between confounder and dependent variable. In Figure \@ref(fig:mediation-indirectcorrelation), the correlation between age and interest in politics is .12 and the correlation between age and newspaper reading time is .88, the indirect correlation between interest in politics and reading time established by age is .12 * .88 = .11.
-
-### Multiplication of correlations
-
-Multiplication makes intuitively sense. If two independent variables are perfectly correlated ($r = 1$), the first independent variable can exactly predict the second independent variable. As a consequence it can predict the dependent variable via the second predictor (indirect correlation) just as well as the second predictor can predict it itself. For example, if age is perfectly correlated with interest in politics ($r = 1$) and the correlation between interest in politics and newspaper reading time is .88, the latter correlation is exactly the same as the indirect correlation between age and reading time via interest in politics that we get through multiplication (1.00 * .88 = .88). Here, age predicts reading time via interest in politics just as well as interest in politics predicts reading time.
-
-If the correlation between the two predictors is below one (disregarding the sign of the correlation), the first predictor can only predict a proportion of the second predictor. As a consequence, the first predictor can also predict only a proportion of the dependent variable via the second predictor. This is a proportion of what the second predictor can predict by itself. A correlation below one (and above minus one) is a proportion, so multiplying the second predictor's correlation by the correlation between the two predictors does the job.
 
 ### Indirect correlation and size of confounding
 
@@ -220,7 +212,7 @@ strongly. [<img src="icons/2question.png" width=161px align="right">](#question9
 
 ## Two Types of Confounders {#confounders}
 
-```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder?", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Intuitive understanding of how the pattern of correlation/effect
 # directions (signs) relates to decrease or increase of partial effect sizes.
 # Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth
@@ -229,12 +221,12 @@ strongly. [<img src="icons/2question.png" width=161px align="right">](#question9
 # is selected. This helps to discover that a positive indirect correlation
 # (blue-blue or red-red) decreases the partial effect whereas a negative
 # indirect correlation (blue-red) increases it.
-knitr::include_app("http://82.196.4.233:3838/apps/mediation-confoundertypes/", height="390px")
+knitr::include_app("http://82.196.4.233:3838/apps/mediation-confoundertypes/", height="305px")
 ```
 
 <A name="question9.3.1"></A>
 ```{block2, type='rmdquestion'}
-1. When is a partial regression effect weaker than the simple regression effect and when is it stronger? Formulate a general rule and check it in Figure \@ref(fig:mediation-confoundertypes). [<img src="icons/2answer.png" width=115px align="right">](#answer9.3.1)
+1. When is a partial regression effect weaker than the simple regression effect and when is it stronger? Experiment with Figure \@ref(fig:mediation-confoundertypes) and try to formulate a general rule. [<img src="icons/2answer.png" width=115px align="right">](#answer9.3.1)
 ```
 
 <A name="question9.3.2"></A>
@@ -279,7 +271,7 @@ Let us assume that political interest has a positive effect on reading newspaper
 
 In this situation, the indirect correlation between political interest and newspaper reading time due to news site use is negative: Positive times negative yields a negative. The indirect correlation tells us that people interested in politics use news sites more frequently and for that reason read newspapers less often. The indirect correlation clearly contradicts the regression effect of political interest on newspaper reading time, which is positive: People who are more interested in politics spend more time on reading newspapers.
 
-If news site use---the confounder---is not included in the regression model, the standardized regression effect of political interest more or less adds the indirect correlation to the effect of political interest. Adding a negative amount (indirect correlation), however, is equal to subtracting this amount from the standardized regression coefficient. The positive effect of political interest on reading time is underestimated. In this example, the effect of political interest is _suppressed_ (_masked_) by the confounder news site use. News site use is a _suppressor variable_. 
+If news site use is not included in the regression model, the standardized regression effect of political interest more or less adds the indirect correlation to the effect of political interest. Adding a negative amount (indirect correlation), however, is equal to subtracting this amount from the standardized regression coefficient. The positive effect of political interest on reading time is underestimated. In this example, the effect of political interest is _suppressed_ (_masked_) by the confounder news site use. News site use is a _suppressor variable_. 
 
 If we include this suppressor variable (news site use) in our regression model, we eliminate its suppression of the effect of political interest on newspaper reading time. The negative effect of news site use on reading time is captured by the regression coefficient for the new news site use predictor. The effect of political interest on newspaper reading time is now controlled for the effect of news site use; it no longer includes the indirect correlation due to news site use. In this example, the effect of political interest on newspaper reading time becomes more strongly positive.
 
@@ -366,6 +358,14 @@ The opposite may happen as well: A formerly negative effect may become positive 
 A variable is a reinforcer (1) if it is not included in the regression model but (2) an effect would become weaker or change sign if the variable is included in the model.
 ```
 
+To summarize the two types of confounders:
+
+```{block2, type='rmdimportant'}
+* If we add a *suppressor* to the model, the suppressed effect moves away from zero. A positive effect becomes more strongly positive, a negative effect becomes more strongly negative.
+
+* If we add a *reinforcer* to the model, the reinforced effect moves towards the opposite side. A positive effect becomes less strongly positive or even negative and a negative effect becomes less strongly negative or even positive.
+```
+
 The bottom line is simple: We can only trust the results of regression analysis if all important confounders are included in the model.
 
 ### Answers {-}
@@ -397,8 +397,8 @@ no longer a confounder if it is included in the model. [<img src="icons/2questio
 Answer to Question 2. 
 
 * The indirect correlation between Political interest and Reading time created
-by Interest in sports would be negative. It would be the opposite of the sign
-of the direct effect, so the partial effect would be stronger if we include
+by Interest in sports is negative. It is the opposite of the sign
+of the direct effect, so the partial effect is stronger if we include
 Interest in sports as a predictor in the regression model. [<img src="icons/2question.png" width=161px align="right">](#question9.3.2)
 ```
   

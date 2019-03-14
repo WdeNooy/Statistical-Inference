@@ -2141,7 +2141,7 @@ The zero score on the moderator is the _reference value_ for the conditional eff
 
 ### Mean-centering
 
-Because the effect of a predictor involved in an interaction is a conditional effect, a zero score on the moderator has a special role. It is the reference value for the effect of the predictor. For example, the effect of exposure on attitude applies to respondents with zero contacts with smokers if the regression model includes an exposure by contact interaction. If zero on the moderator is so important, we may want to manipulate this value.
+Because the effect of a predictor involved in an interaction is a conditional effect, a zero score on the moderator has a special role. It is the reference value for the effect of the predictor. For example, the effect of exposure on attitude applies to respondents with zero contacts with smokers if the regression model includes an exposure by contact interaction. If zero on the moderator is so important as a reference value, we may want to manipulate this value to ensure that it is meaningful.
 
 ```{r mean-centering-moderator, eval=TRUE, echo=FALSE, fig.cap="What happens if you mean-center the moderator variable?", out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand how mean-centering affects the interpretion of the
@@ -2161,7 +2161,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mean-centering-moderator/", he
 
 <A name="question8.5.5"></A>
 ```{block2, type='rmdquestion'}
-5. What happens to the red regression line and the regression equation if you subtract the mean (*M*) from the respondents' contact with smokers scores? Thus, you mean-center the moderator Contact. Use the slider **Center Contact. Subtract from Contract:** in Figure \@ref(fig:mean-centering-moderator) to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer8.5.5)
+5. What happens to the red regression line and the regression equation if you subtract the mean (*M*) from the respondents' contact with smokers scores? Thus, you mean-center the moderator Contact. Use the slider **Center Contact. Subtract from Contact:** in Figure \@ref(fig:mean-centering-moderator) to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer8.5.5)
 ```
 
 <A name="question8.5.6"></A>
@@ -2179,7 +2179,7 @@ To _mean-center_ a variable, you subtract the variable's mean from all scores on
 \normalsize
 \end{equation*}
 
-With mean-centered numerical moderators, a conditional effect in the presence of interaction always makes sense. It is the effect of the predictor for average score on the moderator. An average score always falls within the range of scores that actually occur. If we mean-center the contact with smokers moderator, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. This makes sense.
+With mean-centered numerical moderators, a conditional effect in the presence of interaction always makes sense. It is the effect of the predictor for respondents who have an average score on the moderator. An average score always falls within the range of scores that actually occur. If we mean-center the moderator variable contact with smokers, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. This makes sense.
 
 Remember that the interaction variable is the product of the predictor and moderator (Section \@ref(interaction-variable)). If any or both of these are mean-centered, you should multiply the mean-centered variable(s) to create the interaction variable, see Sections \@ref(conditional-effects) and \@ref(conditional-effect-cont).
 
@@ -2270,7 +2270,7 @@ If contact (the moderator) is mean-centered, as in the current example, we simpl
 
 We also have to plug in a value for each covariate. This example contains one covariate, namely (smoking) status. We plug in the score for non-smokers (0). In the end, our predictor (exposure) should be the only variable in the right hand side of the regression equation [the last line in Equation \@ref(eq:regsimpleslopemoderated)]. Remember that we do not include the error term ($e$) in the equation if we predict values; the error term captures prediction errors, so it does not contribute to prediction.
 
-If the moderator is not mean-centered, we have to plug in the value of the mean of the moderator and the value of the mean plus or minus the standard deviation of the moderator. In this example, the mean score of contact with smokers is 5.1, so the moderator mean minus one standard deviation (2.0) equals 3.1 and the mean plus one standard deviation is 7.1.
+If the moderator is not mean-centered, we have to plug in the value of the mean of the moderator and the value of the mean plus or minus the standard deviation of the moderator. Let us assume that the mean score of contact with smokers is 5.1 in this example. The moderator mean minus one standard deviation (2.0) equals 3.1 and the mean plus one standard deviation is 7.1.
 
 ### Statistical inference on conditional effects
 
@@ -2281,7 +2281,7 @@ smokers <- haven::read_spss("data/smokers.sav")
 # Mean-center numerical predictors.
 smokers$exposure_mc <- smokers$exposure - mean(smokers$exposure)
 smokers$contact_mc <- smokers$contact - mean(smokers$contact)
-# Unsandardized linear model.
+# Unstandardized linear model.
 model_1 <- lm(attitude ~ exposure_mc*contact_mc + status2, data = smokers)
 # Table with results in SPSS style.
 results <- coef(summary(model_1))
@@ -2316,7 +2316,7 @@ knitr::kable(results, digits = 3, booktabs = TRUE,
 # Helper function for displaying results within the text.
 source("report_n.R")
 # Partial cleanup.
-rm(smokers, model_1, ci, results_2, model_2, z_attitude, z_contact, z_status2, z_expocontact, z_exposure)
+rm(model_1, ci, results_2, model_2, z_attitude, z_contact, z_status2, z_expocontact, z_exposure)
 ```
 
 The regression model yields a p value and confidence interval for the predictor at the reference value of the moderator. In the model estimated in Table \@ref(tab:cont-moderator-output), for instance, we obtain a p value of `r report_n(results[2,5], 3)` and a 95% confidence interval of [`r report_n(results[2,6],2)`, `r report_n(results[2,7],2)`] for the effect of exposure on attitude. This is the conditional effect of exposure on attitude for cases that score zero on the moderator variable (contact with smokers).
@@ -2334,7 +2334,25 @@ rm(results, report_n)
 
 In Section \@ref(commonsupportdichotomous), we checked the support of the predictor in the data for different groups of the moderator. The basic idea is that we can only sensibly estimate and interpret a conditional effect at a moderator level if we have observations over the entire range of the predictor. For each moderator group, we checked the distribution of the predictor.
 
-With a continuous moderator we can also do this if we group moderator scores. Hainmueller et al. [-@RefWorks:3838] recommend creating three groups, each containing one third of all observations. These low, medium, and high groups correspond more or less with the minus one standard deviation/mean/plus one standard deviation values that we used for visualizing and testing conditional effects. Create a histogram for the predictor in each of these groups to check common support of moderation in the data.
+With a continuous moderator we can also do this if we group moderator scores. Hainmueller et al. [-@RefWorks:3838] recommend creating three groups, each containing one third of all observations. These low, medium, and high groups correspond more or less with the minus one standard deviation/mean/plus one standard deviation values that we used for visualizing and testing conditional effects. Create a histogram for the predictor in each of these groups to check common support of moderation in the data, as explained in micro lecture \@ref(fig:SPSSregSupport1).
+
+```{r cont-moderator-support, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Common support of the predictor variable (exposure) at three levels of the moderator variable (contact)."}
+# Display predictor (exposure) values for three groups of the moderator (contact).
+smokers %>% #data read in previous code chunk
+  mutate(contact_bin = factor(ntile(contact, 3),
+                              levels = c(1, 2, 3),
+                              labels = c("Low contact", "Medium contact", "High contact"))) %>% 
+  ggplot(aes(x = exposure)) +
+    geom_histogram(fill = brewercolors[5], binwidth = 1) +
+    facet_wrap(~contact_bin, ncol = 1) +
+    scale_x_continuous(name = "Exposure", breaks = 0:10) +
+    theme_general()
+
+# Cleanup.
+rm(smokers)
+```
+
+According to Figure \@ref(fig:cont-moderator-support), the predictor variable exposure covers the entire range from 0 to 10 at medium and high contact levels. At low contact level, however, the lowest exposure score is 1 instead of zero. In all, we have common support for moderation of the exposure effect by contact for exposure scores from 1 to 10. This is quite a broad range but we should note that we have few observations of low exposure at the low contact level as well as few observations of high exposure at the high contact level.
 
 ### Assumptions
 
@@ -2354,9 +2372,9 @@ Pros/cons: Adds F Change test; F Change test does not add to significance test o
 
 ### Higher-order interaction effects
 
-An interaction effect with one moderator, whether continuous or categorical, is called _first-order interaction_. It is possible to have a moderated effect that is moderated itself by a second moderator. For example, the change in the exposure effect due to a person's contact with smokers may be different for smokers than for non-smokers. This is called a _second-order interaction_ or _higher-order interaction_. We can include more moderators, yielding even higher higher-order interactions, such as three or four moderators.
+An interaction effect with one moderator, whether continuous or categorical, is called _first-order interaction_ or _two-way interaction_. It is possible to have a moderated effect that is moderated itself by a second moderator. For example, the change in the exposure effect due to a person's contact with smokers may be different for smokers than for non-smokers. This is called a _second-order interaction_ or _higher-order interaction_. We can include more moderators, yielding even higher higher-order interactions, such as three or four moderators.
 
-An interaction variable that is the product of the predictor and two moderators can be used to include a second-order interaction in a regression model. If you include a second-order interaction, you must also include the effects of the variables involved in the interaction as well as all first-order interactions among these variables in the regression model. All in all, these models become very complicated to interpret, so we do not pay attention to them.
+An interaction variable that is the product of the predictor and two moderators can be used to include a second-order interaction in a regression model. If you include a second-order interaction, you must also include the effects of the variables involved in the interaction as well as all first-order interactions among these variables in the regression model. All in all, these models become very complicated to interpret and they are beyond the scope of the current course.
 
 ### Answers {-}
 
@@ -2630,9 +2648,9 @@ rm(ci, df, results, resultsF, table, attitude, cl, contact, exposure, former, n,
 
 The left panel in Figure \@ref(fig:report-moderator-visual) clearly shows that the effect of exposure on attitude is more or less the same for non-smokers and smokers. The effect is different for former smokers, for whom the exposure effect is more strongly negative. It is difficult to draw this conclusion from the table with regression coefficients.
 
-Check that the predictor has good support at the selected values of the moderator. In the left-hand plot of Figure \@ref(fig:report-moderator-visual), the groups (colours) vary nicely over the entire range of the predictor _exposure_, so that is okay. It is more difficult to see good variation in the right-hand plot. 
+Check that the predictor has good support at the selected values of the moderator. In the left-hand plot of Figure \@ref(fig:report-moderator-visual), the groups (colours) vary nicely over the entire range of the predictor _exposure_, so that is okay. We need histograms to check common support for the right-hand plot. 
 
-Do not report that common support is good. If it is bad, warn the reader that we cannot fully trust the estimated moderation because we do not have a nice range of predictor values within each level of the moderator.
+Do not report that common support is good. If it is bad, warn the reader that we cannot fully trust the estimated moderation because we do not have a nice range of predictor values within each level of the moderator. If the predictor is support only within a restricted range, you may report this range.
 
 Finally, inspect the residual plots but do not include them in the report. Warn the reader if the assumptions of the linear regression model are not met. Do not mention the assumptions if they are met.
 
@@ -2700,7 +2718,7 @@ knitr::include_url("https://www.youtube.com/embed/pUo-i48NNbw", height = "360px"
 ```{block2, type='rmdquestion'}
 5. Let us hypothesize that children's media literacy depends on sex, age, and parental supervision. Is the effect of parental supervision moderated by the child's age?
     Use [children.sav](http://82.196.4.233:3838/data/children.sav) to answer this research question and apply mean-centering. 
-    Report the results as required in this course (APA6), include a moderation plot, and discuss coverage. [<img src="icons/2answer.png" width=115px align="right">](#answer8.7.5)
+    Report the results as required in this course (APA6), include a moderation plot, and discuss common support. [<img src="icons/2answer.png" width=115px align="right">](#answer8.7.5)
 ```
 
 <A name="question8.7.6"></A>
@@ -2948,7 +2966,7 @@ GRAPH
   
 Interpret the results:  
 
-* Coverage of the exposure predictor is poor at low contact levels. Especially low exposure hardly occurs at low contact level. This explains the high standard error for the exposure effect in Exercise 1 as explained in Exercise 3. [<img src="icons/2question.png" width=161px align="right">](#question8.7.4)
+* Common support of the exposure predictor is poor at low contact levels. Especially low exposure hardly occurs at low contact level. This explains the high standard error for the exposure effect in Exercise 1 as explained in Exercise 3. [<img src="icons/2question.png" width=161px align="right">](#question8.7.4)
 ```
 
 <A name="answer8.7.5"></A>
@@ -3223,7 +3241,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator/", height
 
 <A name="question8.8.2"></A>
 ```{block2, type='rmdquestion'}
-2. What happens if you change the position on the slider? Explain you answer. [<img src="icons/2answer.png" width=115px align="right">](#answer8.8.2)
+2. What happens if you change the position on the slider? Explain your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer8.8.2)
 ```
 
 <A name="question8.8.3"></A>
@@ -3319,11 +3337,17 @@ the same at all levels of the moderator in the population. [<img src="icons/2que
 
 ## Take-Home Points  
 
+* We use regression analysis if our dependent variable is numeric and we have at least one numeric independent (predictor) variable.
+
+* We use dummy variables to include a categorical variable as a predictor in a regression model. We need a dummy (1/0) variable for each category on the categorical variable except for one category, which represents the reference group.
+
+* We use an F test to test the null hypothesis that the regression model does not help to predict the dependent variable in the population. We use a t test to test the null hypothesis that a regression coefficient is zero in the population.
+
 * In a regression model, moderation means that there are different slopes (effects of the predictor) for different groups or contexts (moderator).
 
 * Interaction variables represent moderation in a regression model. 
 
-* An interaction variable is the product of the predictor and moderator. A categorical moderator is represented by one or more dummy variables. There is an interaction variable for each of the moderator's dummy variables. 
+* An interaction variable is the product of the predictor and moderator. If a categorical moderator is represented by one or more dummy variables, we need an interaction variable for each of the moderator's dummy variables. 
 
 * Statistical inference for an interaction variable is exactly the same as for "ordinary" regression predictors.
 
@@ -3333,6 +3357,6 @@ the same at all levels of the moderator in the population. [<img src="icons/2que
 
 * To interpret moderation, describe the effects (slopes, unstandardized regression coefficients) and visualize the regression lines for different groups. For a numerical variable, select some interesting levels of the moderator, such as the mean and one standard deviation below or above the mean.
 
-* Interpret regression lines for groups or moderator levels only if the predictor scores are nicely distributed for this group or level (common support). 
+* Warn the reader if the predictor scores are not nicely distributed for all groups or levels (no common support). 
 
-* Don't use the standardized regression coefficients (Beta) for interaction variables in SPSS.
+* Don't use the standardized regression coefficients (Beta) for interaction variables or for dummy variables in SPSS.
