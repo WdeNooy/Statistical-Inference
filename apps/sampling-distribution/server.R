@@ -25,8 +25,8 @@ shinyServer(function(input, output) {
       geom_bar(stat = "identity") +
       scale_y_continuous(
         name = "Proportion",
-        breaks = seq(0, 1, by = 0.2),
-        limits = c(0, 1)
+        breaks = seq(0, 1, by = 0.1),
+        limits = c(0, 0.3)
       ) +
       scale_x_discrete(name = "Candy color" , breaks = candy$colornames) +
       scale_fill_manual(values = brewercolors) +
@@ -76,11 +76,14 @@ shinyServer(function(input, output) {
         geom_dotplot(
           mapping = aes(candy.sample, fill = candy.sample),
           method = "dotdensity",
-          dotsize = 2
+          dotsize = 2, 
+          binwidth = 0.1
         ) +
         scale_fill_manual(values = brewercolors,
                           limits = candy$colornames) +
-        scale_y_continuous(name = NULL, breaks = NULL) +
+        scale_y_continuous(name = "Number in the sample", 
+                           breaks = seq(from = 0.05, to = 0.95, by = 0.1),
+                           labels = 1:10) +
         scale_x_discrete(name = "Candy color",
                          breaks = candy$colornames,
                          drop = FALSE) +
@@ -159,11 +162,14 @@ shinyServer(function(input, output) {
         geom_dotplot(
           mapping = aes(candy.sample, fill = candy.sample),
           method = "dotdensity",
-          dotsize = 2
+          dotsize = 2,
+          binwidth = 0.1
         ) +
         scale_fill_manual(values = brewercolors,
                           limits = candy$colornames) +
-        scale_y_continuous(name = NULL, breaks = NULL) +
+        scale_y_continuous(name = "Number in the sample", 
+                           breaks = seq(from = 0.05, to = 0.95, by = 0.1),
+                           labels = 1:10) +
         scale_x_discrete(name = "Candy color",
                          breaks = candy$colornames,
                          drop = FALSE) +
