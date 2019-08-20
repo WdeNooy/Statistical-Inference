@@ -1,5 +1,5 @@
 library(shiny)
-fig.height = 200 
+fig.height = 300 
 fig.width = 600
 
 shinyUI(

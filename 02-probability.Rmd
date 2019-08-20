@@ -15,13 +15,13 @@ Although this procedure is simple, it is not practical. In a research project, w
 
 The first way to obtain a sampling distribution is still based on the idea of drawing a large number of samples. However, we only draw one sample from the population for which we collect data. As a next step, we draw a large number of samples from our initial sample. The samples drawn in the second step are called _bootstrap samples_. The technique was developed by Bradley Efron [-@RefWorks:3956; -@RefWorks:3957]. For each bootstrap sample, we calculate the sample statistic of interest and we collect these as our sampling distribution. We usually want about 5,000 bootstrap samples for our sampling distribution.  
 
-```{r bootstrapping, echo=FALSE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r bootstrapping, echo=FALSE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Variant of app random-variable (Ch. 1).
 # Generate and display a not too small (N = 50?) representative sample from a uniformly distributed population of five colours (don't show the population). Add a button to draw one bootstrap sample with replacement at a time, showing the distribution of colours in the sample (dotplot with coloured dots) and adding the proportion of yellow candies to the histogram of the sampling distribution (y-axis percentage of cases?), which already shows the true sampling distribution (binomial distribution) as a light histogram in the background. Allow the user to draw one thousand bootstrap samples and add the results to the histogram. Finally, allow the user to draw a new random initial sample.
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="448px")
 ```
 
-In Figure \@ref(fig:bootstrapping), an initial sample has been drawn from a population containing five candy colours in equal proportions.
+In Figure \@ref(fig:bootstrapping), an initial sample has been drawn from a population containing five candy colours in equal proportions (left panel).
 
 <A name="question2.1.1"></A>
 ```{block2, type='rmdquestion'}
@@ -43,34 +43,30 @@ In Figure \@ref(fig:bootstrapping), an initial sample has been drawn from a popu
 4. Draw a new initial sample. This sample is probably less representative of the distribution of candy colour in the population. What happens to the bootstrap samples and the bootstrap sampling distribution? [<img src="icons/2answer.png" width=115px align="right">](#answer2.1.4)
 ```
 
-----
-<div style="column-count: 2; -moz-column-count: 2">
+```{block2, type='rmdmunchhausen'}
 The _bootstrap_ concept refers to the story in which Baron von M&uuml;nchhausen saves himself by pulling himself and his horse by his bootstraps (or hair) out of a swamp. In a similar miraculous way, the bootstrap samples resemble the sampling distribution even though they are drawn from a sample instead of the population. This miracle requires some explanation and it need not work always, as we will discuss in the remainder of this section. 
 
-![Baron von M&uuml;nchhausen pulls himself and his horse out of a swamp. Theodor Hosemann (1807-1875) [Public domain, via Wikimedia Commons](https://commons.wikimedia.org/wiki/File:M%C3%BCnchhausen-Sumpf-Hosemann.png)](figures/Munchhausen.png)
-</div>
-----
+[Picture: Baron von M&uuml;nchhausen pulls himself and his horse out of a swamp. Theodor Hosemann (1807-1875), public domain, via Wikimedia Commons](https://commons.wikimedia.org/wiki/File:M%C3%BCnchhausen-Sumpf-Hosemann.png)
+```
 
 ### Sampling with and without replacement  
 
-As we will see in Chapter \@ref(param-estim), for example Section \@ref(precisionsesamplesize), the size of a sample is very important to the shape of the sampling distribution. The sampling distribution of samples with twenty cases can be very different from the sampling distribution of samples with fourty cases. To construct a sampling distribution from bootstrap samples, the bootstrap samples must be exactly as large as the original sample.  
+As we will see in Chapter \@ref(param-estim), for example Section \@ref(precisionsesamplesize), the size of a sample is very important to the shape of the sampling distribution. The sampling distribution of samples with twenty-five cases can be very different from the sampling distribution of samples with fifty cases. To construct a sampling distribution from bootstrap samples, the bootstrap samples must be exactly as large as the original sample.  
 
 How can we draw many different bootstrap samples from the original sample if each bootstrap sample must contain the same number of cases as the original sample?
 
-```{r replacement, eval=TRUE, echo=FALSE, fig.cap="Sampling with and without replacement."}
+```{r replacement, eval=TRUE, echo=FALSE, fig.cap="Sampling with and without replacement.", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 #Create a sample consisting of 10 candies (dots) that are coloured (5 colours)
 #and numbered. Display this sample as a dotplot.
 # Add a button to create three (bootstrap) samples with replacement and a button
 # to create three (bootstrap) samples without replacement.
 # Show the three samples: coloured dots with their ID numbers.
-
-# Replaced by static image.
-knitr::include_graphics("figures/replacement.png")
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping-replacement/", height="448px")
 ```
 
 <A name="question2.1.5"></A>
 ```{block2, type='rmdquestion'}
-5. What are the differences between sampling with and without replacement (Figure \@ref(fig:replacement))? [<img src="icons/2answer.png" width=115px align="right">](#answer2.1.5)
+5. What are the differences between sampling with and without replacement (Figure \@ref(fig:replacement))? Press the buttons *Draw Without Replacement* and *Draw With Replacement* once or several times to see the differences. [<img src="icons/2answer.png" width=115px align="right">](#answer2.1.5)
 ```
 
 If we allow every case in the original sample to be sampled only once, each bootstrap sample contains all cases of the original sample, so it is an exact copy of the original sample. Thus, we cannot create different bootstrap samples. 
@@ -197,12 +193,17 @@ Answer to Question 5.
 * If we draw a sample without replacement from our initial sample of the same
 size as the initial sample, the new sample must contain all observations from
 the initial sample. As a result, the new sample is identical to the initial
-sample. All samples that we draw are identical.
-* Drawing with replacement, an observation can be drawn more than once. This
-must have occurred for at least one red candy in the two examples of bootstrap
-samples with replacement in the figure. Otherwise, we could never have more red
-candies (twelve or eleven) in the bootstrap sample than in the initial sample
-(ten red candies). [<img src="icons/2question.png" width=161px align="right">](#question2.1.5)
+sample. All samples that we draw are identical. This does not provide an 
+interesting sampling distribution.
+* Drawing with replacement, an observation can be drawn more than once. As a
+result, the same candy number may appear more than once in the new sample.
+Otherwise, we could never have more candies of a particular color in the
+bootstrapped sample than in the original sample (five candies of each color).
+Each new sample drawn with replacement from the original sample can be
+different, so the proportion of yellow candies varies across these bootstrap
+samples. We can create a meaningful sampling distribution from these varying
+proportions of yellow candies. [<img src="icons/2question.png" width=161px
+align="right">](#question2.1.5)
 ```
 
 <A name="answer2.1.6"></A>
@@ -883,8 +884,8 @@ Finally, we also use bootstrapping if SPSS does not have a test for the statisti
 
 ## Test Your Understanding
 
-```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="530px")
+```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="448px")
 ```
 
 <A name="question2.8.1"></A>

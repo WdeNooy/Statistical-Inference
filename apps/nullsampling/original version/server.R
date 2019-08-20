@@ -84,32 +84,6 @@ shinyServer(function(input, output) {
       geom_segment(aes(x = reactive$sampmean, xend = reactive$sampmean, 
                        y = 0, yend = 0.5), 
                    colour = brewercolors["Red"]) +
-      #Sample average vline mirrored
-      geom_segment(aes(x = mean + (mean - reactive$sampmean), 
-                       xend = mean + (mean - reactive$sampmean), 
-                       y = 0, yend = 0.5), 
-                   colour = brewercolors["Red"],
-                   linetype = "dashed") +
-      #Sample average p value (one-sided)
-      geom_text(label = paste0(format(round(pt((reactive$sampmean - mean)/se, df, 
-                                               lower.tail = (mean > reactive$sampmean)), 
-                                            digits = 3), nsmall = 3)),
-                aes(x = reactive$sampmean ,
-                    y =  0.25),
-                colour = brewercolors["Red"],
-                hjust = ifelse(mean < reactive$sampmean, -0.1, 1.1),
-                vjust = 0,
-                size = 5) +
-      #Sample average p value (two-sided)
-      geom_text(label = paste0("Two-sided\np value:\n", 
-                               format(round(2*pt((reactive$sampmean - mean)/se, df, 
-                                 lower.tail = (mean > reactive$sampmean)), 
-                              digits = 3), nsmall = 3)),
-                aes(x = ifelse(mean < reactive$sampmean, 1, 10), y =  0.25),
-                colour = brewercolors["Red"],
-                hjust = ifelse(mean < reactive$sampmean, 0, 1),
-                vjust = 0,
-                size = 5) +
       #Scaling and double axis definitions
       scale_x_continuous(breaks = c(1, left, mean, right, 10), limits = c(1, 10),
                          labels = c("1", format(round(left, 2),nsmall = 2), 

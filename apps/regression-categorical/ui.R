@@ -10,7 +10,7 @@ shinyUI(
                     br(),
                     selectInput("selector",
                                 "Select reference group",
-                                choices = c( "Never smoked", "Stopped smoking","Smoking")
+                                choices = c( "Non-smoker", "Former smoker","Smoker")
                                 
                     ),
                     actionButton("samplebutton", "New Plot"

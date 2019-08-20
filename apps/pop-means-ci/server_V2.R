@@ -42,12 +42,7 @@ shinyServer(function(input, output) {
       #Adjust x values outside plotable area
       if (x < xmin) x <- xmin
       if (x > xmax) x <- xmax
-      #Set x to critical value if near critical value
-      x <- ifelse((samplemean - x)/se > 1.9 & (samplemean - x)/se <= 1.965, 
-                  samplemean - 1.96 * se,
-             ifelse((samplemean - x)/se < -1.9 & (samplemean - x)/se >= -1.965, 
-                    samplemean + 1.96 * se, x))
-      out <- abs(samplemean - x)/se > 1.965 #Outside 95%CI?
+      out <- abs(samplemean - x)/se > 1.96 #Outside 95%CI?
       df <<- rbind(df, data.frame(x = x, 
                                   y = ymax - psize/200,
                                   colour = ifelse(out, brewercolors["Red"], brewercolors["Green"])))
@@ -55,10 +50,10 @@ shinyServer(function(input, output) {
       ll_cur <- smean$llim
       ul_cur <- smean$ulim
       smean <<- data.frame(x = x,  
-                           z = round((samplemean - x)/se, digits = 2), # ifelse((samplemean - x)/se > 1.9 & (samplemean - x)/se <= 1.96, 
-                                      # 1.96,
-                                      # ifelse((samplemean - x)/se < -1.9 & (samplemean - x)/se >= -1.96, 
-                                      #        -1.96, (samplemean - x)/se)), #around 1.96 -> 1.96
+                           z = ifelse((samplemean - x)/se > 1.9 & (samplemean - x)/se < 1.97, 
+                                      1.96,
+                                      ifelse((samplemean - x)/se < -1.9 & (samplemean - x)/se > -1.97, 
+                                             -1.96, (samplemean - x)/se)), #around 1.96 -> 1.96
                            xlow = x - 1.96 * se, 
                            xhigh = x + 1.96 * se, 
                            ypop = ymax,
@@ -79,111 +74,85 @@ shinyServer(function(input, output) {
       geom_blank() +
       #95% most likely sample means
       geom_segment(aes(x = (xhigh + xlow)/2, xend = xlow, 
-                       y = ypop - psize/200, yend = ymin), data = smean,
+                       y = ypop - psize/100, yend = ypop/1.6), data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
                    colour = smean$colour) +
       geom_segment(aes(x = (xhigh + xlow)/2, xend = xhigh, 
-                       y = ypop - psize/200, yend = ymin), data = smean,
+                       y = ypop - psize/100, yend = ypop/1.6), data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
                    colour = smean$colour) +
       geom_segment(aes(x = xlow, xend = xhigh, 
-                       y = ymin, yend = ymin), data = smean,
+                       y = ypop/1.6, yend = ypop/1.6), data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
                    size = 3,
                    colour = smean$colour) +
-      geom_text(aes(x = df$x[nrow(df)], y = (ymin + ymax)/4),
+      geom_text(aes(x = df$x[nrow(df)], y = (ymax - 0.1)/1.6),
                 label = "95% most likely samples",
-                alpha = ifelse(smean$ypop == ymin, 0, 1),
-                colour = smean$colour) +
-      #Critical value times standard error: arrows and text
-      #left arrow with label
-      geom_segment(aes(x = samplemean, xend = sample_ll, 
-                       y = (ymax + ymin)/2, yend = (ymax + ymin)/2), 
-                   alpha = ifelse(result$ll_reached == "", 0, 1),
-                   size = 1,
-                   colour = "darkgray",
-                   arrow = arrow(type = "closed", length = unit(0.1, "inches"), 
-                                 ends = ifelse(result$ll_reached == "" || result$ul_reached == "", "both", "last"))) +
-      geom_text(aes(x = (samplemean + sample_ll)/2, y = (ymax + ymin)*0.47,
-                    label = ifelse(result$ll_reached == "", "", "1.96 * SE"),
-                    vjust = 1),
-                colour = "darkgray") +
-      #right arrow with label
-      geom_segment(aes(x = samplemean, xend = sample_ul, 
-                       y = (ymax + ymin)/2, yend = (ymax + ymin)/2), 
-                   alpha = ifelse(result$ul_reached == "", 0, 1),
-                   size = 1,
-                   colour = "darkgray",
-                   arrow = arrow(type = "closed", length = unit(0.1, "inches"), 
-                                 ends = ifelse(result$ll_reached == "" || result$ul_reached == "", "both", "last"))) +
-      geom_text(aes(x = (samplemean + sample_ul)/2, y = (ymax + ymin)*0.47,
-                    label = ifelse(result$ul_reached == "", "", "1.96 * SE"),
-                    vjust = 1),
-                colour = "darkgray") +
-      #confidence interval text: display if both limits have been reached
-      geom_text(aes(x = samplemean, y = ymax*0.54,
-                    label = ifelse(result$ll_reached == "" || result$ul_reached == "", "", "95% confidence interval"),
-                    vjust = 0),
-                colour = "darkgray") +
-      #vertical line to actual sample mean (show if at least one limit has been reached)
-      geom_segment(aes(x = samplemean, xend = samplemean, 
-                       y = ymin, yend = (ymax + ymin)/2), 
-                   alpha = ifelse(result$ll_reached == "" && result$ul_reached == "", 0, 1),
-                   size = 1,
-                   colour = "darkgray") +
-      #vertical line to lower limit population value
-      geom_segment(aes(x = sample_ll, xend = sample_ll, 
-                       y = ymax, yend = (ymax + ymin)/2), 
-                   alpha = ifelse(result$ll_reached == "", 0, 1),
-                   size = 1,
-                   colour = "darkgray") +
-      #vertical line to upper limit population value
-      geom_segment(aes(x = sample_ul, xend = sample_ul, 
-                       y = ymax, yend = (ymax + ymin)/2), 
-                   alpha = ifelse(result$ul_reached == "", 0, 1),
-                   size = 1,
-                   colour = "darkgray") +
+                alpha = ifelse(smean$ypop == ymin, 0, 1)) +
       #Selected population means (on click)
       geom_point(aes(x = df$x, y = df$y), 
                  alpha = ifelse(df$y == ymin, 0, 1),
                  size = psize,
                  colour = df$colour) +
-      geom_text(aes(x = smean$x, y = ymax - psize/80,
-                    label = format(round(smean$x, digits = 2), nsmall=2),
-                    vjust = 1),
-                alpha = ifelse(smean$ypop == ymin || abs(smean$z) == 1.96, 0, 1)) +
+      geom_text(aes(x = smean$x, y = ymax - psize/40,
+                    label = format(round(smean$x, digits = 2), nsmall=2)),
+                    alpha = ifelse(smean$ypop == ymin || abs(smean$z) == 1.96, 0, 1)) +
       #Lower and upper bounds
-      geom_text(aes(x = smean$llim, y = ymax - psize/80,
-                    label = ifelse(result$ll_reached == "","", 
-                                   paste0(format(round(smean$llim, digits = 2), nsmall=2), "\nLower limit")),
-                    vjust = 1)) +
-      geom_text(aes(x = smean$ulim, y = ymax - psize/80,
-                    label = ifelse(result$ul_reached == "","", 
-                                   paste0(format(round(smean$ulim, digits = 2), nsmall=2), "\nUpper limit")),
-                    vjust = 1)) +
+      geom_text(aes(x = smean$llim, y = ymax - psize/40,
+                    label = ifelse(result$ll_reached == "","", paste0("Lower limit\n", 
+                                   format(round(smean$llim, digits = 2), nsmall=2))))) +
+      geom_text(aes(x = smean$ulim, y = ymax - psize/40,
+                    label = ifelse(result$ul_reached == "","", paste0("Upper limit\n",
+                                   format(round(smean$ulim, digits = 2), nsmall=2))))) +
+      #Critical value times standard error: arrows and text
+      #left arrow with label
+      geom_segment(aes(x = samplemean, xend = sample_ll, 
+                       y = ymax/2 - psize/60, yend = ymax/2 - psize/60), 
+                   alpha = ifelse(result$ll_reached == "", 0, 1),
+                   size = 1,
+                   colour = "darkgray",
+                   arrow = arrow(type = "closed", length = unit(0.1, "inches"), 
+                                 ends = ifelse(result$ll_reached == "" || result$ul_reached == "", "both", "last"))) +
+      geom_text(aes(x = (samplemean + sample_ll)/2, y = ymax/2 - psize/40,
+                    label = ifelse(result$ll_reached == "", "", "1.96 * SE")),
+                colour = "darkgray") +
+      #right arrow with label
+      geom_segment(aes(x = samplemean, xend = sample_ul, 
+                       y = ymax/2 - psize/60, yend = ymax/2 - psize/60), 
+                   alpha = ifelse(result$ul_reached == "", 0, 1),
+                   size = 1,
+                   colour = "darkgray",
+                   arrow = arrow(type = "closed", length = unit(0.1, "inches"), 
+                                 ends = ifelse(result$ll_reached == "" || result$ul_reached == "", "both", "last"))) +
+      geom_text(aes(x = (samplemean + sample_ul)/2, y = ymax/2 - psize/40,
+                    label = ifelse(result$ul_reached == "", "", "1.96 * SE")),
+                colour = "darkgray") +
+      #vertical line to actual sample mean (show if at least one limit has been reached)
+      geom_segment(aes(x = samplemean, xend = samplemean, 
+                       y = ymin, yend = ymax/2 - psize/60), 
+                   alpha = ifelse(result$ll_reached == "" && result$ul_reached == "", 0, 1),
+                   size = 1,
+                   colour = "darkgray") +
+      #confidence interval text: display if both limits have been reached
+      geom_text(aes(x = samplemean, y = ymax/2 - psize/150,
+                    label = ifelse(result$ll_reached == "" || result$ul_reached == "", "", "95% confidence interval")),
+                colour = "darkgray") +
       #Sample mean
       geom_point(aes(x = samplemean, y = ymin + psize/200), 
                  size = psize) +
-      geom_text(aes(x = samplemean + (xmax + xmin)*0.02, y = (ymax + ymin)*0.05, 
-                    label = "Our Sample"),
-                hjust = 0) +
       #z Value of sample mean
-      geom_text(aes(x = samplemean + (xmax + xmin)*0.02, y = (ymax + ymin)*0.11, 
+      geom_text(aes(x = samplemean, y = ymin + 4*psize/240, 
                     label = paste0("z = ", format(round(smean$z, digits = 2), nsmall=2))),
-                hjust = 0,
                 alpha = ifelse(smean$ypop == ymin, 0, 1)) +
       #Results
-      geom_text(aes(x = xmin, y = (ymax + ymin)*0.7,
-                    label = result$ll_reached[1],
-                    hjust = 0),
+      geom_text(aes(x = xmin + (xmax - xmin)/6, y = ymin + 6*psize/200,
+                    label = result$ll_reached[1]),
                 colour = brewercolors["Blue"]) +
-      geom_text(aes(x = xmax, y = (ymax + ymin)*0.7,
-                    label = result$ul_reached[1],
-                    hjust = 1),
+      geom_text(aes(x = xmax - (xmax - xmin)/6, y = ymin + 6*psize/200,
+                    label = result$ul_reached[1]),
                 colour = brewercolors["Blue"]) +
-      geom_text(aes(x = (xmax + xmin)/2, y = (ymax + ymin)*0.7,
+      geom_text(aes(x = (xmax + xmin)/2, y = ymin + 6*psize/200,
                     label = result$both_reached[1]),
-                hjust = 0.5,
                 colour = brewercolors["Blue"]) +
       #Scaling and double axis definitions
       scale_x_continuous(breaks = seq(xmin, xmax, by = 1), 

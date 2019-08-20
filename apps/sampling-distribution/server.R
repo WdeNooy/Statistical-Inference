@@ -48,6 +48,8 @@ shinyServer(function(input, output) {
     ggplot() + 
       theme_general()
   })
+  
+  set.seed(46)
 
   #Events triggered by small sample button
   observeEvent(input$smallsample, {

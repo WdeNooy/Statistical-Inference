@@ -95,20 +95,18 @@ shinyServer(function(input, output) {
                                                lower.tail = (mean > reactive$sampmean)), 
                                             digits = 3), nsmall = 3)),
                 aes(x = reactive$sampmean ,
-                    y =  0.25),
+                    y =  0.2),
                 colour = brewercolors["Red"],
-                hjust = ifelse(mean < reactive$sampmean, -0.1, 1.1),
-                vjust = 0,
+                hjust = ifelse((mean < reactive$sampmean), -0.1, 1.1),
                 size = 5) +
       #Sample average p value (two-sided)
-      geom_text(label = paste0("Two-sided\np value:\n", 
+      geom_text(label = paste0("Two-sided p value : ", 
                                format(round(2*pt((reactive$sampmean - mean)/se, df, 
                                  lower.tail = (mean > reactive$sampmean)), 
                               digits = 3), nsmall = 3)),
-                aes(x = ifelse(mean < reactive$sampmean, 1, 10), y =  0.25),
+                aes(x = 5.5, y =  0.42),
                 colour = brewercolors["Red"],
-                hjust = ifelse(mean < reactive$sampmean, 0, 1),
-                vjust = 0,
+                hjust = 0.5,
                 size = 5) +
       #Scaling and double axis definitions
       scale_x_continuous(breaks = c(1, left, mean, right, 10), limits = c(1, 10),

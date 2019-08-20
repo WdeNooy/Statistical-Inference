@@ -89,7 +89,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/"
 
 ### Partial effect  
 
-How does a multiple regression model control the effect of an independent variable for the effects of all other independent variables? Conceptually, the regression model first removes the variation in the dependent variable that is predicted by all other independent variables. Then it determines how well the remaining independent variable predicts the variation that is left (residual variation). This is the variation in outcome scores than can be predicted by this particular independent variable but not by any of the other independent variables in the model.
+How does a multiple regression model control the effect of an independent variable for the effects of all other independent variables? Conceptually, the regression model first removes the variation in the dependent variable that is predicted by all other independent variables. Then it determines how well the remaining independent variable predicts the variation that is left (residual variation). This is the variation in outcome scores that can be predicted by this particular independent variable but not by any of the other independent variables in the model.
 
 In this sense, a regression coefficient in a multiple regression model expresses the unique contribution of a variable to the prediction of the dependent variable. It is the contribution to the prediction of the dependent variable over and above the predictions that we can make with all other independent variables in the model. This is called a _partial effect_. This is what we mean if we say that we are _controlling for all other independent variables_ in our interpretation of a regression model. 
 
@@ -596,7 +596,7 @@ Researchers are usually interested in causal effects, so let us theorize a causa
 
 Correlation is the first criterion. A causal relation implies correlation or another type of statistical association. If newspaper reading is not correlated with age, it is hard to imagine that age affects newspaper reading. But correlation does not imply causation, as the saying goes. Correlated variables need not be causally related. We need additional arguments to add plausibility to a causal relation.
 
-The second criterion is the time order between cause and consequence. A consequence must appear after the cause. In our example, a person's age must be fixed before she displays the behaviour that we want to explain, namely reading newspapers. The time order is very plausible here because age stands for the moment a person was born, which must be prior in time to reading newspapers. If there is a causal relation between age and reading newspapers, age must be the cause and newspaper reading the consequence.
+The second criterion is the time order between cause and consequence. A cause must appear before the consequence. In our example, a person's age must be fixed before she displays the behaviour that we want to explain, namely reading newspapers. The time order is very plausible here because age stands for the moment a person was born, which must be prior in time to reading newspapers. If there is a causal relation between age and reading newspapers, age must be the cause and newspaper reading the consequence.
 
 A third criterion for causality is that the correlation is not spurious. In Section \@ref(spuriousness), we have encountered a spurious effect as an effect that incorrectly includes the effect of a confounder (reinforcer).
 
@@ -665,7 +665,7 @@ In the middle of the 20th century, newspapers were among the most important sour
 
 This line of reasoning shows us two things. First, we discover that our common cause may actually represent different things. Age, for instance, refers to life experience in its effect on interest in politics. In contrast, it relates to the period of coming of age in its direct effect on newspaper reading time.
 
-Our second discovery is that we usually look for mediators if we want to understand a direct effect. Date of birth affects exposure to people using newspapers as information sources, which affects the habit of reading newspapers, which finally affects the time spend on reading newspapers later on. Exposure and habit are mediators here. A direct effect of age on newspaper reading replaces a causal process that may contain many intermediary steps. Adding mediators to our model is a way of getting more insight in the causal process.
+Our second discovery is that we usually look for mediators if we want to understand a direct effect. Date of birth affects exposure to people using newspapers as information sources, which affects the habit of reading newspapers, which finally affects the time spend on reading newspapers later on. Exposure and habit are mediators here. A direct effect of age on newspaper reading represents a causal process that may contain many intermediary steps. Adding mediators to our model is a way of getting more insight in the causal process.
 
 ### Answers {-}
 
@@ -1405,7 +1405,7 @@ dependent variable instead of from a problem with homoscedasticity.
   
 Results:  
   
-Your table and path diagram should like like the table and path diagrams
+Your table and path diagram should like the table and path diagrams
 reported in the section on reporting mediation results. [<img src="icons/2question.png" width=161px align="right">](#question9.9.1)
 ```
 
@@ -1420,10 +1420,10 @@ unintelligble code.
   
 In the PROCESS menu:  
     
-* Select readingtime as dependent variable (Y).  
-* Select age as Independent Variable (X),  
-* Select newssite as M variable(s),  
-* Select 4 under Model Number (model with only one mediator).  
+* Select readingtime as dependent variable (Y variable).  
+* Select age as independent variable (X variable),  
+* Select newssite as mediator (M),  
+* Select 4 under Model number (model with only one mediator).  
 * Under Options: Select Effect size (for standardized effect sizes) 
   and 3 decimal places in output.
   
@@ -1517,9 +1517,9 @@ unintelligble code.
   
 In addition to the PROCESS menu selections specified in Exercise 2, you should:  
     
-* Add political interest to the list of M Variable(s) ensuring that it is the
+* Add political interest to the list of mediators (M) ensuring that it is the
 first in this list.
-* Change Model Number to 6 (Model with two mediators in line).  
+* Change Model number to 6 (Model with two mediators in line).  
   
 Check data: See Exercise 1.  
   
@@ -1536,14 +1536,14 @@ Indirect effect(s) of X on Y
 |:----|----:|----:|----:|----:|
 | Total:  |  1.474   |  .418     |  .657      |  2.298  |
 | Ind1 :  |  .053    |  .033     |  .007      |  .146  |
-| Ind2 :  |  -.021   |  .013     |  -.057     |  -.003  |
-| Ind3 :  |  1.441   |  .417     |  .616      |  2.257  |
+| Ind2 :  |  1.441   |  .417     |  .616      |  2.257  |
+| Ind3 :  |  -.021   |  .013     |  -.057     |  -.003  |
 
 Indirect effect key   
   
 * Ind1 :   age -> polinter -> readingt   
-* Ind2 :   age -> polinter -> newssite -> readingt   
-* Ind3 :   age -> newssite -> readingt   
+* Ind2 :   age -> newssite -> readingt   
+* Ind3 :   age -> polinter -> newssite -> readingt   
   
 A table could look like this:  
     
@@ -1552,8 +1552,8 @@ Indirect effect(s) of X on Y
 |                                                |  Effect | Boot SE | BootLLCI | BootULCI  |
 |:----|----:|----:|----:|----:|
 | age->pol. interest->reading time                |  .05    |  .03    |  .01     |  .15  |
-| age->pol. interest->news site use->reading time |  -.021  |  .01    |  -.06    |  -.003  |
 | age->news site use->reading time                |  1.44   |  .42    |  .62     |  2.26  |
+| age->pol. interest->news site use->reading time |  -.021  |  .01    |  -.06    |  -.003  |
 | Total indirect effect                           |  1.47   |  .42    |  .66     |  2.30  |
   
   
@@ -1608,10 +1608,10 @@ unintelligble code.
   
 In the PROCESS menu:  
     
-* Select medliter as dependent varible (Y).  
-* Select age as Independent Variable (X).  
-* Select supervision as M variable(s).  
-* Select 4 under Model Number (model with only one mediator).  
+* Select medliter as dependent variable (Y variable).  
+* Select age as independent variable (X variable).  
+* Select supervision as mediator (M).  
+* Select 4 under Model number (model with only one mediator).  
 * Under Options: Select Effect size and 3 decimal places in output.  
   
 Check data:  
@@ -1673,7 +1673,7 @@ If we think of causality, we usually think of a process in which one thing leads
 It is paramount to note that the regression approach to mediation and path models does not tell us anything about the causal order of the variables. The causal order is purely an assumption that we make. The plausibility of the assumptions depends on how well we can justify the time order of the variables and the absence of common causes for cause-consequence pairs (see \@ref(causalcriteria)).
 
 ### Time order
-To establish the time order of variables, we must think about the time at which the behaviours or opinions that we measure took place. This is what matters, not the time at which we make the measurement. We can collect information on behaviour a long time after the fact, for example by asking respondents when they started using news sites or checking internet use logs.
+To establish the time order of variables, we must think about the time at which the behaviours or opinions that we measure took place. This is what matters, not the time at which we measure them. We can collect information on behaviour a long time after the fact, for example by asking respondents when they started using news sites or checking internet use logs.
 
 The more time has passed between the occurrence of the behaviour or opinion that we think is the cause and the occurrence of the one we think is the consequence, the more plausible the causal order. If cause and consequence appear very close in time, it may be difficult to argue that one variable precedes the other. 
 
@@ -1889,7 +1889,7 @@ well below minus one. [<img src="icons/2question.png" width=161px align="right">
 
 * An indirect effect is a mediated effect. Variables that are at the same time predicted and predictors in an indirect effect are called _mediators_, _intermediary variables_, or _intervening variables_.
 
-* Statistical inference on an indirect effect---its confidence interval and significance level---requires a sampling distribution of the indirect effect's size. This distribution can be bootstrapped with the PROCESS macro [@RefWorks:3873].
+* Statistical inference on an indirect effect---its confidence interval and significance level---requires a sampling distribution of the size of the indirect effect. This distribution can be bootstrapped with the PROCESS macro [@RefWorks:3873].
 
 * Mediation is an intuitively appealing concept but it is difficult to establish. A causal interpretation requires a clear time order between predictor, mediator, and dependent variable, a clear theoretical and conceptual difference between these three variables, and the inclusion of all common causes of predictor, mediator, and dependent variable in the regression models.
 

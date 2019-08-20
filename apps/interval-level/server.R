@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
  
     validate(
       need(input$mainslider != 100,
-            "Selecting 100% leads to an infinitely wide confidence interval")
+            "A 100% confidence interval includes all possible values.")
     )
     
     ggplot(data.frame(x = c(0, 6)), aes(x = x)) +

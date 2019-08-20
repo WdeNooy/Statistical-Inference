@@ -15,9 +15,9 @@ shinyUI(
         plotOutput("sampleplot"), 
         actionButton("firstsampleaction", label = "New Sample")),
       verticalLayout(
-        plotOutput("bootstrappedplot"),
-        actionButton("bootstrapsmallaction", label = "Bootstrap 1 Sample")), 
+        plotOutput("noreplacementplot"),
+        actionButton("bootstrapsmallaction", label = "Draw Without Replacement")), 
       verticalLayout(
-        plotOutput("sampdistplot"),
-        actionButton("bootstraplargeaction", label = "Bootstrap 1000 Samples"))
+        plotOutput("replacementplot"),
+        actionButton("bootstraplargeaction", label = "Draw With Replacement"))
   )))

@@ -8,15 +8,14 @@ shinyServer(function(input, output) {
   df <- 30 #df of t distribution
   sampsd <- 1.0 #sd of sample
   tc <- qt(0.025, df, lower.tail = FALSE) #criticial quantiles
-  under <- -.10 #margin below sampling distribution
-  
+
   #Function for scaling and shifting the t-distribution
   dtshift <- function(x,mean,sd,df) dt(x = (x - mean)/sd, df = df)
   
   #Reactive containers for changing values
   reactive <- 
     reactiveValues(
-      sampmean = ifelse(exists("react$sample"), runif(1, 3, 8), 3.9) #initial saple mean = 3.9
+      sampmean = ifelse(exists("react$sample"), runif(1, 3, 8), 3.90001) #initial saple mean = 3.9
     )
   react <- 
     reactiveValues(
@@ -35,48 +34,50 @@ shinyServer(function(input, output) {
     mean <- input$sampsizeslider #hypothesized population mean
     
     #Calculating the left threshold
-    left <- mean - se * tc
-    right <- mean + se * tc
+    left <- ifelse(mean > reactive$sampmean,
+                   reactive$sampmean,
+                   mean + (mean - reactive$sampmean)
+                   )
+    right <- ifelse(mean <= reactive$sampmean,
+                    reactive$sampmean,
+                    mean + (mean - reactive$sampmean)
+                    )
     
     #PLOT#
     ggplot(data.frame(x = c(0,8)), aes(x = x)) + 
-      #Left area under curve: 2.5%
+      #Left area under curve according to the p value
       stat_function(fun = dtshift,
                     xlim = c(1,left),
                     geom = "area",
-                    fill = brewercolors["Blue"],
-                    colour = "black",
+                    fill = brewercolors["Red"],
+                    colour = brewercolors["Red"],
+                    alpha = ifelse(mean > reactive$sampmean,
+                                   0.3,
+                                   0.1
+                                   ),
                     args = list(mean = mean, sd = se, df = df),
                     n = 1000) +
-      #Right area under curve: 2.5%
+      #Right area under curve according to the p value
       stat_function(fun = dtshift,
                     xlim = c(right, 10),
                     geom = "area",
-                    fill = brewercolors["Blue"],
-                    colour = "black",
+                    fill = brewercolors["Red"],
+                    colour = brewercolors["Red"],
+                    alpha = ifelse(mean > reactive$sampmean,
+                                   0.1,
+                                   0.3
+                    ),
                     args = list(mean = mean, sd = se, df = df),
                     n = 1000) +
       #T distribution function
       stat_function(fun = dtshift,
                     args = list(mean = mean, sd = se, df = df),
                     n = 1000) +
-      #2.5% label left
-      geom_text(label = "2.5%",
-                aes(x = left,
-                    y =  dtshift(left, mean, se, df) + 0.03),
-                hjust = 1,
-                size = 5) +
-      #2.5% label right
-      geom_text(label = "2.5%",
-                aes(x = right,
-                    y =  dtshift(right, mean, se, df) + 0.03),
-                hjust = 0,
-                size = 5) +
       #Horizontal axis for sampling distribution
       geom_hline(aes(yintercept = 0)) +
       #Hypothesized population mean line
       geom_segment(aes(x = mean, xend = mean, 
-                       y = under, yend = dtshift(mean, mean, se, df))) +
+                       y = 0, yend = dtshift(mean, mean, se, df))) +
       #sample scores
       geom_point(data = react$sample[react$sample$x >= 1 & react$sample$x <= 10,], aes(x = x, y = y), 
                  colour = brewercolors["Red"]) +
@@ -91,8 +92,9 @@ shinyServer(function(input, output) {
                    colour = brewercolors["Red"],
                    linetype = "dashed") +
       #Sample average p value (one-sided)
-      geom_text(label = paste0(format(round(pt((reactive$sampmean - mean)/se, df, 
-                                               lower.tail = (mean > reactive$sampmean)), 
+      geom_text(label = paste0("One-sided\np value:\n", 
+                               format(round(pt((reactive$sampmean - mean)/se, df,
+                                               lower.tail = (mean > reactive$sampmean)),
                                             digits = 3), nsmall = 3)),
                 aes(x = reactive$sampmean ,
                     y =  0.25),
@@ -123,7 +125,7 @@ shinyServer(function(input, output) {
                            name = "Sample media literacy scores"),
                          expand = c(.02, .02)) +
       scale_y_continuous(breaks = NULL, 
-                         limits = c(under, 0.5),
+                         limits = c(0, 0.5),
                          expand = c(0, 0)) + 
       #Axis labels and theme                                       
       xlab("Hypothesized population mean media literacy score") + 
