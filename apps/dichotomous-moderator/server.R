@@ -41,8 +41,8 @@ shinyServer(function(input, output) {
     ggplot(df, aes(x = Exposure, y = Attitude, colour = Group)) +
       geom_point() +
       geom_smooth(method="lm", fill=NA, n = 1000, fullrange = FALSE) +
-      scale_colour_manual(values = c("Smoker" = unname(brewercolors["Green"]),
-                                     "Non-smoker" = unname(brewercolors["Red"]))) +
+      scale_colour_manual(values = c("Smoker" = unname(brewercolors["Red"]),
+                                     "Non-smoker" = unname(brewercolors["Blue"]))) +
       theme_general() +
       theme(legend.position = "bottom") +
       xlim(c(0,10)) +

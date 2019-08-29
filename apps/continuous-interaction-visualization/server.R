@@ -111,7 +111,7 @@ shinyServer(function(input, output) {
           size = .9,
           color = rgb(0,0.5,1)) 
     }
-   if(sum(input$checkboxes == "M - 2SD")) {
+   if(sum(input$checkboxes == "Mean - 2SD")) {
      
      m2sd <- mean(scatter$contact) - 2 * sd(scatter$contact)
      colorm2sd <- 
@@ -132,7 +132,7 @@ shinyServer(function(input, output) {
          size = .9,
          color = rgb(1,.5,0)) 
     }
-    if(sum(input$checkboxes == "M - 1SD")) {
+    if(sum(input$checkboxes == "Mean - 1SD")) {
       m1sd <- mean(scatter$contact) - 1 * sd(scatter$contact)
       colorm1sd <- 
         rgb(.75,.75,0, alpha = dnorm(scatter$contact, m1sd, .5))
@@ -152,7 +152,7 @@ shinyServer(function(input, output) {
           size = .9,
           color = rgb(.75,.75,0)) 
     } 
-    if(sum(input$checkboxes == "M")) {
+    if(sum(input$checkboxes == "Mean")) {
       m <- mean(scatter$contact)
       colorm <- 
         rgb(0,1,1, alpha = dnorm(scatter$contact, m, .5))
@@ -173,7 +173,7 @@ shinyServer(function(input, output) {
           color =rgb(0,1,1)) 
     }
     
-    if(sum(input$checkboxes == "M + 1SD")) {
+    if(sum(input$checkboxes == "Mean + 1SD")) {
       mp1sd <- mean(scatter$contact) + 1 * sd(scatter$contact)
       colormp1sd <- 
         rgb(0,0,1, alpha = dnorm(scatter$contact, mp1sd, .5))
@@ -193,7 +193,7 @@ shinyServer(function(input, output) {
           size = .9,
           color =  rgb(0,0,1)) 
     }
-    if(sum(input$checkboxes == "M + 2SD")) {
+    if(sum(input$checkboxes == "Mean + 2SD")) {
       mp2sd <- mean(scatter$contact) + 2 * sd(scatter$contact)
       colormp2sd <- 
         rgb(.5,0,1,alpha = dnorm(scatter$contact, mp2sd, .5))

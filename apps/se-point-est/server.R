@@ -57,8 +57,8 @@ shinyServer(function(input, output) {
       #display initial, empty plot
       ggplot(data = data.frame(x = 1.4, y = 4)) +
         #Message
-        geom_text(aes(x = x, y = y, label = "Please draw a sample",
-                      color = unname(brewercolors["Red"]))) +
+        geom_text(aes(x = x, y = y, label = "Please draw a sample"),
+                      color = unname(brewercolors["Red"])) +
         #Population Mean line
         geom_vline(colour = "black",
                    size = 1,

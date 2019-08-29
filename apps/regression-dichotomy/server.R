@@ -45,9 +45,9 @@ shinyServer(function(input, output) {
   output$equationui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude = }\\color{#D7191C}{constant(",
+        paste("$$\\color{black}{attitude = }\\color{#2B83BA}{constant(",
               input$nonsmokeraveragesli,
-              ")}\\color{black}{ + }\\color{#2B83BA}{b (",
+              ")}\\color{black}{ + }\\color{#D7191C}{b (",
               (input$smokeraveragesli - input$nonsmokeraveragesli),
               ")}\\color{black}{* status + e}$$")
       )
@@ -91,8 +91,8 @@ shinyServer(function(input, output) {
                    data = segments,
                    aes(x = x, xend = xend,y = y, yend= yend),
                    linetype = "dashed") +
-      scale_colour_manual(name = "Smoking status", values = c("Non-Smoker (0)" = unname(brewercolors["Red"]),
-                                     "Smoker (1)" = unname(brewercolors["Blue"]))) + 
+      scale_colour_manual(name = "Smoking status", values = c("Non-Smoker (0)" = unname(brewercolors["Blue"]),
+                                     "Smoker (1)" = unname(brewercolors["Red"]))) + 
       scale_y_continuous(name = "Attitude",
                          breaks = c(-5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
       xlab("Smoking status") +

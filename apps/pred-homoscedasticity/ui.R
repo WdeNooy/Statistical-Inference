@@ -14,7 +14,7 @@ shinyUI(
                                 value = .5,
                                 min = -1,
                                 max = 1,
-                                step = .1
+                                step = .5
                     )
     ),
             column(8,

@@ -1,35 +1,25 @@
 library(shiny)
-fig.height = 480
-fig.width = 400
+fig.width = 480
+fig.height = 300
 
-shinyUI(fluidPage(
-  verticalLayout(
-  fluidRow(align = "center",
-           plotOutput("plot",
-                      width = fig.width,
-                      height = fig.height)
-           ),
-  fluidRow(align = "center",
-           sliderInput("alpha", 
-                       "Significance level:", 
-                       value = 0.05,
-                       min = 0.005, 
-                       max = 0.5,
-                       step = 0.001),
-           p("Adapted from Tarik Gouhier, https://github.com/tgouhier/type1vs2")
-           )
-  )))
-#     p("Change the significance level of the test and see what happens to the probabilities of Type I and Type II errors as well as test power."),
-#     sliderInput("alpha", 
-#                 "Significance level:", 
-#                 value = 0.05,
-#                 min = 0.005, 
-#                 max = 0.5,
-#                 step = 0.001),
-#     p("Adapted from Tarik Gouhier, https://github.com/tgouhier/type1vs2")
-#     ),
-#   
-#   mainPanel(
-#     
-#   )
-# ))
+shinyUI(
+  fluidPage(
+    sidebarPanel(
+        br(),
+        br(),
+        radioButtons("steps", "Test Power",
+                                  c("Step 1: Significance test" = "step1",
+                                    "Step 2: A practically relevant effect size" = "step2",
+                                    "Step 3: Type II error" = "step3",
+                                    "Step 4: Power" = "step4")
+                     ),
+        br()
+        ),
+    mainPanel(
+        align = "center",
+        plotOutput("mainplot",
+                    width = fig.width,
+                    height = fig.height)
+        )
+    )
+)

@@ -94,7 +94,8 @@ shinyServer(function(input, output) {
       geom_text(aes(x = df$x[nrow(df)], y = (ymin + ymax)/4),
                 label = "95% most likely samples",
                 alpha = ifelse(smean$ypop == ymin, 0, 1),
-                colour = smean$colour) +
+                colour = smean$colour,
+                size = 5) +
       #Critical value times standard error: arrows and text
       #left arrow with label
       geom_segment(aes(x = samplemean, xend = sample_ll, 

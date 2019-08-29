@@ -47,16 +47,16 @@ shinyServer(function(input, output) {
     ggplot(df, aes(x = Exposure, y = Attitude, colour = Group)) +
       geom_point() +
       geom_smooth(method="lm", fill=NA, n = 1000, fullrange = TRUE) +
-      {if(input$selectinput == "All") scale_colour_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
-                                                                      "Smoker" = unname(brewercolors["Green"]),
-                                                                      "Non-smoker" = unname(brewercolors["Red"])))} + 
+      {if(input$selectinput == "All") scale_colour_manual(values = c("Former smoker" = unname(brewercolors["Orange"]),
+                                                                      "Smoker" = unname(brewercolors["Red"]),
+                                                                      "Non-smoker" = unname(brewercolors["Blue"])))} + 
       {if(input$selectinput == "Non-smoker") scale_colour_manual(values = c("Former smoker" = "grey",
                                                                       "Smoker" = "grey",
-                                                                      "Non-smoker" = unname(brewercolors["Red"])))} + 
+                                                                      "Non-smoker" = unname(brewercolors["Blue"])))} + 
       {if(input$selectinput == "Smoker") scale_colour_manual(values = c("Former smoker" = "grey",
-                                                                      "Smoker" = unname(brewercolors["Green"]),
+                                                                      "Smoker" = unname(brewercolors["Red"]),
                                                                       "Non-smoker" = "grey"))} + 
-      {if(input$selectinput == "Former smoker") scale_colour_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
+      {if(input$selectinput == "Former smoker") scale_colour_manual(values = c("Former smoker" = unname(brewercolors["Orange"]),
                                                                       "Smoker" = "grey",
                                                                       "Non-smoker" = "grey"))} + 
       
@@ -73,16 +73,16 @@ shinyServer(function(input, output) {
     }
     ggplot(df, aes(x = Exposure, fill = Group)) +
      geom_histogram(color = "black", binwidth = .5) +
-     {if(input$selectinput == "All") scale_fill_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
-                                                                    "Smoker" = unname(brewercolors["Green"]),
-                                                                    "Non-smoker" = unname(brewercolors["Red"])))} + 
+     {if(input$selectinput == "All") scale_fill_manual(values = c("Former smoker" = unname(brewercolors["Orange"]),
+                                                                    "Smoker" = unname(brewercolors["Red"]),
+                                                                    "Non-smoker" = unname(brewercolors["Blue"])))} + 
     {if(input$selectinput == "Non-smoker") scale_fill_manual(values = c("Former smoker" = "grey",
                                                                           "Smoker" = "grey",
-                                                                          "Non-smoker" = unname(brewercolors["Red"])))} + 
+                                                                          "Non-smoker" = unname(brewercolors["Blue"])))} + 
     {if(input$selectinput == "Smoker") scale_fill_manual(values = c("Former smoker" = "grey",
-                                                                      "Smoker" = unname(brewercolors["Green"]),
+                                                                      "Smoker" = unname(brewercolors["Red"]),
                                                                       "Non-smoker" = "grey"))} + 
-    {if(input$selectinput == "Former smoker") scale_fill_manual(values = c("Former smoker" = unname(brewercolors["Blue"]),
+    {if(input$selectinput == "Former smoker") scale_fill_manual(values = c("Former smoker" = unname(brewercolors["Orange"]),
                                                                              "Smoker" = "grey",
                                                                              "Non-smoker" = "grey"))} + 
     xlim(c(0,10)) +

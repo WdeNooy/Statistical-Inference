@@ -1,11 +1,12 @@
 library(shiny)
 library(ggplot2)
+library(dplyr)
   
 shinyServer(function(input, output) {
     #Load styling file
     source("../plottheme/styling.R", local = TRUE)
     
-    n <- 40 #Number of observations
+    n <- 80 #Number of observations
     x <- seq(from = 0, to = 10, length.out = n)
     
     data <- reactive({
@@ -19,10 +20,10 @@ shinyServer(function(input, output) {
     output$scatterplot <- renderPlot({
       #Fit model
       
-     df = data.frame(exposure = x, attitude = data())
+     df <- data.frame(exposure = x, attitude = data())
       fit <- lm(attitude ~ exposure, data = df)
       
-      #Extract predicted and residuals
+      #Extract predicted values and residuals
       df$predicted <- predict(fit)
       df$resid <- residuals(fit)
       
@@ -48,13 +49,43 @@ shinyServer(function(input, output) {
       #Extract pred and resid
       df$predicted <- predict(fit)
       df$resid <- residuals(fit)
-
+      #add approx min and max of residuals across exposure bins
+      df <- df %>%
+        #add exposure bins
+        mutate(
+          bin = round(x
+            # case_when(
+            # x < 2.5 ~ 1,
+            # x < 5 ~ 2,
+            # x < 7.5 ~ 3,
+            # TRUE ~ 4
+          )
+        ) %>%
+        #add min and max residuals per bin
+        group_by(bin) %>%
+        mutate(
+          resid_min = min(resid),
+          resid_max = max(resid)
+        )
+      
       #Make variable showing points in rectangle
       df <- brushedPoints(df, input$scatterbrush, allRows = TRUE)
 
       #PLOT
       ggplot(df, aes(x = predicted, y = resid, colour = selected_)) +
         scale_colour_manual(values=c("black", unname(brewercolors["Red"]))) +
+        geom_smooth(
+          aes(x = predicted, y = resid_min),
+          se = FALSE,
+          method = "lm",
+          colour = "grey"
+        ) +
+        geom_smooth(
+          aes(x = predicted, y = resid_max),
+          se = FALSE,
+          method = "lm",
+          colour = "grey"
+        ) +
         geom_segment(data =subset(df, selected_ == TRUE),
                      aes(xend = predicted),
                      yend = 0,

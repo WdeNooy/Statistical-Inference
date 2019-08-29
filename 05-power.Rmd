@@ -40,9 +40,9 @@ The variation of sample size across groups is important to analysis of variance 
 
 ## Effect Size {#effectsize}
 
-```{r sample-size-unstand, fig.cap="Sampling distribution of average candy weight under the null hypothesis that average candy weight is 2.8 grams in the population.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+```{r sample-size-unstand, fig.cap="Sampling distribution of average candy weight under the null hypothesis that average candy weight is 2.8 grams in the population.", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Average candy weight sampling distribution approximated by a t distribution with two-sided 5% significance tails. Weak, moderate, and strong effect sizes (under null hypothesis that average candy weight is 2.8 in the population) marked by vertical red lines.
-knitr::include_app("http://82.196.4.233:3838/apps/sample-size-unstand/", height="410px")
+knitr::include_app("http://82.196.4.233:3838/apps/sample-size-unstand/", height="268px")
 ```
 
 <A name="question5.2.1"></A>
@@ -206,9 +206,9 @@ We can use standardized effect size to express the effects that we are intereste
 
 If we know the effect size in the sample for which we want statistically significant results, we can figure out the minimum sample size for which the test statistic is statistically significant. 
 
-```{r sample-size, fig.cap="What is the minimum sample size required for a significant two-sided test result if the sample mean has a particular effect size? The p values belong to two-sided tests.", echo=FALSE, out.width="420px", screenshot.opts = list(delay = 5), dev="png"}
+```{r sample-size, fig.cap="What is the minimum sample size required for a significant two-sided test result if the sample mean has a particular effect size? The p values belong to two-sided tests.", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Average candy weight sampling distribution approximated by a t distribution with two-sided 5% significance tails. Weak, moderate, and strong effect sizes (under null hypothesis that average candy weight is 2.8 in the population) marked by vertical red lines with two-sided p values for a smaple with this average.
-knitr::include_app("http://82.196.4.233:3838/apps/sample-size/", height="410px")
+knitr::include_app("http://82.196.4.233:3838/apps/sample-size/", height="268px")
 ```
 
 <A name="question5.2.6"></A>
@@ -374,56 +374,74 @@ The statisticians Jerzy Neyman and Egon Pearson introduced the idea of working w
 [Egon Pearson. Photo by Grasso Luigi, Wikimedia Commons, CC BY-SA 4.0](https://upload.wikimedia.org/wikipedia/commons/a/a2/Egon_Pearson.jpg)
 ```
 
-Figure \@ref(fig:TypeI-II-errors) illustrates this situation. The top graph represents the sampling distribution according to our null hypothesis. This sampling distribution is derived from our hypothetical population in which there is no effect, that is, our null hypothesis is true for this population. In our current example, average candy weight is 2.8 grams in this hypothetical population.  
+Figure \@ref(fig:TypeI-II-errors) illustrates this situation. Before reading on, try to make sense of the steps in this figure. The questions accompanying the figure walk you through these steps. 
 
-The bottom graph represents the sampling distribution for an imaginary population with a small effect size. Here, the alternative hypothesis is true, for instance, average candy weight is 2.9 grams, which is a bit higher than in the hypothetical population. 
-
-By the way, average population candy weights are not depicted in the graphs, just the test statistic (t) values. By now, you should know that the average in a normal or t distribution is situated at the middle (underneath the top) of the bell shape and that the average of a sampling distribution for the sample mean is equal to the population average because a sample mean is an unbiased estimator.  
-
-```{r TypeI-II-errors, echo=FALSE,fig.cap="Simulation of Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
+```{r TypeI-II-errors, echo=FALSE,fig.cap="The relation between significance tests, effect size, Type II error, and power.", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 #This Shiny app illustrates Type I and Type II Error. Interaction helps to understand how significance level and power are related.  
 #Source: Adapted from Tarik Gouhier, type1vs2-master, https://github.com/tgouhier/type1vs2
-knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="615px")
+knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="310px")
 ```
-
-Before reading on, try to make sense of the two graphs in Figure \@ref(fig:TypeI-II-errors) and how they relate to each other.  
 
 <A name="question5.3.1"></A>
 ```{block2, type='rmdquestion'}
-1. What is the relation between significance level and Type I error? Formulate your answer very precisely: Details matter now! Check your answer by changing the significance level. [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.1)
+1. What is the rejection region in the graph provided in *Step 1* of Figure \@ref(fig:TypeI-II-errors)? [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.1)
 ```
 
 <A name="question5.3.2"></A>
 ```{block2, type='rmdquestion'}
-2. What exactly is Type II error? [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.2)
+2. Is the null hypothesis true or false? [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.2)
 ```
 
 <A name="question5.3.3"></A>
 ```{block2, type='rmdquestion'}
-3. How does the probability of a Type II error relate to the probability of a Type I error? Try to explain the relation in your own words. [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.3)
+3.  Can we make a Type I error? Explain the meaning of a Type I error in your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.3)
 ```
 
-### Type I error  
-We have two populations, a hypothetical population and an imaginary true population. Once we have drawn our sample, we only deal with the hypothetical population, for instance, the top graph in Figure \@ref(fig:TypeI-II-errors), as we have done in all preceding chapters. 
+<A name="question5.3.4"></A>
+```{block2, type='rmdquestion'}
+4. What is the size of the unstandardized effect size that is deemed practically relevant in Step 2? [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.4)
+```
+
+<A name="question5.3.5"></A>
+```{block2, type='rmdquestion'}
+5. If H~1~ is true, which area under the sampling distributions represents the probability that we draw a sample with average candy weight that is less than the average of our sample (2.84 grams)? [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.5)
+```
+
+<A name="question5.3.6"></A>
+```{block2, type='rmdquestion'}
+6. In *Step 3*, the yellow area represents the probability of making a Type II error if H~1~ is true. Explain what a Type II error is. [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.6)
+```
+
+<A name="question5.3.7"></A>
+```{block2, type='rmdquestion'}
+7. If H~1~ is true, which sample means would make us commit a Type II error? [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.7)
+```
+
+<A name="question5.3.8"></A>
+```{block2, type='rmdquestion'}
+8. The blue area represents the power of a test in *Step 4*. Describe what power is in terms of rejecting the null hypothesis and Type II error. [<img src="icons/2answer.png" width=115px align="right">](#answer5.3.8)
+```
+
+### The world of the researcher  
+We have two populations, a hypothetical population defined by our null hypothesis (H~0~) and an imaginary true population defined by the alternative hypothesis (H~1~). Once we have drawn our sample, we only deal with the hypothetical population as we have done in all preceding chapters. 
 
 Acting as if the null hypothesis is true, we determine how (un)likely the sample is that we have drawn. If it is very unlikely, we have a p value below the significance level and we reject the null hypothesis. We say: If the null hypothesis is true, our sample is too unlikely, so we reject the null hypothesis.  
 
 We may be wrong. Perhaps the null hypothesis is actually true and we were just very unfortunate to draw a sample that is very different from the population. If so, we make a Type I error (see Section \@ref(sig-typeI)). The probability that we will make this error is the significance level of the test, which is usually set to .05.
 
-### The world of the researcher  
-This is what we are doing once we have the sample. Let us call this the world of the researcher. At present, we have not yet stepped into the world of the researcher because we are still thinking about the size of the sample that we are going to draw. 
-
-We can experiment a bit and that is what we do if we ask ourselves: What is going to happen to our statistical test if the true population from which we draw our sample has average candy weight that is a bit higher (small effect) than candy weight according to our null hypothesis?  
+This is what we are doing once we have the sample. Let us call this the world of the researcher.
 
 ### The alternative world of a small effect  
-If we actually sample from this imaginary true population, the bottom graph in Figure \@ref(fig:TypeI-II-errors) represents our true sampling distribution. It shows us the true probabilities (areas under the curve) of drawing a sample with a particular minimum or maximum value for the test statistic t. These are the probabilities of our sample if there is a small effect in the population.  
+We can experiment a bit and that is what we do if we ask ourselves: What is going to happen to our statistical test if the true population from which we draw our sample has average candy weight that is a bit higher (small effect) than candy weight according to our null hypothesis?  
 
-Now that we know the true sampling distribution if there is a small effect in the population, we can foresee what is going to happen when we enter the world of the researcher. The researcher is going to use the test values of the top graph to decide on the null hypothesis. If the sample t value is between, say, plus and minus two (the critical values, t~c~ in Figure \@ref(fig:TypeI-II-errors)), the researcher is not going to reject the null hypothesis.
+If we actually sample from this imaginary true population, the sampling distribution centered around the alternative hypothesis (H~1~) in Figure \@ref(fig:TypeI-II-errors) represents our true sampling distribution. It shows us the true probabilities (areas under the curve) of drawing a sample with a particular minimum or maximum value. These are the probabilities of our sample if there is a small effect in the population.  
+
+Now that we know the true sampling distribution if there is a small effect in the population, we can foresee what is going to happen when we enter the world of the researcher. The researcher is going to use the rejection region to decide on the null hypothesis. If the sample mean is not in the rejection region, the researcher is not going to reject the null hypothesis.
 
 ### Type II error {#typeIIerror}  
 If there is a (small) effect in the population, the null hypothesis is not true. For example, average candy weight is not 2.8 grams, it is 2.9 grams. If our sample mean is close to 2.8 grams, we may not reject the null hypothesis even if it is not true. This is a _Type II error_: not rejecting a false null hypothesis.  
 
-The probability that we make a Type II error if there is a small effect is expressed by the blue section in the bottom graph. It is usually denoted by the Greek letter beta ($\beta$). The blue section represents the probability of drawing a sample from this population with a small effect size that has a t value that is NOT in the rejection region, so the null hypothesis is NOT rejected. See the top graph. 
+The probability that we make a Type II error if there is a small effect is expressed by the yellow section in Figure \@ref(fig:TypeI-II-errors), Steps 3 and 4. It is usually denoted by the Greek letter beta ($\beta$). The yellow section represents the probability of drawing a sample from the population with a small effect size that is *not* in the rejection region, so the null hypothesis is *not* rejected. See the top graph. 
 
 Table \@ref(tab:errortable) summarizes the four possible situations that may arise if we test a null hypothesis. The null hypothesis may be true or false and we may or may not reject the null hypothesis.
 
@@ -434,13 +452,9 @@ knitr::kable(rbind(c("Null is rejected", "Type I error, Significance level (alph
 ```
 
 ### Power of the test  
-The probability of NOT making a Type II error is called the _power of the test_. It is equal to one minus the probability of making a Type II error, that is, 1 - $\beta$. The power of the test is represented by the orange sections in the bottom graph. They represent the probability of getting a sample t value that makes the researcher reject the null hypothesis. So a false null hypothesis is rejected and we do not make an error.  
+The probability of *not* making a Type II error is called the _power of the test_. It is equal to one minus the probability of making a Type II error, that is, 1 - $\beta$. The power of the test is represented by the blue section in Figure \@ref(fig:TypeI-II-errors), Step 4. It represents the probability of getting a sample that makes the researcher reject the null hypothesis. So a false null hypothesis is rejected and we do not make an error.  
 
-Note that we can reject the null hypothesis in two ways: If our sample happens to have a test statistic that is much higher than expected under the null hypothesis or if it is much lower. In the example above, the imagined true population has a mean that is higher than the hypothesized population mean. The bulk of the power of the test therefore is in the right tail of the bottom graph.  
-
-However, a little bit of power is situated in the left tail. It is so small that we usually cannot see the orange section in the left tail of the bottom graph but the displayed probability shows that it is there. This is a bit strange because one could say that we reject the null hypothesis for the wrong reason: In the world of the researcher, we decide that our null hypothesis is too high whereas it actually is too low.  
-
-The probability that this happens is very small and usually negligible. In the interactive content, you may encounter power values in the left tail that are so small that they have to be written in scientific notation, e.g., 1.0E-10, which means 1 at the tenth decimal place: 0.0000000001. Anyway, the important thing is that we reject a false null hypothesis even if it is for the 'wrong' reason. The decision to reject the null hypothesis is right because the null hypothesis is false. Unfortunately, in this situation our conclusion that the population value is below the hypothesized value would be wrong.  
+In the example of Figure \@ref(fig:TypeI-II-errors) Step 4, the power of the test is 84 per cent (0.84). If average candy weight is 2.9 grams in the population, we have 84 per cent probability to reject the null hypothesis that it is 2.8 grams if we draw a sample (of the current size) from this population. This is usually considered an acceptable level of power (see Section \@ref(sizeeffectpower)).
 
 ### Answers {-}
 
@@ -448,44 +462,75 @@ The probability that this happens is very small and usually negligible. In the i
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* With a higher significance level (alpha goes up), we take a larger risk to
-reject the null hypothesis if it is true. The probability of a Type I error,
-which we make if we reject a true null hypothesis, goes up.
-* The orange tails in the top graph become bigger and the critical values move
-towards zero. [<img src="icons/2question.png" width=161px align="right">](#question5.3.1)
+* The rejection region contains all sample outcomes (average candy weight in
+this example) for which we reject the null hypothesis. These are the sample
+outcomes in the red tails of the sampling distribution: all averages below
+2.73 and all averages over 2.87. [<img src="icons/2question.png" width=161px
+align="right">](#question5.3.1)
 ```
   
 <A name="answer5.3.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* We make a Type II error if we do not reject a false null hypothesis.
-* The situations in which we make a Type II error are depicted by the red
-double-sided arrow in the bottom graph. [<img src="icons/2question.png" width=161px align="right">](#question5.3.2)
+* We don't know if the null hypothesis is true or false. Chapter
+\@ref(hypothesis) should have taught us that we reject the null hypothesis but
+this does not prove that the null hypothesis is true. [<img
+src="icons/2question.png" width=161px align="right">](#question5.3.2)
 ```
   
 <A name="answer5.3.3"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* If the probability of a Type I error goes up, the probability of a Type II
-error goes down, and the other way around.
-* With a higher significance level (alpha goes up), we take a larger risk to
-reject the null hypothesis if it is true. We have a larger probability of
-making a Type I error, which is depicted by the orange tails in the top graph.
-* If we take a larger risk to reject a true null hypothesis, we reject the
-null hypothesis more easily.
-* If we reject the null hypothesis more easily, we are more likely to reject
-the null hypothesis if it is not true. The probability to reject a false null
-hypothesis is the power of the test. This probability is expressed by the
-orange tail in the bottom graph.
-* Note that the critical t values move closer to zero both in the top and
-bottom graph if we take a larger risk to reject a false null hypothesis. The
-critical t values also demarcate the blue area in the bottom graph. Moving
-towards zero, they decrease the size of the blue area. [<img src="icons/2question.png" width=161px align="right">](#question5.3.3)
+* No, if we do not reject the null hypothesis, we cannot reject a true null
+hypothesis. Type I error is rejecting a null hypothesis that is true (Section
+\@ref(sig-typeI)). [<img src="icons/2question.png" width=161px
+align="right">](#question5.3.3)
+```
+
+<A name="answer5.3.4"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 4. 
+
+* In general, an effect size is the difference (horizontal distance in the figure) between the population value according to the null hypothesis and either an (imaginary) true population value or the value found in a sample.
+* H~1~ specifies an imaginary true population value that differes sufficiently from the null hypothesis to be practically relevant.
+* The effect size is the difference between average candy weight according to H~1~ (2.9 grams) and according to H~0~ (2.8 grams), so the effect size is 0.1 (grams).
+* The effect size is unstandardized because it is expressed in the original unit of measurement: weight in grams. We did not standardize the effect size using a standard deviation. 
+* Note that the unstandardized effect size of the sample is the difference between average candy weight in the sample (2.84 grams) and average weight according to H~0~ (2.8 grams), so this effect size is 0.04 (grams). [<img src="icons/2question.png" width=161px align="right">](#question5.3.4)
 ```
   
-## Sample Size, Effect Size, and Power  
+<A name="answer5.3.5"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 5. 
+
+* The sampling distribution of H~1~ is the actual sampling distribution from which we draw our sample because the true population value is the center of the true sampling distribution. So we must look at this sampling distribution.
+* The area under this curve to the left of the red line representing the sample mean (2.84) gives the probability of drawing a sample with average candy weight less than our sample. [<img src="icons/2question.png" width=161px align="right">](#question5.3.5)
+```
+
+<A name="answer5.3.6"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 6. 
+
+* We make a Type II error if we do not reject a false null hypothesis. The yellow tail covers sample outcomes that are **not** in the rejection regions. For these sample outcomes, we do not reject the null hypothesis. But the null hypothesis is false because H~1~ is true, so we make a Type II error. [<img src="icons/2question.png" width=161px align="right">](#question5.3.6)
+```
+  
+<A name="answer5.3.7"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 7. 
+
+* All samples with average candy weight between 2.73 and 2.87 grams are sufficiently close to the value according to the null hypothesis: 2.8 grams. They are outside the rejection region, so we do not reject the null hypothesis. The null hypothesis, however, is wrong. The true population value (according to H~1~) is 2.9 grams. 
+* These are the sample means under the yellow section but the tail is too close to the horizontal axes to see the yellow color below 2.8 in this example. [<img src="icons/2question.png" width=161px align="right">](#question5.3.7)
+```
+
+<A name="answer5.3.8"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 8. 
+
+* Power is the probability---remember, areas under sampling distributions represent probabilities---of rejecting a false null hypothesis. Rejecting a false null hypothesis means that we do *not* make a Type II error. After all, a Type II error is *not* rejecting a false null hypothesis. [<img src="icons/2question.png" width=161px align="right">](#question5.3.8)
+```
+
+## Sample Size, Effect Size, and Power {#sizeeffectpower}
 
 Finally, after all these sections, we can answer the question raised in the beginning of this chapter: How large should my sample be? To answer this question, we must consider the significance level, effect size, and test power.
 
@@ -505,7 +550,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size-power2/", height="
 
 <A name="question5.4.1"></A>
 ```{block2, type='rmdquestion'}
-1. Figure \@ref(fig:sample-size-power) shows the sampling distributions of the sample mean under the null hypothesis (H~0~, left-hand curve) and under the assumed true value of the population mean (H~1~, right-hand curve). Explain the meaning of the red, yellow, and blue surfaces in the graph. [<img src="icons/2answer.png" width=115px align="right">](#answer5.4.1)
+1. Figure \@ref(fig:sample-size-power) shows the sampling distributions of the sample mean under the null hypothesis (H~0~, left-hand curve) and under the assumed true value of the population mean (H~1~, right-hand curve). Explain the meaning of the yellow, and blue surfaces in the graph. [<img src="icons/2answer.png" width=115px align="right">](#answer5.4.1)
 ```
 
 <A name="question5.4.2"></A>
@@ -520,7 +565,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size-power2/", height="
 
 <A name="question5.4.4"></A>
 ```{block2, type='rmdquestion'}
-4. How does test power change if we select a lower significance level, for example, $\alpha = 0.01$? Move the significance level slider to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer5.4.4)
+4. How does test power change if we select a lower significance level (lower probability of making a Type I error), for example, $\alpha$ = 0.01? Move the significance level slider to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer5.4.4)
 ```
 
 <A name="question5.4.5"></A>
@@ -538,11 +583,11 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size-power2/", height="
 7. Effects tend to be small (0.2) rather than moderate (0.5) in communication science. What is the test power for a small effect with the sample size that you obtained in Question 6 and how large must the sample be if we want 80% test power for a test with a small effect? [<img src="icons/2answer.png" width=115px align="right">](#answer5.4.7)
 ```
 
-Sample size, statistical significance, effect size, and test power are related. To determine the size of your sample, you have three sliders that you should adjust simultaneously. Statistical significance is the easiest slider to decide on; we usually leave the significance level at .05. We do not select a smaller value because it will reduce the power of the test (with the same sample size and effect size) as you may have noticed in one of the figures in the preceding section.  
+Sample size, statistical significance, effect size, and test power are related. To determine the size of your sample, you have three sliders that you should adjust simultaneously. Statistical significance is the easiest slider to decide on; we usually leave the significance level at .05. We do not select a smaller value because it will reduce the power of the test (with the same sample size and effect size) as you may have noticed while answering Question 4. 
 
 For effect size, we have to choose among a small, moderate, or large effect. Previous results of research similar to our research project can help us decide whether we have to reckon with small effect sizes or not. If we have a concrete number for the (standardized) minimum effect size that is of practical relevance, we can use that number.  
 
-For power, the conventional rule of thumb is that we like to have at least 80% probability of rejecting a false null hypothesis. You may note that the probability of NOT rejecting a true null hypothesis is higher: .95. After all, it is one minus the probability of rejecting a true null hypothesis (Type I error), which is the significance level. 
+For power, the conventional rule of thumb is that we like to have at least 80% probability of rejecting a false null hypothesis. You may note that the probability of *not* rejecting a true null hypothesis is higher: .95. After all, it is one minus the probability of rejecting a true null hypothesis (Type I error), which is the significance level. 
 
 Power is set to a lower level because the null hypothesis is usually assumed to reflect our best knowledge about the world. From this perspective, we are keener on avoiding the error of falsely rejecting the null hypothesis (our current best knowledge) than falsely not rejecting (accepting) it. This approach, however, is not without criticisms as we will discuss in Chapter \@ref(crit-discus). Anyway, if you want to raise the power to the same level of .95, you can do so; it will require a larger sample.  
 
@@ -563,48 +608,24 @@ Second, test power and Type II errors are important in situations in which we do
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* The red areas represent the significance level of the null hypothesis test,
-namely the total probability of rejecting the null hypothesis if the null
-hypothesis is true.
-* The yellow area gives the probability that we draw a sample from a population
-with true mean H1 which does not reject the null hypothesis. With these
-samples, we do not reject the null hypothesis, which is false, so we make a
-Type II error. The yellow area is the probability of making a Type II error.
-* The blue area (including the red tail at the right) is the probability that
-we draw a sample from a population with true mean H1 that rejects the null
-hypothesis, which is false so we do not make a Type II error. It is the
-probability that we reject a false null hypothesis, which is the power of the
-test. [<img src="icons/2question.png" width=161px align="right">](#question5.4.1)
+* The yellow area gives the probability that we draw a sample from a population with true mean H~1~ which does not reject the null hypothesis. With these samples, we do not reject a false null hypothesis, so we make a Type II error. The yellow area is the probability of making a Type II error.
+* The blue area is the probability that we draw a sample from a population with true mean H~1~ that rejects the null hypothesis. Here, we reject a false null hypothesis, so we do not make a Type II error. This probability is the power of the test. [<img src="icons/2question.png" width=161px align="right">](#question5.4.1)
 ```
   
 <A name="answer5.4.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* It is more difficult to show that a small effect is statistically
-significant than a large effect. After all, the (assumed) true value (under
-H~1~) is closer to the hypothesized value (under H~0~) in case of a small
-effect: the two sample distributions are more closely together. Our sample
-outcome, for example average candy weight, will be closer to the hypothesized
-average candy weight if the effect is small.
-* Therefore, it is more difficult to reject the null hypothesis. We have a
-lower probability of rejecting the null hypothesis if it is actually false. In
-other words, we have lower test power. [<img src="icons/2question.png"
-width=161px align="right">](#question5.4.2)
+* It is more difficult to show that a small effect is statistically significant than a large effect. After all, the (assumed) true value (under H~1~) is closer to the hypothesized value (under H~0~) in case of a small effect. The two sample distributions are more closely together. Our sample outcome, for example average candy weight, will be closer to the hypothesized average candy weight if the effect is small.
+* Therefore, it is more difficult to reject the null hypothesis. We have a lower probability of rejecting the null hypothesis if it is actually false. In other words, we have lower test power. [<img src="icons/2question.png" width=161px align="right">](#question5.4.2)
 ```
   
 <A name="answer5.4.3"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* With a one-sided test, the total significance level (red area) is situated
-in one tail. The border of the red area (the critical value) is closer to the
-hypothesized value.
-* If this tail is at the right side, namely, at the side of the true
-population mean, we are more likely to reject the null hypothesis with a
-sample from the true population (the blue area becomes larger). Test power
-increases. [<img src="icons/2question.png" width=161px
-align="right">](#question5.4.3)
+* With a one-sided test, the total significance level (the tails cut of in the sampling distribution around H~0~) is situated in one tail. The cut point (the critical value) is closer to the hypothesized value if we change our two-sided test into a one-sided test.
+* If this tail is at the right side, namely, at the side of the true population mean, we are more likely to reject the null hypothesis with a sample from the true population (the blue area becomes larger). Test power increases. [<img src="icons/2question.png" width=161px align="right">](#question5.4.3)
 ```
   
 <A name="answer5.4.4"></A>
@@ -613,29 +634,22 @@ Answer to Question 4.
 
 * A lower significance level, for instance, 1% instead 5%, decreases test
 power. With a lower significance level, it is more difficult to reject the
-null hypothesis (the red tails become smaller), so we are less likely to
+null hypothesis (the cut-off tails become smaller), so we are less likely to
 reject a false null hypothesis.
 * By the way, this is the main reason why we usually do not use a significance
 level below 5%: our test power would be smaller, so the probability of a Type
 II error would be higher. [<img src="icons/2question.png" width=161px
 align="right">](#question5.4.4)
 ```
-  
+
 <A name="answer5.4.5"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* Increasing sample size increases test power. Increasing sample size is the
-researcher's tool for increasing test power.
-* A larger sample has a smaller standard error, so the sampling distributions
-become narrower, more peaked.
-* As a consequence, the critical values and the red tails move towards the
-center of the sampling distribution according to the null hypothesis. Sample
-outcomes that are closer to the null hypothesis are now statistically significant.
-It is easier to reject the null hypothesis.
-* A larger part of the sampling distribution according to the (assumed) true
-population value is in the area where we reject the null hypothesis. We have
-higher test power. [<img src="icons/2question.png" width=161px
+* Increasing sample size increases test power. Increasing sample size is the researcher's main tool for increasing test power.
+* A larger sample has a smaller standard error, so the sampling distributions become narrower, more peaked.
+* As a consequence, the critical values that cut off the tails move towards the center of the sampling distribution of the null hypothesis. Sample outcomes that are closer to the null hypothesis are now statistically significant. It is easier to reject the null hypothesis.
+* A larger part of the sampling distribution according to the (assumed) true population value is in the area where we reject the null hypothesis. We have higher test power. [<img src="icons/2question.png" width=161px
 align="right">](#question5.4.5)
 ```
   
@@ -643,16 +657,9 @@ align="right">](#question5.4.5)
 ```{block2, type='rmdanswer'}
 Answer to Question 6. 
 
-* First, note that the probability that a test is statistically significant if
-there is a particular effect in the population, is a description of test
-power. So we have to find the sample size that has 80% test power for the
-specified test.
+* First, note that the probability that a test is statistically significant if there is a particular effect in the population, is a description of test power. So we have to find the sample size that has 80% test power for the specified test.
 * Set standardized effect size to 0.5, the type of test to one-sided, and the significance level to 5%.
-* Now, change sample size by changing the sample size slider until the app
-reports 80% test power. This happens with a sample containing 26 observations.
-If you want to make small adjustments to the sample size: click the sample
-size slider's handle and use the left and right arrow keys on your keyboard.
-[<img src="icons/2question.png" width=161px align="right">](#question5.4.6)
+* Now, change sample size by changing the sample size slider until the figure reports 80% test power. This happens with a sample containing 26 observations. If you want to make small adjustments to the sample size: click the sample size slider's handle and use the left and right arrow keys on your keyboard. [<img src="icons/2question.png" width=161px align="right">](#question5.4.6)
 ```
   
 <A name="answer5.4.7"></A>
@@ -661,10 +668,7 @@ Answer to Question 7.
 
 * Change the standardized effect size to 0.2 (small effect). The figure reports a test power of only 26%.
 * At sample size 154, the power of a test with a small effect is 80%.
-* Note that we need a sample of just 26 observations to obtain 80% test power
-in case of a moderate effect. In contrast, small effects quickly require large
-samples! [<img src="icons/2question.png" width=161px
-align="right">](#question5.4.7)
+* Note that we need a sample of just 26 observations to obtain 80% test power in case of a moderate effect. In contrast, small effects quickly require large samples! [<img src="icons/2question.png" width=161px align="right">](#question5.4.7)
 ```
 
 ## Research Hypothesis as Null Hypothesis  
@@ -719,12 +723,12 @@ We need not go into the details of how to calculate the sample size to obtain a 
 
 ## Test Your Understanding
 
-```{r test-power, echo=FALSE, fig.cap="Effect size, power, Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="430px"}
+```{r test-power, echo=FALSE, fig.cap="Effect size, power, Type I and Type II error.", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Use app type1vs2.
-knitr::include_app("http://82.196.4.233:3838/apps/type1vs2/", height="615px")
+knitr::include_app("http://82.196.4.233:3838/apps/type1vs2fixed/", height="310px")
 ```
 
-Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both sampling distributions are approximated with a t distribution. At the top is the hypothetical world of the researcher. In this hypothetical world, the researcher's null hypothesis is true, namely that average candy weight is 2.8 grams in the population. At the bottom is the real world in which average candy weight is 2.9 grams. The standard deviation of candy weights is 0.5.  
+Figure \@ref(fig:test-power) shows sampling distributions for two worlds. To the left is the hypothetical world of the researcher. In this hypothetical world, the researcher's null hypothesis is true, namely that average candy weight is 2.8 grams in the population. To the right is the real world in which average candy weight is 2.9 grams. The standard deviation of candy weights is 0.5.
 
 <A name="question5.6.1"></A>
 ```{block2, type='rmdquestion'}
@@ -733,42 +737,22 @@ Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both s
 
 <A name="question5.6.2"></A>
 ```{block2, type='rmdquestion'}
-2.  What does t~c~ mean? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.2)
+2. What is the unstandardized and standardized effect size in the sample? Is the effect weak, moderate, or strong? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.2)
 ```
 
 <A name="question5.6.3"></A>
 ```{block2, type='rmdquestion'}
-3. Why are the t values and t~c~values exactly the same on both horizontal axes? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.3)
+3. What do the red horizontal lines in Figure \@ref(fig:test-power) represent? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.3)
 ```
 
 <A name="question5.6.4"></A>
 ```{block2, type='rmdquestion'}
-4. What is the unstandardized and standardized effect size if average candy weight is 2.83 grams in our sample? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.4)
+4. What does the yellow section in the graph mean? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.4)
 ```
 
 <A name="question5.6.5"></A>
 ```{block2, type='rmdquestion'}
-5. What do the double-sided horizontal red arrows represent in the top graph? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.5)
-```
-
-<A name="question5.6.6"></A>
-```{block2, type='rmdquestion'}
-6. Why are the double-sided horizontal arrows red in the top graph and black in the bottom graph and the other way around? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.6)
-```
-
-<A name="question5.6.7"></A>
-```{block2, type='rmdquestion'}
-7. Why are the orange sections in the top graph labelled Type I error? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.7)
-```
-
-<A name="question5.6.8"></A>
-```{block2, type='rmdquestion'}
-8. What happens to the probability of a Type II error (the blue section in the bottom graph) if you change the significance level with the slider? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.8)
-```
-
-<A name="question5.6.9"></A>
-```{block2, type='rmdquestion'}
-9. What does _Type II error_ mean in the bottom graph? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.9)
+5. What does the blue section in the graph mean? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.5)
 ```
 
 ```{r sample-size-power2, fig.cap="How does test power depend on effect size, type of test, significance level, and sample size? Sampling distributions of the sample mean under the null hypothesis (H~0~, left-hand curve) and under the assumed true value of the population mean (H~1~, right-hand curve) for a one-sample t test.", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
@@ -785,19 +769,19 @@ Figure \@ref(fig:test-power) shows sampling distributions for two worlds. Both s
 knitr::include_app("http://82.196.4.233:3838/apps/sample-size-power2/", height="385px")
 ```
 
-<A name="question5.6.10"></A>
+<A name="question5.6.6"></A>
 ```{block2, type='rmdquestion'}
-10. Which test has higher power: a one-sided test at 5% significance level or a two-sided test at 1% significance level? Explain how significance level and type of test (one-sided versus two-sided) affect test power. Use Figure \@ref(fig:sample-size-power2) to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.10)
+6. Which test has higher power: a one-sided test at 5% significance level or a two-sided test at 1% significance level? Explain how significance level and type of test (one-sided versus two-sided) affect test power. Use Figure \@ref(fig:sample-size-power2) to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.6)
 ```
 
-<A name="question5.6.11"></A>
+<A name="question5.6.7"></A>
 ```{block2, type='rmdquestion'}
-11. Explain what happens to the two sampling distributions in Figure \@ref(fig:sample-size-power2) when you change the standardized effect size. [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.11)
+7. Explain what happens to the two sampling distributions in Figure \@ref(fig:sample-size-power2) when you change the standardized effect size. [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.7)
 ```
 
-<A name="question5.6.12"></A>
+<A name="question5.6.8"></A>
 ```{block2, type='rmdquestion'}
-12. Explain what happens to the two sampling distributions in Figure \@ref(fig:sample-size-power2) when you change the size of the sample. [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.12)
+8. Explain what happens to the two sampling distributions in Figure \@ref(fig:sample-size-power2) when you change the size of the sample. [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.8)
 ```
 
 ### Answers {-}
@@ -810,154 +794,72 @@ Answers to the Test Your Understanding questions will be shown in the web book w
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 1. 
 
-* The values on the horizontal axes are t values, that is, the value of the
-sample statistic, for instance, the sample mean, transformed into a t test
-statistic. [<img src="icons/2question.png" width=161px align="right">](#question5.6.1)
+* The values on the horizontal axes are average candy weights. From left to right: 2.73 gram is the lower critical value of a statistical test with 5% significance level; 2.8 gram is the hypothesized average candy weight in the population; 2.87 gram is the upper critical value of a statistical test with 5% significance level; 2.8 gram is the (assumedly) true average candy weight in the population. [<img src="icons/2question.png" width=161px align="right">](#question5.6.1)
 ```
 
 <A name="answer5.6.2"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 2. 
 
-* t~c~ is the value of the test statistic t that separates the (usually 5%)
-most unlikely or most extreme samples from the most likely samples if the null
-hypothesis is true.
-* It is called the critical value (of the test statistic). If the test
-statistic for our sample is beyond this value, we reject the null hypothesis. [<img src="icons/2question.png" width=161px align="right">](#question5.6.2)
+* The effect size in the sample is the difference between the hypothesized population value and the value found in the sample. 
+* The hypothesized population mean of candy weights is 2.8 grams and the sample mean is 2.84 grams, so the effect size equals 2.8 - 2.84 = (-)0.04 grams. This is the unstandardized effect size. Note that We do not care about the sign of the difference.
+* For the standardized effect size, we divide the unstandardized effect size by the standard deviation of the variable. The standard deviation of candy weight (in the sample) is given as 0.5, so the standardized effect size is 0.04 / 0.5 = 0.08.
+* Provided that we drop a minus sign if it appears, this value is Cohen's d.
+* According to the rules of thumb for interpreting Cohen's d, the effect is very weak because it is much less than 0.20.
+* Note that this is the effect size *in the sample*. As an alternative, you can calculate the *true effect size* as the difference between the hypothesized value and the true value in the population. The true unstandardized effect size is 2.8 - 2.9 = (-)0.1. If we assume that the reported standard deviation of candy weights (0.5) applies to the population, the true standardized effect size is
+(2.8 - 2.9)/0.5 = (-)0.2. [<img src="icons/2question.png" width=161px align="right">](#question5.6.2)
 ```
 
 <A name="answer5.6.3"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 3. 
 
-* The researcher only knows the hypothetical world: What does the sampling
-distribution look like if my null hypothesis is true? She uses the critical
-values of this hypothetical world.
-* The other graph represents the true sampling distribution. This distribution
-actually produced the sample that the researcher has drawn. The researcher
-evaluates the sample drawn from this sampling distribution with the critical
-values from the hypothetical distribution. Therefore, the t~c~values from the
-upper graph are also used in the bottom graph. [<img src="icons/2question.png" width=161px align="right">](#question5.6.3)
+* The red horizontal lines represent the values of the sample outcome (average candy weight) for which we reject the null hypothesis. This is called the rejection region of the test. [<img src="icons/2question.png" width=161px align="right">](#question5.6.3)
 ```
 
 <A name="answer5.6.4"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 4. 
 
-* The effect size is the difference between the hypothesized population value
-and the value found in the sample. According to the text accompanying the
-Figure, the hypothesized population mean of candy weight is 2.8 grams.
-* If our sample mean is 2.83 grams, the effect size is the difference, that is,
-(-)0.03 grams. This is the unstandardized effect size. We usually do not care
-about the sign of the difference.
-* For the standardized effect size, we divide the unstandardized effect size
-by the standard deviation of the original variable. The standard deviation of
-candy weight (in the sample) is given as 0.5, so the standardized effect
-size is 0.03 / 0.5 = 0.06.
-* Provided that we drop a minus sign if it appears, this value is Cohen's d.
-* According to the rules of thumb for interpreting Cohen's d, the effect is
-very weak because it is much less than 0.20.
-* Note that this is the effect size in the sample. As an alternative, you can
-calculate the true effect size as the difference between the hypothesized value
-and the true value in the population. The true unstandardized effect size is
-2.8 - 2.9 = (-)0.1. If we assume that the reported standard deviation of candy
-weights (0.5) applies to the population, the true standardized effect size is
-(2.8 - 2.9)/0.5 = (-)0.2. [<img src="icons/2question.png" width=161px align="right">](#question5.6.4)
+* The yellow section represents the probability of *not* rejecting a null hypothesis
+if it is false. This is the probability of a Type II error. [<img src="icons/2question.png" width=161px align="right">](#question5.6.4)
 ```
 
 <A name="answer5.6.5"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 5. 
 
-* They represent the values of the t statistic for which we reject the null
-hypothesis. This is called the rejection region of the test. [<img src="icons/2question.png" width=161px align="right">](#question5.6.5)
+* The blue section represents the probability of rejecting a null hypothesis if it is false. This is the power of the test. [<img src="icons/2question.png" width=161px align="right">](#question5.6.5)
 ```
 
 <A name="answer5.6.6"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 6. 
 
-* The red double-sided arrows represent errors.
-* In the top graph, they represent the situation that we reject a null
-hypothesis if it is true. This is a Type I error.
-* In the bottom graph, they represent the situation that we do not reject a
-null hypothesis that is false. This is a Type II error. [<img src="icons/2question.png" width=161px align="right">](#question5.6.6)
+* A lower significance level (1% instead of 5%) makes it more difficult to reject a null hypothesis. As a consequence, it is more difficult to reject a false null hypothesis: test power decreases.
+* A two-sided test has only half of its significance level at the side of the true population value, whereas a one-sided test has all of it at the side of the true population value. This means that the relevant rejection region is smaller for a two-sided test than for a one-sided test. This reduces the probability of rejecting a false null hypothesis: lower test power. 
+* A one-sided test at 5% significance level, then, has two reasons for having more power than a two-sided test at 1% significance level. [<img src="icons/2question.png" width=161px align="right">](#question5.6.6)
 ```
 
 <A name="answer5.6.7"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 7. 
 
-* The orange sections represent the probability of rejecting a null hypothesis
-if it is true. This is a Type I error.
-* Note that a more accurate labelling of the graph would have said:
-"Probability of a Type I error." [<img src="icons/2question.png" width=161px align="right">](#question5.6.7)
+* Note that effect size in general is the difference between what we expect according to the null hypothesis and what we (are going to) find in the sample. The true population value is the expected value of what we are going to find in a sample (if the estimator is unbiased), so this is what we expect to find in our sample when we haven't yet drawn a sample. 
+* The effect size is represented by the distance between H~0~ (the population value according to the null hypothesis) and H~1~ (the assumed true population value, that is, a population value for which the researcher hopes to reject the null hypothesis).
+* With a larger effect size, then, the distance between H~0~ and H~1~ becomes larger: The distributions move away from each other. Actually, the assumed true sampling distribution moves away from the sampling distribution according to the null hypothesis. The latter distribution remains in the same place because it is fixed by the researcher's null hypothesis.
+* If the distributions move apart, they overlap less and test power increases (the blue area). 
+* A smaller effect size has the opposite result. [<img src="icons/2question.png" width=161px align="right">](#question5.6.7)
 ```
 
 <A name="answer5.6.8"></A>
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 8. 
 
-* With a higher significance level (alpha goes up), we take a larger risk to
-reject the null hypothesis if it is true. The orange tails in the top graph
-become bigger and the critical values move towards zero.
-* If we take a larger risk to reject a true null hypothesis, we reject the
-null hypothesis more easily.
-* If we reject the null hypothesis more easily, we are more likely to reject
-the null hypothesis if it is not true. The probability to reject a false null
-hypothesis is the power of the test. This probability is expressed by the
-orange tail in the bottom graph.
-* If we are more likely to reject a false null hypothesis, we are less likely
-to make the Type II error of not rejecting a false null hypothesis. This is
-the blue section in the bottom graph.
-* Note that the critical t values move closer to zero both in the top and
-bottom graph if we take a larger risk to reject a false null hypothesis. The
-critical t values also demarcate the blue area in the bottom graph. Moving
-towards zero, they decrease the size of the blue area. [<img src="icons/2question.png" width=161px align="right">](#question5.6.8)
-```
-
-<A name="answer5.6.9"></A>
-```{block2, type='rmdanswer', echo=ch5}
-Answer to Question 9. 
-
-* Type II error is the situation that we do not reject a null hypothesis that
-is false. [<img src="icons/2question.png" width=161px align="right">](#question5.6.9)
-```
-
-<A name="answer5.6.10"></A>
-```{block2, type='rmdanswer', echo=ch5}
-Answer to Question 10. 
-
-* A lower significance level (1% instead of 5%) makes it more difficult to reject a null hypothesis. As a consequence, it is more difficult to reject a false null hypothesis: test power decreases.
-* A two-sided test has only half of it's significance level at the side of the true population value, whereas a one-sided test has all of it at the side of the true population value. This means that the relevant rejection region is smaller for a two-sided test than for a one-sided test. This reduces the probability of rejecting a false null hypothesis: lower test power. 
-* A one-sided test at 5% significance level, then, has two reasons for having more power than a two-sided test at 1% significance level. [<img src="icons/2question.png" width=161px align="right">](#question5.6.10)
-```
-
-<A name="answer5.6.11"></A>
-```{block2, type='rmdanswer', echo=ch5}
-Answer to Question 11. 
-
-* The effect size is represented by the distance between H~0~ (the population value according to the null hypothesis) and H~1~ (the assumed true population value, that is, a population value for which the researcher hopes to reject the null hypothesis).
-* Note that effect size in general is the difference between what we expect according to the null hypothesis and what we (are going to) find in the sample. The true population value is the expected value (if the estimator is unbiased), so this is what we expect to find in our sample when we haven't yet drawn a sample. 
-* With a larger effect size, then, the distance between H~0~ and H~1~ becomes larger: The distributions move away from each other. Actually, the assumed true sampling distribution moves away from the sampling distribution according to the null hypothesis. The latter distribution remains in the same place because it is fixed by the researcher's null hypothesis.
-* If the distributions move apart, they overlap less and test power increases (the blue area with the right-hand red tail). 
-* A smaller effect size has the opposite result. [<img src="icons/2question.png" width=161px align="right">](#question5.6.11)
-```
-
-<A name="answer5.6.12"></A>
-```{block2, type='rmdanswer', echo=ch5}
-Answer to Question 12. 
-
-* A larger sample has a smaller standard error, so both sampling distributions
-become narrower, more peaked.
-* As a consequence, the critical values and the red tails move towards the
-center of the sampling distribution according to the null hypothesis. Sample
-outcomes that are closer to the null hypothesis are now statistically significant.
-It is easier to reject the null hypothesis.
-* A larger part of the sampling distribution according to the (assumed) true
-population value is in the area where we reject the null hypothesis. We have
-higher test power. 
-* A smaller sample has the opposite effect. [<img src="icons/2question.png" width=161px align="right">](#question5.6.12)
+* A larger sample has a smaller standard error, so both sampling distributions become narrower, more peaked.
+* As a consequence, the critical values move towards the center of the sampling distribution according to the null hypothesis. Sample outcomes that are closer to the null hypothesis are now statistically significant. It is easier to reject the null hypothesis.
+* A larger part of the sampling distribution according to the (assumed) true population value is in the area where we reject the null hypothesis. We have higher test power. 
+* A smaller sample has the opposite effect. [<img src="icons/2question.png" width=161px align="right">](#question5.6.8)
 ```
 
 ## Take-Home Points  
@@ -972,4 +874,6 @@ higher test power.
 
 * The probability of _not_ making a Type II error is the power of the test.  
 
-* The power of a test tells us the probability that we reject the null hypothesis if there is an effect of a particular size in the population. The larger this probability, the more confident we are that we do not overlook an effect when we do not reject the null hypothesis. 
+* The power of a test tells us the probability that we reject the null hypothesis if there is an effect of a particular size in the population. The larger this probability, the more confident we are that we do not overlook an effect when we do not reject the null hypothesis.
+
+* A practical way to increase test power: Draw a larger sample.

@@ -30,9 +30,28 @@ shinyServer(function(input, output) {
     left <- mean - error #Left confidence interval border
     right <- mean + error #Right confidence interval border
     
-    sign <- ifelse(right <= input$savslider, 
-                   "Statistically\n significant\n test result", 
-                   "Statistically\n non-significant\n test result")
+    sign <- paste0(ifelse(right <= input$savslider, 
+                   "Statistically\nsignificant\ntest result for\n", 
+                   "Statistically\nnon-significant\ntest result for\n"),
+                   ifelse(
+                     input$savslider == 2.8,
+                     "really no effect at all.",
+                     ifelse(input$savslider < 2.83,
+                            "negligible effect size.",
+                            ifelse(
+                              input$savslider < 2.87,
+                              "very weak\neffect size.",
+                              ifelse(input$savslider < 3.01,
+                                     "weak effect size.",
+                                     ifelse(input$savslider < 3.2,
+                                            "moderately strong\neffect size.",
+                                            "strong effect size."
+                                            )
+                                    )
+                                  )
+                          )
+                     )
+                   )
     #calculate power and store
     power <- ifelse(
       input$savslider == 2.8, NA, round(
@@ -88,16 +107,18 @@ shinyServer(function(input, output) {
                  colour = brewercolors["Red"]) +
       #Test result label
       geom_text(label = sign,
-                aes(x = 3.15, 
+                aes(x = 3.45, 
                     y = dnorm(mean, mean, SE)),
                 vjust = 1,
+                hjust = 1,
                 color = brewercolors["Blue"]
                 ) +
       #Power
        geom_text(label = paste0("Power ", power),
-                 aes(x = 2.45, 
+                 aes(x = 2.15, 
                      y = dnorm(mean, mean, SE)),
-                 vjust = 1
+                 vjust = 1, 
+                 hjust = 0
        ) +
        #Definition of sample mean type and legend name
       scale_linetype_manual(name = "",

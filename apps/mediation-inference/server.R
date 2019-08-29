@@ -191,7 +191,7 @@ output$histplot <- renderPlot({
     xlab("b* indirect") +
     theme_general()
   
-grid.arrange(pmplot,moplot,pindirplot, ncol=3)
+grid.arrange(pmplot,moplot,pindirplot, ncol=1)
 
 })
 })

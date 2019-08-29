@@ -107,6 +107,9 @@ output$scatterplot <- renderPlot({
     geom_text(inherit.aes=FALSE,data=meaningroup,aes(x = x + 0.4,y=means + 0.05, 
                                                      label = rprint(means),colour = colour),
               position = position_dodge(width=0.5), size = 5, show.legend = FALSE) + 
+    scale_colour_manual(name = "Smoking status", values = c("Non-smoker" = unname(brewercolors["Blue"]),
+                                                            "Former smoker" = unname(brewercolors["Orange"]),
+                                                            "Smoker" = unname(brewercolors["Red"]))) + 
     xlab("Smoking status") + 
     coord_cartesian(ylim = c(-5, 5)) +
     ylab("Attitude") +

@@ -6,18 +6,23 @@ fig.height = 320
 shinyUI(
   fluidPage(
     verticalLayout(
-      fluidRow(align = "center",
+      fluidRow(column(
+        width = 7,
+        align = "center",
                plotOutput("mainplot",
                           width = fig.width,
                           height = fig.height
                )
-      ),
-      fluidRow(align = "center",
-               plotOutput("histplot",
-                          width = fig.width,
-                          height = fig.height/2
+        ),
+        column(
+          width = 5,
+          align = "center",
+          plotOutput("histplot",
+                     width = fig.width/2,
+                     height = fig.height
                )
-      ),
+          )
+        ),
       fluidRow(align = "center",
                actionButton("smallsamplebtn",
                             label  = "Draw a single sample"),

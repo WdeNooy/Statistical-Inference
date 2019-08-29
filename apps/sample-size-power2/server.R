@@ -68,8 +68,6 @@ output$mainplot <- renderPlot({
                   args = list(mean = meanha, sd = se, df = df),
                   alpha = 0.5,
                   n = 1000) +
-    #Label with sample size
-   # geom_label(x = 2.5, y = 0.35, label = paste0("Required sample size: ", n), size = 5) +
     theme_general() +
     scale_x_continuous(name = "Population means", limits = c(-5, 10), breaks = c(0, meanha), labels = c("H0", "H1")) +
     scale_y_continuous(name = "Probability density", breaks = NULL)
@@ -79,28 +77,54 @@ if(input$onetwoselect == "Two-sided"){
     stat_function(fun = dtshift,
                   xlim = c(-5,lefth0),
                   geom = "area",
-                  fill = brewercolors["Red"],
+                  alpha = 0, #totally transparent, no fill colour
                   colour = "black",
-                  alpha = 0.8,
                   args = list(mean = meanh0, sd = se, df = df),
                   n = 1000) +
-    #Right alpha 
+    #Left alpha 2.5% label
+    geom_text(
+      aes(x = lefth0, y = 0.01,
+          label = paste0(format(round(input$siglevslider/2, digits = 1), nsmall = 1),"%"),
+          hjust = 1
+      ),
+      size = 3,
+      colour = "grey40"
+    ) +
+    #Right alpha 2.5% label
     stat_function(fun = dtshift,
                   xlim = c(righth0,10),
                   geom = "area",
                   colour = "black",
-                  fill = brewercolors["Red"],
+                  alpha = 0, #totally transparent, no fill colour
                   args = list(mean = meanh0, sd = se, df = df),
-                  n = 1000)
+                  n = 1000) +
+    #Right alpha 
+    geom_text(
+      aes(x = righth0, y = 0.01,
+          label = paste0(format(round(input$siglevslider/2, digits = 1), nsmall = 1),"%"),
+          hjust = 0
+      ),
+      size = 3,
+      colour = "grey40"
+    )
  }else{
     p +  #Right alpha 
       stat_function(fun = dtshift,
                     xlim = c(righth0,10),
                     geom = "area",
                     colour = "black",
-                    fill = brewercolors["Red"],
+                    alpha = 0, #totally transparent, no fill colour
                     args = list(mean = meanh0, sd = se, df = df),
-                    n = 1000)
+                    n = 1000) +
+     #Right alpha 
+     geom_text(
+       aes(x = righth0, y = 0.01,
+           label = paste0(format(round(input$siglevslider, digits = 1), nsmall = 1),"%"),
+           hjust = 0
+       ),
+       size = 3,
+       colour = "grey40"
+     )
  }
     
 })
