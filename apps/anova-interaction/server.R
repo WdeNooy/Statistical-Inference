@@ -7,25 +7,25 @@ shinyServer(function(input, output) {
   source("../plottheme/styling.R", local = TRUE)
   
   #Reactive data frame for plotting the means
-  data <- reactive(data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"),
-                                                levels = c("Nobody","Clooney","Jolie")),
+  data <- reactive(data.frame(endorser = factor(c("Clooney","Jolie","No endorser","Clooney","Jolie","No endorser"),
+                                                levels = c("Clooney","Jolie","No endorser")),
                               sex = as.factor(c(rep("male", 3), rep("female", 3))),
-                              willingness_av = c(input$mennobody,
-                                                 input$menclooney,
+                              willingness_av = c(input$menclooney,
                                                  input$menjolie,
-                                                 input$wonobody,
+                                                 input$mennobody,
                                                  input$woclooney,
-                                                 input$wojolie)))
+                                                 input$wojolie,
+                                                 input$wonobody)))
   #Calculations for p value, f value and eta^2
   stats <- reactive({df <- data()
                     n <- 10 # size of each group
                     # Generate within subgroup deviations with sd = 1.66
                     dev <- qnorm(seq(from = 1/11, to = 10/11, length.out = 10), mean = 0, sd = 2)
                     # Generate full dataset with current subgroup averages
-                    dfull <- data.frame(endorser = factor(c(rep("Nobody", times = 2*n),
-                                                            rep("Clooney", times = 2*n),
-                                                            rep("Jolie", times = 2*n)),
-                                                          levels = c("Nobody","Clooney","Jolie")),
+                    dfull <- data.frame(endorser = factor(c(rep("Clooney", times = 2*n),
+                                                            rep("Jolie", times = 2*n),
+                                                            rep("No endorser", times = 2*n)),
+                                                          levels = c("Clooney","Jolie","No endorser")),
                                         sex = as.factor(rep(c(rep("male", n), rep("female", n)), 3)),
                                         willingness = c(df$willingness_av[1] + dev,
                                                         df$willingness_av[4] + dev,
@@ -47,12 +47,12 @@ shinyServer(function(input, output) {
   output$fvaltext <- renderUI({
       helpText(
         div(HTML(paste0(
-            "<b>Endorser effect:</b> F(2, 54) = ",
+            "<b>Main effect of Endorser:</b> F(2, 54) = ",
               rprint(stats()[1,4]), ", ",
               pprint(stats()[1,5]),
               ", eta<sup>2</sup> = ",
               rprint(stats()[1,6]),
-            "<br><b>Sex effect:</b> F(1, 54) = ",
+            "<br><b>Main effect of Sex:</b> F(1, 54) = ",
               rprint(stats()[2,4]), ", ",
               pprint(stats()[2,5]),
               ", eta<sup>2</sup> = ",
@@ -151,10 +151,10 @@ shinyServer(function(input, output) {
       ggtitle("Average willingness by endorser") + 
       #Theme settings
       theme_general() + 
-      theme(legend.position = "bottom")
+      theme(legend.position = "bottom", text = element_text(size = 16))
   })
   
-  #Output for total of nobody
+  #Output for total of Nobody
   output$totnobtext <- renderText(
     as.character(
       round(
@@ -188,7 +188,7 @@ shinyServer(function(input, output) {
       )
     )
   )
-  #Output for total men
+  #Output for total women
   output$totwomtext <- renderText(
     as.character(
       round(

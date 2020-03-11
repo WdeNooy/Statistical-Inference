@@ -1,15 +1,15 @@
 # Moderation with Analysis of Variance (ANOVA) {#anova}
-> Key concepts: eta-squared, between groups variance, within groups variance, F test on analysis of variance model, pairwise comparisons, post-hoc tests, one-way analysis of variance, two-way analysis of variance, factorial design, balanced design, main effects, moderation, interaction effect, higher-order interactions.
+> Key concepts: eta-squared, between-groups variance, within-groups variance, F test on analysis of variance model, pairwise comparisons, post-hoc tests, one-way analysis of variance, two-way analysis of variance, factorial design, balanced design, main effects, moderation, interaction effect.
 
 ### Summary {-}
 
 ```{block2, type='rmdimportant'}
-How do we test score level differences for three or more groups and what if group effects are not the same for all participants?
+How do we test mean differences for three or more groups and what if group effects are not the same for all participants?
 ```
 
 Imagine an experiment in which participants watch a video promoting a charity. They see George Clooney, Angelina Jolie, or no celebrity endorse the charity's fund-raiser. Afterwards, their willingness to donate to the charity is measured. Which campaign works best, that is, produces highest average willingness to donate? Or does one campaign work better for females, another for males?
 
-In this example, we want to compare the level of outcome scores (average willingness to donate) across more than two groups (participants who saw Clooney, Jolie, or no celebrity). To this end, we use analysis of variance. The null hypothesis tested in analysis of variance states that all groups have the same average outcome score in the population. 
+In this example, we want to compare the outcome scores (average willingness to donate) across more than two groups (participants who saw Clooney, Jolie, or no celebrity). To this end, we use analysis of variance. The null hypothesis tested in analysis of variance states that all groups have the same average outcome score in the population. 
 
 This null hypothesis is similar to the one we test in an independent-samples t test for two groups. With three or more groups, we must use the variance of the group means (between-groups variance) to test the null hypothesis. If the between-groups variance is zero, all group means are equal.
 
@@ -21,7 +21,7 @@ With two or more factors, we can have interaction effects in addition to main ef
 
 The phenomenon that a variable can have different effects for different groups on another variable is called moderation. We usually think of one factor as the predictor (or independent variable) and the other factor as the moderator. The moderator (e.g., sex) changes the effect of the predictor (e.g., celebrity endorser) on the dependent variable (e.g., willingness to donate).
 
-## Different Score Levels for Three or More Groups
+## Different Means for Three or More Groups
 
 Celebrity endorsement theory states that celebrities who publicly state that they favour a product, candidate, or cause, help to persuade consumers to adopt or support the product, candidate, or cause [for a review, see @RefWorks:3940; for an alternative approach, see @RefWorks:3941]. 
 
@@ -55,20 +55,25 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-means/", height="490px")
 
 <A name="question7.1.2"></A>
 ```{block2, type='rmdquestion'}
-2. How do the double-sided vertical arrows relate to effect size (eta^2^)? Explain the relation in your own words and change group means to verify your expectations. [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.2)
+2. Which arrow expresses the effect of seeing Clooney on willingnes to donate? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.2)
+```
+
+<A name="question7.1.3"></A>
+```{block2, type='rmdquestion'}
+3. How do the double-sided vertical arrows relate to effect size (eta^2^)? Explain the relation in your own words and change group means to verify your expectations. [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.3)
 ```
 
 A group's average score on the dependent variable represents the group's score level. The group averages in Figure \@ref(fig:anova-means) tell us for which celebrity the average willingness to donate is higher and for which situation it is lower.
 
 Random assignment of test participants to experimental groups (e.g., which video is shown) creates groups that are in principle equal on all imaginable characteristics except the experimental treatment(s) administered by the researcher. Participants who see Clooney should have more or less the same average age, knowledge, and so on as participants who see Jolie or no celebrity. After all, each experimental group is just a random sample of participants. 
 
-If random assignment was done successfully, differences between group score levels can only be caused by the experimental treatment (read Chapter \@ref(mediation) for a better understanding). Mean differences are said to represent the _effect_ of experimental treatment in analysis of variance.
+If random assignment was done successfully, differences between group means can only be caused by the experimental treatment (read Chapter \@ref(confounder) for a better understanding). Mean differences are said to represent the _effect_ of experimental treatment in analysis of variance.
 
-Analysis of variance was developed for the analysis of randomized experiments, where effects can be interpreted as causal effects. Note, however, that analysis of variance can also be applied to non-experimental data. Although mean differences are still called effects in the latter type of analysis, these need not be causal effects.
+Analysis of variance was developed for the analysis of randomized experiments, where effects can be interpreted as causal effects. Note, however, that analysis of variance can also be applied to non-experimental data. Although mean differences are still called effects in the latter type of analysis, these do not have to be causal effects.
 
-In analysis of variance, then, we are simply interested in the differences between group means. The conclusion for a sample is easy: Which groups have higher average score on the dependent variable and for which are they lower? A simple means plot, such as Figure \@ref(fig:anova-meansplot), aids interpretation and helps communicating results to the reader. 
+In analysis of variance, then, we are simply interested in the differences between group means. The conclusion for a sample is easy: Which groups have higher average score on the dependent variable and for which are they lower? A means plot, such as Figure \@ref(fig:anova-meansplot), aids interpretation and helps communicating results to the reader. On average, participants who saw Clooney or Jolie have higher willingness to donate than partitipants who did not see a celebrity endorser.
 
-```{r anova-meansplot, echo=FALSE, fig.cap="A means plot showing that average willingness to donate is higher with a celebrity endorser than without a celebrity endorser.", out.width="70%"}
+```{r anova-meansplot, echo=FALSE, fig.cap="A means plot showing that average willingness to donate is higher with a celebrity endorser than without a celebrity endorser. As a reading instruction, effects of endorsers are represented by arrows.", fig.asp=0.6, out.width="70%"}
 # Insert means plot for celebrity endorsement example.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), willingness_av = c(3, 6, 7), const = 1)
 library(ggplot2)
@@ -88,11 +93,11 @@ This proportion is informative and precise. If you want to classify the effect s
 
 *	0.3 = medium-sized or moderate effect,
 
-*	0.5 = large or strong effectss.
+*	0.5 = large or strong effect.
 
 ### Between-groups variance and within-groups variance {#between-variance}
 
-For a better understanding of eta^2^ and the statistical test of an analysis of variance model, we have to compare the scores to the group averages and to the overall average. Figure \@ref(fig:anova-between) adds overall average willingness to donate to the plot with participants' scores and average experimental group scores. 
+For a better understanding of eta^2^ and the statistical test of an analysis of variance model, we have to compare the individual scores to the group averages and to the overall average. Figure \@ref(fig:anova-between) adds overall average willingness to donate to the plot with participants' scores and average experimental group scores. 
 
 ```{r anova-between, fig.cap="Which part of score differences tells us about the differences between groups?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="540px"}
 # Goal: Illustrate that between-groups variance represents differences between group means and the grand mean. And that it is a (smaller or larger) proportion of total variance.
@@ -101,37 +106,37 @@ For a better understanding of eta^2^ and the statistical test of an analysis of 
 knitr::include_app("http://82.196.4.233:3838/apps/anova-between/", height="490px")
 ```
 
-<A name="question7.1.3"></A>
-```{block2, type='rmdquestion'}
-3. In Figure \@ref(fig:anova-between), what do the solid red arrows represent? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.3)
-```
-
 <A name="question7.1.4"></A>
 ```{block2, type='rmdquestion'}
-4. What do the solid black arrows represent? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.4)
+4. In Figure \@ref(fig:anova-between), what do the solid red arrows represent? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.4)
 ```
 
 <A name="question7.1.5"></A>
 ```{block2, type='rmdquestion'}
-5. What do the dotted black arrows in Figure \@ref(fig:anova-between) represent? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.5)
+5. What do the solid black arrows represent? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.5)
 ```
 
 <A name="question7.1.6"></A>
 ```{block2, type='rmdquestion'}
-6. Which arrows relate to effect size eta^2^? Change group means (and press the _Update graph_ button) to verify your expectation. [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.6)
+6. What do the dotted black arrows in Figure \@ref(fig:anova-between) represent? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.6)
+```
+
+<A name="question7.1.7"></A>
+```{block2, type='rmdquestion'}
+7. Which arrows relate to effect size eta^2^? Change group means (and press the _Update graph_ button) to verify your expectation. [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.7)
 ```
 
 Let us assume that we have measured the willingness to donate for a sample of 12 participants in our study as depicted in Figure \@ref(fig:anova-between). Once we have our data, we first have a look at the percentage of variance that is explained, eta^2^. What does it mean if we say that a percentage of the variance is explained when we interpret eta^2^? 
 
 The variance that we want to explain consists of the differences between the scores of the participants on the dependent variable and the overall or grand mean of all outcome scores. Remember that a variance measures deviations from the mean. The dotted black arrows in Figure \@ref(fig:anova-between) express the distances between outcome scores and the grand average. Squaring, summing, and averaging these distances over all observations gives us the total variance in outcome scores.
 
-The goal of our experiment is to explain why some of our participants have a willingness to donate that is far above the grand mean (horizontal black line in Figure \@ref(fig:anova-between)) while others score a lot lower. We hypothesized that participants are influenced by the endorser they have seen. If an endorser is more effective, the overall level of willingness should be higher. In other words, the average willingness should be higher for participants confronted with this endorser.
+The goal of our experiment is to explain why some of our participants have a willingness to donate that is far above the grand mean (horizontal black line in Figure \@ref(fig:anova-between)) while others score a lot lower. We hypothesized that participants are influenced by the endorser they have seen. If an endorser has a positive effect, the average willingness should be higher for participants confronted with this endorser.
 
 Group average willingness is what we can predict from the experimental treatment. If we know the group to which a participant belongs---which celebrity she saw endorsing the fundraising campaign---we can use the average outcome score for the group as the predicted outcome for each group member---her willingness to donate due to the endorser she saw. The predicted group scores are represented by the coloured horizontal lines for group means in Figure \@ref(fig:anova-between).
 
 Now what part of the variance in outcome scores (dotted black arrows in Figure \@ref(fig:anova-between)) is explained by the experimental treatment? If we use the experimental treatment as predictor of willingness to donate, we predict that a participant's willingness equals her group average (horizontal coloured line) instead of the overall average (horizontal black line), which we use if we do not take into account the participant's experimental treatment.
 
-So the difference between the overall average and the group average is what we predict and explain by the experimental treatment. This difference is represented by the solid black arrows in Figure \@ref(fig:anova-between). The variance of the predicted scores is obtained if we average the squared sizes of the solid black arcs for all participants. This variance is called the _between-groups variance_.
+So the difference between the overall average and the group average is what we predict and explain by the experimental treatment. This difference is represented by the solid black arrows in Figure \@ref(fig:anova-between). The variance of the predicted scores is obtained if we average the squared sizes of the solid black arrows for all participants. This variance is called the _between-groups variance_.
 
 Playing with the group means in Figure \@ref(fig:anova-between), you may have noticed that eta^2^ is high if there are large differences between group means. In this situation we have high between-groups variance---large black arrows---so we can predict a lot of the variation in outcome scores between participants. 
 
@@ -164,7 +169,7 @@ The variation in scores within a population, for example, all people who would b
 The amount of variation in population scores is important. Chance differences between sample means are more likely to be larger if within-groups variance is larger. You are more likely to draw some observations far away from the population mean if score variation is larger in the population. Observations far from the mean influence the sample mean strongly, so the means of samples drawn from this population fluctuate more.
 ```
 
-The experimental treatment predicts that a participant's willingness equals the average willingness of the participant's group. It cannot predict or explain that a participant's willingness score is slightly different from her group mean (the red double-sided arrows in Figure \@ref(fig:anova-between)). _Within-groups variance_ in outcome scores is what we cannot predict with our experimental treatment; it is prediction error. In some SPSS output, it is therefore labeled as "Error".
+The experimental treatment predicts that a participant's willingness equals the average willingness of the participant's group. It cannot predict or explain that a participant's willingness score is slightly different from her group mean (the red double-sided arrows in Figure \@ref(fig:anova-between)). _Within-groups variance_ in outcome scores is what we cannot predict with our experimental treatment; it is prediction error. In some SPSS output, it is therefore sometimes labeled as "Error".
 
 ### F test on the model {#anova-model}
 
@@ -182,7 +187,7 @@ Average group scores tell us whether the experimental treatment has effects with
 1. In which situation is between-groups variance zero? Adjust the group means in Figure \@ref(fig:anova-F) to check your answer.
 ```
 
-If we want to test whether the difference that we find in the sample also applies to the population, we use the substantive null hypothesis that all average outcome scores are equal in the population from which the samples were drawn. In our example, the null hypothesis states that people in the population who would see George Clooney as endorser are just as willing to donate as people who would see Angelina Jolie or who would not see a celebrity endorser at all.
+If we want to test whether the difference that we find in the sample also applies to the population, we use the null hypothesis that all average outcome scores are equal in the population from which the samples were drawn. In our example, the null hypothesis states that people in the population who would see George Clooney as endorser are just as willing to donate as people who would see Angelina Jolie or who would not see a celebrity endorser at all.
 
 ```{r skipped3, eval=FALSE, echo=FALSE}
 # Skipped to simplify the explanation of ANOVA.
@@ -212,13 +217,13 @@ We use the variance in group means as the number to express the size of differen
 2. What happens to the F test statistic and its p value if differences are more convincing?
 ```
 
-We cannot just use the between-groups variance as the test statistic because we have to take into account chance differences between sample means. If we draw samples from the same population, the sample means can still be different because we draw samples at random. These sample mean differences are due to chance, they do not reflect true differences within the population. 
+We cannot just use the between-groups variance as the test statistic because we have to take into account chance differences between sample means. If we draw samples for different groups from the same population, the sample means can still be different because we draw samples at random. These sample mean differences are due to chance, they do not reflect true differences within the population. 
 
 We have to correct for chance differences and this is done by taking the ratio of between-groups variance over within-groups variance. This ratio gives us the relative size of observed differences between group means over group mean differences that we expect by chance.
 
 Our test statistic, then, is the ratio of two variances: between-groups variance and within-groups variance. The F distribution approximates the sampling distribution of the ratio of two variances, so we can use this probability distribution to test the significance of the group mean differences we observe in our sample. 
 
-Long story short: We test the substantive null hypothesis that all groups have the same population means in an analysis of variance. But behind the scenes, we actually test between-groups variance against within-groups variance. That is why it is called analysis of variance.
+Long story short: We test the null hypothesis that all groups have the same population means in an analysis of variance. But behind the scenes, we actually test between-groups variance against within-groups variance. That is why it is called analysis of variance.
 
 ### Assumptions for the F test in analysis of variance {#anova-assumpt}
 
@@ -227,7 +232,7 @@ There are two important assumptions that we must make if we use the F distributi
 #### Independent samples
 The first assumption is that the groups can be regarded as independent samples. As in an independent-samples t test, it must be possible _in principle_ to draw a separate sample for each group in the analysis. Because this is a matter of principle instead of how we actually draw the sample, we have to argue that the assumption is reasonable. We cannot check the assumption against the data.
 
-This is an example of an argument that we can make. In an experiment, we usually draw one sample of participants but we assign participants randomly to one of the experimental conditions. This could have easily been done separately for each experimental group. For example, we first draw a participant for the first condition: seeing George Clooney endorsing the fundraising campaign. Next, we draw a participant for the second condition, e.g., Angelina Jolie. The two draws are independent: whomever we have drawn for the Clooney condition is irrelevant to whom we draw for the Jolie condition. Therefore, draws are independent and the samples can be regarded as independent.
+Here is an example of an argument that we can make. In an experiment, we usually draw one sample of participants and, as a next step, we assign participants randomly to one of the experimental conditions. We could have easily drawn a separate sample for each experimental group. For example, we first draw a participant for the first condition: seeing George Clooney endorsing the fundraising campaign. Next, we draw a participant for the second condition, e.g., Angelina Jolie. The two draws are independent: whomever we have drawn for the Clooney condition is irrelevant to whom we draw for the Jolie condition. Therefore, draws are independent and the samples can be regarded as independent.
 
 Situations where samples cannot be regarded as independent are the same as in the case of dependent/paired-samples t tests (see Section \@ref(dependentsamples)). For example, samples of first and second observations in a repeated measurement design should not be regarded as independent samples. Some analysis of variance models can handle repeated measurements but we do not discuss them here.
 
@@ -242,29 +247,29 @@ The assumption of equal population variances is less important if group samples 
 
 Analysis of variance tests the null hypothesis of equal population means but it does not yield confidence intervals for group means. It does not always tell us which groups score significantly higher or lower.
 
-```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population? The p values belong to independent t tests on the means of two groups.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="525px"}
+```{r anova-posthoc, fig.cap="Which groups have different average outcome scores in the population? The p values belong to independent-samples t tests on the means of two groups.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="525px"}
 # Goal: Sensitize students to the need for and problems with post-hoc tests.
 # Generate and display a sample as in the app anova-means with option to change
 # group means.
 # Display the model F test and the results of three t-tests (without Bonferroni
 # correction) for pairwise comparisons (if feasible: as labels to the vertical
-# arcs between group means in the plot).
+# arrows between group means in the plot).
 knitr::include_app("http://82.196.4.233:3838/apps/anova-posthoc/", height="485px")
-```
-
-<A name="question7.1.7"></A>
-```{block2, type='rmdquestion'}
-7. Does the F test in analysis of variance tell us which groups have significantly different average population outcome scores? Can we have the same F test result with different sets of group means? Adjust group means in Figure \@ref(fig:anova-posthoc) to demonstrate your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.7)
 ```
 
 <A name="question7.1.8"></A>
 ```{block2, type='rmdquestion'}
-8. Is it possible that the F test is statistically significant but none of the t tests that compare groups one by one? Can you obtain this situation in Figure \@ref(fig:anova-posthoc)? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.8)
+8. Does the F test in analysis of variance tell us which groups have significantly different average population outcome scores? Can we have the same F test result with different sets of group means? Adjust group means in Figure \@ref(fig:anova-posthoc) to demonstrate your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.8)
 ```
 
 <A name="question7.1.9"></A>
 ```{block2, type='rmdquestion'}
-9. Is it okay that we apply both an F test and several t tests to the same group differences? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.9)
+9. Is it possible that the F test is statistically significant but none of the t tests that compare groups one by one? Can you obtain this situation in Figure \@ref(fig:anova-posthoc)? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.9)
+```
+
+<A name="question7.1.10"></A>
+```{block2, type='rmdquestion'}
+10. Is it okay that we apply both an F test and several t tests to the same group differences? [<img src="icons/2answer.png" width=115px align="right">](#answer7.1.10)
 ```
 
 If the F test is statistically significant, we reject the null hypothesis that all groups have the same population mean on the dependent variable. In our current example, we reject the null hypothesis that average willingness to donate is equal for people who saw George Clooney, Angelina Jolie, or no endorser for the fund raiser. In other words, we _reject_ the null hypothesis that the endorser does _not_ matter to willingness to donate.
@@ -277,17 +282,17 @@ In a pairwise comparison, we have two groups, for instance, participants confron
 
 With three groups, we can make three pairs: Clooney versus Jolie, Clooney versus nobody, and Jolie versus nobody. We have to execute three t tests on the same data. We already know that there are most likely differences in average scores, so the t tests are executed after the fact, in Latin _post hoc_. Hence the name _post-hoc tests_.
 
-Applying more than one test to the same data increases the probability of finding at least one statistically significant difference even if there are no differences at all in the population. Section \@ref(cap-chance) discussed this phenomenon as capitalization on chance and it offered a way to correct for this problem, namely Bonferroni correction. We ought to apply this correction to the pairwise t tests that we execute if the analysis of variance F test is statistically significant.
+Applying more than one test to the same data increases the probability of finding at least one statistically significant difference even if there are no differences at all in the population. Section \@ref(cap-chance) discussed this phenomenon as capitalization on chance and it offered a way to correct for this problem, namely Bonferroni correction. We ought to apply this correction to the independent-samples t tests that we execute if the analysis of variance F test is statistically significant.
 
 #### Two steps in analysis of variance
 
-Analysis of variance, then, consists of two steps. In the first step, we test the general null hypothesis that all groups have equal average scores on the dependent variable in the population. If we cannot reject this null hypothesis, we have too little evidence to conclude that there are differences between the groups. Our analysis stops here although it is recommended to report the confidence intervals of the group means to inform the reader. Perhaps our sample was just too small to reject the null hypothesis.
+Analysis of variance, then, consists of two steps. In the first step, we test the general null hypothesis that all groups have equal average scores on the dependent variable in the population. If we cannot reject this null hypothesis, we have too little evidence to conclude that there are differences between the groups. Our analysis of variance stops here, although it is recommended to report the confidence intervals of the group means to inform the reader. Perhaps our sample was just too small to reject the null hypothesis.
 
-If the F test is statistically significant, we proceed to the second step. Here, we apply independent-samples t tests with Bonferroni correction to each pair of groups to see which groups have significantly different means. In our example, we would compare the Clooney and Jolie groups to the group without celebrity endorser to see if celebrity endorsement increases willingness to donate to the fund raiser. In addition, we would compare the Clooney and Jolie groups to see if one celebrity is more effective than the other. 
+If the F test is statistically significant, we proceed to the second step. Here, we apply independent-samples t tests with Bonferroni correction to each pair of groups to see which groups have significantly different means. In our example, we would compare the Clooney and Jolie groups to the group without celebrity endorser to see if celebrity endorsement increases willingness to donate to the fund raiser, and, if so, how much? In addition, we would compare the Clooney and Jolie groups to see if one celebrity is more effective than the other. 
 
 #### Contradictory results
 
-It may happen that the F test on the model is statistically significant but none of the post-hoc tests is statistically significant. This usually happens when the p value of the F test is near .05. Perhaps the correction for capitalization is too strong; this is known to be the case with the Bonferroni correction. Alternatively, the sample is too small for the post-hoc test. Note that we have fewer observations in a post-hoc test than in the F test because we only look at two of the groups.
+It may happen that the F test on the model is statistically significant but none of the post-hoc tests is statistically significant. This usually happens when the p value of the F test is near .05. Perhaps the correction for capitalization on chance is too strong; this is known to be the case with the Bonferroni correction. Alternatively, the sample can be too small for the post-hoc test. Note that we have fewer observations in a post-hoc test than in the F test because we only look at two of the groups.
 
 This situation illustrates the limitations of null hypothesis significance tests (Chapter \@ref(crit-discus)). Remember that the 5 per cent significance level remains an arbitrary boundary and statistical significance depends a lot on sample size. So do not panic if the F and t tests have contradictory results.
 
@@ -303,10 +308,19 @@ Answer to Question 1.
 willingness to donate across the three experimental conditions: exposure to
 Clooney as endorser, Jolie as endorser, or no celebrity endorser. [<img src="icons/2question.png" width=161px align="right">](#question7.1.1)
 ```
-  
+
 <A name="answer7.1.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
+
+* The arrow between the orange and green lines expresses the effect of seeing Clooney on willingnes to donate. 
+* The orange line represents average willingness to donate for participants who saw Clooney. The green line is average willingness to donate for participants who did not see a celebrity endorser. This is the control group in the experiment. 
+* Seeing Clooney distinguishes the Clooney group from the control group. The difference in means results from this distinction. [<img src="icons/2question.png" width=161px align="right">](#question7.1.2)
+```
+  
+<A name="answer7.1.3"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 3. 
 
 * The more different the group means, the larger the red arrows, the larger the
 between-groups variance, the larger eta^2^.
@@ -316,12 +330,12 @@ that is not relevant here) before taking the average. As a consequence, a long
 red arrow contributes more to between-groups variance than two short arrows
 that are just as long as the long arrow if they are summed. This is the reason
 that eta^2^ increases if the group in the middle moves closer to the top
-group (or, from some point, closer to the bottom group). [<img src="icons/2question.png" width=161px align="right">](#question7.1.2)
+group (or, from some point, closer to the bottom group). [<img src="icons/2question.png" width=161px align="right">](#question7.1.3)
 ```
   
-<A name="answer7.1.3"></A>
+<A name="answer7.1.4"></A>
 ```{block2, type='rmdanswer'}
-Answer to Question 3. 
+Answer to Question 4. 
 
 * The solid red arrows represent the difference between an individual score
 and the average score of the group to which the individual belongs. For
@@ -330,34 +344,34 @@ participant who was exposed to Clooney as endorser. The orange line represents
 the average willingness score of the participants who were exposed to Clooney.
 The red arrow is the difference between the individual's willingness score and
 the mean score of its group. Squaring, summing, and averaging the solid red
-arrows (within-groups differences) yields the within-groups variance. [<img src="icons/2question.png" width=161px align="right">](#question7.1.3)
-```
-  
-<A name="answer7.1.4"></A>
-```{block2, type='rmdanswer'}
-Answer to Question 4. 
-
-* The solid black arrows represent the difference between an individual's group
-score, for instance, the average willingness score of all participants who were
-exposed to Clooney, and the average score of all participants (the grand or
-overall mean).
-* If we square, sum, and average these differences, we get the variance of
-group means, which is called the between-groups variance. [<img src="icons/2question.png" width=161px align="right">](#question7.1.4)
+arrows (within-groups differences) yields the within-groups variance. [<img src="icons/2question.png" width=161px align="right">](#question7.1.4)
 ```
   
 <A name="answer7.1.5"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* The dotted black arrows represent the difference between individual
-willingness scores and the average willingness scores of all participants.
-Square, sum, and average them to get the overall variance. Take the square
-root of the variance to obtain the overall standard deviation. [<img src="icons/2question.png" width=161px align="right">](#question7.1.5)
+* The solid black arrows represent the difference between an individual's group
+score, for instance, the average willingness score of all participants who were
+exposed to Clooney, and the average score of all participants (the grand or
+overall mean).
+* If we square, sum, and average these differences, we get the variance of
+group means, which is called the between-groups variance. [<img src="icons/2question.png" width=161px align="right">](#question7.1.5)
 ```
   
 <A name="answer7.1.6"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 6. 
+
+* The dotted black arrows represent the difference between individual
+willingness scores and the average willingness scores of all participants.
+Square, sum, and average them to get the overall variance. Take the square
+root of the variance to obtain the overall standard deviation. [<img src="icons/2question.png" width=161px align="right">](#question7.1.6)
+```
+  
+<A name="answer7.1.7"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 7. 
 
 * The solid black arrows relate to eta^2^. Eta^2^ is larger if the
 differences between the group means are larger. The solid black arrows express
@@ -367,12 +381,12 @@ decreases and the solid black arrows become smaller. The red arrows (differences
 between scores and their group means) remain the same.
 * The dotted black arrows change but some become longer and others become
 shorter if you decrease the differences between the group means, so the
-dotted black arrows are not clearly related to eta^2^. [<img src="icons/2question.png" width=161px align="right">](#question7.1.6)
+dotted black arrows are not clearly related to eta^2^. [<img src="icons/2question.png" width=161px align="right">](#question7.1.7)
 ```
   
-<A name="answer7.1.7"></A>
+<A name="answer7.1.8"></A>
 ```{block2, type='rmdanswer'}
-Answer to Question 7. 
+Answer to Question 8. 
 
 * If the F test in analysis of variance is statistically significant, we
 reject the null hypothesis that all groups have the same mean score in the
@@ -382,28 +396,28 @@ need post-hoc tests to find that out.
 * Because the F test does not tell us which group has a higher or lower score,
 we can have the same F value for different situations. For example, exchange
 the means of two groups. You will get exactly the same F value (in this
-balanced design). [<img src="icons/2question.png" width=161px align="right">](#question7.1.7)
-```
-  
-<A name="answer7.1.8"></A>
-```{block2, type='rmdanswer'}
-Answer to Question 8. 
-
-* Yes, this is possible. For example, set the mean score of the No Endorser
-group at 4.5, while you leave the Clooney and Jolie averages at 6.4 and 6.8.
-* A t test uses only two of the three groups, so the total number of
-observations is lower and, therefore, test power is lower and the null
-hypothesis is more difficult to reject.
-* Note that this situation only occurs if the F test is just significant
-(slightly below .05). This illustrates that the .05 threshold is an artificial
-boundary. [<img src="icons/2question.png" width=161px align="right">](#question7.1.8)
+balanced design). [<img src="icons/2question.png" width=161px align="right">](#question7.1.8)
 ```
   
 <A name="answer7.1.9"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 9. 
 
-* This is okay provided that we correct for capitalization on chance (see Section \@ref(cap-chance)). [<img src="icons/2question.png" width=161px align="right">](#question7.1.9)
+* Yes, this is possible. For example, set the mean score of the No Endorser
+group at 4.5, while you leave the Clooney and Jolie averages at 6.4 and 6.8.
+* A t test uses only two of the three groups, so the total number of
+observations is lower and, therefore, test power is lower and the null
+hypothesis is more difficult to reject.
+* Note that this situation mainly occurs if the F test is just significant
+(slightly below .05). This illustrates that the .05 threshold is an artificial
+boundary. [<img src="icons/2question.png" width=161px align="right">](#question7.1.9)
+```
+  
+<A name="answer7.1.10"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 10. 
+
+* This is okay provided that we correct for capitalization on chance (see Section \@ref(cap-chance)). [<img src="icons/2question.png" width=161px align="right">](#question7.1.10)
 ```
   
 ## One-Way Analysis of Variance in SPSS {#onewaySPSS}
@@ -459,7 +473,7 @@ There are no impossible values on the variables.
 Check assumptions:  
   
 The three groups are more or less of equal size: The largest difference is 4
-participants, which is less than ten per cent of the smallest group (*N* = 45).
+participants, which is less than ten per cent of the largest group (*N* = 49).
 Anyway, we may assume equal population variances, Levene *F* (2, 140) = .02, *p* =
 .978. Note that the results of this test can be slightly different in
 different versions of SPSS.
@@ -504,12 +518,16 @@ results, but the test is never statistically significant.
   
 Interpret the results:  
   
-In the sample, former smokers have a much more negative attitude towards smoking (*M* = -1.69, *SD* = 1.71) than non-smokers (*M* = 0.64, *SD* = 1.17, mean difference = -2.33, *p* < .001, 95%CI[-3.31, -1.35]) and smokers (*M* = 0.80, *SD* = 1.67, mean difference = -2.49, *p* < .001, 95%CI[-3.66, -1.32]). Average attitude towards smoking scores are significantly different, *F* (2, 82) = 18.85, *p* < .001, eta^2^ = 0.31. We have sufficient evidence to conclude that one group has a more positive attitude towards smoking than another group in the population of adults.
+In the sample, former smokers have a much more negative attitude towards smoking (*M* = -1.69, *SD* = 1.71) than non-smokers (*M* = 0.64, *SD* = 1.17) and smokers (*M* = 0.80, *SD* = 1.67). 
 
-Note that eta^2^ was calculated by hand, dividing the sum of squares of the main effect (between groups) by the total sum of squares. [<img src="icons/2question.png" width=161px align="right">](#question7.2.2)
+With 95% confidence, the attitude towards smoking for former smokers is on average at least 1.35 points more negative on a scale from -5 to +5 than for non-smokers and the difference can be as large as 3.3 points in the population (mean difference = -2.33, *p* < .001, 95%CI[-3.31, -1.35]). Similarly, former smokers have an attitude that is on average 1.3 to 3.7 points more negative than smokers (mean difference = -2.49, *p* < .001, 95%CI[-3.66, -1.32]). The difference in attitude towards smoking between smokers and non-smokers in the population is not clear. Smokers can on average be up to 0.78 points more negative about smoking than non-smokers, but they can also be up to 1.09 points more positive (mean difference = 0.16, *p* = 1.000, 95%CI[-0.78, 1.09]). We need a larger sample to be more specific about the difference between smokers and non-smokers.
+
+Due to the differences between on the one hand former smokers and on the other hand smokers and non-smokers, average attitude towards smoking scores are significantly different across smoking status, *F* (2, 82) = 18.85, *p* < .001, eta^2^ = 0.31. We have sufficient evidence to conclude that former smokers have a more negative attitude towards smoking than the other groups in the population of adults. The differences are substantial (a strong effect, _eta_ = 0.56).
+
+Note that eta^2^ was calculated by hand, dividing the sum of squares of the main effect (between groups) by the total sum of squares. Eta is the square root of eta^2^. [<img src="icons/2question.png" width=161px align="right">](#question7.2.2)
 ```
 
-## Different Score Levels for Two Factors
+## Different Means for Two Factors
 
 The participants in the experiment do not only differ because they see different endorsers in the charity video. In addition, there are differences according to sex: female versus male participants. Does participant's sex matter to the effect of the endorser on willingness to donate? 
 
@@ -529,7 +547,7 @@ The participants in the experiment do not only differ because they see different
 # Allow the user to select (display) group means on one of the two factors or
 # both. On selection, add group means as horizontal lines (coloured for the 3
 # levels factor and different line styles for 2 levels factor) with between
-# group variation indicated by double-sided arcs between group mean and grand
+# group variation indicated by double-sided arrows between group mean and grand
 # mean for each dot (between). Add subgroup (endorser by sex) means if both
 # factors are selected.
 knitr::include_app("http://82.196.4.233:3838/apps/anova-twoway/", height="408px")
@@ -542,7 +560,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-twoway/", height="408px"
 
 <A name="question7.3.2"></A>
 ```{block2, type='rmdquestion'}
-2. Which effect on willingness to donate is probably stronger: the effect of endorser or of sex? Motivate your answer, for example, using the grey arrows in the plot. Compare a plot with the endorser factor selected to a plot with the sex factor selected. [<img src="icons/2answer.png" width=115px align="right">](#answer7.3.2)
+2. Compare a plot with the endorser factor selected to a plot with the sex factor selected. Which effect on willingness to donate is probably stronger: the effect of endorser or of sex? Motivate your answer, for example, using the grey arrows in the plots. [<img src="icons/2answer.png" width=115px align="right">](#answer7.3.2)
 ```
 
 <A name="question7.3.3"></A>
@@ -581,14 +599,47 @@ rm(df)
 
 Table \@ref(tab:anova-balanced) shows an example of a balanced 3x2 factorial design. Each subgroup (cell) contains two participants (cases). Equal distributions of frequencies across columns or across rows indicate statistical independence. In the example, the distributions are the same across columns (and rows), so the factors are statistically independent.
 
-In practice, it may not always be possible to have exactly the same number of observations for each subgroup. A participant may drop out from the experiment, a measurement may go wrong, and so on. If the numbers of observations are more or less the same for all subgroups, the factors are nearly independent, which is okay. So let us use the same rule of thumb for a balanced design as for the conditions of an F test in analysis of variance: If the size of the smallest subgroup is less than ten per cent smaller than the size of the largest group, we call a factorial design balanced.
+In practice, it may not always be possible to have exactly the same number of observations for each subgroup. A participant may drop out from the experiment, a measurement may go wrong, and so on. If the numbers of observations are more or less the same for all subgroups, the factors are nearly independent, which is okay. We can use the same rule of thumb for a balanced design as for the conditions of an F test in analysis of variance: If the size of the smallest subgroup is less than ten per cent smaller than the size of the largest group, we call a factorial design balanced.
 
-A balanced design is nice but not necessary. Unbalanced designs can be analyzed but estimation is more complicated (a problem for the computer, not for us) and the assumption of equal population variances for all groups (Levene's F test) is more important (a problem for us, not for the computer) because we do not have equal group sizes. Note that the requirement of equal group sizes applies to the subgroups in a two-way analysis of variance. With a balanced design, we ensure that we have the same number of observations in all subgroups, so we are on the safe side.
+A balanced design is nice but not necessary. Unbalanced designs can be analyzed but estimation is more complicated (a problem for the computer, not for us) and the assumption of equal population variances for all groups (Levene's F test) is more important (a problem for us, not for the computer) because we do not have equal group sizes. Note that the requirement of equal group sizes applies to the _subgroups_ in a two-way analysis of variance. With a balanced design, we ensure that we have the same number of observations in all subgroups, so we are on the safe side.
 
 ### Main effects in two-way analysis of variance {#maineffects}
 A two-way analysis of variance tests the effects of both factors on the dependent variable in one go. It tests the null hypothesis that participants exposed to Clooney have the same average willingness to donate in the population as participants exposed to Jolie or those who are not exposed to an endorser. At the same time, it tests the null hypothesis that females and males have the same average willingness to donate in the population.
 
-The tested effects are _main effects_, that is, an overall or average difference between the mean scores of the groups on the dependent variable. The main effect of the endorser factor shows the mean differences for endorser groups if we do not distinguish between females and males. Likewise, the main effect for sex shows the average difference in willingness to donate between females and males without taking into account the endorser to whom they were exposed.
+```{r anova-meansplot2, echo=FALSE, fig.cap="Means plots for the main effects of endorser and sex on willingness to donate. As a reading instruction, effects of endorsers and of being female are represented by arrows.", out.width="50%", fig.asp=0.8, fig.show='hold'}
+# Insert means plot for celebrity endorsement example.
+d <- data.frame(
+  endorser = factor(c("Nobody","Nobody","Clooney","Clooney","Jolie","Jolie"), 
+                    levels = c("Nobody","Clooney","Jolie")),
+  sex = factor(rep(c("Women", "Men"), 3)),
+  willingness_av = c(4.5, 3, 6.5, 5, 8.5, 7), const = 1)
+library(ggplot2)
+# Plot for main effect endorser.
+d %>% group_by(endorser) %>%
+  summarise(willing = mean(willingness_av),
+            const = max(const)) %>%
+  ggplot(aes(endorser, willing)) + 
+    geom_point(size = 3) + 
+    geom_line(aes(group = const), size = 1) + 
+    theme_general() + 
+    theme(text = element_text(size = 18)) +
+    scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 
+    labs(x = "Endorser", y = "Average willingness to donate")
+# Plot for main effect sex.
+d %>% group_by(sex) %>%
+  summarise(willing = mean(willingness_av),
+            const = max(const)) %>%
+  ggplot(aes(sex, willing)) + 
+    geom_point(size = 3) + 
+    geom_line(aes(group = const), size = 1) + 
+    theme_general() + 
+    theme(text = element_text(size = 18)) +
+    scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 
+    labs(x = "Sex", y = "Average willingness to donate")
+rm(d)
+```
+
+The tested effects are main effects because they represent the effect of one factor. They express an overall or average difference between the mean scores of the groups on the dependent variable. The main effect of the endorser factor shows the mean differences for endorser groups if we do not distinguish between females and males. Likewise, the main effect for sex shows the average difference in willingness to donate between females and males without taking into account the endorser to whom they were exposed.
 
 We could have used two separate one-way analyses of variance to test the same effects. Moreover, we could have tested the difference between females and males with an independent-samples t test. The results would have been the same (if the design is balanced.) But there is an important advantage to using a two-way analysis of variance, to which we turn in the next section.
 
@@ -633,7 +684,7 @@ endorser and sex. The graph will show the means of subgroups: females exposed to
 Clooney, males exposed to Clooney, males exposed to Jolie, and so on. [<img src="icons/2question.png" width=161px align="right">](#question7.3.3)
 ```
   
-## Moderation: Score Level Differences that Depend on Context {#moderationanova}
+## Moderation: Group-Level Differences that Depend on Context {#moderationanova}
 
 ```{r echo=FALSE}
 # TBD: the concept of moderation ; picture (sketch as video) as icon
@@ -668,24 +719,24 @@ rm(variables)
 
 Moderation as different effects for different groups is best interpreted using a cross-tabulation of group means, which is visualized as a means plot. In a group means table, the __Totals__ row and column contain the means for each factor separately, for example the means for males and females (factor sex) or the means for the endorsers (factor endorser). These means represent the main effects. The means in the cells of the table are the means of the subgroups, which represent moderation. Draw them in a means plot for easy interpretation.
 
-In a means plot, we use the groups on the predictor on the horizontal axis, for example, the three endorsers. The average score on the dependent variable is used as the vertical axis. Finally, we plot the average scores for every predictor-moderator group, for instance, an endorser-sex combination, and we link the means that belong to the same moderator group, for example, the means for females and the means for males (Figure \@ref(fig:anova-moderation)).
+In a means plot, we use the groups of the predictor on the horizontal axis, for example, the three endorsers. The average score on the dependent variable is used as the vertical axis. Finally, we plot the average scores for every predictor-moderator group, for instance, an endorser-sex combination, and we link the means that belong to the same moderator group, for example, the means for females and the means for males (Figure \@ref(fig:anova-moderation)).
 
 ```{r anova-moderation, fig.cap="How can we recognize main effects and moderation in a means plot?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goals: Learn to recognize different types of moderation, visually distinguishing between main effects (differences) and moderation (different differences.
 # Create a means plot with 3x2 means, willingness on Y axis, endorser (nobody, Clooney, Jolie) on X axis, and different colours for sex. Initial means have main effects but no interaction effect.Connect the means per sex by line segments. Link the female & male mean for the same group by a vertical double-sided arrow. Allow user to change all six means (if possible, by dragging them vertically?). Display marginal (total) means for each sex and endorser.
 # Initial means.
 # d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 7, 4.5, 6.5, 8.5))
-knitr::include_app("http://82.196.4.233:3838/apps/anova-moderation/", height="270px")
+knitr::include_app("http://82.196.4.233:3838/apps/anova-moderation/", height="305px")
 ```
 
 <A name="question7.4.1"></A>
 ```{block2, type='rmdquestion'}
-1. Does the plot in Figure \@ref(fig:anova-moderation) display a main effect of the factor sex? Motivate your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer7.4.1)
+1. Does the plot in Figure \@ref(fig:anova-moderation) display a main effect of the factor sex? Motivate your answer with numbers from the table and/or the lines in the plot. If sex has a main effect in this sample, describe the effect: What is the difference between women and men here? [<img src="icons/2answer.png" width=115px align="right">](#answer7.4.1)
 ```
 
 <A name="question7.4.2"></A>
 ```{block2, type='rmdquestion'}
-2. Is there a main effect of endorser? Again, motivate your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer7.4.2)
+2. Is there a main effect of endorser? Again, motivate your answer and describe the effect if there is one. [<img src="icons/2answer.png" width=115px align="right">](#answer7.4.2)
 ```
 
 <A name="question7.4.3"></A>
@@ -707,7 +758,7 @@ In analysis of variance, effects are differences between average outcome scores.
 
 Different "Clooney effects" for female and male participants imply different differences! The difference in average willingness scores between females exposed to Clooney and females who are not exposed to an endorser is different from the difference in average scores for males. We have four subgroups with average willingness scores that we have to compare. We have six subgroups if we also include endorsement by Angelina Jolie. 
 
-```{r anova-effectstrengthmod, echo=FALSE, out.width="70%", fig.cap="Moderation as a stronger effect within a particular context."}
+```{r anova-effectstrengthmod, echo=FALSE, out.width="70%", fig.asp=0.6, fig.cap="Moderation as a stronger effect within a particular context."}
 # Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(3, 5, 5, 4.5, 9, 6.5))
 library(ggplot2)
@@ -717,24 +768,24 @@ ggplot(d, aes(endorser, willingness_av, colour = sex)) +
   geom_segment(aes(x = 0.8, xend = 2.2, y = d[5,3], yend = d[5,3]),
                linetype = "dashed", color = "black") +
   geom_segment(aes(x = 2, xend = 2, y = d[4,3], yend = d[5,3]),
-               color = brewercolors["Green"],
+               color = "darkgrey",
                arrow = arrow(length = unit(2,"mm"),
-                                 ends = "both",
+                                 # ends = "both",
                                  type = "closed")) +
   geom_text(aes(x = 2.02, y = (d[4,3] + d[5,3])/2,
             label = "Clooney effect\nfor females",
-            hjust = 0), color = brewercolors["Green"]
+            hjust = 0), color = "darkgrey"
             ) +
   geom_segment(aes(x = 0.8, xend = 2.2, y = d[1,3], yend = d[1,3]),
                linetype = "dashed", color = "black") +
-  geom_segment(aes(x = 1, xend = 1, y = d[1,3], yend = d[2,3]),
-               color = brewercolors["Green"],
+  geom_segment(aes(x = 1, xend = 1, y = d[1,3], yend = (d[2,3] - 0.1)),
+               color = "darkgrey",
                arrow = arrow(length = unit(2,"mm"),
-                                 ends = "both",
+                                 # ends = "both",
                                  type = "closed")) +
-  geom_text(aes(x = 1.02, y = (d[1,3] + d[2,3])/2,
+  geom_text(aes(x = 0.98, y = (d[1,3] + d[2,3])/2,
             label = "Clooney effect\nfor males",
-            hjust = 0), color = brewercolors["Green"]
+            hjust = 1), color = "darkgrey"
             ) +
   theme_general() + 
   scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 
@@ -749,13 +800,51 @@ The distances between the lines show the difference of the differences. If the l
 
 A special case of effect strength moderation is the situation in which the effect is absent (zero) in one context and present in another context. A trivial example would be the effect of an anti-smoking campaign on smoking frequency. For smokers (one context), smoking frequency may go down with campaign exposure and the campaign may have an effect. For non-smokers (another context), smoking frequency cannot go down and the campaign cannot have this effect.
 
-Except for trivial cases such as the effect of anti-smoking campaigns on non-smokers, it does not make sense to distinguish sharply between moderation in which the effect is strengthened and moderation in which the effect is present versus absent. In non-trivial cases, it is very rare that an effect is precisely zero.
+Except for trivial cases such as the effect of anti-smoking campaigns on non-smokers, it does not make much sense to distinguish sharply between moderation in which the effect is strengthened and moderation in which the effect is present versus absent. In non-trivial cases, it is very rare that an effect is precisely zero. (See Holbert and Park [-@HolbertConceptualizingOrganizingPositing2019] for a different view on this matter.)
 
 #### Effect direction moderation
 
-In the other type of moderation, the effect in one group is the opposite of the effect in another group. For example, Clooney is a more effective endorser among females than males whereas Jolie is more effective among males than females. Let us call this _effect direction moderation_. Females reverse the Jolie effect and males reverse the Clooney effect. 
+In the other type of moderation, the effect in one group is the opposite of the effect in another group. In figure \@ref(fig:anova-effectdirmod1), for example, Clooney increases the average willingness to donate among females in comparison the group who did not see a celebrity endorser. In contrast, average willingness for male Clooney viewers is lower than the average for the males without endorser. Let us call this _effect direction moderation_. Males reverse the Clooney effect that we find for females. 
 
-```{r anova-effectdirmod, echo=FALSE, out.width="70%", fig.cap="Moderation as opposite effects in different contexts."}
+```{r anova-effectdirmod1, echo=FALSE, out.width="70%", fig.asp=0.6, fig.cap="Moderation as a positive  effect in one context and a negative effect in another context."}
+# Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
+d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(5, 3.5, 7, 6, 7.5, 9))
+library(ggplot2)
+ggplot(d, aes(endorser, willingness_av, colour = sex)) + 
+  geom_point(size = 3) + 
+  geom_line(aes(group = sex), size = 1) + 
+  geom_segment(aes(x = 0.8, xend = 2.2, y = d[5,3], yend = d[5,3]),
+               linetype = "dashed", color = "black") +
+  geom_segment(aes(x = 2, xend = 2, y = d[4,3], yend = d[5,3]),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+  geom_text(aes(x = 1.98, y = (d[4,3] + d[5,3])/2,
+            label = "Clooney effect\nfor females",
+            hjust = 1), color = "darkgrey"
+            ) +
+  geom_segment(aes(x = 0.8, xend = 2.2, y = d[1,3], yend = d[1,3]),
+               linetype = "dashed", color = "black") +
+  geom_segment(aes(x = 1, xend = 1, y = d[1,3], yend = (d[2,3] + 0.1)),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+  geom_text(aes(x = 0.98, y = (d[1,3] + d[2,3])/2,
+            label = "Clooney effect\nfor males",
+            hjust = 1), color = "darkgrey"
+            ) +
+  theme_general() + 
+  scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 
+  labs(x = "Endorser", y = "Average willingness to donate") +
+  scale_color_manual(values=c(brewercolors[[1]], brewercolors[[5]]))
+rm(d)
+```
+
+In an extreme situation, the effect in one group can compensate for the effect in another group if it is about as strong but of the opposite direction (Figure \@ref(fig:anova-effectdirmod2)). Imagine that George Clooney convinces females to donate but discourages males to donate because his charms backfires on men (pure jealousy, perhaps.) Similarly, Angelina Jolie may have opposite effects on females and males. 
+
+```{r anova-effectdirmod2, echo=FALSE, out.width="70%", fig.asp=0.6, fig.cap="Moderation as opposite effects in different contexts."}
 # Add means plot with Clooney, Jolie, and Nobody on the x axis, willingness to donate on the y axis, and separate (coloured) lines linking the mean scores for females and males. In the plot, the average for females*Clooney is much higher than males*Clooney but the reverse does not apply to Jolie.
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"), levels = c("Clooney","Nobody","Jolie")), sex = as.factor(c(rep("male", 3), rep("female", 3))), willingness_av = c(6, 3, 9, 6, 9, 3))
 library(ggplot2)
@@ -764,22 +853,22 @@ ggplot(d, aes(endorser, willingness_av, colour = sex)) +
   geom_line(aes(group = sex), size = 1) + 
   geom_segment(aes(x = 0.8, xend = 3.2, y = d[1,3], yend = d[1,3]),
                linetype = "dashed", color = "black") +
-  geom_segment(aes(x = 1, xend = 1, y = d[4,3], yend = d[5,3]),
-               color = brewercolors["Green"],
+  geom_segment(aes(x = 1, xend = 1, y = d[4,3], yend = (d[5,3] - 0.1)),
+               color = "darkgrey",
                arrow = arrow(length = unit(2,"mm"),
-                                 ends = "both",
+                                 # ends = "both",
                                  type = "closed")) +
   geom_text(aes(x = 0.98, y = (d[4,3] + d[5,3])/2,
             label = "Clooney effect\nfor females",
-            hjust = 1), color = brewercolors["Green"]) +
+            hjust = 1), color = "darkgrey") +
   geom_segment(aes(x = 3, xend = 3, y = d[4,3], yend = d[6,3]),
-               color = brewercolors["Green"],
+               color = "darkgrey",
                arrow = arrow(length = unit(2,"mm"),
-                                 ends = "both",
+                                 # ends = "both",
                                  type = "closed")) +
   geom_text(aes(x = 3.02, y = (d[4,3] + d[6,3])/2,
             label = "Jolie effect\nfor females",
-            hjust = 0), color = brewercolors["Green"]) +
+            hjust = 0), color = "darkgrey") +
   theme_general() + 
   scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 
   labs(x = "Endorser", y = "Average willingness to donate") + 
@@ -787,15 +876,13 @@ ggplot(d, aes(endorser, willingness_av, colour = sex)) +
 rm(d)
 ```
 
-The effect in one group can compensate for the effect in another group if it is about as strong but of the opposite direction. Imagine that George Clooney convinces females to donate but discourages males to donate because his charms backfires on men (pure jealousy, perhaps.) Similarly, Angelina Jolie may have opposite effects on females and males. 
-
-In this situation, the main effect of endorser on willingness to donate is (nearly) zero. If we average over females and males, there is no net difference between Clooney, Jolie, and the condition without an endorser. This does not mean that the endorser does not matter. On the contrary, the interaction effects tell us that the endorser is effective for one group but counterproductive for another group. The second part of the conclusion is just as important as the first part. The campaign should avoid to  decrease the willingness to donate among particular target groups.
+In this situation, the main effect of endorser on willingness to donate is (nearly) zero. If we average over females and males, there is no net difference between Clooney, Jolie, and the condition without an endorser. This does not mean that the endorser does not matter. On the contrary, the interaction effects tell us that the endorser is effective for one group but counterproductive for another group. The second part of the conclusion is just as important as the first part. The campaigner should avoid to decrease the willingness to donate among particular target groups.
 
 ### Testing main and interaction effects
 
 The effect of a single factor is called a main effect, as we learned in Section \@ref(maineffects). A main effect reflects the difference between means for groups within one factor. The main effect of sex, for instance, can be that females are on average more willing to donate than males. A two-way analysis of variance includes two main effects, one for each factor (see Section \@ref(anova2way)), for example a main effect of sex and a main effect of endorser. 
 
-For moderation, however, we compare average scores of subgroups, that is, groups that combine a level on one factor and a level on another factor. In Figure \@ref(fig:anova-interaction), we compare average willingness to donate for combinations of endorser and participant's sex. The effect of differences among subgroups on the dependent variable is called an _interaction effect_. Just like a main effect, an interaction effect is tested with an F test and its effect size is expressed by eta^2^.
+For moderation, however, we compare average scores of subgroups, that is, groups that combine a level on one factor with a level on another factor. In Figure \@ref(fig:anova-interaction), we compare average willingness to donate for combinations of endorser and participant's sex. The effect of differences among subgroups on the dependent variable is called an _interaction effect_. Just like a main effect, an interaction effect is tested with an F test and its effect size is expressed by eta^2^.
 
 ```{r anova-interaction, echo=FALSE, fig.cap="How can we recognize main effects and moderation in a means plot?", screenshot.opts = list(delay = 5), dev="png", out.width="780px"}
 # Goals: Recognize effect size and statistical significance of main and interaction effects.
@@ -820,13 +907,17 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="3
 7. Is it possible to have a statistically significant interaction effect but no statistically significant main effects? If so, adjust the scores in Figure \@ref(fig:anova-interaction) to prove your case. [<img src="icons/2answer.png" width=115px align="right">](#answer7.4.7)
 ```
 
-Interpretation of moderation requires some training because we must abstract from main effects. The fact that females score on average higher than males is irrelevant to moderation but it does affect all subgroup mean scores. So the fact that the red line is above the blue line in Figure \@ref(fig:anova-interaction) is not relevant to moderation.
+Interpretation of moderation requires some training because we must look beyond main effects. The fact that females score on average higher than males is irrelevant to moderation but it does affect all subgroup mean scores. So the fact that the red line is above the blue line in Figure \@ref(fig:anova-interaction) is not relevant to moderation.
 
-Moderation concerns the differences between subgroups that remain if we remove the overall differences between groups, that is, the differences that are captured by the main effects. The remaining differences between subgroup average scores provide us with a between-groups variance. In addition, the variation of outcome scores within subgroups yields a within-groups variance. Note that within-groups variance is not visible in Figure \@ref(fig:anova-interaction) because the willingness scores of the participants are not shown.
+Moderation concerns the differences between subgroups that remain if we remove the overall differences between groups, that is, the differences that are captured by the main effects. The remaining differences between subgroup average scores provide us with a between-groups variance. In addition, the variation of outcome scores within subgroups yields a within-groups variance. Note that within-groups variance is not visible in Figure \@ref(fig:anova-interaction) because the willingness scores of the individual participants are not shown.
 
-We can use the between-groups and within-groups variances to execute an F test just like the F test we use for main effects. The null hypothesis of the F test on an interaction effect states that the subgroups have the same population averages if we correct for the main effects. Our statistical software takes care of this correction.
+We can use the between-groups and within-groups variances to execute an F test just like the F test we use for main effects. The _null hypothesis_ of the F test on an interaction effect states that the subgroups have the same population averages if we correct for the main effects. Our statistical software takes care of this correction if we include the main effects in the model, which we should always do. 
 
-Note that we must include the main effects in the model if we want to correct for them in our test of an interaction effect. If we would exclude main effects, we assume that there are no main effects. Why assume that there are no main effects if we can test their absence?
+Alternatively, we can formulate the null hypothesis of the test on the interaction effect as equal effects of the predictor for all moderator groups in the population. In the current example, the null hypothesis could be that the effect of endorser is the same for both sexes in the population. Or, the other way around, that the effect of sex is the same for different endorser groups in the population.
+
+```{block2, type='rmdimportant'}
+Null hypothesis of the test on the interaction effect: equal effects of the predictor for all moderator groups in the population.
+```
 
 Moderation between three or more factors is possible. These are called _higher-order interactions_. It is wise to include both main effects and lower-order interactions if we test a higher-order interaction. As a result, our model becomes very complicated and hard to interpret. If a (first-order) interaction between two predictors must be interpreted as different differences, an interaction between three factors must be interpreted as different differences in differences. That's difficult to imagine, so let us avoid them.
 
@@ -843,13 +934,12 @@ Answer to Question 1.
 means.
 * In the right-most column of the table, it is easy to see that females have a
 higher average willingness score than males, so there is a main effect of sex.
-* In the plot, the difference is more difficult to see. You have to guess the
-average score of females over all endorsers (the average of the red line) and
-the average score of all males (average of the blue line), to see that females
-score higher than males on average.
 * In this particular plot, the red line is everywhere above the blue line, so
 it is relatively easy to see that females score on average higher than males.
-But if the lines cross, it will be more difficult to see. [<img src="icons/2question.png" width=161px align="right">](#question7.4.1)
+* If the lines cross, it will be more difficult to see a main effect. In that
+case, you have to guess the average score of females over all endorsers (the
+average of the red line) and the average score of all males (average of the
+blue line) to see whether females score on average higher than males. [<img src="icons/2question.png" width=161px align="right">](#question7.4.1)
 ```
   
 <A name="answer7.4.2"></A>
@@ -960,8 +1050,7 @@ males for another endorser.
 
 The main purpose of reporting a two-way analysis of variance is to show the reader the differences between average group scores on the dependent variable between groups on the same factor (main effects) and different differences for groups on a second factor (interaction effect). A means plot is very suitable for this purpose. Conventionally, we place the predictor groups on the horizontal axis and we draw different lines for the moderator groups. But you can switch them if it produces a more appealing graph.
 
-```{r 2way-meansplot, echo=FALSE, message=FALSE, warning=FALSE, out.width="70%", fig.cap="An example of a means plot."}
-# {TBD}
+```{r 2way-meansplot, echo=FALSE, message=FALSE, warning=FALSE, out.width="70%", fig.asp=0.6, fig.cap="An example of a means plot."}
 # Basic colours and layout.
 source("../apps/plottheme/styling.R")
 # Create effect sizes.
@@ -1000,14 +1089,14 @@ For the statistically informed reader, you should include the following informat
 
 * Report it if the main assumption is violated, that is, if you have (sub)groups of unequal size and the test on homogeneous variances is statistically significant. Report Levene's test just like you report the F test of a main effect (see above). If the assumption is violated, we still report and interpret the results of the analysis of variance but we warn that the results may not be trustworthy. 
 
-In a two-way analysis of variance, the number of numeric results can be large. It is recommended to present them as a table (in the text or in an appendix). If you report the table, include the error, the sums of squares and mean squares in the same way that SPSS reports them. Table \@ref(tab:2way-table) presents an example.
+A two-way analysis of variance may produce many numeric results to report. It is recommended to present them as a table (in the text or in an appendix). If you report the table, include the error, the sums of squares and mean squares in the same way that SPSS reports them. Table \@ref(tab:2way-table) presents an example.
 
 ```{r 2way-table, warning=FALSE, message=FALSE, echo=FALSE}
 results <- anova(lm(willing_post ~ sex*endorser, data = donors))
 results <- cbind(round(results[,2], digits = 2), round(results[,1], digits = 0), round(results[,3:4], digits = 2), round(results[,5], digits = 3))
 row.names(results)[3] <- "endorser*sex"
 row.names(results)[4] <- "error"
-results[5,] <- c(round(sum(results[,2]), digits = 2), sum(results[,3]), NA, NA, NA)
+results[5,] <- c(round(sum(results[,1]), digits = 2), round(sum(results[,2]), digits = 2), NA, NA, NA)
 row.names(results)[5] <- "Total"
 results$`round(results[, 5], digits = 3)`[results$`round(results[, 5], digits = 3)` < 0.001] <- "< 0.001"
 options(knitr.kable.NA = '')
@@ -1055,7 +1144,7 @@ knitr::include_url("https://www.youtube.com/embed/te0HZpvA6X8", height = "360px"
 <A name="question7.6.3"></A>
 ```{block2, type='rmdquestion'}
 3. Data set [smokers.sav](http://82.196.4.233:3838/data/smokers.sav) contains information about smoking for a random sample of adults. Does the attitude towards smoking depend on the adult's smoking behaviour (smoker, former smoker, or non-smoker) and on exposure to an anti-smoking campaign? 
-  Recode exposure scores into three groups: low exposure (scores 3 or less), medium exposure (scores 3 to 7), and high exposure (scores above 7). [<img src="icons/2answer.png" width=115px align="right">](#answer7.6.3)
+  Recode exposure scores into three groups: low exposure (scores 3 or less), medium exposure (scores above 3 up to and including 7), and high exposure (scores above 7). [<img src="icons/2answer.png" width=115px align="right">](#answer7.6.3)
 ```
 
 ### Answers {-}
@@ -1085,23 +1174,24 @@ There are no impossible values on the three variables.
   
 Check assumptions:  
   
-All six subgroups are of nearly equal size and/or the Levene test on
+* All six subgroups are of nearly equal size and/or the Levene test on
 homogeneity of variances is not statistically significant, *F* (5, 137) = 0.43,
-*p* = .825, so the most important assumptions are met. Note that different
+*p* = .825, so the most important assumption is met. Note that different
 versions of SPSS may give slightly different results, but the p values are all
-around .830.
+around .830. 
+
+* The females and males could have been drawn independently and each experimental group could have been drawn independently as well: The samples are independent. Because this is usually the case, this assumption is not always explicitly checked. But do note it if the samples are not independent. 
   
 Interpret the results:  
   
 The question is about moderation, so let us focus our interpretation on the  
 interaction effect.  
   
-* Our two-way analysis of variance shows a statistically significant interaction effect of endorser and sex of the participant, *F* (2, 137) = 4.63, *p* = .011, eta^2^ = 0.05. We may conclude that the effect of the endorsing celebrity on an adult's willingness to donate is different for females and males.  
+* Our two-way analysis of variance shows a statistically significant interaction effect of endorser and sex of the participant, *F* (2, 137) = 4.63, *p* = .011, eta^2^ = 0.05. We may conclude that the effect of the endorsing celebrity on an adult's willingness to donate is different for females and males in the population. The differences are substantial (a medium-sized effect, eta = 0.22).
 * Females who saw George Clooney are more strongly willing to donate (*M* = 5.84, *SD* = 1.48) than males (*M* = 4.09, *SD* = 1.30). In contrast, there is hardly any difference in willingness to donate between males (*M* = 4.99, *SD* = 1.77) and females (*M* = 4.91, *SD* = 1.51) who see Angelina Jolie endorse the fund raiser.  
-* This result suggests that females are more sensitive to George Clooney as endorser than males but the opposite does not apply to Angelina Jolie as endorser. 
-* The effect size, however, is small.
+* This result suggests that females are more sensitive to George Clooney as endorser than males but the opposite does not apply to Angelina Jolie as endorser.
   
-Note that eta^2^ was calculated by hand, dividing the sum of squares of the interaction effect by the sum of squares of the corrected total. We do not have post-hoc tests for the interaction effect, so we do not have a confidence interval for the differences between subgroups. [<img src="icons/2question.png" width=161px align="right">](#question7.6.1)
+Note that eta^2^ was calculated by hand, dividing the sum of squares of the interaction effect by the sum of squares of the corrected total. Eta is the square root of eta^2^. We do not have post-hoc tests for the interaction effect, so we do not have a confidence interval for the differences between subgroups. [<img src="icons/2question.png" width=161px align="right">](#question7.6.1)
 ```
 
 <A name="answer7.6.2"></A>
@@ -1134,8 +1224,9 @@ The six subggroups are not nearly of equal size but the Levene test on homogenei
 Interpret the results for the interaction effect:  
   
 * For adults who do not remember the campaign, the effect of seeing Angelina Jolie endorse the fund raiser seems to be relatively low in comparison to the effect for adults who do remember the campaign. This can be seen in the means plot.  
-* However, a two-way analysis of variance tells us that the interaction effect of endorser with campaign remembrance on willingness to donate is very weak and not statistically significant, *F* (2, 137) = 0.67, *p* = .514, eta^2^ = .01.  
-* Both the endorsing celebrity and campaign remembrance seem to have statistically significant effects on willingness to donate, but the effect of celebrity endorser on willingness to donate is not clearly different for adults who remember the campaign and those who do not remember the campaign.  
+* However, a two-way analysis of variance tells us that the interaction effect of endorser with campaign remembrance on willingness to donate is weak and not statistically significant, *F* (2, 137) = 0.67, *p* = .514, eta^2^ = .01.  
+* Both the endorsing celebrity and campaign remembrance seem to have statistically significant effects on willingness to donate, but the effect of celebrity endorser on willingness to donate is not clearly different for adults who remember the campaign and those who do not remember the campaign.
+* Our sample (_N_ = 143) is not very small, so it is not very likely that the test would have been non-significant if the effect in the population is moderate or strong. 
   
 Note that eta^2^ was calculated by hand, dividing the sum of squares of the interaction effect by the sum of squares of the corrected total. [<img src="icons/2question.png" width=161px align="right">](#question7.6.2)
 ```
@@ -1190,18 +1281,28 @@ should report this as a disclaimer with our results.
   
 Interpret the results:  
   
-Because we are going to interpret all effects, it is recommended to present the table with between-participants effects instead of reporting all F test results in the text.  
-    
-* Exposure clearly matters to smoking attitude according to our two-way analysis of variance. High exposure is associated with a more negative attitude towards smoking (*M* = -0.52, *SD* = 1.26) than medium exposure (*M* = 0.18, *SD* = 1.95, difference: *p* = .024), which is more negative than the attitude for adults with low exposure (*M* = 0.99, *SD* = 1.34, difference: *p* = .006). Exposure accounts for 21 per cent of the variation in attitude towards smoking.  
+Because we are going to interpret all effects, it is recommended to present the table with between-participants effects instead of reporting all F test results in the text. The interpretation can then focus on the group averages and their differences (from the post-hoc tests).
+
+| | SS | df | MS | _F_ | _p_ | Eta-squared |
+|:----|----:|----:|----:|----:|----:|----:|
+| Exposure | 50.050 | 2 | 25.025 | 26.768 | <.001 | 0.21 |
+| Smoking status | 58.75 | 2 | 29.38 | 31.42 | <.001 | 0.25 |
+| Smoking status * Exposure | 29.991 | 4 | 7.498 | 8.020 | .000 | 0.13 |
+| Error | 71.051 | 76 | .935 |  | | |
+| Total | 233.413 | 84 |  |  | | |
+_Note_. _N_ = 85.
+
+* Exposure clearly matters to smoking attitude according to our two-way analysis of variance. High exposure is associated with a more negative attitude towards smoking (*M* = -0.52, *SD* = 1.26) than medium exposure (*M* = 0.18, *SD* = 1.95). With 95% confidence, the difference ranges from as little as 0.07 to not less than 1.3 points on a scale of ten points in the population (average difference = -0.70, *p* = .024, 95%CI[-1.33, -0.07]). At medium exposure, the attitude towards smoking is more negative than the attitude of adults with low exposure (*M* = 0.99, *SD* = 1.34). Here, the difference in the population ranges from 0.2 to 1.4 points with 95% confidence (average difference = -0.81, *p* = .006, 95%CI[-1.43, -0.19]). 
+* Exposure accounts for 21 per cent of the variation in attitude towards smoking.  
   
-* Smoking status also matters for attitude towards smoking.   
-* Former smokers (*M* = -1.70, *SD* = 1.71) are significantly more negative towards smoking then smokers (*M* = 0.80, *SD* = 1.67, difference: *p* < .001) and non-smokers (*M* = 0.64, *SD* = 1.17, difference: *p* < .001).  
-* The difference between the latter two groups is not statistically significant (*p* = 1.000). Smoking status accounts for 25 per cent of the differences in smoking attitude.  
+* Smoking status also matters for attitude towards smoking. It accounts for 25 per cent of the differences in smoking attitude, which is quite a lot.   
+* Former smokers (*M* = -1.70, *SD* = 1.71) are significantly more negative towards smoking than smokers (*M* = 0.80, *SD* = 1.67) and non-smokers (*M* = 0.64, *SD* = 1.17). The differences with former smokers range from 1.7 to 3.3 points (on a scale with ten points) for smokers (average difference = -2.49, *p* < .001, 95%CI[-3.30, -1.68]) and from 1.7 to 3.0 points for non-smokers (average difference = -2.33, *p* < .001, 95%CI[-3.01, -1.65] in the population).
+* The difference between smokers and non-smokers is not statistically significant, although smokers seem to have a more positive rather than a more negative attitude towards smoking than non-smokers (average difference = 0.16, *p* = 1.000, 95%CI[-0.49, 0.81]). Our sample is not so large (_N_ = 85), so the power of the test is probably not high.
+
+* There is a moderate to high (eta^2^ = 0.13, eta = 0.36) and statistically significant interaction effect of smoking status with exposure on attitude towards smoking.  
+* If we inspect the means plot, we see that the effect of exposure on attitude is moderated by smoking status. Former smokers with low exposure are much more positive (less negative) about smoking than we would expect. In other words, medium and high exposure to the campaign decreases the attitude of former smokers more than the attitudes of smokers or non-smokers.
   
-* There is a moderate (eta^2^ = 0.13) and statistically significant interaction effect of smoking status with exposure on attitude towards smoking.  
-* If we inspect the means plot, we see that the effect of exposure on attitude is moderated by smoking status. Former smokers with low exposure are much more positive (less negative) about smoking than we would expect. Or, in other words, medium and high exposure to the campaign decreases their attitude more than the attitudes of smokers or non-smokers.
-  
-Note that the proportions of explained variance (eta^2^) have been calculated manually. [<img src="icons/2question.png" width=161px align="right">](#question7.6.3)
+Note that the proportions of explained variance (eta^2^) have been calculated manually. Eta is the square root of eta^2^. [<img src="icons/2question.png" width=161px align="right">](#question7.6.3)
 ```
 
 ## Test Your Understanding
@@ -1214,7 +1315,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="3
 
 <A name="question7.7.1"></A>
 ```{block2, type='rmdquestion'}
-1. What is or are the main effects in Figure \@ref(fig:anova-overview)? Explain how you can recognize main effects both in the means plot and in the reported numbers. [<img src="icons/2answer.png" width=115px align="right">](#answer7.7.1)
+1. What is or are the main effects in Figure \@ref(fig:anova-overview)? Explain how you can recognize main effects both in the means plot and in the table of means. [<img src="icons/2answer.png" width=115px align="right">](#answer7.7.1)
 ```
 
 <A name="question7.7.2"></A>
@@ -1224,7 +1325,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/anova-interaction/", height="3
 
 <A name="question7.7.3"></A>
 ```{block2, type='rmdquestion'}
-3 What is the null hypothesis of the F tests reported in Figure \@ref(fig:anova-overview)? [<img src="icons/2answer.png" width=115px align="right">](#answer7.7.3)
+3. What is the null hypothesis of the F tests reported in Figure \@ref(fig:anova-overview)? [<img src="icons/2answer.png" width=115px align="right">](#answer7.7.3)
 ```
 
 <A name="question7.7.4"></A>
@@ -1303,7 +1404,7 @@ understood as different differences. [<img src="icons/2question.png" width=161px
 ```{block2, type='rmdanswer', echo=ch7}
 Answer to Question 3. 
 
-* The substantive null hypothesis of an F test in analysis of variance is that
+* The null hypothesis of an F test in analysis of variance is that
 all groups have the same average outcome scores in the populations from which
 the samples were drawn.
 * For the main effect of sex, the null hypothesis is that females and males
@@ -1333,7 +1434,7 @@ be predicted for 47 per cent by the endorser that they were exposed to. [<img sr
 
 ## Take-Home Points  
 
-* In analysis of variance, we test the substantive null hypothesis that all groups have the same population means. Behind the scenes, we actually test the ratio of between-groups variance to within-groups variance.
+* In analysis of variance, we test the null hypothesis that all groups have the same population means. Behind the scenes, we actually test the ratio of between-groups variance to within-groups variance.
 
 * The overall differences in average outcome scores between groups on one factor (independent variable) are a main effect in an analysis of variance.
 

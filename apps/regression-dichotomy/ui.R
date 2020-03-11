@@ -6,7 +6,7 @@ shinyUI(
   fluidPage(
     fluidRow(column(6,
                     align = "center",
-                    br(),
+                    # br(),
 #                    div(strong("Equation:")),
                     withMathJax(uiOutput("equationui")),
                     div(strong("Adjust average attitude towards smoking:")),

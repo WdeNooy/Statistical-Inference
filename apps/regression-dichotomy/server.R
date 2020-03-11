@@ -45,11 +45,11 @@ shinyServer(function(input, output) {
   output$equationui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude = }\\color{#2B83BA}{constant(",
+        paste("$$\\color{black}{attitude = }\\color{#2B83BA}{constant}\\color{black}{ + }\\color{#D7191C}{b }\\color{black}{* status}$$ \n $$\\color{black}{attitude = }\\color{#2B83BA}{",
               input$nonsmokeraveragesli,
-              ")}\\color{black}{ + }\\color{#D7191C}{b (",
+              "}\\color{black}{ + }\\color{#D7191C}{",
               (input$smokeraveragesli - input$nonsmokeraveragesli),
-              ")}\\color{black}{* status + e}$$")
+              "}\\color{black}{* status}$$")
       )
     )
   })

@@ -7,15 +7,16 @@ shinyServer(function(input, output) {
   source("../plottheme/styling.R", local = TRUE)
   
   #Reactive data frame for plotting the means
-  data <- reactive(data.frame(endorser = factor(c("Nobody","Clooney","Jolie","Nobody","Clooney","Jolie"),
-                                                levels = c("Nobody","Clooney","Jolie")),
+  data <- reactive(data.frame(endorser = factor(c("Clooney","Jolie","No endorser","Clooney","Jolie","No endorser"),
+                                                levels = c("Clooney","Jolie","No endorser")),
                               sex = as.factor(c(rep("male", 3), rep("female", 3))),
-                              willingness_av = c(input$mennobody,
-                                                 input$menclooney,
+                              willingness_av = c(input$menclooney,
                                                  input$menjolie,
-                                                 input$wonobody,
+                                                 input$mennobody,
                                                  input$woclooney,
-                                                 input$wojolie)))
+                                                 input$wojolie,
+                                                 input$wonobody)))
+
   ##MAIN PLOT##
   output$mainplot <- renderPlot({
     #Load data
@@ -99,11 +100,10 @@ shinyServer(function(input, output) {
       ggtitle("Average willingness by endorser") + 
       #Theme settings
       theme_general() + 
-      theme(legend.position = c(0.5, 0), legend.direction = "horizontal",
-            legend.justification = c(0.5, 0), legend.background = element_blank())
+      theme(legend.position = "bottom")
   })
   
-  #Output for total of nobody
+  #Output for total of Nobody
   output$totnobtext <- renderText(
     as.character(
       round(
@@ -137,7 +137,7 @@ shinyServer(function(input, output) {
       )
     )
   )
-  #Output for total men
+  #Output for total women
   output$totwomtext <- renderText(
     as.character(
       round(

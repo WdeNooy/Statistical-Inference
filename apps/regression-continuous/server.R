@@ -60,7 +60,7 @@ shinyServer(function(input, output) {
   output$formulaui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\color{black}{attitude(}\\color{orange}{",1.6 - 0.6 * input$expovalueslider,"}\\color{black}{) = 1.6 + b(-0.6) * exposure(}\\color{orange}{",input$expovalueslider,"}\\color{black}{)}$$")
+        paste("$$\\color{orange}{attitude}\\color{black}{ = constant + b * }\\color{steelblue}{exposure}$$ \n $$\\color{orange}{",1.6 - 0.6 * input$expovalueslider,"}\\color{black}{ = 1.6 + -0.6 * }\\color{steelblue}{",input$expovalueslider,"}$$")
       )
     )
   })

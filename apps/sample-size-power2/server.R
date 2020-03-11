@@ -45,18 +45,27 @@ output$mainplot <- renderPlot({
                  args = list(mean = meanh0, sd = se, df = df),
                  n = 1000) +
   ##Ha
-  #beta-1/power
+  #1-beta = power: left tail
   stat_function(fun = dtshift,
+                xlim = c(-5,lefth0),
+                geom = "area",
+                fill = brewercolors["Green"],
+                colour = "black",
+                alpha = 0.5,
+                args = list(mean = meanha, sd = se, df = df),
+                n = 1000) +
+   #1-beta = power: right tail
+   stat_function(fun = dtshift,
                 xlim = c(righth0,10),
                 geom = "area",
-                fill = brewercolors["Blue"],
+                fill = brewercolors["Green"],
                 colour = "black",
                 alpha = 0.5,
                 args = list(mean = meanha, sd = se, df = df),
                 n = 1000) +
     #Beta
     stat_function(fun = dtshift,
-                  xlim = c(-5,righth0),
+                  xlim = c(lefth0,righth0),
                   geom = "area",
                   colour = "black",
                   fill = brewercolors["Yellow"],

@@ -41,7 +41,7 @@ output$mainplot <- renderPlot({
     stat_function(fun = dtshift,
                   xlim = c(xmin,lefth0),
                   geom = "area",
-                  fill = brewercolors["Red"],
+                  fill = brewercolors["Blue"],
                   colour = "black",
                   alpha = ifelse(
                     input$steps %in% c("step1", "step2"),
@@ -55,7 +55,7 @@ output$mainplot <- renderPlot({
                   xlim = c(righth0,xmax),
                   geom = "area",
                   colour = "black",
-                  fill = brewercolors["Red"],
+                  fill = brewercolors["Blue"],
                   alpha = ifelse(
                     input$steps %in% c("step1", "step2"),
                     0.5, #show
@@ -124,7 +124,7 @@ output$mainplot <- renderPlot({
     stat_function(fun = dtshift,
                   xlim = c(righth0,xmax),
                   geom = "area",
-                  fill = brewercolors["Blue"],
+                  fill = brewercolors["Green"],
                   colour = "black",
                   alpha = 0.5,
                   args = list(mean = meanha, sd = se, df = df),
@@ -135,7 +135,7 @@ output$mainplot <- renderPlot({
           label = paste0(round(power), "%"),
           hjust = 0.5
       ),
-      colour = "white",
+      colour = "black",
       size = 5
     )}
   #Steps 3 and 4 show beta
@@ -169,13 +169,13 @@ output$mainplot <- renderPlot({
       ) +
       #Left rejection region
       geom_segment(aes(x = xmin, xend = lefth0, y = 0, yend = 0),
-                   colour = brewercolors["Red"], 
+                   colour = brewercolors["Blue"], 
                    alpha = 0.5,
                    size = 1.5
       ) +
       #Right rejection region
       geom_segment(aes(x = righth0, xend = xmax, y = 0, yend = 0),
-                   colour = brewercolors["Red"], 
+                   colour = brewercolors["Blue"], 
                    alpha = 0.5,
                    size = 1.5
       ) 

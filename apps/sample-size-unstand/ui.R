@@ -12,7 +12,7 @@ shinyUI(
         br(),
         sliderInput("sampsizeslider",
                     label = "Sample size",
-                    value = 15,
+                    value = 20,
                     min = 5,
                     max = 150,
                     step = 1

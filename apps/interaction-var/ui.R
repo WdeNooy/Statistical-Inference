@@ -32,7 +32,7 @@ shinyUI(
     )
     ),
     fluidRow(align = "center",
-             div(strong("Multiple regression equation:")),
+             div(strong("Multiple regression equations:")),
              withMathJax(uiOutput("formulamult"))
     )    
   )

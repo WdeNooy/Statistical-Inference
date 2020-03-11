@@ -35,7 +35,7 @@ output$mainplot <- renderPlot({
       args = c(mean = p, sd = sqrt(p*(1-p)/n)),
       fill = "grey",
       alpha = 0.5) +
-    scale_x_continuous(name = "Population proportion of yellow candies",
+    scale_x_continuous(name = "Proportion of yellow candies in the sample",
                        breaks = c(0, .25, .5, .75, 1),
                        limits = c(-.2, 1.2)) +
     scale_y_continuous(name = "Count", breaks = NULL) +

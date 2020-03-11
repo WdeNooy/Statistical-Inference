@@ -29,27 +29,17 @@ shinyUI(
         
         tags$table(
           style="width: auto;",
-          class="table  table-condensed",
+          class="table: table-condensed",
           tags$tr(
             tags$th(""),
-            tags$th("Nobody"),
             tags$th("Clooney"),
             tags$th("Jolie"),
+            tags$th("No endorser"),
             tags$th("Total:")
           ),
           tags$tr(
             tags$td(
               "Women"
-            ),
-            tags$td(
-              numericInput("wonobody",
-                           label = "",
-                           value = 4.5,
-                           min = 0,
-                           max = 10,
-                           width = 60,
-                           step = .5
-              )
             ),
             tags$td(
               numericInput("woclooney",
@@ -72,22 +62,22 @@ shinyUI(
               )            
             ),
             tags$td(
+              numericInput("wonobody",
+                           label = "",
+                           value = 4.5,
+                           min = 0,
+                           max = 10,
+                           width = 60,
+                           step = .5
+              )
+            ),
+            tags$td(
               textOutput("totwomtext")  
             )
           ),
           tags$tr(
             tags$td(
               "Men"
-            ),
-            tags$td(
-              numericInput("mennobody",
-                           label = "",
-                           value = 3,
-                           min = 0,
-                           max = 10,
-                           width = 60,
-                           step = .5
-              )             
             ),
             tags$td(
               numericInput("menclooney",
@@ -110,6 +100,16 @@ shinyUI(
               )
             ),
             tags$td(
+              numericInput("mennobody",
+                           label = "",
+                           value = 3,
+                           min = 0,
+                           max = 10,
+                           width = 60,
+                           step = .5
+              )             
+            ),
+            tags$td(
               textOutput("totmentext") 
             )
           ),
@@ -118,13 +118,13 @@ shinyUI(
               strong("Total:")
             ),
             tags$td(
-              textOutput("totnobtext")
-            ),
-            tags$td(
               textOutput("totclotext")
             ),
             tags$td(
               textOutput("totjoltext")
+            ),
+            tags$td(
+              textOutput("totnobtext")
             ),
             tags$td(textOutput("tottext"))
           ) 

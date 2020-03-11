@@ -58,33 +58,48 @@ shinyServer(function(input, output) {
         alpha = 1,
         size = .9,
         aes(color = "Current line")) +
-      scale_fill_gradient(name = "Relevance for current line",low = "white", high = unname(brewercolors["Blue"])) + 
+      scale_fill_gradient(name = "Relevance for \n current line",low = "white", high = unname(brewercolors["Blue"])) + 
+      scale_color_manual(name = "", 
+                         values = c("Previous line" = "#A9A9A9",
+                                    "Current line" = unname(brewercolors["Red"]))
+                         ) + 
       guides(fill = guide_colorbar(title.position = "top",
-                                   barwidth = 9,
+                                   title.theme = element_text(size = 12, angle = 0),
+                                   direction = "horizontal",
+                                   barwidth = 6,
                                    order = 1,
                                    label = FALSE,
                                    ticks = FALSE
                                   )) +
-      scale_color_manual(name = "", 
-                         values = c("Previous line" = "#A9A9A9",
-                                    "Current line" = unname(brewercolors["Red"])
-                                    )) + 
       coord_cartesian(xlim = c(0, 10), ylim = c(-5, 5)) +
       ylab("Attitude") +
       xlab("Exposure") +
       theme_general() + 
-      theme(legend.position = "bottom")
+      theme(legend.position = "bottom", 
+            legend.direction = "vertical",
+            text = element_text(size = 15))
     
   })
   ##FORMULA OUTPUT##
+  # entire formula
   output$formulaui <- renderUI({
     withMathJax(
       helpText(
-        paste("$$\\small{\\color{black}{attitude = 0.4 + (-0.26 + 0.04 * }\\color{blue}{",
+        paste("$$\\small{\\color{black}{attitude = 0.4 + -0.26*exposure + 0.15*}\\color{blue}{",
               input$modvalueslider,
-              "}\\color{black}{)*exposure + 0.15*}\\color{blue}{",
+              "} + 0.04*}\\color{blue}{",
               input$modvalueslider,
-              "}}$$")
+              "}\\color{black}{*exposure}$$")
+      )
+    )
+  })
+  # slope of exposure effect
+  output$formulaslope <- renderUI({
+    withMathJax(
+      helpText(
+        paste("$$\\small{\\color{black}{-0.26 + 0.04*}\\color{blue}{",
+              input$modvalueslider,
+              "}\\color{black}{ = }\\color{blue}{", format(round(-0.26 + 0.04*input$modvalueslider, digits = 3), nsmall = 2),"}}$$")
       )
     )
   })

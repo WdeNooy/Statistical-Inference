@@ -57,46 +57,47 @@ shinyServer(function(input, output) {
   }
   
   # DATA FOR LINES: ONE DATA FRAME PER SCENARIO
-  line_none <- data.frame(x = c(.40,.40,.40,.60,.60,.60),
-                          xend = c(.15,.15,.15,.85,.85,.85),
-                          y = c(.55,.75,.95,.55,.75,.95), 
-                          yend = c(.15,.15,.15,.2,.2,.2),
-                          color = rep("darkgrey", times = 6), #line and label
-                          label = c(0.12, 0.01,0.28,0.88,-0.84,-0.12),
-                          xlab = c(.41,.41,.41,.59,.59,.59),
-                          ylab = c(.46,.67,.88,.46,.67,.88),
-                          width = lwdfunc(c(0.12, 0.01,0.28,0.88,-0.84,-0.12)),
-                          arrowsize = c(0, 0, 0, 0, 0, 0))
-  line_age <- data.frame(x = c(.15,.40,.40,.24,.60,.60),
-                          xend = c(.15,.15,.15,.85,.85,.85),
-                          y = c(.55,.75,.95,.55,.75,.95), 
-                          yend = c(.15,.15,.15,.2,.2,.2),
-                          color = c("blue", "darkgrey", "darkgrey", "blue", "darkgrey", "darkgrey"),
-                          label = c(0.12, 0.01,0.28,0.83,-0.84,-0.12),
-                          xlab = c(.10,.41,.41,.54,.59,.59),
-                          ylab = c(.46,.67,.88,.46,.67,.88),
-                          width = lwdfunc(c(0.12, 0.01,0.28,0.83,-0.84,-0.12)),
-                          arrowsize = c(0, 0, 0, 0.2, 0, 0))
-  line_news <- data.frame(x = c(.40,.15,.40,.60,.24,.60),
-                         xend = c(.15,.15,.15,.85,.85,.85),
-                         y = c(.55,.75,.95,.55,.75,.95), 
-                         yend = c(.15,.15,.15,.2,.2,.2),
-                         color = c("darkgrey", "blue", "darkgrey", "darkgrey", "blue", "darkgrey"),
-                         label = c(0.12, 0.01,0.28,0.88,-0.79,-0.12),
-                         xlab = c(.41,.10,.41,.59,.44,.59),
-                         ylab = c(.46,.67,.88,.46,.67,.88),
-                         width = lwdfunc(c(0.12, 0.01,0.28,0.88,-0.79,-0.12)),
-                         arrowsize = c(0, 0, 0, 0, 0.2, 0))
-  line_edu <- data.frame(x = c(.40,.40,.15,.60,.60,.24),
-                         xend = c(.15,.15,.15,.85,.85,.85),
-                         y = c(.55,.75,.95,.55,.75,.95), 
-                         yend = c(.15,.15,.15,.2,.2,.2),
-                         color = c("darkgrey", "darkgrey", "blue", "darkgrey", "darkgrey", "blue"),
-                         label = c(0.12, 0.01,0.28,0.88,-0.84,-0.18),
-                         xlab = c(.41,.41,.10,.59,.59,.39),
-                         ylab = c(.46,.67,.88,.46,.67,.88),
-                         width = lwdfunc(c(0.12, 0.01,0.28,0.88,-0.84,-0.18)),
-                         arrowsize = c(0, 0, 0, 0, 0, 0.05))
+  # first line is simple effect of predictor on outcome
+  line_none <- data.frame(x = c(.15, .42,.42,.42,.58,.58,.58),
+                          xend = c(.74, .15,.15,.15,.85,.85,.85),
+                          y = c(.15,.55,.75,.95,.55,.75,.95), 
+                          yend = c(.15,.15,.15,.15,.15,.15,.15),
+                          color = c("black", rep("darkgrey", times = 6)), #line and label
+                          label = c("Simple: 0.14", "0.12", "0.01", "0.28", "0.88", "-0.84", "-0.12"),
+                          xlab = c(.5, .41,.41,.41,.59,.59,.59),
+                          ylab = c(.2, .46,.67,.88,.46,.67,.88),
+                          width = lwdfunc(c(0.14, 0.12, 0.01,0.28,0.88,-0.84,-0.12)),
+                          arrowsize = c(0.05, 0, 0, 0, 0, 0, 0))
+  line_age <- data.frame(x = c(.15, .15,.42,.42,.24,.58,.58),
+                          xend = c(.74, .15,.15,.15,.74,.85,.85),
+                          y = c(.15, .55,.75,.95,.55,.75,.95), 
+                          yend = c(.15, .15,.15,.15,.2,.15,.15),
+                          color = c("black", "blue", "darkgrey", "darkgrey", "blue", "darkgrey", "darkgrey"),
+                          label = c("Simple: 0.14", "0.12", "0.01","0.28","0.83","-0.84","-0.12"),
+                          xlab = c(.5,.10,.41,.41,.48,.59,.59),
+                          ylab = c(.2,.46,.67,.88,.46,.67,.88),
+                          width = lwdfunc(c(0.14, 0.12, 0.01,0.28,0.83,-0.84,-0.12)),
+                          arrowsize = c(0.05, 0, 0, 0, 0.15, 0, 0))
+  line_news <- data.frame(x = c(.15,.42,.15,.42,.58,.24,.58),
+                         xend = c(.74, .15,.15,.15,.85,.74,.85),
+                         y = c(.15,.55,.75,.95,.55,.75,.95), 
+                         yend = c(.15,.15,.15,.15,.15,.2,.15),
+                         color = c("black", "darkgrey", "blue", "darkgrey", "darkgrey", "blue", "darkgrey"),
+                         label = c("Simple: 0.14", "0.12", "0.01","0.28","0.88","-0.79","-0.12"),
+                         xlab = c(.5,.41,.10,.41,.59,.4,.59),
+                         ylab = c(.2,.46,.67,.88,.46,.67,.88),
+                         width = lwdfunc(c(0.14, 0.12, 0.01,0.28,0.88,-0.79,-0.12)),
+                         arrowsize = c(0.05, 0, 0, 0, 0, 0.15, 0))
+  line_edu <- data.frame(x = c(.15,.42,.42,.15,.58,.58,.24),
+                         xend = c(.74,.15,.15,.15,.85,.85,.74),
+                         y = c(.15,.55,.75,.95,.55,.75,.95), 
+                         yend = c(.15,.15,.15,.15,.15,.15,.2),
+                         color = c("black", "darkgrey", "darkgrey", "blue", "darkgrey", "darkgrey", "blue"),
+                         label = c("Simple: 0.14", "0.12", "0.01","0.28","0.88","-0.84","-0.18"),
+                         xlab = c(.5,.41,.41,.10,.59,.59,.35),
+                         ylab = c(.2,.46,.67,.88,.46,.67,.88),
+                         width = lwdfunc(c(0.14, 0.12, 0.01,0.28,0.88,-0.84,-0.18)),
+                         arrowsize = c(0.05, 0, 0, 0, 0, 0, 0.05))
   
   #MAIN PLOT
   output$mainplot <- renderPlot({
@@ -121,24 +122,54 @@ shinyServer(function(input, output) {
     #MAIN PLOT                      
     ggplot(labels) +
       #All lines linked to a confounder
-      geom_segment(data = lines, 
-                   aes(x = x, y = y, xend = xend, yend = yend), 
-                   size = lines$width,
-                   colour = lines$color, 
+      # between predictor and confounders
+      geom_curve(data = lines[lines$x < 0.5 & lines$arrowsize == 0,], 
+                   aes(
+                     x = lines$x[lines$x < 0.5 & lines$arrowsize == 0], 
+                     y = lines$y[lines$x < 0.5 & lines$arrowsize == 0], 
+                     xend = lines$xend[lines$x < 0.5 & lines$arrowsize == 0], 
+                     yend = lines$yend[lines$x < 0.5 & lines$arrowsize == 0]
+                     ), 
+                   size = lines$width[lines$x < 0.5 & lines$arrowsize == 0],
+                   colour = lines$color[lines$x < 0.5 & lines$arrowsize == 0], 
                    alpha = .8,
-                   arrow = arrow(length = unit(lines$arrowsize*0.5, "npc"),type = "closed")) + 
-      #Simple arrow
-      geom_segment(x = .15,
-                   xend = .74,
-                   y = .15,
-                   yend = .15,
-                   alpha = .4,
-                   arrow = arrow(length = unit(0.03, "npc"),type = "closed"),
-                   size = lwdfunc(0.14)) + 
-      #Labels
-      geom_label(data = labels, 
+                   curvature = 0.3) + 
+      # between confounders and outcome
+      geom_curve(data = lines[lines$x > 0.5 & lines$arrowsize == 0,], 
+                 aes(
+                   x = lines$x[lines$x > 0.5 & lines$arrowsize == 0], 
+                   y = lines$y[lines$x > 0.5 & lines$arrowsize == 0], 
+                   xend = lines$xend[lines$x > 0.5 & lines$arrowsize == 0], 
+                   yend = lines$yend[lines$x > 0.5 & lines$arrowsize == 0]
+                 ), 
+                 size = lines$width[lines$x > 0.5 & lines$arrowsize == 0],
+                 colour = lines$color[lines$x > 0.5 & lines$arrowsize == 0], 
+                 alpha = .8,
+                 curvature = -0.3) + 
+      #Labels for confounders (below regression arrows)
+      geom_label(data = labels[labels$color != "black",], 
                  aes(x = x, y = y, label = label), 
-                 colour = labels$color,
+                 colour = labels$color[labels$color != "black"],
+                 fill = "white",
+                 label.r = unit(0,"lines"),
+                 label.padding = unit(.4, "lines"),
+                 size  = 5) +
+      #Arrows for all regression effects
+      geom_segment(data = lines[lines$arrowsize != 0,], 
+                 aes(
+                   x = lines$x[lines$arrowsize != 0], 
+                   y = lines$y[lines$arrowsize != 0], 
+                   xend = lines$xend[lines$arrowsize != 0], 
+                   yend = lines$yend[lines$arrowsize != 0]
+                 ), 
+                 size = lines$width[lines$arrowsize != 0],
+                 colour = lines$color[lines$arrowsize != 0], 
+                 alpha = .8,
+                 arrow = arrow(length = unit(lines$arrowsize[lines$arrowsize != 0]*0.5, "npc"),type = "closed")) + 
+      #Labels for predictors and outcome (above regression arrows)
+      geom_label(data = labels[labels$color == "black",], 
+                 aes(x = x, y = y, label = label), 
+                 colour = "black",
                  fill = "white",
                  label.r = unit(0,"lines"),
                  label.padding = unit(.4, "lines"),
@@ -147,8 +178,6 @@ shinyServer(function(input, output) {
       geom_text(data = lines, 
                 aes(x = xlab, y = ylab, label = label), 
                 colour = lines$color) +
-      # Text label Simple
-      geom_text(x = .5, y = .2, label = "Simple: 0.14") +
       # Text label Partial
       geom_text(x = .5, y = .1, 
                 label = ifelse(is.na(partialsize), "", paste("Partial:",partialsize)),

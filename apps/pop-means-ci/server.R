@@ -8,7 +8,7 @@ shinyServer(function(input, output) {
   xmin <- 0 
   xmax <- 5
   ymin <- 0
-  ymax <- 0.7
+  ymax <- 0.9
   
   #Size of point
   psize <- 5
@@ -20,7 +20,7 @@ shinyServer(function(input, output) {
   samplemean <- runif(1, 2, 4)
   sample_ll <- samplemean - 1.96 * se
   sample_ul <- samplemean + 1.96 * se
-  smean <- data.frame(x = samplemean, #last selected populaiton mean
+  smean <- data.frame(x = samplemean, #last selected population mean
                       z = 0, #z value of sample mean for current pop. mean
                       xlow = xmin, xhigh = xmax,
                       ypop = ymin, #95%ci triangle
@@ -78,24 +78,45 @@ shinyServer(function(input, output) {
     ggplot() + 
       geom_blank() +
       #95% most likely sample means
-      geom_segment(aes(x = (xhigh + xlow)/2, xend = xlow, 
-                       y = ypop - psize/200, yend = ymin), data = smean,
+      #normal function line 
+      stat_function(fun = dnorm,
+                    args = list(mean = smean$x, sd = se),
+                    data = smean,
+                    xlim = c(xmin, xmax),
+                    alpha = ifelse(smean$ypop == ymin, 0, 1),
+                    colour = smean$colour,
+                    size = 1.5                    ) +
+      #left-tail boundary
+      geom_segment(aes(x = xlow, xend = xlow, y = 0, yend = dnorm(xlow, mean = x, sd = se)),
+                   data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
-                   colour = smean$colour) +
-      geom_segment(aes(x = (xhigh + xlow)/2, xend = xhigh, 
-                       y = ypop - psize/200, yend = ymin), data = smean,
+                   colour = smean$colour,
+                   size = 1.5
+                   ) +
+      #left-tail boundary
+      geom_segment(aes(x = xhigh, xend = xhigh, y = 0, yend = dnorm(xhigh, mean = x, sd = se)),
+                   data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
-                   colour = smean$colour) +
-      geom_segment(aes(x = xlow, xend = xhigh, 
+                   colour = smean$colour,
+                   size = 1.5
+                   ) +
+      #selected population average line
+      geom_vline(aes(xintercept = smean$x),
+                 alpha = ifelse(smean$ypop == ymin, 0, 1),
+                 size = 0.5,
+                 colour = smean$colour) +
+      #interval estimate
+      geom_segment(aes(x = xlow, xend = xhigh,
                        y = ymin, yend = ymin), data = smean,
                    alpha = ifelse(smean$ypop == ymin, 0, 1),
-                   size = 3,
+                   size = 4,
                    colour = smean$colour) +
+      #text
       geom_text(aes(x = df$x[nrow(df)], y = (ymin + ymax)/4),
                 label = "95% most likely samples",
                 alpha = ifelse(smean$ypop == ymin, 0, 1),
                 colour = smean$colour,
-                size = 5) +
+                size = 4.5) +
       #Critical value times standard error: arrows and text
       #left arrow with label
       geom_segment(aes(x = samplemean, xend = sample_ll, 
