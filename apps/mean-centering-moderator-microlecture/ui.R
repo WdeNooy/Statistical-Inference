@@ -12,7 +12,7 @@ shinyUI(fluidPage(
                         label = "Center Contact. Subtract from Contact:",
                         min = 0,
                         max = 10,
-                        value = 0,
+                        value = 10,
                         step = .5),
                       sliderInput("modvalueslider",
                         label = "Adjust the value of Contact (Moderator):",
@@ -22,7 +22,7 @@ shinyUI(fluidPage(
                         step = .1),
                       checkboxInput("showMCline",
                         label = "Show the mean-centered line.",
-                        value = TRUE)
+                        value = FALSE)
                       ),
                column(8,
                       align = "center",

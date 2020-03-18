@@ -28,13 +28,9 @@ shinyServer(function(input, output) {
   
     #Create data frames for plotting
     df <- data.frame(x = c(0, 6)) #Limits for line
-    #frame for dots with dots within [-0.5, 0.5]-range of selected moderator value in dark blue
-    scatter <- data.frame(attitude = attitude, exposure = exposure, 
-                          plane = ifelse( 
-                            abs(contact - input$modvalueslider) > 0.5, 0,
-                            ifelse(
-                              abs(contact - input$modvalueslider) > 0.25, 0.5, 1)))
-
+    scatter <- data.frame(attitude = attitude, exposure = exposure)
+    scatter$plane <- dnorm(contact, input$modcenterslider/2, sd = .5)
+    
     #Plot
     ggplot(df, aes(x = x)) +
       geom_point(data = scatter,
@@ -44,7 +40,7 @@ shinyServer(function(input, output) {
                      y = attitude,
                      fill = plane),
                  show.legend = FALSE) +
-      scale_fill_gradient(name = "", low = "white", high = unname(brewercolors["Blue"])) + 
+      scale_fill_gradient(name = "",low = "white", high = unname(brewercolors["Blue"])) + 
       stat_function(
         fun = attfun,
         args = list(contact = input$modvalueslider),
@@ -58,7 +54,7 @@ shinyServer(function(input, output) {
                     constant = 0.40 + 0.14 * input$modcenterslider/2,
                     betaexposure = -0.26 + 0.04 * input$modcenterslider/2),
         n = 500,
-        alpha = ifelse(input$showMCline, 1, 0),
+        alpha = 1,
         size = .9,
         aes(color = "Contact centered = 0")) +
       scale_color_manual(name = "",
@@ -69,7 +65,6 @@ shinyServer(function(input, output) {
                 label = paste("Attitude = ", format(0.40 + 0.14 * input$modcenterslider/2, nsmall = 2),
                               " + ", format(-0.26 + 0.04 * input$modcenterslider/2, nsmall = 2),
                               " * Exposure + 0.14 * Contact_c (0) + 0.04 * Contact_c (0) * Exposure"),
-                alpha = ifelse(input$showMCline, 1, 0),
                 show.legend = FALSE) +
       geom_text(aes(x = 5, y = -4.8, color = "Contact = 0"), size = 2.6,
                 label = paste0("Attitude = 0.40 + -0.26 * Exposure + 0.14 * Contact (",

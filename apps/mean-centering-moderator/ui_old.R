@@ -1,5 +1,5 @@
 library(shiny)
-fig.width = 420
+fig.width = 400
 fig.height = 300
 
 shinyUI(fluidPage(
@@ -19,10 +19,7 @@ shinyUI(fluidPage(
                         min = 0,
                         max = 10,
                         value = 0,
-                        step = .1),
-                      checkboxInput("showMCline",
-                        label = "Show the mean-centered line.",
-                        value = TRUE)
+                        step = .5)
                       ),
                column(8,
                       align = "center",

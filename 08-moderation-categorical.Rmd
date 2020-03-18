@@ -1648,27 +1648,31 @@ model_1 <- lm(attitude ~ exposure*status2 + contact, data = smokers)
 results <- data.frame(B = c(report_n(model_1$coefficients,3), NA),
                       #non-smokers
                       Plugin0 = c("", "", "Smoker = 0", paste0("Mean contact = ", report_n(mean(smokers$contact), 3)), "Smoker = 0", ""),
-                       Slope0 = c("", as.character(report_n(model_1$coefficients[2],3)), "", "", paste0(report_n(model_1$coefficients[5],3), " * 0"), report_n(model_1$coefficients[2],3)),
-                      Constant0 = c(as.character(report_n(model_1$coefficients[1],3)), "", paste0(as.character(report_n(model_1$coefficients[3],3)), " * 0"), paste0(as.character(report_n(model_1$coefficients[4],3)), " * ", report_n(mean(smokers$contact), 3)), "", report_n(round(model_1$coefficients[1],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3)),
+                       Slope0 = c("", as.character(report_n(model_1$coefficients[2],3)), "", "", paste0(report_n(model_1$coefficients[5],3), " * 0"), paste0(report_n(model_1$coefficients[2],3), footnote_marker_alphabet(1))),
+                      Constant0 = c(as.character(report_n(model_1$coefficients[1],3)), "", paste0(as.character(report_n(model_1$coefficients[3],3)), " * 0"), paste0(as.character(report_n(model_1$coefficients[4],3)), " * ", report_n(mean(smokers$contact), 3)), "", paste0(report_n(round(model_1$coefficients[1],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3), footnote_marker_alphabet(1))),
                       #smokers
                       Plugin1 = c("", "", "Smoker = 1", paste0("Mean contact = ", report_n(mean(smokers$contact), 3)), "Smoker = 1", ""),
-                       Slope1 = c("", as.character(report_n(model_1$coefficients[2],3)), "", "", paste0(report_n(model_1$coefficients[5],3), " * 1"), report_n(round(model_1$coefficients[2],3) + round(model_1$coefficients[5],3), 3)),
-                      Constant1 = c(as.character(report_n(model_1$coefficients[1],3)), "", paste0(as.character(report_n(model_1$coefficients[3],3)), " * 1"), paste0(as.character(report_n(model_1$coefficients[4],3)), " * ", report_n(mean(smokers$contact), 3)), "", report_n(round(model_1$coefficients[1],3) + round(model_1$coefficients[3],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3)),
+                       Slope1 = c("", as.character(report_n(model_1$coefficients[2],3)), "", "", paste0(report_n(model_1$coefficients[5],3), " * 1"), paste0(report_n(round(model_1$coefficients[2],3) + round(model_1$coefficients[5],3), 3), footnote_marker_alphabet(2))),
+                      Constant1 = c(as.character(report_n(model_1$coefficients[1],3)), "", paste0(as.character(report_n(model_1$coefficients[3],3)), " * 1"), paste0(as.character(report_n(model_1$coefficients[4],3)), " * ", report_n(mean(smokers$contact), 3)), "", paste0(report_n(round(model_1$coefficients[1],3) + round(model_1$coefficients[3],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3), footnote_marker_alphabet(2))),
                       row.names = c("(Constant)", "Exposure", "Smoker", "Contact",
-                                     "Exposure*Smoker", "Result (sum):"),
+                                     "Exposure*Smoker", "Result (sum)"),
                       check.names = FALSE)
 # Table.
 options(knitr.kable.NA = '')
 knitr::kable(results, digits = 3, booktabs = TRUE,
              caption = "Calculation of the simple slope and constant for non-smokers and smokers at average contact.",
              col.names = c("B", rep(c("1. Plugin", "2. Slope", "3. Constant"), 2)),
-             align = "rlrrlrr") %>%
+             align = "rlrrlrr",
+             escape = F) %>%
   kable_styling(font_size = 12, full_width = F,
                 latex_options = c("scale_down", "HOLD_position")) %>%
-  add_header_above(c(" " = 2, "Non-smokers" = 3, "Smokers" = 3))
+  add_header_above(c(" " = 2, "Non-smokers" = 3, "Smokers" = 3)) %>%
+  footnote(alphabet = c(paste0("Equation for non-smokers: y = ", report_n(model_1$coefficients[2],3), " * Exposure	+ ", report_n(round(model_1$coefficients[1],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3) ,"."), paste0("Equation for smokers: y = ", report_n(round(model_1$coefficients[2],3) + round(model_1$coefficients[5],3), 3), " * Exposure	+ ", report_n(round(model_1$coefficients[1],3) + round(model_1$coefficients[3],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3), ".")))
 # Cleanup.
 rm(smokers, model_1, results)
 ```
+
+The calculated slope and constant constitute the simple regression equation of the effect of the predictor for the selected values of the moderator and covariates (see the footnotes to Table \@ref(tab:cat-moderator-results2)). You can interpret the slopes, which are unstandardized regression coefficients ($b$), or use the equations to draw regression lines.
 
 ### Answers {-}
 

@@ -122,12 +122,22 @@ knitr::include_app("http://82.196.4.233:3838/apps/mean-centering-moderator/", he
 
 <A name="question9.1.5"></A>
 ```{block2, type='rmdquestion'}
-5. What happens to the red regression line and the red regression equation if you subtract the mean (*M*) from the respondents' contact with smokers scores? Thus, you mean-center the moderator Contact. Use the slider **Center Contact. Subtract from Contact:** in Figure \@ref(fig:mean-centering-moderator) to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.5)
+5. Participants with moderator scores that are very close to the selected moderator value are dark blue in the plot. Participants with scores that are quite close to the selected value are light blue. Would you conclude that the regression line represents a sizable group of participants? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.5)
 ```
 
 <A name="question9.1.6"></A>
 ```{block2, type='rmdquestion'}
-6. If Contact is mean-centered, the regression coefficient of exposure represents the effect of exposure on attitude for respondents with a particular score on the original Contact variable. What is this original Contact score? Use the slider **Adjust the value of Contact (Moderator):** to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.6)
+6. What happens to the red regression line and the red regression equation if you subtract the mean (*M*) from the respondents' contact with smokers scores? Thus, you mean-center the moderator Contact. Use the slider **Center Contact. Subtract from Contact:** in Figure \@ref(fig:mean-centering-moderator) to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.6)
+```
+
+<A name="question9.1.7"></A>
+```{block2, type='rmdquestion'}
+7. If Contact is mean-centered, the regression coefficient of exposure represents the effect of exposure on attitude for respondents with a particular score on the original Contact variable. What is this original Contact score? Use the slider **Adjust the value of Contact (Moderator):** to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.7)
+```
+
+<A name="question9.1.8"></A>
+```{block2, type='rmdquestion'}
+8. If you have dragged the blue regression line to the red regression line, participants with moderator values close to the mean are (dark) blue (see Question 5). Would you conclude that the regression line represents a sizable group of participants now? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.8)
 ```
 
 What if there are no people with zero contact? Then, the interpretation of the regression coefficient $b_1$ for exposure does not make sense. In this situation, it is better to mean-center the moderator (contact) before you add it to the regression equation and before you calculate the interaction variable. 
@@ -203,9 +213,9 @@ It can be quite tricky to interpret regression coefficients in a regression mode
 knitr::include_app("http://82.196.4.233:3838/apps/continuous-interaction-visualization/", height="308px")
 ```
 
-<A name="question9.1.7"></A>
+<A name="question9.1.9"></A>
 ```{block2, type='rmdquestion'}
-7. Select one or more options in Figure \@ref(fig:continuous-interaction-visualization) to represent regression lines predicting attitude from exposure at different values of the moderator (contact with smokers). Respondents with moderator values close to the selected value are coloured. Which moderator values would you pick to communicate the results of moderation? Motivate your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.7)
+9. Select one or more options in Figure \@ref(fig:continuous-interaction-visualization) to represent regression lines predicting attitude from exposure at different values of the moderator (contact with smokers). Respondents with moderator values close to the selected value are coloured. Which moderator values would you pick to communicate the results of moderation? Motivate your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.9)
 ```
 
 As we have seen in Section \@ref(interpret-cont-interaction), the regression coefficient of an interaction effect with a numerical moderator can be directly interpreted. It represents the predicted difference in the unstandardized effect size for a one unit increase in the moderator. For example, one more contact with a smoker increases the exposure effect by 0.04.
@@ -249,25 +259,33 @@ Instead of writing out the full equations, add columns (Table \@ref(tab:cont-mod
 results <- data.frame(B = c("3.6", "-0.1", "0.1", "0.1", "0.03", ""),
                       #average contact for a non-smoker
                       Plugin0 = c("", "", "Smoker = 0", "Mean contact(mc) = 0", "Mean contact(mc) = 0", ""),
-                      Slope0 = c("", "-0.1", "", "", "0.03 * 0", "-0.1"),
-                      Constant0 = c("3.6", "", "0.1 * 0", "0.1 * 0", "", "3.6"),
+                      Slope0 = c("", "-0.1", "", "", "0.03 * 0", paste0("-0.1", 
+                                footnote_marker_alphabet(1))),
+                      Constant0 = c("3.6", "", "0.1 * 0", "0.1 * 0", "", paste0("3.6", 
+                                footnote_marker_alphabet(1))),
                       #1SD above average contacts for a non-smoker
                       Plugin1 = c("", "", "Smoker = 0", "SD contact = 2.0", "SD contact = 2.0", ""),
-                      Slope1 = c("", "-0.1", "", "", "0.03 * 2.0", "-0.04"),
-                      Constant1 = c("3.6", "", "0.1 * 0", "0.1 * 2.0", "", "3.8"),
+                      Slope1 = c("", "-0.1", "", "", "0.03 * 2.0", paste0("-0.04", 
+                                footnote_marker_alphabet(2))),
+                      Constant1 = c("3.6", "", "0.1 * 0", "0.1 * 2.0", "", paste0("3.8", 
+                                footnote_marker_alphabet(2))),
                       row.names = c("(Constant)", "Exposure", "Smoker", "Contact",
-                                     "Exposure*Contact", "Result (sum):"),
+                                     "Exposure*Contact", "Result (sum)"),
                       check.names = FALSE)
 # Table.
 options(knitr.kable.NA = '')
 knitr::kable(results, digits = 3, booktabs = TRUE,
              caption = "Calculation of the simple slope and constant at average contact and one standard deviation above average contact for non-smokers.",
              col.names = c("B", rep(c("1. Plugin", "2. Slope", "3. Constant"), 2)),
-             align = "rlrrlrr") %>%
+             align = "rlrrlrr",
+             escape = F) %>%
   kable_styling(font_size = 12, full_width = F,
                 latex_options = c("scale_down", "HOLD_position")) %>%
-  add_header_above(c(" " = 2, "Average contact" = 3, "Average + 1 SD contact" = 3))
+  add_header_above(c(" " = 2, "Average contact" = 3, "Average + 1 SD contact" = 3)) %>%
+  footnote(alphabet = c("Equation for average contact: y = -0.1 * Exposure	+ 3.6.", "Equation for 1 SD above average contact: y = -0.04 * Exposure	+ 3.8."))
 ```
+
+The footnotes to Table \@ref(tab:cont-moderator-results) show the resulting simple regression equations. You can interpret the slopes, which are unstandardized regression coefficients ($b$), or use the equations to draw regression lines.
 
 If the moderator is not mean-centered, we have to plug in the value of the mean of the moderator and the value of the mean plus or minus the standard deviation of the moderator. Let us assume that the mean score of contact with smokers is 5.1 in this example. The moderator mean minus one standard deviation (2.0) equals 3.1 and the mean plus one standard deviation is 7.1.
 
@@ -294,13 +312,15 @@ attributes(results)$dimnames[[1]][5] <- "Exposure*Contact (mean-centered)"
 ci <- confint.lm(model_1)
 results <- cbind(results, ci)
 # Correctly standardized coefficients.
-attach(smokers)
-z_exposure <- (exposure_mc - mean(exposure_mc)/sd(exposure_mc))
-z_contact <- (contact_mc - mean(contact_mc)/sd(contact_mc))
-z_status2 <- (status2 - mean(status2)/sd(status2))
-z_expocontact <- (exposure_mc * contact_mc - mean(exposure_mc * contact_mc)/sd(exposure_mc * contact_mc))
-z_attitude <- (attitude - mean(attitude)/sd(attitude))
-model_2 <- lm(z_attitude ~ z_exposure + z_contact + z_status2 + z_expocontact)
+smokers <- smokers %>%
+  mutate(
+    z_exposure = (exposure - mean(exposure))/sd(exposure),
+    z_contact = (contact - mean(contact))/sd(contact),
+    z_status2 = (status2 - mean(status2))/sd(status2),
+    z_expocontact = z_exposure * z_contact,
+    z_attitude = (attitude - mean(attitude))/sd(attitude)
+  )
+model_2 <- lm(z_attitude ~ z_exposure + z_contact + z_status2 + z_expocontact, data = smokers)
 results_2 <- coef(summary(model_2))
 results <- cbind(results[, 1:2], results_2[, 1], results[, 3:6])
 results[1, 3] <- NA
@@ -445,14 +465,22 @@ respondents who have no (zero) contacts with smokers. [<img src="icons/2question
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* Mean Contact score is 5. The regression coefficient of exposure changes to
--0.06, namely -0.26 + 0.04 * 5. Accordingly, the red regression line becomes
-almost horizontal. [<img src="icons/2question.png" width=161px align="right">](#question9.1.5)
+* We can spot some light-blue dots in the graph but no dark blue dots. There is no sizable set of participants with (hardly) any contact with smokers. There are (hardly) any participants to whom the effect expressed by -.26 applies.
+* In other words, this regression coefficient is not supported by data, so it is quite meaningless. [<img src="icons/2question.png" width=161px align="right">](#question9.1.5)
 ```
   
 <A name="answer9.1.6"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 6. 
+
+* Mean Contact score is 5. The regression coefficient of exposure changes to
+-0.06, namely -0.26 + 0.04 * 5. Accordingly, the red regression line becomes
+almost horizontal. [<img src="icons/2question.png" width=161px align="right">](#question9.1.6)
+```
+  
+<A name="answer9.1.7"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 7. 
 
 * The regression line of the mean-centered Contact moderator coincides with
 the blue regression line if we select 5 as value of the original Contact
@@ -462,12 +490,20 @@ case of a mean-centered moderator, consists of respondents who score 5 on the
 original Contact with smokers moderator.
 * By mean centering, we assign the score zero to respondents who used to have
 a mean score on the moderator Contact with smokers. Now that they score zero
-on the new mean-centered variable, they have become the reference group. [<img src="icons/2question.png" width=161px align="right">](#question9.1.6)
+on the new mean-centered variable, they have become the reference group. [<img src="icons/2question.png" width=161px align="right">](#question9.1.7)
 ```
   
-<A name="answer9.1.7"></A>
+<A name="answer9.1.8"></A>
 ```{block2, type='rmdanswer'}
-Answer to Question 7. 
+Answer to Question 8. 
+
+* Now there are many (dark) blue dots, so there is a sizable number of participants who have around average contact with smokers. The regression coefficient for the effect of exposure applies to quite some participants in the sample, so it is meaningful.
+* The mean of a variable is usually a value with a lot of observations nearby. This makes it a good reference value in a moderation model. [<img src="icons/2question.png" width=161px align="right">](#question9.1.8)
+```
+  
+<A name="answer9.1.9"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 9. 
 
 * The important thing is to understand that a regression line that depends on
 few observations is not very trustworthy. The line usually does not represent
@@ -486,7 +522,7 @@ interpreting moderation.
 * Of course, moderator values even closer to the mean, such as moderator values
 below or above which we find one third of all scores (the first and third
 terciles) are also well supported by observations, as is the moderator mean
-itself. [<img src="icons/2question.png" width=161px align="right">](#question9.1.7)
+itself. [<img src="icons/2question.png" width=161px align="right">](#question9.1.9)
 ```
   
 ## Reporting Regression Results {#reportmoderation}
