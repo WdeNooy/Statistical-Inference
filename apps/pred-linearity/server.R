@@ -5,15 +5,15 @@ shinyServer(function(input, output) {
   #Load styling file
   source("../plottheme/styling.R", local = TRUE)
   
-  n <- 20 #Number of observations
+  n <- 50 #Number of observations
   x <- seq(from = 0, to = 10, length.out = n)
   
   #Select data generating function depending on dropdown menu
   data <- reactive({
     switch(input$typeselector,
-           "Linear" = -0.6*x + rnorm(n = n, mean = 3, sd = 1),
-           "Curved" = .08*x^2 - rnorm(n = n, mean = 4, sd = 0.4),
-           "U shaped" = .3*(x-5)^2 - rnorm(n = n, mean = 3, sd = 1))
+           "Linear" = ifelse(rbinom(n = 1, size = 1, prob = 0.3) == 1, 1, -1)*0.6*x + rnorm(n = n, mean = 3, sd = 1),
+           "Curved" =  ifelse(rbinom(n = 1, size = 1, prob = 0.5) == 1, 1, -1)*.08*x^2 - rnorm(n = n, mean = 4, sd = 0.4),
+           "U shaped" =  ifelse(rbinom(n = 1, size = 1, prob = 0.5) == 1, 1, -1)*.3*(x-5)^2 - rnorm(n = n, mean = 3, sd = 1))
   })
   ##SCATTERPLOT## 
   output$scatterplot <- renderPlot({

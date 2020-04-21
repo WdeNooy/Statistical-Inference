@@ -68,14 +68,14 @@ shinyServer(function(input, output) {
       geom_text(aes(x = 5, y = -4.0, color = "Contact centered = 0"), size = 2.6,
                 label = paste("Attitude = ", format(0.40 + 0.14 * input$modcenterslider/2, nsmall = 2),
                               " + ", format(-0.26 + 0.04 * input$modcenterslider/2, nsmall = 2),
-                              " * Exposure + 0.14 * Contact_c (0) + 0.04 * Contact_c (0) * Exposure"),
+                              " * Exposure + 0.14 * Contact_c (0) + 0.04 * Exposure * Contact_c (0)"),
                 alpha = ifelse(input$showMCline, 1, 0),
                 show.legend = FALSE) +
       geom_text(aes(x = 5, y = -4.8, color = "Contact = 0"), size = 2.6,
                 label = paste0("Attitude = 0.40 + -0.26 * Exposure + 0.14 * Contact (",
                               input$modvalueslider,
-                              ") + 0.04 * Contact (", input$modvalueslider,
-                              ") * Exposure"),
+                              ") + 0.04 * Exposure * Contact (", input$modvalueslider,
+                              ")"),
                 show.legend = FALSE) +
       coord_cartesian(xlim = c(0, 10), ylim = c(-5, 5)) +
       ylab("Attitude") +
