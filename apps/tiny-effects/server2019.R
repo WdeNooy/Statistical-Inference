@@ -54,9 +54,9 @@ shinyServer(function(input, output) {
                    )
     #calculate power and store
     power <- ifelse(
-      input$effectslider == 2.8, NA, round(
+      input$savslider == 2.8, NA, round(
         power.t.test(n = input$ssizeslider,
-                     delta = (input$effectslider - mean),
+                     delta = (input$savslider - mean),
                      sd = sdpop,
                      sig.level = 0.05,
                      type = "one.sample",
@@ -66,54 +66,12 @@ shinyServer(function(input, output) {
     
     
      #PLOT
-     p <- ggplot(data.frame(x = c(0,6)), aes(x = x)) 
-     if (input$showpower) {
-       p <- p +
-        #Power: left area under curve
-         stat_function(fun = dnorm,xlim = c(-10,left),
-                       geom = "area",
-                       fill = brewercolors["Green"],
-                       colour = "grey",
-                       alpha = 1,
-                       args = list(mean = input$effectslider, sd = SE),
-                       n = 1000) + 
-        #Power: right area under curve
-       stat_function(fun = dnorm,
-                     xlim = c(right,10),
-                     geom = "area",
-                     colour = "grey",
-                     alpha = 1,
-                     fill = brewercolors["Green"],
-                     args = list(mean = input$effectslider, sd = SE),
-                     n = 1000) +
-       #Normal function line for true sampling distribution 
-       stat_function(fun = dnorm,
-                     args = list(mean = input$effectslider, sd = SE),
-                     n = 1000,
-                     color = "grey") +
-         #Population mean vline
-         geom_vline(aes(xintercept = input$effectslider,
-                        linetype = "True population mean",
-                        colour = "True population mean"),
-                    size = 0.8) +
-         #Power
-         geom_text(label = paste0("Power ", power),
-                   aes(x = 3.45, 
-                       y = 1.1 * dnorm(mean, mean, SE)),
-                   color = brewercolors["Green"],
-                   size = 5,
-                   vjust = 1, 
-                   hjust = 1
-         )
-       }
-      # show plot
-     p +
+     ggplot(data.frame(x = c(0,6)), aes(x = x)) +
       #Left area under curve
       stat_function(fun = dnorm,xlim = c(-10,left),
                     geom = "area",
                     fill = brewercolors["Blue"],
                     colour = "black",
-                    alpha = 0.5,
                     args = list(mean = mean, sd = SE),
                     n = 1000) + 
       #Right area under curve
@@ -121,7 +79,6 @@ shinyServer(function(input, output) {
                     xlim = c(right,10),
                     geom = "area",
                     colour = "black",
-                    alpha = 0.5,
                     fill = brewercolors["Blue"],
                     args = list(mean = mean, sd = SE),
                     n = 1000) +
@@ -143,41 +100,41 @@ shinyServer(function(input, output) {
                 size = 5) +
       #Sampling distribution mean vline
       geom_vline(aes(xintercept = mean,
-                     linetype = "Hypothesized population mean",
-                     color = "Hypothesized population mean")) +
+                     linetype = "Hypothesized population mean")) +
       #Sample mean vline
       geom_vline(aes(xintercept = input$savslider,
-                      linetype = "Sample mean",
-                 colour = "Sample mean"),
-                 size = 0.8) +
+                      linetype = "Sample mean"),
+                 colour = brewercolors["Red"]) +
       #Test result label
       geom_text(label = sign,
-                aes(x = 2.15, 
-                    y = 1.1 * dnorm(mean, mean, SE)),
+                aes(x = 3.45, 
+                    y = dnorm(mean, mean, SE)),
                 vjust = 1,
-                hjust = 0,
+                hjust = 1,
                 color = brewercolors["Blue"]
                 ) +
-      #Definition of sample mean type and legend name
+      #Power
+       geom_text(label = paste0("Power ", power),
+                 aes(x = 2.15, 
+                     y = dnorm(mean, mean, SE)),
+                 vjust = 1, 
+                 hjust = 0
+       ) +
+       #Definition of sample mean type and legend name
       scale_linetype_manual(name = "",
                             values = c("Hypothesized population mean" = "dashed", 
-                                       "Sample mean" = "solid", 
-                                       "True population mean" = "solid")) + 
-      scale_colour_manual(name = "", 
-                             values = c("Hypothesized population mean" = "black", 
-                                        "Sample mean" = brewercolors[["Blue"]], 
-                                        "True population mean" = "grey")) + 
+                                       "Sample mean" = "solid")) + 
       #X axis breaks definition
-      scale_x_continuous(name = "Average candy weight", breaks = ticks, labels = strengthlab) + 
-      scale_y_continuous(name = "Probability density", breaks = NULL) +
+      scale_x_continuous(breaks = ticks, labels = strengthlab) + 
       #Defining x axis zoom
       coord_cartesian(xlim = c(2.15, 3.45)) +
       #Title and labels for axes
       ggtitle("Sampling distribution") + 
+      xlab("Average candy weight") + 
+      ylab("Denisty") +
       #Theme specification
       theme_general() + 
-      theme(axis.text.x = element_text(size = 11),
-            legend.text = element_text(size = 11.5),
+      theme(axis.text.x = element_text(size = 9),
             legend.position = "top",
             legend.direction = "horizontal")
   })

@@ -1,14 +1,16 @@
 library(shiny)
-fig.height = 325 
-fig.width = 500
+fig.height = 300 
+fig.width = 400
 
 shinyUI(
   fluidPage(
-    fluidRow(column(3,
+    fluidRow(column(4,
                     align = "left",
+                    br(),
+                    br(),
                     align = "center",
                     sliderInput("savslider",
-                                label = "Sample mean",
+                                label = "Sample average",
                                 min = 2.8,
                                 max = 3.3,
                                 value = 2.9,
@@ -18,16 +20,10 @@ shinyUI(
                                 min = 10,
                                 max = 15000,
                                 value = 10,
-                                step = 10),
-                    sliderInput("effectslider",
-                                label = "True population mean",
-                                min = 2.8,
-                                max = 3.3,
-                                value = 3.0,
-                                step = .01),
-                    checkboxInput("showpower", "Show test power")
+                                step = 10
+                    )
              ),
-             column(9, 
+             column(8, 
                    align = "center",
                    plotOutput("mainplot",
                         width = fig.width,

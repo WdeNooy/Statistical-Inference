@@ -15,7 +15,7 @@ Among the alternatives to null hypothesis significance testing, using a confiden
 
 ## Criticisms of Null Hypothesis Significance Testing
 
-In null hypothesis significance testing, we totally rely on the test's p value. If this value is below .05 or another significance level, we reject the null hypothesis and we do not reject it otherwise. Is this a wise thing to do? Watch the video.
+In null hypothesis significance testing, we totally rely on the test's p value. If this value is below .05 or another significance level, we reject the null hypothesis and we do not reject it otherwise. Based on this decision, we draw a conclusion about the effect in the population. Is this a wise thing to do? Watch the video.
 
 ```{r pdance, echo=FALSE, fig.cap="The dance of the p values by Geoff Cumming.", screenshot.opts = list(delay = 5), dev="png"}
 knitr::include_url("https://www.youtube.com/embed/ez4DgdurRPg", height = "315px")
@@ -23,14 +23,14 @@ knitr::include_url("https://www.youtube.com/embed/ez4DgdurRPg", height = "315px"
 
 ### Statistical significance is not a measure of effect size  
 
-Perhaps, Chapter \@ref(hypothesis) on null hypothesis testing should have been titled _Am I Lucky or Unlucky?_ instead of _Am I Right or Am I Wrong?_ When our sample is small, the power to reject a null hypothesis is rather small, so it often happens that we retain the null hypothesis even if it is wrong. There is a lot of uncertainty about the population if our sample is small. So we must be lucky to draw a sample that is sufficiently at odds with the null hypothesis to reject it.
+Perhaps, Chapter \@ref(hypothesis) on null hypothesis testing should have been titled _Am I Lucky or Unlucky?_ instead of _Am I Right or Am I Wrong?_ When our sample is small, say a few dozens of cases, the power to reject a null hypothesis is rather small, so it often happens that we retain the null hypothesis even if it is wrong. There is a lot of uncertainty about the population if our sample is small. So we must be lucky to draw a sample that is sufficiently at odds with the null hypothesis to reject it.
 
-If our sample is large or very large, small differences between what we expect according to our null hypothesis can be statistically significant even if the differences are too small to be of any practical value. A statistically significant result does not have to be practically relevant. In all, statistical significance does not tell us about effect size. 
+If our sample is large or very large (a few thousand cases), small differences between what we expect according to our null hypothesis can be statistically significant even if the differences are too small to be of any practical value. A statistically significant result does not have to be practically relevant. In all, statistical significance does not tell us much about the effect in the population. 
 
 ```{r tiny-effects, fig.cap="Any effect can be statistically significant.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Illustrate that even tiny effects can yield statistically significant test results if the sample is sufficiently large.
-# Generate a normal distribution as hypothesized sampling distribution (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Add a vertical line with value for the sample average linked to a slider (range [2.82, 3.00] initial value 2.90). Add a sample size slider (range [10, 5,000], initial value 10), which is linked to the standard error of the normal curve.
-knitr::include_app("http://82.196.4.233:3838/apps/tiny-effects/", height="310px")
+# Generate a normal distribution as hypothesized sampling distribution (M = 2.8, SE = SD / sqrt(N) = 0.6 / sqrt(10) = 0.2) with 2.5% of each tail area coloured. Add a vertical line with value for the sample average linked to a slider (range [2.82, 3.00] initial value 2.90). Add a sample size slider (range [10, 5,000], initial value 10), which is linked to the standard error of the normal curve. With slider for (assumed) true population mean and test power.
+knitr::include_app("http://82.196.4.233:3838/apps/tiny-effects/", height="340px")
 ```
 
 <A name="question6.1.1"></A>
@@ -55,10 +55,18 @@ knitr::include_app("http://82.196.4.233:3838/apps/tiny-effects/", height="310px"
 
 <A name="question6.1.5"></A>
 ```{block2, type='rmdquestion'}
-5. When is a statistically significant result more surprising: with high or low test power? [<img src="icons/2answer.png" width=115px align="right">](#answer6.1.5)
+5. When is a statistically significant result more surprising: in a small sample or in a large sample? Select the option to show test power and compare test power with a small sample to test power with a large sample. [<img src="icons/2answer.png" width=115px align="right">](#answer6.1.5)
 ```
 
-It is a common mistake to think that statistical significance is a measure of the strength or practical relevance of an effect. In the video (Figure \@ref(fig:pdance)), this mistaken interpretation is expressed by the type of sound associated with a p value: the lower the p value of the test, the more joyous the sound.
+<A name="question6.1.6"></A>
+```{block2, type='rmdquestion'}
+6. When do we have stronger evidence that an effect is zero or nearly zero in the population: with a statistically non-significant result in a small sample or in a large sample? Use Figure \@ref(fig:tiny-effects) to find the answer (select the option to show test power):
+    - Choose a small sample size, say, 20. Change the true population mean such that the power of the test is at least .80 (a smaller value would result in test power below .80). This is the smallest effect size in the population for which we have sufficient test power to obtain a significant result.
+    - Repeat this for a large sample size, say, around 2,000. 
+    - Compare the effect sizes in the population for the small and large sample. Which one is closer to zero? [<img src="icons/2answer.png" width=115px align="right">](#answer6.1.6)
+```
+
+It is a common mistake to think that statistical significance is a measure of the strength, importance, or practical relevance of an effect. In the video (Figure \@ref(fig:pdance)), this mistaken interpretation is expressed by the type of sound associated with a p value: the lower the p value of the test, the more joyous the sound.
 
 It is wrong to use statistical significance as a measure of strength or importance. In a large sample, even irrelevant results can be highly significant and in small samples, as demonstrated in the video, results can sometimes be highly significant and sometimes be insignificant. Never forget:
 
@@ -70,21 +78,28 @@ If we want to say something about the magnitude of an effect in the population, 
 
 If the statistical test is significant, we conclude that an effect probably exists in the population. We may use the effect size in the sample as a point estimate of the population effect. This effect size should be at the core of our interpretation. Is it large (strong), small (weak), or perhaps tiny and practically irrelevant?
 
-If the statistical test is not significant, it is tempting to conclude that the null hypothesis is true, namely, that there is no effect in the population and we do not have to interpret the effect that we find in our sample. But this is not right. Finding insufficient proof for rejecting the null hypothesis does not prove that the null hypothesis is true.
+If the statistical test is not significant, it is tempting to conclude that the null hypothesis is true, namely, that there is no effect in the population. If so, we do not have to interpret the effect that we find in our sample. But this is not right. Finding insufficient evidence for rejecting the null hypothesis does not prove that the null hypothesis is true. Even if the null hypothesis is false, we can draw a sample that does not reject the null hypothesis.
 
-In a two-sided significance test, the null hypothesis specifies one particular value for the sample outcome. If the outcome is continuous, for instance, a mean or regression coefficient, the null hypothesis can hardly ever be true. The true population value is very likely not exactly the same as the hypothesized value. It may be only slightly different, but it is different.
+In a two-sided significance test, the null hypothesis specifies one particular value for the sample outcome. If the outcome is continuous, for instance, a mean or regression coefficient, the null hypothesis can hardly ever be true, strictly speaking. The true population value is very likely not exactly the same as the hypothesized value. It may be only slightly different, but it is different.
 
-Instead of focusing on true versus false, we had better take into account the probability that we reject the null hypothesis, which is test power. If test power is low, as it often is in social scientific research without very large samples, we should realize that there can be a substantive difference between true and hypothesized population values even if the test is not statistically significant.
+```{block2, type='rmdimportant'}
+A statistically non-significant result does NOT mean that the null hypothesis is true.
+```
 
-With low power, we have high probability of not rejecting a false null hypothesis (Type II error) even if the true population value is quite different from the hypothesized value. For example, a small sample of candies drawn from a population with average candy weight of 3.0 grams may not reject the null hypothesis that average candy weight is 2.8 grams in the population. The statistical test result should not make us conclude that there is no interesting effect. The test may not pick up substantively interesting effects.
+When we evaluate a p value, we had better take into account the probability that we reject the null hypothesis, which is test power. If test power is low, as it often is in social scientific research without very large samples, we should realize that there can be a substantive difference between true and hypothesized population values even if the test is not statistically significant.
 
-In contrast, if our test has very high power, we should expect effects to be statistically significant. Even tiny effects that are totally irrelevant from a substantive point of view. For example, an effect of exposure on attitude of 0.01 on 10-point scales, is likely to be statistically significant in a very large sample but it can be substantively uninteresting.
+With low power, we have high probability of not rejecting a false null hypothesis (Type II error) even if the true population value is quite different from the hypothesized value. For example, a small sample of candies drawn from a population with average candy weight of 3.0 grams may not reject the null hypothesis that average candy weight is 2.8 grams in the population. The non-significant test result should not make us conclude that there is no interesting effect. The test may not pick up substantively interesting effects.
+
+In contrast, if our test has very high power, we should expect effects to be statistically significant, even tiny effects that are totally irrelevant from a substantive point of view. For example, an effect of exposure on attitude of 0.01 on a 10-point scale is likely to be statistically significant in a very large sample but it is probably substantively uninteresting.
+
+In a way, a statistically non-significant result is more interesting than a significant result in a test with high power. If it is easy to get significant results even for small effect sizes (high power), a non-significant result probably indicates that the true effect in the population is very small. In this situation, we are most confident that the effect is close to zero or absent in the population.
 
 As noted before (Section \@ref(typeIIerror)), standard statistical software usually does not report the power of a test. For this reason, it is not common practice to evaluate the statistical significance of results in combination with test power.
 
-By now, however, you understand that test power is affected by sample size. You should realize that null hypotheses are easily rejected in large samples but they are more difficult to reject in small samples. Don't let your selection of interesting results be guided predominantly by statistical significance if your sample is not very large.
+By now, however, you understand that test power is affected by sample size. You should realize that null hypotheses are easily rejected in large samples but they are more difficult to reject in small samples. A significant test result in a small sample suggests a substantive effect in the population but not necessarily so in a large sample. A non-significant test result in a small sample does not mean that the effect size in the population is too small to be of interest. Don't let your selection of interesting results be guided only by statistical significance.
 
 ### Knocking down straw men (over and over again) {#strawmen} 
+
 There is another aspect in the practice of null hypothesis significance testing that is not very satisfactory. Remember that null hypothesis testing was presented as a means for the researcher to use previous knowledge as input to her research (Section \@ref(binarydecision)). The development of science requires us to expand existing knowledge. Does this really happen in the practice of null hypothesis significance testing?  
 
 Imagine that previous research has taught us that one additional unit of exposure to advertisements for a brand increases a person's brand awareness on average by 0.1 unit if we use well-tested standard scales for exposure and brand awareness. If we want to use this knowledge in our own research, we would hypothesize that the regression coefficient of exposure is 0.1 in a regression model predicting brand awareness.  
@@ -116,7 +131,8 @@ Answer to Question 2.
 * Increase sample size. Already at a sample size of 140, a sample with average
 candy weight of 2.9 grams differs significantly from the hypothesized 2.8 grams.
 In other words, a sample of this size with an average of (at least) 2.9 is quite unlikely
-to be drawn from the hypothesized population with an average of 2.8. [<img src="icons/2question.png" width=161px align="right">](#question6.1.2)
+to be drawn from the hypothesized population with an average of 2.8.
+* Note that the true population mean does not matter to the significance of a particular sample outcome. In a significance test, we compare the sample mean to the null hypothesis using the sampling distribution based on the null hypothesis. [<img src="icons/2question.png" width=161px align="right">](#question6.1.2)
 ```
   
 <A name="answer6.1.3"></A>
@@ -125,9 +141,9 @@ Answer to Question 3.
 
 * The smallest sample mean larger than 2.8 that we can select with the sample
 average slider is 2.81. The smallest non-zero difference between sample mean
-and hypothesized population average, then, is .01 (gram).
+and hypothesized population average, then, is .01 (grams).
 * A sample of about 14,000 observations will give a statistically significant
-test result.
+test result. Use the slider to check this.
 * So yes, we can get a statistically significant result for the smallest
 non-zero effect size.
 * A difference of 0.01 grams (less than 0.4% of the hypothesized weight) may
@@ -151,13 +167,25 @@ regions. [<img src="icons/2question.png" width=161px align="right">](#question6.
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* A statistically significant result is more surprising with low test power.
-* With low test power, the difference between the hypothesized value and the 
-sample result must be quite large to obtain a statistically significant result or we
-must be very lucky. In this sense, a statistically significant result is more
-surprising with low test power than with high test power.
-* With low test power, we are more likely to have an effect that is
-sizable and practically relevant if the test is statistically significant. [<img src="icons/2question.png" width=161px align="right">](#question6.1.5)
+* A statistically significant result is more surprising in a small sample.
+* This follows from the power of the test: the probability of rejecting a false null hypothesis. With low power, we have a low probability of drawing a sample that rejects the null hypothesis.
+* Remember that test power depends both on sample size and effect size in the population (Chapter \@ref(power)). A large sample has higher test power than a small sample for the same true effect in the population. In addition, a large effect in the population has higher test power than a small effect with the same sample size. You can check this in the figure: Change the sample size or the true population mean and watch what happens to test power.
+* With a small sample and small effect size, we must be lucky to obtain a statistically significant result because we have low power. We do not expect a significant result, it is surprising to get one.
+* But we do not always have to be lucky to get a significant test result in a small sample. If the effect is large in the population, we have good test power notwithstanding the small size of our sample. For this reason, a significant test result in a small sample suggests a not-so-small effect in the population. In the social and behavioural sciences, small effect sizes are much more common than large effects. Also in this sense, a statistically significant result is more surprising in a small sample than in a large sample. [<img src="icons/2question.png" width=161px align="right">](#question6.1.5)
+```
+  
+<A name="answer6.1.6"></A>
+```{block2, type='rmdanswer'}
+Answer to Question 6. 
+
+* A statistically non-significant result in a large sample provides stronger evidence for an effect near zero in the population than in a small sample.
+* Let us follow the steps outlined in the question:
+    - If we choose a small sample size of 20 candies, we have to set the true population mean to at least 3.1 to obtain test power that meets the minimum requirement of .80. For all population values between 2.8 and 3.1, we have insufficient test power, so the chance of drawing a sample that rejects the null hypothesis is too low. We expect (too many) non-significant test results for population values between 2.8 and 3.1, so these population values are plausible if the test result turns out to be not statistically significant.
+    - For a sample of 2,000 candies, the minimum value for the population mean is 2.84 to obtain test power of at least .80. Now population means between 2.8 and 2.84 are plausible if we have a non-significant test result.
+    - True effect size in the case of a test on one mean is the difference between the mean in the population and the hypothesized mean, so we are dealing with effect sizes between 2.8 - 2.8 = 0 and 2.84 - 2.8 = 0.04 in the large sample. These values are much closer to zero than in the small sample situation: 3.1 - 2.8 = 0.3.
+* We can also reason why we should expect an effect near zero with a non-significant result in a large sample: 
+    - A large sample has higher test power than a small sample, so it is easier to get a statistically significant test result for a small effect. In other words, a large sample picks up small effects more easily than a small sample. 
+    - If the result is not significant in a large sample, the population effect is probably less than small, otherwise the test result would probably have been significant. In a small sample, however, we can get non-significant results also for small or larger effects. [<img src="icons/2question.png" width=161px align="right">](#question6.1.6)
 ```
   
 ## Alternatives for Null Hypothesis Significance Testing  
@@ -218,7 +246,7 @@ Figure \@ref(fig:ci-nullhyp) shows six confidence intervals for a population val
 2. Would you advise the company to use the advertisement based on the confidence intervals in Figure \@ref(fig:ci-nullhyp)? [<img src="icons/2answer.png" width=115px align="right">](#answer6.2.2)
 ```
 
-A confidence interval shows us whether or not our null hypothesis must be rejected (see Section \@ref(null-ci0)). The rule is simple: If the value of the null hypothesis is within the confidence interval, the null hypothesis must not be rejected. By the way, note that a confidence interval allows us to test a null hypothesis other than the nil (Section \@ref(strawmen)). If we hypothesize that the effect of exposure on brand awareness is 0.1, we reject the hypothesis if the confidence interval of the regression coefficient does not include 0.1.
+A confidence interval shows us whether or not our null hypothesis must be rejected (see Section \@ref(null-ci0)). The rule is simple: If the value of the null hypothesis is within the confidence interval, the null hypothesis must not be rejected. By the way, note that a confidence interval allows us to test a null hypothesis other than the nil (Section \@ref(strawmen)). If we hypothesize that the effect of exposure on brand awareness is 0.1, we reject this null hypothesis if the confidence interval of the regression coefficient does not include 0.1.
 
 At the same time, however, confidence intervals allow us to draw a more nuanced conclusion. A confidence interval displays our uncertainty about the result. If the confidence interval is wide, we are quite uncertain about the true population value. If a wide confidence interval includes the null hypothesis near one of its boundaries (e.g., Confidence Interval D in Figure \@ref(null-ci0)), we do not reject the null hypothesis but it still is plausible that the population value is substantially larger (or substantially smaller) than the hypothesized value. 
 
@@ -248,13 +276,14 @@ In a similar way, a very narrow confidence interval including the null hypothesi
 
 For example, we could interpret Confidence Interval C in Figure \@ref(fig:ci-nullhyp) in the following way:
 
-The effect of exposure to advertisements on brand awareness is statistically significant, _t_ (273) = 3.67, _p_ < .001, 95%CI[0.1, 0.5]. On the basis of the confidence interval we are confident that the effect is positive but small (_b_* = 0.05). One additional daily exposure increases predicted brand awareness by 0.1 to 0.5 on a scale from 1 (unaware of the brand) to 7 (highly aware of the brand). We need a lot of additional exposure to advertisements before brand awareness changes substantially.
+The effect of exposure to advertisements on brand awareness is statistically significant, _t_ (273) = 3.67, _p_ < .001, 95%CI[0.1, 0.5]. On the basis of the confidence interval we are confident that the effect is positive but small (maximum _b_* = 0.05). One additional daily exposure increases predicted brand awareness by 0.1 to 0.5 on a scale from 1 (unaware of the brand) to 7 (highly aware of the brand). We need a lot of additional exposure to advertisements before brand awareness changes substantially.
 
 Using confidence intervals in this way, we avoid the problem that statistically non-significant effects are not published. Not publishing non-significant results, either because of self-selection by the researcher or selection by journal editors and reviewers, offers a misleading view of research results.
 
 If results are not published, they cannot be used to design new research projects. For example, effect sizes that are not statistically significant are just as helpful to determine test power and sample size as statistically significant effect sizes. An independent variable without statistically significant effect may have a significant effect in a new research project and should not be discarded if the potential effect size is so substantial that it is practically relevant. Moreover, combining results from several research projects helps making more precise estimates of population values, which brings us to meta-analysis.
 
 ### Meta-analysis 
+
 Meta-analysis is a method that capitalizes on previous knowledge. In this method, we collect previous studies on the same topic that use the same or highly similar variables. Combining the results of these studies, we can make statements with higher precision about the population. Basically, we combine the separate samples used for each single study into a large sample, which reduces the uncertainty and allows more precise inferences about the population.
 
 Meta-analysis is a good example of combining research efforts to increase our understanding. It favours estimation over hypothesis testing because the goal is to obtain more precise estimates of population values or effects. Meta-analysis is strongly recommended as a research strategy by Geoff Cumming, who coined the concept _New Statistics_. See Cumming's book [-@RefWorks:3883], [website](http://www.latrobe.edu.au/psychology/research/research-areas/cognitive-and-developmental-psychology/esci), or [YouTube channel](https://www.youtube.com/user/geoffdcumming) if you are curious to learn more. The video at the start of this chapter is made by Geoff Cumming.
@@ -384,6 +413,11 @@ Figure \@ref(fig:power-problem) displays the sampling distribution for candy wei
 3. What happens to the statistical significance of the sample means and to test power if you change sample size? [<img src="icons/2answer.png" width=115px align="right">](#answer6.4.3)
 ```
 
+<A name="question6.4.4"></A>
+```{block2, type='rmdquestion'}
+4. When is a large effect in the population more likely: with a statistically significant effect in a small sample or in a large sample? Compare situations with at least .80 test power. (Press _Take 5 new samples_ after you adjust a slider to see the change.) [<img src="icons/2answer.png" width=115px align="right">](#answer6.4.4)
+```
+
 ### Answers {-}
 
 ```{block2, type='rmdanswer', echo=!ch6}
@@ -425,8 +459,20 @@ effect) if our test result is not statistically significant. [<img src="icons/2q
 Answer to Question 3. 
 
 * The larger the sample, the more often sample means are statistically
-significant (in the blue tail).
+significant (in a blue tail).
 * If sample means are more often statistically significant, we reject false null hypotheses more often, so test power increases. [<img src="icons/2question.png" width=161px align="right">](#question6.4.3)
+```
+
+<A name="answer6.4.4"></A>
+```{block2, type='rmdanswer', echo=ch6}
+Answer to Question 4. 
+
+* A large effect in the population is more likely with a statistically significant effect in a small sample than in a large sample.
+* With sample size 10, the population mean must be set to 3.4 for .80 test power. (Press _Take 5 new samples_ after you adjust the population mean slider to see this.)
+* With sample size 100, a population mean of 3.0 already yields test power (well) above .80.
+* With the larger sample (_N_ = 100), we expect a statistically significant result for a population value of 3.0, that is, for an effect size of 3.0 - 2.8 = 0.2. At this population value, test power is sufficiently high to expect that the null hypothesis is rejected. 
+* In contrast, we expect a statistically significant result for an effect size of 3.4 - 2.8 = 0.6 with the smaller sample (_N_ = 10). A statistically significant test result in a smaller sample suggests a larger effect size in the population than in a larger sample.
+* The bottom line: Not just large effects but also small(er) effects will usually yield statistically significant results in a large sample. In contrast, only large effects will usually yield statistically significant results in a small sample. For this reason, large effects are more likely with a significant test result in a small sample. Of course, we can always be unlucky and draw a sample that does not have a statistically significant result. That is why the word _usually_ is used in the preceding sentences. [<img src="icons/2question.png" width=161px align="right">](#question6.4.4)
 ```
 
 ## Take-Home Points  
@@ -435,7 +481,7 @@ significant (in the blue tail).
 
 * Statistically significant results do not have to be relevant or important. A small, negligible difference between the sample outcome and the hypothesized population value can be statistically significant in a very large sample with high test power.
 
-* A practically relevant and important difference between the sample outcome and the hypothesized population value does not have to be statistically significant in a small sample or with a test with low power.
+* A practically relevant and important difference between the sample outcome and the hypothesized population value does not have to be statistically significant in a small sample because of low test power.
 
 * Give priority to effect size over statistical significance in your interpretation of results.
 

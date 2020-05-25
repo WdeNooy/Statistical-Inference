@@ -7,88 +7,93 @@ shinyServer(function(input, output) {
   #Source styling file for plots
   source("../plottheme/styling.R", local = TRUE)
 
-  mean <- 2.8 #Hypothesized population mean
-  sdpop <- 0.6 #Population SD 
+  mean <- 0 #Hypothesized population mean difference
+  sd <- 0.6 #Population SD 
 
+  #Function for scaling and shifting the t-distribution
+  dtshift <- function(x,mean,sd,df) 0.8*dt(x = (x - mean)/sd, df = df)
+  
   ##RENDER MAIN PLOT##
   output$mainplot <- renderPlot({
     
     #Hardcoded labels for plot
-    strengthlab <- c("Strong\n2.32",
-                     "Moderate\n2.5",
-                     "Weak\n2.68",
-                     "H0\n2.8",
-                     "Weak\n2.92",
-                     "Moderate\n3.1",
-                     "Strong\n3.28")
+    strengthlab <- c("Strong\n-0.48",
+                     "Moderate\n-0.3",
+                     "Weak\n-0.12",
+                     "H0\n0",
+                     "Weak\n0.12",
+                     "Moderate\n0.3",
+                     "Strong\n0.48")
     #Hardcoded tickmarks for plot
-    ticks <- c(2.32,2.5,2.68,2.8,2.92,3.1,3.28) 
+    ticks <- c(-0.48,-0.3,-0.12,0,0.12,0.3,0.48) 
     
-    SE <- sdpop/sqrt(input$ssizeslider) #SE
+    SE <- sqrt( 2 * sd^2/input$ssizeslider) #SE assuming equal population variances
     
-    error <- qnorm(1 - .025) * SE # Distance from mean
+    error <- qt(p = 1 - .025, df = input$ssizeslider - 2) * SE # Distance from mean
     left <- mean - error #Left confidence interval border
     right <- mean + error #Right confidence interval border
     
     sign <- paste0(ifelse(right <= input$savslider, 
-                   "Statistically\nsignificant\ntest result for\n", 
-                   "Statistically\nnon-significant\ntest result for\n"),
+                   "Statistically\nsignificant\ntest result for a\n", 
+                   "Statistically\nnon-significant\ntest result for a\n"),
                    ifelse(
-                     input$savslider == 2.8,
-                     "really no effect at all.",
-                     ifelse(input$savslider < 2.83,
-                            "negligible effect size.",
+                     input$savslider == 0,
+                     "really no effect at all",
+                     ifelse(input$savslider < 0.02,
+                            "negligible effect size",
                             ifelse(
-                              input$savslider < 2.87,
-                              "very weak\neffect size.",
-                              ifelse(input$savslider < 3.01,
-                                     "weak effect size.",
-                                     ifelse(input$savslider < 3.2,
-                                            "moderately strong\neffect size.",
-                                            "strong effect size."
+                              input$savslider < 0.06,
+                              "very weak\neffect size",
+                              ifelse(input$savslider < 0.23,
+                                     "weak effect size",
+                                     ifelse(input$savslider < 0.41,
+                                            "moderately strong\neffect size",
+                                            "strong effect size"
                                             )
                                     )
                                   )
                           )
-                     )
+                     ),
+                   "\nin the sample."
                    )
     #calculate power and store
     power <- ifelse(
-      input$effectslider == 2.8, NA, round(
-        power.t.test(n = input$ssizeslider,
+      input$effectslider == 0, NA, round(
+        power.t.test(n = input$ssizeslider / 2, #n is size of group
                      delta = (input$effectslider - mean),
-                     sd = sdpop,
+                     sd = sd,
                      sig.level = 0.05,
-                     type = "one.sample",
+                     type = "two.sample",
                      alternative = "two.sided")$power,
         2)
     )
     
     
      #PLOT
-     p <- ggplot(data.frame(x = c(0,6)), aes(x = x)) 
+     p <- ggplot(data.frame(x = c(-1, 1)), aes(x = x)) 
      if (input$showpower) {
        p <- p +
         #Power: left area under curve
-         stat_function(fun = dnorm,xlim = c(-10,left),
+         stat_function(fun = dtshift,
+                       xlim = c(-1,left),
                        geom = "area",
                        fill = brewercolors["Green"],
                        colour = "grey",
                        alpha = 1,
-                       args = list(mean = input$effectslider, sd = SE),
+                       args = list(mean = input$effectslider, sd = SE, df = input$ssizeslider - 2),
                        n = 1000) + 
         #Power: right area under curve
-       stat_function(fun = dnorm,
-                     xlim = c(right,10),
+       stat_function(fun = dtshift,
+                     xlim = c(right,1),
                      geom = "area",
                      colour = "grey",
                      alpha = 1,
                      fill = brewercolors["Green"],
-                     args = list(mean = input$effectslider, sd = SE),
+                     args = list(mean = input$effectslider, sd = SE, df = input$ssizeslider - 2),
                      n = 1000) +
-       #Normal function line for true sampling distribution 
-       stat_function(fun = dnorm,
-                     args = list(mean = input$effectslider, sd = SE),
+       #t function line for true sampling distribution 
+       stat_function(fun = dtshift,
+                     args = list(mean = input$effectslider, sd = SE, df = input$ssizeslider - 2),
                      n = 1000,
                      color = "grey") +
          #Population mean vline
@@ -98,8 +103,8 @@ shinyServer(function(input, output) {
                     size = 0.8) +
          #Power
          geom_text(label = paste0("Power ", power),
-                   aes(x = 3.45, 
-                       y = 1.1 * dnorm(mean, mean, SE)),
+                   aes(x = 0.8, 
+                       y = 1.1 * dt(input$effectslider, df = input$ssizeslider - 2)),
                    color = brewercolors["Green"],
                    size = 5,
                    vjust = 1, 
@@ -109,37 +114,40 @@ shinyServer(function(input, output) {
       # show plot
      p +
       #Left area under curve
-      stat_function(fun = dnorm,xlim = c(-10,left),
+      stat_function(fun = dtshift,
+                    xlim = c(-1,left),
                     geom = "area",
                     fill = brewercolors["Blue"],
                     colour = "black",
                     alpha = 0.5,
-                    args = list(mean = mean, sd = SE),
+                    args = list(mean = mean, sd = SE, df = input$ssizeslider - 2),
                     n = 1000) + 
       #Right area under curve
-      stat_function(fun = dnorm,
-                    xlim = c(right,10),
+      stat_function(fun = dtshift,
+                    xlim = c(right,1),
                     geom = "area",
                     colour = "black",
                     alpha = 0.5,
                     fill = brewercolors["Blue"],
-                    args = list(mean = mean, sd = SE),
+                    args = list(mean = mean, sd = SE, df = input$ssizeslider - 2),
                     n = 1000) +
       #Normal function line 
-      stat_function(fun = dnorm,
-                    args = list(mean = mean, sd = SE),
+      stat_function(fun = dtshift,
+                    args = list(mean = mean, sd = SE, df = input$ssizeslider - 2),
                     n = 1000) +
       #2,5% label right
       geom_text(label = "2.5%",
-                aes(x = right * 1.01 ,
-                    y =  dnorm(right, mean, SE)),
+                aes(x = right * 1.04 ,
+                    y =  dtshift(right, mean = mean, sd = SE, df = input$ssizeslider - 2)),
                 hjust = 0,
+                vjust = 0,
                 size = 5) +
       #2.5%label left
       geom_text(label = "2.5%",
-                aes(x = left * 0.99 ,
-                    y =  dnorm(left, mean, SE)),
+                aes(x = left * 1.04 ,
+                    y =  dtshift(left, mean = mean, sd = SE, df = input$ssizeslider - 2)),
                 hjust = 1,
+                vjust = 0,
                 size = 5) +
       #Sampling distribution mean vline
       geom_vline(aes(xintercept = mean,
@@ -152,8 +160,8 @@ shinyServer(function(input, output) {
                  size = 0.8) +
       #Test result label
       geom_text(label = sign,
-                aes(x = 2.15, 
-                    y = 1.1 * dnorm(mean, mean, SE)),
+                aes(x = -0.8, 
+                    y = 1.1 * dt(mean, df = input$ssizeslider - 2)),
                 vjust = 1,
                 hjust = 0,
                 color = brewercolors["Blue"]
@@ -168,10 +176,10 @@ shinyServer(function(input, output) {
                                         "Sample mean" = brewercolors[["Blue"]], 
                                         "True population mean" = "grey")) + 
       #X axis breaks definition
-      scale_x_continuous(name = "Average candy weight", breaks = ticks, labels = strengthlab) + 
+      scale_x_continuous(name = "Average difference in candy weight between the two groups", breaks = ticks, labels = strengthlab) + 
       scale_y_continuous(name = "Probability density", breaks = NULL) +
       #Defining x axis zoom
-      coord_cartesian(xlim = c(2.15, 3.45)) +
+      coord_cartesian(xlim = c(-0.8, 0.8)) +
       #Title and labels for axes
       ggtitle("Sampling distribution") + 
       #Theme specification

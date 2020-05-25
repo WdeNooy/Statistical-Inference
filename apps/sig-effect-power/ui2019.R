@@ -1,17 +1,17 @@
 library(shiny)
 fig.height = 300 
-fig.width = 500
+fig.width = 400
 
 shinyUI(
   fluidPage(
-    fluidRow(column(3,
+    fluidRow(column(4,
                     align = "center",
                     br(),
                     br(),
                     sliderInput("savslider",
-                                label = "Population mean",
+                                label = "Population average",
                                 min = 2.8,
-                                max = 3.4,
+                                max = 3.2,
                                 value = 2.9,
                                 step = .05),
                     sliderInput("ssizeslider",
@@ -24,7 +24,7 @@ shinyUI(
                     actionButton("sampbutton",
                                  label = "Take 5 new samples")
     ),
-    column(9,
+    column(8,
            align = "center",
            plotOutput("mainplot",
                       width = fig.width,

@@ -104,10 +104,10 @@ shinyServer(function(input, output) {
                 size = 4) +
       #Sampel mean vline
       geom_vline(aes(xintercept = mean,
-                     linetype = "Hypothesized population mean")) +
+                     linetype = "Mean")) +
       #Definition of sample mean type and legend name
       scale_linetype_manual(name = "",
-                            values = c("Hypothesized population mean" = "dashed")) + 
+                            values = c("Mean" = "dashed")) + 
       #Dots for mean of 5 samples
        geom_point(data = df,
                   aes(x = means, y = .1),
@@ -117,15 +117,14 @@ shinyServer(function(input, output) {
       #X axis breaks definition
       scale_x_continuous(breaks = ticks, labels = strengthlab) + 
       #Defining x axis zoom
-      coord_cartesian(xlim = c(2.25, 3.85)) +
+      coord_cartesian(xlim = c(2.15, 3.45)) +
       #Title and labels for axes
       ggtitle("Sampling distribution") + 
       xlab("Average candy weight") + 
       ylab("Denisty") +
       #Theme specification
       theme_general() + 
-      theme(axis.text.x = element_text(size =11),
-            legend.text = element_text(size =12),
+      theme(axis.text.x = element_text(size = 9),
             legend.position = "top",
             legend.direction = "horizontal")
   })
