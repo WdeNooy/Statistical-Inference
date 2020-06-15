@@ -108,12 +108,14 @@ shinyServer(function(input, output) {
       
       ggplot(candy.sample.history.df, aes(x = Freq)) +
         geom_bar(fill = brewercolors["Yellow"]) +
-        scale_x_continuous(name = "Number of yellow candies",
+        scale_x_continuous(name = "Number of yellow candies in the sample",
                            breaks = 0:10,
                            limits = c(-1, 10)) +
-        scale_y_continuous(
+        scale_y_continuous(name = "Count",
           breaks =  function (x)
-            floor(pretty(seq(1, max(x) + 1)))) +
+            floor(pretty(seq(1, max(x) + 1))),
+          sec.axis = sec_axis(~ ./nrow(candy.sample.history.df), name = "Proportion =\nProbability")
+          ) +
         ggtitle("Sampling distribution") +
         theme_general() + 
         theme(plot.title = element_text(hjust = 0.5),
@@ -195,11 +197,12 @@ shinyServer(function(input, output) {
       
       ggplot(candy.sample.history.df, aes(x = Freq)) +
         geom_bar(fill = brewercolors["Yellow"]) +
-        scale_x_continuous(name = "Number of yellow candies",
+        scale_x_continuous(name = "Number of yellow candies in the sample",
                            breaks = 0:10,
                            limits = c(-1, 10)) +
-        scale_y_continuous(
-          breaks =  function (x) floor(pretty(seq(1, max(x) + 1)))) +
+        scale_y_continuous(name = "Count",
+          breaks =  function (x) floor(pretty(seq(1, max(x) + 1))),
+          sec.axis = sec_axis(~ ./nrow(candy.sample.history.df), name = "Proportion =\nProbability")) +
         ggtitle("Sampling distribution") +
         theme_general() + 
         theme(plot.title = element_text(hjust = 0.5),

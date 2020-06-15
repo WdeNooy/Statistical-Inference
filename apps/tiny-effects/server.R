@@ -31,26 +31,27 @@ shinyServer(function(input, output) {
     right <- mean + error #Right confidence interval border
     
     sign <- paste0(ifelse(right <= input$savslider, 
-                   "Statistically\nsignificant\ntest result for\n", 
-                   "Statistically\nnon-significant\ntest result for\n"),
+                   "Statistically\nsignificant\ntest result for a\n", 
+                   "Statistically\nnon-significant\ntest result for a\n"),
                    ifelse(
                      input$savslider == 2.8,
-                     "really no effect at all.",
+                     "really no effect at all",
                      ifelse(input$savslider < 2.83,
-                            "negligible effect size.",
+                            "negligible effect size",
                             ifelse(
                               input$savslider < 2.87,
-                              "very weak\neffect size.",
+                              "very weak\neffect size",
                               ifelse(input$savslider < 3.01,
-                                     "weak effect size.",
+                                     "weak effect size",
                                      ifelse(input$savslider < 3.2,
-                                            "moderately strong\neffect size.",
-                                            "strong effect size."
+                                            "moderately strong\neffect size",
+                                            "strong effect size"
                                             )
                                     )
                                   )
                           )
-                     )
+                     ),
+                   "\nin the sample."
                    )
     #calculate power and store
     power <- ifelse(

@@ -176,7 +176,7 @@ shinyServer(function(input, output) {
                                         "Sample mean" = brewercolors[["Blue"]], 
                                         "True population mean" = "grey")) + 
       #X axis breaks definition
-      scale_x_continuous(name = "Average difference in candy weight between the two groups", breaks = ticks, labels = strengthlab) + 
+      scale_x_continuous(name = "Average difference in understanding between the two groups", breaks = ticks, labels = strengthlab) + 
       scale_y_continuous(name = "Probability density", breaks = NULL) +
       #Defining x axis zoom
       coord_cartesian(xlim = c(-0.8, 0.8)) +
