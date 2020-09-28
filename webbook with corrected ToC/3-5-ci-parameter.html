@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.5 Confidence Interval for a Parameter | A Gentle but Critical Introduction to Statistical Inference, Moderation, and Mediation</title>
+  <meta name="description" content="3.5 Confidence Interval for a Parameter | A Gentle but Critical Introduction to Statistical Inference, Moderation, and Mediation" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.5 Confidence Interval for a Parameter | A Gentle but Critical Introduction to Statistical Inference, Moderation, and Mediation" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.5 Confidence Interval for a Parameter | A Gentle but Critical Introduction to Statistical Inference, Moderation, and Mediation" />
+  
+  
+  
+
+<meta name="author" content="Wouter de Nooy" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="3-4-crit-values.html"/>
+<link rel="next" href="3-6-SPSS-CI.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/vis-4.20.1/vis.css" rel="stylesheet" />
+<script src="libs/vis-4.20.1/vis.min.js"></script>
+<script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script>
+<script src="https://hypothes.is/embed.js" async></script>
+
+
+
+<link rel="stylesheet" href="styleX.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction and Reader’s Guide</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#intended-audience-and-setting"><i class="fa fa-check"></i>Intended Audience and Setting</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#interactive-content"><i class="fa fa-check"></i>Interactive Content</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#disclaimer"><i class="fa fa-check"></i>Disclaimer</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spss-tutorial-videos-list.html"><a href="spss-tutorial-videos-list.html"><i class="fa fa-check"></i>SPSS Tutorial Videos List</a></li>
+<li class="chapter" data-level="1" data-path="1-samp-dist.html"><a href="1-samp-dist.html"><i class="fa fa-check"></i><b>1</b> Sampling Distribution: How Different Could My Sample Have Been?</a><ul>
+<li class="chapter" data-level="" data-path="1-samp-dist.html"><a href="1-samp-dist.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="1.1" data-path="1-1-statistical-inference-making-the-most-of-your-data.html"><a href="1-1-statistical-inference-making-the-most-of-your-data.html"><i class="fa fa-check"></i><b>1.1</b> Statistical Inference: Making the Most of Your Data</a></li>
+<li class="chapter" data-level="1.2" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html"><i class="fa fa-check"></i><b>1.2</b> A Discrete Random Variable: How Many Yellow Candies in My Bag?</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#sample-statistic"><i class="fa fa-check"></i><b>1.2.1</b> Sample statistic</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#sampling-distribution"><i class="fa fa-check"></i><b>1.2.2</b> Sampling distribution</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#probdistribution"><i class="fa fa-check"></i><b>1.2.3</b> Probability and probability distribution</a></li>
+<li class="chapter" data-level="1.2.4" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#expectedvalue"><i class="fa fa-check"></i><b>1.2.4</b> Expected value or expectation</a></li>
+<li class="chapter" data-level="1.2.5" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#unbiased-est"><i class="fa fa-check"></i><b>1.2.5</b> Unbiased estimator</a></li>
+<li class="chapter" data-level="1.2.6" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#representative"><i class="fa fa-check"></i><b>1.2.6</b> Representative sample</a></li>
+<li class="chapter" data-level="" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html"><i class="fa fa-check"></i><b>1.3</b> A Continuous Random Variable: Overweight And Underweight.</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html#continuous-variable"><i class="fa fa-check"></i><b>1.3.1</b> Continuous variable</a></li>
+<li class="chapter" data-level="1.3.2" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html#cont_sample_stat"><i class="fa fa-check"></i><b>1.3.2</b> Continuous sample statistic</a></li>
+<li class="chapter" data-level="1.3.3" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html#continuous-probabilities"><i class="fa fa-check"></i><b>1.3.3</b> Continuous probabilities</a></li>
+<li class="chapter" data-level="1.3.4" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html#probability-density"><i class="fa fa-check"></i><b>1.3.4</b> Probability density</a></li>
+<li class="chapter" data-level="1.3.5" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html#probabilities-always-sum-to-1"><i class="fa fa-check"></i><b>1.3.5</b> Probabilities always sum to 1</a></li>
+<li class="chapter" data-level="" data-path="1-3-cont-random-var.html"><a href="1-3-cont-random-var.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="1-4-concluding-remarks.html"><a href="1-4-concluding-remarks.html"><i class="fa fa-check"></i><b>1.4</b> Concluding Remarks</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="1-4-concluding-remarks.html"><a href="1-4-concluding-remarks.html#sample-characteristics-as-observations"><i class="fa fa-check"></i><b>1.4.1</b> Sample characteristics as observations</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-4-concluding-remarks.html"><a href="1-4-concluding-remarks.html#means-at-three-levels"><i class="fa fa-check"></i><b>1.4.2</b> Means at three levels</a></li>
+<li class="chapter" data-level="" data-path="1-4-concluding-remarks.html"><a href="1-4-concluding-remarks.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="1-5-test-your-understanding.html"><a href="1-5-test-your-understanding.html"><i class="fa fa-check"></i><b>1.5</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="1-5-test-your-understanding.html"><a href="1-5-test-your-understanding.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="1-6-take-home-points.html"><a href="1-6-take-home-points.html"><i class="fa fa-check"></i><b>1.6</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-probmodels.html"><a href="2-probmodels.html"><i class="fa fa-check"></i><b>2</b> Probability Models: How Do I Get a Sampling Distribution?</a><ul>
+<li class="chapter" data-level="" data-path="2-probmodels.html"><a href="2-probmodels.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="2.1" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html"><i class="fa fa-check"></i><b>2.1</b> The Bootstrap Approximation of the Sampling Distribution</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html#sampling-with-and-without-replacement"><i class="fa fa-check"></i><b>2.1.1</b> Sampling with and without replacement</a></li>
+<li class="chapter" data-level="2.1.2" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html#calculating-probabilities-with-replacement"><i class="fa fa-check"></i><b>2.1.2</b> Calculating probabilities with replacement</a></li>
+<li class="chapter" data-level="2.1.3" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html#calculating-probabilities-without-replacement"><i class="fa fa-check"></i><b>2.1.3</b> Calculating probabilities without replacement</a></li>
+<li class="chapter" data-level="2.1.4" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html#limitations-to-bootstrapping"><i class="fa fa-check"></i><b>2.1.4</b> Limitations to bootstrapping</a></li>
+<li class="chapter" data-level="2.1.5" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html#any-sample-statistic-can-be-bootstrapped"><i class="fa fa-check"></i><b>2.1.5</b> Any sample statistic can be bootstrapped</a></li>
+<li class="chapter" data-level="" data-path="2-1-boot-approx.html"><a href="2-1-boot-approx.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="2-2-boot-spss.html"><a href="2-2-boot-spss.html"><i class="fa fa-check"></i><b>2.2</b> Bootstrapping in SPSS</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="2-2-boot-spss.html"><a href="2-2-boot-spss.html#instructions"><i class="fa fa-check"></i><b>2.2.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.2.2" data-path="2-2-boot-spss.html"><a href="2-2-boot-spss.html#exercises"><i class="fa fa-check"></i><b>2.2.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="2-2-boot-spss.html"><a href="2-2-boot-spss.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="2-3-exact-approaches-to-the-sampling-distribution.html"><a href="2-3-exact-approaches-to-the-sampling-distribution.html"><i class="fa fa-check"></i><b>2.3</b> Exact Approaches to the Sampling Distribution</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="2-3-exact-approaches-to-the-sampling-distribution.html"><a href="2-3-exact-approaches-to-the-sampling-distribution.html#exact-approaches-for-categorical-data"><i class="fa fa-check"></i><b>2.3.1</b> Exact approaches for categorical data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="2-3-exact-approaches-to-the-sampling-distribution.html"><a href="2-3-exact-approaches-to-the-sampling-distribution.html#computer-intensive"><i class="fa fa-check"></i><b>2.3.2</b> Computer-intensive</a></li>
+<li class="chapter" data-level="" data-path="2-3-exact-approaches-to-the-sampling-distribution.html"><a href="2-3-exact-approaches-to-the-sampling-distribution.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="2-4-SPSS-exact.html"><a href="2-4-SPSS-exact.html"><i class="fa fa-check"></i><b>2.4</b> Exact Approaches in SPSS</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="2-4-SPSS-exact.html"><a href="2-4-SPSS-exact.html#instructions-1"><i class="fa fa-check"></i><b>2.4.1</b> Instructions</a></li>
+<li class="chapter" data-level="2.4.2" data-path="2-4-SPSS-exact.html"><a href="2-4-SPSS-exact.html#exercises-1"><i class="fa fa-check"></i><b>2.4.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="2-4-SPSS-exact.html"><a href="2-4-SPSS-exact.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html"><i class="fa fa-check"></i><b>2.5</b> Theoretical Approximations of the Sampling Distribution</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#reasons-for-a-bell-shaped-probability-distribution"><i class="fa fa-check"></i><b>2.5.1</b> Reasons for a bell-shaped probability distribution</a></li>
+<li class="chapter" data-level="2.5.2" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#cond-probdistr"><i class="fa fa-check"></i><b>2.5.2</b> Conditions for the use of theoretical probability distributions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#checking-conditions"><i class="fa fa-check"></i><b>2.5.3</b> Checking conditions</a></li>
+<li class="chapter" data-level="2.5.4" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#complicatedsampling"><i class="fa fa-check"></i><b>2.5.4</b> More complicated sample statistics: differences</a></li>
+<li class="chapter" data-level="2.5.5" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#independent-samples"><i class="fa fa-check"></i><b>2.5.5</b> Independent samples</a></li>
+<li class="chapter" data-level="2.5.6" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#dependentsamples"><i class="fa fa-check"></i><b>2.5.6</b> Dependent samples</a></li>
+<li class="chapter" data-level="" data-path="2-5-theoretical-approximations-of-the-sampling-distribution.html"><a href="2-5-theoretical-approximations-of-the-sampling-distribution.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="2-6-spss-and-theoretical-approximation-of-the-sampling-distribution.html"><a href="2-6-spss-and-theoretical-approximation-of-the-sampling-distribution.html"><i class="fa fa-check"></i><b>2.6</b> SPSS and Theoretical Approximation of the Sampling Distribution</a></li>
+<li class="chapter" data-level="2.7" data-path="2-7-when-do-we-use-which-approach-to-the-sampling-distribution.html"><a href="2-7-when-do-we-use-which-approach-to-the-sampling-distribution.html"><i class="fa fa-check"></i><b>2.7</b> When Do We Use Which Approach to the Sampling Distribution?</a></li>
+<li class="chapter" data-level="2.8" data-path="2-8-test-your-understanding.html"><a href="2-8-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>2.8</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="2-8-test-your-understanding.html"><a href="2-8-test-your-understanding.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="2-9-take-home-points.html"><a href="2-9-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>2.9</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-param-estim.html"><a href="3-param-estim.html"><i class="fa fa-check"></i><b>3</b> Estimating a Parameter: Which Population Values Are Plausible?</a><ul>
+<li class="chapter" data-level="" data-path="1-samp-dist.html"><a href="1-samp-dist.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="3.1" data-path="3-1-point-estimate.html"><a href="3-1-point-estimate.html"><i class="fa fa-check"></i><b>3.1</b> Point Estimate</a></li>
+<li class="chapter" data-level="3.2" data-path="3-2-interval-estimate-for-the-sample-statistic.html"><a href="3-2-interval-estimate-for-the-sample-statistic.html"><i class="fa fa-check"></i><b>3.2</b> Interval Estimate for the Sample Statistic</a><ul>
+<li class="chapter" data-level="" data-path="1-2-discreterandomvariable.html"><a href="1-2-discreterandomvariable.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-3-precisionsesamplesize.html"><a href="3-3-precisionsesamplesize.html"><i class="fa fa-check"></i><b>3.3</b> Precision, Standard Error, and Sample Size</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="3-3-precisionsesamplesize.html"><a href="3-3-precisionsesamplesize.html#sample-size"><i class="fa fa-check"></i><b>3.3.1</b> Sample size</a></li>
+<li class="chapter" data-level="3.3.2" data-path="3-3-precisionsesamplesize.html"><a href="3-3-precisionsesamplesize.html#standard-error"><i class="fa fa-check"></i><b>3.3.2</b> Standard error</a></li>
+<li class="chapter" data-level="" data-path="3-3-precisionsesamplesize.html"><a href="3-3-precisionsesamplesize.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="3-4-crit-values.html"><a href="3-4-crit-values.html"><i class="fa fa-check"></i><b>3.4</b> Critical Values</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="3-4-crit-values.html"><a href="3-4-crit-values.html#standardization-and-z-scores"><i class="fa fa-check"></i><b>3.4.1</b> Standardization and <em>z</em> scores</a></li>
+<li class="chapter" data-level="3.4.2" data-path="3-4-crit-values.html"><a href="3-4-crit-values.html#int-est-sample-mean"><i class="fa fa-check"></i><b>3.4.2</b> Interval estimates from critical values and standard errors</a></li>
+<li class="chapter" data-level="" data-path="3-4-crit-values.html"><a href="3-4-crit-values.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="3-5-ci-parameter.html"><a href="3-5-ci-parameter.html"><i class="fa fa-check"></i><b>3.5</b> Confidence Interval for a Parameter</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="3-5-ci-parameter.html"><a href="3-5-ci-parameter.html#imag-pop-values"><i class="fa fa-check"></i><b>3.5.1</b> Imaginary population values</a></li>
+<li class="chapter" data-level="3.5.2" data-path="3-5-ci-parameter.html"><a href="3-5-ci-parameter.html#conf-interval"><i class="fa fa-check"></i><b>3.5.2</b> Confidence interval</a></li>
+<li class="chapter" data-level="3.5.3" data-path="3-5-ci-parameter.html"><a href="3-5-ci-parameter.html#bootstrap-confidenceinterval"><i class="fa fa-check"></i><b>3.5.3</b> Confidence intervals with bootstrapping</a></li>
+<li class="chapter" data-level="" data-path="3-5-ci-parameter.html"><a href="3-5-ci-parameter.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="3-6-SPSS-CI.html"><a href="3-6-SPSS-CI.html"><i class="fa fa-check"></i><b>3.6</b> Confidence Intervals in SPSS</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="3-6-SPSS-CI.html"><a href="3-6-SPSS-CI.html#instruction"><i class="fa fa-check"></i><b>3.6.1</b> Instruction</a></li>
+<li class="chapter" data-level="3.6.2" data-path="3-6-SPSS-CI.html"><a href="3-6-SPSS-CI.html#exercises"><i class="fa fa-check"></i><b>3.6.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="3-6-SPSS-CI.html"><a href="3-6-SPSS-CI.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="3-7-test-your-understanding.html"><a href="3-7-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>3.7</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="3-7-test-your-understanding.html"><a href="3-7-test-your-understanding.html#answers-5"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="3-8-take-home-points.html"><a href="3-8-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>3.8</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-hypothesis.html"><a href="4-hypothesis.html"><i class="fa fa-check"></i><b>4</b> Testing a Null Hypothesis: Am I Right or Am I Wrong?</a><ul>
+<li class="chapter" data-level="" data-path="4-hypothesis.html"><a href="4-hypothesis#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="4.1" data-path="4-1-binarydecision.html"><a href="4-1-binarydecision.html"><i class="fa fa-check"></i><b>4.1</b> A Binary Decision</a></li>
+<li class="chapter" data-level="4.2" data-path="4-2-statistical-tests.html"><a href="4-2-statistical-tests.html"><i class="fa fa-check"></i><b>4.2</b> Statistical Tests</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="4-2-statistical-tests.html"><a href="4-2-statistical-tests.html#nullhypothesis"><i class="fa fa-check"></i><b>4.2.1</b> The null hypothesis</a></li>
+<li class="chapter" data-level="4.2.2" data-path="4-2-statistical-tests.html"><a href="4-2-statistical-tests.html#sig-typeI"><i class="fa fa-check"></i><b>4.2.2</b> Significance level (<span class="math inline">\(\alpha\)</span>), significance, rejection region, and Type I error</a></li>
+<li class="chapter" data-level="4.2.3" data-path="4-2-statistical-tests.html"><a href="4-2-statistical-tests.html#pvalue"><i class="fa fa-check"></i><b>4.2.3</b> p Value</a></li>
+<li class="chapter" data-level="" data-path="4-2-statistical-tests.html"><a href="4-2-statistical-tests.html"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="4-3-null-alt.html"><a href="4-3-null-alt.html"><i class="fa fa-check"></i><b>4.3</b> Research hypothesis, alternative hypothesis, and nil hypothesis</a><ul>
+<li class="chapter" data-level="" data-path="4-3-null-alt.html"><a href="4-3-null-alt.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="4-4-one-twosidedtests.html"><a href="4-4-one-twosidedtests.html"><i class="fa fa-check"></i><b>4.4</b> One-Sided and Two-Sided Tests</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="4-4-one-twosidedtests.html"><a href="4-4-one-twosidedtests.html#boundary-value-as-hypothesized-population-value"><i class="fa fa-check"></i><b>4.4.1</b> Boundary value as hypothesized population value</a></li>
+<li class="chapter" data-level="4.4.2" data-path="4-4-one-twosidedtests.html"><a href="4-4-one-twosidedtests.html#one-sided-two-sided-distinction-is-not-always-relevant"><i class="fa fa-check"></i><b>4.4.2</b> One-sided – two-sided distinction is not always relevant</a></li>
+<li class="chapter" data-level="4.4.3" data-path="4-4-one-twosidedtests.html"><a href="4-4-one-twosidedtests.html#from-one-sided-to-two-sided-p-values-and-back-again"><i class="fa fa-check"></i><b>4.4.3</b> From one-sided to two-sided p values and back again</a></li>
+<li class="chapter" data-level="" data-path="4-4-one-twosidedtests.html"><a href="4-4-one-twosidedtests.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="4-5-testing-a-null-hypothesis-with-a-theoretical-probability-distribution.html"><a href="4-5-testing-a-null-hypothesis-with-a-theoretical-probability-distribution.html"><i class="fa fa-check"></i><b>4.5</b> Testing a Null Hypothesis with a Theoretical Probability Distribution</a><ul>
+<li class="chapter" data-level="" data-path="4-5-testing-a-null-hypothesis-with-a-theoretical-probability-distribution.html"><a href="4-5-testing-a-null-hypothesis-with-a-theoretical-probability-distribution.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html"><a href="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html"><i class="fa fa-check"></i><b>4.6</b> Testing a Null Hypothesis with an Exact Approach or Bootstrapping</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html"><a href="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html#null-ci0"><i class="fa fa-check"></i><b>4.6.1</b> Relation between null-hypothesis tests and confidence intervals</a></li>
+<li class="chapter" data-level="4.6.2" data-path="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html"><a href="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html#testing-a-null-hypothesis-with-bootstrapping"><i class="fa fa-check"></i><b>4.6.2</b> Testing a null hypothesis with bootstrapping</a></li>
+<li class="chapter" data-level="" data-path="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html"><a href="4-6-testing-a-null-hypothesis-with-an-exact-approach-or-bootstrapping.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="4-7-test-recipe-and-rules-for-reporting.html"><a href="4-7-test-recipe-and-rules-for-reporting.html"><i class="fa fa-check"></i><b>4.7</b> Test Recipe and Rules for Reporting</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="4-7-test-recipe-and-rules-for-reporting.html"><a href="4-7-test-recipe-and-rules-for-reporting.html#reporting-to-fellow-scientists"><i class="fa fa-check"></i><b>4.7.1</b> Reporting to fellow scientists</a></li>
+<li class="chapter" data-level="4.7.2" data-path="4-7-test-recipe-and-rules-for-reporting.html"><a href="4-7-test-recipe-and-rules-for-reporting.html#reporting-to-the-general-reader"><i class="fa fa-check"></i><b>4.7.2</b> Reporting to the general reader</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="4-8-nullSPSS.html"><a href="4-8-nullSPSS.html"><i class="fa fa-check"></i><b>4.8</b> Specifying Null Hypotheses in SPSS</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="4-8-nullSPSS.html"><a href="4-8-nullSPSS.html#instructions"><i class="fa fa-check"></i><b>4.8.1</b> Instructions</a></li>
+<li class="chapter" data-level="4.8.2" data-path="4-8-nullSPSS.html"><a href="4-8-nullSPSS.html#exercises"><i class="fa fa-check"></i><b>4.8.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="4-8-nullSPSS.html"><a href="4-8-nullSPSS.html#answers-5"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="4-9-cap-chance.html"><a href="4-9-cap-chance.html"><i class="fa fa-check"></i><b>4.9</b> Capitalization on Chance</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="4-9-cap-chance.html"><a href="4-9-cap-chance.html#capitalization-on-chance-in-post-hoc-tests"><i class="fa fa-check"></i><b>4.9.1</b> Capitalization on chance in post-hoc tests</a></li>
+<li class="chapter" data-level="4.9.2" data-path="4-9-cap-chance.html"><a href="4-9-cap-chance.html#correcting-for-capitalization-on-chance"><i class="fa fa-check"></i><b>4.9.2</b> Correcting for capitalization on chance</a></li>
+<li class="chapter" data-level="4.9.3" data-path="4-9-cap-chance.html"><a href="4-9-cap-chance.html#specifying-hypotheses-afterwards"><i class="fa fa-check"></i><b>4.9.3</b> Specifying hypotheses afterwards</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="4-10-test-your-understanding.html"><a href="4-10-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>4.10</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="4-10-test-your-understanding.html"><a href="4-10-test-your-understanding.html"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="4.11" data-path="4-11-take-home-points.html"><a href="1-6-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>4.11</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-power.html"><a href="5-power.html"><i class="fa fa-check"></i><b>5</b> Which Sample Size Do I Need? Power!</a><ul>
+<li class="chapter" data-level="" data-path="5-power.html"><a href="5-power.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="5.1" data-path="5-1-size-test-req.html"><a href="5-1-size-test-req.html"><i class="fa fa-check"></i><b>5.1</b> Sample Size and Test Requirements</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html"><i class="fa fa-check"></i><b>5.2</b> Effect Size</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#practical-relevance"><i class="fa fa-check"></i><b>5.2.1</b> Practical relevance</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#unstandardized-and-standardized-effect-sizes"><i class="fa fa-check"></i><b>5.2.2</b> Unstandardized and standardized effect sizes</a></li>
+<li class="chapter" data-level="5.2.3" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#cohens-d-for-one-or-two-means"><i class="fa fa-check"></i><b>5.2.3</b> Cohen’s d for one or two means</a></li>
+<li class="chapter" data-level="5.2.4" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#how-to-calculate-cohens-d-from-spss-output"><i class="fa fa-check"></i><b>5.2.4</b> How to calculate Cohen’s d from SPSS output</a></li>
+<li class="chapter" data-level="5.2.5" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#assoc-size"><i class="fa fa-check"></i><b>5.2.5</b> Association as effect size</a></li>
+<li class="chapter" data-level="5.2.6" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#standardized-effect-size-and-sample-size"><i class="fa fa-check"></i><b>5.2.6</b> Standardized effect size and sample size</a></li>
+<li class="chapter" data-level="" data-path="5-2-effectsize.html"><a href="5-2-effectsize.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html"><i class="fa fa-check"></i><b>5.3</b> Hypothetical World Versus Imaginary True World</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html#imagining-a-population-with-a-small-effect"><i class="fa fa-check"></i><b>5.3.1</b> Imagining a population with a small effect</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html#the-world-of-the-researcher"><i class="fa fa-check"></i><b>5.3.2</b> The world of the researcher</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html#the-alternative-world-of-a-small-effect"><i class="fa fa-check"></i><b>5.3.3</b> The alternative world of a small effect</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html#typeIIerror"><i class="fa fa-check"></i><b>5.3.4</b> Type II error</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html#power-of-the-test"><i class="fa fa-check"></i><b>5.3.5</b> Power of the test</a></li>
+<li class="chapter" data-level="" data-path="5-3-hypothetical-world-versus-imaginary-true-world.html"><a href="5-3-hypothetical-world-versus-imaginary-true-world.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-4-sizeeffectpower.html"><a href="5-4-sizeeffectpower.html"><i class="fa fa-check"></i><b>5.4</b> Sample Size, Effect Size, and Power</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-sizeeffectpower.html"><a href="5-4-sizeeffectpower.html#so-how-do-we-determine-sample-size"><i class="fa fa-check"></i><b>5.4.1</b> So how do we determine sample size?</a></li>
+<li class="chapter" data-level="" data-path="5-4-sizeeffectpower.html"><a href="5-4-sizeeffectpower.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="5-5-research-hypothesis-as-null-hypothesis.html"><a href="5-5-research-hypothesis-as-null-hypothesis.html"><i class="fa fa-check"></i><b>5.5</b> Research Hypothesis as Null Hypothesis</a></li>
+<li class="chapter" data-level="5.6" data-path="5-6-test-your-understanding.html"><a href="5-6-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>5.6</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="5-6-test-your-understanding.html"><a href="5-6-test-your-understanding.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-take-home-points.html"><a href="1-6-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>5.7</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-crit-discus.html"><a href="6-crit-discus.html"><i class="fa fa-check"></i><b>6</b> Critical Discussion of Null Hypothesis Significance Testing</a><ul>
+<li class="chapter" data-level="" data-path="6-crit-discus.html"><a href="6-crit-discus.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="6.1" data-path="6-1-criticisms-of-null-hypothesis-significance-testing.html"><a href="6-1-criticisms-of-null-hypothesis-significance-testing.html"><i class="fa fa-check"></i><b>6.1</b> Criticisms of Null Hypothesis Significance Testing</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="6-1-criticisms-of-null-hypothesis-significance-testing.html"><a href="6-1-criticisms-of-null-hypothesis-significance-testing.html#statistical-significance-is-not-a-measure-of-effect-size"><i class="fa fa-check"></i><b>6.1.1</b> Statistical significance is not a measure of effect size</a></li>
+<li class="chapter" data-level="6.1.2" data-path="6-1-criticisms-of-null-hypothesis-significance-testing.html"><a href="6-1-criticisms-of-null-hypothesis-significance-testing.html#strawmen"><i class="fa fa-check"></i><b>6.1.2</b> Knocking down straw men (over and over again)</a></li>
+<li class="chapter" data-level="" data-path="6-1-criticisms-of-null-hypothesis-significance-testing.html"><a href="6-1-criticisms-of-null-hypothesis-significance-testing.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="6-2-alternatives-for-null-hypothesis-significance-testing.html"><a href="6-2-alternatives-for-null-hypothesis-significance-testing.html"><i class="fa fa-check"></i><b>6.2</b> Alternatives for Null Hypothesis Significance Testing</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="6-2-alternatives-for-null-hypothesis-significance-testing.html"><a href="6-2-alternatives-for-null-hypothesis-significance-testing.html#estimation-instead-of-hypothesis-testing"><i class="fa fa-check"></i><b>6.2.1</b> Estimation instead of hypothesis testing</a></li>
+<li class="chapter" data-level="6.2.2" data-path="6-2-alternatives-for-null-hypothesis-significance-testing.html"><a href="6-2-alternatives-for-null-hypothesis-significance-testing.html#meta-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Meta-analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="6-2-alternatives-for-null-hypothesis-significance-testing.html"><a href="6-2-alternatives-for-null-hypothesis-significance-testing.html#replication"><i class="fa fa-check"></i><b>6.2.3</b> Replication</a></li>
+<li class="chapter" data-level="6.2.4" data-path="6-2-alternatives-for-null-hypothesis-significance-testing.html"><a href="6-2-alternatives-for-null-hypothesis-significance-testing.html#bayesian-inference"><i class="fa fa-check"></i><b>6.2.4</b> Bayesian inference</a></li>
+<li class="chapter" data-level="" data-path="6-2-alternatives-for-null-hypothesis-significance-testing.html"><a href="6-2-alternatives-for-null-hypothesis-significance-testing.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="6-3-no-random-sample.html"><a href="6-3-no-random-sample.html"><i class="fa fa-check"></i><b>6.3</b> What If I Do Not Have a Random Sample?</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="6-3-no-random-sample.html"><a href="6-3-no-random-sample.html#theoretical-population"><i class="fa fa-check"></i><b>6.3.1</b> Theoretical population</a></li>
+<li class="chapter" data-level="6.3.2" data-path="6-3-no-random-sample.html"><a href="6-3-no-random-sample.html#datageneratingprocess"><i class="fa fa-check"></i><b>6.3.2</b> Data generating process</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="6-4-test-your-understanding.html"><a href="1-5-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>6.4</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="6-4-test-your-understanding.html"><a href="6-4-test-your-understanding.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="6-5-take-home-points.html"><a href="6-5-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>6.5</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-anova.html"><a href="7-anova.html"><i class="fa fa-check"></i><b>7</b> Moderation with Analysis of Variance (ANOVA)</a><ul>
+<li class="chapter" data-level="" data-path="7-anova.html"><a href="7-anova.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="7.1" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html"><i class="fa fa-check"></i><b>7.1</b> Different Means for Three or More Groups</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html#anova-meandiffs"><i class="fa fa-check"></i><b>7.1.1</b> Mean differences as effects</a></li>
+<li class="chapter" data-level="7.1.2" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html#between-variance"><i class="fa fa-check"></i><b>7.1.2</b> Between-groups variance and within-groups variance</a></li>
+<li class="chapter" data-level="7.1.3" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html#anova-model"><i class="fa fa-check"></i><b>7.1.3</b> F test on the model</a></li>
+<li class="chapter" data-level="7.1.4" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html#anova-assumpt"><i class="fa fa-check"></i><b>7.1.4</b> Assumptions for the F test in analysis of variance</a></li>
+<li class="chapter" data-level="7.1.5" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html#which-groups-have-different-average-scores"><i class="fa fa-check"></i><b>7.1.5</b> Which groups have different average scores?</a></li>
+<li class="chapter" data-level="" data-path="7-1-different-means-for-three-or-more-groups.html"><a href="7-1-different-means-for-three-or-more-groups.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="7-2-onewaySPSS.html"><a href="7-2-onewaySPSS.html"><i class="fa fa-check"></i><b>7.2</b> One-Way Analysis of Variance in SPSS</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="7-2-onewaySPSS.html"><a href="7-2-onewaySPSS.html#instructions"><i class="fa fa-check"></i><b>7.2.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="7-2-onewaySPSS.html"><a href="7-2-onewaySPSS.html#exercises"><i class="fa fa-check"></i><b>7.2.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="7-2-onewaySPSS.html"><a href="7-2-onewaySPSS.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="7-3-different-means-for-two-factors.html"><a href="7-3-different-means-for-two-factors.html"><i class="fa fa-check"></i><b>7.3</b> Different Means for Two Factors</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="7-3-different-means-for-two-factors.html"><a href="7-3-different-means-for-two-factors.html#anova2way"><i class="fa fa-check"></i><b>7.3.1</b> Two-way analysis of variance</a></li>
+<li class="chapter" data-level="7.3.2" data-path="7-3-different-means-for-two-factors.html"><a href="7-3-different-means-for-two-factors.html#balanced"><i class="fa fa-check"></i><b>7.3.2</b> Balanced design</a></li>
+<li class="chapter" data-level="7.3.3" data-path="7-3-different-means-for-two-factors.html"><a href="7-3-different-means-for-two-factors.html#maineffects"><i class="fa fa-check"></i><b>7.3.3</b> Main effects in two-way analysis of variance</a></li>
+<li class="chapter" data-level="" data-path="7-3-different-means-for-two-factors.html"><a href="7-3-different-means-for-two-factors.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="7-4-moderationanova.html"><a href="7-4-moderationanova.html"><i class="fa fa-check"></i><b>7.4</b> Moderation: Group-Level Differences that Depend on Context</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="7-4-moderationanova.html"><a href="7-4-moderationanova.html#types-of-moderation"><i class="fa fa-check"></i><b>7.4.1</b> Types of moderation</a></li>
+<li class="chapter" data-level="7.4.2" data-path="7-4-moderationanova.html"><a href="7-4-moderationanova.html#testing-main-and-interaction-effects"><i class="fa fa-check"></i><b>7.4.2</b> Testing main and interaction effects</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-moderationanova.html"><a href="7-4-moderationanova.html#assumptions-for-two-way-analysis-of-variance"><i class="fa fa-check"></i><b>7.4.3</b> Assumptions for two-way analysis of variance</a></li>
+<li class="chapter" data-level="" data-path="7-4-moderationanova.html"><a href="7-4-moderationanova.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="7-5-reporting-two-way-analysis-of-variance.html"><a href="7-5-reporting-two-way-analysis-of-variance.html"><i class="fa fa-check"></i><b>7.5</b> Reporting Two-Way Analysis of Variance</a></li>
+<li class="chapter" data-level="7.6" data-path="7-6-twowaySPSS.html"><a href="7-6-twowaySPSS.html"><i class="fa fa-check"></i><b>7.6</b> Two-Way Analysis of Variance in SPSS</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="7-6-twowaySPSS.html"><a href="7-6-twowaySPSS.html#instructions-1"><i class="fa fa-check"></i><b>7.6.1</b> Instructions</a></li>
+<li class="chapter" data-level="7.6.2" data-path="7-6-twowaySPSS.html"><a href="7-6-twowaySPSS.html#exercises-1"><i class="fa fa-check"></i><b>7.6.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="7-6-twowaySPSS.html"><a href="7-6-twowaySPSS.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="7-7-test-your-understanding.html"><a href="7-7-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>7.7</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="7-7-test-your-understanding.html"><a href="7-7-test-your-understanding.html#answers-5"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="7-8-take-home-points.html"><a href="7-8-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>7.8</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-moderationcat.html"><a href="8-moderationcat.html"><i class="fa fa-check"></i><b>8</b> Regression Analysis And A Categorical Moderator</a><ul>
+<li class="chapter" data-level="" data-path="8-moderationcat.html"><a href="8-moderationcat.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="8.1" data-path="8-1-regression-equation.html"><a href="8-1-regression-equation.html"><i class="fa fa-check"></i><b>8.1</b> The Regression Equation</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="8-1-regression-equation.html"><a href="8-1-regression-equation.html#a-numerical-predictor"><i class="fa fa-check"></i><b>8.1.1</b> A numerical predictor</a></li>
+<li class="chapter" data-level="8.1.2" data-path="8-1-regression-equation.html"><a href="8-1-regression-equation.html#dichpredictor"><i class="fa fa-check"></i><b>8.1.2</b> Dichotomous predictors</a></li>
+<li class="chapter" data-level="8.1.3" data-path="8-1-regression-equation.html"><a href="8-1-regression-equation.html#categorical-predictor"><i class="fa fa-check"></i><b>8.1.3</b> A categorical independent variable and dummy variables</a></li>
+<li class="chapter" data-level="8.1.4" data-path="8-1-regression-equation.html"><a href="8-1-regression-equation.html#regr-inference"><i class="fa fa-check"></i><b>8.1.4</b> Sampling distributions and assumptions</a></li>
+<li class="chapter" data-level="" data-path="8-1-regression-equation.html"><a href="8-1-regression-equation.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="8-2-SPSS-regression.html"><a href="8-2-SPSS-regression.html"><i class="fa fa-check"></i><b>8.2</b> Regression Analysis in SPSS</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="8-2-SPSS-regression.html"><a href="8-2-SPSS-regression.html#instructions"><i class="fa fa-check"></i><b>8.2.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.2.2" data-path="8-2-SPSS-regression.html"><a href="8-2-SPSS-regression.html#exercises"><i class="fa fa-check"></i><b>8.2.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="8-2-SPSS-regression.html"><a href="8-2-SPSS-regression.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html"><i class="fa fa-check"></i><b>8.3</b> Different Lines for Different Groups</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#a-dichotomous-moderator-and-numerical-predictor"><i class="fa fa-check"></i><b>8.3.1</b> A dichotomous moderator and numerical predictor</a></li>
+<li class="chapter" data-level="8.3.2" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#interaction-variable"><i class="fa fa-check"></i><b>8.3.2</b> Interaction variable</a></li>
+<li class="chapter" data-level="8.3.3" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#conditional-effects"><i class="fa fa-check"></i><b>8.3.3</b> Conditional effects, not main effects</a></li>
+<li class="chapter" data-level="8.3.4" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#interactioninterpretation"><i class="fa fa-check"></i><b>8.3.4</b> Interpretation and statistical inference</a></li>
+<li class="chapter" data-level="8.3.5" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#a-categorical-moderator"><i class="fa fa-check"></i><b>8.3.5</b> A categorical moderator</a></li>
+<li class="chapter" data-level="8.3.6" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#commonsupportdichotomous"><i class="fa fa-check"></i><b>8.3.6</b> Common support</a></li>
+<li class="chapter" data-level="8.3.7" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#visualizing-moderation-and-covariates"><i class="fa fa-check"></i><b>8.3.7</b> Visualizing moderation and covariates</a></li>
+<li class="chapter" data-level="" data-path="8-3-categoricalmoderator.html"><a href="8-3-categoricalmoderator.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="8-4-catmodSPSS.html"><a href="8-4-catmodSPSS.html"><i class="fa fa-check"></i><b>8.4</b> A Dichotomous or Categorical Moderator in SPSS</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="8-4-catmodSPSS.html"><a href="8-4-catmodSPSS.html#instructions-1"><i class="fa fa-check"></i><b>8.4.1</b> Instructions</a></li>
+<li class="chapter" data-level="8.4.2" data-path="8-4-catmodSPSS.html"><a href="8-4-catmodSPSS.html#exercises-1"><i class="fa fa-check"></i><b>8.4.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="8-4-catmodSPSS.html"><a href="8-4-catmodSPSS.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="8-5-test-your-understanding.html"><a href="8-5-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>8.5</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="8-5-test-your-understanding.html"><a href="8-5-test-your-understanding.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="8-6-take-home-points.html"><a href="8-6-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>8.6</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-moderationcont.html"><a href="9-moderationcont.html"><i class="fa fa-check"></i><b>9</b> Regression Analysis With A Numerical Moderator</a><ul>
+<li class="chapter" data-level="" data-path="9-moderationcont.html"><a href="9-moderationcont.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="9.1" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html"><i class="fa fa-check"></i><b>9.1</b> A Numerical Moderator</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#interpret-cont-interaction"><i class="fa fa-check"></i><b>9.1.1</b> Interaction variable</a></li>
+<li class="chapter" data-level="9.1.2" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#conditional-effect-cont"><i class="fa fa-check"></i><b>9.1.2</b> Conditional effect</a></li>
+<li class="chapter" data-level="9.1.3" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#mean-centering"><i class="fa fa-check"></i><b>9.1.3</b> Mean-centering</a></li>
+<li class="chapter" data-level="9.1.4" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#symmetry-of-predictor-and-moderator"><i class="fa fa-check"></i><b>9.1.4</b> Symmetry of predictor and moderator</a></li>
+<li class="chapter" data-level="9.1.5" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#visualization-of-the-interaction-effect"><i class="fa fa-check"></i><b>9.1.5</b> Visualization of the interaction effect</a></li>
+<li class="chapter" data-level="9.1.6" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#statistical-inference-on-conditional-effects"><i class="fa fa-check"></i><b>9.1.6</b> Statistical inference on conditional effects</a></li>
+<li class="chapter" data-level="9.1.7" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#common-support"><i class="fa fa-check"></i><b>9.1.7</b> Common support</a></li>
+<li class="chapter" data-level="9.1.8" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#assumptions"><i class="fa fa-check"></i><b>9.1.8</b> Assumptions</a></li>
+<li class="chapter" data-level="9.1.9" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#higher-order-interaction-effects"><i class="fa fa-check"></i><b>9.1.9</b> Higher-order interaction effects</a></li>
+<li class="chapter" data-level="" data-path="9-1-cont-moderator-regression.html"><a href="9-1-cont-moderator-regression.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-2-reportmoderation.html"><a href="9-2-reportmoderation.html"><i class="fa fa-check"></i><b>9.2</b> Reporting Regression Results</a></li>
+<li class="chapter" data-level="9.3" data-path="9-3-RegressionContModSPSS.html"><a href="9-3-RegressionContModSPSS.html"><i class="fa fa-check"></i><b>9.3</b> A Numerical Moderator in SPSS</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="9-3-RegressionContModSPSS.html"><a href="9-3-RegressionContModSPSS.html#instructions"><i class="fa fa-check"></i><b>9.3.1</b> Instructions</a></li>
+<li class="chapter" data-level="9.3.2" data-path="9-3-RegressionContModSPSS.html"><a href="9-3-RegressionContModSPSS.html#exercises"><i class="fa fa-check"></i><b>9.3.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="9-3-RegressionContModSPSS.html"><a href="9-3-RegressionContModSPSS.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="9-4-test-your-understanding.html"><a href="9-4-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>9.4</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="9-4-test-your-understanding.html"><a href="9-4-test-your-understanding.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="9-5-take-home-points.html"><a href="9-5-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>9.5</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-confounder.html"><a href="10-confounder.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis And Confounders</a><ul>
+<li class="chapter" data-level="" data-path="10-confounder.html"><a href="10-confounder.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="10.1" data-path="10-1-controlling.html"><a href="10-1-controlling.html"><i class="fa fa-check"></i><b>10.1</b> Controlling for Effects of Other Predictors</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="10-1-controlling.html"><a href="10-1-controlling.html#partial-effect"><i class="fa fa-check"></i><b>10.1.1</b> Partial effect</a></li>
+<li class="chapter" data-level="10.1.2" data-path="10-1-controlling.html"><a href="10-1-controlling.html#confounding-variables"><i class="fa fa-check"></i><b>10.1.2</b> Confounding variables</a></li>
+<li class="chapter" data-level="" data-path="10-1-controlling.html"><a href="10-1-controlling.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="10-2-indirectcorrelation.html"><a href="10-2-indirectcorrelation.html"><i class="fa fa-check"></i><b>10.2</b> Indirect Correlation</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="10-2-indirectcorrelation.html"><a href="10-2-indirectcorrelation.html#indirect-correlation-and-size-of-confounding"><i class="fa fa-check"></i><b>10.2.1</b> Indirect correlation and size of confounding</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-2-indirectcorrelation.html"><a href="10-2-indirectcorrelation.html#confounders-are-not-included-in-the-regression-model"><i class="fa fa-check"></i><b>10.2.2</b> Confounders are not included in the regression model</a></li>
+<li class="chapter" data-level="10.2.3" data-path="10-2-indirectcorrelation.html"><a href="10-2-indirectcorrelation.html#randomization"><i class="fa fa-check"></i><b>10.2.3</b> Randomization for avoiding confounders</a></li>
+<li class="chapter" data-level="" data-path="10-2-indirectcorrelation.html"><a href="10-2-indirectcorrelation.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-3-confounders.html"><a href="10-3-confounders.html"><i class="fa fa-check"></i><b>10.3</b> Two Types of Confounders</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="10-3-confounders.html"><a href="10-3-confounders.html#suppression"><i class="fa fa-check"></i><b>10.3.1</b> Suppression</a></li>
+<li class="chapter" data-level="10.3.2" data-path="10-3-confounders.html"><a href="10-3-confounders.html#spuriousness"><i class="fa fa-check"></i><b>10.3.2</b> Reinforcement and spuriousness</a></li>
+<li class="chapter" data-level="" data-path="10-3-confounders.html"><a href="10-3-confounders.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="10-4-compmodelSSPSS.html"><a href="10-4-compmodelSSPSS.html"><i class="fa fa-check"></i><b>10.4</b> Comparing Regression Models in SPSS</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="10-4-compmodelSSPSS.html"><a href="10-4-compmodelSSPSS.html#instructions"><i class="fa fa-check"></i><b>10.4.1</b> Instructions</a></li>
+<li class="chapter" data-level="10.4.2" data-path="10-4-compmodelSSPSS.html"><a href="10-4-compmodelSSPSS.html#exercises"><i class="fa fa-check"></i><b>10.4.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="10-4-compmodelSSPSS.html"><a href="10-4-compmodelSSPSS.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="10-5-test-your-understanding.html"><a href="10-5-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>10.5</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="10-5-test-your-understanding.html"><a href="10-5-test-your-understanding.html#answers-4"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="10-6-take-home-points.html"><a href="10-6-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>10.6</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-mediation.html"><a href="11-mediation.html"><i class="fa fa-check"></i><b>11</b> Mediation with Regression Analysis</a><ul>
+<li class="chapter" data-level="" data-path="11-mediation.html"><a href="11-mediation.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="11.1" data-path="11-1-mediation-as-causal-process.html"><a href="11-1-mediation-as-causal-process.html"><i class="fa fa-check"></i><b>11.1</b> Mediation as Causal Process</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="11-1-mediation-as-causal-process.html"><a href="11-1-mediation-as-causal-process.html#causalcriteria"><i class="fa fa-check"></i><b>11.1.1</b> Criteria for a causal relation</a></li>
+<li class="chapter" data-level="11.1.2" data-path="11-1-mediation-as-causal-process.html"><a href="11-1-mediation-as-causal-process.html#indirecteffect"><i class="fa fa-check"></i><b>11.1.2</b> Mediation as indirect effect</a></li>
+<li class="chapter" data-level="11.1.3" data-path="11-1-mediation-as-causal-process.html"><a href="11-1-mediation-as-causal-process.html#causal-process"><i class="fa fa-check"></i><b>11.1.3</b> Causal process</a></li>
+<li class="chapter" data-level="" data-path="11-1-mediation-as-causal-process.html"><a href="11-1-mediation-as-causal-process.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html"><i class="fa fa-check"></i><b>11.2</b> Path Model with Regression Analysis</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#requirements"><i class="fa fa-check"></i><b>11.2.1</b> Requirements</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#size-indirect-effects"><i class="fa fa-check"></i><b>11.2.2</b> Size of indirect effects</a></li>
+<li class="chapter" data-level="11.2.3" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#direction-of-indirect-effects"><i class="fa fa-check"></i><b>11.2.3</b> Direction of indirect effects</a></li>
+<li class="chapter" data-level="11.2.4" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#partialserialmediation"><i class="fa fa-check"></i><b>11.2.4</b> Parallel and serial mediation</a></li>
+<li class="chapter" data-level="11.2.5" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#partialfullmediation"><i class="fa fa-check"></i><b>11.2.5</b> Partial and full mediation</a></li>
+<li class="chapter" data-level="11.2.6" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#significance-of-indirect-effects"><i class="fa fa-check"></i><b>11.2.6</b> Significance of indirect effects</a></li>
+<li class="chapter" data-level="" data-path="11-2-path-model-with-regression-analysis.html"><a href="11-2-path-model-with-regression-analysis.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-3-mediationcovariate.html"><a href="11-3-mediationcovariate.html"><i class="fa fa-check"></i><b>11.3</b> Controlling for Covariates</a></li>
+<li class="chapter" data-level="11.4" data-path="11-4-reporting-mediation-results.html"><a href="11-4-reporting-mediation-results.html"><i class="fa fa-check"></i><b>11.4</b> Reporting Mediation Results</a></li>
+<li class="chapter" data-level="11.5" data-path="11-5-SPSSPROCESS.html"><a href="11-5-SPSSPROCESS.html"><i class="fa fa-check"></i><b>11.5</b> Mediation with SPSS and PROCESS</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-SPSSPROCESS.html"><a href="11-5-SPSSPROCESS.html#instructions"><i class="fa fa-check"></i><b>11.5.1</b> Instructions</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-SPSSPROCESS.html"><a href="11-5-SPSSPROCESS.html#exercises"><i class="fa fa-check"></i><b>11.5.2</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="11-5-SPSSPROCESS.html"><a href="11-5-SPSSPROCESS.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="11-6-criticisms-of-mediation.html"><a href="11-6-criticisms-of-mediation.html"><i class="fa fa-check"></i><b>11.6</b> Criticisms of Mediation</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="11-6-criticisms-of-mediation.html"><a href="11-6-criticisms-of-mediation.html#causal-order-assumed"><i class="fa fa-check"></i><b>11.6.1</b> Causal order assumed</a></li>
+<li class="chapter" data-level="11.6.2" data-path="11-6-criticisms-of-mediation.html"><a href="11-6-criticisms-of-mediation.html#time-order"><i class="fa fa-check"></i><b>11.6.2</b> Time order</a></li>
+<li class="chapter" data-level="11.6.3" data-path="11-6-criticisms-of-mediation.html"><a href="11-6-criticisms-of-mediation.html#causality-or-underlying-construct"><i class="fa fa-check"></i><b>11.6.3</b> Causality or underlying construct?</a></li>
+<li class="chapter" data-level="11.6.4" data-path="11-6-criticisms-of-mediation.html"><a href="11-6-criticisms-of-mediation.html#every-effect-in-a-path-model-can-be-confounded"><i class="fa fa-check"></i><b>11.6.4</b> Every effect in a path model can be confounded</a></li>
+<li class="chapter" data-level="11.6.5" data-path="11-6-criticisms-of-mediation.html"><a href="11-6-criticisms-of-mediation.html#recommendations"><i class="fa fa-check"></i><b>11.6.5</b> Recommendations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="11-7-combining-mediation-and-moderation.html"><a href="11-7-combining-mediation-and-moderation.html"><i class="fa fa-check"></i><b>11.7</b> Combining Mediation and Moderation</a></li>
+<li class="chapter" data-level="11.8" data-path="11-8-test-your-understanding.html"><a href="11-8-test-your-understanding.html#test-your-understanding"><i class="fa fa-check"></i><b>11.8</b> Test Your Understanding</a><ul>
+<li class="chapter" data-level="" data-path="11-8-test-your-understanding.html"><a href="11-8-test-your-understanding.html#answers-3"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="11-9-take-home-points.html"><a href="11-9-take-home-points.html#take-home-points"><i class="fa fa-check"></i><b>11.9</b> Take-Home Points</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendix-test-overview.html"><a href="appendix-test-overview.html"><i class="fa fa-check"></i>Appendix: Test Overview</a><ul>
+<li class="chapter" data-level="" data-path="formulating-statistical-hypotheses.html"><a href="formulating-statistical-hypotheses.html"><i class="fa fa-check"></i>Formulating Statistical Hypotheses</a></li>
+<li class="chapter" data-level="" data-path="proportions-shares.html"><a href="proportions-shares.html"><i class="fa fa-check"></i>Proportions: shares</a><ul>
+<li class="chapter" data-level="" data-path="proportions-shares.html"><a href="proportions-shares.html#testing-proportions-in-spss"><i class="fa fa-check"></i>Testing proportions in SPSS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mean-and-median-level.html"><a href="mean-and-median-level.html"><i class="fa fa-check"></i>Mean and median: level</a><ul>
+<li class="chapter" data-level="" data-path="mean-and-median-level.html"><a href="mean-and-median-level.html#testing-one-mean-or-median-in-spss"><i class="fa fa-check"></i>Testing one mean or median in SPSS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="variance-disagreement.html"><a href="variance-disagreement.html"><i class="fa fa-check"></i>Variance: (dis)agreement</a><ul>
+<li class="chapter" data-level="" data-path="variance-disagreement.html"><a href="variance-disagreement.html#testing-two-variances-in-spss"><i class="fa fa-check"></i>Testing two variances in SPSS</a></li>
+<li class="chapter" data-level="" data-path="variance-disagreement.html"><a href="variance-disagreement.html#answers"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html"><i class="fa fa-check"></i>Association: relations between characteristics</a><ul>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html#score-level-differences"><i class="fa fa-check"></i>Score level differences</a></li>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html#comparing-means-in-spss"><i class="fa fa-check"></i>Comparing means in SPSS</a></li>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html#answers-1"><i class="fa fa-check"></i>Answers</a></li>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html#combinations-of-scores"><i class="fa fa-check"></i>Combinations of scores</a></li>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html#testing-associations-in-spss"><i class="fa fa-check"></i>Testing associations in SPSS</a></li>
+<li class="chapter" data-level="" data-path="association-relations-between-characteristics.html"><a href="association-relations-between-characteristics.html#answers-2"><i class="fa fa-check"></i>Answers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Gentle but Critical Introduction to Statistical Inference, Moderation, and Mediation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ci-parameter" class="section level2">
+<h2><span class="header-section-number">3.5</span> Confidence Interval for a Parameter</h2>
+<p>Working through the preceding sections, it may have occurred to you that it is all very well to be able to estimate the value of a statistic in a new sample with a particular precision and probability, but that this is not what we are interested in. Instead, we want to estimate the value of the statistic in the population.</p>
+<p>For example, we don’t care much about the average weight of candies in our sample bag or in the next sample bag that we may buy. We want to say something about the average weight of candies in the population. How can we do this?</p>
+<p>In addition, you may have realized that, if we know the sampling distribution, we also know the precise population value, for instance, average candy weight. After all, the average of the sampling distribution is equal to the population mean for an unbiased estimator. In the preceding paragraphs, we acted as if we knew the sampling distribution. If we know the sampling distribution, and it then follows that we also know the population value, why would we even care about estimating an interval?</p>
+<p>Our problem is this: We want to estimate a population value using probabilities. For probabilities we need the sampling distribution but for the sampling distribution, we must know the population. A vicious circle.</p>
+<div class="figure"><span id="fig:exactapproachfigure"></span>
+<img src="figures/exactapproach.png" alt="Probabilities of a sample with a particular number of yellow candies if 20 per cent of the candies are yellow in the population." width="300px" />
+<p class="caption">
+Figure 3.6: Probabilities of a sample with a particular number of yellow candies if 20 per cent of the candies are yellow in the population.
+</p>
+</div>
+<p>In the exact approach to the sampling distribution of the proportion of yellow candies in a sample bag (Figure <a href="3-5-ci-parameter.html#fig:exactapproachfigure">3.6</a>), for instance, we must know the proportion of yellow candies in the population. If we know the population proportion, we can calculate the exact probability of getting a sample bag with a particular proportion of yellow candies. But we don’t know the population proportion of yellow candies; we want to estimate it.</p>
+<p>A theoretical probability distribution can only be used as an approximation of a sampling distribution if we know some characteristics of the population. We know that the sampling distribution of sample means always has the bell shape of a normal or standard-normal (<em>z</em>) distribution or <em>t</em> distribution. However, knowing the shape is not sufficient for using the theoretical distribution as an approximation of the sampling distribution.</p>
+<p>We must also know the population mean because it specifies where the centre of the sampling distribution is located. So, we must know the population mean to use a theoretical probability distribution to estimate the population mean. This sounds like a problem that only Baron von Münchhausen can solve. How can we drag ourselves by the hair out of this swamp?</p>
+<p>By the way, we also need the standard error to know how peaked or flat the bell shape is. The standard error can usually be estimated from the data in our sample. But let us not worry about how the standard error is being estimated and focus on estimating the population mean.</p>
+<div id="imag-pop-values" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Imaginary population values</h3>
+<p>How can we find plausible population means? Figure <a href="3-5-ci-parameter.html#fig:pop-means-ci">3.7</a> shows average candy weight in a random sample (lower scale). Click somewhere under the top axis to select a possible value for the population mean. The app will then display the interval of most plausible sample means (green if it contains the actual sample mean, red otherwise) if this would be the true population value. In addition, it calculates the <em>z</em> value of the actual sample mean if the selected value would be the true population value.</p>
+<div class="figure"><span id="fig:pop-means-ci"></span>
+<iframe src="http://82.196.4.233:3838/apps/pop-means-ci/?showcase=0" width="630px" height="310px">
+</iframe>
+<p class="caption">
+Figure 3.7: For which population means is our sample mean plausible?
+</p>
+</div>
+<A name="question3.5.1"></A>
+
+<div class="rmdquestion">
+<ol style="list-style-type: decimal">
+<li>Click repeatedly on Figure <a href="3-5-ci-parameter.html#fig:pop-means-ci">3.7</a> to find the highest and lowest value of the population mean for which the sample mean is in the interval of sample means that have 95% probability of occurring. <a href="#answer3.5.1"><img src="icons/2answer.png" width=115px align="right"></a>
+</div></li>
+</ol>
+<A name="question3.5.2"></A>
+
+<div class="rmdquestion">
+<ol start="2" style="list-style-type: decimal">
+<li>If you find the highest or lowest value of the population mean for which the sample mean is in the interval of sample means that have 95% probability of occurring, a horizontal arrow appears with the label: 1.96 * SE.<br />
+What does this arrow represent and why does it carry this label? <a href="#answer3.5.2"><img src="icons/2answer.png" width=115px align="right"></a>
+</div></li>
+</ol>
+<A name="question3.5.3"></A>
+
+<div class="rmdquestion">
+<ol start="3" style="list-style-type: decimal">
+<li>How does the <em>z</em> value of the sample mean help you to minimize the number of clicks you need? <a href="#answer3.5.3"><img src="icons/2answer.png" width=115px align="right"></a>
+</div></li>
+</ol>
+<A name="question3.5.4"></A>
+
+<div class="rmdquestion">
+<ol start="4" style="list-style-type: decimal">
+<li>How does the depicted interval estimate help you to minimize the number of clicks you need? <a href="#answer3.5.4"><img src="icons/2answer.png" width=115px align="right"></a>
+</div></li>
+</ol>
+<A name="question3.5.5"></A>
+
+<div class="rmdquestion">
+<ol start="5" style="list-style-type: decimal">
+<li>What is the most efficient strategy (minimum number of clicks) to determine the lower and upper limits of the population means for which the sample mean is among the 95% most likely samples? Explain why this is the most efficient strategy. <a href="#answer3.5.5"><img src="icons/2answer.png" width=115px align="right"></a>
+</div></li>
+</ol>
+<p>How do we solve the Münchhausen problem that we must know the population mean to estimate the population mean? A solution is that we select a lot of imaginary population means. We play a <em>What If?</em>-game for each imaginary population mean: What are probable sample results if this is the true population value? We calculate the interval within which the sample mean is expected to fall if the imaginary mean would be the true population mean. We use a fixed confidence level, usually a probability of 95%.</p>
+<p>As a next step, we check if the mean of the sample that we have actually drawn falls within this interval. If it does, we conclude that this (imaginary) population mean is not at odds with the sample that we have drawn. In contrast, if our sample mean falls outside the interval, we conclude that this population mean is not plausible because our sample is too unlikely to be drawn from a population with this mean.</p>
+<p>In this way, we can find all population means that are <em>consistent</em> with our sample. If the true population mean is any of these imaginary means, we are sufficiently likely (95% probability) to draw a sample with our actual sample mean.</p>
+<p>While playing with Figure <a href="3-5-ci-parameter.html#fig:pop-means-ci">3.7</a>, you may have noticed the <em>z</em> values of the sample mean for the lowest and highest population means for which the sample mean is still within the interval. When you hit the lower bound of the population means, the sample mean has a <em>z</em> value around 1.96 while it has a <em>z</em> value around -1.96 for the highest population mean in the range.</p>
+<p>It is not a coincidence that we find the critical values of the standard-normal distribution when we reach the minimum and maximum population means that are plausible. We are using the standard-normal distribution to approximate the sampling distribution of the sample mean. The critical <em>z</em> value 1.96 marks the upper limit of the interval containing 95% of all samples with means closest to the population mean and -1.96 marks the lower limit. A distance of 1.96 standard errors, then, is the maximum distance between a population mean and a sample mean that belongs to the 95% sample means closest to the population mean.</p>
+<p>As a consequence, we may simply calculate the range of plausible population values by adding and subtracting 1.96 standard errors from the sample mean. This is much more efficient than selecting a lot of imaginary population means!</p>
+
+<div class="rmdimportant">
+<ul>
+<li>Confidence interval lower limit = sample value – critical value * standard error.</li>
+<li>Confidence interval upper limit = sample value + critical value * standard error.</li>
+</ul>
+<p>For example, the 95%-confidence interval for a sample mean:</p>
+<ul>
+<li>Lower limit = sample mean - 1.96 * standard error.</li>
+<li>Upper limit = sample mean + 1.96 * standard error.
+</div></li>
+</ul>
+<p>This can be illustrated with an example: If average candy weight in our sample is 2.8 grams and the standard error is 0.5, the lower and upper boundary for plausible population means are 1.82 grams (this is 2.8 minus 1.96 times 0.5) and 3.78 grams (2.8 plus 1.96 times 0.5).</p>
+<p>Haven’t we seen this calculation before? Yes we did, in Section <a href="3-4-crit-values.html#int-est-sample-mean">3.4.2</a>, where we estimated the interval for sample means. We now simply reverse the calculation, using the sample mean to estimate an interval of plausible population means instead of the other way around.</p>
+</div>
+<div id="conf-interval" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> Confidence interval</h3>
+<p>The upper and lower bounds for the population means that are plausible constitute an interval estimate of the parameter. This interval is linked to a probability, for instance, 95%.</p>
+<p>It is very important that we understand that this is NOT the probability that the parameter has a particular value, or that it falls within the interval. The parameter is <em>not</em> a random variable because it is not affected by the random sample that we draw and therefore it does not have a probability.</p>
+<p>The parameter has one value, which is either within or outside the interval that we have constructed. We just don’t know. But we do know that our sample is more likely for population values within the interval.</p>
+<p>We use the term <em>confidence</em> instead of probability when we use this interval to estimate a parameter. The interval is called a <em>confidence interval</em> and we usually add the confidence level, for instance, the 95% confidence interval (abbreviated: 95%CI). We are 95% confident that the parameter falls within the 95% confidence interval. If the 95% confidence interval for average candy weight ranges from 2.4 to 3.2 grams, we write in our report:</p>
+
+<div class="rmdimportant">
+We are 95% confident that average candy weight in the population is between 2.4 and 3.2 grams.
+</div>
+
+
+<div class="rmdneyman">
+<p>Jerzy Neyman introduced the concept of a confidence interval in 1937:</p>
+<p>“In what follows, we shall consider in full detail the problem of estimation by interval. We shall show that it can be solved entirely on the ground of the theory of probability as adopted in this paper, without appealing to any new principles or measures of uncertainty in our judgements”. <span class="citation">(Neyman, <a href="references.html#ref-RefWorks:3929" role="doc-biblioref">1937</a>: 347)</span></p>
+<a href="https://upload.wikimedia.org/wikipedia/commons/d/de/Jerzy_Neyman-bender.jpg">Photo of Jerzy Neyman by Ohonik, Commons Wikimedia, CC BY-SA 4.0</a>
+</div>
+
+</div>
+<div id="bootstrap-confidenceinterval" class="section level3">
+<h3><span class="header-section-number">3.5.3</span> Confidence intervals with bootstrapping</h3>
+<p>If we approximate the sampling distribution with a theoretical probability distribution such as the normal (<em>z</em>) or <em>t</em> distribution, critical values and the standard error are used to calculate the confidence interval (see Section <a href="3-5-ci-parameter.html#imag-pop-values">3.5.1</a>).</p>
+<p>There are theoretical probability distributions that do not work with a standard error, such as the <em>F</em> distribution or chi-squared distribution. If we use those distributions to approximate the sampling distribution of a continuous sample statistic, for instance, the association between two categorical variables, we cannot use the formula for a confidence interval (Section <a href="3-5-ci-parameter.html#imag-pop-values">3.5.1</a>) because we do not have a standard error. We must use bootstrapping to obtain a confidence interval.</p>
+<p>As you might remember from Section <a href="2-1-boot-approx.html#boot-approx">2.1</a>, we simulate a sampling distribution if we bootstrap a statistic, for instance the median candy weight in a sample bag. We can use this sampling distribution to construct a confidence interval. For example, we take the values separating the bottom 2.5% and the top 2.5% of all samples in the bootstrapped sampling distribution as the lower and upper limits of the 95% confidence interval.</p>
+<p>It is also possible to construct the entire sampling distribution in exact approaches to the sampling distribution. Both the standard error and percentiles can be used to create confidence intervals. This can be very demanding in terms of computer time, so exact approaches to the sampling distribution usually only report p values (see Section <a href="4-2-statistical-tests.html#pvalue">4.2.3</a>), not confidence intervals.</p>
+</div>
+<div id="answers-3" class="section level3 unnumbered">
+<h3>Answers</h3>
+<A name="answer3.5.1"></A>
+
+<div class="rmdanswer">
+<p>Answer to Question 1.</p>
+<ul>
+<li>The closer the sample mean is to the population mean, the higher the
+probability of drawing a sample with more or less this mean. Population means
+close to the sample mean will turn up as green dots and their intervals will
+include the sample mean.</li>
+<li>The more we move away from the sample mean, the less likely to draw a sample
+with a mean that differs at least this much from the population mean. At some
+point, the population mean is too far away from the sample mean, so the actual
+sample mean is no longer within the range of the 95% most likely sample means to
+be drawn from a population with the selected population mean. <a href="#question3.5.1"><img src="icons/2question.png" width=161px align="right"></a>
+</div></li>
+</ul>
+<A name="answer3.5.2"></A>
+
+<div class="rmdanswer">
+<p>Answer to Question 2.</p>
+<ul>
+<li>The arrow represents the distance (difference) between the mean of the sample (black dot in the bottom of the figure) and the lowest or highest plausible population value given our sample mean (the green dot in the top of the figure).</li>
+<li>The label specifies this distance or difference: the critical value in a standard-normal distribution with a confidence level of 95%, namely 1.96, multiplied by the standard error (SE). The 95% most likely sample means are by definition no further away from the true population mean than the critical value times the standard error.</li>
+<li>The population mean is plausible because the actual sample mean is within this distance. <a href="#question3.5.2"><img src="icons/2question.png" width=161px align="right"></a>
+</div></li>
+</ul>
+<A name="answer3.5.3"></A>
+
+<div class="rmdanswer">
+<p>Answer to Question 3.</p>
+<ul>
+<li>In a standard-normal distribution, z standardizes scores and 95% of all
+observations differ no more than 1.96 z scores from the mean. The lowest and
+highest population means for which the current sample mean is among the 95%
+most plausible samples, then, are reached if the z value of the sample mean is
+(almost) 1.96 or -1.96.</li>
+<li>So the z value tells us how close we are to the limit. <a href="#question3.5.3"><img src="icons/2question.png" width=161px align="right"></a>
+</div></li>
+</ul>
+<A name="answer3.5.4"></A>
+
+<div class="rmdanswer">
+<p>Answer to Question 4.</p>
+<ul>
+<li>The interval estimate shows the width of the interval between the lowest and
+highest population average for which the current sample mean is among the 95%
+most plausible samples.</li>
+<li>If the current sample mean is at the left limit of the interval, we reach
+the highest population mean for which the sample mean is within the interval.
+Increase the population mean and the interval will no longer include the
+current sample mean. In a similar way, the lowest population mean for which
+the interval includes the sample mean is found if the sample mean is on the
+right limit of the interval. <a href="#question3.5.4"><img src="icons/2question.png" width=161px align="right"></a>
+</div></li>
+</ul>
+<A name="answer3.5.5"></A>
+
+<div class="rmdanswer">
+<p>Answer to Question 5.</p>
+<p>Using the answer to Question 3, we may use the following steps to find the
+lower and upper limits:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Click in the middle of the sample mean. This selects the population mean
+that is equal to the sample mean.</li>
+<li>Click on the left limit of the interval. This should be (very near to) the
+lowest population mean, the interval of which still includes the sample mean.</li>
+<li>Repeat Step a to display again the interval for the population mean that is
+equal to the sample mean.</li>
+<li>Click the right limit of this interval to find the highest population mean
+such that the current sample mean is still among the 95% most plausible
+samples.</li>
+</ol>
+<ul>
+<li>You may not hit the nail spot-on with every click but the procedure itself
+is efficient. You can only do better by gambling the values of the two limits
+directly and being very very lucky.</li>
+<li>The important lesson here: Instead of constructing the interval around the
+population mean, we can construct it around the sample mean to obtain the
+range of population means that are plausible given this sample. We flip the
+procedure! <a href="#question3.5.5"><img src="icons/2question.png" width=161px align="right"></a>
+</div></li>
+</ul>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="3-4-crit-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="3-6-SPSS-CI.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["GentleIntro.pdf"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

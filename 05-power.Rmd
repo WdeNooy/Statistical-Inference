@@ -38,7 +38,7 @@ This chapter reviews concepts that are central to understanding what statistical
 Table \@ref(tab:thumb) in Chapter \@ref(probmodels) (summarised in Table \@ref(tab:thumbsize) below) shows the conditions that must be satisfied if we want to use a theoretical probability distribution to approximate a sampling distribution. Only if the conditions are met, the theoretical probability distribution resembles the sampling distribution sufficiently for using the former as approximation of the latter.
 
 ```{r thumbsize, echo=FALSE, screenshot.opts=list(delay = 2)}
-knitr::kable(rbind(c("Binomial distribution", "proportion", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)"), c("(Standard) normal distribution", "one or two means", "> 100"), c("t distribution", "one or two means", "each group > 30"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30"), c("t distribution", "regression coefficient", "20+ per independent variable"), c("F distribution", "3+ means", " all groups are more or less of equal size"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5")), col.names = c("Distribution", "Sample statistic", "Minimum sample size"), caption = "Rules of thumb for minimum sample sizes.", booktabs = TRUE) %>%
+knitr::kable(rbind(c("Binomial distribution", "proportion", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)"), c("(Standard) normal distribution", "one or two means", "> 100"), c("t distribution", "one or two means", "each group > 30"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30"), c("t distribution", "regression coefficient", "20+ per independent variable"), c("F distribution", "3+ means", " all groups are more or less of equal size"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5 (sample 5+ observations per category or cell)")), col.names = c("Distribution", "Sample statistic", "Minimum sample size"), caption = "Rules of thumb for minimum sample sizes.", booktabs = TRUE) %>%
   kable_styling(font_size = 12, full_width = F,
                 latex_options = c("scale_down", "HOLD_position"))
 ```
@@ -47,7 +47,7 @@ Conditions often include sample size. Table \@ref(tab:thumbsize) reproduces the 
 
 Chi-squared tests require a minimum of five expected frequencies per category in a frequency distribution or cell in a contingency table. Your sample size should be at least the number of categories or cells times five to come even near this requirement. Regression analysis requires at least 20 cases per independent variable in the regression model.  
 
-The variation of sample size across groups is important in analysis of variance (ANOVA), which uses the F distribution. If the number of cases is more or less the same across all groups, we need not worry about the variances of the dependent variable for the groups in the population. To be on the safe side, then, it is recommended to design your sampling strategy in such a way that you end up with more or less equal group sizes if you plan to use analysis of variance.  
+The variation of sample size across groups is important in analysis of variance (ANOVA), which uses the F distribution. If the number of cases is more or less the same across all groups, we do not have to worry about the variances of the dependent variable for the groups in the population. To be on the safe side, then, it is recommended to design your sampling strategy in such a way that you end up with more or less equal group sizes if you plan to use analysis of variance.  
 
 ## Effect Size {#effectsize}
 
@@ -108,7 +108,7 @@ In scientific research, we rarely have precise norms for differences that we usu
 
 If candy weights vary a lot, we will not be very impressed by a relatively small difference between observed and expected (hypothesized) average candy weight. In contrast, if candy weight is quite constant, a small average difference can be important. 
 
-For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the hypothesized population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on means is known as _Cohen's d_. 
+For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the hypothesized population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on one or two means is known as _Cohen's d_. 
 
 ----
 
@@ -190,6 +190,8 @@ knitr::include_url("https://www.youtube.com/embed/2TSuu6WpcUo", height = "360px"
 # moderate effect size.
 ```
 
+SPSS version 27 (and later) provides Cohen's d for t tests on one or two means. This is not always the value that we need, so calculate Cohen's d by hand to be on the safe side.
+
 #### Exercises
 
 <A name="question5.2.3"></A>
@@ -215,7 +217,7 @@ Effect size is also zero according to the standard null hypotheses used for test
 Because they are standardized, we can interpret their effect sizes using rules of thumb. The rule of thumb for interpreting a standardized regression coefficient (_b_*) or a correlation coefficient, for example, could be that a value between 0 and .10 is interpreted as no or a very weak association, between .10 and .30 as weak, between .30 and .50 as moderate, .50 to .80 as strong, and .80 to 1.00 as very strong, while exactly 1.00 is a perfect association. Note that we ignore the sign (plus or minus) of the effect when we interpret its size.
 
 ### Standardized effect size and sample size  
-We can use standardized effect size to express the effects that we are interested in without caring about the precise size of differences. We merely have to choose whether small, moderate, or large effects are of practical interest to us. Preferably, we know from previous research whether small, moderate, or large effects are common in our type of research. If moderate or large effects are rare, we should use a sample size that allows detecting small effects. In contrast, when large effects occur frequently, we can do with a smaller sample that may overlook small effects.  
+We can use standardized effect size to express the effects that we are interested in. We choose whether small, moderate, or large effects are of practical interest to us. Preferably, we know from previous research whether small, moderate, or large effects are common in our type of research. If moderate or large effects are rare, we should use a sample size that allows detecting small effects. In contrast, when large effects occur frequently, we can do with a smaller sample that may overlook small effects.  
 
 If we know the effect size in the sample for which we want statistically significant results, we can figure out the minimum sample size for which the test statistic is statistically significant. 
 
@@ -236,7 +238,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size/", height="268px")
 
 Effect size as well as test statistics reflect the difference between what we expect according to the null hypothesis and what we observe in our sample. As a consequence, effect size indicators and test statistics are related. In some cases, such as Cohen's d, the relation between effect size and test statistic is very simple.  
 
-The test statistic t for a t test on one mean, for example, is equal to Cohen's d times the square root of sample size. Here, the only difference between the two is sample size! Sample size influences the test statistic---the larger the sample, the larger the test statistic. At the same time, effect size affects the test statistic---a larger effect size produces a larger test statistic. 
+The test statistic t for a t test on one mean, for example, is equal to Cohen's d times the square root of sample size. Here, the only difference between the two is sample size! Sample size influences the test statistic---the larger the sample, the larger the test statistic--- but it does not influence effect size. This is an important difference.
 
 ### Answers {-}
 
@@ -290,8 +292,9 @@ Answer to Question 4.
 
 * In a one-sided test, we take the boundary value (here: 6.0) as the value
 against which we test. It makes sense to use this value also for calculating
-effect size. The unstandardized and standardized effect sizes, then, are the
-same as in Question 1. [<img src="icons/2question.png" width=161px align="right">](#question5.2.4)
+effect size provided that our sample result is on the correct side of the boundary value.
+* If we hypothesize, for example, that average attitude towards immigrants is at least 6.0 in the population and we find a sample average of 4.5, the unstandardized and standardized effect sizes, then, are the same as in Question 1. 
+* In contrast, if our sample average is 7.5, it is covered by the null hypothesis (population average is at least 6.0). In this situation, we could argue that there is no difference between the hypothesized average(s) and the avergae in our sample, so there is no effect. [<img src="icons/2question.png" width=161px align="right">](#question5.2.4)
 ```
 
 <A name="answer5.2.5"></A>
@@ -308,7 +311,7 @@ that the F test on equality of population variances is statistically
 significant (*p* = .029), so we do not assume equal variances and we use the
 bottom row from the results table.
 * Cohen's d = 2 * 1.602 / sqrt(30.009) = 3.204 / 5.478 = 0.58. This is a
-moderate effect.
+moderate effect. SPSS V27 reports quite a different value: 0.372, which signals a weak to moderate effect. The latter calculation assumes that attitude towards immigrants has equal variances for the young and old in the population.
 * Note that the sample of young voters is too small to conduct a t test. This,
 however, is not consequential to Cohen's d because a minimum sample size is
 required for a reliable p value but not for a t value. [<img src="icons/2question.png" width=161px align="right">](#question5.2.5)
@@ -430,7 +433,7 @@ Now let us ask ourselves: What is going to happen to our statistical test if the
 
 If we actually sample from this imaginary true population, the sampling distribution centered around the alternative hypothesis (H~1~) in Figure \@ref(fig:TypeI-II-errors) represents our true sampling distribution. It shows us the true probabilities (areas under the curve) of drawing a sample with a particular minimum or maximum value. These are the probabilities of our sample if there is a small effect in the population.  
 
-Now that we know the true sampling distribution if there is a small effect in the population, we can foresee what is going to happen when we enter the world of the researcher. The researcher is going to use the rejection region to decide on the null hypothesis. If the sample mean is not in the rejection region, the researcher is not going to reject the null hypothesis.
+Now that we know the true sampling distribution if there is a small effect in the population, we can foresee what is going to happen when we enter the world of the researcher. The researcher is going to use the rejection region to decide on the null hypothesis. If the sample mean is in the rejection region, the researcher is going to reject the null hypothesis. Otherwise, the null hypothesis is not rejected.
 
 ### Type II error {#typeIIerror}  
 If there is a (small) effect in the population, the null hypothesis is not true. For example, average candy weight is not 2.8 grams, it is 2.9 grams. If our sample mean is close to 2.8 grams, we may not reject the null hypothesis even if it is not true. This is a _Type II error_: not rejecting a false null hypothesis.  
@@ -734,7 +737,7 @@ Figure \@ref(fig:test-power) shows sampling distributions for two worlds. To the
 
 <A name="question5.6.3"></A>
 ```{block2, type='rmdquestion'}
-3. What do the red horizontal lines in Figure \@ref(fig:test-power) represent? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.3)
+3. What do the blue horizontal lines in Figure \@ref(fig:test-power) represent? [<img src="icons/2answer.png" width=115px align="right">](#answer5.6.3)
 ```
 
 <A name="question5.6.4"></A>
@@ -806,7 +809,7 @@ Answer to Question 2.
 ```{block2, type='rmdanswer', echo=ch5}
 Answer to Question 3. 
 
-* The red horizontal lines represent the values of the sample outcome (average candy weight) for which we reject the null hypothesis. This is called the rejection region of the test. [<img src="icons/2question.png" width=161px align="right">](#question5.6.3)
+* The blue horizontal lines represent the values of the sample outcome (average candy weight) for which we reject the null hypothesis. This is called the rejection region of the test. [<img src="icons/2question.png" width=161px align="right">](#question5.6.3)
 ```
 
 <A name="answer5.6.4"></A>

@@ -84,8 +84,28 @@ In analysis of variance, then, we are simply interested in the differences betwe
 d <- data.frame(endorser = factor(c("Nobody","Clooney","Jolie"), levels = c("Nobody","Clooney","Jolie")), willingness_av = c(3, 6, 7), const = 1)
 library(ggplot2)
 ggplot(d, aes(endorser, willingness_av)) + 
-  geom_point(size = 3) + 
-  geom_line(aes(group = const), size = 1) + 
+  geom_point(size = 3, color=brewercolors["Blue"]) + 
+  geom_line(aes(group = const), size = 1, color=brewercolors["Blue"]) + 
+  geom_segment(aes(x = 1, xend = 3, y = d[1,2], yend = d[1,2]),
+               linetype = "dashed", color = "black") +
+  geom_segment(aes(x = 2, xend = 2, y = d[1,2], yend = (d[2,2] - 0.1)),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+  geom_text(aes(x = 2.02, y = (d[1,2] + d[2,2])/2,
+            label = "Clooney effect",
+            hjust = 0), color = "darkgrey"
+            ) +
+  geom_segment(aes(x = 3, xend = 3, y = d[1,2], yend = (d[3,2] - 0.1)),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+  geom_text(aes(x = 2.98, y = (d[1,2] + d[3,2])/2,
+            label = "Jolie effect",
+            hjust = 1), color = "darkgrey"
+            ) +
   theme_general() + 
   scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + labs(x = "Endorser", y = "Average willingness to donate")
 rm(d)
@@ -175,7 +195,7 @@ The variation in scores within a population, for example, all people who would b
 The amount of variation in population scores is important. Chance differences between sample means are more likely to be larger if within-groups variance is larger. You are more likely to draw some observations far away from the population mean if score variation is larger in the population. Observations far from the mean influence the sample mean strongly, so the means of samples drawn from this population fluctuate more.
 ```
 
-The experimental treatment predicts that a participant's willingness equals the average willingness of the participant's group. It cannot predict or explain that a participant's willingness score is slightly different from her group mean (the red double-sided arrows in Figure \@ref(fig:anova-between)). _Within-groups variance_ in outcome scores is what we cannot predict with our experimental treatment; it is prediction error. In some SPSS output, it is therefore sometimes labeled as "Error".
+The experimental treatment predicts that a participant's willingness equals the average willingness of the participant's group. It cannot predict or explain that a participant's willingness score is slightly different from her group mean (the red double-sided arrows in Figure \@ref(fig:anova-between)). _Within-groups variance_ in outcome scores is what we cannot predict with our experimental treatment; it is prediction error. In some SPSS output, it is therefore labeled as "Error".
 
 ### F test on the model {#anova-model}
 
@@ -442,6 +462,8 @@ knitr::include_url("https://www.youtube.com/embed/RXfCae9v2M0", height = "360px"
 # Interpret output: F test on the null hypothesis that all groups have equal population means - point out between groups sum of squares? ; post-hoc t test for pairwise comparison of (population) means ; test result and significance, confidence interval.
 ```
 
+SPSS V27 (and later) reports eta-squared if you check the _Estimate effect size_ box.
+
 ### Exercises
 
 <A name="question7.2.1"></A>
@@ -620,13 +642,33 @@ d <- data.frame(
   sex = factor(rep(c("Women", "Men"), 3)),
   willingness_av = c(4.5, 3, 6.5, 5, 8.5, 7), const = 1)
 library(ggplot2)
-# Plot for main effect endorser.
-d %>% group_by(endorser) %>%
+d2 <- d %>% group_by(endorser) %>%
   summarise(willing = mean(willingness_av),
-            const = max(const)) %>%
-  ggplot(aes(endorser, willing)) + 
-    geom_point(size = 3) + 
-    geom_line(aes(group = const), size = 1) + 
+            const = max(const))
+# Plot for main effect endorser.
+ggplot(d2, aes(endorser, willing)) + 
+    geom_point(size = 3, color=brewercolors["Blue"]) + 
+    geom_line(aes(group = const), size = 1, color=brewercolors["Blue"]) + 
+    geom_segment(aes(x = 1, xend = 3, y = willing[[1]], yend = willing[[1]]),
+               linetype = "dashed", color = "black") +
+    geom_segment(aes(x = 2, xend = 2, y = willing[[1]], yend = (willing[[2]] - 0.1)),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+    geom_text(aes(x = 2.02, y = (willing[[1]] + willing[[2]])/2,
+            label = "Clooney effect",
+            hjust = 0), color = "darkgrey", size =5
+            ) +
+    geom_segment(aes(x = 3, xend = 3, y = willing[[1]], yend = (willing[[3]] - 0.1)),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+    geom_text(aes(x = 2.98, y = (willing[[1]] + willing[[3]])/2,
+            label = "Jolie effect",
+            hjust = 1), color = "darkgrey", size =5
+            ) +
     theme_general() + 
     theme(text = element_text(size = 18)) +
     scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 
@@ -636,8 +678,19 @@ d %>% group_by(sex) %>%
   summarise(willing = mean(willingness_av),
             const = max(const)) %>%
   ggplot(aes(sex, willing)) + 
-    geom_point(size = 3) + 
-    geom_line(aes(group = const), size = 1) + 
+    geom_point(size = 3, color=brewercolors["Blue"]) + 
+    geom_line(aes(group = const), size = 1, color=brewercolors["Blue"]) + 
+    geom_segment(aes(x = 1, xend = 2, y = willing[[1]], yend = willing[[1]]),
+               linetype = "dashed", color = "black") +
+    geom_segment(aes(x = 2, xend = 2, y = willing[[1]], yend = (willing[[2]] - 0.1)),
+               color = "darkgrey",
+               arrow = arrow(length = unit(2,"mm"),
+                                 # ends = "both",
+                                 type = "closed")) +
+    geom_text(aes(x = 1.98, y = (willing[[1]] + willing[[2]])/2,
+            label = "Effect of being female",
+            hjust = 1), color = "darkgrey", size =5
+            ) +
     theme_general() + 
     theme(text = element_text(size = 18)) +
     scale_y_continuous(limits = c(1, 10), breaks = c(1, 5, 10)) + 

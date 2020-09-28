@@ -96,7 +96,7 @@ output$mainplot <- renderPlot({
       colour = brewercolors["Red"]
     ) +
     theme_general() +
-    scale_x_continuous(name = "Average candy weight in the population (gramms)", 
+    scale_x_continuous(name = "Average candy weight in the population (grams)", 
                        limits = c(xmin, xmax), 
                        breaks = if(input$steps == "step1") {
                          c(lefth0, meanh0, righth0)
