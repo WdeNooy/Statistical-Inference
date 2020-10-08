@@ -281,7 +281,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/regression-categorical/", heig
 
 In this example, smoking status is measured with three categories: (1) non-smokers, (2) former smokers, and (3) smokers. Let us use the term _categorical variable_ only for variables containing three or more categories or groups. This makes it easy to distinguish them from dichotomous variables. This distinction is important because we can include a dichotomous variable straight away as a predictor in a regression model but we cannot do so for a variable with more than two categories. We can only include such a categorical independent variable if we change it into a set of dichotomies. 
 
-We can create a new dichotomous variable for each group, indicating whether (score 1) or not (score 0) the respondent is part of this group. In the example, we could create the variables _neversmoked_, _smokesnomore_, and _smoking_. Every respondent would score 1 on one of the three variables and 0 on the other two variables. These variables are called _dummy variables_ or _indicator variables_.
+We can create a new dichotomous variable for each group, indicating whether (score 1) or not (score 0) the respondent is part of this group. In the example, we could create the variables _neversmoked_, _smokesnomore_, and _smoking_. Every respondent would score 1 on one of the three variables and 0 on the other two variables (Table \@ref(tab:dummytable)). These variables are called _dummy variables_ or _indicator variables_.
 
 ```{r dummytable, echo=FALSE, screenshot.opts=list(delay = 2)}
 knitr::kable(rbind(c("1 - Non-smoker", "1", "0", "0"), 
@@ -1276,7 +1276,7 @@ results[1, 3] <- NA
 # Adjust parameter names
 attributes(results)$dimnames[[1]][1] <- "(Constant)"
 attributes(results)$dimnames[[1]][2] <- "Exposure"
-attributes(results)$dimnames[[1]][3] <- "Status (smoker)"
+attributes(results)$dimnames[[1]][3] <- "Status (smoker = 1, non-smoker = 0)"
 attributes(results)$dimnames[[1]][4] <- "Exposure*Status (smoker)"
 # Table.
 options(knitr.kable.NA = '')
@@ -1291,17 +1291,17 @@ source("report_n.R")
 rm(smokers, model_1, ci, results_2, model_2, z_attitude, z_status2, z_expostatus2, z_exposure)
 ```
 
-In Table \@ref(tab:dich-moderator-output), non-smokers are the reference group on the moderator, so the regression coefficient for exposure gives us the effect of exposure on smoking attitude **for non-smokers**. Its value is `r report_n(results[2, 1], digits = 2)`, so an additional unit of exposure predicts a smoking attitude among non-smokers that is `r report_n(abs(results[2, 1]), digits = 2)` points more negative. More exposure to the campaign goes together with a more negative attitude towards smoking for non-smokers. The p value for this effect tests the null hypothesis that the effect is zero in the population. If the exposure effect is statistically significant, we reject this null hypothesis.
+In Table \@ref(tab:dich-moderator-output), non-smokers are the reference group on the moderator because they are coded 0. Therefore, the regression coefficient for exposure gives us the effect of exposure on smoking attitude **for non-smokers**. Its value is `r report_n(results[2, 1], digits = 2)`, so an additional unit of exposure predicts a smoking attitude among non-smokers that is `r report_n(abs(results[2, 1]), digits = 2)` points more negative. More exposure to the campaign goes together with a more negative attitude towards smoking for non-smokers. The p value for this effect tests the null hypothesis that the effect is zero in the population. If the exposure effect is statistically significant, we reject this null hypothesis.
 
-The effect of smoking status on attitude is conditional on exposure because smoking status is included in the interaction variable. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average `r report_n(results[3, 1], digits = 2)` more positive towards smoking than non-smokers. The p value tests the null hypothesis that the difference is zero for people without exposure (exposure = 0) to the anti-smoking campaign.
+The effect of smoking status on attitude is conditional on exposure because smoking status and exposure are included in the interaction variable. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average `r report_n(results[3, 1], digits = 2)` more positive towards smoking than non-smokers. The p value tests the null hypothesis that the difference is zero for people without exposure (exposure = 0) to the anti-smoking campaign.
 
-Smokers are coded 1 on the (smoking) status variable, so the regression coefficient for the interaction variable tells us that the slope of the exposure effect is `r report_n(abs(results[4, 1]), digits = 2)` lower for smokers than for non-smokers. The estimated slope of the exposure effect is `r report_n(results[2, 1], digits = 2)` for non-smokers. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is `r report_n(results[2, 1] + results[4, 1], digits = 2)`. 
+Smokers are coded 1 on the (smoking) status variable and non-smokers are coded 0, so the regression coefficient for the interaction variable tells us that the slope of the exposure effect is `r report_n(abs(results[4, 1]), digits = 2)` lower for smokers than for non-smokers. The estimated slope of the exposure effect is `r report_n(results[2, 1], digits = 2)` for non-smokers. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is `r report_n(results[2, 1] + results[4, 1], digits = 2)`. 
 
 Now we can compare the slopes (regression coefficients) for the two groups, which gives good insight into the nature of moderation in this example. The effect of exposure on attitude is more strongly negative for smokers than for non-smokers.
 
 The interaction variable is treated as an ordinary predictor in the estimation process, so it receives a confidence interval and a p value. The null hypothesis for the p value is that the interaction effect is zero in the population. In other words, the effect of exposure on attitude is hypothesized to be the same for smokers and non-smokers in the population; no moderation is expected in the population.
 
-We know the confidence intervals and p values of the exposure effect for non-smokers (the regression coefficient for exposure) and for the difference between their exposure effect and the exposure effect for smokers (the regression coefficient for the interaction effect). We do not know, however, the confidence interval and statistical significance of the exposure effect for smokers. We cannot add confidence intervals or p values, so we do not know if the effect of exposure for smokers is significantly different from zero in the popultion. 
+We know the confidence intervals and p values of the exposure effect for non-smokers (the regression coefficient for exposure) and for the difference between their exposure effect and the exposure effect for smokers (the regression coefficient for the interaction effect). We do not know, however, the confidence interval and statistical significance of the exposure effect for smokers. We cannot add confidence intervals or p values, so we do not know if the effect of exposure for smokers is significantly different from zero in the population. 
 
 If you want to know the confidence interval or p value of the exposure effect for smokers, you have to rerun the regression analysis using a different dummy variable for the moderator. You should create a dichotomous variable that assigns 0 to smokers and 1 to non-smokers, and an interaction variable created with this dichotomy. The regression coefficient of the exposure effect now expresses the effect for smokers because smokers are the reference group on the new dummy variable. The associated p value and confidence interval apply to the exposure effect for smokers.
 
@@ -1394,7 +1394,7 @@ Remember that the effects of predictors that are included in interactions are co
 
 For the two dummy variables *Former smoker* and *Smoker*, the null hypothesis is tested that they have the same average attitude in the population as the non-smokers (reference group) if they are not exposed to the anti-smoking campaign. Participants who are not exposed to the campaign (zero exposure) are the reference group here.
 
-Interaction predictors show effect differences. In Table \@ref(tab:cat-moderator-results), the interaction predictors test the null hypotheses that the effect of exposure is equal for former smokers and non-smokers (_Exposure\*Former smoker_) or for smokers and non-smokers (_Exposure\*Smoker_) in the population.
+Interaction predictors show effect differences. In Table \@ref(tab:cat-moderator-results), the interaction predictors test the null hypotheses that the effect of exposure on attitude is equal for former smokers and non-smokers (_Exposure\*Former smoker_) or for smokers and non-smokers (_Exposure\*Smoker_) in the population.
 
 If we would like to know whether the exposure effect for former smokers is significantly different from zero, we have to rerun the regression model using former smokers as reference group. This new model would also tell us whether the exposure effect for former smokers is significantly different from the exposure effect for people who are still smoking.
 
@@ -1634,9 +1634,9 @@ Instead of writing out the full equations, you can also obtain the constant and 
 
 1. Add a column indicating which value you plug in for the moderator variable(s) and any covariates. In this example, _smoker_ is the moderator variable, which appears both by itself and as part of the interaction variable. The variable _contact_ is a covariate here; we use its mean as plug-in value.
 
-2. Add a column to calculate the simple slope. Only use the variables that include the predictor, which is _exposure_ in this example. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the simple slope.
+2. Add a column to calculate the constant. Use all variables that do _not_ include the predictor. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the constant.
 
-3. Add a column to calculate the constant. Use all variables that do _not_ include the predictor. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the constant.
+3. Add a column to calculate the simple slope. Only use the variables that include the predictor, which is _exposure_ in this example. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the simple slope.
 
 ```{r cat-moderator-results2, echo=FALSE, message=FALSE, warning=FALSE}
 # Table of regression coefficients for exposure moderated by status3, similar to SPSS output.
@@ -1659,15 +1659,16 @@ results <- data.frame(B = c(report_n(model_1$coefficients,3), NA),
                       check.names = FALSE)
 # Table.
 options(knitr.kable.NA = '')
-knitr::kable(results, digits = 3, booktabs = TRUE,
-             caption = "Calculation of the simple slope and constant for non-smokers and smokers at average contact.",
-             col.names = c("B", rep(c("1. Plugin", "2. Slope", "3. Constant"), 2)),
+results %>% select(B, Plugin0, Constant0, Slope0, Plugin1, Constant1, Slope1) %>%
+  knitr::kable(digits = 3, booktabs = TRUE,
+             caption = "Calculation of the constant and simple slope for non-smokers and smokers at average contact.",
+             col.names = c("B", rep(c("1. Plugin", "2. Constant", "3. Slope"), 2)),
              align = "rlrrlrr",
              escape = F) %>%
   kable_styling(font_size = 12, full_width = F,
                 latex_options = c("scale_down", "HOLD_position")) %>%
   add_header_above(c(" " = 2, "Non-smokers" = 3, "Smokers" = 3)) %>%
-  footnote(alphabet = c(paste0("Equation for non-smokers: y = ", report_n(model_1$coefficients[2],3), " * Exposure	+ ", report_n(round(model_1$coefficients[1],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3) ,"."), paste0("Equation for smokers: y = ", report_n(round(model_1$coefficients[2],3) + round(model_1$coefficients[5],3), 3), " * Exposure	+ ", report_n(round(model_1$coefficients[1],3) + round(model_1$coefficients[3],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3), ".")))
+  footnote(alphabet = c(paste0("Equation for non-smokers: y = ", report_n(round(model_1$coefficients[1],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3) , " + ", report_n(model_1$coefficients[2],3), " * Exposure."), paste0("Equation for smokers: y = ", report_n(round(model_1$coefficients[1],3) + round(model_1$coefficients[3],3) + (round(model_1$coefficients[4],3) * round(mean(smokers$contact), 3)), 3), " + ", report_n(round(model_1$coefficients[2],3) + round(model_1$coefficients[5],3), 3), " * Exposure.")))
 # Cleanup.
 rm(smokers, model_1, results)
 ```

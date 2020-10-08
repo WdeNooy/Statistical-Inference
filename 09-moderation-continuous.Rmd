@@ -23,7 +23,7 @@ The interpretation of an interaction effect is different if the moderator is num
 
 This interpretation is quite abstract and not easy to understand. It is better to visualize the regression lines for different values of the moderator. We usually draw regression lines for three interesting moderator values. The mean value of the moderator shows us the effect at a moderate level of the moderator. One standard deviation below or above the mean of the moderator represent attractive low and high moderator values. 
 
-Just like a model with a dichotomous or categorical moderator, the effect of a predictor that is involved in moderation is a conditional effect. In other words, it is the effect for one particular value of the moderator, namely the value zero. Unfortunately, zero is not always a meaningful value for the moderator. If it does not exist or appear rarely on the moderator, it is better to mean-center the moderator. Mean-centering a variable changes the scores such that the mean of the original variable becomes zero on the mean-centered variable. The value zero is always meaningful for a mean-centered variable because it represents the mean score on the original variable. With a mean-centered moderator, the regression coefficient of the predictor always makes sense.
+Just like a model with a dichotomous or categorical moderator, the effect of a predictor that is involved in moderation is a conditional effect. In other words, it is the effect for one particular value of the moderator, namely the value zero. Unfortunately, zero is not always a meaningful value for the moderator. If it does not exist or appears rarely on the moderator, it is better to mean-center the moderator. Mean-centering a variable changes the scores such that the mean of the original variable becomes zero on the mean-centered variable. The value zero is always meaningful for a mean-centered variable because it represents the mean score on the original variable. With a mean-centered moderator, the regression coefficient of the predictor always makes sense.
 
 ## A Numerical Moderator {#cont-moderator-regression}
 
@@ -156,7 +156,25 @@ To _mean-center_ a variable, you subtract the variable's mean from all scores on
 \normalsize
 \end{equation*}
 
-With mean-centered numerical moderators, a conditional effect in the presence of interaction always makes sense. It is the effect of the predictor for respondents who have an average score on the moderator. An average score always falls within the range of scores that actually occur. If we mean-center the moderator variable contact with smokers, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. This makes sense.
+Mean-centering shifts the values of a variable such that the mean of the new variable becomes zero (Figure \@ref(fig:mean-centering-plot)). Below-average values on the original variable are negative on a mean-centered variable and above-average values are positive. The shape of the distribution remains the same.
+
+```{r mean-centering-plot, eval=TRUE, echo=FALSE, fig.cap="Histograms of the original contacts with smokers variable and the mean-centered variable. The red lines represent the means."}
+#create dataframe
+set.seed(4932)
+df <- tibble(`Contacts Original` = runif(600) * 10) %>%
+  mutate(`Contacts Mean-Centered` = `Contacts Original` - mean(`Contacts Original`)) %>%
+  pivot_longer(cols = `Contacts Original`:`Contacts Mean-Centered`, names_to = "exposure") %>%
+  mutate(exposure = factor(exposure, levels = c("Contacts Original", "Contacts Mean-Centered")))
+#create plots
+ggplot(df) +
+  geom_histogram(aes(x = value), binwidth = 0.5, fill=brewercolors[["Blue"]]) +
+  scale_x_continuous(breaks = ifelse(df$exposure == "Contacts Original", c(0, 2.5, 5, 7.5, 10), c(-5, -2.5, 0, 2.5, 5))) +
+  facet_wrap(~exposure, nrow = 2, scales = "free_x") +
+  geom_vline(aes(xintercept = ifelse(exposure == "Contacts Original", 5, 0)), color = brewercolors[["Red"]], size = 1.5) +
+  theme_bw()
+```
+
+With mean-centered numerical moderators, a conditional effect in the presence of interaction always makes sense. It is the effect of the predictor for respondents who have an average score on the moderator because they score zero on the mean-centered variable. An average score always falls within the range of scores that actually occur. If we mean-center the moderator variable contact with smokers, the regression coefficient $b_1$ for exposure expresses the effect of exposure on attitude for people with average contacts with smokers. This makes sense.
 
 Remember that the interaction variable is the product of the predictor and moderator (Section \@ref(interaction-variable)). If any or both of these are mean-centered, you should multiply the mean-centered variable(s) to create the interaction variable, see Sections \@ref(conditional-effects) and \@ref(conditional-effect-cont).
 
@@ -254,41 +272,42 @@ Instead of writing out the full equations, add columns (Table \@ref(tab:cont-mod
 
 1. Add a column indicating which value you plug in for the moderator variable(s) and any covariates. In this example, _contact_ is the moderator variable, which appears both by itself and as part of the interaction variable. The variable _smoker_ is a covariate here; we select the non-smokers (coded 0).
 
-2. Add a column to calculate the simple slope. Only use the variables that include the predictor, which is _exposure_ in this example. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the simple slope.
+2. Add a column to calculate the constant. Use all variables that do _not_ include the predictor. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the constant.
 
-3. Add a column to calculate the constant. Use all variables that do _not_ include the predictor. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the constant.
+3. Add a column to calculate the simple slope. Only use the variables that include the predictor, which is _exposure_ in this example. For each of these variables, multiply the regression coefficient by the plug-in value (if any). Sum the results to obtain the simple slope.
 
 ```{r cont-moderator-results, echo=FALSE, message=FALSE, warning=FALSE}
 # Table of regression coefficients for exposure moderated by contact.
 # Additional columns for calculating the intercept and simpe slope of exposure for non-smokers.
 # Create data frame with fake unstandardizd regression coefficients.
-results <- data.frame(B = c("3.6", "-0.1", "0.1", "0.1", "0.03", ""),
+results <- data.frame(B = c("3.60", "-0.10", "0.10", "0.10", "0.03", ""),
                       #average contact for a non-smoker
                       Plugin0 = c("", "", "Smoker = 0", "Mean contact(mc) = 0", "Mean contact(mc) = 0", ""),
-                      Slope0 = c("", "-0.1", "", "", "0.03 * 0", paste0("-0.1", 
+                      Slope0 = c("", "-0.10", "", "", "0.03 * 0", paste0("-0.10", 
                                 footnote_marker_alphabet(1))),
-                      Constant0 = c("3.6", "", "0.1 * 0", "0.1 * 0", "", paste0("3.6", 
+                      Constant0 = c("3.60", "", "0.10 * 0", "0.10 * 0", "", paste0("3.60", 
                                 footnote_marker_alphabet(1))),
                       #1SD above average contacts for a non-smoker
-                      Plugin1 = c("", "", "Smoker = 0", "SD contact = 2.0", "SD contact = 2.0", ""),
-                      Slope1 = c("", "-0.1", "", "", "0.03 * 2.0", paste0("-0.04", 
+                      Plugin1 = c("", "", "Smoker = 0", "SD contact = 2.00", "SD contact = 2.00", ""),
+                      Slope1 = c("", "-0.10", "", "", "0.03 * 2.00", paste0("-0.04", 
                                 footnote_marker_alphabet(2))),
-                      Constant1 = c("3.6", "", "0.1 * 0", "0.1 * 2.0", "", paste0("3.8", 
+                      Constant1 = c("3.60", "", "0.10 * 0", "0.10 * 2.00", "", paste0("3.80", 
                                 footnote_marker_alphabet(2))),
                       row.names = c("(Constant)", "Exposure", "Smoker", "Contact",
                                      "Exposure*Contact", "Result (sum)"),
                       check.names = FALSE)
 # Table.
 options(knitr.kable.NA = '')
-knitr::kable(results, digits = 3, booktabs = TRUE,
-             caption = "Calculation of the simple slope and constant at average contact and one standard deviation above average contact for non-smokers. The variable contact is mean-centered.",
-             col.names = c("B", rep(c("1. Plugin", "2. Slope", "3. Constant"), 2)),
+results %>% select(B, Plugin0, Constant0, Slope0, Plugin1, Constant1, Slope1) %>%
+  knitr::kable(digits = 3, booktabs = TRUE,
+             caption = "Calculation of the constant and simple slope at average contact and one standard deviation above average contact for non-smokers. The variable contact is mean-centered.",
+             col.names = c("B", rep(c("1. Plugin", "2. Constant", "3. Slope"), 2)),
              align = "rlrrlrr",
              escape = F) %>%
   kable_styling(font_size = 12, full_width = F,
                 latex_options = c("scale_down", "HOLD_position")) %>%
   add_header_above(c(" " = 2, "Average contact" = 3, "Average + 1 SD contact" = 3)) %>%
-  footnote(alphabet = c("Equation for average contact: y = -0.1 * Exposure	+ 3.6.", "Equation for 1 SD above average contact: y = -0.04 * Exposure	+ 3.8."))
+  footnote(alphabet = c(paste0("Equation for average contact: y = ", report_n(as.numeric(results$B[1]) + as.numeric(results$B[3])*0 + as.numeric(results$B[4])*0), "+ ", report_n(as.numeric(results$B[2]) + as.numeric(results$B[5])*0), " * Exposure"), paste0("Equation for 1 SD above average contact: y = ", report_n(as.numeric(results$B[1]) + as.numeric(results$B[3])*0 + as.numeric(results$B[4])*2), "+ ", report_n(as.numeric(results$B[2]) + as.numeric(results$B[5])*2), " * Exposure")))
 ```
 
 The footnotes to Table \@ref(tab:cont-moderator-results) show the resulting simple regression equations. You can interpret the slopes, which are unstandardized regression coefficients ($b$), or use the equations to draw regression lines.
