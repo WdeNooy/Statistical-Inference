@@ -48,12 +48,12 @@ shinyServer(function(input, output) {
     df <- brushedPoints(df, input$scatterbrush, allRows = TRUE)
     
     ggplot(df, aes(x = resid, fill = selected_)) + 
-      geom_histogram(colour = "black", binwidth = 0.3) + 
+      geom_histogram(colour = "black", binwidth = 0.6) + 
       stat_function( 
         fun = function(x, mean, sd, n, bw){ 
           dnorm(x = x, mean = mean, sd = sd) * n * bw
         }, 
-        args = c(mean = 0, sd = 1, n = n, bw = 0.3)) +
+        args = c(mean = 0, sd = 1, n = n, bw = 0.6)) +
       scale_fill_manual(values = c("TRUE" = unname(brewercolors["Blue"]),
                                    "FALSE" = unname(brewercolors["Red"])),
                         limits = c("TRUE", "FALSE"),

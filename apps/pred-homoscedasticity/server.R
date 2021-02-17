@@ -6,7 +6,7 @@ shinyServer(function(input, output) {
     #Load styling file
     source("../plottheme/styling.R", local = TRUE)
     
-    n <- 80 #Number of observations
+    n <- 160 #Number of observations
     x <- seq(from = 0, to = 10, length.out = n)
     
     data <- reactive({
@@ -93,6 +93,7 @@ shinyServer(function(input, output) {
         geom_point(shape = 21,
                    size = 3) +
         geom_hline(yintercept = 0) +
+        #geom_text(aes(x = mean(predicted), y = max(resid), label=paste0("homo = ", homo()))) +
         xlab("Predicted attitude") +
         ylab("Residual") +
         theme_general() +

@@ -5,7 +5,7 @@ shinyServer(function(input, output) {
   #Load styling file
   source("../plottheme/styling.R", local = TRUE)
   
-  n <- 50 #Number of observations
+  n <- 150 #Number of observations
   x <- seq(from = 0, to = 10, length.out = n)
   
   #Select data generating function depending on dropdown menu
@@ -34,6 +34,7 @@ shinyServer(function(input, output) {
                        yend = predicted),
                    color = brewercolors["Red"]) +
       geom_point(shape = 21, size = 3) +
+      geom_text(aes(x = 5, y = max(attitude), label = paste0("b = ", round(coef(fit)[[2]], 2)))) +
       xlab("Exposure") +
       ylab("Attitude") +
       theme_general()

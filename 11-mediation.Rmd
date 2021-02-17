@@ -133,7 +133,7 @@ In the middle of the 20th century, newspapers were among the most important sour
 
 This line of reasoning shows us two things. First, we discover that our common cause may actually represent different things. Age, for instance, refers to life experience in its effect on interest in politics. In contrast, it relates to the period of coming of age in its direct effect on newspaper reading time.
 
-Our second discovery is that we usually look for mediators if we want to understand a direct effect. Date of birth affects exposure to people using newspapers as information sources, which affects the habit of reading newspapers, which finally affects the time spend on reading newspapers later on. Exposure and habit are mediators here. A direct effect of age on newspaper reading represents a causal process that may contain many intermediary steps. Adding mediators to our model is a way of getting more insight in the causal process.
+Our second discovery is that we usually look for mediators if we want to understand a direct effect. Date of birth affects exposure to people using newspapers as information sources, which affects the habit of reading newspapers, which finally affects the time spent on reading newspapers later on. Exposure and habit are mediators here. A direct effect of age on newspaper reading represents a causal process that may contain many intermediary steps. Adding mediators to our model is a way of getting more insight in the causal process.
 
 ### Answers {-}
 
@@ -504,7 +504,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-This sounds like a paradox but it should not upset you. The unstandardized indirect effect tends to be weaker than the direct effects, that is, closer to zero (for instance, see Table \@ref(tab:age-indirect)). With a weaker effect, it is more difficult to reject the null hypothesis that the effect is zero in the population. We need a larger sample to reject null hypotheses for smaller effects (see Chapter \@ref(power) on power). In this case, report that all direct effects that create the indirect effect are statistically significant, so non-significance may arise from low test power rather than from absence of an indirect effect in the population. 
+This sounds like a paradox but it should not upset you. The unstandardized indirect effect tends to be weaker than the direct effects, that is, closer to zero (for instance, see Table \@ref(tab:age-indirect)). With a weaker effect, it is more difficult to reject the null hypothesis that the effect is zero in the population. We need a larger sample to reject null hypotheses for smaller effects (see Chapter \@ref(power) on power). In this case, report that all direct effects that create the indirect effect are statistically significant, so non-significance is likely to arise from low test power rather than from absence of an indirect effect in the population. 
 
 ### Answers {-}
 
@@ -597,7 +597,7 @@ rm(variables)
 
 Figure \@ref(fig:causaldiagram4) presents a model in which education is used as a covariate in a model with political interest mediating the effect of age on newspaper reading time. Education is probably causally prior to both political interest and newspaper reading time, so it is allowed to have an effect on both variables. In this way, we control for education and remove spurious correlation between political interest and newspaper reading time due to education as a common cause.
 
-If education is allowed to predict both political interest and newspaper reading time as in Figure \@ref(fig:causaldiagram4), political interest mediates the effect of education on newspaper reading time. We are, however, not interested in mediation in the case of a covariate, so we do not estimate or report the indirect effects of education on newspaper reading time. In the context of a mediation model, a _covariate_ is a predictor for which we do not investigate if its effect is mediated.
+If education predicts political interest and political interest predicts newspaper reading time as in Figure \@ref(fig:causaldiagram4), political interest mediates the effect of education on newspaper reading time. We are, however, not interested in mediation in the case of a covariate, so we do not estimate or report the indirect effects of education on newspaper reading time. In the context of a mediation model, a _covariate_ is a predictor for which we do not investigate if its effect is mediated.
 
 Note that covariates should only be allowed to have an effect on variables that can be caused by the covariate. We should not include effects of a covariate on a variable that is causally prior to it. If a covariate is a consequence rather than a cause of a mediator, it had better be used as another mediator in the model. If, for instance, political cynicism may affect newspaper reading time but it is a consequence of political interest, it should be included as a second (serial) mediator instead of as a covariate.
 
@@ -656,8 +656,8 @@ ci <- confint.lm(model_4)
 library(visNetwork)
 library(stringr)
 nodes <- data.frame(
-  id = 1:5, x = c(0, 100, 350, 360, 1000),
-  y = c(500, 0, 0, 250, 500),
+  id = 1:5, x = c(0, 100, 300, 360, 1000),
+  y = c(550, 0, 75, 300, 550),
   label = c("Age (/10)", "Education", "Pol. Interest", "News Site Use", "Newspaper \n Reading Time"), 
   shape = "box", font.size = 42, shadow = "FALSE", physics = FALSE, borderWidth = 1, color = list(background = "white", border = "black") )
 edges <- data.frame(from = c(seq(1, 3), seq(1, 4)), 
@@ -783,7 +783,7 @@ knitr::include_url("https://www.youtube.com/embed/a_xllJhFHq8", height = "360px"
 
 <A name="question9.9.1"></A>
 ```{block2, type='rmdquestion'}
-1. Use [readers.sav](http://82.196.4.233:3838/data/readers.sav) to analyze the causal model depicted in Figure \@ref(fig:results-pathdiagram) with a series of regression models in SPSS. Create a table and draw a path diagram to present the direct effects. [<img src="icons/2answer.png" width=115px align="right">](#answer9.9.1)
+1. Use [readers_short.sav](http://82.196.4.233:3838/data/readers_short.sav) to analyze the causal model depicted in Figure \@ref(fig:results-pathdiagram) with a series of regression models in SPSS. Create a table and draw a path diagram to present the direct effects. [<img src="icons/2answer.png" width=115px align="right">](#answer9.9.1)
 ```
 
 <A name="question9.9.2"></A>
@@ -803,7 +803,7 @@ knitr::include_url("https://www.youtube.com/embed/a_xllJhFHq8", height = "360px"
 
 <A name="question9.9.5"></A>
 ```{block2, type='rmdquestion'}
-5. The data set [children.sav](http://82.196.4.233:3838/data/children.sav) contains information about the media literacy of children and parental supervision of their media use. Is the effect of age on media literacy fully or partially mediated by parental supervision? 
+5. The data set [children_short.sav](http://82.196.4.233:3838/data/children_short.sav) contains information about the media literacy of children and parental supervision of their media use. Is the effect of age on media literacy fully or partially mediated by parental supervision? 
    Use PROCESS and SPSS to estimate the model and check the assumptions. Motivate your answer to the question. [<img src="icons/2answer.png" width=115px align="right">](#answer9.9.5)
 ```
 
@@ -886,7 +886,7 @@ unintelligble code.
   
 In the PROCESS menu:  
     
-* Select readingtime as dependent variable (Y variable).  
+* Select readtime as dependent variable (Y variable).  
 * Select age as independent variable (X variable),  
 * Select newssite as mediator (M),  
 * Select 4 under Model number (model with only one mediator).  
@@ -1007,9 +1007,9 @@ Indirect effect(s) of X on Y
 
 Indirect effect key   
   
-* Ind1 :   age -> polinter -> readingt   
-* Ind2 :   age -> newssite -> readingt   
-* Ind3 :   age -> polinter -> newssite -> readingt   
+* Ind1 :   age -> polint -> readtime   
+* Ind2 :   age -> newssite -> readtime   
+* Ind3 :   age -> polint -> newssite -> readtime   
   
 A table could look like this:  
     
@@ -1040,12 +1040,12 @@ Answer to Exercise 5.
 SPSS syntax:  
   
 \* Check data.    
-FREQUENCIES VARIABLES=age supervision medliter    
+FREQUENCIES VARIABLES=age supervis medliter    
   /ORDER=ANALYSIS.    
 \* Set imposible value (25) to missing.    
 \* Define Variable Properties.    
 \*supervision.    
-MISSING VALUES supervision(25.00).    
+MISSING VALUES supervis(25.00).    
 EXECUTE.    
 \* Indirect effect test with PROCESS: Model 4.    
 \* Do not paste PROCESS output.    
@@ -1056,7 +1056,7 @@ REGRESSION
   /CRITERIA=PIN(.05) POUT(.10)    
   /NOORIGIN     
   /DEPENDENT medliter    
-  /METHOD=ENTER age supervision    
+  /METHOD=ENTER age supervis    
   /SCATTERPLOT=(\*ZRESID ,\*ZPRED)    
   /RESIDUALS HISTOGRAM(ZRESID).    
 \* Outcome: parental supervision.    
@@ -1064,7 +1064,7 @@ REGRESSION
   /MISSING LISTWISE    
   /CRITERIA=PIN(.05) POUT(.10)    
   /NOORIGIN     
-  /DEPENDENT supervision    
+  /DEPENDENT supervis    
   /METHOD=ENTER age    
   /SCATTERPLOT=(\*ZRESID ,\*ZPRED)    
   /RESIDUALS HISTOGRAM(ZRESID).    
@@ -1076,7 +1076,7 @@ In the PROCESS menu:
     
 * Select medliter as dependent variable (Y variable).  
 * Select age as independent variable (X variable).  
-* Select supervision as mediator (M).  
+* Select supervis as mediator (M).  
 * Select 4 under Model number (model with only one mediator).  
 * Under Options: Select Effect size and 3 decimal places in output.  
   
@@ -1226,7 +1226,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", heigh
 
 <A name="question11.8.extra"></A>
 ```{block2, type='rmdquestion'}
-Extra Question. The standardized effect of political interest on reading time can be larger than 1.0 or smaller than -1.0. In which situation? Use the sliders to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.extra)
+Extra Question (Optional). The standardized effect of political interest on reading time can be larger than 1.0 or smaller than -1.0. In which situation? Use the sliders to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.extra)
 ```
 
 ### Answers {-}
