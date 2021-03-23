@@ -12,8 +12,10 @@ shinyUI(
     cellArgs = list(style = "padding: 1px"),
     align = "center",
       verticalLayout(
-        plotOutput("sampleplot"), 
-        actionButton("firstsampleaction", label = "New Sample")),
+        plotOutput("sampleplot"),
+        actionButton("firstsampleaction", label = "New Sample"),
+        actionButton("resetsampleaction", label = "Reset")
+        ),
       verticalLayout(
         plotOutput("bootstrappedplot"),
         actionButton("bootstrapsmallaction", label = "Bootstrap 1 Sample")), 

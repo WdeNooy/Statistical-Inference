@@ -10,7 +10,6 @@ shinyServer(function(input, output) {
   mean <- 5.5 #hypothesized population mean
   tc <- qt(0.025, df, lower.tail = FALSE) #criticial quantiles 2.5%
   tc5 <- qt(0.05, df, lower.tail = FALSE) #criticial quantiles 5%
-  under <- -.10 #margin below sampling distribution
   
   #Calculating the right and left threshold
   right <- mean + se * tc #2.5%
@@ -42,13 +41,13 @@ shinyServer(function(input, output) {
     )
   react <- 
     reactiveValues(
-      sample = data.frame(x = rnorm(df + 1, mean = isolate(reactive$sampmean), sd = sampsd), y = 0.9 * under) #sample
+      sample = data.frame(x = rnorm(df + 1, mean = isolate(reactive$sampmean), sd = sampsd), y = 0.45) #sample
     )
   
   #Reset
   observeEvent(input$resetButton, {
     reactive$sampmean <- newsample() #sample mean
-    react$sample <- data.frame(x = rnorm(df + 1, mean = reactive$sampmean, sd = sampsd), y = 0.9 * under) #sample
+    react$sample <- data.frame(x = rnorm(df + 1, mean = reactive$sampmean, sd = sampsd), y = 0.45) #sample
   })
   
   ##MAIN PLOT##
@@ -120,81 +119,55 @@ shinyServer(function(input, output) {
                 colour = brewercolors["Blue"],
                 hjust = 1,
                 size = 5) +
-      #critical value label left
-      geom_text(label = format(round(left, 1),nsmall = 1),
-                aes(x = left,
-                    y =  -0.02),
-                hjust = 0.5,
-                size = 3) +
-      #critical value label right
-      geom_text(label = format(round(right, 1),nsmall = 1),
-                aes(x = right,
-                    y =  -0.02),
-                hjust = 0.5,
-                size = 3) +
-      #critical value 5% label left
-      geom_text(label = format(round(left5, 1),nsmall = 1),
-                aes(x = left5,
-                    y =  -0.02),
-                hjust = 0.5,
-                size = 3) +
-      #critical value 5% label right
-      geom_text(label = format(round(right5, 1),nsmall = 1),
-                aes(x = right5,
-                    y =  -0.02),
-                hjust = 0.5,
-                size = 3) +
       #Horizontal axis for sampling distribution
       geom_hline(aes(yintercept = 0)) +
       #Hypothesized population mean line
       geom_segment(aes(x = mean, xend = mean, 
-                       y = 0, yend = 0.4)) +
+                       y = 0, yend = dtshift(mean, mean, se, df))) +
       #sample scores
       geom_point(data = react$sample[react$sample$x >= 1 & react$sample$x <= 10,], aes(x = x, y = y), 
                  colour = brewercolors["Red"]) +
       #Sample average vline
       geom_segment(aes(x = reactive$sampmean, xend = reactive$sampmean, 
-                       y = under, yend = dtshift(reactive$sampmean, mean, se, df)), 
+                       y = 0, yend = 0.5), 
                    colour = brewercolors["Red"]) +
       #Sample average p value (left)
       geom_text(label = paste0(format(round(pt((reactive$sampmean - mean)/se, df, 
                                  lower.tail = TRUE), 
                               digits = 3), nsmall = 3)),
                 aes(x = reactive$sampmean ,
-                    y =  0.01),
+                    y =  0.2),
                 colour = brewercolors["Red"],
                 hjust = 1.1,
-                vjust = 0,
                 size = 5) +
       #Sample average p value (right)
       geom_text(label = paste0(format(round(pt((reactive$sampmean - mean)/se, df, 
                                                lower.tail = FALSE), 
                                             digits = 3), nsmall = 3)),
                 aes(x = reactive$sampmean ,
-                    y =  0.01),
+                    y =  0.2),
                 colour = brewercolors["Red"],
                 hjust = -0.1,
-                vjust = 0,
                 size = 5) +
       #Scaling and double axis definitions
-      scale_x_continuous(breaks = c(1, reactive$sampmean, 10),
+      scale_x_continuous(breaks = c(1, left, left5, mean, right5, right, 10),
                          limits = c(1, 10),
-                         labels = c(1, 
-                                    paste0("Mean = ",round(reactive$sampmean, digits = 2)), 10),
-                         name = "Sample media literacy scores",
+                         labels = c(1, format(round(left,1), nsmall=1), format(round(left5,1), nsmall=1), format(round(mean,1), nsmall=1), format(round(right5,1), nsmall=1), format(round(right,1), nsmall=1), 10),
                          sec.axis = sec_axis(~ .,
-                           breaks = c(1, mean, 10),
-                           labels = c(1, format(round(mean,1), nsmall=1), 10),
-                           name = "Hypothesized population mean media literacy score"),
+                           breaks = c(1, reactive$sampmean, 10),
+                           labels = c(1, 
+                                      paste0("Mean = ",round(reactive$sampmean, digits = 2)),
+                                      10),
+                           name = "Sample media literacy scores"),
                          expand = c(.02, .02)) +
       scale_y_continuous(breaks = NULL, 
-                         limits = c(under, 0.4),
-                         name = "",
+                         limits = c(0, 0.5),
                          expand = c(0, 0)) + 
-      #Theme                                       
+      #Axis labels and theme                                       
+      xlab("Sample mean media literacy score") + 
+      ylab("") + 
       theme_general() +
       theme(panel.border = element_rect(colour = NA), 
-            axis.line.y = element_blank(),
-            plot.margin = margin(10,0,10,0))
+            plot.margin = margin(0,0,10,0))
   })
 })

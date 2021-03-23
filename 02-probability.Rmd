@@ -24,7 +24,7 @@ The first way to obtain a sampling distribution is still based on the idea of dr
 ```{r bootstrapping, echo=FALSE, fig.cap="How do we create a sampling distribution with bootstrapping?", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Variant of app random-variable (Ch. 1).
 # Generate and display a not too small (N = 50?) representative sample from a uniformly distributed population of five colours (don't show the population). Add a button to draw one bootstrap sample with replacement at a time, showing the distribution of colours in the sample (dotplot with coloured dots) and adding the proportion of yellow candies to the histogram of the sampling distribution (y-axis percentage of cases?), which already shows the true sampling distribution (binomial distribution) as a light histogram in the background. Allow the user to draw one thousand bootstrap samples and add the results to the histogram. Finally, allow the user to draw a new random initial sample.
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="448px")
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="462px")
 ```
 
 In Figure \@ref(fig:bootstrapping), an initial sample (left panel) has been drawn from a population containing five candy colours in equal proportions.
@@ -157,7 +157,7 @@ Answer to Question 2.
 * The sampling distribution of a sample proportion is an exact distribution
 (named binomial distribution): the probabilities of every number or proportion
 of yellow candies in the sample can be calculated. The results are displayed
-as a grey histogram at the bottom of the figure. [<img src="icons/2question.png" width=161px align="right">](#question2.1.2)
+as a grey histogram at the right of the figure. [<img src="icons/2question.png" width=161px align="right">](#question2.1.2)
 ```
 
 <A name="answer2.1.3"></A>
@@ -283,11 +283,13 @@ knitr::include_url("https://www.youtube.com/embed/m1XaYrkYHh8", height = "360px"
 
 In principle, any sample statistic can be bootstrapped. SPSS, however, does not bootstrap all sample statistics. For example, SPSS does not bootstrap the minimum value, maximum value or the range between minimum and maximum value of a variable. 
 
+SPSS reports bootstrapping results as confidence intervals. We will discuss confidence intervals in detail in the next chapter.
+
 ### Exercises 
 
 <A name="question2.2.1"></A>
 ```{block2, type='rmdquestion'}
-1. Download the data set [candies.sav](http://82.196.4.233:3838/data/candies.sav) and use SPSS to bootstrap the t test on average weight of yellow and red candies (the example above). The test is available in the _Analyze>Compare Means_ menu. [<img src="icons/2answer.png" width=115px align="right">](#answer2.2.1)
+1. Download the data set [candies.sav](http://82.196.4.233:3838/data/candies.sav) and use SPSS to bootstrap the _t_ test on average weight of yellow and red candies (the example above). The test is available in the _Analyze>Compare Means_ menu. [<img src="icons/2answer.png" width=115px align="right">](#answer2.2.1)
 ```
 
 <A name="question2.2.2"></A>
@@ -324,34 +326,17 @@ Check data:
   
 There are no impossible values on the two variables.    
       
-Check assumptions:  
-  
-The measurement levels of the variables are OK for a t test: 
-colour is a categorical variable with two values and weight is
-a numeric variable. There are no additional assumptions for 
-bootstrapping.
-    
 Interpret the results:   
   
-The table "Bootstrap for Independent Samples Test" contains   
-the results that we are interested in.   
+The table "Bootstrap for Independent Samples Test" contains the results that we are interested in.   
   
-Levene's test on homogeneity of variances is not statistically  
-significant, so we may assume that the population variances of  
-red and yellow candy weight are equal. So we interpret the  
-top row in table "Bootstrap for Independent Samples Test".  
+Levene's test on homogeneity of variances is not statistically significant, so we may assume that the population variances of red and yellow candy weight are equal. So we interpret thetop row in table "Bootstrap for Independent Samples Test".  
   
-The mean difference between red and yellow candy weight is  
-0.05 grams. In our sample, red candies are just a little  
-heavier than yellow candies.  
+The mean difference between red and yellow candy weight is 0.05 grams. In our sample, red candies are just a little heavier than yellow candies.  
   
-The bootstrapped 95% confidence interval for this difference is -0.11 to 0.21.
-With 95% confidence, we can say that red candies can be on average 0.11 grams
-lighter than yellow candies or up to 0.21 grams heavier. We cannot tell which
-of the two are heavier in the population with sufficient confidence.
+The bootstrapped 95% confidence interval for this difference is -0.11 to 0.21. With 95% confidence, we can say that red candies can be on average 0.11 grams lighter than yellow candies or up to 0.21 grams heavier. We cannot tell which of the two are heavier in the population with sufficient confidence.
 
-Note that your results can be slightly different because bootstrapping creates
-random samples. [<img src="icons/2question.png" width=161px align="right">](#question2.2.1)
+Note that your results can be slightly different because bootstrapping creates random samples. [<img src="icons/2question.png" width=161px align="right">](#question2.2.1)
 ```
 
 <A name="answer2.2.2"></A>
@@ -379,10 +364,6 @@ Check data:
     
 There are no impossible values on the weight variable.  
   
-Check assumptions:  
-    
-The measurement level of variable weight is OK.  
-      
 Interpret the results:   
   
 Median candy weight in the sample is 2.81 grams. With   
@@ -521,10 +502,6 @@ Check data:
 The contingency table does not show any impossible values for  
 the two categorical variables.  
   
-Check assumptions:  
-  
-There are no assumptions for a Fisher-exact test.  
-  
 Interpret the results:  
   
 There is a strong association (Cramer's V = .52) between candy colour and candy stickiness, which is statistically significant, *p* = .010 (exact). Yellow and red candies are less often sticky than blue, green, and orange candies. [<img src="icons/2question.png" width=161px align="right">](#question2.4.1)
@@ -551,10 +528,6 @@ Check data:
   
 The contingency table does not show any impossible values for the two categorical variables.  
   
-Check assumptions:  
-  
-There are no assumptions for a Fisher-exact test.  
-  
 Interpret the results:  
   
 There is a weak association (Cramer's V = .27) between candy colour and candy spottiness, which is not statistically significant, *p* = .480 (exact) or (using chi-square) *p* = .555.   
@@ -578,7 +551,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height
 
 <A name="question2.5.2"></A>
 ```{block2, type='rmdquestion'}
-2. While checking the distribution, pay special attention to the tails because these are used for significance tests (see Chapter \@ref(hypothesis)). The red and green bars represent the 2.5 per cent samples with minimum or maximum average weight. The vertical lines mark the outer 2.5 per cent according to the normal function. Do the tail borders of the sampling distribution and normal approximation match? [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.2)
+2. While checking the distribution, pay special attention to the tails because these are used for significance tests (see Chapter \@ref(hypothesis)). The red and green bars represent the 2.5 per cent samples with minimum or maximum average weight. The vertical lines mark the outer 2.5 per cent according to the normal distribution. Do the tail borders of the sampling distribution and normal distribution match? [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.2)
 ```
 
 <A name="question2.5.3"></A>
@@ -706,7 +679,7 @@ Imagine that a magnetic field is activated if the first coin lands with heads up
 
 ### Dependent samples {#dependentsamples}
 
-The example of a manipulated second toss is applicable to repeated measurements. If we want to know how quickly the yellow colour fades when yellow candies are exposed to sun light, we may draw a sample of yellow candies once and measure the colourfulness of each candy at least twice: at the start and end of some time interval. Subsequently, we compare the average colourfulness of the second set of measurements to the average in the first set of measurements.  
+The example of a manipulated second toss is applicable to repeated measurements. If we want to know how quickly the yellow colour fades when yellow candies are exposed to sun light, we may draw a sample of yellow candies once and measure the colourfulness of each candy at least twice: at the start and end of some time interval. We compare the colourfulness of a candy at the second measurement to its colourfulness at the first measurement.  
 
 ```{r mean-dependent, fig.cap="Dependent samples.", echo=FALSE, out.width="560px", screenshot.opts = list(delay = 5), dev="png"}
  # Demonstrate the construction of a sampling distribution for mean differences
@@ -768,10 +741,7 @@ sampling distributions that we generate with this app. [<img src="icons/2questio
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* The width/peakedness of the sampling distribution changes. This expresses
-the variation (standard devation) in the sampling distribution. But regardless
-of the amount of variation, the normal curve fits the distribution equally
-well. [<img src="icons/2question.png" width=161px align="right">](#question2.5.3)
+* The width/peakedness of the sampling distribution changes but the normal curve fits the distribution well. [<img src="icons/2question.png" width=161px align="right">](#question2.5.3)
 ```
 
 <A name="answer2.5.4"></A>
@@ -781,8 +751,7 @@ Answer to Question 4.
 * The larger the sample, the more information each sample contains, the more
 samples resemble the population, the closer is the sample statistic to the
 population value. As a consequence, a larger sample produces a sampling
-distribution with a lower spread (standard deviation, variance), so the
-sampling distribution is more peaked. [<img src="icons/2question.png" width=161px align="right">](#question2.5.4)
+distribution that is more peaked. [<img src="icons/2question.png" width=161px align="right">](#question2.5.4)
 ```
 
 <A name="answer2.5.5"></A>
@@ -898,7 +867,7 @@ Finally, we also use bootstrapping if SPSS does not have a test for the statisti
 ## Test Your Understanding 
 
 ```{r models-summary1, echo=FALSE, fig.cap="How do we bootstrap a sampling distribution?", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
-knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="448px")
+knitr::include_app("http://82.196.4.233:3838/apps/bootstrapping/", height="462px")
 ```
 
 <A name="question2.8.1"></A>

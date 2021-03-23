@@ -48,6 +48,15 @@ shinyServer(function(input, output) {
       lastsample = numeric()
     )
   
+  # Reset to initial sample
+  observeEvent(input$resetsampleaction,{
+    samples$firstsample <<- rep(1:5, each = 5)
+    samples$firstsampleID <<- c(1:25) 
+    samples$hist = numeric()
+    samples$lastsample = numeric()
+    samples$lastsampleID = numeric()
+  })
+  
   # When new initial sample is taken, take sample, clear history.
   observeEvent(input$firstsampleaction,{
     samples$firstsample <<- sort(sample(1:5, size = 25, replace = TRUE))

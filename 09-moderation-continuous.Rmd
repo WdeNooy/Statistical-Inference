@@ -363,11 +363,11 @@ source("report_n.R")
 rm(model_1, ci, results_2, model_2)
 ```
 
-The regression model yields a p value and confidence interval for the predictor at the reference value of the moderator. In the model estimated in Table \@ref(tab:cont-moderator-output), for instance, we obtain a p value of `r report_n(results[2,5], 3)` and a 95% confidence interval of [`r report_n(results[2,6],2)`, `r report_n(results[2,7],2)`] for the effect of exposure on attitude. This is the conditional effect of exposure on attitude for cases that score zero on the moderator variable (contact with smokers).
+The regression model yields a _p_ value and confidence interval for the predictor at the reference value of the moderator. In the model estimated in Table \@ref(tab:cont-moderator-output), for instance, we obtain a _p_ value of `r report_n(results[2,5], 3)` and a 95% confidence interval of [`r report_n(results[2,6],2)`, `r report_n(results[2,7],2)`] for the effect of exposure on attitude. This is the conditional effect of exposure on attitude for cases that score zero on the moderator variable (contact with smokers).
 
-If the moderator variable _contact_ is mean-centered, the p value tests the null hypothesis that the effect of exposure is zero for people who have average contact with smokers. The confidence interval tells us that the effect of exposure on attitude for people with average contacts with smokers ranges between `r report_n(results[2,6],2)` and `r report_n(results[2,7],2)` with 95% confidence. If the moderator is not mean-centered, the results apply to people who have no contact with smokers.
+If the moderator variable _contact_ is mean-centered, the _p_ value tests the null hypothesis that the effect of exposure is zero for people who have average contact with smokers. The confidence interval tells us that the effect of exposure on attitude for people with average contacts with smokers ranges between `r report_n(results[2,6],2)` and `r report_n(results[2,7],2)` with 95% confidence. If the moderator is not mean-centered, the results apply to people who have no contact with smokers.
 
-Note that mean-centering of the moderator changes, so to speak, the regression line that we test. Instead of testing the effect of exposure for people with no smoker contact, we test the effect for people with average contact with smokers if the moderator is mean-centered. If we would like to get the p value or confidence interval for the regression line at one standard deviation above (or below) the mean, we have to center the moderator at that value before we estimate the regression model. In this course, however, we will not do so. 
+Note that mean-centering of the moderator changes, so to speak, the regression line that we test. Instead of testing the effect of exposure for people with no smoker contact, we test the effect for people with average contact with smokers if the moderator is mean-centered. If we would like to get the _p_ value or confidence interval for the regression line at one standard deviation above (or below) the mean, we have to center the moderator at that value before we estimate the regression model. In this course, however, we will not do so. 
 
 ```{r echo=FALSE}
 #Cleanup.
@@ -616,7 +616,7 @@ colnames(table) <- c("B", "95% CI")
 source("report_n.R")
 ```
 
-If we report a regression model, we first present the significance test and predictive power of the entire regression model. We may report that the regression model is statistically significant, F (`r resultsF[[1,4]]`, `r resultsF[[2,4]]`) = `r report_n(as.numeric(resultsF[[1,6]]),2)`, p `r ifelse(resultsF[[1,7]] == "0.000", "< 0.001", paste0("=", resultsF[[1,7]]))`, so the regression model very likely helps to predict attitude towards smoking in the population. Note that the APA6-style table (Table \@ref(tab:report-moderation-table)) only reports the F value and its significance level.
+If we report a regression model, we first present the significance test and predictive power of the entire regression model. We may report that the regression model is statistically significant, _F_ (`r resultsF[[1,4]]`, `r resultsF[[2,4]]`) = `r report_n(as.numeric(resultsF[[1,6]]),2)`, _p_ `r ifelse(resultsF[[1,7]] == "0.000", "< 0.001", paste0("=", resultsF[[1,7]]))`, so the regression model very likely helps to predict attitude towards smoking in the population. Note that the APA6-style table (Table \@ref(tab:report-moderation-table)) only reports the _F_ value and its significance level.
 
 How well does the regression model predict attitude towards smoking? The effect size of a regression model or its predictive power is summarized by $R^2$ (_R Square_), which is the proportion of the variance in the dependent variable scores (attitude towards smoking) that can be predicted with the regression model. In this example, $R^2$ is `r report_n(summ$r.squared, 2)`, so the regression model predicts `r report_n(summ$r.squared * 100, 0)`% of the variance in attitude towards smoking among the respondents. In communication research, $R^2$ is usually smaller. 
 
@@ -624,7 +624,7 @@ $R^2$ tells us how well the regression model predicts the dependent variable in 
 
 As a next step, we discuss the size, statistical significance, and confidence intervals of the regression coefficients. If a predictor is involved in one or more interaction effects, we must be very clear about the reference value or reference group to which the effect applies. In the example below, non-smokers are the reference group on the smoking status variable because they have code zero. Average number of contacts with smokers is the reference value on the contact variable because this variable is mean-centered.
 
-Exposure, in our example, has a negative predictive effect on attitude towards smoking (_b_ = `r report_n(results[2,1])`) for non-smokers with average contacts with smokers, t = `r report_n(results[2,3])`, `r ifelse(results[2,4] < .0005, "p < .001", paste0("p = ", report_n(results[2,4], digits=3)))`, 95%CI[`r report_n(ci[2,1])`, `r report_n(ci[2,2])`]. Note that SPSS does not report the degrees of freedom for the t test on a regression coefficient, so we cannot report them.
+Exposure, in our example, has a negative predictive effect on attitude towards smoking (_b_ = `r report_n(results[2,1])`) for non-smokers with average contacts with smokers, _t_ = `r report_n(results[2,3])`, `r ifelse(results[2,4] < .0005, "p < .001", paste0("p = ", report_n(results[2,4], digits=3)))`, 95%CI[`r report_n(ci[2,1])`, `r report_n(ci[2,2])`]. Note that SPSS does not report the degrees of freedom for the _t_ test on a regression coefficient, so we cannot report them.
 
 ```{r report-moderation-table, echo=FALSE}
 # Table.
@@ -640,7 +640,7 @@ knitr::kable(table, booktabs = TRUE, align = c("l", "c"),
                 latex_options = c("HOLD_position"))
 ```
 
-Instead of presenting the numerical results in the text, we may summarize them in an APA6 style table, such as Table \@ref(tab:report-moderation-table). Note that t and p values are not reported in this table, the focus is on the confidence intervals. The significance level is indicated by stars.
+Instead of presenting the numerical results in the text, we may summarize them in an APA6 style table, such as Table \@ref(tab:report-moderation-table). Note that _t_ and _p_ values are not reported in this table, the focus is on the confidence intervals. The significance level is indicated by stars.
 
 A sizable and statistically significant interaction effect signals that an effect is moderated. In the example reported in Table \@ref(tab:report-moderation-table), the effect of exposure on attitude seems to be moderated by contact with smokers (_b_ = `r report_n(results[6,1])`, `r ifelse(results[6,4] < .0005, "p < .001", paste0("p = ", report_n(results[6,4], digits=3)))`) and by smoking status (_b_ = `r report_n(results[7,1])`, `r ifelse(results[7,4] < .0005, "p < 0.001", paste0("p = ", report_n(results[7,4], digits=3)))`). 
 
@@ -1201,12 +1201,7 @@ medliter = 4.325 + 0.193 + 0.341 + (0.292 + 0.048)\*supervision
   
 medliter = 4.859 + 0.340\*supervision  
   
-Note: Age was mean-centered for all 87 cases but the regression model only
-uses the 85 cases without a missing value on any of the variables. As a
-result, the mean of age scores in the regression model is not exactly zero. We
-can still use zero here because we merely want to refer to an age value that
-is in the center of the distribution. Both zero and nearly zero are in the
-center. 
+Note: Age was mean-centered for all 87 cases but the regression model only uses the 85 cases without a missing value on any of the variables. As a result, the mean of age scores in the regression model is not exactly zero. We can still use zero here because we merely want to refer to an age value that is in the center of the distribution. Both zero and nearly zero are in the center. Also due to the missing values, the standard deviation of age reported in the regression analysis is slightly different (1.937) from the standard deviation of this variable provided by SPSS Frequencies (1.990). We use the standard deviation reported in the regression analysis.
 
 <img src="figures/moderationplotEx5.png" width=600px>
 

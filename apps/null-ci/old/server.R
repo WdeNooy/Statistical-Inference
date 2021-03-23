@@ -6,11 +6,11 @@ shinyServer(function(input, output) {
   
   se <- 0.7  #sd of sampling distribution
   df <- 30 #df of t distribution
-  under <- -.10 #margin below sampling distribution
+  under <- -.15 #margin below sampling distribution
   
   sampsd <- 1.5
   sampmean <- runif(1, min = 3, max = 8) #sample mean
-  sample <- data.frame(x = rnorm(df + 1, mean = sampmean, sd = sampsd), y = 0.9 * under) #sample
+  sample <- data.frame(x = rnorm(df + 1, mean = sampmean, sd = sampsd), y = 0.45) #sample
   sample <- sample[sample$x >= 1 & sample$x <= 10,] #remove scores outside range
   
   #Function for scaling and shifting the t-distribution
@@ -64,34 +64,31 @@ shinyServer(function(input, output) {
       geom_hline(aes(yintercept = 0)) +
       #Hypothesized population mean line
       geom_segment(aes(x = mean, xend = mean, 
-                       y = 0, yend = 0.45)) +
+                       y = under, yend = dtshift(mean, mean, se, df))) +
       #sample scores
       geom_point(data = sample, aes(x = x, y = y), 
                  colour = brewercolors["Red"]) +
       #Sample average vline
       geom_segment(aes(x = sampmean, xend = sampmean, 
-                       y = under, yend = dtshift(sampmean, mean, se, df)), 
+                       y = 0, yend = 0.5), 
                    colour = brewercolors["Red"]) +
       #Scaling and double axis definitions
-      scale_x_continuous(breaks = c(1, sampmean, 10),
-                         limits = c(1, 10),
-                         labels = c(1, 
-                                    paste0("Mean = ",round(sampmean, digits = 2)),
-                                    10),
-                         name = "Sample media literacy scores",
+      scale_x_continuous(breaks = seq(1, 10, by = 1), limits = c(1, 10),
                          sec.axis = sec_axis(~ .,
-                                             breaks = c(1, mean, 10), 
-                                             labels = c("1", format(round(mean, 2),nsmall = 2), "10"),
-                                             name = "Hypothesized population mean media literacy score"),
+                           breaks = c(1, sampmean, 10),
+                           labels = c(1, 
+                                      paste0("Mean = ",round(sampmean, digits = 2)),
+                                      10),
+                           name = "Sample media literacy scores"),
                          expand = c(.02, .02)) +
       scale_y_continuous(breaks = NULL, 
-                         limits = c(under, 0.45),
-                         name = "",
+                         limits = c(under, 0.5),
                          expand = c(0, 0)) + 
-      #Theme                                       
+      #Axis labels and theme                                       
+      xlab("Hypothesized population mean media literacy score") + 
+      ylab("") + 
       theme_general() +
-      theme(panel.border = element_rect(colour = NA),
-            axis.line.y = element_blank(),
-            plot.margin = margin(10,0,10,0))
+      theme(panel.border = element_rect(colour = NA), 
+            plot.margin = margin(0,0,10,0))
   })
 })
