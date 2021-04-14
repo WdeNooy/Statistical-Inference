@@ -9,7 +9,7 @@ shinyServer(function(input, output) {
 
   mean <- 2.8 #Population mean
   sdpop <- 0.6 #Population SD 
-  
+
   #Container for reactive values
   sample <- reactiveValues(lastsample = numeric(),
                            SE = numeric(),
@@ -28,20 +28,18 @@ shinyServer(function(input, output) {
     sample$SE <<- sdpop/sqrt(input$ssizeslider)
     #calculate power and store
     sample$power <<- ifelse(
-      input$savslider == mean, NA, round(
+      input$savslider == mean, NA, format(round(
         power.t.test(n = input$ssizeslider,
           delta = (input$savslider - mean),
           sd = sdpop,
           sig.level = 0.05,
           type = "one.sample",
           alternative = "two.sided")$power,
-        2)
+        2), nsmall = 2)
     )
       
   })
-  
 
-  
   ##RENDER MAIN PLOT##
   output$mainplot <- renderPlot({
     
@@ -49,7 +47,7 @@ shinyServer(function(input, output) {
     strengthlab <- c("Strong\n2.32",
                      "Moderate\n2.5",
                      "Weak\n2.68",
-                     "H0\n2.8",
+                     "\n2.8",
                      "Weak\n2.92",
                      "Moderate\n3.1",
                      "Strong\n3.28")
@@ -64,9 +62,9 @@ shinyServer(function(input, output) {
     right <- mean + error #Right confidence interval border
     
      #PLOT
-     ggplot(data.frame(x = c(0,6)), aes(x = x)) +
+     ggplot(data.frame(x = c(2.25, 3.85)), aes(x = x)) +
       #Left area under curve
-      stat_function(fun = dnorm,xlim = c(-10,left),
+      stat_function(fun = dnorm,xlim = c(2.15,left),
                     geom = "area",
                     fill = brewercolors["Blue"],
                     colour = "black",
@@ -74,7 +72,7 @@ shinyServer(function(input, output) {
                     n = 1000) + 
       #Right area under curve
       stat_function(fun = dnorm,
-                    xlim = c(right,10),
+                    xlim = c(right,3.85),
                     geom = "area",
                     colour = "black",
                     fill = brewercolors["Blue"],
@@ -102,31 +100,34 @@ shinyServer(function(input, output) {
                      y = .7 * dnorm(mean, mean,SE)),
                 hjust = 0,
                 size = 4) +
-      #Sampel mean vline
-      geom_vline(aes(xintercept = mean,
-                     linetype = "Hypothesized population mean")) +
-      #Definition of sample mean type and legend name
-      scale_linetype_manual(name = "",
-                            values = c("Hypothesized population mean" = "dashed")) + 
-      #Dots for mean of 5 samples
-       geom_point(data = df,
-                  aes(x = means, y = .1),
-                  shape = 21,
-                  size = 4,
-                  fill = brewercolors) +
+      #H0 vline
+      geom_segment(aes(x = mean, xend = mean, y = 0, yend = Inf)) +
+      #X axis sampling distribution
+       geom_hline(aes(yintercept = 0)) +
+      #Segments for mean of 5 samples
+       geom_segment(data = df,
+                  aes(x = means, xend = means, y = -0.1 * dnorm(mean, mean, SE), yend = 0),
+                  size = 3,
+                  alpha = 0.5,
+                  color = brewercolors) +
       #X axis breaks definition
-      scale_x_continuous(breaks = ticks, labels = strengthlab) + 
-      #Defining x axis zoom
-      coord_cartesian(xlim = c(2.25, 3.85)) +
-      #Title and labels for axes
-      ggtitle("Sampling distribution") + 
-      xlab("Average candy weight") + 
-      ylab("Denisty") +
+      scale_x_continuous(
+        name = "Sample average candy weight",
+        breaks = ticks, labels = strengthlab, 
+        sec.axis = sec_axis(~ .,
+                            name = "Hypothesized population mean", 
+                            breaks = c(2.8), 
+                            labels = c("H0")),
+        expand = c(0, 0)
+                         ) + 
+      #y axis definition
+      scale_y_continuous(
+        name = "Probability density", 
+        breaks = NULL, 
+        limits = c(-0.1 * dnorm(mean, mean, SE), dnorm(mean, mean, SE)),
+        expand = c(0, 0)) +
       #Theme specification
       theme_general() + 
-      theme(axis.text.x = element_text(size =11),
-            legend.text = element_text(size =12),
-            legend.position = "top",
-            legend.direction = "horizontal")
+      theme(axis.text.x = element_text(size =11))
   })
 })

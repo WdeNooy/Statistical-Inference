@@ -172,12 +172,24 @@ write_sav(households, "data/households.sav")
 
 # Children: media literacy, sex, age, supervision.
 set.seed(2583)
-children <- data.frame(medliter = rnorm(87, mean = 4.3, sd = 1.8), sex = c(rep(3, 46), rep(2, 40), 1)) #One impossible value.
+n <- 472 # 87
+children <- data.frame(
+  medliter = rnorm(n, mean = 4.3, sd = 1.8), 
+  sex = c(rep(3, round(n * 46 / 87)), rep(2, round(n * 40 / 87)), rep(1, round(n / 87))) # One/some impossible value(s).
+  )
 children$medliter <- children$medliter - min(children$medliter) + 1
+children <- children %>%
+  mutate(
+    medliter = case_when(
+      medliter < 0 ~ 0,
+      medliter > 10 ~ 10,
+      TRUE ~ medliter
+    )
+  )
 set.seed(1174)
-children$age <- round((children$medliter + 22 + rnorm(87, mean = 0, sd = 5.1))/3)
+children$age <- round((children$medliter + 22 + rnorm(n, mean = 0, sd = 5.1))/3)
 set.seed(3228)
-children$supervision <- (children$medliter + rnorm(87, mean = 0, sd = 3.6))
+children$supervision <- (children$medliter + rnorm(n, mean = 0, sd = 3.6))
 children$supervision <- norm10(children$supervision) #normalize to 1-10
 children$supervision[30] <- 25 # Impossible value.
 # Set labels.
@@ -205,7 +217,7 @@ children <- children %>%
 # children$medliter <- labelled::labelled(children$medliter, labels = c(`No media literacy at all` = 1, `Maximum media literacy` = 10))
 # attributes(children$supervision)$label <- "Parental supervision during media use"
 # children$supervision <- labelled::labelled(children$supervision, labels = c(`Never supervised` = 1, `Supervised all the time` = 10))
-haven::write_sav(children, "data/children.sav")
+haven::write_sav(children, "data/allchildren.sav") # data/children.sav
 
 # Voters: immigrant opinion, age (class: young vs. old).
 set.seed(1324)
@@ -276,11 +288,19 @@ rm(Clooney, Jolie, willing_post, willing_pre, exposure, remember, endorser, sex)
 write_sav(donors, "data/donors.sav")
 # Note: Set factors to nominal scale in SPSS.
 
-#Consumers: brand awareness, ad exposure, word of mouth, gender.
+#Consumers: brand awareness, ad exposure, word of mouth, gender (and intention to buy).
 set.seed(834)
-consumers <- data.frame(ad_expo = norm10(sqrt(rnorm(62, 10, 4.8))), wom = c(rep(2, 18), rep(1, 44)), gender = c(rep(1, 12), rep(2, 6), rep(1, 19), rep(2, 25)))
+n <- 520 #62
+consumers <- data.frame(
+  ad_expo = norm10(sqrt(abs(rnorm(n, 10, 4.8)))), 
+  wom = c(rep(2, round(n * 18 / 62)), rep(1, round(n * 44 / 62))), 
+  gender = c(rep(1, round(n * 12 / 62)), rep(2, round(n * 6 / 62)), rep(1, round(n * 19 / 62)), rep(2, round(n * 25 / 62))))
 set.seed(825)
-consumers$brand_aw <- norm10(consumers$ad_expo - as.integer(consumers$gender) * 1.2 - as.integer(consumers$wom) * 1.7 + rnorm(62, 0, 3.3))
+consumers$brand_aw <- norm10(consumers$ad_expo - as.integer(consumers$gender) * 1.2 - as.integer(consumers$wom) * 1.7 + rnorm(n, 0, 3.3))
+set.seed(426)
+consumers$intention <- norm10(8.4 * consumers$ad_expo + 7.7 * consumers$brand_aw - 1 * consumers$ad_expo * consumers$brand_aw + as.integer(consumers$gender) * 1 - as.integer(consumers$wom) * 0.3 + rnorm(n, 0, 14.3))
+#summary(lm(intention ~ ad_expo*brand_aw + gender, data = consumers))
+#summary(lm(intention ~ scale(ad_expo, scale = F)*scale(brand_aw, scale = F) + gender, data = consumers))
 # add labels
 consumers <- consumers %>%
   mutate(
@@ -299,25 +319,24 @@ consumers <- consumers %>%
     brand_aw = labelled_spss(brand_aw,
       labels = c(`Does not recognize the brand at all` = 1, `Knows the brand very well` = 10),
       label = "Brand awareness"
+    ),
+    intention = labelled_spss(intention,
+      labels = c(`No intention to buy at all` = 1, `Determined to buy` = 10),
+      label = "Intention to buy"
     )
   )
-# attributes(consumers$ad_expo)$label <- "Exposure to brand advertisements"
-# attributes(consumers$wom)$label <- "Heard about the brand by word of mouth?"
-# attributes(consumers$gender)$label <- "Consumer's sex"
-# attributes(consumers$brand_aw)$label <- "Brand awareness"
-# consumers$ad_expo <- labelled::labelled(consumers$ad_expo, labels = c(`No exposure to ads` = 1, `Maximum exposure to ads` = 10))
-# consumers$brand_aw <- labelled::labelled(consumers$brand_aw, labels = c(`Does not recognize the brand at all` = 1, `Knows the brand very well` = 10))
 # save SPSS data file
-haven::write_sav(consumers, "data/consumers.sav")
+haven::write_sav(consumers, "data/allconsumers.sav") # data/consumers.sav
 
 #Smokers: attitude [-5, 5], exposure [0, 10], (smoking) status [2 or 3 cat.], contact (with smokers) [0, 10].
 set.seed(4932)
-smokers <- data.frame(exposure = runif(85)*10, status2 = rbinom(85, 1, 0.2))
+n <- 312 #85
+smokers <- data.frame(exposure = runif(n)*10, status2 = rbinom(n, 1, 0.2))
 smokers$status3[smokers$status2 == 1] <- 2
 set.seed(8220)
 smokers$status3[smokers$status2 != 1] <- rbinom(sum(smokers$status2 != 1), 1, 0.3)
 set.seed(4321)
-smokers$contact <- 0.26*(10 - smokers$exposure) + rnorm(85, mean = 0, sd = 2)
+smokers$contact <- 0.26*(10 - smokers$exposure) + rnorm(n, mean = 0, sd = 2)
 smokers$contact <- norm10(smokers$contact, lbound1 = FALSE)
 set.seed(390)
 smokers$attitude <- 1.5*(-0.26*smokers$exposure + 
@@ -326,7 +345,14 @@ smokers$attitude <- 1.5*(-0.26*smokers$exposure +
   -0.24*smokers$exposure*(smokers$status3 == 1) +
   0.7*(smokers$status3 == 2) +
   -0.20*smokers$exposure*(smokers$status3 == 2) +
-  rnorm(85, mean = 1, sd = 0.6))
+  rnorm(n, mean = 1, sd = 0.6))
+# recode values that are too high or too low
+smokers <- smokers %>%
+  mutate(attitude = case_when(
+    attitude < -5 ~ -5,
+    attitude > 5 ~ 5,
+    TRUE ~ attitude
+  ))
 # add labels
 smokers <- smokers %>%
   mutate(
@@ -352,7 +378,7 @@ smokers <- smokers %>%
     )
   )
 # save SPSS data file
-haven::write_sav(smokers, "data/smokers.sav")
+haven::write_sav(smokers, "data/allsmokers.sav") # data/smokers.sav
 
 # Readers: Predicting newspaper reading time from news site use, political scepticism, political interest, education level, and age.
 # Age (in decades).

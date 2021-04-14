@@ -482,9 +482,9 @@ rm(results)
  
 The confidence interval of an indirect effect can be calculated from its bootstrapped sampling distribution. Table \@ref(tab:indirect-sim) shows bootstrap results for the indirect effects in a model with age as predictor, newspaper reading time as dependent variable, and interest in politics and news site use as mediators. 
 
-In total, there is a substantial indirect effect of age on newspaper reading time in this model. We are confident that this effect is positive [_b_ = 1.47, 95%CI[0.62, 2.25] (bootstrapped)]. It is easy to see that the indirect effect of age via news site use on reading time is by far the most important indirect effect. On its own, it is responsible for almost the entire total indirect effect [_b_ = 1.44, 95%CI[0.60, 2.23] (bootstrapped)].
+In total, there is a substantial indirect effect of age on newspaper reading time in this model. We are confident that this effect is positive [_b_ = 1.47, 95% CI [0.62, 2.25] (bootstrapped)]. It is easy to see that the indirect effect of age via news site use on reading time is by far the most important indirect effect. On its own, it is responsible for almost the entire total indirect effect [_b_ = 1.44, 95% CI [0.60, 2.23] (bootstrapped)].
 
-It may happen that an indirect effect is not statistically significant (the confidence interval includes zero) whereas all direct effects that constitute the indirect effect are statistically significant. In Figure \@ref(fig:causaldiagram3), for example, both the effect of age on political interest (b = 0.30, 95%CI[0.22, 0.38]) and the effect of political interest on reading time (b = 0.20, 95%CI[0.12, 0.28]) are statistically significant at the .05 level. The indirect effect of age via political interest on reading time, however, is not statistically significant at this level [b = 0.30 * 0.20 = 0.06, 95%CI[-0.02, 0.14], (bootstrapped)]. 
+It may happen that an indirect effect is not statistically significant (the confidence interval includes zero) whereas all direct effects that constitute the indirect effect are statistically significant. In Figure \@ref(fig:causaldiagram3), for example, both the effect of age on political interest (b = 0.30, 95% CI [0.22, 0.38]) and the effect of political interest on reading time (b = 0.20, 95% CI [0.12, 0.28]) are statistically significant at the .05 level. The indirect effect of age via political interest on reading time, however, is not statistically significant at this level [b = 0.30 * 0.20 = 0.06, 95% CI [-0.02, 0.14], (bootstrapped)]. 
 
 ```{r causaldiagram3, echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time: unstandardized estimates with 95% confidence intervals.", fig.asp=0.3}
 library(ggplot2)
@@ -497,7 +497,7 @@ ggplot(variables, aes(x, y)) +
   geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
-  geom_text(x = c(0.35, 0.5, 0.65), y = c(.26, .07, .26), label = c("b = 0.30,\n95%CI[0.22, 0.38]", "Indirect: b = 0.06, 95%CI[-0.02, 0.14]", "b = 0.20,\n95%CI[0.12, 0.28]")) +
+  geom_text(x = c(0.35, 0.5, 0.65), y = c(.26, .07, .26), label = c("b = 0.30,\n95% CI [0.22, 0.38]", "Indirect: b = 0.06, 95% CI [-0.02, 0.14]", "b = 0.20,\n95% CI [0.12, 0.28]")) +
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
 # Cleanup.
@@ -667,7 +667,7 @@ edges <- data.frame(from = c(seq(1, 3), seq(1, 4)),
                     label = c(  round(model_3$coefficients[2], digits = 2),
                                 round(model_3$coefficients[3], digits = 2),
                                 round(model_3$coefficients[4], digits = 2),
-                                paste0("Direct: b = ", round(model_4$coefficients[2], digits = 2), ", 95%CI[", round(ci[2,1], digits = 2), ", ",  round(ci[2,2], digits = 2), "]", "\nIndirect effect: b = 1.44, 95%CI[0.61, 2.17]"), 
+                                paste0("Direct: b = ", round(model_4$coefficients[2], digits = 2), ", 95% CI [", round(ci[2,1], digits = 2), ", ",  round(ci[2,2], digits = 2), "]", "\nIndirect effect: b = 1.44, 95% CI [0.61, 2.17]"), 
                                 round(model_4$coefficients[3], digits = 2),
                                 round(model_4$coefficients[4], digits = 2),
                                 round(model_4$coefficients[5], digits = 2)
@@ -922,7 +922,7 @@ not exactly the same as the ones reported here.
 increases the predicted average newspaper reading time through news site use
 with slightly more than one minute. With 95% confidence, the increase is between 0.3
 and 1.9 additional minutes.
-* The indirect effect is weak to moderate, *b\** = .16, 95%CI[.05; .28]. [<img src="icons/2question.png" width=161px align="right">](#question9.9.2)
+* The indirect effect is weak to moderate, *b\** = .16, 95% CI [.05; .28]. [<img src="icons/2question.png" width=161px align="right">](#question9.9.2)
 ```
 
 <A name="answer9.9.3"></A>
@@ -1123,10 +1123,10 @@ Indirect effect of X on Y
    
 * The indirect effect of age on media literacy via parental supervision does
 not remove the direct effect completely (*b* = 0.19, *t* = 2.33, *p* = .022,
-95%CI[0.03; 0.36]), so the effect is only partially mediated if it is mediated
+95% CI [0.03; 0.36]), so the effect is only partially mediated if it is mediated
 at all.
 * Although the largest part of the 95% confidence interval is positive, we
-cannot rule out a zero (absent) indirect effect, *b* = 0.03, 95%CI[-0.02; 0.11]
+cannot rule out a zero (absent) indirect effect, *b* = 0.03, 95% CI [-0.02; 0.11]
 bootstrapped. Perhaps, the effect of age on media literacy is not mediated by
 parental supervision. [<img src="icons/2question.png" width=161px align="right">](#question9.9.5)
 ```

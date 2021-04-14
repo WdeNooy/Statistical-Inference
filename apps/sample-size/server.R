@@ -83,9 +83,11 @@ shinyServer(function(input, output) {
       geom_vline(aes(xintercept = d[6]),
                  colour = brewercolors["Red"]) +
       #p value label weak
-      geom_text(label = paste0("p", " == ", 
+      geom_text(label = ifelse(2*pt((d[3]-mean)/se, df = df) < .005,
+                               "p < .001",
+                               paste0("p", " == ", 
                                format(round(2*pt((d[3]-mean)/se, df = df),
-                                            digits = 3), nsmall = 3)),
+                                            digits = 3), nsmall = 3))),
                 parse = TRUE,
                 aes(x = d[3] - 0.02,
                     y =  0.45),
@@ -93,9 +95,11 @@ shinyServer(function(input, output) {
                 size = 5,
                 colour = brewercolors["Red"]) +
       #p value label moderate
-      geom_text(label = paste0("p", " == ", 
+      geom_text(label = ifelse(2*pt((d[2]-mean)/se, df = df) < .005,
+                               "p < .001",
+                               paste0("p", " == ", 
                                format(round(2*pt((d[2]-mean)/se, df = df),
-                                            digits = 3), nsmall = 3)),
+                                            digits = 3), nsmall = 3))),
                 parse = TRUE,
                 aes(x = d[6] + 0.02,
                     y =  0.45),
@@ -103,9 +107,11 @@ shinyServer(function(input, output) {
                 size = 5,
                 colour = brewercolors["Red"]) +
       #p value label strong
-      geom_text(label = paste0("p", " == ", 
+      geom_text(label = ifelse(2*pt((d[1]-mean)/se, df = df) < .005,
+                               "p < .001",
+                               paste0("p", " == ", 
                                format(round(2*pt((d[1]-mean)/se, df = df),
-                                            digits = 3), nsmall = 3)),
+                                            digits = 3), nsmall = 3))),
                 parse = TRUE,
                 aes(x = d[1] - 0.02,
                     y =  0.45),

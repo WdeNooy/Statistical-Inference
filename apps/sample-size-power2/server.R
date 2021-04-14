@@ -8,7 +8,8 @@ shinyServer(function(input, output) {
   
   #Function for scaling and shifting the t-distribution
   dtshift <- function(x,mean,sd,df) dt(x = (x - mean)/sd, df = df)
-
+  under <- -.05 #margin below sampling distribution
+  
 output$mainplot <- renderPlot({
   
   # Calculate power (as percentage) for given n
@@ -38,12 +39,15 @@ output$mainplot <- renderPlot({
   meanha <- meanh0 + sd * input$efsizeslider #meanh0 plus unstandardized effect size
   
  p <-
-   ggplot(data.frame(x = c(-5,8)), aes(x = x)) + 
+   ggplot(data.frame(x = c(-5,10)), aes(x = x)) + 
   ##H0
   #H0 distribution function
    stat_function(fun = dtshift,
                  args = list(mean = meanh0, sd = se, df = df),
                  n = 1000) +
+  #Hypothesized population (H0) mean line
+  geom_segment(aes(x = meanh0, xend = meanh0, 
+                    y = dtshift(meanh0, meanha, se, df), yend = Inf)) +
   ##Ha
   #1-beta = power: left tail
   stat_function(fun = dtshift,
@@ -77,10 +81,23 @@ output$mainplot <- renderPlot({
                   args = list(mean = meanha, sd = se, df = df),
                   alpha = 0.5,
                   n = 1000) +
-    theme_general() +
-    scale_x_continuous(name = "Population means", limits = c(-5, 10), breaks = c(0, meanha), labels = c("H0", "H1")) +
-    scale_y_continuous(name = "Probability density", breaks = NULL)
-# Switch plot output dependent on one or two-sided selection  
+   #Hypothesized population (H1) mean line
+   geom_segment(aes(x = meanha, xend = meanha, 
+                    y = dtshift(meanha, meanh0, se, df), yend = Inf)) +
+   theme_general() +
+    scale_x_continuous(name = "Average sample candy weight (grams)", 
+                       limits = c(-5, 10), 
+                       breaks = NULL, 
+                       sec.axis = sec_axis(~ .,
+                                           name = "Average candy weight in the population (grams)", 
+                                           breaks = c(0, meanha), 
+                                           labels = c("H0", "H1"))
+    ) +
+    scale_y_continuous(name = "Probability density", breaks = NULL,
+                       limits = c(under, 0.45),
+                       expand = c(0, 0))
+
+ # Switch plot output dependent on one or two-sided selection  
 if(input$onetwoselect == "Two-sided"){
   p + #Left alpha
     stat_function(fun = dtshift,
@@ -115,8 +132,17 @@ if(input$onetwoselect == "Two-sided"){
       ),
       size = 3,
       colour = "grey40"
-    )
- }else{
+    ) +
+    #Left rejection boundary
+    geom_segment(aes(x = lefth0, xend = lefth0, 
+                     y = under, yend = dtshift(lefth0, meanh0, se, df))) +
+    #Right rejection boundary
+    geom_segment(aes(x = righth0, xend = righth0, 
+                     y = under, yend = dtshift(righth0, meanh0, se, df))) +
+    #power boundary
+    geom_segment(aes(x = righth0, xend = righth0, 
+                     y = under, yend = dtshift(righth0, meanha, se, df)))
+}else{
     p +  #Right alpha 
       stat_function(fun = dtshift,
                     xlim = c(righth0,10),
@@ -133,7 +159,13 @@ if(input$onetwoselect == "Two-sided"){
        ),
        size = 3,
        colour = "grey40"
-     )
+     ) +
+    #Right rejection boundary
+    geom_segment(aes(x = righth0, xend = righth0, 
+                     y = under, yend = dtshift(righth0, meanh0, se, df))) +
+    #power boundary
+    geom_segment(aes(x = righth0, xend = righth0, 
+                     y = under, yend = dtshift(righth0, meanha, se, df)))
  }
     
 })

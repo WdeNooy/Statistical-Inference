@@ -80,8 +80,8 @@ shinyServer(function(input, output) {
                        yend = c(meannonsmoke,meansmoke,meannonsmoke,meansmoke))
     
     
-    ggplot(df, aes(x = category, y = y, colour = category)) + 
-      geom_jitter(width = .2) + 
+    ggplot(df) + 
+      geom_jitter(aes(x = category, y = y, colour = category), width = .1) + 
       stat_function(inherit.aes = FALSE,
                     data = data.frame(x = c(0,3)),
                     aes(x = x),
@@ -91,10 +91,12 @@ shinyServer(function(input, output) {
                    data = segments,
                    aes(x = x, xend = xend,y = y, yend= yend),
                    linetype = "dashed") +
+      geom_vline(aes(xintercept = 1), color = "grey") +
+      geom_hline(aes(yintercept = 0), color = "grey") +
       scale_colour_manual(name = "Smoking status", values = c("Non-Smoker (0)" = unname(brewercolors["Blue"]),
                                      "Smoker (1)" = unname(brewercolors["Red"]))) + 
       scale_y_continuous(name = "Attitude",
-                         breaks = c(-5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
+                         breaks = c(0, -5, round(meansmoke, digits=1), round(meannonsmoke, digits=1), 5)) +
       xlab("Smoking status") +
       coord_cartesian(ylim = c(-5,5)) + 
       theme_general() + 

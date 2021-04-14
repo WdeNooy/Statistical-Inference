@@ -63,10 +63,12 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size-unstand/", height=
 
 We have learned that larger samples have smaller standard errors (Section \@ref(sample-size)). Smaller standard errors yield larger test statistic values and larger test statistics have smaller _p_ values. In other words, a test on a larger sample is more often statistically significant. 
 
-A larger sample offers more precision, so the difference between our sample outcome and the hypothesized value is more often sufficient to reject the null hypothesis. For example, we would reject the null hypothesis that average candy weight is 2.8 grams in the population if the average weight in our sample bag is 2.70 grams and our sample is large. But we may not reject this null hypothesis if we have the same outcome in a small sample bag.  
+A larger sample offers more precision, so the difference between our sample outcome and the hypothesized value is more often sufficient to reject the null hypothesis. For example, we would reject the null hypothesis that average candy weight is 2.8 grams in the population if average weight in our sample bag is 2.70 grams and our sample is large. But we may not reject this null hypothesis if we have the same outcome in a small sample bag. 
 
 <div style="column-count: 2; -moz-column-count: 2"> 
-Of course, the size of the difference between our sample outcome and the hypothesized population value matters as well. This difference is called _effect size_. If average candy weight in our sample bag deviates more from the average weight that we expect according to the null hypothesis, we are more likely to reject the null hypothesis. If we think of our statistical test as a security metal detector, our test will pick up larger amounts of metal more easily.
+The larger our sample, the more sensitive our test will be, so we will get statistically significant results more often. If we think of our statistical test as a security metal detector, a more sensitive detector will go off more often.
+
+Of course, the size of the difference between our sample outcome and the hypothesized population value matters as well. This difference is called _effect size_. If average candy weight in our sample bag deviates more from the average weight specified in the null hypothesis, we are more likely to reject the null hypothesis. In terms of a security metal detector: Our test will pick up large pieces of metal more easily than small pieces.
 
 ![Security metal detector. [Jason Lander from Portland, United States, Wikimedia CommonsCC BY 2.0](https://upload.wikimedia.org/wikipedia/commons/c/c0/Security_%282363676375%29.jpg)](figures/metaldetector.jpg)
 </div>
@@ -88,13 +90,13 @@ If we have decided on a minimum level of improvement that is relevant to us, we 
 
 For media interventions such as health, political, or advertisement campaigns, one could think of a minimum change of attitude affected by the campaign in relation to campaign costs. A choice between different campaigns could be based on their efficiency in terms of attitudinal change per cost unit.  
 
-Note the important difference between practical relevance and statistical significance. Practical relevance is what we are interested in. If the new medicine is sufficiently effective, we want our statistical test to signal it. In the security metal detector example: If a person carries too much metal, we want the detector to signal it. 
+Note the important difference between practical relevance and statistical significance. Practical relevance is what we are interested in. If the new medicine is sufficiently effective, we want our statistical test to signal it. In the security metal detector example: If a person carries too much metal, we want the detector to pick it up. 
 
 Statistical significance is just a tool that we use to signal practically relevant effects. Statistical significance is not meaningful in itself. For example, we do not want to have a security detector responding to a minimal quantity of metal in a person's dental filling. Statistical significance is important only if it signals practical relevance. We will return to this topic in Chapter \@ref(crit-discus).
 
 ### Unstandardized and standardized effect sizes  
 
-The difference between our sample outcome and the hypothesized value is the _unstandardized effect size_. If we test a mean, the unstandardized effect size is just the difference between our sample mean and the hypothesized population mean. For example, if we hypothesized that average candy weight in the population is 2.8 grams and we find an average candy weight in our sample bag of 2.75 grams, the unstandardized effect size is -0.05 grams. If 0.05 grams is a great deal to us, the effect is practically relevant.
+The difference between our sample outcome and the hypothesized value is the _unstandardized effect size_. If we test a mean, the unstandardized effect size is just the difference between our sample mean and the hypothesized population mean. For example, if we hypothesize that average candy weight in the population is 2.8 grams and we find an average candy weight in our sample bag of 2.75 grams, the unstandardized effect size is -0.05 grams. If a difference of 0.05 grams is a great deal to us, the effect is practically relevant.
 
 Unstandardized effect sizes depend on the scale on which we measure the sample outcome. The unstandardized effect size of average candy weight changes if we measure candy weight in grams, micro grams, kilograms, or ounces. Of course, changing the scale does not affect the meaning of the effect size but the number that we are looking at is very different: 0.05 grams, 50 milligrams, 0.00005 kilos, or 0.00176 ounces. For this reason, we do not have rules of thumb for interpreting unstandardized effect sizes in  terms of small, medium, or large effects.
 
@@ -104,7 +106,7 @@ In scientific research, we rarely have precise norms for raw differences (unstan
 
 To avoid answering this difficult question, we can take the variation in scores (standard deviation) into account. In the context of the candies example, we will not be impressed by a small difference between observed and expected (hypothesized) average candy weight if candy weights vary a lot. In contrast, if candy weight is quite constant, a small average difference can be important. 
 
-For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the hypothesized population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on one or two means is known as _Cohen's d_. 
+For this reason, standardized effect sizes for sample means divide the difference between the sample mean and the hypothesized population mean by the standard deviation in the sample. Thus, we take into account the variation in scores. This standardized effect size for tests on one or two means is known as _Cohen's_ d. 
 
 ----
 
@@ -113,22 +115,22 @@ These are the formulas for Cohen's _d_ for a one-sample _t_ test, a paired-sampl
 <div style="column-count: 3; -moz-column-count: 3">
 
 \begin{equation}
-  d_{one_-sample} = \frac{|M - \mu_0|}{SD}
+  d_{one_-sample} = \frac{M - \mu_0}{SD}
 \end{equation}
 
 \begin{equation}
-  d_{paired_-samples} = \frac{|M_{diff} - \mu_{0_-diff}|}{SD_{diff}}
+  d_{paired_-samples} = \frac{M_{diff} - \mu_{0_-diff}}{SD_{diff}}
 \end{equation}
 
 \begin{equation}
-  d_{independent_-samples} = \frac{|2*t|}{\sqrt(df)}
+  d_{independent_-samples} = \frac{2*t}{\sqrt(df)}
 \end{equation}
 
 </div>
 
 Where:
 
-* $M$ is the sample mean, $\mu_0$ is the hypothesized population mean, and $SD$ is the standard deviation in the sample, and $||$ indicates that the absolute value must be used (drop a negative sign of the result),
+* $M$ is the sample mean, $\mu_0$ is the hypothesized population mean, and $SD$ is the standard deviation in the sample,
 
 * $M_{diff}$ is the difference between the two means in the sample, $\mu_{0_-diff}$ is the hypothesized difference between the two means in the population mean, which is zero in case of a nil hypothesis, and $SD_{diff}$ is the standard deviation of the difference in the sample,
 
@@ -136,21 +138,19 @@ Where:
 
 ----
 
-The sample outcome can be a single mean, for instance the average weight of candies, but it can also be the difference between two means, for example, the difference in colourfulness of yellow candies at the beginning and end of a time period. In the latter case, the standard deviation that we need is the standard deviation of colourfulness difference across all candies (Section \@ref(dependentsamples)). In the case of independent samples, such as average weight of red versus yellow candies, we need a special combined (_pooled_) standard deviation for yellow and red candy weight that is not reported by SPSS. Here, we use the _t_ value and degrees of freedom to calculate Cohen's d.
+The sample outcome can be a single mean, for instance the average weight of candies, but it can also be the difference between two means, for example, the difference in colourfulness of yellow candies at the beginning and end of a time period. In the latter case, the standard deviation that we need is the standard deviation of colourfulness difference across all candies (Section \@ref(dependentsamples)). In the case of independent samples, such as average weight of red versus yellow candies, we need a special combined (_pooled_) standard deviation for yellow and red candy weight that is not reported by SPSS. Here, we use the _t_ value and degrees of freedom to calculate Cohen's _d_.
 
-The direction of an effect is not important to effect size. For example, we do not care whether the yellow candies or the red candies are on average heavier. For this reason, Cohen's _d_ is always positive. If you obtain a negative result, just drop the minus sign.
+Using an inventory of published results of tests on one or two means, Cohen [-@RefWorks:3933] proposed rules of thumb for standardized effect sizes (ignore a negative sign if it occurs):  
 
-Using an inventory of published results of tests on one or two means, Cohen [-@RefWorks:3933] proposed rules of thumb for standardized effect sizes:  
+* 0.2: weak (small) effect,  
 
-* 0.2: weak effect,  
+* 0.5: moderate (medium) effect,  
 
-* 0.5: moderate effect,  
+* 0.8: strong (large) effect.  
 
-* 0.8: strong effect.  
+Note that Cohen's _d_ can take values above one. These are not errors, they reflect very strong or huge effects [@sawilowskyNewEffectSize2009]. 
 
-Note that Cohen's _d_ can take values above one. These are to be considered strong effects. 
-
-### How to calculate Cohen's _d_ from SPSS output
+### Obtaining Cohen's _d_ with SPSS
 
 #### Instructions
 
@@ -185,8 +185,6 @@ knitr::include_url("https://www.youtube.com/embed/2TSuu6WpcUo", height = "360px"
 # In the example, Cohen's _d_ equals $(2 * 0.651) / \surd(18) = 0.31$. This is a
 # moderate effect size.
 ```
-
-SPSS version 27 (and later) provides Cohen's _d_ for _t_ tests on one or two means. This is not always the value that we need, so calculate Cohen's _d_ by hand to be on the safe side.
 
 #### Exercises
 
@@ -232,7 +230,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/sample-size/", height="268px")
 7. What is the meaning of the _p_ values and why do they decrease if we increase sample size? [<img src="icons/2answer.png" width=115px align="right">](#answer5.2.7)
 ```
 
-Effect size as well as test statistics reflect the difference between what we expect according to the null hypothesis and what we observe in our sample. As a consequence, effect size indicators and test statistics are related. In some cases, such as Cohen's d, the relation between effect size and test statistic is very simple.  
+Effect size as well as test statistics reflect the difference between what we expect according to the null hypothesis and what we observe in our sample. As a consequence, effect size indicators and test statistics are related. In some cases, such as Cohen's _d_, the relation between effect size and test statistic is very simple.  
 
 The test statistic _t_ for a _t_ test on one mean, for example, is equal to Cohen's _d_ times the square root of sample size. Here, the only difference between the two is sample size! Sample size influences the test statistic---the larger the sample, the larger the test statistic--- but it does not influence effect size. This is an important difference.
 
@@ -274,12 +272,12 @@ of 0.25 grams. [<img src="icons/2question.png" width=161px align="right">](#ques
 Answer to Question 3. 
 
 * Execute a one-sample _t_ test with 6.0 as test value.
-* The reported mean difference is (-)0.5; this is the unstandardized effect
+* The reported mean difference is -0.5; this is the unstandardized effect
 size.
-* To obtain the standardized effect size (Cohen's _d_ in this case), divide the
+* SPSS (version 27 and later) reports that Cohen's _d_ is -0.26. This is a weak effect.
+* If you have to calculate Cohen's _d_ by hand, divide the
 unstandardized effect size by the standard deviation of the variable (here:
-attitude towards immigration), which is reported to be 1.939 Cohen's _d_ = 0.5 /
-1.939 = 0.26. This is a weak effect. [<img src="icons/2question.png" width=161px align="right">](#question5.2.3)
+attitude towards immigration), which is reported to be 1.939 Cohen's _d_ = -0.5 / 1.939 = -0.26. [<img src="icons/2question.png" width=161px align="right">](#question5.2.3)
 ```
 
 <A name="answer5.2.4"></A>
@@ -297,20 +295,13 @@ effect size provided that our sample result is on the correct side of the bounda
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* Execute an independent-samples _t_ test with groups defined by the variable
-age_group.
-* The reported mean difference is (-)0.718; this is the unstandardized effect
-size.
-* We approximate the standardized effect size (Cohen's _d_ in this case) by
-dividing twice the _t_ value by the square root of the degrees of freedom. Note
-that the _F_ test on equality of population variances is statistically
-significant (*p* = .029), so we do not assume equal variances and we use the
-bottom row from the results table.
-* Cohen's _d_ = 2 * 1.602 / sqrt(30.009) = 3.204 / 5.478 = 0.58. This is a
-moderate effect. SPSS V27 reports quite a different value: 0.372, which signals a weak to moderate effect. The latter calculation assumes that attitude towards immigrants has equal variances for the young and old in the population.
-* Note that the sample of young voters is too small to conduct a _t_ test. This,
-however, is not consequential to Cohen's _d_ because a minimum sample size is
-required for a reliable _p_ value but not for a _t_ value. [<img src="icons/2question.png" width=161px align="right">](#question5.2.5)
+* Execute an independent-samples _t_ test with groups defined by the variable age_group.
+* The reported mean difference is (-)0.718; this is the unstandardized effect size. Note that the mean difference is positive if you select the old as the first group and the young as the second group. Otherwise, it is negative.
+* SPSS (version 27 and later) reports that Cohen's _d_ is (-)0.37. This is a moderate (medium) effect.
+* If you calculate the standardized effect size (Cohen's _d_) by hand, you should use the _t_ value and degrees of freedom from the top row. Divide twice the _t_ value by the square root of the degrees of freedom: Cohen's _d_ = 2 * 1.201 / sqrt(64) = 2.402 / 8 = 0.30. This is a
+weak effect. 
+* In this particular case, the value of Cohen's _d_ reported by SPSS and the manually calculated value are slightly different, probably because we have such a small group of young voters in our sample.
+* Note that the sample of young voters is too small to conduct a _t_ test here. [<img src="icons/2question.png" width=161px align="right">](#question5.2.5)
 ```
 
 <A name="answer5.2.6"></A>
@@ -432,7 +423,7 @@ If we actually sample from this imaginary true population, the sampling distribu
 Now that we know the true sampling distribution if there is a small effect in the population, we can foresee what is going to happen when we enter the world of the researcher. The researcher is going to use the rejection region to decide on the null hypothesis. If the sample mean is in the rejection region, the researcher is going to reject the null hypothesis. Otherwise, the null hypothesis is not rejected.
 
 ### Type II error {#typeIIerror}  
-If there is a (small) effect in the population, the null hypothesis is not true. For example, average candy weight is not 2.8 grams, it is 2.9 grams. If our sample mean is close to 2.8 grams, we may not reject the null hypothesis even if it is not true. This is a _Type II error_: not rejecting a false null hypothesis.  
+If there is a (small) effect in the population, the null hypothesis is not true. For example, average candy weight is not 2.8 grams, it is 2.9 grams in the population. If our sample mean is close to 2.8 grams, we may not reject the null hypothesis even if it is not true. This is a _Type II error_: not rejecting a false null hypothesis.  
 
 The probability that we make a Type II error if there is a small effect is expressed by the yellow section in Figure \@ref(fig:TypeI-II-errors), Steps 3 and 4. It is usually denoted by the Greek letter beta ($\beta$). The yellow section represents the probability of drawing a sample from the population with a small effect size that is *not* in the rejection region, so the null hypothesis is *not* rejected. 
 
@@ -578,7 +569,7 @@ Sample size, statistical significance, effect size, and test power are related. 
 
 For effect size, we have to choose between a small, moderate, or large effect. Previous results of research similar to our research project can help us decide whether we should expect small effect sizes or not. If we have a concrete number for the (standardized) minimum effect size that is of practical relevance, we can use that number.  
 
-For power, the conventional rule of thumb is that we like to have at least 80% probability of rejecting a false null hypothesis. You may note that the probability of *not* rejecting a true null hypothesis is higher: .95. After all, it is one minus the probability of rejecting a true null hypothesis (Type I error), which is the significance level. 
+For power, the conventional rule of thumb is that we like to have at least 80 per cent probability of rejecting a false null hypothesis. You may note that the probability of *not* rejecting a true null hypothesis is higher: 95 per cent. Remember, the probability to reject a true null hypothesis, which is the significance level, is usually set to five per cent, so the probability of not rejecting a true null hypothesis is 95 per cent.
 
 Power is set to a lower level because the null hypothesis is usually assumed to reflect our best knowledge about the world. From this perspective, we are keener on avoiding the error of falsely rejecting the null hypothesis (our current best knowledge) than falsely not rejecting (accepting) it. This approach, however, is not without criticisms as we will discuss in Chapter \@ref(crit-discus). Anyway, if you want to raise the power to the same level of .95, you can do so; it will require a larger sample.  
 
@@ -795,8 +786,8 @@ Answer to Question 2.
 * The effect size in the sample is the difference between the hypothesized population value and the value found in the sample. 
 * The hypothesized population mean of candy weights is 2.8 grams and the sample mean is 2.84 grams, so the effect size equals 2.8 - 2.84 = (-)0.04 grams. This is the unstandardized effect size. Note that we do not care about the sign of the difference.
 * For the standardized effect size, we divide the unstandardized effect size by the standard deviation of the variable. The standard deviation of candy weight (in the sample) is given as 0.5, so the standardized effect size is 0.04 / 0.5 = 0.08.
-* Provided that we drop a minus sign if it appears, this value is Cohen's d.
-* According to the rules of thumb for interpreting Cohen's d, the effect is very weak because it is much less than 0.20.
+* Provided that we drop a minus sign if it appears, this value is Cohen's _d_.
+* According to the rules of thumb for interpreting Cohen's _d_, the effect is very weak because it is much less than 0.20.
 * Note that this is the effect size *in the sample*. As an alternative, you can calculate the *true effect size* as the difference between the hypothesized value and the true value in the population. The true unstandardized effect size is 2.8 - 2.9 = (-)0.1. If we assume that the reported standard deviation of candy weights (0.5) applies to the population, the true standardized effect size is
 (2.8 - 2.9)/0.5 = (-)0.2. [<img src="icons/2question.png" width=161px align="right">](#question5.6.2)
 ```
@@ -854,6 +845,8 @@ Answer to Question 8.
 ```
 
 ## Take-Home Points  
+
+* Effect size is the difference between the hypothesized value and the true (population) or observed (sample) value.
 
 * Effect size is related to practical relevance. Effect sizes are expressed by (standardized) mean differences, regression coefficients, and measures of association such as the correlation coefficient, _R_^2^, and eta^2^.
 

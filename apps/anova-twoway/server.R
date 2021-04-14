@@ -24,41 +24,62 @@ shinyServer(function(input, output) {
     reactive({
       # Samples is dependent on the new sample button.
       
-      input$newsampbut
+      if ( input$newsampbut == 0 ) {
+      #start data set with larger differences for endorser than for sex
+      df <- data.frame(
+        y = c(
+          6 + rnorm(1, -0.4, sd = 0.6),
+          6 + rnorm(1, -0.4, sd = 0.6),
+          6 + rnorm(1, 0.4, sd = 0.6),
+          6 + rnorm(1, 0.4, sd = 0.6),
+          7 + rnorm(1, -0.4, sd = 0.6),
+          7 + rnorm(1, -0.4, sd = 0.6),
+          7 + rnorm(1, 0.4, sd = 0.6),
+          7 + rnorm(1, 0.4, sd = 0.6),
+          3 + rnorm(1, -0.4, sd = 0.6),
+          3 + rnorm(1, -0.4, sd = 0.6),
+          3 + rnorm(1, 0.4, sd = 0.6),
+          3 + rnorm(1, 0.4, sd = 0.6)),
+        x = spacemaker(3, n, .15),
+        cat1 = rep(c("Clooney","Jolie","NoEnd"),each = n),
+        cat2 = rep(c("Men","Women"),each = 2))
+      }
       
-      # Define the means for each category.
-      
-      mCloon <- runif(1, min = 3, max = 7)
+      else {
+        
+        # Define the means for each category.
+        
+        mCloon <- runif(1, min = 3, max = 7)
       mJolie <- runif(1, min = 3, max = 7)
       mNoEnd <- runif(1, min = 3, max = 7)
       mMen <-   runif(1, min = -1, max = 1)
       mWom <-   runif(1, min = -1, max = 1)
-
-    # Generate the data frame needed for plotting the positions of each dot
-    # variable y is the mean of each endorser category mixed with a random 
-    # bit for the sex category with sd of 1. 
+      
+      # Generate the data frame needed for plotting the positions of each dot
+      # variable y is the mean of each endorser category mixed with a random 
+      # bit for the sex category with sd of 1. 
       
       df <-
         data.frame(
           y = c(
-            mCloon + rnorm(1, mMen, sd = 1),
-            mCloon + rnorm(1, mMen, sd = 1),
-            mCloon + rnorm(1, mWom, sd = 1),
-            mCloon + rnorm(1, mWom, sd = 1),
-            mJolie + rnorm(1, mMen, sd = 1),
-            mJolie + rnorm(1, mMen, sd = 1),
-            mJolie + rnorm(1, mWom, sd = 1),
-            mJolie + rnorm(1, mWom, sd = 1),
-            mNoEnd + rnorm(1, mMen, sd = 1),
-            mNoEnd + rnorm(1, mMen, sd = 1),
-            mNoEnd + rnorm(1, mWom, sd = 1),
-            mNoEnd + rnorm(1, mWom, sd = 1)),
+            mCloon + rnorm(1, mMen, sd = 0.6),
+            mCloon + rnorm(1, mMen, sd = 0.6),
+            mCloon + rnorm(1, mWom, sd = 0.6),
+            mCloon + rnorm(1, mWom, sd = 0.6),
+            mJolie + rnorm(1, mMen, sd = 0.6),
+            mJolie + rnorm(1, mMen, sd = 0.6),
+            mJolie + rnorm(1, mWom, sd = 0.6),
+            mJolie + rnorm(1, mWom, sd = 0.6),
+            mNoEnd + rnorm(1, mMen, sd = 0.6),
+            mNoEnd + rnorm(1, mMen, sd = 0.6),
+            mNoEnd + rnorm(1, mWom, sd = 0.6),
+            mNoEnd + rnorm(1, mWom, sd = 0.6)),
           x = spacemaker(3, n, .15),
           cat1 = rep(c("Clooney","Jolie","NoEnd"),each = n),
           cat2 = rep(c("Men","Women"),each = 2))
-      
-    return(df)
-  })
+      }  
+      return(df)
+    })
   
   # MAIN PLOT ----
   
@@ -234,11 +255,6 @@ shinyServer(function(input, output) {
         scale_linetype_manual(values = c("Men" = "dotted",
                                          "Women" = "dashed",
                                          "Grand Mean" = "solid")) +
-        scale_colour_manual(values = 
-                              c("Grand Mean" = "black",
-                                "Clooney" = unname(brewercolors["Orange"]),
-                                "Jolie" = unname(brewercolors["Blue"]),
-                                "NoEnd" = unname(brewercolors["Green"]))) + 
         guides(linetype = guide_legend(
                             title = "Means:",
                             override.aes = list(
