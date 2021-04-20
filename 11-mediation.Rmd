@@ -10,7 +10,7 @@ knitr::include_url("https://www.youtube.com/embed/P_hK2RKJPm4", height = "360px"
 ### Summary {-}
 
 ```{block2, type='rmdimportant'}
-What happens if I use more than one predictor in a regression model? Can I add a causal order to the predictors?
+Can I add a causal order to the predictors in my regression models?
 ```
 
 If we add a causal order among the predictors of our regression model, we obtain a causal model or path model. The causal model includes an indirect effect: The first predictor affects the scores on the second predictor, which affects the scores on the dependent variable that we usually call the outcome variable. For example, age affects news site use, which affects newspaper reading time. In this path model, the second predictor (news site use) mediates the effect of the first predictor on the outcome variable. The second predictor is called a mediator.
@@ -75,7 +75,7 @@ A common cause does not have to remove the entire effect between a predictor and
 
 Not all people become more interested in politics as they grow older and their interest in politics does not have to increase regularly during all of their lifetime. The relation between age and interest in politics, therefore, will not be perfect. This allows us to technically distinguish between the effect of age and the effect of interest in politics.
 
-If we include both age and interest in politics as predictors in a regression model for newspaper reading time, the partial effect of interest in politics is corrected for the spurious correlation between interest in politics and newspaper reading caused by age as their common cause. The partial effect of political interest can be interpreted as causal if current interest in politics was attained before the newspaper readings that we measure (very plausible) and age is the only common cause of interest in politics and newspaper reading (highly questionable).
+If we include both age and interest in politics as predictors in a regression model for newspaper reading time, the partial effect (Section \@ref(partialeffect)) of interest in politics is corrected for the spurious correlation between interest in politics and newspaper reading caused by age as their common cause. The partial effect of political interest can be interpreted as causal if current interest in politics was attained before the newspaper readings that we measure (very plausible) and age is the only common cause of interest in politics and newspaper reading (highly questionable).
 
 ```{r causaldiagram, echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
@@ -84,9 +84,9 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7),
                         y = c(.1, .3, .1),
                         label = c("Age", "Pol.Interest", "Reading Time"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.06, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.04, yend = y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.04, yend = y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
@@ -107,10 +107,10 @@ variables <- data.frame(x = c(0.2, 0.4, 0.6, 0.8),
                         y = c(.1, .3, .3, .1),
                         label = c("Age", "Pol.Interest", "News Site Use", "Reading Time"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[4] - 0.07, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.07, yend = variables$y[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[3], y = variables$y[3], xend = variables$x[4] - 0.04, yend = variables$y[4] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[4] - 0.07, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.04, yend = y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.07, yend = y[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[3], y = y[3], xend = x[4] - 0.04, yend = y[4] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.1, 0.9), ylim = c(0, 0.4)) +
   theme_void()
@@ -118,7 +118,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-An indirect effect may contain more than one step or mediator. If we include news site use in the model (Figure \@ref(fig:causaldiagram2)), we would have an indirect effect from age to interest in politics to news site use and finally to newspaper reading time.
+An indirect effect may contain more than one step or mediator. If we include news site use in the model (Figure \@ref(fig:causaldiagram2)), we would have an indirect effect of age via interest in politics via news site use on newspaper reading time.
 
 ```{block2, type='rmdimportant'}
 *  Mediation: A causal relationship between a predictor, one or more mediators, and an outcome variable.
@@ -141,10 +141,8 @@ Our second discovery is that we usually look for mediators if we want to underst
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* Political interest is a mediator in this model because it is predicted by
-age and, in turn, it predicts reading time.
-* If we interpret the arrows as causal influence, age is causally prior to
-political interest, which is causally prior to reading time.
+* Political interest is a mediator in this model because it is predicted by age and, in turn, it predicts reading time.
+* If we interpret the arrows as causal influence, age is causally prior to political interest, which is causally prior to reading time.
 * A mediator is also called an intermediary or intervening variable. [<img src="icons/2question.png" width=161px align="right">](#question9.5.1)
 ```
   
@@ -152,21 +150,10 @@ political interest, which is causally prior to reading time.
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* The curved arrow is the standardized indirect (predictive) effect of age on
-reading time.
-* It summarizes the assumed causal process that age influences political
-interest, which influences reading time. For example, older people are more
-interested in politics and because they are more interested in politics, they
-spend more time on reading newspapers.
-* Technically, the standardized indirect effect represents the predicted
-difference (in standard deviations) of reading time that results from a
-difference in political interest that results from a difference of one
-standard deviation in age.
-* An indirect effect is equal to the product of the direct effects, just like
-an indirect correlation is the product of correlations. In the example, the
-value of the indirect effect is indeed equal (within rounding error) to the
-product of the effects of age on political interest and political interest on
-reading time. [<img src="icons/2question.png" width=161px align="right">](#question9.5.2)
+* The curved arrow is the standardized indirect (predictive) effect of age via political interest on reading time.
+* It summarizes the assumed causal process that age influences political interest, which influences reading time. For example, older people are more interested in politics and because they are more interested in politics, they spend more time on reading newspapers.
+* The standardized indirect effect represents the predicted difference (in standard deviations) of reading time that results from a difference in political interest that results from a difference of one standard deviation in age.
+* An indirect effect is equal to the product of the direct effects, just like an indirect correlation is the product of correlations. In the example, the value of the indirect effect is indeed equal (within rounding error) to the product of the effects of age on political interest and political interest on reading time. [<img src="icons/2question.png" width=161px align="right">](#question9.5.2)
 ```
   
 <A name="answer9.5.3"></A>
@@ -190,6 +177,8 @@ between political interest and reading time. Note that 0.5 * 0.6 = 0.3. [<img sr
 ```
   
 ## Path Model with Regression Analysis
+
+Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is a dependent variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the dependent variable. In other words, all variables that are causally prior to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are causally prior to it.
 
 ```{r mediation-regression, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/mediation-regression.png"}
 # Goal: Exemplify the different regression models required to estimate the direct effects in a path model.
@@ -265,13 +254,6 @@ visNetwork(nodes, edges, width = "100%") %>%
 2. The fat arrows were hypothesized whereas the thin ones were not. Why are the thin ones included in the regression analyses (they have coefficient estimates too)? [<img src="icons/2answer.png" width=115px align="right">](#answer9.6.2)
 ```
 
-<A name="question9.6.3"></A>
-```{block2, type='rmdquestion'}
-3. Can we obtain the sizes and confidence intervals of indirect effects from regression models executed with SPSS? [<img src="icons/2answer.png" width=115px align="right">](#answer9.6.3)
-```
-
-Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is a dependent variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the dependent variable. In other words, all variables that are causally prior to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are causally prior to it.
-
 In the path diagram displayed in Figure \@ref(fig:mediation-regression), we would regress newspaper reading time, the final dependent variable, on all other variables. As a next step, we would predict news site use as outcome from all variables except reading time. 
 
 Note that we include education level as predictor of news site use and newspaper reading even if we did not draw a direct arrow. Education level is theorized to be causally prior to news use site, so it can have a direct effect. We hypothesized that it did not have a direct effect on news site use and reading time, so we omitted arrows in our hypothesized model. We must include education as a predictor to check that it does not have these direct effects.
@@ -306,6 +288,11 @@ visNetwork(nodes, edges, width = "100%") %>%
 rm(nodes, edges)
 ``` 
 
+<A name="question9.6.3"></A>
+```{block2, type='rmdquestion'}
+3. Calculate the size of each indirect effect of age on news site use in Figure \@ref(fig:pathdiagram-unstandardized). [<img src="icons/2answer.png" width=115px align="right">](#answer9.6.3)
+```
+
 It may sound weird that we can multiply the unstandardized regression coefficients but it really works. In Figure \@ref(fig:pathdiagram-unstandardized), for instance, the unstandardized partial effect of age (measured in tens of years) on interest in politics is `r round(model_2$coefficients[2], digits=2)`. This means that an additional 10 years of life predict an average increase in interest in politics of `r round(model_2$coefficients[2], digits=2)`. 
 
 In its turn, interest in politics has an unstandardized effect of `r round(model_4$coefficients[4], digits=2)` on reading time (in minutes). An additional unit of interest in politics predicts an average increase in reading time of `r round(model_4$coefficients[4], digits=2)` minutes.
@@ -332,9 +319,9 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7),
                         y = c(.2, .6, .2),
                         label = c("Age", "Pol.Interest", "Reading Time"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.09, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.09, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.04, yend = y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.04, yend = y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label), size = 7) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.8)) +
   theme_void()
@@ -344,11 +331,11 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7, 0.5),
                         y = c(.4, .6, .4, .2),
                         label = c("Age", "Pol.Interest", "Reading Time", "News Site Use"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.09, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.07, yend = variables$y[2] - 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[4] - 0.09, yend = variables$y[4] + 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.09, yend = variables$y[3] + 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$x[3] - 0.09, yend = variables$y[3] - 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.09, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.07, yend = y[2] - 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[4] - 0.09, yend = y[4] + 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.09, yend = y[3] + 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[4], y = y[4], xend = x[3] - 0.09, yend = y[3] - 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
   geom_label(aes(label=label), size = 7) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.8)) +
   theme_void()
@@ -356,7 +343,7 @@ ggplot(variables, aes(x, y)) +
 rm(variables)
 ```
 
-If at least one of the indirect effects in a path model contains two or more mediators, we are dealing with serial mediation. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
+If at least one of the indirect effects in a path model contains two or more mediators, we are dealing with _serial mediation_. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
 
 ```{r mediationserial, echo=FALSE, fig.cap="Causal diagram for serial mediation.", fig.asp=0.3}
 library(ggplot2)
@@ -365,11 +352,11 @@ variables <- data.frame(x = c(0.3, 0.45, 0.7, 0.55),
                         y = c(.2, .3, .2, .1),
                         label = c("Age", "Pol.Interest", "Reading Time", "News Site Use"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.05, yend = variables$y[2] - 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +   geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[4] - 0.06, yend = variables$y[4] + 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.06, yend = variables$y[3] + 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[4] - 0.02, yend = variables$y[4] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$x[3] - 0.06, yend = variables$y[3] - 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.06, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.05, yend = y[2] - 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +   geom_segment(aes(x = x[1], y = y[1], xend = x[4] - 0.06, yend = y[4] + 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.06, yend = y[3] + 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[4] - 0.02, yend = y[4] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[4], y = y[4], xend = x[3] - 0.06, yend = y[3] - 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
@@ -456,7 +443,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-inference/", height=
 5. Take a few thousand samples. Do all three sampling distributions have the same shape? [<img src="icons/2answer.png" width=115px align="right">](#answer9.6.5)
 ```
 
-SPSS does not calculate the size of indirect effects for us or their confidence intervals and _p_ values. It is easy to calculate the sizes of indirect effects, as we have seen in a preceding section: just take the product of direct effects. In contrast, it is not possible to calculate the confidence interval or _p_ value of an indirect effect in a reliable way from the confidence intervals or _p_ values of the direct effects [see @RefWorks:3873: Section 4.4 for a detailed discussion of different approaches].
+SPSS does not calculate the size of indirect effects for us or their confidence intervals and _p_ values. It is easy to calculate the sizes of indirect effects, as we have seen in a preceding section: just take the product of direct effects. In contrast, it is not possible to calculate the confidence interval or _p_ value of an indirect effect in a reliable way from the confidence intervals or _p_ values of the direct effects [see @RefWorks:3873: Section 4.4 for a detailed and critical discussion of approaches that try to calculate the _p_ value of an indirect effect from _p_ values of direct effects].
 
 For statistical inference on the indirect effect, we need the sampling distribution of the size of the indirect effect. This sampling distribution is not the same as the product or some other combination of the sampling distributions of the direct effects that make up the indirect effect. The situation is similar to the sampling distribution of the difference between two sample means (independent-samples _t_ test), which is not equal to the difference between the sampling distribution of one mean and the sampling distribution of the other mean (Section \@ref(complicatedsampling)). 
 
@@ -482,9 +469,9 @@ rm(results)
  
 The confidence interval of an indirect effect can be calculated from its bootstrapped sampling distribution. Table \@ref(tab:indirect-sim) shows bootstrap results for the indirect effects in a model with age as predictor, newspaper reading time as dependent variable, and interest in politics and news site use as mediators. 
 
-In total, there is a substantial indirect effect of age on newspaper reading time in this model. We are confident that this effect is positive [_b_ = 1.47, 95% CI [0.62, 2.25] (bootstrapped)]. It is easy to see that the indirect effect of age via news site use on reading time is by far the most important indirect effect. On its own, it is responsible for almost the entire total indirect effect [_b_ = 1.44, 95% CI [0.60, 2.23] (bootstrapped)].
+In total, there is a substantial indirect effect of age on newspaper reading time in this model. We are confident that this effect is positive [_b_ = 1.47, 95% CI [0.62, 2.25] (bootstrapped)]. It is easy to see that the indirect effect of age via news site use on reading time is by far the most important indirect effect [_b_ = 1.44, 95% CI [0.60, 2.23] (bootstrapped)]. On its own, it is responsible for almost the entire total indirect effect.
 
-It may happen that an indirect effect is not statistically significant (the confidence interval includes zero) whereas all direct effects that constitute the indirect effect are statistically significant. In Figure \@ref(fig:causaldiagram3), for example, both the effect of age on political interest (b = 0.30, 95% CI [0.22, 0.38]) and the effect of political interest on reading time (b = 0.20, 95% CI [0.12, 0.28]) are statistically significant at the .05 level. The indirect effect of age via political interest on reading time, however, is not statistically significant at this level [b = 0.30 * 0.20 = 0.06, 95% CI [-0.02, 0.14], (bootstrapped)]. 
+It may happen that an indirect effect is not statistically significant (the confidence interval includes zero) whereas all direct effects that constitute the indirect effect are statistically significant. In Figure \@ref(fig:causaldiagram3), for example, both the effect of age on political interest (_b_ = 0.30, 95% CI [0.22, 0.38]) and the effect of political interest on reading time (_b_ = 0.20, 95% CI [0.12, 0.28]) are statistically significant at the .05 level. The indirect effect of age via political interest on reading time, however, is not statistically significant at this level [_b_ = 0.30 * 0.20 = 0.06, 95% CI [-0.02, 0.14], (bootstrapped)]. 
 
 ```{r causaldiagram3, echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time: unstandardized estimates with 95% confidence intervals.", fig.asp=0.3}
 library(ggplot2)
@@ -493,11 +480,11 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7),
                         y = c(.1, .3, .1),
                         label = c("Age", "Pol.Interest", "Reading Time"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.06, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.04, yend = y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.04, yend = y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
-  geom_text(x = c(0.35, 0.5, 0.65), y = c(.26, .07, .26), label = c("b = 0.30,\n95% CI [0.22, 0.38]", "Indirect: b = 0.06, 95% CI [-0.02, 0.14]", "b = 0.20,\n95% CI [0.12, 0.28]")) +
+  geom_text(x = c(0.35, 0.5, 0.65), y = c(.26, .07, .26), label = c(expression(paste(italic("b\n"), " = 0.30,\n95% CI [0.22, 0.38]")), expression(paste("Indirect: ", italic("b"), " = 0.06, 95% CI [-0.02, 0.14]")), expression(paste(italic("b\n"), " = 0.20,\n95% CI [0.12, 0.28]")))) +
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
 # Cleanup.
@@ -512,31 +499,18 @@ This sounds like a paradox but it should not upset you. The unstandardized indir
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* There are four variables with incoming arrows in this model. Each of them can
-be a dependent variable in a regression model, so we can estimate four
-regression models.
-* The unstandardized and standardized regression coefficients tell us the
-(unstandardized or standardized) sizes of the direct effects in the path
-model.
-* For example, news site use has an unstandardized effect of -1.55 on
-newspaper reading time in the diagram. A difference of one unit of news site
-use predicts a decrease in newspaper reading time of 1.55 units. We are 95
-per cent confident that this decrease is in between 0.6 and 2.5 units in the
-population. [<img src="icons/2question.png" width=161px align="right">](#question9.6.1)
+* There are four variables with incoming arrows in this model. Each of them can be a dependent variable in a regression model, so we can estimate four regression models.
+* The unstandardized and standardized regression coefficients tell us the (unstandardized or standardized) sizes of the direct effects in the path model.
+* For example, news site use has an unstandardized effect of -1.55 on newspaper reading time in the diagram. A difference of one unit of news site use predicts a decrease in newspaper reading time of 1.55 units. We are 95 per cent confident that this decrease is in between 0.6 and 2.5 units in the population. [<img src="icons/2question.png" width=161px align="right">](#question9.6.1)
 ```
   
 <A name="answer9.6.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* If we do not include effects between variables that were not hypothesized in
-our regression model, we actually assume that the effects are zero.
-* If this assumption is not correct, the results for hypothesized effects are
-wrong.
-* If we exclude the effect of a predictor on an outcome from the model, we
-deny this predictor the opportunity to be a common cause to the outcome and
-another predictor. Thus, we fail to signal and filter out the spurious
-correlation due to this common cause.
+* If we do not include effects between variables that were not hypothesized in our regression model, we actually assume that the effects are zero.
+* If this assumption is not correct, the results for hypothesized effects are wrong.
+* If we exclude the effect of a predictor on an outcome from the model, we deny this predictor the opportunity to be a common cause to the outcome and another predictor. Thus, we fail to signal and filter out the spurious correlation due to this common cause.
 * For these reasons, it is better to include all variables that are causally prior to the dependent variable as predictors. [<img src="icons/2question.png" width=161px align="right">](#question9.6.2)
 ```
   
@@ -544,12 +518,13 @@ correlation due to this common cause.
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* SPSS does not report the sizes and confidence intervals of the indirect effects.
-* We can easily calculate indirect effect sizes from the regression results in
-SPSS. Just multiply the regression coefficients of all effects that make up
-the indirect effect.
-* Confidence intervals and _p_ values of indirect effects cannot be easily
-calculated from the regression results. We use bootstrapping to this end. [<img src="icons/2question.png" width=161px align="right">](#question9.6.3)
+* Calculate the size of a indirect effect by multiplying the regression coefficients of all direct effects that make up the indirect effect.
+* Indirect effects:
+    + Age > Education > Pol. Interest > News Site Use: -0.13 * 0.28 * 0.12 = -0.004
+    + Age > Education > News Site Use: -0.13 * 0.06 = -0.008
+    + Age > Pol. Interest > News Site Use: 0.14 * 0.12 = 0.017
+* All indirects effects are close to zero. An additional 10 years (age is measured in decades) predicts a small decrease in news site use via education (-0.008) and via education via political interest (-0.004). It predicts a small increase via political interest (0.017).
+* Be sure not to forget one of the indirect effects! [<img src="icons/2question.png" width=161px align="right">](#question9.6.3)
 ```
   
 <A name="answer9.6.4"></A>
@@ -557,24 +532,28 @@ calculated from the regression results. We use bootstrapping to this end. [<img 
 Answer to Question 4. 
 
 * For every sample, the indirect effect size is calculated as the product of
-the effects of the predictor (Age) on the mediator (Political interest) and of
+the effects of the predictor (age) on the mediator (political interest) and of
 the mediator on the outcome (Reading time). The indirect effect is added to
-the sampling distribution. [<img src="icons/2question.png" width=161px align="right">](#question9.6.4)
+the sampling distribution.
+* So the sampling distribution of indirect effect size is created simultaneously with the sampling distributions of direct effect sizes. It is __not__ calculated from the sampling distributions of the direct effect sizes. [<img src="icons/2question.png" width=161px align="right">](#question9.6.4)
 ```
   
 <A name="answer9.6.5"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
+![](figures/S11_2Q5.png)
+
 * If you look carefully, you will see that the sampling distribution of the
 regression coefficient of the indirect effect is skewed, asymmetrical. The
 left tail is badly populated and the top is to the left of the top of
-the normal curve. [<img src="icons/2question.png" width=161px align="right">](#question9.6.5)
+the normal curve.
+* This is not a normal or _t_ distribution like the sampling distribution of direct effect size. [<img src="icons/2question.png" width=161px align="right">](#question9.6.5)
 ```
   
 ## Controlling for Covariates {#mediationcovariate}
 
-We usually have theoretical reasons to expect that a particular variable mediates an effect, for example, political interest mediates the effect of age on newspaper reading time. At the same time, we know that our dependent variable and perhaps our mediator may depend on other variables. Newspaper reading time, for instance, may also depend on education. In this situation, we would use the other variables as covariates (or control variables) for which we want to control statistically.
+We usually have theoretical reasons to expect that a variable mediates an effect, for example, that political interest mediates the effect of age on newspaper reading time. At the same time, we know that our dependent variable and perhaps our mediator may depend on other variables. Newspaper reading time, for instance, may also depend on education. In this situation, we would use the other variables as covariates (or control variables) for which we want to control statistically.
 
 ```{r causaldiagram4, echo=FALSE, fig.cap="Causal diagram for  interest in politics as mediator between age and newspaper reading time with education as covariate.", fig.asp=0.3}
 library(ggplot2)
@@ -583,11 +562,11 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7, 0.3),
                         y = c(.1, .3, .1, .3),
                         label = c("Age", "Pol.Interest", "Reading Time", "Education"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$x[2] - 0.04, yend = variables$y[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$x[3] - 0.06, yend = variables$y[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.06, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.04, yend = y[2] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.04, yend = y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[4], y = y[4], xend = x[2] - 0.04, yend = y[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[4], y = y[4], xend = x[3] - 0.06, yend = y[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
@@ -643,9 +622,9 @@ knitr::kable(results, booktabs = TRUE,
 rm(results)
 ```
 
-A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arrows. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous or a set of dummy variables (see Section \@ref(dichpredictor)).
+A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arrows. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous variable or a set of dummy variables (see Section \@ref(dichpredictor)).
 
-```{r results-pathdiagram, echo=FALSE, fig.cap="Unstandardized direct effects for a path model with one mediator and two covariates.", screenshot.alt = "figures/results-pathdiagram.png"}
+```{r results-pathdiagram, echo=FALSE, fig.asp=0.5, fig.cap="Unstandardized direct effects for a path model with one mediator and two covariates.", screenshot.alt = "figures/results-pathdiagram.png"}
 # Load data.
 readers <- haven::read_spss("data/readers.sav")
 # Create effect sizes.
@@ -783,7 +762,7 @@ knitr::include_url("https://www.youtube.com/embed/a_xllJhFHq8", height = "360px"
 
 <A name="question9.9.1"></A>
 ```{block2, type='rmdquestion'}
-1. Use [readers_short.sav](http://82.196.4.233:3838/data/readers_short.sav) to analyze the causal model depicted in Figure \@ref(fig:results-pathdiagram) with a series of regression models in SPSS. Create a table and draw a path diagram to present the direct effects. [<img src="icons/2answer.png" width=115px align="right">](#answer9.9.1)
+1. Use [readers.sav](http://82.196.4.233:3838/data/readers.sav) to analyze the causal model depicted in Figure \@ref(fig:results-pathdiagram) with a series of regression models in SPSS. Create a table and draw a path diagram to present the direct effects. [<img src="icons/2answer.png" width=115px align="right">](#answer9.9.1)
 ```
 
 <A name="question9.9.2"></A>
@@ -803,7 +782,7 @@ knitr::include_url("https://www.youtube.com/embed/a_xllJhFHq8", height = "360px"
 
 <A name="question9.9.5"></A>
 ```{block2, type='rmdquestion'}
-5. The data set [children_short.sav](http://82.196.4.233:3838/data/children_short.sav) contains information about the media literacy of children and parental supervision of their media use. Is the effect of age on media literacy fully or partially mediated by parental supervision? 
+5. The data set [allchildren.sav](http://82.196.4.233:3838/data/allchildren.sav) contains information about the media literacy of children and parental supervision of their media use. Is the effect of age on media literacy fully or partially mediated by parental supervision? 
    Use PROCESS and SPSS to estimate the model and check the assumptions. Motivate your answer to the question. [<img src="icons/2answer.png" width=115px align="right">](#answer9.9.5)
 ```
 
@@ -857,7 +836,9 @@ of the dependent variable.
 linear regression model are violated.
   
 Regression model with news site use as dependent variable:  
-  
+
+![](figures/S11_5Q1.png)
+
 * The residuals are quite normally distributed but they display a pattern of
 down-sloping strips. This is the consequence of the fact that the outcome
 (news site use) is measured as integer scores, that is, without decimal
@@ -890,8 +871,9 @@ In the PROCESS menu:
 * Select age as independent variable (X variable),  
 * Select newssite as mediator (M),  
 * Select 4 under Model number (model with only one mediator).  
-* Under Options: Select Effect size (for standardized effect sizes) 
+* Under __Options__: Select Effect size (for standardized effect sizes) 
   and 3 decimal places in output.
+* Under __Long variable names__ (PROCESS V3.5 and higher), check the box labelled _I accept the risk of incorrect output_.
   
 Check data: See Exercise 1.  
   
@@ -904,15 +886,19 @@ The relevant results in the PROCESS output:
     
 Indirect effect of X on Y  
 
+<div style="font-size: 0.8em">
 | | Effect | Boot SE | BootLLCI | BootULCI |
 |:----|----:|----:|----:|----:|
 | newssite | 1.121 | .411 | .307 | 1.923 |
-
+</div>
+  
 Completely standardized indirect effect of X on Y   
 
+<div style="font-size: 0.8em">
 | | Effect | Boot SE | BootLLCI | BootULCI |
 |:----|----:|----:|----:|----:|
 | newssite | .164 | .060 | .045 | .281 |
+</div>
 
 Note that these are bootstrap results, so they may change from
 one analysis to the next. Your results are most likely to be
@@ -920,9 +906,8 @@ not exactly the same as the ones reported here.
   
 * An age difference of ten years (remember that age was measured in decades)
 increases the predicted average newspaper reading time through news site use
-with slightly more than one minute. With 95% confidence, the increase is between 0.3
-and 1.9 additional minutes.
-* The indirect effect is weak to moderate, *b\** = .16, 95% CI [.05; .28]. [<img src="icons/2question.png" width=161px align="right">](#question9.9.2)
+with slightly more than one minute. With 95% confidence, the increase is between 0.3 and 1.9 additional minutes.
+* The indirect effect is weak to moderate, *b\** = 0.16, 95% CI [0.05; 0.28]. [<img src="icons/2question.png" width=161px align="right">](#question9.9.2)
 ```
 
 <A name="answer9.9.3"></A>
@@ -948,25 +933,26 @@ Interpret the results:
 * PROCESS assumes that covariates predict both the mediator(s) and the
 dependent variable. You can see this in the reported regression equations: all
 of them include the covariates as predictors.
-* If you think that political interest is a consequence of news site use instead
-of a cause, political interest should be included as a (second) mediator
-between news site use and reading time. In this case, you should estimate a
-model for serial mediation, see Exercise 4.
+* If you think that political interest is a consequence of news site use instead of a cause, political interest should be included as a (second) mediator between news site use and reading time. In this case, you should estimate a model for serial mediation, see Exercise 4.
   
 The relevant results in the PROCESS output:  
   
 Indirect effect of X on Y   
 
+<div style="font-size: 0.8em">
 | | Effect | Boot SE | BootLLCI | BootULCI |
 |:----|----:|----:|----:|----:|
 | newssite | 1.441   |  .416     |  .589      |  2.225 |
-
+</div>
+  
 Completely standardized indirect effect of X on Y   
 
+<div style="font-size: 0.8em">
 | | Effect | Boot SE | BootLLCI | BootULCI |
 |:----|----:|----:|----:|----:|
 | newssite | .212    |  .061     |  .087      |  .325 |
-
+</div>
+  
 * The interpretation is very much like the interpretation in Exercise 2. Note
 that the indirect effect has become a little stronger now that we control for
 interest in politics. [<img src="icons/2question.png" width=161px align="right">](#question9.9.3)
@@ -998,30 +984,33 @@ The main results are reported thus:
   
 Indirect effect(s) of X on Y   
   
+<div style="font-size: 0.8em">
 |        |  Effect  |  Boot SE  |  BootLLCI  |  BootULCI  |
 |:----|----:|----:|----:|----:|
 | Total:  |  1.474   |  .418     |  .657      |  2.298  |
 | Ind1 :  |  .053    |  .033     |  .007      |  .146  |
 | Ind2 :  |  1.441   |  .417     |  .616      |  2.257  |
 | Ind3 :  |  -.021   |  .013     |  -.057     |  -.003  |
-
+</div>
+  
 Indirect effect key   
   
-* Ind1 :   age -> polint -> readtime   
-* Ind2 :   age -> newssite -> readtime   
-* Ind3 :   age -> polint -> newssite -> readtime   
+* Ind1 :   age -> polint -> readingt   
+* Ind2 :   age -> newssite -> readingt   
+* Ind3 :   age -> polint -> newssite -> readingt   
   
 A table could look like this:  
     
 Indirect effect(s) of X on Y   
-  
+
+<div style="font-size: 0.8em">  
 |                                                |  Effect | Boot SE | BootLLCI | BootULCI  |
 |:----|----:|----:|----:|----:|
 | age->pol. interest->reading time                |  .05    |  .03    |  .01     |  .15  |
 | age->news site use->reading time                |  1.44   |  .42    |  .62     |  2.26  |
 | age->pol. interest->news site use->reading time |  -.021  |  .01    |  -.06    |  -.003  |
 | Total indirect effect                           |  1.47   |  .42    |  .66     |  2.30  |
-  
+</div>  
   
 * Age has an indirect effect on newspaper reading time. An additional ten
 years of life predict that newspaper reading time increases by 1.5 minutes on
@@ -1040,12 +1029,12 @@ Answer to Exercise 5.
 SPSS syntax:  
   
 \* Check data.    
-FREQUENCIES VARIABLES=age supervis medliter    
+FREQUENCIES VARIABLES=age supervision medliter    
   /ORDER=ANALYSIS.    
 \* Set imposible value (25) to missing.    
 \* Define Variable Properties.    
 \*supervision.    
-MISSING VALUES supervis(25.00).    
+MISSING VALUES supervision(25.00).    
 EXECUTE.    
 \* Indirect effect test with PROCESS: Model 4.    
 \* Do not paste PROCESS output.    
@@ -1056,7 +1045,7 @@ REGRESSION
   /CRITERIA=PIN(.05) POUT(.10)    
   /NOORIGIN     
   /DEPENDENT medliter    
-  /METHOD=ENTER age supervis    
+  /METHOD=ENTER age supervision    
   /SCATTERPLOT=(\*ZRESID ,\*ZPRED)    
   /RESIDUALS HISTOGRAM(ZRESID).    
 \* Outcome: parental supervision.    
@@ -1064,7 +1053,7 @@ REGRESSION
   /MISSING LISTWISE    
   /CRITERIA=PIN(.05) POUT(.10)    
   /NOORIGIN     
-  /DEPENDENT supervis    
+  /DEPENDENT supervision    
   /METHOD=ENTER age    
   /SCATTERPLOT=(\*ZRESID ,\*ZPRED)    
   /RESIDUALS HISTOGRAM(ZRESID).    
@@ -1076,9 +1065,10 @@ In the PROCESS menu:
     
 * Select medliter as dependent variable (Y variable).  
 * Select age as independent variable (X variable).  
-* Select supervis as mediator (M).  
+* Select supervision as mediator (M).  
 * Select 4 under Model number (model with only one mediator).  
-* Under Options: Select Effect size and 3 decimal places in output.  
+* Under __Options__: Select Effect size and 3 decimal places in output.  
+* Under __Long variable names__ (PROCESS V3.5 and higher), check the box labelled _I accept the risk of incorrect output_.
   
 Check data:  
   
@@ -1092,11 +1082,14 @@ produce plots of residuals.
   
 Regression of media literacy:  
 
+![](figures/S11_5Q5a.png)
+
+![](figures/S11_5Q5b.png)
+
 * The residuals are quite normally distributed and nicely grouped around zero
 at all levels of the predicted outcome.
-* The variation of residuals is perhaps smaller at low levels of the
-predicted outcome than at high levels but there are perhaps too few
-observations at low predicted levels to be sure.
+* The variation of residuals is perhaps larger at medium levels of the
+predicted outcome than at high and/or low levels.
   
 Regression of parental supervision:  
 
@@ -1109,26 +1102,23 @@ Interpret the results:
 Relevant results from PROCESS:  
   
 Direct effect of X on Y   
-  
+
+<div style="font-size: 0.8em">  
 |          |  Effect  |  SE    |  t      |  p     |  LLCI  |  ULCI   |
 |:----|----:|----:|----:|----:|----:|----:|
-| supervis  |  .193    |  .083  |  2.327  |  .022  |  .028  |  .358  |
-  
+| supervis  |  .283    |  .036  |  7.802  |  .000  |  .212  |  .355  |
+</div>
    
 Indirect effect of X on Y   
   
+<div style="font-size: 0.8em">
 |          |  Effect  |  Boot SE  |  BootLLCI  |  BootULCI  |
 |:----|----:|----:|----:|----:|
-| supervis  |  .031    |  .031     |  -.017     |  .110    |
-   
-* The indirect effect of age on media literacy via parental supervision does
-not remove the direct effect completely (*b* = 0.19, *t* = 2.33, *p* = .022,
-95% CI [0.03; 0.36]), so the effect is only partially mediated if it is mediated
-at all.
-* Although the largest part of the 95% confidence interval is positive, we
-cannot rule out a zero (absent) indirect effect, *b* = 0.03, 95% CI [-0.02; 0.11]
-bootstrapped. Perhaps, the effect of age on media literacy is not mediated by
-parental supervision. [<img src="icons/2question.png" width=161px align="right">](#question9.9.5)
+| supervis  |  .053    |  .016     |  .024     |  .085    |
+</div>
+  
+* The indirect effect of age on media literacy via parental supervision (*b* = 0.05, 95% CI [0.02; 0.09], bootstrapped) does not remove the direct effect completely (*b* = 0.28, *t* = 7.80, *p* < .001, 95% CI [0.21; 0.36]), so the effect is only partially mediated.
+* Actually, the direct effect, which ranges between 0.20 and 0.36 in the population with 95 per cent confidence, is much stronger than the indirect effect (0.02 to 0.09). [<img src="icons/2question.png" width=161px align="right">](#question9.9.5)
 ```
 
 ## Criticisms of Mediation
@@ -1144,7 +1134,7 @@ To establish the time order of variables, we must think about the time at which 
 If cause and consequence appear very closely in time, it may be difficult to argue that one variable precedes the other. This may also apply to the time at which measurement takes place. If we measure cause and consequence nearly at the same time, it can be difficult to establish the time order of the two.
 
 ### Causality or underlying construct?
-For causes and consequences that appear nearly simultaneously, we should take into account that the two variables may measure the same underlying construct. Think of the way we construct a scale from items: We assume that the items measure the same underlying attitude, for instance, interest in politics. 
+For causes and consequences that appear nearly simultaneously, we should take into account that the two variables may measure the same underlying construct. Think of the way we construct a scale from items: We assume that the items measure the same underlying attitude, for instance, political cynicism. 
 
 The indicators of a scale are correlated because they have a common cause, namely, the underlying attitude. But it does not make sense to interpret the correlation as a sign of mediation. One item does not trigger another item, and so on. A mediator must be theoretically and conceptually different from both the predictor and outcome. We have to provide arguments that they are really different.
 
@@ -1184,10 +1174,10 @@ variables <- data.frame(x = c(0.3, 0.5, 0.7, 0.35),
                         y = c(.1, .3, .1, .3),
                         label = c("Age", "Pol.Interest", "Reading Time", "Sex"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3] - 0.06, yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[2] - 0.04, yend = variables$y[2] - 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[3] - 0.04, yend = variables$y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = 0.375, yend = 0.19), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.06, yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[2] - 0.04, yend = y[2] - 0.03), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3] - 0.04, yend = y[3] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[4], y = y[4], xend = 0.375, yend = 0.19), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.4)) +
   theme_void()
@@ -1199,29 +1189,71 @@ Several models with more than one mediator or with moderated mediation can be es
 
 ## Test Your Understanding
 
+```{r mediationserial2, echo=FALSE, fig.cap="A path model with unstandardized regression coefficients.", fig.asp=0.3}
+library(ggplot2)
+# Create coordinates for the variable names.
+variables <- data.frame(x = c(0.3, 0.3, 0.45, 0.55, 0.7), 
+                        y = c(.1, .5, .1, .5, .3),
+                        label = c("Age", "Girl", "Supervision", "Screen time", "Media literacy"))
+coeffs <- data.frame(
+  x = c(0.375, 0.375, 0.375, 0.375, 0.375, 0.485, 0.625, 0.575),
+  y = c(.525, .425, .3, .175, .075, .3, .425, .175),
+  label = c("0.3", "0.1", "0.4", "0.3", "0.1", "-0.5", "0.2", "0.3"))
+ggplot(variables, aes(x, y)) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[5] - 0.055, yend = y[5] - 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3] - 0.05, yend = y[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[4] - 0.05, yend = y[4] - 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[5] - 0.055, yend = y[5]+ 0.01), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[4] - 0.05, yend = y[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[3], y = y[3], xend = x[4], yend = y[4] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[3], y = y[3], xend = x[5] - 0.055, yend = y[5] - 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[4], y = y[4], xend = x[5] - 0.055, yend = y[5] + 0.04), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_label(aes(label=label)) +
+  geom_text(data = coeffs, aes(x = x, y = y, label = label)) +
+  coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0, 0.6)) +
+  theme_void()
+# Cleanup.
+rm(variables)
+```
+
+<A name="question11.8.1"></A>
+```{block2, type='rmdquestion'}
+1. Does Figure \@ref(fig:mediationserial2) represent parallel mediation or  serial mediation? Explain your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.1)
+```
+
+<A name="question11.8.2"></A>
+```{block2, type='rmdquestion'}
+2. How many indirect effects does age have on media literacy in Figure \@ref(fig:mediationserial2)? And how many indirect effects does sex have on media literacy? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.2)
+```
+
+<A name="question11.8.3"></A>
+```{block2, type='rmdquestion'}
+3. Calculate the total effect of (parental) supervision on media literacy  in Figure \@ref(fig:mediationserial2) and compare this effect to the direct effect of supervision on media literacy.  [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.3)
+```
+
 ```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Use app mediation-commoncause.
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="325px")
 ```
 
-<A name="question11.8.1"></A>
-```{block2, type='rmdquestion'}
-1. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.1)
-```
-
-<A name="question11.8.2"></A>
-```{block2, type='rmdquestion'}
-2. If we know the standard errors and confidence intervals for all direct effects in the model of Figure \@ref(fig:mediation-selftest), can we calculate the standard error or confidence interval of the indirect effect? If so, how? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.2)
-```
-
-<A name="question11.8.3"></A>
-```{block2, type='rmdquestion'}
-3. When is the correlation between political interest and reading time completely spurious in this model? Use the sliders to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.3)
-```
-
 <A name="question11.8.4"></A>
 ```{block2, type='rmdquestion'}
-4. How many regression models do we need to estimate the path model of Figure \@ref(fig:mediation-selftest)? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.4)
+4. In Figure \@ref(fig:mediation-selftest), what does the curved arrow represent? How is its value calculated? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.4)
+```
+
+<A name="question11.8.5"></A>
+```{block2, type='rmdquestion'}
+5. If we know the standard errors and confidence intervals for all direct effects in the model of Figure \@ref(fig:mediation-selftest), can we calculate the standard error or confidence interval of the indirect effect? If so, how? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.5)
+```
+
+<A name="question11.8.6"></A>
+```{block2, type='rmdquestion'}
+6. When is the correlation between political interest and reading time completely spurious in this model? Use the sliders to check your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.6)
+```
+
+<A name="question11.8.7"></A>
+```{block2, type='rmdquestion'}
+7. How many regression models do we need to estimate the path model of Figure \@ref(fig:mediation-selftest)? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.7)
 ```
 
 <A name="question11.8.extra"></A>
@@ -1239,26 +1271,54 @@ Answers to the Test Your Understanding questions will be shown in the web book w
 ```{block2, type='rmdanswer', echo=ch11}
 Answer to Question 1. 
 
-* The curved arrow is the standardized indirect (predictive) effect of age on
-reading time. It represents the predicted change (in standard deviations) of
-reading time that results from a change in political interest that results
-from a change of one standard deviation in age.
-* To obtain the value of the indirect standardized effect, multiply the
-standardized effect of age on political interest by the standardized effect of
-political interest on reading time. [<img src="icons/2question.png" width=161px align="right">](#question11.8.1)
+* Figure \@ref(fig:mediationserial2) represents serial mediation because there is (at least) one indirect effect with more than one mediator: Age > Supervision > Screen time > media literacy. [<img src="icons/2question.png" width=161px align="right">](#question11.8.1)
 ```
 
 <A name="answer11.8.2"></A>
 ```{block2, type='rmdanswer', echo=ch11}
 Answer to Question 2. 
 
-* No, we cannot calculate the standard error or confidence interval of an indirect effect from the standard errors and confidence intervals of direct effects.
-* For this reason, we have to use bootstrapping in PROCESS. [<img src="icons/2question.png" width=161px align="right">](#question11.8.2)
+* Age has three indirect effects on media literacy in Figure \@ref(fig:mediationserial2):
+    + Age > Screen time > Media literacy
+    + Age > Supervision > Screen time > Media literacy
+    + Age > Supervision > Media literacy
+* Sex has only one indirect effect on media literacy in Figure \@ref(fig:mediationserial2):
+    + Sex > Screen time > Media literacy
+* Note that there is no arrow from sex to supervision. Apparently, this effect is zero, so sex does not have indirect effects via supervision. [<img src="icons/2question.png" width=161px align="right">](#question11.8.2)
 ```
 
 <A name="answer11.8.3"></A>
 ```{block2, type='rmdanswer', echo=ch11}
 Answer to Question 3. 
+
+* The total effect is the sum of the direct effect and all indirect effects.
+* The effects of (parental) supervision on media literacy:
+    + Supervision > Media literacy (direct): 0.3.
+    + Supervision > Screen time > Media literacy (indirect): -0.5 * 0.2 = -0.1.
+    + Total effect: 0.3 + -0.1 = 0.2.
+* The total effect of supervision on media literacy is smaller (less strongly positive) than the direct effect. If we assume causality, we may conclude that the desired effect of supervision on media literacy, namely, more supervision leads to higher media literacy, is partly undone by the fact that supervision decreases screen time, which decreases media literacy. [<img src="icons/2question.png" width=161px align="right">](#question11.8.3)
+```
+
+<A name="answer11.8.4"></A>
+```{block2, type='rmdanswer', echo=ch11}
+Answer to Question 4. 
+
+* The curved arrow is the standardized indirect (predictive) effect of age on reading time. It represents the predicted change (in standard deviations) of reading time that results from a change in political interest that results from a change of one standard deviation in age.
+* To obtain the value of the indirect standardized effect, multiply the
+standardized effect of age on political interest by the standardized effect of political interest on reading time. [<img src="icons/2question.png" width=161px align="right">](#question11.8.4)
+```
+
+<A name="answer11.8.5"></A>
+```{block2, type='rmdanswer', echo=ch11}
+Answer to Question 5. 
+
+* No, we cannot calculate the standard error or confidence interval of an indirect effect from the standard errors and confidence intervals of direct effects.
+* For this reason, we have to use bootstrapping in PROCESS. [<img src="icons/2question.png" width=161px align="right">](#question11.8.5)
+```
+
+<A name="answer11.8.6"></A>
+```{block2, type='rmdanswer', echo=ch11}
+Answer to Question 6. 
 
 * The correlation between political interest and reading time is completely
 spurious in this model if the entire correlation is due to a common cause.
@@ -1269,29 +1329,22 @@ reading time).
 * The correlation between political interest and reading time, then, is
 completely spurious in this model if this correlation equals the product of
 the correlations with age.
-* Check this by adjusting the three correlations until the correlation between
-political interest and reading time equals the product of the other two
-correlations. Set, for instance, the correlation between political interest and
-reading time to 0.1, the correlation between age and political interest to 0.4
-and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25
-= 0.1.
+* Check this by adjusting the three correlations until the correlation between political interest and reading time equals the product of the other two correlations. Set, for instance, the correlation between political interest and reading time to 0.1, the correlation between age and political interest to 0.4 and the correlation between age and reading time to 0.25. Note that 0.4 * 0.25 = 0.1.
 * In the plot, the standardized regression coefficient for the effect of
 political interest on reading time (b~MO~) should become zero. There is no
 effect if we control for age even though the correlation is 0.1.
 * Note that the standardized regression effect of political interest on
-reading time does not have to be zero if the correlation between these two variables
-is zero. [<img src="icons/2question.png" width=161px align="right">](#question11.8.3)
+reading time does not have to be zero if the correlation between these two variables is zero. [<img src="icons/2question.png" width=161px align="right">](#question11.8.6)
 ```
 
-<A name="answer11.8.4"></A>
+<A name="answer11.8.7"></A>
 ```{block2, type='rmdanswer', echo=ch11}
-Answer to Question 4. 
+Answer to Question 7. 
 
-* We must estimate a regression model for each variable that has at least one
-predictor in the model.
+* We must estimate a regression model for each variable that has at least one predictor in the model.
 * So we need two regression models: one with newspaper reading time as
 dependent variable and the other with political interest as dependent
-variable. [<img src="icons/2question.png" width=161px align="right">](#question11.8.4)
+variable. [<img src="icons/2question.png" width=161px align="right">](#question11.8.7)
 ```
 
 <A name="answer11.8.extra"></A>
@@ -1309,7 +1362,7 @@ that the effect direction (sign) is the opposite of the sign of the effect of
 political interest on reading time.
 * If the correlation between political interest and reading time is positive,
 age suppresses the regression if the indirect correlation between political
-interest due to age with reading time is negative. So. one of the correlations
+interest due to age with reading time is negative. So one of the correlations
 of age with political interest and reading time must be positive, the other
 must be negative. Just increase the size of the positive and negative
 correlations to obtain a standardized regression coefficient for the effect of

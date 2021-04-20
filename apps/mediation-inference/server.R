@@ -132,7 +132,7 @@ output$histplot <- renderPlot({
   b_PM <- r_PM
   b_PO <- round((r_PO - r_PM*r_MO)/(1 - r_PM^2), digits = 2)
   b_MO <- round((r_MO - r_PM*r_PO)/(1 - r_PM^2), digits = 2)
-  b_indirect <- round(b_PM * b_MO, digits = 2)
+  b_indirect <- round(b_PM * b_MO, digits = 3)
   
   #Histogram for Mediator/Outcome
   moplot <- ggplot(data.frame(b_MO), aes(x = b_MO)) +
@@ -175,7 +175,7 @@ output$histplot <- renderPlot({
   #Histogram for Predictor/Outcome indirect
   pindirplot <- ggplot(data.frame(b_indirect), aes(x = b_indirect)) +
     geom_histogram(fill = brewercolors["Red"],
-                   binwidth = 0.01) +
+                   binwidth = 0.002) +
     stat_function(
       fun = function(x, mean, sd, n, bw) {
         dnorm(x = x, mean = mean, sd = sd) * n * bw
@@ -184,7 +184,7 @@ output$histplot <- renderPlot({
         mean = mean(b_indirect),
         sd = sd(b_indirect),
         n = length(b_indirect),
-        bw = 0.01
+        bw = 0.002
       )
     ) +
     coord_cartesian(xlim = c(0, .15)) +
