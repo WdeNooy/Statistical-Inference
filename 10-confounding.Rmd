@@ -86,7 +86,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/"
 
 <A name="question9.1.3"></A>
 ```{block2, type='rmdquestion'}
-3. Interpret the meaning of the simple regression models and explain why they do not change if independent variables are added. In which situation are the gray and blue results equal? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.3)
+3. Interpret the meaning of the regression coeficients in the simple regression models (the values indicated by the gray dots). In which situation are the gray and blue results equal? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.3)
 ```
 
 ### Partial effect  
@@ -136,17 +136,9 @@ site use as an independent variable to the model. [<img src="icons/2question.png
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* A simple regression model contains only one independent variable. The
-regression coefficient represents the effect of this independent variable
-without controlling for the effects of other independent variable.
-* These effects are positive for age and political interest in the example:
-Older people and people who are more interested in politics are predicted to
-spend more time on reading newspapers. The effects are negative for education
-and news site use: People with more (years of) education or more frequently
-using news sites are predicted to spend less time on reading newspapers.
-* If we select only one independent variable, we have a simple regression
-model, so the independent variable's blue effect must be equal to its gray
-effect. [<img src="icons/2question.png" width=161px align="right">](#question9.1.3)
+* A simple regression model contains only one independent variable. The regression coefficient represents the effect of this independent variable without controlling for the effects of other independent variables.
+* These effects are positive for age and political interest in the example: Older people and people who are more interested in politics are predicted to spend more time on reading newspapers. The effects are negative for education and news site use: People with more (years of) education or more frequently using news sites are predicted to spend less time on reading newspapers.
+* If we select only one independent variable, we have a simple regression model, so the independent variable's blue effect must be equal to its gray effect. [<img src="icons/2question.png" width=161px align="right">](#question9.1.3)
 ```
   
 ## Indirect Correlation {#indirectcorrelation}
@@ -173,7 +165,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-indirectcorrelation/
 1. Which variable changes the effect of political interest on newspaper reading time most when added to the model? And why is that so? Add confounders to the model in Figure \@ref(fig:mediation-indirectcorrelation) and try to explain why the change is small or large. [<img src="icons/2answer.png" width=115px align="right">](#answer9.2.1)
 ```
 
-When is a variable a confounder and when does it change the effect of another predictor a lot? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and dependent variable but is not (yet) included in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and dependent variable.
+When is a variable a confounder and when does it change the effect of another predictor a lot if it is added to the regression model? The answer to the first part of this question is easy: A _confounder_ is a variable that is correlated with both the predictor and dependent variable but is not (yet) included in the regression model. Because of the correlations, a confounder establishes an _indirect correlation_ between the predictor and dependent variable.
 
 ```{block2, type='rmdimportant'}
 A confounder is a variable that is correlated with both the predictor and dependent variable but is not included in the regression model.
@@ -183,9 +175,9 @@ The size of the indirect correlation equals the product of the correlation betwe
 
 ### Indirect correlation and size of confounding
 
-In Figure \@ref(fig:mediation-indirectcorrelation), we start with a simple regression model with political interest as the only predictor of newspaper reading time. Respondent's age, however, is correlated both with political interest ($r = 0.12$) and with newspaper reading time ($r = 0.88$). Age creates a positive indirect correlation between political interest and reading time. 
+In Figure \@ref(fig:mediation-indirectcorrelation), we start with a simple regression model with political interest as the only predictor of newspaper reading time. Respondent's age, however, is correlated both with political interest ($r$ = 0.12) and with newspaper reading time ($r$ = 0.88). Age creates a positive indirect correlation between political interest and reading time. 
 
-As long as age is not included in the regression model, the model believes that the indirect correlation due to age is part of the effect of political interest. It assigns the indirect correlation due to age wrongly to the effect of political interest, that is, to the regression coefficient of political interest. In this  situation, the regression coefficient for political interest expresses both the effect of political interest itself and the effect of age (the confounder).
+As long as age is not included in the regression model, the model believes that the indirect correlation due to age is part of the effect of political interest. It assigns the indirect correlation due to age wrongly to the effect of political interest, that is, it includes the indirect correlation in the regression coefficient of political interest. In this  situation, the regression coefficient for political interest expresses both the effect of political interest itself and the effect of age (the confounder).
 
 Once we add age as a new predictor to the regression model, the indirect correlation due to age is removed from the effect of political interest. The effect of age on newspaper reading time is now correctly assigned to age. As a result, the value of the regression coefficient for political interest changes if we add age as a new predictor.
 
@@ -244,7 +236,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-confoundertypes/", h
 
 <A name="question9.3.1"></A>
 ```{block2, type='rmdquestion'}
-1. When is a partial regression effect weaker than the simple regression effect and when is it stronger? Experiment with Figure \@ref(fig:mediation-confoundertypes) and try to formulate a general rule. [<img src="icons/2answer.png" width=115px align="right">](#answer9.3.1)
+1. If you add a confounder, when is a partial regression effect weaker than the simple regression effect and when is it stronger? Experiment with Figure \@ref(fig:mediation-confoundertypes) and try to formulate a general rule. [<img src="icons/2answer.png" width=115px align="right">](#answer9.3.1)
 ```
 
 <A name="question9.3.2"></A>
@@ -296,7 +288,7 @@ In this situation, the indirect correlation between political interest and newsp
 
 If news site use is not included in the regression model, the standardized regression effect of political interest more or less adds the indirect correlation to the effect of political interest. Adding a negative amount (indirect correlation), however, is equal to subtracting this amount from the standardized regression coefficient. The positive effect of political interest on reading time is underestimated. In this example, the effect of political interest is _suppressed_ (_masked_) by the confounder news site use. News site use is a _suppressor variable_. 
 
-If we include this suppressor variable (news site use) in our regression model, we eliminate its suppression of the effect of political interest on newspaper reading time. The negative effect of news site use on reading time is captured by the regression coefficient for the added news site use predictor. The effect of political interest on newspaper reading time is now controlled for the effect of news site use; it no longer includes the indirect correlation due to news site use. In this example, the effect of political interest on newspaper reading time becomes more strongly positive.
+If we include this suppressor variable (news site use) in our regression model, we eliminate its suppression of the effect of political interest on newspaper reading time. The negative effect of news site use on reading time is now captured by the regression coefficient for the news site use predictor. The effect of political interest on newspaper reading time is now controlled for the effect of news site use; it no longer includes the indirect correlation due to news site use. In this example, the effect of political interest on newspaper reading time becomes more strongly positive.
 
 ```{r suppression2, echo=FALSE, fig.cap="Interest in politics as a confounder of the effect of news site use on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
@@ -318,7 +310,7 @@ rm(variables)
 Now, let us have a look at the situation in which the indirect correlation is positive but the regression effect of the predictor is negative. Just reverse the example and make news site use the predictor and political interest the confounder. The regression effect of news site use on newspaper reading time is negative if people tend to use news sites instead of newspapers as sources of information. The indirect correlation due to political interest, however, is positive if politically interested people use news sites more and spend more time on reading newspapers. In this scenario, the negative effect of news site use on newspaper reading is underestimated if we do not control for political interest.
 
 ```{block2, type='rmdimportant'}
-A variable is a suppressor (1) if it is not included in the regression model but (2) an effect would become stronger if the variable is included in the model.
+A variable is a suppressor (1) if it is not included in the regression model and (2) it establishes an indirect correlation between predictor and independent variable that has the opposite sign of the current effect of the predictor on the independent variable.
 ```
 
 Suppression can have surprising effects. If the predictor's original effect was close to zero, adding a suppressor variable to the model will strengthen the effect. An effect that we initially believed to be absent may turn out to be substantial and statistically significant. If our regression model tells us that our predictor does not have an effect, we cannot rule out that it does have an effect that is suppressed by a suppressor variable.
@@ -375,18 +367,18 @@ As with suppression, spuriousness can have surprising results. It may happen tha
 
 Actually, the indirect correlation between a predictor and dependent variable due to a confounding variable can be so strong that a positive effect in a model without the confounder changes into a negative effect in a model that includes the variable. Adding the reinforcer to the model, the effect of the predictor not only moves towards zero (becoming weaker), but it moves beyond zero into a negative effect. It may even move so far beyond zero that the new negative effect is stronger than the   reinforced positive effect.
 
-The opposite may happen as well: An initially negative effect may become positive if a strong reinforcer variable is added to the model. This would be the case if the indirect correlation between political interest and newspaper reading time via education is strongly negative, resulting in a negative effect of political interest on reading time if education is left out of the model. Adding education to the model may then result in a positive effect of political interest.
+The opposite may happen as well: An initially negative effect may become positive if a strong reinforcer variable is added to the model. This would be the case if the indirect correlation between political interest and newspaper reading time via news site use is strongly negative, resulting in a negative effect of political interest on reading time if news site use is left out of the model. Adding news site use to the model may then result in a positive effect of political interest.
 
 ```{block2, type='rmdimportant'}
-A variable is a reinforcer (1) if it is not included in the regression model but (2) an effect would become weaker or change sign if the variable is included in the model.
+A variable is a reinforcer (1) if it is not included in the regression model and (2) it establishes an indirect correlation between predictor and independent variable that has the same sign as the current effect of the predictor on the independent variable.
 ```
 
 To summarize the two types of confounders:
 
 ```{block2, type='rmdimportant'}
-* If we add a *suppressor* to the model, the suppressed effect moves away from zero. A positive effect becomes more strongly positive, a negative effect becomes more strongly negative.
+* If we add a *suppressor* to the model, the suppressed effect moves away from zero because suppression disappears. A positive effect becomes more strongly positive, a negative effect becomes more strongly negative.
 
-* If we add a *reinforcer* to the model, the reinforced effect moves towards the opposite side. A positive effect becomes less strongly positive or even negative and a negative effect becomes less strongly negative or even positive.
+* If we add a *reinforcer* to the model, the reinforced effect moves towards the opposite side because reinforcement disappears. A positive effect becomes less strongly positive or even negative and a negative effect becomes less strongly negative or even positive.
 ```
 
 The bottom line is simple: Regression analysis only gives us the true effects of predictors if all important confounders are included in the model.
@@ -503,16 +495,105 @@ Interpret the results:
 * Given the number of regression coefficients that are estimated, it is
 helpful to present them as a table instead of reporting all results in the
 interpretation.
-* Education has a weak negative predictive effect on newspaper reading time
-until news site use is introduced as a predictor. Then its effect becomes very small and statistically insignificant.
-* Interest in politics has a weak positive predictive effect on newspaper
-reading time. This effect becomes weaker when news site use is added as a
-predictor and especially when age is added.
-* Initially, news site use has a strong negative predictive effect on
-newspaper reading time but the effect is much weaker when age is added as a
-predictor.
-* Age has a strong positive effect on newspaper reading time if we control for
-all other predictors in the model. [<img src="icons/2question.png" width=161px align="right">](#question9.4.1)
+
+<table style="font-size: 0.8em">
+  <tr align="center">
+    <td style="border-top: 1px solid">
+      Variable
+    </td>
+    <td style="border-top: 1px solid">
+      <i>B</i>
+    </td>
+    <td colspan=2 style="border-top: 1px solid; border-bottom: 1px solid; ">
+      95% CI for <i>B</i>
+    </td>
+    <td style="border-top: 1px solid">
+      <i>SE B</i>
+    </td>
+    <td style="border-top: 1px solid">
+      <i>B*</i>
+    </td>
+    <td style="border-top: 1px solid">
+      <i>R<sup>2</sup></i>
+    </td>
+  </tr>
+  <tr align="center">
+    <td colspan="2" style="border-bottom: 1px solid">
+    </td>
+    <td style="border-bottom: 1px solid">
+      <i>LL</i>
+    </td>
+    <td style="border-bottom: 1px solid">
+      <i>UL</i>
+    </td>
+    <td colspan="3" style="border-bottom: 1px solid">
+    </td>
+  </tr>
+  <tr>
+    <td>Step 1</td><td colspan="5"></td><td align="right">.01</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">46.21***</td><td align="right">35.14</td><td align="right">57.28</td><td align="right">5.63</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Education (in years)</td><td align="right" style="border-bottom: 1px solid">-0.86*&nbsp;&nbsp;&nbsp;</td><td align="right" style="border-bottom: 1px solid">-1.66</td><td align="right" style="border-bottom: 1px solid">-0.05</td><td align="right" style="border-bottom: 1px solid">0.41</td><td align="right" style="border-bottom: 1px solid">-0.12*&nbsp;&nbsp;&nbsp;</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+  <tr>
+    <td>Step 2</td><td colspan="5"></td><td align="right">.05</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">43.74***</td><td align="right">32.75</td><td align="right">54.74</td><td align="right">5.59</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">-1.25** &nbsp;</td><td align="right">-2.07</td><td align="right">-0.42</td><td align="right">0.42</td><td align="right">-0.17** &nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Interest in politics</td><td align="right" style="border-bottom: 1px solid">1.51** &nbsp;</td><td align="right" style="border-bottom: 1px solid">0.61</td><td align="right" style="border-bottom: 1px solid">2.41</td><td align="right" style="border-bottom: 1px solid">0.46</td><td align="right" style="border-bottom: 1px solid">0.19** &nbsp;</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+  <tr>
+    <td>Step 3</td><td colspan="5"></td><td align="right">.73</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">45.74***</td><td align="right">39.85</td><td align="right">51.63</td><td align="right">2.99</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.16 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.29</td><td align="right">0.62</td><td align="right">0.23</td><td align="right">0.02 &nbsp;&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Interest in politics</td><td align="right">1.13*** </td><td align="right">0.65</td><td align="right">1.61</td><td align="right">0.25</td><td align="right">0.14***</td><td></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;News sites use</td><td align="right" style="border-bottom: 1px solid">-5.72***</td><td align="right" style="border-bottom: 1px solid">-6.12</td><td align="right" style="border-bottom: 1px solid">-5.31</td><td align="right" style="border-bottom: 1px solid">0.21</td><td align="right" style="border-bottom: 1px solid">-0.85***</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+  <tr>
+    <td>Step 4</td><td colspan="5"></td><td align="right">.79</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">13.59***</td><td align="right">5.26</td><td align="right">21.93</td><td align="right">4.24</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.06 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.34</td><td align="right">0.46</td><td align="right">0.20</td><td align="right">0.01 &nbsp;&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Interest in politics</td><td align="right">0.52* &nbsp;&nbsp;</td><td align="right">0.07</td><td align="right">0.96</td><td align="right">0.23</td><td align="right">0.07* &nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;News sites use</td><td align="right">-1.55** &nbsp;</td><td align="right">-2.47</td><td align="right">-0.64</td><td align="right">0.47</td><td align="right">-0.23** &nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Age (in decades)</td><td align="right" style="border-bottom: 1px solid">4.55***</td><td align="right" style="border-bottom: 1px solid">3.62</td><td align="right" style="border-bottom: 1px solid">5.47</td><td align="right" style="border-bottom: 1px solid">0.47</td><td align="right" style="border-bottom: 1px solid">0.67***</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+</table>
+<div style="font-size: 0.8em">
+  <i>Note.</i> CI = confidence interval; <i>LL</i> = lower limit; <i>UL</i> = upper limit; <i>B</i>* = standardized regression coefficient.
+  <br>
+  * <i>p</i> < .05. ** <i>p</i> < .01. *** <i>p</i> < .001.
+</div>
+
+* Education has a weak negative predictive effect on newspaper reading time until news site use is introduced as a predictor. Then its effect becomes very small and statistically insignificant.
+* Interest in politics has a positive predictive effect on newspaper reading time. This effect becomes weaker when news site use is added as a predictor and especially when age is added.
+* Initially, news site use has a strong negative predictive effect on newspaper reading time but the effect is much weaker when age is added as a predictor.
+* Age has a strong positive effect on newspaper reading time if we control for all other predictors in the model. [<img src="icons/2question.png" width=161px align="right">](#question9.4.1)
 ```
 
 <A name="answer9.4.2"></A>
@@ -573,6 +654,100 @@ that assumptions are met.
   
 Interpret the results:  
   
+<table style="font-size: 0.8em">
+  <tr align="center">
+    <td style="border-top: 1px solid">
+      Variable
+    </td>
+    <td style="border-top: 1px solid">
+      <i>B</i>
+    </td>
+    <td colspan=2 style="border-top: 1px solid; border-bottom: 1px solid; ">
+      95% CI for <i>B</i>
+    </td>
+    <td style="border-top: 1px solid">
+      <i>SE B</i>
+    </td>
+    <td style="border-top: 1px solid">
+      <i>B*</i>
+    </td>
+    <td style="border-top: 1px solid">
+      <i>R<sup>2</sup></i>
+    </td>
+  </tr>
+  <tr align="center">
+    <td colspan="2" style="border-bottom: 1px solid">
+    </td>
+    <td style="border-bottom: 1px solid">
+      <i>LL</i>
+    </td>
+    <td style="border-bottom: 1px solid">
+      <i>UL</i>
+    </td>
+    <td colspan="3" style="border-bottom: 1px solid">
+    </td>
+  </tr>
+  <tr>
+    <td>Step 1</td><td colspan="5"></td><td align="right">.01</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">46.21***</td><td align="right">35.14</td><td align="right">57.28</td><td align="right">5.63</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Education (in years)</td><td align="right" style="border-bottom: 1px solid">-0.86*&nbsp;&nbsp;&nbsp;</td><td align="right" style="border-bottom: 1px solid">-1.66</td><td align="right" style="border-bottom: 1px solid">-0.05</td><td align="right" style="border-bottom: 1px solid">0.41</td><td align="right" style="border-bottom: 1px solid">-0.12*&nbsp;&nbsp;&nbsp;</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+  <tr>
+    <td>Step 2</td><td colspan="5"></td><td align="right">.05</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">60.98***</td><td align="right">47.05</td><td align="right">74.91</td><td align="right">7.08</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">-1.30** &nbsp;</td><td align="right">-2.14</td><td align="right">-0.46</td><td align="right">0.43</td><td align="right">-0.18** &nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Political cynicism</td><td align="right" style="border-bottom: 1px solid">-1.68** &nbsp;</td><td align="right" style="border-bottom: 1px solid">-2.67</td><td align="right" style="border-bottom: 1px solid">-0.69</td><td align="right" style="border-bottom: 1px solid">0.50</td><td align="right" style="border-bottom: 1px solid">-0.20** &nbsp;</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+  <tr>
+    <td>Step 3</td><td colspan="5"></td><td align="right">.72</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">53.65***</td><td align="right">46.00</td><td align="right">61.31</td><td align="right">3.89</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.27&nbsp;&nbsp;&nbsp;</td><td align="right">-0.21</td><td align="right">0.74</td><td align="right">0.24</td><td align="right">0.04 &nbsp;&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Political cynicism</td><td align="right">-0.69* &nbsp;&nbsp;</td><td align="right">-1.24</td><td align="right">-0.14</td><td align="right">0.28</td><td align="right">-0.08* &nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;News sites use</td><td align="right" style="border-bottom: 1px solid">-5.70***</td><td align="right" style="border-bottom: 1px solid">-6.12</td><td align="right" style="border-bottom: 1px solid">-5.28</td><td align="right" style="border-bottom: 1px solid">0.21</td><td align="right" style="border-bottom: 1px solid">-0.84***</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+  <tr>
+    <td>Step 4</td><td colspan="5"></td><td align="right">.79</td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">15.45***</td><td align="right">5.65</td><td align="right">25.26</td><td align="right">4.98</td><td colspan="2"></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.10 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.31</td><td align="right">0.51</td><td align="right">0.21</td><td align="right">0.01 &nbsp;&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;Political cynicism</td><td align="right">-0.30 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.78</td><td align="right">0.18</td><td align="right">0.24</td><td align="right">-0.03 &nbsp;&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left">&nbsp;&nbsp;News sites use</td><td align="right">-1.35** &nbsp;</td><td align="right">-2.25</td><td align="right">-0.45</td><td align="right">0.46</td><td align="right">-0.20** &nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Age (in decades)</td><td align="right" style="border-bottom: 1px solid">4.76***</td><td align="right" style="border-bottom: 1px solid">3.86</td><td align="right" style="border-bottom: 1px solid">5.67</td><td align="right" style="border-bottom: 1px solid">0.46</td><td align="right" style="border-bottom: 1px solid">0.70***</td><td style="border-bottom: 1px solid"></td>
+  </tr>
+</table>
+<div style="font-size: 0.8em">
+  <i>Note.</i> CI = confidence interval; <i>LL</i> = lower limit; <i>UL</i> = upper limit; <i>B</i>* = standardized regression coefficient.
+  <br>
+  * <i>p</i> < .05. ** <i>p</i> < .01. *** <i>p</i> < .001.
+</div>
+
 * When political cynicism is added as a predictor, the negative effect of
 education becomes stronger. In the model without political cynicism,
 political cynicism suppressed part of the effect of education. [<img src="icons/2question.png" width=161px align="right">](#question9.4.3)
@@ -649,9 +824,9 @@ Answer to Question 3.
 Answer to Question 4. 
 
 * We have to add political cynicism to the model to obtain a negative effect of political interest on newspaper reading time.
-* The effect becomes neagtive for two combined reasons: 
-   1 Political cynicism as a confounder reinforces the effect of political interest because the indirect correlation has the same (positive) sign as the effect. The indirect correlation is -0.45 \* -0.40 = 0.18. Minus times minus yield a plus! Adding a reinforcer to a model pushes the original effect in the direction of zero.
-   2 The indirect correlation (0.18) is larger than the original effect of political interest (0.14). The change to the original effect is more or less equal to the size of the indirect correlation. The original effect is pushed beyond zero into the realm of negative effects. [<img src="icons/2question.png" width=161px align="right">](#question10.5.4)
+* The effect becomes neagtive for two combined reasons:  
+    1. Political cynicism as a confounder reinforces the effect of political interest because the indirect correlation has the same (positive) sign as the effect. The indirect correlation is -0.45 \* -0.40 = 0.18. Minus times minus yield a plus! Adding a reinforcer to a model pushes the original effect in the direction of zero.  
+    2. The indirect correlation (0.18) is larger than the original effect of political interest (0.14). The change to the original effect is more or less equal to the size of the indirect correlation. The original effect is pushed beyond zero into the realm of negative effects. [<img src="icons/2question.png" width=161px align="right">](#question10.5.4)
 ```
 
 ## Take-Home Points  

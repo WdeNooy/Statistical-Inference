@@ -656,6 +656,28 @@ Instead of presenting the numerical results in the text, we may summarize them i
 
 A sizable and statistically significant interaction effect signals that an effect is moderated. In the example reported in Table \@ref(tab:report-moderation-table), the effect of exposure on attitude seems to be moderated by contact with smokers (_b_ = `r report_n(results[6,1])`, `r ifelse(results[6,4] < .0005, "p < .001", paste0("p = ", report_n(results[6,4], digits=3)))`) and by smoking status (_b_ = `r report_n(results[7,1])`, `r ifelse(results[7,4] < .0005, "p < 0.001", paste0("p = ", report_n(results[7,4], digits=3)))` for former smoker). 
 
+```{r moderator-concept3, echo=FALSE, fig.cap="Conceptual diagram of the estimated moderation model.", fig.asp=0.3}
+# Create coordinates for the variable names.
+variables <- data.frame(x = c(0.32, 0.41, 0.5, 0.59, 0.68), 
+                        y = c(.1, .3, .3, .3, .1),
+                        hjust = c(1, 0.5, 0.5, 0.5, 0),
+                        label = c("Exposure", "Contact", "Former \nsmoker", "Smoker", "Attitude"))
+ggplot(variables, aes(x, y)) + 
+  # exposure effect
+  geom_segment(aes(x = x[1], y = y[1], xend = x[5], yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  # contact moderation
+  geom_segment(aes(x = x[2], y = y[2], xend = x[2], yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  # former smoker moderation
+  geom_segment(aes(x = x[3], y = y[3], xend = x[3], yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  # smoker moderation
+  geom_segment(aes(x = x[4], y = y[4], xend = x[4], yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_label(aes(label=label, hjust = hjust)) + 
+  coord_cartesian(xlim = c(0.27, 0.83), ylim = c(0, 0.4)) +
+  theme_void()
+# Cleanup.
+rm(variables)
+```
+
 The regression coefficients for interaction effects must be interpreted as effect differences. For a categorical moderator, the coefficient describes the effect size difference between the category represented by the dummy variable and the reference group. The negative effect of exposure is stronger for former smokers than for the reference group non-smokers. The average difference is `r report_n(results[7,1])`.
 
 For a numerical moderator, we can interpret the general pattern reflected by the interaction effect. A positive interaction effect, such as `r report_n(results[6, 1])` for the interaction between exposure and smoker contact, signals that the effect of exposure is more strongly positive or less strongly negative at higher levels of contact with smokers. 
@@ -1364,7 +1386,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mean-centering-moderator/", he
 
 <A name="question9.4.6"></A>
 ```{block2, type='rmdquestion'}
-6. If we mean-center contact, which regression coefficients change? Check the box in Figure \@ref(fig:mean-centering-moderator2) and compare the red and blue regression equations? Why do they change? [<img src="icons/2answer.png" width=115px align="right">](#answer9.4.6)
+6. If we mean-center contact, which regression coefficients change? Check the box in Figure \@ref(fig:mean-centering-moderator2) and compare the red and blue regression equations. Why do they change? [<img src="icons/2answer.png" width=115px align="right">](#answer9.4.6)
 ```
 
 <A name="question9.4.7"></A>
@@ -1448,17 +1470,24 @@ Answer to Question 6.
 
 * If we mean-center contact (the moderator), the reference group changes for effects that are moderated by contact.
 * In the model, exposure is the only variable that interacts with contact, so its regression coefficient changes. 
-* This regression coefficient changes from -0.26 to -0.06. Each aditional unit of contact increases the effect of exposure on attitude by 0.04, which is the regression coefficient of the interaction effect. Mean contact score is 5.0, so we add five times 0.04 to the effect of exposure if we proceed from zero as reference group in the original regression model to 5.0 (on the original contact variable) as reference group in the model with mean-centered contact. [<img src="icons/2question.png" width=161px align="right">](#question9.4.6)
+
+![](figures/S9_4Q6.png)
+
+* This regression coefficient changes from -0.26 to -0.06. Each aditional unit of contact increases the effect of exposure on attitude by 0.04, which is the regression coefficient of the interaction effect. Mean contact score is 5.0, so we add five times 0.04 (= 0.20) to the effect of exposure if we proceed from zero as reference group in the original regression model to 5.0 (on the original contact variable) as reference group in the model with mean-centered contact. 
+* In addition, the constant changes. Plug the value 5 for _Contact (0)_ in the blue equation: 0.14 * 5 = 0.70. This value must be added to the constant in the blue equation (0.40 + 0.70), which yields the constant in the red equation: 1.10. [<img src="icons/2question.png" width=161px align="right">](#question9.4.6)
 ```
 
 <A name="answer9.4.7"></A>
 ```{block2, type='rmdanswer', echo=ch9}
 Answer to Question 7. 
 
-* The blue regression line represents the effect of exposure on attitude for the minimum value of the moderator *contact*, namely, zero. Observations with contact scores near zero are blue. There are only a few of them, so we have very few observations for the regression line at this moderator value. These observations do not cover the entire range of exposure values; there are two in the center and one at the right. The regression line has bad common support.
-* Set the **Center Contact** slider to *M - SD* and ensure that the **Show the mean-centered line** box is checked. The red regression line represents the effect of exposure on attitude for people with a number of contacts that is one standard deviation (*SD*) below the mean (*M*).
-* If we want to know the support for this regression line, we have to move the blue regression line on top of the red regression line. Use the **Adjust the value of Contact** slider to this end. You have to set it to three.
-* Now we can see which observations have contact scores close to three. There are many blue and dark blue (very close contact scores) dots and they are nicely distributed across the entire range of exposure scores. This regression line has good common support; it is more reliable. [<img src="icons/2question.png" width=161px align="right">](#question9.4.7)
+* If contact is set to zero, the blue regression line represents the effect of exposure on attitude for the minimum value of the moderator *contact* (figure below, left panel). Observations with contact scores near zero are blue. There are only a few of them, so we have very few observations for the regression line at this moderator value. These observations do not cover the entire range of exposure values; there are two in the center and one at the right. The regression line has bad common support.
+
+![](figures/S9_4Q7.png)
+
+* If you compare the **Center Contact** slider to the **Adjust the value of Contact** slider, you can see that *M - SD* equals 3 here. Three contacts is one standard deviation below the average number of contacts. 
+* Set the **Adjust the value of Contact** slider to 3 to obtain the (blue) regression line expressing the effect of exposure on attitude for people with 3 contacts with smokers (figure above, right panel). 
+* Now we can see which observations have contact scores close to 3. There are many blue and dark blue (contact scores very close to 3) dots and they are nicely distributed across the entire range of exposure scores. This regression line has good common support; it is more reliable than the one for minimum (0) number of contacts. [<img src="icons/2question.png" width=161px align="right">](#question9.4.7)
 ```
 
 ## Take-Home Points  

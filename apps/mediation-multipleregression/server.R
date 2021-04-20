@@ -81,6 +81,13 @@ if(length(input$predcheckbox) > 0){
                       color = "b* and 95% CI in simple regression"),
                   size = 2, 
                   alpha = 0.5) + 
+     # dashed line to X axis: gray
+     geom_segment(aes(y = Predictor,
+                      yend = -Inf,
+                      x = bicoef, xend = bicoef,
+                      color = "b* and 95% CI in simple regression"),
+                  linetype = "dotted",
+                  na.rm = TRUE) +
      {if(length(input$predcheckbox)>0) geom_point(aes(x = mucoef,
                                                       color = "b* and 95% CI in multiple regression"),
                                                   na.rm = TRUE,
@@ -90,6 +97,13 @@ if(length(input$predcheckbox) > 0){
                                                         x = muleft, xend = muright,
                                                         color = "b* and 95% CI in multiple regression"),
                                                     na.rm = TRUE)} +
+     # dashed line to X axis: blue
+     {if(length(input$predcheckbox)>0) geom_segment(aes(y = Predictor,
+                                                          yend = -Inf,
+                                                          x = mucoef, xend = mucoef,
+                                                          color = "b* and 95% CI in multiple regression"),
+                                                      linetype = "dashed",
+                                                      na.rm = TRUE)} +
      scale_color_manual(values = c("b* and 95% CI in simple regression" = "grey" ,
                                    "b* and 95% CI in multiple regression" = unname(brewercolors["Blue"])),
                         limits = c("b* and 95% CI in simple regression",

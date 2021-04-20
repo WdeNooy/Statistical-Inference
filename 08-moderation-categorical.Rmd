@@ -59,9 +59,9 @@ variables <- data.frame(x = c(0.3, 0.3, 0.3, 0.7),
                         y = c(.1, .3, .5, .3),
                         label = c("Exposure", "Smoking Status", "Contact with Smokers", "Attitude"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[4] - 0.04, yend = variables$y[4] - 0.02), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[4] - 0.04, yend = variables$y[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[3], y = variables$y[3], xend = variables$x[4] - 0.04, yend = variables$y[4] + 0.02), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = x[4] - 0.04, yend = y[4] - 0.02), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[4] - 0.04, yend = y[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[3], y = y[3], xend = x[4] - 0.04, yend = y[4] + 0.02), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0.05, 0.55)) +
   theme_void()
@@ -1057,8 +1057,8 @@ variables <- data.frame(x = c(0.35, 0.5, 0.65),
                         hjust = c(1, 0.5, 0),
                         label = c("Predictor", "Moderator", "Dependent variable"))
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$x[3], yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$x[2], yend = variables$y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[3], yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = x[2], yend = y[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) +
   geom_label(aes(label=label, hjust = hjust)) + 
   coord_cartesian(xlim = c(0.3, 0.8), ylim = c(0, 0.4)) +
   theme_void()
@@ -1172,10 +1172,10 @@ variables$xend <- variables$x[4] - x_diff #fixed translation to the left
 variables$yend <- variables$y[4] + x_diff * (variables$y - variables$y[4]) / (variables$x[4] - variables$x)
 rm(x_diff)
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$xend[1], yend = variables$yend[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$xend[2], yend = variables$yend[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[3], y = variables$y[3], xend = variables$xend[3], yend = variables$yend[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  # geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$xend[4], yend = variables$yend[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = xend[1], yend = yend[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = xend[2], yend = yend[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[3], y = y[3], xend = xend[3], yend = yend[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  # geom_segment(aes(x = x[4], y = y[4], xend = xend[4], yend = yend[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0.1, 0.5)) +
   theme_void()
@@ -1327,11 +1327,11 @@ variables$xend <- variables$x[6] - x_diff #fixed translation to the left
 variables$yend <- variables$y[6] + x_diff * (variables$y - variables$y[6]) / (variables$x[6] - variables$x)
 rm(x_diff)
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$xend[1], yend = variables$yend[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$xend[2], yend = variables$yend[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[3], y = variables$y[3], xend = variables$xend[3], yend = variables$yend[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$xend[4], yend = variables$yend[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[5], y = variables$y[5], xend = variables$xend[5], yend = variables$yend[5]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = xend[1], yend = yend[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = xend[2], yend = yend[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[3], y = y[3], xend = xend[3], yend = yend[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[4], y = y[4], xend = xend[4], yend = yend[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[5], y = y[5], xend = xend[5], yend = yend[5]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0.1, 0.5)) +
   theme_void()
@@ -1450,10 +1450,10 @@ variables$xend <- variables$x[5] - x_diff #fixed translation to the left
 variables$yend <- variables$y[5] + x_diff * (variables$y - variables$y[5]) / (variables$x[5] - variables$x)
 rm(x_diff)
 ggplot(variables, aes(x, y)) + 
-  geom_segment(aes(x = variables$x[1], y = variables$y[1], xend = variables$xend[1], yend = variables$yend[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[2], y = variables$y[2], xend = variables$xend[2], yend = variables$yend[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[3], y = variables$y[3], xend = variables$xend[3], yend = variables$yend[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
-  geom_segment(aes(x = variables$x[4], y = variables$y[4], xend = variables$xend[4], yend = variables$yend[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[1], y = y[1], xend = xend[1], yend = yend[1]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[2], y = y[2], xend = xend[2], yend = yend[2]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[3], y = y[3], xend = xend[3], yend = yend[3]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
+  geom_segment(aes(x = x[4], y = y[4], xend = xend[4], yend = yend[4]), arrow = arrow(length = unit(0.04, "npc"), type = "closed")) + 
   geom_label(aes(label=label)) + 
   coord_cartesian(xlim = c(0.2, 0.8), ylim = c(0.1, 0.5)) +
   theme_void()
