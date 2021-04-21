@@ -3,7 +3,7 @@
 
 Watch this micro lecture on confounders for an overview of the chapter.
 
-```{r, echo=FALSE, out.width="640px", dev="png", screenshot.opts = list(delay = 5)}
+```{r, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/8vyTFygkCrU", height = "360px")
 ```
 
@@ -25,7 +25,7 @@ In a regression model, we use the variation in scores on independent variables t
 
 For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two independent variables (age and interest in politics) to predict the dependent variable (newspaper reading time). The two independent variables can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which independent variable is responsible for which part of the variation on the dependent variable? 
 
-```{r mediation-multipleregression, fig.cap="How do regression coefficients change if new predictors for reading time are added to the model?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r mediation-multipleregression, fig.pos='H', fig.align='center', fig.cap="How do regression coefficients change if new predictors for reading time are added to the model?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Show that regression coefficients change if new predictors are added to
 # the regression model.
 # For outcome Newspaper Reading Time, display the standardized simple
@@ -143,7 +143,7 @@ Answer to Question 3.
   
 ## Indirect Correlation {#indirectcorrelation}
 
-```{r mediation-indirectcorrelation, fig.cap="What happens to the regression coefficient for the effect of political interest if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r mediation-indirectcorrelation, fig.pos='H', fig.align='center', fig.cap="What happens to the regression coefficient for the effect of political interest if we add a confounder to the model? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Show that a regression coefficient changes more if the new predictor is more strongly correlated with the old predictor and dependent variable, hence, the indirect correlation is stronger.
 # Display the simple (standardized) regression coefficient as a black arrow from Pol.Interest to Reading Time with the width of the arrow corresponding to the size of the effect. Label arrow with "Simple: 0.14" and "Partial: ?". Add Age, Education, and News Site Use as confounders (gray), linked by gray lines with both Pol.Interest and Reading Time. Line widths represent and are labeled with the size of correlations. Allow the user to select one confounder at a time. Display this confounder and its lines to Age and Reading Time in blue and add a (semi-tranparent) blue arrow from Pol.Interest to reading Time on top of the black arrow with its width corresponding to the partial effect when controlling for the selected confounder.
 # Correlations and standardized coefficients that are in line with the example data file readers.sav:
@@ -222,7 +222,7 @@ strongly. [<img src="icons/2question.png" width=161px align="right">](#question9
 
 ## Two Types of Confounders {#confounders}
 
-```{r mediation-confoundertypes, fig.cap="When is a regression effect too large and when is it too small due to a confounder? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mediation-confoundertypes, fig.pos='H', fig.align='center', fig.cap="When is a regression effect too large and when is it too small due to a confounder? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Intuitive understanding of how the pattern of correlation/effect
 # directions (signs) relates to decrease or increase of partial effect sizes.
 # Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth
@@ -260,7 +260,7 @@ There are two situations in which an indirect correlation can have the opposite 
 
 We start with the first situation and discuss the second situation later on in this section.
 
-```{r suppression1, echo=FALSE, fig.cap="News site use as a confounder of the effect of interest in politics on newspaper reading time.", fig.asp=0.3}
+```{r suppression1, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="News site use as a confounder of the effect of interest in politics on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.38, 0.5, 0.62, 0.7, 0.5), 
@@ -290,7 +290,7 @@ If news site use is not included in the regression model, the standardized regre
 
 If we include this suppressor variable (news site use) in our regression model, we eliminate its suppression of the effect of political interest on newspaper reading time. The negative effect of news site use on reading time is now captured by the regression coefficient for the news site use predictor. The effect of political interest on newspaper reading time is now controlled for the effect of news site use; it no longer includes the indirect correlation due to news site use. In this example, the effect of political interest on newspaper reading time becomes more strongly positive.
 
-```{r suppression2, echo=FALSE, fig.cap="Interest in politics as a confounder of the effect of news site use on newspaper reading time.", fig.asp=0.3}
+```{r suppression2, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Interest in politics as a confounder of the effect of news site use on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.38, 0.5, 0.62, 0.7, 0.5), 
@@ -323,7 +323,7 @@ Adding a new predictor to a regression model may weaken the effects of other pre
 
 In both situations, regression effects are initially overestimated because the predictors cover part of the effect of an important variable that has not yet been added to the regression model. The part of the effect that is due to the confounding variable is called _spurious_. The confounding variable is called a _reinforcer_ because it makes an effect appear more strongly positive or more strongly negative than it really is as long as the confounder has not been added to the regression model.
 
-```{r reinforcement1, echo=FALSE, fig.cap="Age as a confounder of the effect of interest in politics on newspaper reading time.", fig.asp=0.3}
+```{r reinforcement1, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Age as a confounder of the effect of interest in politics on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.39, 0.5, 0.61, 0.7, 0.5), 
@@ -346,7 +346,7 @@ If age is not included as a predictor in the regression model, the indirect corr
 
 In Figure \@ref(fig:reinforcement1), age is positively correlated with both political interest and newspaper reading. But a confounder that is negatively correlated with predictor and outcome has the same impact as a confounder that is positively correlated with predictor and outcome. Political cynicism, for instance, can be negatively correlated with both interest in politics and newspaper reading. People who are less cynical about politics are more interested in politics and spend more time on reading newspapers. As a result, it looks like political interest strongly increases newspaper reading time but higher newspaper reading time is at least partly due to less political cynicism. Similar scenarios are available if the regression effect and the indirect correlation are negative.
 
-```{r reinforcement2, echo=FALSE, fig.cap="Political cynicism as a confounder of the effect of interest in politics on newspaper reading time.", fig.asp=0.3}
+```{r reinforcement2, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Political cynicism as a confounder of the effect of interest in politics on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.38, 0.5, 0.62, 0.7, 0.5), 
@@ -421,7 +421,7 @@ Interest in sports as a predictor in the regression model. [<img src="icons/2que
 
 ###  Instructions
 
-```{r SPSSregconfound, echo=FALSE, out.width="640px", fig.cap="(ref:regconfoundSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregconfound, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regconfoundSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/TItNFCLn6qA", height = "360px")
 # "stepwise" regression: Add predictors in blocks (and leave Method at Enter) if you want to specify the order in which predictors are added to the model.
 # Note: basic regression video in Ch. 4, checking assumptions (and plotting regression line) video in Ch. 8.
@@ -496,100 +496,32 @@ Interpret the results:
 helpful to present them as a table instead of reporting all results in the
 interpretation.
 
-<table style="font-size: 0.8em">
-  <tr align="center">
-    <td style="border-top: 1px solid">
-      Variable
-    </td>
-    <td style="border-top: 1px solid">
-      <i>B</i>
-    </td>
-    <td colspan=2 style="border-top: 1px solid; border-bottom: 1px solid; ">
-      95% CI for <i>B</i>
-    </td>
-    <td style="border-top: 1px solid">
-      <i>SE B</i>
-    </td>
-    <td style="border-top: 1px solid">
-      <i>B*</i>
-    </td>
-    <td style="border-top: 1px solid">
-      <i>R<sup>2</sup></i>
-    </td>
-  </tr>
-  <tr align="center">
-    <td colspan="2" style="border-bottom: 1px solid">
-    </td>
-    <td style="border-bottom: 1px solid">
-      <i>LL</i>
-    </td>
-    <td style="border-bottom: 1px solid">
-      <i>UL</i>
-    </td>
-    <td colspan="3" style="border-bottom: 1px solid">
-    </td>
-  </tr>
-  <tr>
-    <td>Step 1</td><td colspan="5"></td><td align="right">.01</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">46.21***</td><td align="right">35.14</td><td align="right">57.28</td><td align="right">5.63</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Education (in years)</td><td align="right" style="border-bottom: 1px solid">-0.86*&nbsp;&nbsp;&nbsp;</td><td align="right" style="border-bottom: 1px solid">-1.66</td><td align="right" style="border-bottom: 1px solid">-0.05</td><td align="right" style="border-bottom: 1px solid">0.41</td><td align="right" style="border-bottom: 1px solid">-0.12*&nbsp;&nbsp;&nbsp;</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-  <tr>
-    <td>Step 2</td><td colspan="5"></td><td align="right">.05</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">43.74***</td><td align="right">32.75</td><td align="right">54.74</td><td align="right">5.59</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">-1.25** &nbsp;</td><td align="right">-2.07</td><td align="right">-0.42</td><td align="right">0.42</td><td align="right">-0.17** &nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Interest in politics</td><td align="right" style="border-bottom: 1px solid">1.51** &nbsp;</td><td align="right" style="border-bottom: 1px solid">0.61</td><td align="right" style="border-bottom: 1px solid">2.41</td><td align="right" style="border-bottom: 1px solid">0.46</td><td align="right" style="border-bottom: 1px solid">0.19** &nbsp;</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-  <tr>
-    <td>Step 3</td><td colspan="5"></td><td align="right">.73</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">45.74***</td><td align="right">39.85</td><td align="right">51.63</td><td align="right">2.99</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.16 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.29</td><td align="right">0.62</td><td align="right">0.23</td><td align="right">0.02 &nbsp;&nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Interest in politics</td><td align="right">1.13*** </td><td align="right">0.65</td><td align="right">1.61</td><td align="right">0.25</td><td align="right">0.14***</td><td></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;News sites use</td><td align="right" style="border-bottom: 1px solid">-5.72***</td><td align="right" style="border-bottom: 1px solid">-6.12</td><td align="right" style="border-bottom: 1px solid">-5.31</td><td align="right" style="border-bottom: 1px solid">0.21</td><td align="right" style="border-bottom: 1px solid">-0.85***</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-  <tr>
-    <td>Step 4</td><td colspan="5"></td><td align="right">.79</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">13.59***</td><td align="right">5.26</td><td align="right">21.93</td><td align="right">4.24</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.06 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.34</td><td align="right">0.46</td><td align="right">0.20</td><td align="right">0.01 &nbsp;&nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Interest in politics</td><td align="right">0.52* &nbsp;&nbsp;</td><td align="right">0.07</td><td align="right">0.96</td><td align="right">0.23</td><td align="right">0.07* &nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;News sites use</td><td align="right">-1.55** &nbsp;</td><td align="right">-2.47</td><td align="right">-0.64</td><td align="right">0.47</td><td align="right">-0.23** &nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Age (in decades)</td><td align="right" style="border-bottom: 1px solid">4.55***</td><td align="right" style="border-bottom: 1px solid">3.62</td><td align="right" style="border-bottom: 1px solid">5.47</td><td align="right" style="border-bottom: 1px solid">0.47</td><td align="right" style="border-bottom: 1px solid">0.67***</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-</table>
 <div style="font-size: 0.8em">
-  <i>Note.</i> CI = confidence interval; <i>LL</i> = lower limit; <i>UL</i> = upper limit; <i>B</i>* = standardized regression coefficient.
-  <br>
+| Variable          | _b_ &nbsp;&nbsp;&nbsp;&nbsp; | 95\% CI|for _b_ |	SE _b_ | _b\*_ &nbsp;&nbsp;&nbsp;&nbsp; | _R_^2^ | 
+|:------------------|----:|-------:|:-------|--------:|------:|-------:|
+|   |    |  LL |  UL |   |   |   |
+|Step 1|    |   |   |   |   |  .01 |
+|&nbsp;&nbsp; Constant| 46.21***   |  35.14 | 57.28  |  5.63 |   |   |
+|&nbsp;&nbsp; Education (in years)| -0.86* &nbsp;&nbsp; |  -1.66 | -0.05  |  0.41 |  -0.12*&nbsp;&nbsp; |   |
+|Step 2 |    |   |   |   |   |  .05 |
+|&nbsp;&nbsp; Constant| 43.74***   |  32.75 | 54.74  |  5.59 |   |   |
+|&nbsp;&nbsp; Education (in years)| -1.25** &nbsp; |  -2.07 | -0.42  |  0.42 |  -0.17**&nbsp; |   |
+|&nbsp;&nbsp; Interest in politics| 1.51** &nbsp; | 0.61  | 2.41  | 0.46  | 0.19**  &nbsp;  |   |
+|Step 3 |    |   |   |   |   |  .73 |
+|&nbsp;&nbsp; Constant| 45.74***   |  39.85 | 51.63  |  2.99 |   |   |
+|&nbsp;&nbsp; Education (in years)| 0.16 &nbsp;&nbsp;&nbsp; |  -0.29 | 0.62  |  0.23 |  0.02 &nbsp;&nbsp;&nbsp; |   |
+|&nbsp;&nbsp; Interest in politics| 1.13*** | 0.65  | 1.61  | 0.25  | 0.14*** |   |
+|&nbsp;&nbsp; News sites use| -5.72*** | -6.12 |  -5.31 | 0.21  | -0.85***  |   |
+|Step 4 |    |   |   |   |   |  .79 |
+|&nbsp;&nbsp; Constant| 13.59***   |  5.26 | 21.93  |  4.24 |   |   |
+|&nbsp;&nbsp; Education (in years)| 0.06 &nbsp;&nbsp;&nbsp; |  -0.34 | 0.46  |  0.20 |  0.01 &nbsp;&nbsp;&nbsp; |   |
+|&nbsp;&nbsp; Interest in politics| 0.52* &nbsp;&nbsp; | 0.07  | 0.96  | 0.23  | 0.07* &nbsp;&nbsp; |   |
+|&nbsp;&nbsp; News sites use| -1.55** &nbsp; | -2.47 |  -0.64 | 0.47  | -0.23** &nbsp; |   |
+|&nbsp;&nbsp; Age (in decades)| 4.55*** | 3.62  | 5.47  | 0.47  | 0.67***  |   |
+  <i>Note.</i> CI = confidence interval; <i>LL</i> = lower limit; <i>UL</i> = upper limit; <i>b</i>* = standardized regression coefficient.  
   * <i>p</i> < .05. ** <i>p</i> < .01. *** <i>p</i> < .001.
 </div>
-
+  
 * Education has a weak negative predictive effect on newspaper reading time until news site use is introduced as a predictor. Then its effect becomes very small and statistically insignificant.
 * Interest in politics has a positive predictive effect on newspaper reading time. This effect becomes weaker when news site use is added as a predictor and especially when age is added.
 * Initially, news site use has a strong negative predictive effect on newspaper reading time but the effect is much weaker when age is added as a predictor.
@@ -654,97 +586,29 @@ that assumptions are met.
   
 Interpret the results:  
   
-<table style="font-size: 0.8em">
-  <tr align="center">
-    <td style="border-top: 1px solid">
-      Variable
-    </td>
-    <td style="border-top: 1px solid">
-      <i>B</i>
-    </td>
-    <td colspan=2 style="border-top: 1px solid; border-bottom: 1px solid; ">
-      95% CI for <i>B</i>
-    </td>
-    <td style="border-top: 1px solid">
-      <i>SE B</i>
-    </td>
-    <td style="border-top: 1px solid">
-      <i>B*</i>
-    </td>
-    <td style="border-top: 1px solid">
-      <i>R<sup>2</sup></i>
-    </td>
-  </tr>
-  <tr align="center">
-    <td colspan="2" style="border-bottom: 1px solid">
-    </td>
-    <td style="border-bottom: 1px solid">
-      <i>LL</i>
-    </td>
-    <td style="border-bottom: 1px solid">
-      <i>UL</i>
-    </td>
-    <td colspan="3" style="border-bottom: 1px solid">
-    </td>
-  </tr>
-  <tr>
-    <td>Step 1</td><td colspan="5"></td><td align="right">.01</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">46.21***</td><td align="right">35.14</td><td align="right">57.28</td><td align="right">5.63</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Education (in years)</td><td align="right" style="border-bottom: 1px solid">-0.86*&nbsp;&nbsp;&nbsp;</td><td align="right" style="border-bottom: 1px solid">-1.66</td><td align="right" style="border-bottom: 1px solid">-0.05</td><td align="right" style="border-bottom: 1px solid">0.41</td><td align="right" style="border-bottom: 1px solid">-0.12*&nbsp;&nbsp;&nbsp;</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-  <tr>
-    <td>Step 2</td><td colspan="5"></td><td align="right">.05</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">60.98***</td><td align="right">47.05</td><td align="right">74.91</td><td align="right">7.08</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">-1.30** &nbsp;</td><td align="right">-2.14</td><td align="right">-0.46</td><td align="right">0.43</td><td align="right">-0.18** &nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Political cynicism</td><td align="right" style="border-bottom: 1px solid">-1.68** &nbsp;</td><td align="right" style="border-bottom: 1px solid">-2.67</td><td align="right" style="border-bottom: 1px solid">-0.69</td><td align="right" style="border-bottom: 1px solid">0.50</td><td align="right" style="border-bottom: 1px solid">-0.20** &nbsp;</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-  <tr>
-    <td>Step 3</td><td colspan="5"></td><td align="right">.72</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">53.65***</td><td align="right">46.00</td><td align="right">61.31</td><td align="right">3.89</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.27&nbsp;&nbsp;&nbsp;</td><td align="right">-0.21</td><td align="right">0.74</td><td align="right">0.24</td><td align="right">0.04 &nbsp;&nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Political cynicism</td><td align="right">-0.69* &nbsp;&nbsp;</td><td align="right">-1.24</td><td align="right">-0.14</td><td align="right">0.28</td><td align="right">-0.08* &nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;News sites use</td><td align="right" style="border-bottom: 1px solid">-5.70***</td><td align="right" style="border-bottom: 1px solid">-6.12</td><td align="right" style="border-bottom: 1px solid">-5.28</td><td align="right" style="border-bottom: 1px solid">0.21</td><td align="right" style="border-bottom: 1px solid">-0.84***</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-  <tr>
-    <td>Step 4</td><td colspan="5"></td><td align="right">.79</td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Constant</td><td align="right" style="text-align: right">15.45***</td><td align="right">5.65</td><td align="right">25.26</td><td align="right">4.98</td><td colspan="2"></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Education (in years)</td><td align="right">0.10 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.31</td><td align="right">0.51</td><td align="right">0.21</td><td align="right">0.01 &nbsp;&nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;Political cynicism</td><td align="right">-0.30 &nbsp;&nbsp;&nbsp;</td><td align="right">-0.78</td><td align="right">0.18</td><td align="right">0.24</td><td align="right">-0.03 &nbsp;&nbsp;&nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;&nbsp;News sites use</td><td align="right">-1.35** &nbsp;</td><td align="right">-2.25</td><td align="right">-0.45</td><td align="right">0.46</td><td align="right">-0.20** &nbsp;</td><td></td>
-  </tr>
-  <tr>
-    <td align="left" style="border-bottom: 1px solid">&nbsp;&nbsp;Age (in decades)</td><td align="right" style="border-bottom: 1px solid">4.76***</td><td align="right" style="border-bottom: 1px solid">3.86</td><td align="right" style="border-bottom: 1px solid">5.67</td><td align="right" style="border-bottom: 1px solid">0.46</td><td align="right" style="border-bottom: 1px solid">0.70***</td><td style="border-bottom: 1px solid"></td>
-  </tr>
-</table>
 <div style="font-size: 0.8em">
-  <i>Note.</i> CI = confidence interval; <i>LL</i> = lower limit; <i>UL</i> = upper limit; <i>B</i>* = standardized regression coefficient.
-  <br>
+| Variable          | _b_ &nbsp;&nbsp;&nbsp;&nbsp; | 95\% CI|for _b_ |	SE _b_ | _b\*_ &nbsp;&nbsp;&nbsp;&nbsp; | _R_^2^ | 
+|:------------------|----:|-------:|:-------|--------:|------:|-------:|
+|   |    |  LL |  UL |   |   |   |
+|Step 1|    |   |   |   |   |  .01 |
+|&nbsp;&nbsp; Constant| 46.21***   |  35.14 | 57.28  |  5.63 |   |   |
+|&nbsp;&nbsp; Education (in years)| -0.86* &nbsp;&nbsp; |  -1.66 | -0.05  |  0.41 |  -0.12*&nbsp;&nbsp; |   |
+|Step 2 |    |   |   |   |   |  .05 |
+|&nbsp;&nbsp; Constant| 60.98***   |  47.05 | 74.91  |  7.08 |   |   |
+|&nbsp;&nbsp; Education (in years)| -1.30** &nbsp; |  -2.14 | -0.46  |  0.43 |  -0.18**&nbsp; |   |
+|&nbsp;&nbsp; Political cynicism| -1.68** &nbsp; | -2.67  | -0.69  | 0.50  | -0.20**  &nbsp;  |   |
+|Step 3 |    |   |   |   |   |  .72 |
+|&nbsp;&nbsp; Constant| 53.65***   |  46.00 | 61.31  |  3.89 |   |   |
+|&nbsp;&nbsp; Education (in years)| 0.27 &nbsp;&nbsp;&nbsp; |  -0.21 | 0.74  |  0.24 |  0.04 &nbsp;&nbsp;&nbsp; |   |
+|&nbsp;&nbsp; Political cynicism| -0.69* &nbsp;&nbsp; | -1.24  | -0.14  | 0.28  | -0.08* &nbsp;&nbsp; |   |
+|&nbsp;&nbsp; News sites use| -5.70*** | -6.12 |  -5.28 | 0.21  | -0.84***  |   |
+|Step 4 |    |   |   |   |   |  .79 |
+|&nbsp;&nbsp; Constant| 15.45***   |  5.65 | 25.26  |  4.98 |   |   |
+|&nbsp;&nbsp; Education (in years)| 0.10 &nbsp;&nbsp;&nbsp; |  -0.31 | 0.51  |  0.21 |  0.01 &nbsp;&nbsp;&nbsp; |   |
+|&nbsp;&nbsp; Political cynicism| -0.30 &nbsp;&nbsp;&nbsp; | -0.78  | 0.18  | 0.24  | -0.03 &nbsp;&nbsp;&nbsp; |   |
+|&nbsp;&nbsp; News sites use| -1.35** &nbsp; | -2.25 |  -0.45 | 0.46  | -0.20** &nbsp; |   |
+|&nbsp;&nbsp; Age (in decades)| 4.76*** | 3.86  | 5.67  | 0.46  | 0.70***  |   |
+  <i>Note.</i> CI = confidence interval; <i>LL</i> = lower limit; <i>UL</i> = upper limit; <i>b</i>* = standardized regression coefficient.  
   * <i>p</i> < .05. ** <i>p</i> < .01. *** <i>p</i> < .001.
 </div>
 
@@ -755,7 +619,7 @@ political cynicism suppressed part of the effect of education. [<img src="icons/
 
 ## Test Your Understanding
 
-```{r mediation-confoundertypes2, fig.cap="When is a regression effect too large and when is it too small due to a confounder? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mediation-confoundertypes2, fig.pos='H', fig.align='center', fig.cap="When is a regression effect too large and when is it too small due to a confounder? Numbers represent correlations (lines) or standardized regression coefficients (arrows).", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Intuitive understanding of how the pattern of correlation/effect
 # directions (signs) relates to decrease or increase of partial effect sizes.
 # Adjust app mediation-indirectcorrelation: Add Pol.Cynicism as a fourth

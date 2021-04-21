@@ -3,7 +3,7 @@
 
 Watch this micro lecture on regression models with a numerical moderator for an overview of the chapter.
 
-```{r, echo=FALSE, out.width="640px", dev="png", screenshot.opts = list(delay = 5)}
+```{r, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/YQIJFS9uBrw", height = "360px")
 ```
 
@@ -29,7 +29,7 @@ Just like a model with a dichotomous or categorical moderator, the effect of a p
 
 With a categorical moderator, it is quite obvious for which values of the moderator we are going to calculate and depict the effect of the predictor on the dependent variable. If smoking status moderates the effect of exposure on attitude towards smoking, we will inspect a regression line for each smoking status category: smokers, former smokers, and non-smokers. But what if the moderator is a numerical variable, for example, the intensity of contact with smokers?
 
-```{r continuous-moderator, fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r continuous-moderator, fig.pos='H', fig.align='center', fig.cap="How do contact values affect the conditional effect of exposure on attitude?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Understand that there is a conditional effect for each value of the moderator by gradually changing the moderator value & understanding the linearity of the effect: a fixed slope change for a fixed difference in moderator values.
 # Generate a data set with a linear interaction (attitude ~ exposure*contact). Display a scattergram with a regression line for the current value of the moderator (contact). Display regression equation as y = a + (b_1 + b_3*contact(5))*exposure + b_2*contact(5) with values for coefficients and for contact. Add slider allowing the user to change the moderator value (range [0, 10], initial value 0). Replace the previous regression line by a grey line, remove older regression lines, and add new regression line in black; also update regression equation.
 # # Number of observations.
@@ -110,7 +110,7 @@ The zero score on the moderator is the _reference value_ for the conditional eff
 
 Because the effect of a predictor involved in an interaction is a conditional effect, a zero score on the moderator has a special role. It is the reference value for the effect of the predictor. For example, the effect of exposure on attitude applies to respondents with zero contacts with smokers if the regression model includes an exposure by contact interaction. If zero on the moderator is so important as a reference value, we may want to manipulate this value to ensure that it is meaningful.
 
-```{r mean-centering-moderator, eval=TRUE, echo=FALSE, fig.cap="What happens if you mean-center the moderator variable?", out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mean-centering-moderator, eval=TRUE, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="What happens if you mean-center the moderator variable?", out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand how mean-centering affects the interpretion of the
 # conditional effect of the predictor by seeing how the reference value changes
 # with mean-centering (and centering on another value, e.g., M plus/minus 1 SD).
@@ -158,7 +158,7 @@ To _mean-center_ a variable, you subtract the variable's mean from all scores on
 
 Mean-centering shifts the values of a variable such that the mean of the new variable becomes zero (Figure \@ref(fig:mean-centering-plot)). Below-average values on the original variable are negative on a mean-centered variable and above-average values are positive. The shape of the distribution remains the same.
 
-```{r mean-centering-plot, eval=TRUE, echo=FALSE, fig.cap="Histograms of the original contacts with smokers variable and the mean-centered variable. The red lines represent the means."}
+```{r mean-centering-plot, eval=TRUE, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Histograms of the original contacts with smokers variable and the mean-centered variable. The red lines represent the means."}
 #create dataframe
 set.seed(4932)
 df <- tibble(`Contacts Original` = runif(600) * 10) %>%
@@ -180,7 +180,7 @@ Remember that the interaction variable is the product of the predictor and moder
 
 ### Symmetry of predictor and moderator
 
-```{r symmetry-predictor-moderator, eval=FALSE, echo=FALSE, fig.cap=""}
+```{r symmetry-predictor-moderator, eval=FALSE, echo=FALSE, fig.pos='H', fig.align='center', fig.cap=""}
 # Goal: Understand the advantages of mean-centering the predictor by seeing how
 # the reference value changes with mean-centering (and centering on another
 # value, e.g., M plus/minus 1 SD).
@@ -217,7 +217,7 @@ If we want to interpret the conditional effect of contact on attitude ($b_2$), w
 
 But wait a minute, this is what we would do if contact was the predictor and exposure the moderator. That is a completely different situation, is it not? No, technically it does not make a difference which variable is the predictor and which is the moderator (Figure \@ref(fig:moderator-symmetry)). The predictor and moderator are symmetric. The difference is only in our theoretical expectations and in our interpretation.
 
-```{r moderator-symmetry, echo=FALSE, fig.cap="Two conceptual diagrams of moderation for the same interaction effect.", fig.asp=0.2}
+```{r moderator-symmetry, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Two conceptual diagrams of moderation for the same interaction effect.", fig.asp=0.2}
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.2, 0.3, 0.4, 0.6, 0.7, 0.8), 
                         y = c(.1, .3, .1, .1, .3, .1),
@@ -243,7 +243,7 @@ The conditional effect of the moderator, as stated above, is the effect of the m
 
 It can be quite tricky to interpret regression coefficients in a regression model that contains interaction effects. The safest strategy is to draw regression lines for different values of the moderator. But what are interesting values if the moderator is numerical?
 
-```{r continuous-interaction-visualization, fig.cap="Which moderator values are helpful for visualizing moderation?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r continuous-interaction-visualization, fig.pos='H', fig.align='center', fig.cap="Which moderator values are helpful for visualizing moderation?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Clarify the interpretation of the (unstandardized) interaction effect by
 # showing regression lines at different (interesting) moderator scores (display
 # slope value).
@@ -398,7 +398,7 @@ In Section \@ref(commonsupportdichotomous), we checked the support of the predic
 
 With a numerical moderator we can also do this if we group moderator scores. Hainmueller et al. [-@RefWorks:3838] recommend creating three groups, each containing one third of all observations. These low, medium, and high groups correspond more or less with the minus one standard deviation/mean/plus one standard deviation values that we used for visualizing and testing conditional effects. Create a histogram for the predictor in each of these groups to check common support of moderation in the data, as explained in micro lecture \@ref(fig:SPSSregSupport1).
 
-```{r cont-moderator-support, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Common support of the predictor variable (exposure) at three levels of the moderator variable (contact)."}
+```{r cont-moderator-support, echo=FALSE, message=FALSE, warning=FALSE, fig.pos='H', fig.align='center', fig.cap="Common support of the predictor variable (exposure) at three levels of the moderator variable (contact)."}
 # Display predictor (exposure) values for three groups of the moderator (contact).
 smokers %>% #data read in previous code chunk
   mutate(contact_bin = factor(ntile(contact, 3),
@@ -656,7 +656,7 @@ Instead of presenting the numerical results in the text, we may summarize them i
 
 A sizable and statistically significant interaction effect signals that an effect is moderated. In the example reported in Table \@ref(tab:report-moderation-table), the effect of exposure on attitude seems to be moderated by contact with smokers (_b_ = `r report_n(results[6,1])`, `r ifelse(results[6,4] < .0005, "p < .001", paste0("p = ", report_n(results[6,4], digits=3)))`) and by smoking status (_b_ = `r report_n(results[7,1])`, `r ifelse(results[7,4] < .0005, "p < 0.001", paste0("p = ", report_n(results[7,4], digits=3)))` for former smoker). 
 
-```{r moderator-concept3, echo=FALSE, fig.cap="Conceptual diagram of the estimated moderation model.", fig.asp=0.3}
+```{r moderator-concept3, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Conceptual diagram of the estimated moderation model.", fig.asp=0.3}
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.32, 0.41, 0.5, 0.59, 0.68), 
                         y = c(.1, .3, .3, .3, .1),
@@ -686,7 +686,7 @@ This interpretation in terms of effect differences remains difficult to understa
 
 Visualize the regression lines for different values of the moderator in addition to presenting the numerical results. If the regression model contains covariates, mention the values that you have used for the covariates. Select one of the categories for a categorical covariate. For numerical covariates, the mean is a good choice. If you are working with mean-centered predictors, be sure to use the mean-centered predictor for the horizontal axis (as in Figure \@ref(fig:report-moderator-visual)), not the original predictor.
 
-```{r report-moderator-visual, fig.cap="The effect of exposure on attitude towards smoking. Left: Effects for groups with different smoking status (at average contact with smokers). Right: Effects at different levels of contact with smokers (effects for non-smokers).", out.width='50%', fig.asp=1, fig.show='hold', echo=FALSE}
+```{r report-moderator-visual, fig.pos='H', fig.align='center', fig.cap="The effect of exposure on attitude towards smoking. Left: Effects for groups with different smoking status (at average contact with smokers). Right: Effects at different levels of contact with smokers (effects for non-smokers).", out.width='50%', fig.asp=1, fig.show='hold', echo=FALSE}
 # Create grouping variable. 
 status <- rep(0, n)
 status[former == 1] <- 1
@@ -764,7 +764,7 @@ Finally, inspect the residual plots but do not include them in the report. Warn 
 
 ### Instructions
 
-```{r SPSSregcenter, echo=FALSE, out.width="640px", fig.cap="(ref:regcenterSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregcenter, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regcenterSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/JAYohFTdOH0", height = "360px")
 # Goal: Mean-centering numerical variables (both predictor and moderator) in SPSS.
 # Example: smokers.sav, the effect of campaign exposure on attitude towards smoking moderated by contacts that people have with smokers.
@@ -777,7 +777,7 @@ knitr::include_url("https://www.youtube.com/embed/JAYohFTdOH0", height = "360px"
 
 ----
 
-```{r SPSSreglines2, echo=FALSE, out.width="640px", fig.cap="(ref:reglines2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSreglines2, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:reglines2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/ApsTQJ6L-0k", height = "360px")
 # Goal: Graph regression lines for different moderator values in a scatterplot.
 # Example: smokers.sav, the effect of campaign exposure on attitude towards smoking moderated by contacts that people have with smokers (both mean-centered), smoking status as covariate.
@@ -788,7 +788,7 @@ knitr::include_url("https://www.youtube.com/embed/ApsTQJ6L-0k", height = "360px"
 
 ----
 
-```{r SPSSregSupport2, echo=FALSE, out.width="640px", fig.cap="(ref:regSupport2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregSupport2, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regSupport2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/pUo-i48NNbw", height = "360px")
 # Goal: Checking common support with a continuous moderator; group moderator in 3 groups (terciles) and create (panelled) histograms for the predictor scores in each moderator group
 # Example: smokers.sav, the effect of campaign exposure on attitude towards smoking moderated by contacts that people have with smokers.
@@ -1350,7 +1350,7 @@ intention = 6.096 + 0.128 * ad_expo [<img src="icons/2question.png" width=161px 
 
 Figure \@ref(fig:moderator-overview) shows the relation between exposure to an anti-smoking campaign and attitude towards smoking. The effect of exposure on attitude is moderated by daily contacts with people who smoke.
 
-```{r moderator-overview, fig.cap="How does moderation work in a regression model?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r moderator-overview, fig.pos='H', fig.align='center', fig.cap="How does moderation work in a regression model?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Use app continuous-moderator.
 knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator1/", height="325px")
 ```
@@ -1380,7 +1380,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/continuous-moderator1/", heigh
 5. What is the null hypothesis of a significance test on the interaction effect ($b_3$)? [<img src="icons/2answer.png" width=115px align="right">](#answer9.4.5)
 ```
 
-```{r mean-centering-moderator2, eval=TRUE, echo=FALSE, fig.cap="What does mean-centering do to regression results?", out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mean-centering-moderator2, eval=TRUE, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="What does mean-centering do to regression results?", out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 knitr::include_app("http://82.196.4.233:3838/apps/mean-centering-moderator/", height="310px")
 ```
 

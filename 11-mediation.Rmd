@@ -3,7 +3,7 @@
 
 Watch this micro lecture on mediation for an overview of the chapter.
 
-```{r, echo=FALSE, out.width="640px", dev="png", screenshot.opts = list(delay = 5)}
+```{r, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/P_hK2RKJPm4", height = "360px")
 ```
 
@@ -21,7 +21,7 @@ The causal order underlying the path model is an assumption that we make. A regr
 
 ## Mediation as Causal Process
 
-```{r mediation-commoncause, fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r mediation-commoncause, fig.pos='H', fig.align='center', fig.cap="How does a common cause affect regression coefficients? The values in this path diagram represent standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Sensitize students to the concept of a common cause creating a spurious effect and mediation as indirect effect.
 # Display causal diagram of age (predictor), political interest (mediator), and newspaper reading time (outcome) including a curved arrow representing the indirect effect of the predictor via the mediator on the outcome (if difficult to program, then just add label: "Indirect efect: 0.24"). If easy to program: relate width of arrows to the effect size (with some minimum width). Add values of partial effect sizes as labels to all direct effects and the indirect effect. Allow the user to change the correlations among the three variables (sliders with range [-.9, .9], initial values random choice in more limited range) and adjust the effect sizes to them.
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="325px")
@@ -77,7 +77,7 @@ Not all people become more interested in politics as they grow older and their i
 
 If we include both age and interest in politics as predictors in a regression model for newspaper reading time, the partial effect (Section \@ref(partialeffect)) of interest in politics is corrected for the spurious correlation between interest in politics and newspaper reading caused by age as their common cause. The partial effect of political interest can be interpreted as causal if current interest in politics was attained before the newspaper readings that we measure (very plausible) and age is the only common cause of interest in politics and newspaper reading (highly questionable).
 
-```{r causaldiagram, echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time.", fig.asp=0.3}
+```{r causaldiagram, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.5, 0.7), 
@@ -100,7 +100,7 @@ In the causal order that we theorize, age is causally prior (antecedent) to inte
 
 A causal diagram like Figure \@ref(fig:causaldiagram) is also called a _path diagram_. Each indirect effect is a sequence of direct effects. Each direct effect is a "step" from one variable to another variable, represented by an arrow. An indirect effect, then, can be regarded as a _path_ that we can follow to "travel" from one variable to another variable. 
 
-```{r causaldiagram2, echo=FALSE, fig.cap="Causal diagram for the effect of age on newspaper reading time mediated by interest in politics and news site use.", fig.asp=0.3}
+```{r causaldiagram2, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagram for the effect of age on newspaper reading time mediated by interest in politics and news site use.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.2, 0.4, 0.6, 0.8), 
@@ -180,7 +180,7 @@ between political interest and reading time. Note that 0.5 * 0.6 = 0.3. [<img sr
 
 Mediation or, more generally, path models can be estimated with a series of regression models. Every variable in the path diagram with at least one predictor (or incoming arrow) is a dependent variable, so for each of them, we estimate a regression model. The regression model contains all variables as predictors that may cause changes in the dependent variable. In other words, all variables that are causally prior to the outcome are used as predictors. In a well-designed causal diagram, all variables to the left of the outcome are causally prior to it.
 
-```{r mediation-regression, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/mediation-regression.png"}
+```{r mediation-regression, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/mediation-regression.png"}
 # Goal: Exemplify the different regression models required to estimate the direct effects in a path model.
 # Image of path model with age, education level (in years), political interest, news site use, and (current) newspaper reading time. Distinguish between hypothesized direct effects and non-hypothesized direct effects. Display the unstandardized regression coefficients with their 95% confidence intervals for the direct effects of all variables that are causally prior to the selected dependent variable.
 # Basic colours and layout.
@@ -279,7 +279,7 @@ The regression results tell us the sizes and statistical significance of all dir
 
 The size of an indirect effect is calculated in exactly the same way as the size of indirect correlations (Section \@ref(indirectcorrelation)): Just multiply the size of direct effects. This can be done with either the standardized regression coefficients or the unstandardized regression coefficients.
 
-```{r pathdiagram-unstandardized, echo=FALSE, fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/pathdiagram-unstandardized.png"}
+```{r pathdiagram-unstandardized, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Path diagram with unstandardized effect sizes and their 95% confidence intervals.", screenshot.alt = "figures/pathdiagram-unstandardized.png"}
 # Causal model/path diagram with unstandardized effect sizes (and 95% confidence intervals). All effects.
 # Display network.
 visNetwork(nodes, edges, width = "100%") %>% 
@@ -311,7 +311,7 @@ If people with more interest in politics use news sites more frequently, there i
 
 If each indirect effect in a path model contains at most one mediator, we have _single mediation_ or _parallel mediation_. Figure \@ref(fig:mediationparallel) illustrates single and parallel mediation. 
 
-```{r mediationparallel, echo=FALSE, fig.cap="Causal diagrams for single (left) and parallel mediation (right).", fig.asp=0.6, fig.show="hold", out.width="50%"}
+```{r mediationparallel, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagrams for single (left) and parallel mediation (right).", fig.asp=0.6, fig.show="hold", out.width="50%"}
 library(ggplot2)
 # Single mediation.
 # Create coordinates for the variable names.
@@ -345,7 +345,7 @@ rm(variables)
 
 If at least one of the indirect effects in a path model contains two or more mediators, we are dealing with _serial mediation_. Figure \@ref(fig:mediationserial) illustrates serial mediation. It contains an indirect effect from age on reading time with two mediators: Age > Political Interest > News Site Use > Reading Time. The distinction between parallel and serial mediation is relevant to the software (PROCESS) that we will use to estimate indirect and total effects (Section \@ref(SPSSPROCESS)).
 
-```{r mediationserial, echo=FALSE, fig.cap="Causal diagram for serial mediation.", fig.asp=0.3}
+```{r mediationserial, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagram for serial mediation.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.45, 0.7, 0.55), 
@@ -411,7 +411,7 @@ If the variables that we entered in the model as mediators do not create any ind
 
 ### Significance of indirect effects
 
-```{r mediation-inference, fig.cap="Does the sampling distribution of an indirect effect resemble the sampling distributions of its direct effects?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r mediation-inference, fig.pos='H', fig.align='center', fig.cap="Does the sampling distribution of an indirect effect resemble the sampling distributions of its direct effects?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand that each sample yields a size of the indirect effect, that
 # is added to the sampling distribution. Compare this sampling distribution with
 # the sampling distributions of the direct effects, to show that the sampling
@@ -473,7 +473,7 @@ In total, there is a substantial indirect effect of age on newspaper reading tim
 
 It may happen that an indirect effect is not statistically significant (the confidence interval includes zero) whereas all direct effects that constitute the indirect effect are statistically significant. In Figure \@ref(fig:causaldiagram3), for example, both the effect of age on political interest (_b_ = 0.30, 95% CI [0.22, 0.38]) and the effect of political interest on reading time (_b_ = 0.20, 95% CI [0.12, 0.28]) are statistically significant at the .05 level. The indirect effect of age via political interest on reading time, however, is not statistically significant at this level [_b_ = 0.30 * 0.20 = 0.06, 95% CI [-0.02, 0.14], (bootstrapped)]. 
 
-```{r causaldiagram3, echo=FALSE, fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time: unstandardized estimates with 95% confidence intervals.", fig.asp=0.3}
+```{r causaldiagram3, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagram for the effects of age and interest in politics on newspaper reading time: unstandardized estimates with 95% confidence intervals.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.5, 0.7), 
@@ -555,7 +555,7 @@ the normal curve.
 
 We usually have theoretical reasons to expect that a variable mediates an effect, for example, that political interest mediates the effect of age on newspaper reading time. At the same time, we know that our dependent variable and perhaps our mediator may depend on other variables. Newspaper reading time, for instance, may also depend on education. In this situation, we would use the other variables as covariates (or control variables) for which we want to control statistically.
 
-```{r causaldiagram4, echo=FALSE, fig.cap="Causal diagram for  interest in politics as mediator between age and newspaper reading time with education as covariate.", fig.asp=0.3}
+```{r causaldiagram4, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagram for  interest in politics as mediator between age and newspaper reading time with education as covariate.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.5, 0.7, 0.3), 
@@ -624,7 +624,7 @@ rm(results)
 
 A path model may yield a lot of direct effects, so it is good practice to present results as a path diagram with the values of the standardized or unstandardized regression coefficients as labels to the arrows. A path model conveniently summarizes the results for the reader (Figure \@ref(fig:results-pathdiagram)). Remember that we don't use standardized regression coefficients if the predictor or a covariate is dichotomous variable or a set of dummy variables (see Section \@ref(dichpredictor)).
 
-```{r results-pathdiagram, echo=FALSE, fig.asp=0.5, fig.cap="Unstandardized direct effects for a path model with one mediator and two covariates.", screenshot.alt = "figures/results-pathdiagram.png"}
+```{r results-pathdiagram, echo=FALSE, fig.asp=0.5, fig.pos='H', fig.align='center', fig.cap="Unstandardized direct effects for a path model with one mediator and two covariates.", screenshot.alt = "figures/results-pathdiagram.png"}
 # Load data.
 readers <- haven::read_spss("data/readers.sav")
 # Create effect sizes.
@@ -681,7 +681,7 @@ SPSS cannot apply statistical inference to indirect effects, so we use the PROCE
 
 ----
 
-```{r SPSSmediatpar, echo=FALSE, out.width="640px", fig.cap="(ref:mediatparSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSmediatpar, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:mediatparSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/EYGlO9X0Dws", height = "360px")
 # Goal: Estimating a single or parallel mediation model with PROCESS (Model 4).
 # Example: readers.sav, the effect of age on newspaper reading time mediated by political interest and news site use (in parallel). 
@@ -707,7 +707,7 @@ knitr::include_url("https://www.youtube.com/embed/EYGlO9X0Dws", height = "360px"
 
 ----
 
-```{r SPSSmediatserial, echo=FALSE, out.width="640px", fig.cap="(ref:mediatserialSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSmediatserial, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:mediatserialSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/gpH72wfXj94", height = "360px")
 # Goal: Estimating a serial mediation model with PROCESS (Model 6).
 # Example: readers.sav, the effect of age on newspaper reading time mediated by political interest and news site use (in serial). 
@@ -730,7 +730,7 @@ knitr::include_url("https://www.youtube.com/embed/gpH72wfXj94", height = "360px"
 
 ----
 
-```{r SPSSmediatcov, echo=FALSE, out.width="640px", fig.cap="(ref:mediatcovSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSmediatcov, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:mediatcovSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/ofYaqFyP4NE", height = "360px")
 # Goal: Estimating a (single mediator) mediation model including covariates with PROCESS.
 # Example: readers.sav, the effect of age on newspaper reading time mediated by news site use with education and political interest as covariates. Note that we cannot specify effects on the mediator for one covariate but not the other.
@@ -746,7 +746,7 @@ knitr::include_url("https://www.youtube.com/embed/ofYaqFyP4NE", height = "360px"
 
 ----
 
-```{r SPSSpath, echo=FALSE, out.width="640px", fig.cap="(ref:pathSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSpath, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:pathSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/a_xllJhFHq8", height = "360px")
 # Goal: Getting standardized direct effects and checking assumptions in SPSS, estimating a path model with both parallel and serial mediators in SPSS that cannot be estimated in PROCESS (two models with covariates)?.
 # Example: readers.sav, the effect of age on newspaper reading time mediated by news site use and the effect of education mediated by both political interest (age -> educ -> pol.interest -> reading).
@@ -1167,7 +1167,7 @@ Mediation and moderation (Chapters \@ref(moderationcat) and \@ref(moderationcont
 
 If the indirect effect is different for females and males, at least one of the two direct effects (predictor on mediator or mediator on dependent variable) must be different for females and males. In Figure \@ref(fig:causaldiagram5), the direct effect of age on interest in politics is moderated and as a consequence, indirect effects including this effect are moderated. This is called _moderated mediation_. In this example, sex is the moderator and interest in politics is the mediator.
 
-```{r causaldiagram5, echo=FALSE, fig.cap="Causal diagram for interest in politics as mediator between age and newspaper reading time with sex as moderator of the effect of age on interest in politics.", fig.asp=0.3}
+```{r causaldiagram5, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Causal diagram for interest in politics as mediator between age and newspaper reading time with sex as moderator of the effect of age on interest in politics.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.5, 0.7, 0.35), 
@@ -1189,7 +1189,7 @@ Several models with more than one mediator or with moderated mediation can be es
 
 ## Test Your Understanding
 
-```{r mediationserial2, echo=FALSE, fig.cap="A path model with unstandardized regression coefficients.", fig.asp=0.3}
+```{r mediationserial2, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="A path model with unstandardized regression coefficients.", fig.asp=0.3}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.3, 0.3, 0.45, 0.55, 0.7), 
@@ -1231,7 +1231,7 @@ rm(variables)
 3. Calculate the total effect of (parental) supervision on media literacy  in Figure \@ref(fig:mediationserial2) and compare this effect to the direct effect of supervision on media literacy.  [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.3)
 ```
 
-```{r mediation-selftest, fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r mediation-selftest, fig.pos='H', fig.align='center', fig.cap="How does mediation work and how can we analyze mediation with regression models? The values to the arrows in the diagram are standardized regression coefficients.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Use app mediation-commoncause.
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", height="325px")
 ```

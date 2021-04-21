@@ -3,7 +3,7 @@
 
 Watch this micro lecture on regression analysis with a categorical moderator for an overview of the chapter.
 
-```{r, echo=FALSE, out.width="640px", dev="png", screenshot.opts = list(delay = 5)}
+```{r, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/BwyrzKdp1HM", height = "360px")
 ```
 
@@ -51,7 +51,7 @@ An interaction effect in a regression model closely resembles an interaction eff
 
 In the social sciences, we usually expect that a particular outcome has several causes. Investigating the effects of an anti-smoking campaign, for instance, we would not assume that a person's attitude towards smoking depends only on exposure to a particular anti-smoking campaign. It is easy to think of other and perhaps more influential causes such as personal smoking status, contact with people who do or do not smoke, susceptibility to addiction, and so on.
 
-```{r concept-smoke, echo=FALSE, fig.asp=0.4, fig.cap="A conceptual model with some hypothesized causes of attitude towards smoking."}
+```{r concept-smoke, echo=FALSE, fig.asp=0.4, fig.pos='H', fig.align='center', fig.cap="A conceptual model with some hypothesized causes of attitude towards smoking."}
 # Draw conceptual diagram: Attitude towards smoking predicted by Exposure, Smoking status, and Contact with smokers.
 library(ggplot2)
 # Create coordinates for the variable names.
@@ -93,7 +93,7 @@ If we want to predict the dependent variable ($y$), we ignore the error term ($e
 
 Let us first have a close look at _simple regression equations_, that is, regression equations with just one predictor ($x$). Let us try to predict attitude towards smoking from exposure to an anti-smoking campaign.
 
-```{r regression-continuous, fig.cap="Predicting attitude towards smoking from exposure to an anti-smoking campaign. The orange dot represents the predicted attitude for the selected value of exposure.", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r regression-continuous, fig.pos='H', fig.align='center', fig.cap="Predicting attitude towards smoking from exposure to an anti-smoking campaign. The orange dot represents the predicted attitude for the selected value of exposure.", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Understand the meaning of the constant and the regression coefficient
 # with a single numerical predictor.
 # Generate a data set with attitude towards smoking as Y and exposure as X with
@@ -177,7 +177,7 @@ We cannot see this in the regression equation, which allows us to plug in -10, 1
 
 Instead of a numerical independent variable, we can use a dichotomy as an independent variable in a regression model. The dichotomy is preferably coded as 1 versus 0, for example, 1 for smokers and 0 for non-smokers among our respondents.
 
-```{r regression-dichotomy, eval=TRUE, echo=FALSE, fig.cap="What is the difference in attitude between non-smokers and smokers?", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r regression-dichotomy, eval=TRUE, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="What is the difference in attitude between non-smokers and smokers?", screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Refresh interpretation of unstandardized regression weight for a
 # dichotomous independent variable by manipulating group averages.
 # Generate attitude scores  with average values -0.6 for non-smokers and 1.0 for
@@ -244,7 +244,7 @@ Therefore, it is recommended to interpret only the unstandardized regression coe
 
 How about a categorical variable containing three or more groups, for example, the distinction between respondents who smoke (smokers), stopped smoking (former smokers), and respondents who never smoked (non-smokers)? Can we include a categorical variable as an independent variable in a regression model? Yes, we can but we need a trick.
 
-```{r regression-categorical, fig.cap="What are the predictive effects of smoking status?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r regression-categorical, fig.pos='H', fig.align='center', fig.cap="What are the predictive effects of smoking status?", echo = FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Understanding effects of dummy variables by manipulating the reference
 # group.
 # Generate numerical dependent variable data (attitude, range [-5, 5]) for a categorical
@@ -360,7 +360,7 @@ Finally, note that we should not include all three dummy variables in the regres
 
 ### Sampling distributions and assumptions {#regr-inference}
 
-```{r regression-sampling, eval=FALSE, echo=FALSE, fig.cap="What happens to regression lines from sample to sample?"}
+```{r regression-sampling, eval=FALSE, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="What happens to regression lines from sample to sample?"}
 # Goal: Understand that regression constant and coefficient(s) have sampling
 # distributions.
 # Generate a population with a weak negative effect (-0.6) of exposure on
@@ -401,7 +401,7 @@ Clustered data should also not be considered as independent observations. Think,
 
 To check the assumption of identically distributed observations, we inspect the residuals. Remember, the residuals are represented by the error term ($e$) in the regression equation. They are the difference between the scores that we observe for our respondents and the scores that we predict for them with our regression model.
 
-```{r resid-normal, fig.cap="What are the residuals and how are they distributed?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r resid-normal, fig.pos='H', fig.align='center', fig.cap="What are the residuals and how are they distributed?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Understand the meaning of residuals by linking residuals in a
 # scatterplot to the x values in a histogram.
 # Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on
@@ -446,7 +446,7 @@ The other two assumptions that we use tell us about problems in our model rather
 
 The regression models that we estimate assume a linear model. This means that an additional unit of the independent variable always increases or decreases the predicted value by the same amount. If our regression coefficient for the effect of exposure on attitude is -0.25, an exposure score of one predicts a 0.25 more negative attitude towards smoking than zero exposure. Exposure score five predicts the same difference in comparison to score four as exposure score ten in comparison to exposure score nine, and so on. Because of the linearity assumption, we can draw a regression model as a straight line. Residuals of the regression model help us to see whether the assumption of a linear effect is plausible.
 
-```{r pred-linearity, fig.cap="How do residuals tell us whether the relation is linear?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r pred-linearity, fig.pos='H', fig.align='center', fig.cap="How do residuals tell us whether the relation is linear?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating the shape of the association.
 # Generate a sample (N = 20?) with a weak negative effect (-0.6) of exposure on attitude, with a sizable error term to have residuals that are clearly visible. Generate either a sample with (1) linear, (2) curved, (3) U-shaped association. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a button to select a different association shape. Upon selection of a shape, generate & display new sample data.
 knitr::include_app("http://82.196.4.233:3838/apps/pred-linearity/", height="460px")
@@ -474,7 +474,7 @@ This indicates that our linear model does not fit the data. If it would fit, the
 
 The plot of residuals by predicted values of the dependent variable tells us more than whether a linear model fits the data.
 
-```{r pred-homoscedasticity, fig.cap="How do residuals tell us that we predict all values equally well?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r pred-homoscedasticity, fig.pos='H', fig.align='center', fig.cap="How do residuals tell us that we predict all values equally well?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Understand the relation between linear model (scatterplot) and residuals plot by manipulating homoscedasticity.
 # Generate a sample (N = 20) with a weak negative effect (-0.6) of exposure on attitude and exposure, with a sizable error term to have residuals that are clearly visible. Generate error terms with a dependency on the independent variable ranging from -1 to +1. Display the sample as a scatterplot with the regression line and (red) line segments linking the dots vertically to the regression line. Display the residuals also in a residuals (Y) by predicted values (X) plot. Hovering over/clicking a dot in the scatterplot should highlight the corresponding dot in the residuals plot. Add a slider (range [-@, 0], initial value 0) to set the levl of heteroscedasticity. Upon slider change, generate & display new sample data.
 knitr::include_app("http://82.196.4.233:3838/apps/pred-homoscedasticity/", height="460px")
@@ -729,7 +729,7 @@ Here, we can predict all levels of attitude equally well or equally badly.
 
 ### Instructions
 
-```{r SPSSregsimple, echo=FALSE, out.width="640px", fig.cap="(ref:regsimpleSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregsimple, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regsimpleSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/euVRsi-NpKk", height = "360px")
 # Goal: asymmetric association as prediction
 # Example: consumers.sav, brand awareness by advertisement exposure
@@ -742,7 +742,7 @@ knitr::include_url("https://www.youtube.com/embed/euVRsi-NpKk", height = "360px"
 
 ----
 
-```{r SPSSregdummy2, echo=FALSE, out.width="640px", fig.cap="(ref:regdummy2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregdummy2, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regdummy2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/hiYbfhkKODE", height = "360px")
 # Creating dummy variables in SPSS.
 # Goal: Understand creating dummy variables.
@@ -753,7 +753,7 @@ knitr::include_url("https://www.youtube.com/embed/hiYbfhkKODE", height = "360px"
 
 ----
 
-```{r SPSSregdummy, echo=FALSE, out.width="640px", fig.cap="(ref:regdummySPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregdummy, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regdummySPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/QB4-LJVJPu4", height = "360px")
 # Using dummy variables in a regression model in SPSS.
 # Example: smokers.sav, predict the attitude towards smoking from exposure to an anti-smoking campaign and respondent's smoking status (dummies).
@@ -764,7 +764,7 @@ knitr::include_url("https://www.youtube.com/embed/QB4-LJVJPu4", height = "360px"
 
 ----
 
-```{r SPSSregassumpt, echo=FALSE, out.width="640px", fig.cap="(ref:regassumptSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregassumpt, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regassumptSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/_9u-VVSh7iU", height = "360px")
 # Goal: Inspecting residuals.  (see Chapter 4 on hypothesis testing for video about regression basics.)
 # Example: smokers.sav, predict the attitude towards smoking from exposure to an anti-smoking campaign and respondent's smoking status.
@@ -1050,7 +1050,7 @@ What if the effect of campaign exposure on attitude towards smoking may be diffe
 
 In a conceptual diagram (Figure \@ref(fig:moderator-concept2)), moderation is represented by an arrow pointing at another arrow. The moderator (smoking status) changes the relation between the predictor (campaign exposure) and the dependent variable (attitude towards smoking). 
 
-```{r moderator-concept2, echo=FALSE, fig.cap="Conceptual diagram of moderation.", fig.asp=0.3}
+```{r moderator-concept2, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Conceptual diagram of moderation.", fig.asp=0.3}
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(0.35, 0.5, 0.65), 
                         y = c(.1, .3, .1),
@@ -1078,7 +1078,7 @@ In the current section, we discuss regression models with a numerical predictor 
 
 ### A dichotomous moderator and numerical predictor
 
-```{r dichotomous-moderator, fig.cap="Is the effect of exposure on attitude moderated by smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r dichotomous-moderator, fig.pos='H', fig.align='center', fig.cap="Is the effect of exposure on attitude moderated by smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize the student to the notion that moderation in a regression
 # model means different slopes for different groups.
 # In a graph with attitude as Y axis and exposure as X axis, generate two regression lines, one for smokers and one for non-smokers. 
@@ -1108,7 +1108,7 @@ In the context of a regression model, moderation means __different slopes for di
 
 How do we obtain different regression coefficients and lines for smokers and non-smokers? The statistical trick is quite easy: Include an additional predictor in the model that is the product of the predictor (exposure) and the moderator (smoking status). This new predictor is the _interaction variable_. The regression coefficient of the interaction variable is called the _interaction effect_.
 
-```{r interaction-var, fig.cap="How does an interaction variable create different regression lines for different groups?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r interaction-var, fig.pos='H', fig.align='center', fig.cap="How does an interaction variable create different regression lines for different groups?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: Intuitive understanding of the effect of an interaction variable.
 # Generate a dataset with 30 observations for the regression model y = 3 -
 # 0.5x_1 + 1.5x_2 + 0.3x_1*x_2 with x_1 in the range [0, 10] and x_2 a dummy (0
@@ -1160,7 +1160,7 @@ The interaction variable must be included together with the original predictor a
 \normalsize
 \end{equation}
 
-```{r moderator-statistical, fig.cap="Statistical diagram of moderation.", echo=FALSE, fig.asp=0.4}
+```{r moderator-statistical, fig.pos='H', fig.align='center', fig.cap="Statistical diagram of moderation.", echo=FALSE, fig.asp=0.4}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(rep.int(0.3, times = 3), 0.7), 
@@ -1295,7 +1295,7 @@ rm(report_n, results)
 ### A categorical moderator
 What if we have three or more groups on our moderator? For example, smoking status measured with three categories: (1) never smoked, (2) formerly smoked, (3) currently smoking? Does the effect of exposure on attitude vary between non-smokers, participants who stopped smoking, and those who are still smoking?
 
-```{r categorical-moderator, fig.cap="When do we have moderation with a categorical moderator?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r categorical-moderator, fig.pos='H', fig.align='center', fig.cap="When do we have moderation with a categorical moderator?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Goal: Sensitize the student to the notion that moderation in a regression
 # model means different slopes for different groups.
 # In a graph with attitude as Y axis and exposure as X axis, generate two regression lines, one for smokers and one for non-smokers. 
@@ -1315,7 +1315,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/categorical-moderator/", heigh
 
 In Section \@ref(categorical-predictor), we learned that we must create dummy variables for all but one groups of a categorical predictor in a regression model. This is what we have to do also for a categorical moderator. If the effect of a predictor, such as exposure, is moderated by a categorical variable, we have to create an interaction variable for each dummy variable in the equation. To create the interaction variables, we multiply the predictor by each of the dummy variables. 
 
-```{r categorical-moderator-fig, echo=FALSE, fig.cap="Statistical diagram with a moderator consisting of three groups. Non-smokers are the reference group", fig.asp=0.4}
+```{r categorical-moderator-fig, echo=FALSE, fig.pos='H', fig.align='center', fig.cap="Statistical diagram with a moderator consisting of three groups. Non-smokers are the reference group", fig.asp=0.4}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(rep.int(0.3, times = 5), 0.7), 
@@ -1382,7 +1382,7 @@ In a regression model with moderation, we have to interpret the effect of a pred
 
 For example, we need quite some observations for smokers to estimate the conditional effect of exposure on attitude for smokers. If there are hardly any smokers in our sample, we cannot estimate the effect of exposure on attitude for them in a reliable way. Even if we have quite some observations for smokers but all smokers have low exposure, we cannot say much about the effect of exposure on attitude for them. If we cannot say much about the effect within this group, we cannot say much about the difference between this effect and effects for other groups. In short, the moderation model is problematic in this situation.
 
-```{r common-support, fig.cap="How well do the observations cover the predictor within each category of smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
+```{r common-support, fig.pos='H', fig.align='center', fig.cap="How well do the observations cover the predictor within each category of smoking status?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Sensitize students to the problem of lacking support for conditional
 # effects by inspecting the coverage of the predictor for each moderator group.
 # Generate a sample for smokers, for former smokers, and for non-smokers each of
@@ -1438,7 +1438,7 @@ A _covariate_ is an independent variable that is currently not central to our an
 
 Note that the distinction between predictor, moderator, and covariate is temporary. As soon as we focus on another variable, that variable becomes the predictor and the other predictors become moderators or covariates. The distinction between predictor, moderator, and covariate is just terminology to show on which variable we focus.
 
-```{r moderator-covar-statistical, fig.cap="Statistical diagram of moderation with contact as covariate.", echo=FALSE, fig.asp=0.4}
+```{r moderator-covar-statistical, fig.pos='H', fig.align='center', fig.cap="Statistical diagram of moderation with contact as covariate.", echo=FALSE, fig.asp=0.4}
 library(ggplot2)
 # Create coordinates for the variable names.
 variables <- data.frame(x = c(rep.int(0.3, times = 4), 0.7), 
@@ -1537,7 +1537,7 @@ The terms with *smoker* and *contact* drop from the equation, so *exposure* is t
 
 Repeat these steps but plug in the score 1 for the *smoker* predictor to obtain the simple regression line for smokers. Figure \@ref(fig:dich-moderator-cov-plot) shows the two regression lines and their equations. The effect of exposure on attitude is more strongly negative for smokers than for non-smokers.
 
-```{r dich-moderator-cov-plot, echo=FALSE, out.width="600px", fig.cap="The effects of exposure on attitude for non-smokers and smokers. Both smokers and non-smokers are assumed to have average contact with smokers."}
+```{r dich-moderator-cov-plot, echo=FALSE, out.width="600px", fig.pos='H', fig.align='center', fig.cap="The effects of exposure on attitude for non-smokers and smokers. Both smokers and non-smokers are assumed to have average contact with smokers."}
 #Create and show the plot.
 ggplot(smokers, aes(x = exposure, y = attitude, 
                     colour = factor(status2,
@@ -1749,7 +1749,7 @@ regression effect for this group is not to be trusted. [<img src="icons/2questio
 
 ### Instructions
 
-```{r SPSSregpred, echo=FALSE, out.width="640px", fig.cap="(ref:regpredSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregpred, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regpredSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/8iB4LiTWSVY", height = "360px")
 # Goal: Creating categorical by numerical interaction predictors (2 methods).
 # Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable status2 and status3), use contact with smokers as a covariate.
@@ -1765,7 +1765,7 @@ knitr::include_url("https://www.youtube.com/embed/8iB4LiTWSVY", height = "360px"
 #   - Note: this procedure can also be used to create a numerical by numerical interaction variable
 ```
 
-```{r SPSSregcatmod, echo=FALSE, out.width="640px", fig.cap="(ref:regcatmodSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregcatmod, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regcatmodSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/ZBIm1rrdXZE", height = "360px")
 # Goal: Estimating categorical by numerical moderation with regression in SPSS.
 # Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_), use contact with smokers as a covariate.
@@ -1774,7 +1774,7 @@ knitr::include_url("https://www.youtube.com/embed/ZBIm1rrdXZE", height = "360px"
 # Check assumptions: See other video.
 ``` 
 
-```{r SPSSregmodlines, echo=FALSE, out.width="640px", fig.cap="(ref:regmodlinesSPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregmodlines, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regmodlinesSPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/JyiFKgaF8-M", height = "360px")
 # Goal: Representing moderation by regression lines in a scatterplot in SPSS.
 # Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_), use contact with smokers as a covariate.
@@ -1798,7 +1798,7 @@ knitr::include_url("https://www.youtube.com/embed/JyiFKgaF8-M", height = "360px"
 #     - close the Chart Editor
 ```
 
-```{r SPSSregSupport1, echo=FALSE, out.width="640px", fig.cap="(ref:regSupport1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
+```{r SPSSregSupport1, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:regSupport1SPSS)", dev="png", screenshot.opts = list(delay = 5)}
 knitr::include_url("https://www.youtube.com/embed/JznCrf0lCIU", height = "360px")
 # Goal: Check common support for a predictor at different moderator values in SPSS.
 # Example: smokers.sav, predict the attitude towards smoking from exposure moderated by smoking status (variable _status2_), use contact with smokers as a covariate.
@@ -2177,7 +2177,7 @@ smokers with high exposure are rare. [<img src="icons/2question.png" width=161px
 
 Figure \@ref(fig:regression-predict2) shows how much respondents were exposed to an anti-smoking campaign (horizontal axis) and their attitudes towards smoking, ranging from negative (-5) to positive (5, vertical axis). Attitude towards smoking is predicted from exposure as well as from the respondent's smoking status and daily contacts with smokers as specified by the (red) multiple regression equation. The blue line represents the (blue) simple regression equation, which predicts attitude from exposure for the selected value of smoking status and contact.
 
-```{r regression-predict2, fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
+```{r regression-predict2, fig.pos='H', fig.align='center', fig.cap="How do predictions based on exposure depend on values of smoking status and smoker contact?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
 # Goal: sensitize student to the notion that prediction in a multiple regression
 # model requires selecting one independent variable and fixed values for the other
 # independent variables. Without moderation, the fixed values only change the vertical
@@ -2236,7 +2236,7 @@ data.frame(
 6. Calculate the regression equation for the effect of exposure on attitude for former smokers who have two contacts with smokers using the results summarized in Table \@ref(tab:exampleresults). [<img src="icons/2answer.png" width=115px align="right">](#answer8.5.6)
 ```
 
-```{r supportexamples, echo=FALSE, eval=TRUE, out.width="640px", out.height="478px", fig.cap="Four examples of common support."}
+```{r supportexamples, echo=FALSE, eval=TRUE, out.width="640px", out.height="478px", fig.pos='H', fig.align='center', fig.cap="Four examples of common support."}
 include_graphics("figures/Q8.5.7.png")
 ```
 
