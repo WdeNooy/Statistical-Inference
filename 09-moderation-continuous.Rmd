@@ -638,7 +638,7 @@ $R^2$ tells us how well the regression model predicts the dependent variable in 
 # Table.
 options(knitr.kable.NA = '')
 knitr::kable(table, booktabs = TRUE, align = c("l", "c"),
-             caption = "Predicting attitude towards smoking with smoking status and contact with smokers as moderators. Results in APA6 style. Exposure and contact are mean-centered.") %>%
+             caption = "Predicting attitude towards smoking with smoking status and contact with smokers as moderators. Results in APA style. Exposure and contact are mean-centered.") %>%
   footnote(general = "_N_ = 150. CI = confidence interval.",
            symbol =  "*\\* _p_ < .05. \\*\\* _p_ < .01. \\*** _p_ < .001.",
            general_title = "Note.", title_format = c("italic"),
@@ -977,9 +977,9 @@ FREQUENCIES VARIABLES=exposure contact
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
 \* Subtract mean from variable.  
-COMPUTE exposure_c=exposure - 4.866.  
+COMPUTE exposure_c=exposure - 4.9255.  
 VARIABLE LABELS  exposure_c 'Exposure (mean-centered)'.  
-COMPUTE contact_c=contact - 5.091.  
+COMPUTE contact_c=contact - 4.9951.  
 VARIABLE LABELS  contact_c 'Contact (mean-centered)'.  
 EXECUTE.  
 \* Compute new interaction variable.  
@@ -1007,15 +1007,11 @@ Check assumptions: See Exercise 1.
 Interpret the results:  
   
 * The size and significance of the interaction effect have not changed at all. Mean-centering only changes the reference values for the effects of the predictor and the moderator. It does not affect the interaction effect.
-* The coefficient for exposure now expresses the predictive effect of exposure for adults with average contact with smokers. They have more contact with smokers than the reference group in Exercise 1, who had no contact with smokers. The interaction effect tells us that the effect of exposure becomes less negative at higher levels of contact. This explains that we have a lower value for the exposure coefficient now. It still is negative, so more exposure to the anti-smoking campaign predicts a more negative attitude towards smoking for adults with average contact with smokers, *b* = -0.31, *t* = -9.60, *p* < .001, 95% CI [-0.38, -0.25].
-* In contrast, the positive effect of contact with smokers on attitude is stronger now (*b* = 0.23) than in Exercise 1 (*b* = 0.02). The interaction effect tells us that contact has a more positive effect on smoking attitude for higher levels of campaign exposure. As a result, the effect of contact at average exposure is stronger than at zero exposure.
+* The coefficient for exposure now expresses the predictive effect of exposure for adults with average contact with smokers. They have more contact with smokers than the reference group in Exercise 1, who had no contact with smokers. The interaction effect tells us that the effect of exposure becomes less negative at higher levels of contact. This explains that we have a higher (less strongly negative) value for the exposure coefficient now. It still is negative, so more exposure to the anti-smoking campaign predicts a more negative attitude towards smoking for adults with average contact with smokers, *b* = -0.32, *t* = -9.77, *p* < .001, 95% CI [-0.38, -0.25].
+* The positive effect of contact with smokers on attitude is stronger now (*b* = 0.23) than in Exercise 1 (*b* = 0.02). The interaction effect tells us that contact has a more positive effect on smoking attitude for higher levels of campaign exposure. As a result, the effect of contact at average exposure is stronger than at zero exposure.
 * Why do we have a statistical significant result for the effect of contact
 now (*p* < .001) but not in Exercise 1 (*p* = .864)?
-* Part of the answer is that the the unstandardized effect is larger (*b* = 0.23) now than in Exercise 1 (*b* = 0.02). It is further away from zero so it is easier to reject the nil hypothesis. The standard error is the other part of the answer. The standard error is smaller now: *SE* = 0.05 against *SE* = 0.09 in Exercise 1. We have quite some observations with about average contact score (the reference value if we mean-center) but hardly
-any observations with minimum (zero) contact score. With fewer observations,
-we are less certain about estimates, so we have a larger standard error, and
-it is more difficult to be confident that the regression coefficient is not
-zero in the population. [<img src="icons/2question.png" width=161px align="right">](#question9.3.3)
+* Part of the answer is that the unstandardized effect is larger (*b* = 0.23) now than in Exercise 1 (*b* = 0.02). It is further away from zero so it is easier to reject the nil hypothesis. The standard error is the other part of the answer. The standard error is smaller now: *SE* = 0.05 against *SE* = 0.09 in Exercise 1. We have quite some observations with about average contact score (the reference value if we mean-center) but hardly any observations with minimum (zero) contact score. With fewer observations, we are less certain about estimates, so we have a larger standard error, and it is more difficult to be confident that the regression coefficient is not zero in the population. [<img src="icons/2question.png" width=161px align="right">](#question9.3.3)
 ```
 
 <A name="answer9.3.4"></A>
@@ -1074,9 +1070,9 @@ FREQUENCIES VARIABLES=age supervision
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
 \* Subtract mean from variable.  
-COMPUTE age_c=age - 9.754.
-VARIABLE LABELS age_c 'Age (mean-centered)'.
-COMPUTE supervision_c=supervision - 5.992.
+COMPUTE age_c=age - 9.754.  
+VARIABLE LABELS age_c 'Age (mean-centered)'.  
+COMPUTE supervision_c=supervision - 5.992.  
 VARIABLE LABELS supervision_c 'Supervision (mean-centered)'.  
 EXECUTE.  
 \* Check mean centering.  
@@ -1144,6 +1140,9 @@ With rearranged terms and sex plugged in for boys:
 medliter = 7.321 + -0.130 \* 0 + 0.284 \* age_centered + 
   (0.406  + -0.002 \* age_centered) \* supervision_centered  
   
+medliter = 7.321 + 0.284 \* age_centered + 
+  (0.406  + -0.002 \* age_centered) \* supervision_centered  
+  
 Age at M - SD (mean-centered so M = 0, SD = 1.879) for boys:  
   
 medliter = 7.321 + 0.284\*(0 - 1.879) + (0.406 + -0.002\*(0 - 1.879))\*supervision  
@@ -1154,17 +1153,17 @@ medliter = 6.787 + 0.410\*supervision
     
 Age at M (M = 0) for boys:  
   
-medliter = 7.321 + .176\*(0) + (0.406 + .025\*(0))\*supervision  
+medliter = 7.321 + 0.284\*(0) + (0.406 + .025\*(0))\*supervision  
   
 medliter = 7.321 + 0.406\*supervision  
   
 Age at M + SD (M = 0, SD = 1.879) for boys:  
   
-medliter = 7.321 + .176\*(0 + 1.879) + (0.406 + -0.002\*(0 + 1.879))\*supervision  
+medliter = 7.321 + 0.284\*(0 + 1.879) + (0.406 + -0.002\*(0 + 1.879))\*supervision  
   
-medliter = 7.321 + 0.331 + (0.406 + -0.004)\*supervision  
+medliter = 7.321 + 0.534 + (0.406 + -0.004)\*supervision  
   
-medliter = 7.652 + 0.402\*supervision  
+medliter = 7.855 + 0.402\*supervision  
 
 For girls, the intercept (constant) is the only thing that is different than for boys.
 

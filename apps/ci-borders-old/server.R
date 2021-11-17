@@ -5,7 +5,7 @@ library(RColorBrewer)
 shinyServer(function(input, output) {
   source("../plottheme/styling.R",local = TRUE)
   mean = 2.8 #population mean
-  sd = 0.8 #Population standard deviation
+  sd = runif(n = 1, min = 0.6, max = 1) #Population standard deviation
 
   output$mainplot <- renderPlot({
     right <- input$mainslider #Left border value

@@ -17,6 +17,8 @@ In the previous chapter, we drew a large number of samples from a population to 
 
 Although this procedure is simple, it is not practical. In a research project, we would have to draw thousands of samples and administer a survey to each sample or collect data on the sample in some other way. This requires too much time and money to be of any practical value. So how do we create a sampling distribution, if we only collect data for a single sample? This chapter presents three ways of doing this: bootstrapping, exact approaches, and theoretical approximations.
 
+After studying this chapter, you should know the limitations of the three methods of creating a sampling distribution, when to use which method, and how to check the conditions for using a method.
+
 ## The Bootstrap Approximation of the Sampling Distribution {#boot-approx}
 
 The first way to obtain a sampling distribution is still based on the idea of drawing a large number of samples. However, we only draw one sample from the population for which we collect data. As a next step, we draw a large number of samples from our initial sample. The samples drawn in the second step are called _bootstrap samples_. The technique was developed by Bradley Efron [-@RefWorks:3956; -@RefWorks:3957]. For each bootstrap sample, we calculate the sample statistic of interest and we collect these as our sampling distribution. We usually want about 5,000 bootstrap samples for our sampling distribution.  
@@ -281,7 +283,7 @@ knitr::include_url("https://www.youtube.com/embed/6E2LgeMtkL4", height = "360px"
 # In SPSS version 24 and earlier, bootstrapping remains active until you disable it. (example with paired t test as next test). There is one thing you should be aware of. If you select the _Perform bootstrapping_ option, all subsequent analyses in SPSS that allow for bootstrapping will be bootstrapped as well. This is usually not what you want and it can be very time-consuming to the computer. Don't forget to deselect this option if you run a new analysis that can be bootstrapped.
 ```
 
-In principle, any sample statistic can be bootstrapped. SPSS, however, does not bootstrap all sample statistics. For example, SPSS does not bootstrap the minimum value, maximum value or the range between minimum and maximum value of a variable. 
+In principle, any sample statistic can be bootstrapped. SPSS, however, does not bootstrap sample statistics that we had better not use because they give bad (biased) results. For example, SPSS does not bootstrap the minimum value, maximum value or the range between minimum and maximum value of a variable. 
 
 SPSS reports bootstrapping results as confidence intervals. We will discuss confidence intervals in detail in the next chapter.
 
@@ -454,7 +456,7 @@ knitr::include_url("https://www.youtube.com/embed/SrfZeLvsHwg", height = "360px"
 ```
 
 ```{r  SPSSExact2, echo=FALSE, out.width="640px", fig.pos='H', fig.align='center', fig.cap="(ref:Exact2SPSS)", dev="png", screenshot.opts = list(delay = 5)}
-knitr::include_url("https://www.youtube.com/embed/2bYF6qb2fjc", height = "360px")
+knitr::include_url("https://www.youtube.com/embed/PlT28wfc6K4", height = "360px")
 # Interpret exact test results in SPSS.
 # Example: exact test on crosstab of candy colour and candy stickiness.
 # The output of a Fisher-exact test on the relation between candy colour and candy stickiness is shown below. We included column percentages in the cells and a symmetric measure of association (Phi and Cramer's V). 
@@ -547,7 +549,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/normal-approximation/", height
 
 <A name="question2.5.2"></A>
 ```{block2, type='rmdquestion'}
-2. While checking the distribution, pay special attention to the tails because these are used for significance tests (see Chapter \@ref(hypothesis)). The red and green bars represent the 2.5 per cent samples with minimum or maximum average weight. The vertical lines mark the outer 2.5 per cent according to the normal distribution. Do the tail borders of the sampling distribution and normal distribution match? [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.2)
+2. While checking the distribution, pay special attention to the tails because these are used for significance tests (see Chapter \@ref(hypothesis)). The red and green bars represent the 2.5 per cent samples with the lowest or highest average weights. The vertical lines mark the outer 2.5 per cent according to the normal distribution. Do the tail borders of the sampling distribution and normal distribution match? [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.2)
 ```
 
 <A name="question2.5.3"></A>
@@ -567,9 +569,7 @@ In addition, it is more likely that our sample bag has an average weight that is
 
 From this argumentation, we conclude that the normal distribution is a reasonable model for the probability distribution of sample means. Actually, it has been proven that the normal distribution exactly represents the sampling distribution in particular cases, for instance the sampling distribution of the mean of a very large sample.
 
-As a model, the theoretical probability distribution may give a better approximation of the sampling distribution than a sampling distribution created by drawing many samples from the population (as you have done in Figure \@ref(fig:normal-approximation)), or from the initial sample as in bootstrapping. Sampling is always subject to chance, so we may have accidentally drawn samples that do not cover the true sampling distribution well.  
-
-### Conditions for the use of theoretical probability distributions {#cond-probdistr}
+s### Conditions for the use of theoretical probability distributions {#cond-probdistr}
 
 Theoretical probability distributions, then, are plausible models for sampling distributions. They are known or likely to have the same shape as the true sampling distributions under particular circumstances or conditions. 
 
@@ -591,15 +591,15 @@ knitr::include_app("http://82.196.4.233:3838/apps/normal-approx-proportion/", he
 
 <A name="question2.5.4"></A>
 ```{block2, type='rmdquestion'}
-4. How do you expect sample size to affect the shape of the sampling distribution? State your expectation and then check it in the interactive content by changing sample size. [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.4)
+4. How does sample size affect the shape of the sampling distribution? See what happens if you change sample size in the interactive content. [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.4)
 ```
 
 <A name="question2.5.5"></A>
 ```{block2, type='rmdquestion'}
-5. How do you expect the population proportion to affect the shape of the sampling distribution? State your expectation and then check it in the interactive content by changing the population proportion. [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.5)
+5. How does the population proportion affect the shape of the sampling distribution? See what happens if you change the population proportion in the interactive content. [<img src="icons/2answer.png" width=115px align="right">](#answer2.5.5)
 ```
 
-Do theoretical probability distributions fit the true sampling distribution? As you may have noticed while playing with Figure \@ref(fig:normal-approx-proportion), this is not always the case. In general, theoretical probability distributions fit sampling distributions better if the sample is larger. In addition, the value of the parameter may be relevant to the fit of the theoretical probability distribution. The sampling distribution of a sample proportion is more symmetrical, like the normal distribution, if the proportion in the population is closer to .5.
+Do theoretical probability distributions fit the true sampling distribution? As you may have noticed while playing with Figure \@ref(fig:normal-approx-proportion), this is not always the case. In general, theoretical probability distributions fit sampling distributions better if the sample is larger. In addition, the population value may be relevant to the fit of the theoretical probability distribution. The sampling distribution of a sample proportion is more symmetrical, like the normal distribution, if the proportion in the population is closer to .5.
 
 This illustrates that we often have several conditions for a theoretical probability distribution to fit the sampling distribution. We should evaluate all of them at the same time. In the example of proportions, a large sample is less important if the true proportion is closer to .5 but it is more important for true proportions that are more distant from .5.
 
@@ -612,7 +612,7 @@ Apart from the normal distribution, there are several other theoretical probabil
 For most of these theoretical probability distributions, sample size is important. The larger the sample, the better. There are additional conditions that must be satisfied such as the distribution of the variable in the population. The rules of thumb are summarized in Table \@ref(tab:thumb). Bootstrapping and exact tests can be used if conditions for theoretical probability distributions have not been met. Special conditions apply to regression analysis (see Chapter \@ref(moderationcat), Section \@ref(regr-inference)).
 
 ```{r thumb, echo=FALSE, screenshot.opts=list(delay = 2)}
-knitr::kable(rbind(c("Binomial distribution", "proportion", "-", "-"), c("(Standard) normal distribution", "proportion", ">= 5 divided by test proportion (<= .5)", "-"), c("(Standard) normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known (for each group)"), c("t distribution", "one or two means", "each group > 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "20+ per independent variable", "See Chapter 8."), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), booktabs = TRUE, col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." ) %>%
+knitr::kable(rbind(c("Binomial distribution", "proportion", "-", "-"), c("(Standard) normal distribution", "proportion", "times test proportion (<= .5) >= 5", "-"), c("(Standard) normal distribution", "one or two means", "> 100", "OR variable is normally distributed in the population and population standard deviation is known (for each group)"), c("t distribution", "one or two means", "each group > 30", "OR variable is normally distributed in each group's population"), c("t distribution", "(Pearson) correlation coefficient", "-", "variables are normally distributed in the population"), c("t distribution", "(Spearman) rank correlation coefficient", "> 30", "-"), c("t distribution", "regression coefficient", "20+ per independent variable", "See Chapter 8."), c("F distribution", "3+ means", " all groups are more or less of equal size", "OR all groups have the same population variance"), c("F distribution", "two variances", "-", "no conditions for Levene's F test"), c("chi-squared distribution", "row or cell frequencies", "expected frequency >= 1 and 80% >= 5", "contingency table: 3+ rows or 3+ columns")), booktabs = TRUE, col.names = c("Distribution", "Sample statistic", "Minimum sample size", "Other requirements"), caption = "Rules of thumb for using theoretical probability distributions." ) %>%
   kable_styling(font_size = 12, latex_options = c("HOLD_position", "scale_down"))
 ```
 
@@ -744,10 +744,9 @@ Answer to Question 3.
 ```{block2, type='rmdanswer'}
 Answer to Question 4. 
 
-* The larger the sample, the more information each sample contains, the more
-samples resemble the population, the closer is the sample statistic to the
-population value. As a consequence, a larger sample produces a sampling
-distribution that is more peaked. [<img src="icons/2question.png" width=161px align="right">](#question2.5.4)
+* A larger sample produces a sampling distribution that is more peaked. This means that the sample statistic outcomes are closer to the true population value (which is the mean of the sampling distribution).
+* In bags containing only two candies, we may often encounter bags without yellow candies (sample proportion of yellow candies: 0.0) or bags with two yellow candies (sample proportion of yellow candies: 1.0). Both values are quite different from the true population proportion (0.5).
+* In bags containing two-hundred candies, we will hardly ever encounter no yellow candies (0.0) or only yellow candies (1.0) if the proportion of candies in the population is 0.5. In these large bags, the proportion of yellow candies is usually be close to 0.5. The sample proportions are closer to the true population proportion. [<img src="icons/2question.png" width=161px align="right">](#question2.5.4)
 ```
 
 <A name="answer2.5.5"></A>
@@ -1028,6 +1027,8 @@ for statistical tests. [<img src="icons/2question.png" width=161px align="right"
 * We may create an exact sampling distribution or simulate a bootstrap sampling distribution in simple situations or if we have a lot of computing power.  
 
 * For a bootstrap sampling distribution, we need about 5,000 bootstrap samples from our original sample.  
+
+* An exact sampling distribution can only be used with categorical variables.
 
 * We can often approximate the sampling distribution of a sample statistic with a known theoretical probability distribution.  
 
