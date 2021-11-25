@@ -89,8 +89,8 @@ shinyServer(function(input, output) {
                                              name = "t value")) +
       scale_y_continuous(breaks = NULL) + 
       #Axis labels and theme                                       
-      xlab("Average media literacy") + 
-      ylab("Density") + 
+      xlab("Average media literacy in a sample of children") + 
+      ylab("Probability density") + 
       theme_general() + 
       guides(linetype = FALSE)
   })

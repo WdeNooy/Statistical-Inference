@@ -29,7 +29,7 @@ Estimation is one of two types of statistical inference, the other being null hy
 
 Hypothesis testing, however, is more in line with this conceptualization of scientific progress. It requires the researcher to formulate an expectation about the population, usually called a _hypothesis_. If the hypothesis is based on theory and previous research, the scientist uses previous knowledge. As a next step, the researcher tests the hypothesis against data collected for this purpose. If the data contradict the hypothesis, the hypothesis is rejected and the researcher has to improve the theory. If the data does not contradict the hypothesis, it is not rejected and, for the time being, the researcher does not have to change the theory.  
 
-Hypothesis testing, then, amounts to choosing one of two options: reject or not reject the hypothesis. This is a binary decision between believing that the population is as it is described in the null hypothesis, or believing that it is not. This is quite a different approach than estimating a confidence interval as a range of plausible population values. Nevertheless, hypothesis testing and confidence intervals are tightly related as we will see later on in this chapter (Section \@ref(null-ci0)).
+Hypothesis testing, then, amounts to choosing one of two options: reject or not reject the hypothesis. This is a binary decision between believing that the population is as it is described in the hypothesis, or believing that it is not. This is quite a different approach than estimating a confidence interval as a range of plausible population values. Nevertheless, hypothesis testing and confidence intervals are tightly related as we will see later on in this chapter (Section \@ref(null-ci0)).
 
 ## Statistical Tests
 
@@ -94,12 +94,12 @@ knitr::include_app("http://82.196.4.233:3838/apps/nullsampling/", height="410px"
 
 <A name="question4.2.4"></A>
 ```{block2, type='rmdquestion'}
-4. In the second step of hypothesis testing (click on *Step 2*), we have to formulate a decision rule for rejecting the null hypothesis. The decision rule is customarily based on a significance level of five per cent. In this situation, when do we reject the null hypothesis? And what represents the *rejection region* in Figure \@ref(fig:nullsampling)? [<img src="icons/2answer.png" width=115px align="right">](#answer4.2.4)
+4. In the second step of hypothesis testing (click on *Step 2*), we formulate a decision rule for rejecting the null hypothesis. The decision rule is graphically represented by the blue tails in Figure \@ref(fig:nullsampling). What is the probability that we draw a sample that is part of the blue tails? Note that this probability is called the *significance level* of the test. [<img src="icons/2answer.png" width=115px align="right">](#answer4.2.4)
 ```
 
 <A name="question4.2.5"></A>
 ```{block2, type='rmdquestion'}
-5. How low or high must the sample mean be to have a statistically significant test result? [<img src="icons/2answer.png" width=115px align="right">](#answer4.2.5)
+5. If a sample is part of the blue tails, we reject the null hypothesis. We say that the test is statistically significant. How low or high must the sample mean be to have a statistically significant test result? [<img src="icons/2answer.png" width=115px align="right">](#answer4.2.5)
 ```
 
 <A name="question4.2.6"></A>
@@ -176,7 +176,7 @@ It is important to remember that a _p_ value is a probability _under the assumpt
 
 Compare it to the probability that we throw sixes with a dice. This probability is one out of six under the assumption that the dice is fair. Probabilities rest on assumptions. If the assumptions are violated, we cannot calculate probabilities. 
 
-If the dice is not fair, we don't know the probability of throwing sixes. In the same way, we have no clue whatsoever of the probability of drawing a sample like the one we have if the null hypothesis is not true in the population. This is why specifying a null hypothesis is necessary for calculating _p_ values.
+If the dice is not fair, we don't know the probability of throwing sixes. In the same way, we have no clue whatsoever of the probability of drawing a sample like the one we have if the null hypothesis is not true in the population.
 
 ### Answers {-}
 
@@ -237,29 +237,20 @@ true. In that case, we draw our sample from another sampling distribution.
 ```{block2, type='rmdanswer'}
 Answer to Question 4. 
 
-* We are going to reject the null hypothesis if our sample outcome (average
-media literacy) is among the five per cent outcomes that are most unlikely.
-The five per cent is the significance level, which is represented by the blue
-tails in the figure.
-* If average media literacy in our sample is in the blue tails, we reject the
-null hypothesis.
-* The media literacy scores on the horizontal axis that are under the blue
-tails constitute the rejection region. [<img src="icons/2question.png"
+* The probability that a sample is part of the blue tails, is 5 per cent because a sampling distribution gives us probabilities of sample outcomes. But note that this probability is only correct if the null hypothesis is true (see the [answer to Question 3](#answer4.2.3)). [<img src="icons/2question.png"
 width=161px align="right">](#question4.2.4)
 ```
 
-<A name="answer4.2.5"></A>
+<A name="answer4.2.5"></A>    
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* A test result is statistically significant if we reject the null hypothesis.
-* In the initial example, with average population media literacy hypothesized
+* The decision rule states that we reject the null hypothesis if average media literacy in our sample is in the blue tails. This means that we reject the null hypothesis if our sample outcome (average media literacy) is among the five per cent outcomes that are most unlikely if the null hypothesis is true.
+* In the initial example with average population media literacy hypothesized
 to be 5.5, sample means below 4.07 or above 6.93 are in the blue tails, so we
 reject the null hypothesis. These sample means are statistically significantly
 different from the hypothesized population value. 
-* The rejection region (see the previous question), consists of all sample
-means below 4.07 and all sample means above 6.93. [<img
-src="icons/2question.png" width=161px align="right">](#question4.2.5)
+* The rejection region consists of all sample means below 4.07 and all sample means above 6.93. [<img src="icons/2question.png" width=161px align="right">](#question4.2.5)
 ```
 
 <A name="answer4.2.6"></A>
@@ -393,9 +384,9 @@ The alternative hypothesis is of interest because it usually represents the rese
 
 Not knowing which precise difference or association to expect, we usually formulate the research hypothesis that there is a difference or association. Because a particular value for the difference or association cannot be specified, these research hypotheses are alternative hypotheses. The associated null hypothesis is that there is no difference or no association. It equates the population statistic to one value, namely zero. This type of null hypothesis is called a _nil hypothesis_ or just plainly _the nil_. 
 
-When groups have the same average scores on a dependent variable, for example, willingness to donate to a charity, the differences between the group averages are hypothesized to be zero. If there is no correlation between exposure and brand awareness in the population, the correlation coefficient (Spearman's rho or Pearson's correlation coefficient) or regression coefficient ($b$ or $b^*$) is hypothesized to be zero. For all measures of association, zero means that there is no association. All of these are examples of nil hypotheses because the population value is hypothesized to be zero.
+If we expect that groups have different average scores on a dependent variable, for example, willingness to donate to a charity, but we do not know how different, we test the null hypothesis that the differences between the group averages are zero (no difference) in the population. If we expect a correlation between exposure and brand awareness in the population but we have no clue about the size of the correlation, we test the null hypothesis that the population correlation coefficient (Spearman's rho or Pearson's correlation coefficient) or regression coefficient ($b$ or $b^*$) is zero. For all measures of association, zero means that there is no association. All of these are examples of nil hypotheses because the population value is hypothesized to be zero.
 
-If the research hypothesis is the alternative hypothesis, we have to formulate the null hypothesis ourselves. This is very important, because the null hypothesis is actually tested. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero (see Section \@ref(nullSPSS) on null hypotheses in SPSS).
+If the research hypothesis is the alternative hypothesis, we have to choose a value for the null hypothesis ourselves. This is very important, because the null hypothesis is actually tested. If statistical software does not report the null hypothesis that is being tested, you may assume that it equates the parameter of interest to zero (see Section \@ref(nullSPSS) on null hypotheses in SPSS).
 
 ### Answers {-}
 
@@ -616,37 +607,37 @@ We have not discussed yet how we construct the sampling distribution. Chapter \@
 
 A theoretical probability distribution links sample outcomes such as a sample mean to probabilities by means of a _test statistic_. A test statistic is named after the theoretical probability distribution to which it belongs: _z_ for the standard-normal or _z_ distribution, _t_ for the _t_ distribution, _F_ for the _F_ distribution and, surprise, surprise, chi-squared for the chi-squared distribution.  
 
-```{r crit-df, fig.pos='H', fig.align='center', fig.cap="Sample size and critical values in a one-sample _t_ test on the null hypothesis that the population average is 5.5.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
+```{r crit-df, fig.pos='H', fig.align='center', fig.cap="Sample size and critical values in a one-sample _t_ test.", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="420px"}
 # Compare app crit-values in Ch. 3.
 # Draw a t distribution with mean 5.5, standard deviation 0.4, and degrees of freedom equal to selected sample size minus 1 ; x-axis with scale and labelled "Average media literacy" ; second x axis reflecting t values ; vertical lines with values for critical values (two-sided, 5% significance level) ; colour areas outside the critical values ; add a slider to adjust sample size (range [5, 50], initial setting 25) ; update the t distribution, the critical values (vertical lines), the areas outside the critical values, and the scale of the t axis if the slider position changes.
 knitr::include_app("http://82.196.4.233:3838/apps/crit-df/", height="405px")
 ```
 
-Figure \@ref(fig:crit-df) uses the _t_ distribution to approximate the sampling distribution of average media literacy in a random sample of children. The null hypothesis states that average media literacy is 5.5 in the population of children.
+Figure \@ref(fig:crit-df) uses the _t_ distribution to approximate the sampling distribution of average media literacy in a random sample of children.
 
 <A name="question4.5.1"></A>
 ```{block2, type='rmdquestion'}
-1. What is the meaning of the coloured tails? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.1)
+1. What is the null hypothesis in a test that uses the sampling distribution depicted in Figure \@ref(fig:crit-df)? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.1)
 ```
 
 <A name="question4.5.2"></A>
 ```{block2, type='rmdquestion'}
-2. What is the meaning of t~c~? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.2)
+2. What is the value of _t_ if average media literacy in our sample is 5.5? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.2)
 ```
 
 <A name="question4.5.3"></A>
 ```{block2, type='rmdquestion'}
-3. Why does the distribution become more pointed when sample size increases? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.3)
+3. What is the meaning of the coloured tails? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.3)
 ```
 
 <A name="question4.5.4"></A>
 ```{block2, type='rmdquestion'}
-4. Is there a fixed relation between the _t_ values (top axis) and the values for average sample media literacy (bottom axis)? Change the sample size to find the answer. [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.4)
+4. How can we use _t~c~_ (the critical value of the test statistic) to test the null hypothesis? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.4)
 ```
 
 <A name="question4.5.5"></A>
 ```{block2, type='rmdquestion'}
-5.  What is the relation between sample size and critical _t_ values? [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.5)
+5.  What is the relation between sample size and critical _t_ values? Change the sample size to find the answer. [<img src="icons/2answer.png" width=115px align="right">](#answer4.5.5)
 ```
 
 A test statistic is calculated from the sample statistic that we want to test, for instance, the sample proportion, mean, variance, or association, but it uses the null hypothesis as well. A test statistic more or less standardizes the difference between the sample statistic and the population value that we expect under the null hypothesis. 
@@ -655,7 +646,7 @@ The exact formula and calculation of a test statistic is not important to us. Ju
 
 We reject the null hypothesis if the test statistic is in the _rejection region_. The value of the test statistic where the rejection region starts, is called the _critical value_ of the test statistic. In Section \@ref(crit-values), we learned that 1.96 is the critical value of z for a two-sided test at five per cent significance level in a standard-normal distribution. In a z test, then, a sample z value above 1.96 or below -1.96 indicates a statistically significant test result.
 
-Probability distributions other than the standard-normal distribution, however, do not have fixed critical values. Their critical values depend on the _degrees of freedom_ of the test, usually abbreviated to _df_. The degrees of freedom of a test may depend on sample size, the number of groups that we compare, or the number of rows and columns in a contingency table. We do not have to worry about this. 
+Probability distributions other than the standard-normal distribution, however, do not have fixed critical values. Their critical values depend on the _degrees of freedom_ of the test, usually abbreviated to _df_. The degrees of freedom of a test may depend on sample size, the number of groups that we compare, or the number of rows and columns in a contingency table. We do not have to worry about this.
 
 The _t_ distribution is an example of a probability distribution for which the critical values depend on the degrees of freedom of the test. In this case, the degrees of freedom are determined by sample size. Larger samples have more degrees of freedom and, as a consequence, they have slightly lower critical values. For samples that are not too small the critical values of _t_ are near 2. You may have noticed this in Figure \@ref(fig:crit-df).
 
@@ -667,52 +658,39 @@ APA requires us to report the degrees of freedom. If SPSS reports the degrees of
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* The coloured tails represent the probabilities of drawing a sample with a
-(sample) mean that differs a lot from the (true or hypothesized) population
-mean. The (true or hypothesized) population mean is represented by the centre
-of the distribution.
-* In this case, the probabilities of the two coloured tails sum to 5%, so the
-tails represent the top five per cent of samples that are most different from
-the hypothesized or true population mean. [<img src="icons/2question.png" width=161px align="right">](#question4.5.1)
+* The null hypothesis is that average media literacy in the population is 5.5. Remember that the hypothesized population value is equal to the average (centre) of the sampling distribution. [<img src="icons/2question.png" width=161px align="right">](#question4.5.1)
 ```
 
 <A name="answer4.5.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* t~c~ is the value of the test statistic _t_ that separates the most unlikely
-or most extreme samples from the most likely samples.
-* It is called the critical value of the test statistic. [<img src="icons/2question.png" width=161px align="right">](#question4.5.2)
+* At 5.5 average media literacy (bottom axis), the value of test statistic _t_ is 0 (top axis). Just follow the vertical line from 5.5 up. A test statistic transforms raw scores (here: average media literacy) into standardized scores (here: _t_ values), so the average is zero. [<img src="icons/2question.png" width=161px align="right">](#question4.5.2)
 ```
 
 <A name="answer4.5.3"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* With a larger sample, we have more information, so we have more precise
-results. More sample means are close to the true population mean.
-* In technical terms, the variation of sample means decreases with larger
-sample size; sample means are more alike. The standard deviation of the
-sampling distribution measures the variation of sample means. It is the
-standard error of the sampling distribution (see Section \@ref(standard-error)). A
-distribution of larger samples has a smaller standard error. [<img src="icons/2question.png" width=161px align="right">](#question4.5.3)
+* The coloured tails represent the probabilities of drawing a sample with a (sample) mean that differs a lot from the hypothesized population mean. The hypothesized population mean is represented by the centre of the distribution.
+* In this case, the probabilities of the two coloured tails sum to 5%, so the tails represent the top five per cent of samples that are most different from the hypothesized population mean. [<img src="icons/2question.png" width=161px align="right">](#question4.5.3)
 ```
 
 <A name="answer4.5.4"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 4. 
 
-* No, there is not a fixed relation. A particular average media literacy
-score, for example, 4.0 on the bottom scale, does not always correspond to the
-same test statistic (t) value on the top scale. Just change sample size to see
-this. [<img src="icons/2question.png" width=161px align="right">](#question4.5.4)
+* _t~c~_ is the value of the test statistic _t_ that separates the most unlikely
+or most extreme samples from the most likely samples. It separates the blue tails and the rejection region where we reject the null hypothesis from the samples that do not reject the null hypothesis.
+* If the _t_ value of our sample is larger than the positive critical value or smaller than the negative critical value, our sample falls within the rejection region, so we reject the null hypothesis. If _t~c~_, for example, is 2.1, we reject the null hypothesis if _t_ for our sample is 3.0 or -3.0, but we do not reject the null hypothesis if _t_ is 1.0 or -1.0 in our sample. [<img src="icons/2question.png" width=161px align="right">](#question4.5.4)
 ```
 
 <A name="answer4.5.5"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 5. 
 
-* Smaller samples have slightly larger critical _t_ values. [<img src="icons/2question.png" width=161px align="right">](#question4.5.5)
+* Smaller samples have slightly larger critical _t_ values. 
+* Note that we do not have a fixed value for the critical value of _t_ as we have for the critical value in a _z_ or standard-normal distribution. The critical value of _z_ is 1.96 (and -1.96) for all sample sizes. [<img src="icons/2question.png" width=161px align="right">](#question4.5.5)
 ```
 
 ## Testing a Null Hypothesis with an Exact Approach or Bootstrapping
@@ -740,7 +718,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/null-ci/", height="268px")
 
 <A name="question4.6.1"></A>
 ```{block2, type='rmdquestion'}
-1. What are the lowest and highest hypothesized population means for which the null hypothesis is _not_ rejected? [<img src="icons/2answer.png" width=115px align="right">](#answer4.6.1)
+1. What are the lowest and highest hypothesized population means for which the null hypothesis is _not_ rejected? Use the slider to find the answer. [<img src="icons/2answer.png" width=115px align="right">](#answer4.6.1)
 ```
 
 <A name="question4.6.2"></A>
@@ -799,14 +777,9 @@ not statistically significant. [<img src="icons/2question.png" width=161px align
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* A confidence interval contains all (hypothetical) values of the population
-value---here: the population mean---for which the observed sample is
-plausible, for example, it is among the 95% of samples with values closest
-to the population value.
-* We reject a null hypothesis if the sample is NOT plausible when the null
-hypothesis is true. So we reject null hypotheses if the hypothesized population
-value is OUTSIDE the confidence interval. If it is INSIDE the confidence
-interval, we do NOT reject the null hypothesis. [<img src="icons/2question.png" width=161px align="right">](#question4.6.2)
+* A confidence interval contains all population values---here: the population mean---for which the observed sample is among the 95% most likely samples to be drawn from such a population.
+* We reject a null hypothesis if the sample is NOT among the 95% most likely samples if the null hypothesis is true. In other words, if it is among the 5% most unlikely samples. 
+* So we reject null hypotheses if the hypothesized population value is OUTSIDE the confidence interval. If it is INSIDE the confidence interval, we do NOT reject the null hypothesis. [<img src="icons/2question.png" width=161px align="right">](#question4.6.2)
 ```
   
 ## Test Recipe and Rules for Reporting
@@ -823,7 +796,7 @@ Before we execute the test, we have to choose the maximum probability of rejecti
 
 3. Select how the sampling distribution is created.  
 
-Are you going to use bootstrapping, an exact approach, or a theoretical probability distribution? Theoretical probability distributions are the most common choice. We have to know which theoretical probability distribution can be used for which test. If you are working with statistical software, you automatically select the correct probability distribution by selecting the correct test. For example, a test on the means of two independent samples in SPSS uses the _t_ distribution.
+Are you going to use bootstrapping, an exact approach, or a theoretical probability distribution? Theoretical probability distributions are the most common choice. If you are working with statistical software, you automatically select the correct probability distribution by selecting the correct test. For example, a test on the means of two independent samples in SPSS uses the _t_ distribution.
 
 4. Execute the test.  
 
@@ -1243,7 +1216,7 @@ We can correct in several ways for this type of capitalization on chance; one su
 
 The Bonferroni correction is a rather coarse correction, which is not entirely accurate. However, it has a simple logic that directly links to the problem of capitalization on chance. Therefore, it is a good technique to help understand the problem, which is the main goal we want to attain, here. We will skip better, but more complicated alternatives to Bonferroni correction.
 
-It has been argued that we do not have to apply a correction for capitalization on chance if we specify a hypothesis beforehand for each test that we execute. Formulating hypotheses does not solve the problem of capitalization on chance. The probability of rejecting at least one true null hypothesis still increases with the number of tests that we execute. If all hypotheses and associated tests are reported [(as recommended in @wassersteinASAStatementPValues2016), however, the reader of the report can evaluate capitalization on chance. If one out of twenty tests at five per cent significance level turns out to be statistically significant, this is what we would expect based on chance if all null hypotheses are true. The evidence for rejecting this null hypothesis is less convincing than if only one test was applied and that test turned out to be statistically significant.
+It has been argued that we do not have to apply a correction for capitalization on chance if we specify a hypothesis beforehand for each test that we execute. Formulating hypotheses does not solve the problem of capitalization on chance. The probability of rejecting at least one true null hypothesis still increases with the number of tests that we execute. If all hypotheses and associated tests are reported [(as recommended in @wassersteinASAStatementPValues2016], however, the reader of the report can evaluate capitalization on chance. If one out of twenty tests at five per cent significance level turns out to be statistically significant, this is what we would expect based on chance if all null hypotheses are true. The evidence for rejecting this null hypothesis is less convincing than if only one test was applied and that test turned out to be statistically significant.
 
 ### Specifying hypotheses afterwards
 
@@ -1366,13 +1339,15 @@ wrong if you (re)formulate the null hypothesis when you know your sample.
 
 ## Take-Home Points  
 
-* We use a statistical test if we want to decide on a null hypothesis: reject or not reject? Usually, this boils down to the question: Is there or is there not an effect (difference, association) in the population?  
+* We use a statistical test if we want to decide on a null hypothesis: reject or not reject?   
 
 * The decision rules should be specified beforehand: Decide on the direction of the test (one-sided or two-sided) and the significance level.
 
 * The null and alternative hypotheses always concern a population statistic. Together they cover all possible outcomes for the statistic. The null hypothesis always specifies one (boundary) value for the population statistic. 
 
 * We reject the null hypothesis if a test is statistically significant. This means that the probability of drawing a sample with the current or a more extreme outcome (even more inconsistent with the null hypothesis) if the null hypothesis is true (conditional probability) is below the significance level.
+
+* A statistically significant test does not prove that the null hypothesis is false. We can make a Type I error: rejecting a true null hypothesis.
 
 * The 95% confidence interval includes all null hypotheses that would _not_ be rejected in a two-sided test at five per cent significance level. It contains the population values that are not sufficiently contradicted by the data.
 

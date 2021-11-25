@@ -95,13 +95,13 @@ output$mainplot <- renderPlot({
     ) +
     geom_text(
       aes(x = meansample, y = 0.5 * under,
-          label = paste0("Sample mean: ", round(meansample, digits = 2)),
+          label = paste0("Sample average: ", round(meansample, digits = 2)),
           vjust = .5,
           hjust = 1.05),
       colour = brewercolors["Red"]
     ) +
     theme_general() +
-    scale_x_continuous(name = "Sample candy weight scores (grams)",
+    scale_x_continuous(name = "Average candy weight in a sample (grams)",
                        limits = c(xmin, xmax),
                        breaks = c(lefth0, righth0), 
                        labels = c(round(lefth0, 2), round(righth0, 2)),
