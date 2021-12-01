@@ -1,24 +1,25 @@
 library(shiny)
-fig.width = 620
-fig.height = 320
+fig.width = 400
+fig.height = 400
 
 
 shinyUI(
   fluidPage(
-    fluidRow(column(2,
+    fluidRow(column(3,
                     br(), br(),
                     aligh = "left",
                     div(
                       checkboxGroupInput("predcheckbox",
-                                  label = "Additional predictors",
+                                  label = "Predictors",
                                   choices = c("Age" = "age",
                                               "Education" = "education",
+                                              "Pol. Interest" = "polinterest",
                                               "News site use" = "newssite"),
                                   inline = FALSE
                                   )
                       )
                     ),
-             column(10,
+             column(9,
                     align = "center",
                     plotOutput("mainplot",
                           width = fig.width,

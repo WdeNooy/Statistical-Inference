@@ -15,9 +15,21 @@ Can I add a causal order to the predictors in my regression models?
 
 If we add a causal order among the predictors of our regression model, we obtain a causal model or path model. The causal model includes an indirect effect: The first predictor affects the scores on the second predictor, which affects the scores on the dependent variable that we usually call the outcome variable. For example, age affects news site use, which affects newspaper reading time. In this path model, the second predictor (news site use) mediates the effect of the first predictor on the outcome variable. The second predictor is called a mediator.
 
-We can estimate a path model as a series of regression models. The size of an indirect effect equals the product of the direct effects that constitute the indirect effect. With additional software, we can estimate the confidence interval of an indirect effect. 
+We can estimate a path model as a series of regression models. The size of an indirect effect equals the product of the direct effects that constitute the indirect effect. With additional software, we can estimate the confidence interval of an indirect effect.
 
-The causal order underlying the path model is an assumption that we make. A regression model shows the predictive effects, which do not have to be causal. We cannot prove that the predictive effects are causal. We can only think of arguments that make a causal interpretation of a predictive effect plausible.
+Mediation models help us to think about the different ways in which a variable may cause another variable. But we must realize that the causal order underlying the model is an assumption that we make. A regression model shows the predictive effects, which do not have to be causal. We cannot prove that the predictive effects are causal. We can only think of arguments that make a causal interpretation of a predictive effect plausible.
+
+#### Essential Analytics {.unnumbered}
+
+We can analyze a mediation model with a series of regression analysis in SPSS (the *Linear* option in the *Regression* submenu). We need one regression model for each variable that is predicted by one or more other variables in the model. The predicted variable is the dependent variable and as independent variables we use all variables that we think are causally prior to the dependent variable.
+
+As an alternative, we may use the PROCESS macro for SPSS. The macro requires that we distinguish between parallel mediation (each indirect effect has just one mediator) and serial mediation (at least one indirect effect includes two or more mediators). PROCESS gives us the size and bootstrapped confidence intervals for all indirect effects of the selected predictor via mediators on the final outcome variable.
+
+```{r mediationtable, echo=FALSE, out.width="75%", fig.pos='H', fig.align='center', fig.cap="PROCESS output with estimated indirect and total effects of age on average newspaper reading time."}
+knitr::include_graphics("figures/S11_AE1.png")
+```
+
+Figure \@ref(fig:mediationtable) shows the results of a model in which political interest and news site use mediate the effect of age on nespaper reading time. Apart from a direct effect (_b_ = 4.55, 95%CI[3.62, 5.47], red box in Figure \@ref(fig:mediationtable)), three indirect effects have been estimated. Clearly the strongest indirect effect of age is the effect mediated by news site use (Figure \@ref(fig:mediationtable), green boxes). An additional unit of age increases predicted newspaper reading time by 1.44. The 95% confidence interval (95%CI[0.64, 2.24], bootstrapped) does not include zero, so this indirect effect is statistically significant at the .05 significance level.
 
 ## Mediation as Causal Process
 
@@ -51,7 +63,7 @@ knitr::include_app("http://82.196.4.233:3838/apps/mediation-commoncause/", heigh
 
 <A name="question9.5.3"></A>
 ```{block2, type='rmdquestion'}
-3. Adjust the correlations in such a way that the effect of age on reading time is fully mediated by political interest. How can we see that the effect is fully mediated? [<img src="icons/2answer.png" width=115px align="right">](#answer9.5.3)
+3. Adjust the correlations in such a way that the effect of age on reading time is zero. In this situation, we say that the effect is fully mediated. [<img src="icons/2answer.png" width=115px align="right">](#answer9.5.3)
 ```
 
 ### Criteria for a causal relation {#causalcriteria}
@@ -63,7 +75,7 @@ The second criterion is the time order between cause and consequence. A cause mu
 
 A third criterion for causality is that the correlation is not spurious. In Section \@ref(spuriousness), we have encountered a spurious effect as an effect that incorrectly includes the effect of a confounder (reinforcer).
 
-In the context of causality, spuriousness is linked to a confounder that is a _common cause_ to both the assumed cause (predictor) and consequence (dependent variable). Age, for instance, can be a common cause both to having (grand)children and reading newspapers. Older people tend to have more (grand)children and they read more newspapers. If we do not control for age when we regress newspaper reading time on the number of (grand)children a person has, we may find a positive effect.
+In the context of causality, spuriousness is linked to a confounder that is a _common cause_ to both the assumed cause (predictor) and consequence (dependent variable). Age, for instance, can be a common cause both to having (grand)children and reading newspapers. Older people tend to have more (grand)children and they read more newspapers. If we do not control for age in a regression model predicting newspaper reading time from the number of (grand)children a person has, we may find a positive effect.
 
 This effect is probably not causal: We do not spend more time reading newspapers because we have more (grand)children. Unless we use newspaper reading to ignore our children and grandchildren when they are around. Most if not all of the effect of (grand)children on newspaper reading is spurious because it results from a common cause, namely age or the habits and opportunities represented by age.
 
@@ -160,10 +172,10 @@ Answer to Question 2.
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* An effect of a predictor on an outcome is fully mediated if the indirect
-effect via the mediator is equal to the overall correlation between the
-predictor and the outcome. In other words, the correlation only represents the
-indirect effect, so there cannot be a direct effect.
+* An effect of a predictor on an outcome is zero if the indirect
+correlation via the mediator is equal to the correlation between the
+predictor and the outcome. In this situation, the correlation between the
+predictor and the outcome only represents the indirect correlation via the mediator.
 * Of course, it makes no sense to say that an effect is fully mediated if
 there is no indirect effect (and no direct effect). So we must start with a
 non-zero correlation between predictor and outcome.
@@ -258,7 +270,7 @@ In the path diagram displayed in Figure \@ref(fig:mediation-regression), we woul
 
 Note that we include education level as predictor of news site use and newspaper reading even if we did not draw a direct arrow. Education level is theorized to be causally prior to news use site, so it can have a direct effect. We hypothesized that it did not have a direct effect on news site use and reading time, so we omitted arrows in our hypothesized model. We must include education as a predictor to check that it does not have these direct effects.
 
-A third regression model would predict political interest from education level and age. The final regression model predicts education level from age .
+A third regression model would predict political interest from education level and age. The final regression model predicts education level from age.
 
 ### Requirements
 We can estimate mediation and path models with regression analysis if we meet the following requirements:
@@ -267,7 +279,7 @@ We can estimate mediation and path models with regression analysis if we meet th
 
     For detail lovers: Variables with only incoming arrows may be dichotomous but that requires logistic regression, which we do not discuss.
 
-2. Each variable used as a predictor must be a numeric or dichotomous (dummy) variable. Again, this is a general requirement of regression models.
+2. Each variable used only as a predictor must be a numeric or dichotomous (dummy) variable. Again, this is a general requirement of regression models.
 
 3. There are no causal feedback loops. Causality must work in one direction. It must be impossible to travel from a variable back to it while following the direction of the arrows. Note that it can be difficult to assign a causal order. For example, does political interest cause (low) political cynicism or the other way around? Or are they not causally related at all?
 
@@ -411,41 +423,9 @@ If the variables that we entered in the model as mediators do not create any ind
 
 ### Significance of indirect effects
 
-```{r mediation-inference, fig.pos='H', fig.align='center', fig.cap="Does the sampling distribution of an indirect effect resemble the sampling distributions of its direct effects?", echo=FALSE, out.width="775px", screenshot.opts = list(delay = 5), dev="png"}
-# Goal: Understand that each sample yields a size of the indirect effect, that
-# is added to the sampling distribution. Compare this sampling distribution with
-# the sampling distributions of the direct effects, to show that the sampling
-# distribution of the indirect effect is skewed.
-# Sample and display correlations between Age (predictor), Pol.Interest
-# (mediator), and Reading Time (outcome) as in app mediation-commoncause but
-# sample the correlations from a normal distribution rnorm(mean = 0.5, sd =
-# 0.05) for Age->Pol.Interest, rnorm(mean = 0.2, sd = 0.05) for
-# Age->ReadingTime, and rnorm(mean = 0.4, sd = 0.05) for
-# Pol.Interest->ReadingTime.
-# Display standardized regression coefficients for Age->Pol.Interest in blue,
-# for Pol.Interest->ReadingTime in green, and for the indirect effect in black.
-# In a second row, add three histograms with counts for values of the
-# standardized regression coefficients for the direct effect of
-# Age->Pol.Interest (blue bars), Pol.Interest->ReadingTime (green bars), and the
-# indirect effect (gray bars).
-# Add buttons to draw 1 sample, 1,000 samples (if used, superimpose normal curve
-# over each histogram), and to reset.
-knitr::include_app("http://82.196.4.233:3838/apps/mediation-inference/", height="375px")
-```
+SPSS does not calculate the size of indirect effects for us or their confidence intervals and _p_ values. It is easy to calculate the sizes of indirect effects, as we have seen in a preceding section: just take the product of direct effects. 
 
-<A name="question9.6.4"></A>
-```{block2, type='rmdquestion'}
-4. How is the sampling distribution of indirect effect size created? Before, simultaneously, or after the sampling distributions of direct effect sizes are created? Check your answer using the __Draw a single sample__ button in Figure \@ref(fig:mediation-inference) repeatedly. [<img src="icons/2answer.png" width=115px align="right">](#answer9.6.4)
-```
-
-<A name="question9.6.5"></A>
-```{block2, type='rmdquestion'}
-5. Take a few thousand samples. Do all three sampling distributions have the same shape? [<img src="icons/2answer.png" width=115px align="right">](#answer9.6.5)
-```
-
-SPSS does not calculate the size of indirect effects for us or their confidence intervals and _p_ values. It is easy to calculate the sizes of indirect effects, as we have seen in a preceding section: just take the product of direct effects. In contrast, it is not possible to calculate the confidence interval or _p_ value of an indirect effect in a reliable way from the confidence intervals or _p_ values of the direct effects [see @RefWorks:3873: Section 4.4 for a detailed and critical discussion of approaches that try to calculate the _p_ value of an indirect effect from _p_ values of direct effects].
-
-For statistical inference on the indirect effect, we need the sampling distribution of the size of the indirect effect. This sampling distribution is not the same as the product or some other combination of the sampling distributions of the direct effects that make up the indirect effect. The situation is similar to the sampling distribution of the difference between two sample means (independent-samples _t_ test), which is not equal to the difference between the sampling distribution of one mean and the sampling distribution of the other mean (Section \@ref(complicatedsampling)). 
+In contrast, it is not possible to calculate the confidence interval or _p_ value of an indirect effect in a reliable way from the confidence intervals or _p_ values of the direct effects [see @RefWorks:3873: Section 4.4 for a detailed and critical discussion of approaches that try to calculate the _p_ value of an indirect effect from _p_ values of direct effects].
 
 We use bootstrapping to create the sampling distribution of the size of an indirect effect. We have learned the principles and limitations of bootstrapping in Section \@ref(boot-approx), so we do not have to go into details here. Suffice it to repeat that our original sample must not be too small and it must be quite representative of the population if we apply bootstrapping.
 
@@ -527,30 +507,6 @@ Answer to Question 3.
 
 * All indirects effects are close to zero. An additional 10 years (age is measured in decades) predicts a small decrease in news site use via education (-0.008) and via education via political interest (-0.004). It predicts a small increase via political interest (0.017).
 * Be sure not to forget one of the indirect effects! [<img src="icons/2question.png" width=161px align="right">](#question9.6.3)
-```
-  
-<A name="answer9.6.4"></A>
-```{block2, type='rmdanswer'}
-Answer to Question 4. 
-
-* For every sample, the indirect effect size is calculated as the product of
-the effects of the predictor (age) on the mediator (political interest) and of
-the mediator on the outcome (Reading time). The indirect effect is added to
-the sampling distribution.
-* So the sampling distribution of indirect effect size is created simultaneously with the sampling distributions of direct effect sizes. It is __not__ calculated from the sampling distributions of the direct effect sizes. [<img src="icons/2question.png" width=161px align="right">](#question9.6.4)
-```
-  
-<A name="answer9.6.5"></A>
-```{block2, type='rmdanswer'}
-Answer to Question 5. 
-
-![](figures/S11_2Q5.png)
-
-* If you look carefully, you will see that the sampling distribution of the
-regression coefficient of the indirect effect is skewed, asymmetrical. The
-left tail is badly populated and the top is to the left of the top of
-the normal curve.
-* This is not a normal or _t_ distribution like the sampling distribution of direct effect size. [<img src="icons/2question.png" width=161px align="right">](#question9.6.5)
 ```
   
 ## Controlling for Covariates {#mediationcovariate}
@@ -1225,7 +1181,7 @@ rm(variables)
 
 <A name="question11.8.2"></A>
 ```{block2, type='rmdquestion'}
-2. How many indirect effects does age have on media literacy in Figure \@ref(fig:mediationserial2)? And how many indirect effects does sex have on media literacy? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.2)
+2. How many indirect effects does age have on media literacy in Figure \@ref(fig:mediationserial2)? And how many indirect effects does sex (variable _Girl_) have on media literacy? [<img src="icons/2answer.png" width=115px align="right">](#answer11.8.2)
 ```
 
 <A name="question11.8.3"></A>

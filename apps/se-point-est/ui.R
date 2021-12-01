@@ -1,37 +1,24 @@
 library(shiny)
-fig.width = 350
+fig.width = 400
 fig.height = 150
-
 shinyUI(
   fluidPage(
-    fluidRow(column(6,
-                    align = "center",
-                    plotOutput("sampleplot",
-                            width = fig.width,
-                            height = fig.height+100)
-                    ),
-             column(6,
-                    align = "center",
-                    plotOutput("sampdistplot",
-                            width = fig.width,
-                            height = fig.height + 100)
-                    )
-             ),
-    fluidRow(column(4,
-                    align = "center",
-                    actionButton("smallsamplebutton",
-                            label = "Add a single sample")
-                    ),
-             column(4,
-                    align = "center",
-                    actionButton("largesamplebutton",
-                            label = "Add 100 samples")
-                    ),
-             column(4,
-                    align = "center",
-                    actionButton("resetbutton",
-                          label = "Reset")
-                    )
-            )
+    verticalLayout(
+      fluidRow(align = "center",
+               plotOutput("mainplot",
+                          width = fig.width,
+                          height = fig.height + 50)
+               ),
+      fluidRow(align = "center",
+               sliderInput("mainslider",
+                           label = "Sample size: Number of candies per sample bag",
+                           min = 10,
+                           max = 100,
+                           value = 40,
+                           step = 5,
+                           width = fig.width - 50
+                          )
+               )
     )
+  )
 )

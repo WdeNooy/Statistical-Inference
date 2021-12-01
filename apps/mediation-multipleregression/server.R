@@ -6,114 +6,65 @@ shinyServer(function(input, output) {
 source("../plottheme/styling.R", local = TRUE)
 
 #read-in csv file 
-readers <- read.csv(file = "readers.csv")
-readers <- as.data.frame(lapply(readers, scale))
+readers_org <- read.csv(file = "readers.csv")
+#mean-center (and standardize) variables, so regression lines are centered
+readers <- as.data.frame(lapply(readers_org, scale))
 
-#extract bivariate coefficients
-biage <- summary(lm(readingtime ~ age,readers))
-biedu <- summary(lm(readingtime ~ education ,readers))
-bipint <- summary(lm(readingtime ~ polinterest ,readers))
-binsite <- summary(lm(readingtime ~ newssite ,readers))
+#Extract coefficients and put into data frame for simple model
+modelsimple <- data.frame(coef = coef(lm(readingtime ~ polinterest,readers)))
+# Idem using original data (otherwise b*)
+modelsimple_org <- data.frame(coef = coef(lm(readingtime ~ polinterest,readers_org)))
 
-#beta
-bicoefficients <- c(coefficients(biage)[2,1],
-                    coefficients(biedu)[2,1],
-                    coefficients(bipint)[2,1],
-                    coefficients(binsite)[2,1])
-# SE
-bise <- c(coefficients(biage)[2,2],
-         coefficients(biedu)[2,2],
-         coefficients(bipint)[2,2],
-         coefficients(binsite)[2,2])
-# Left and right edges of 95% CI
-bileft <- bicoefficients - 1.96 * bise
-biright <- bicoefficients + 1.96 * bise
-
-#Standard dataframe
-bidf <- data.frame(Predictor = c("Age", "Education", "Pol. Interest", "News site use"),
-                   bicoef = bicoefficients,
-                   bileft = bileft,
-                   biright = biright)
-
+#Construct label
+simplelabel <- paste0("Simple effect of political interest (b* = ", round(modelsimple$coef[2], digits = 2), "); readingtime = constant + polinterest")
 
 output$mainplot <- renderPlot({
 
-  
-  
-  if(length(input$predcheckbox) == 0){
-  mudf <- data.frame(mucoef = rep(NA,4), muleft = rep(NA,4), muright = rep(NA,4))
-  plotdf <- cbind(bidf,mudf)
-  
+  #Formula for full model
+  if (length(input$predcheckbox) == 0) {
+    formula <- "readingtime ~ polinterest"
+    #Define colour label as name
+    partiallabel <- "Partial effect of political interest"
+  } else {
+    formula <- paste("readingtime ~ polinterest + ", paste(input$predcheckbox,collapse = "+"))
+    #Define colour label as name
+    partiallabel <- paste0("Partial effect of political interest (b* = ", round(coef(lm(eval(formula),readers))[[2]], digits = 2), "); \nreadingtime = constant + polinterest + ", paste(input$predcheckbox,collapse = " + "))
   }
-
-if(length(input$predcheckbox) > 0){
-
-  # Filter to determine which variables have to be NA (hidden) for plotting
-  filter <- (c("age", "education","polinterest","newssite") %in% input$predcheckbox)
-  
-  #Formula for model
-  formula <- paste("readingtime ~", paste(input$predcheckbox,collapse = "+"))
   
   #Extract coefficients and put into data frame
-  model <- coefficients(summary(lm(eval(formula),readers)))
-  mucoef <- model[2:(length(input$predcheckbox) + 1), 1 ]
-  muse <- model[2:(length(input$predcheckbox) + 1), 2 ]
+  model <- data.frame(coef = coef(lm(eval(formula),readers)))
   
-  mudf <- data.frame(mucoef = rep(NA,4), muleft = rep(NA,4), muright = rep(NA,4))
-  
-  muleft <- mucoef - 1.96 * muse
-  muright <- mucoef + 1.96 * muse
-  
-  mudf$mucoef[filter] <- mucoef
-  mudf$muleft[filter] <- muleft
-  mudf$muright[filter] <- muright
-  
-  plotdf <-  cbind(bidf,mudf)
-  
-}
-     #MAIN PLOT
-     ggplot(plotdf, aes(y = Predictor)) + 
-     geom_point(aes(x = bicoef, colour = "b* and 95% CI in simple regression"), size = 5, alpha = .8) + 
-     geom_segment(aes(y = Predictor,
-                      yend = Predictor,
-                      x = bileft,
-                      xend = biright,
-                      color = "b* and 95% CI in simple regression"),
-                  size = 2, 
-                  alpha = 0.5) + 
-     # dashed line to X axis: gray
-     geom_segment(aes(y = Predictor,
-                      yend = -Inf,
-                      x = bicoef, xend = bicoef,
-                      color = "b* and 95% CI in simple regression"),
-                  linetype = "dotted",
-                  na.rm = TRUE) +
-     {if(length(input$predcheckbox)>0) geom_point(aes(x = mucoef,
-                                                      color = "b* and 95% CI in multiple regression"),
-                                                  na.rm = TRUE,
-                                                  size = 3)} + 
-     {if(length(input$predcheckbox)>0) geom_segment(aes(y = Predictor,
-                                                        yend = Predictor,
-                                                        x = muleft, xend = muright,
-                                                        color = "b* and 95% CI in multiple regression"),
-                                                    na.rm = TRUE)} +
-     # dashed line to X axis: blue
-     {if(length(input$predcheckbox)>0) geom_segment(aes(y = Predictor,
-                                                          yend = -Inf,
-                                                          x = mucoef, xend = mucoef,
-                                                          color = "b* and 95% CI in multiple regression"),
-                                                      linetype = "dashed",
-                                                      na.rm = TRUE)} +
-     scale_color_manual(values = c("b* and 95% CI in simple regression" = "grey" ,
-                                   "b* and 95% CI in multiple regression" = unname(brewercolors["Blue"])),
-                        limits = c("b* and 95% CI in simple regression",
-                                   "b* and 95% CI in multiple regression"),
-                        guide = guide_legend(nrow = 2,title = "" )) + 
-     geom_vline(xintercept = 0) +
-     coord_cartesian(xlim = c(-1,1)) + 
-     theme_general() + 
-     xlab("Standardized regression coefficient") +
-     theme(legend.position = "bottom")
+  #MAIN PLOT
+  ggplot(readers, aes(x = polinterest, y = readingtime)) + 
+    geom_point(size = 1, alpha = .5) + #dots
+    geom_segment(aes(x = min(polinterest),
+                     xend = max(polinterest),
+                     y = modelsimple$coef[1] + min(polinterest) * modelsimple$coef[2],
+                     yend = modelsimple$coef[1] + max(polinterest) * modelsimple$coef[2],
+                     color = "Simple effect"),
+                 size = 2) +
+    {if(length(input$predcheckbox)>0) geom_segment(aes( x = min(polinterest),
+                                                        xend = max(polinterest),
+                                                        y = model$coef[1] + min(polinterest) * model$coef[2],
+                                                        yend = model$coef[1] + max(polinterest) * model$coef[2],
+                                                        color = "Partial effect"),
+                                                   size = 1.5)} +
+    scale_color_manual(values = c("Simple effect" = "grey",
+                                  "Partial effect" = unname(brewercolors["Blue"])),
+                       limits = c("Simple effect", "Partial effect"),
+                       labels = c(simplelabel, partiallabel),
+                       guide = guide_legend(nrow = 2,title = "" )) + 
+    scale_x_continuous(name = "Political interest", 
+                       breaks = c(-2, 0, 2),
+                       labels = c("low", "average", 'high')
+                       ) +
+    scale_y_continuous(name = "Newspaper reading time", 
+                       breaks = c(-2, 0, 2),
+                       labels = c("low", "average", 'high'),
+                       limits = c(-3.5, 2.5)
+    ) +
+    theme_general() + 
+    theme(legend.position = c(0.03,0.1), legend.justification = c(0,0.5), legend.background = element_blank())
   
 })
 

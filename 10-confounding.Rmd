@@ -19,74 +19,43 @@ Because the effects of predictors are adjusted for the effects of other predicto
 
 Indirect correlations play a central role here: the correlation between a predictor (age) and the dependent variable (newspaper reading time) due to a third variable (news site use) that is correlated both with the predictor and the dependent variable. The size of the indirect correlation is the product of the correlation between the predictor (age) and third variable (news site use) and the correlation between the third variable (news site use) and the dependent variable (newspaper reading time).
 
+#### Essential Analytics {.unnumbered}
+
+We can detect confounders by adding each independent variable as a separate *Block* in a linear regression model (the *Linear* option in the *Regression* submenu). The SPSS output estimates a regression model for each block (Figure \@ref(fig:confounderstable)).
+
+```{r confounderstable, echo=FALSE, out.width="50%", fig.pos='H', fig.align='center', fig.cap="SPSS table of regression models with the independent variables interest in politics, age, and news site use added one by one."}
+knitr::include_graphics("figures/S10_AE1.png")
+```
+
+In the first model, interest in politics is the only predictor. One additional unit of interest in politics adds 1.13 to the predicted newspaper time per day (Figure \@ref(fig:confounderstable), red box). If age is added as a predictor in the second model, the effect of interest in politics decreases from 1.13 to 0.32 (Figure \@ref(fig:confounderstable), green box). Age reinforced the effect of interest in politics in the first model. The third model adds the predictor variable news site use. Now, the effect of interest in politics increases from 0.32 to 0.53 (Figure \@ref(fig:confounderstable), blue box); news site use suppressed the effect of interest in politics in the second model.
+
 ## Controlling for Effects of Other Predictors {#controlling}
 
 In a regression model, we use the variation in scores on independent variables to predict the variation of scores on the dependent variable: Does a person with a higher score on an independent variable also have a higher score or, on the contrary, a lower score on the dependent variable? A simple regression model contains only one independent variable but a multiple regression model includes more than one.
 
-For example, European citizens who are older spend more time on reading newspapers and so do citizens who are more interested in politics. We have two independent variables (age and interest in politics) to predict the dependent variable (newspaper reading time). The two independent variables can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which independent variable is responsible for which part of the variation on the dependent variable? 
+For example, European citizens who are more interested in politics spend more time on reading newspapers and so do citizens who are older. We have two independent variables (interest in politics and age) to predict the dependent variable (newspaper reading time). The two independent variables can be correlated: Older citizens tend to be more interested in politics. How does the regression model decide which independent variable is responsible for which part of the variation in the dependent variable? 
 
 ```{r mediation-multipleregression, fig.pos='H', fig.align='center', fig.cap="How do regression coefficients change if new predictors for reading time are added to the model?", echo=FALSE, screenshot.opts = list(delay = 5), dev="png", out.width="775px"}
 # Goal: Show that regression coefficients change if new predictors are added to
-# the regression model.
-# For outcome Newspaper Reading Time, display the standardized simple
-# (=bivariate) regression coefficients and their 95% confidence intervals of
-# predictors Age, Education, Pol. Interest, and News Site Use as gray fat lines
-# and dots. Allow the user to add (and remove) predictors to a multiple
-# regression model (if possible, by clicking on the predictor's name; if too
-# complicated to program, add list of predictors with checkboxes). On selection,
-# display and update the standardized regression coefficients of the predictors
-# that are included in the model, which are represented as thin blue lines and
-# dots.
-# Standardized coefficients that are in line with the example data file
-# readers.sav:
-# Age (simple): 0.88 [0.83; 0.94]
-# Age with Educ: 0.89 [0.83; 0.94]
-# Age with PolInt: 0.88 [0.83; 0.93]
-# Age with News: 0.72 [0.59; 0.85]
-# Age with Educ, PolInt: 0.88 [0.83; 0.93]
-# Age with Educ, News: 0.71 [0.58; 0.84]
-# Age with PolInt, News: 0.67 [0.53; 0.80]
-# Age with Educ, PolInt, News: 0.67 [0.53; 0.80] 
-# Education (simple): -0.12 [-0.23; -0.01]
-# Education with Age: .01 [-0.05; 0.06]
-# Education with PolInt: -0.17 [-0.29; -0.06]
-# Education with News: 0.06 [0.00; 0.13]
-# Education with Age, PolInt: -0.01 [-0.06; 0.05]
-# Education with Age, News: 0.02 [-0.03; 0.08]
-# Education with PolInt, News: 0.02 [-0.04; 0.08]
-# Education with Age, PolInt, News: 0.01 [-0.05; 0.06]
-# Pol. Interest (simple): 0.14 [0.03; 0.25]
-# PolInt with Age: 0.04 [-0.01; 0.09]
-# PolInt with Educ: 0.19 [0.08; 0.30]
-# PolInt with News: 0.15 [0.09; 0.21]
-# PolInt with Age, Educ: .0.04 [-0.01; 0.10]
-# PolInt with Age, News: 0.04 [0.01; 0.07]
-# PolInt with Educ, News: 0.14 [0.08; 0.20]
-# PolInt with Age, Educ, News: 0.07 [0.01; 0.12]
-# News Site Use (simple): -0.84 [-0.90; -0.78]
-# News Site Use with Age: -0.18 [-0.31; -0.05]
-# News Site Use with Educ: -0.85 [-0.92; -0.79]
-# News Site Use with PolInt: -0.84 [-0.90; -0.78]
-# News Site Use with Age, Educ: -0.19 [-0.33; -0.06]
-# News Site Use with Age, PolInt: -0.23 [-0.36; -0.09]
-# News Site Use with Educ, PolInt: -0.85 [-0.91; -0.79]
-# News Site Use with Age, Educ, PolInt: -0.23 [-0.37; -0.09]
+# the regression model. For outcome Newspaper reading time, display the simple
+# regression effect of interest in politics and the partial effects if we
+# control for one or more other variables (age, education, news site use).
 knitr::include_app("http://82.196.4.233:3838/apps/mediation-multipleregression/", height="405px")
 ```
 
 <A name="question9.1.1"></A>
 ```{block2, type='rmdquestion'}
-1. Select Age and Education in Figure \@ref(fig:mediation-multipleregression). Compare the regression coefficients and their confidence intervals for the multiple regression model including the selected independent variables (blue dots and lines) to the results for the simple regression models including only one independent variable (gray dots and lines). [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.1)
+1. The grey line in Figure \@ref(fig:mediation-multipleregression) represents the effect of interest in politics on newspaper reading time if interest in politics is the only independent variable. Check the box for age to add it as a second independent variable. What happens to the regression lines and the standardized regression coefficient (_b*_)? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.1)
 ```
 
 <A name="question9.1.2"></A>
 ```{block2, type='rmdquestion'}
-2. Try other combinations of Age and a second independent variable. When does the regression coefficient of Age change markedly? Can you give a substantive explanation why it changes as it does? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.2)
+2. Remove age from the model (uncheck its box) and add the other additional predictors to the model, one at a time. What happens to the effect of political interest? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.2)
 ```
 
 <A name="question9.1.3"></A>
 ```{block2, type='rmdquestion'}
-3. Interpret the meaning of the regression coeficients in the simple regression models (the values indicated by the gray dots). In which situation are the gray and blue results equal? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.3)
+3. If we want to know the effect of political interest on newspaper reading time that does not include the effect of other variables, which model should we use: the simple model with political interest as only predictor, a model in which we control for one additional predictor, or a model controlling for all additional predictors? [<img src="icons/2answer.png" width=115px align="right">](#answer9.1.3)
 ```
 
 ### Partial effect {#partialeffect}  
@@ -109,36 +78,28 @@ With non-experimental data, for example data on newspaper reading habits gathere
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* The effect of age remains more or less the same, around 0.9, if we control
-for education.
-* The negative effect of education if we do not control for age (gray),
-disappears if we control for age (blue). The blue dot for education is near
-zero (and positive rather than negative) and the confidence interval includes
-zero. [<img src="icons/2question.png" width=161px align="right">](#question9.1.1)
+* If we add age as a second predictor, the effect of interest in politics changes: 
+    + the blue regression line is less steep than the grey regression line;
+    + the standardized regression coefficient (_b*_) drops from 0.14 for the (simple) model without age to 0.04 for the model including age as independent variable;
+    + so the (positive) effect of interest in politics on newspaper reading time becomes weaker.
+* If we add age, the regression coefficient for political interest only predicts variation in newspaper reading time (the vertical position of dots in the plot) that cannot be predicted by age. We say that the effect of political interest is controlled for the effect of age. [<img src="icons/2question.png" width=161px align="right">](#question9.1.1)
 ```
   
 <A name="answer9.1.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* The regression coefficient of age changes most when we add news site use as
-an independent variable to the model. The effect of age becomes weaker (around
-0.7).
-* Using internet as news source probably reduces newspaper reading time because
-news can be retrieved from the internet. Older people are less likely to use
-the internet as news source, so part of the positive effect of age on newspaper
-reading time is actually due to the fact that older people use news sites less
-because of their age. That part of the age effect disappears if we add news
-site use as an independent variable to the model. [<img src="icons/2question.png" width=161px align="right">](#question9.1.2)
+* If we only add education to the model, the blue line is steeper than the grey line. The standardized regression coefficient (_b*_) becomes stronger; it changes from 0.14 to 0.19. The partial effect of political interest on newspaper reading time becomes stronger if we control for education.
+* This also happens if we only add news site use to the model. The standardized regression coefficient (_b*_) increases from 0.14 to 0.15. This increase is too small to see a clear difference between the blue and grey regression lines. [<img src="icons/2question.png" width=161px align="right">](#question9.1.2)
 ```
   
 <A name="answer9.1.3"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 3. 
 
-* A simple regression model contains only one independent variable. The regression coefficient represents the effect of this independent variable without controlling for the effects of other independent variables.
-* These effects are positive for age and political interest in the example: Older people and people who are more interested in politics are predicted to spend more time on reading newspapers. The effects are negative for education and news site use: People with more (years of) education or more frequently using news sites are predicted to spend less time on reading newspapers.
-* If we select only one independent variable, we have a simple regression model, so the independent variable's blue effect must be equal to its gray effect. [<img src="icons/2question.png" width=161px align="right">](#question9.1.3)
+* If we include both political interest and age as independent variables, political interest can only predict variation in reading time among participants that cannot be predicted by age. The effect of political interest is cleansed from any effects of age that may have been included in the effect of political interest that we obtained in the simple regression model with political interest as only predictor.
+* Every additional independent variable that we control for by adding it to the regression model removes the effect of that variable that may otherwise be captured by the effect of political interest. The more variables we control for, the more the regression coefficient for political interest reflects the effect of political interest instead of effects of other variables.
+* Therefore, a model controlling for all additional predictors is the best model to know the effect of political interest on newspaper reading time that does not include the effect of other variables. [<img src="icons/2question.png" width=161px align="right">](#question9.1.3)
 ```
   
 ## Indirect Correlation {#indirectcorrelation}
@@ -172,6 +133,8 @@ A confounder is a variable that is correlated with both the predictor and depend
 ```
 
 The size of the indirect correlation equals the product of the correlation between confounder and predictor and the correlation between confounder and dependent variable. In Figure \@ref(fig:mediation-indirectcorrelation), the correlation between age and political interest is .12 and the correlation between age and newspaper reading time is .88, the indirect correlation between interest in politics and reading time established by age is .12 * .88 = .11.
+
+Note that we do NOT use _indirect correlation_ to refer to negative correlations in this book.
 
 ### Indirect correlation and size of confounding
 
@@ -310,7 +273,7 @@ rm(variables)
 Now, let us have a look at the situation in which the indirect correlation is positive but the regression effect of the predictor is negative. Just reverse the example and make news site use the predictor and political interest the confounder. The regression effect of news site use on newspaper reading time is negative if people tend to use news sites instead of newspapers as sources of information. The indirect correlation due to political interest, however, is positive if politically interested people use news sites more and spend more time on reading newspapers. In this scenario, the negative effect of news site use on newspaper reading is underestimated if we do not control for political interest.
 
 ```{block2, type='rmdimportant'}
-A variable is a suppressor (1) if it is not included in the regression model and (2) it establishes an indirect correlation between predictor and independent variable that has the opposite sign of the current effect of the predictor on the independent variable.
+A variable is a suppressor (1) if it is not included in the regression model and (2) it establishes an indirect correlation between predictor and dependent variable that has the opposite sign of the current effect of the predictor on the dependent variable.
 ```
 
 Suppression can have surprising effects. If the predictor's original effect was close to zero, adding a suppressor variable to the model will strengthen the effect. An effect that we initially believed to be absent may turn out to be substantial and statistically significant. If our regression model tells us that our predictor does not have an effect, we cannot rule out that it does have an effect that is suppressed by a suppressor variable.
@@ -370,7 +333,7 @@ Actually, the indirect correlation between a predictor and dependent variable du
 The opposite may happen as well: An initially negative effect may become positive if a strong reinforcer variable is added to the model. This would be the case if the indirect correlation between political interest and newspaper reading time via news site use is strongly negative, resulting in a negative effect of political interest on reading time if news site use is left out of the model. Adding news site use to the model may then result in a positive effect of political interest.
 
 ```{block2, type='rmdimportant'}
-A variable is a reinforcer (1) if it is not included in the regression model and (2) it establishes an indirect correlation between predictor and independent variable that has the same sign as the current effect of the predictor on the independent variable.
+A variable is a reinforcer (1) if it is not included in the regression model and (2) it establishes an indirect correlation between predictor and dependent variable that has the same sign as the current effect of the predictor on the dependent variable.
 ```
 
 To summarize the two types of confounders:
@@ -389,32 +352,17 @@ The bottom line is simple: Regression analysis only gives us the true effects of
 ```{block2, type='rmdanswer'}
 Answer to Question 1. 
 
-* Note that the simple effect is the regression coefficient if we do not
-control for any confounders, so political interest is the only predictor. The
-partial effect is the regression coefficient for the effect of political
-interest on reading time if we control for (at least) one other predictor.
-Then, political interest is not the only predictor in the regression model.
-* If the indirect correlation has the opposite sign of the direct effect of
-political interest on reading time, which is positive here, the partial effect
-is stronger than the simple effect. An indirect correlation is negative if one
-of its two correlations is negative and the other is positive.
-* If the indirect correlation has the same sign as the direct effect of
-political interest on reading time, the partial effect is weaker than the
-simple effect. It can also change sign, which happens when we add political cynicism to the model. An indirect correlation is positive if none or both of its two
-correlations are negative.
-* Note that we compare the signs of the correlations of the confounder with
-the sign of the predictor in the model without the confounder. A variable is
-no longer a confounder if it is included in the model. [<img src="icons/2question.png" width=161px align="right">](#question9.3.1)
+* Note that the simple effect is the regression coefficient if we do not control for any confounders, so political interest is the only predictor. The partial effect is the regression coefficient for the effect of political interest on reading time if we control for at least one other predictor. Then, political interest is not the only predictor in the regression model.
+* If the indirect correlation has the opposite sign of the direct effect of political interest on reading time, which is positive here, the partial effect is stronger than the simple effect. An indirect correlation is negative if one of its two correlations is negative and the other is positive.
+* If the indirect correlation has the same sign as the direct effect of political interest on reading time, the partial effect is weaker than the simple effect. It can also change sign, which happens when we add political cynicism to the model. An indirect correlation is positive if none or both of its two correlations are negative.
+* Note that we compare the signs of the correlations of the confounder with the sign of the predictor in the model without the confounder. A variable is no longer a confounder if it is included in the model. [<img src="icons/2question.png" width=161px align="right">](#question9.3.1)
 ```
   
 <A name="answer9.3.2"></A>
 ```{block2, type='rmdanswer'}
 Answer to Question 2. 
 
-* The indirect correlation between Political interest and Reading time created
-by Interest in sports is negative. It is the opposite of the sign
-of the direct effect, so the partial effect is stronger if we include
-Interest in sports as a predictor in the regression model. [<img src="icons/2question.png" width=161px align="right">](#question9.3.2)
+* The indirect correlation between political interest and reading time created by interest in sports is negative. It is the opposite of the sign of the direct effect, so the partial effect is stronger if we include interest in sports as a predictor in the regression model. [<img src="icons/2question.png" width=161px align="right">](#question9.3.2)
 ```
   
 ## Comparing Regression Models in SPSS {#compmodelSSPSS}

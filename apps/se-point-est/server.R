@@ -1,288 +1,110 @@
 library(shiny)
 library(ggplot2)
-library(dplyr)
-library(scales)
 library(RColorBrewer)
 
 shinyServer(function(input, output) {
-  #Load general plot theme and colors for color brewer
-  source("../plottheme/styling.R")
-  #VARIABLES
-  N <- 10 #Sample size
-  reps <- 100 #Repetitions of samples
-  mean <- 2.8 # Population mean
-  sd <- 1 #Population sd
-  se <- sd/sqrt(N)
-  
-  #container for samples
-  samples <- reactiveValues(
-    lastsample = numeric(),
-    hist = numeric())
-  
-  ##BUTTON ACTIONS
-  #Take small sample 
-  observeEvent(input$smallsamplebutton,{
-    samples$lastsample <<- rnorm(N,mean = mean, sd = sd)
-    samples$hist <<- c(samples$hist, mean(samples$lastsample))
-    # Limit size of sample to 3 Mb
-    if(object.size(samples) > 3e+06) {
-      samples$hist <<- numeric()
-      samples$lastsample <<- numeric()
-    }
-    })
-  
-  #Take largesample
-  observeEvent(input$largesamplebutton,{
-    temp <- replicate(n = reps, rnorm(N,mean = mean, sd = sd))
-    samples$hist <<- c(samples$hist,apply(temp, MARGIN = 2, mean))
-    samples$lastsample <<- temp[ , reps]
-    # Limit size of sample to 3 Mb
-    if(object.size(samples) > 3e+06) {
-      samples$hist <<- numeric()
-      samples$lastsample <<- numeric()
-    }
-  })
-  
-  #Reset
-  observeEvent(input$resetbutton,{
-    samples$hist <<- numeric()
-    samples$lastsample <<- numeric()
-    })
-  
-  #PLOT OF SINGLE SAMPLE
-  output$sampleplot <- renderPlot({
+  source("../plottheme/styling.R",local = TRUE)
+  cilevel = .95 # confidence level
+  mean = 2.8 #population mean
+  sd = runif(n = 1, min = 2, max = 4) #Population standard deviation
+
+  output$mainplot <- renderPlot({
+    n <- input$mainslider # sets sample size
+    se <- sd/sqrt(n) # calculates standard error
+    error <- qnorm((1 - cilevel)/2) * se # Distance from mean
+    left <- mean + error #Left confidence interval border
+    right <- mean - error #Right confidence interval border
     
-    #Display message if there is no data yet
-    if(length(samples$lastsample) == 0) {
-      #display initial, empty plot
-      ggplot(data = data.frame(x = 1.4, y = 4)) +
-        #Message
-        geom_text(aes(x = x, y = y, label = "Please draw a sample"),
-                      color = unname(brewercolors["Red"])) +
-        #Population Mean line
-        geom_vline(colour = "black",
-                   size = 1,
-                   aes(xintercept = mean,
-                       linetype = "Population Mean")) + 
-        #Specifing legend for linetypes
-        scale_linetype_manual(guide = guide_legend(title = ""),
-                              values = c("Population Mean" = "solid")) +
-        #Adjusting zoom
-        coord_cartesian(xlim = c(0,6)) +
-        #Setting breaks
-        scale_x_continuous(breaks = c(seq(0,6,by = .5))) + 
-        scale_y_continuous(breaks = NULL) + 
-        #Title and axis labels
-        ggtitle("Last sample") +
-        ylab("") + 
-        xlab("Candy weight") +
-        #General theme
-        theme_general() +
-        #Adjusting legend
-        theme(legend.position = "top",
-              legend.margin = margin(.1, .1, .1, .1, unit = "cm"),
-              legend.text = element_text(size = 9))
-        
-      } else {
-    
-    #data frame
-    df <- data.frame(cweight = samples$lastsample)
-  
-    #PLOT
-    ggplot(df,aes(x = cweight)) +
-      #Dotplot
-      geom_dotplot(method = "histodot",
-                   binwidth = .2,
-                   fill = sample(brewercolors,
-                                 size = N,
-                                 replace = TRUE)) +
-      #Sample Mean line
-      geom_vline(size = 0.7,
-                 aes(xintercept = mean(cweight),
-                     linetype = "Sample Mean")) + 
-      #Population Mean line
-      geom_vline(colour = "black",
-                 size = 1,
-                 aes(xintercept = mean,
-                     linetype = "Population Mean")) + 
-      #Text indicating N
-      geom_text(aes(x = 5,
-                y = 1,
-                label = paste("N =",N,sep = ""))) +
-      #Arrow
-      geom_segment(aes(x = mean,
-                       xend = mean(cweight, na.rm = TRUE),
-                       y = .5,
-                       yend = .5,
-                       colour = "Deviation from mean"),
-                       size = 1,
-                       arrow = arrow(length = unit(.2,"cm"))) + 
-      #Specifing legend for linetypes
-      scale_linetype_manual(guide = guide_legend(title = ""),
-                            values = c("Sample Mean" = "dashed",
-                                       "Population Mean" = "solid")) +
-      #Specifing legend for colour/arrow
-      scale_colour_manual(guide = guide_legend(title = ""),
-                          values = c("Deviation from mean" = unname(brewercolors["Red"]))) + 
-      #Adjusting zoom
-      coord_cartesian(xlim = c(0,6)) +
-      #Setting breaks
-      scale_x_continuous(breaks = c(seq(0,6,by = .5))) + 
-      scale_y_continuous(breaks = NULL) + 
-      #Title and axis labels
-      ggtitle("Last sample") +
-      ylab("") + 
-      xlab("Candy weight") +
+    ggplot(data.frame(x = c(0, 6)), aes(x = x)) +
+       #Left area under curve
+       stat_function(fun = dnorm,xlim = c(-10,left),
+                    geom = "area",
+                    fill = brewercolors["Blue"],
+                    args = list(mean = mean, sd = se)) + 
+      #Center area under curve
+      stat_function(fun = dnorm,
+                    xlim = c(left,right),
+                    geom = "area",
+                    fill = "white",
+                    args = list(mean = mean, sd = se)) +
+      #Right area under curve
+      stat_function(fun = dnorm,
+                    xlim = c(right,10),
+                    geom = "area",
+                    fill = brewercolors["Blue"],
+                    args = list(mean = mean, sd = se)) +
+      #Normal function line 
+      stat_function(fun = dnorm,
+                     args = list(mean = mean, sd = se)) +
+      #Left vline
+      geom_vline(aes(xintercept = left,
+                 linetype = "left margin")) +
+      #Right vline
+      geom_vline(aes(xintercept = right,
+                 linetype = "right margin")) +
+      #Mean vline
+      geom_vline(aes(xintercept = mean,
+                     linetype = "mean")) + 
+      #Defining types of lines
+      scale_linetype_manual(name = "",
+                            values = c("left margin" = "dashed",
+                                       "right margin" = "dashed",
+                                       "mean" = "solid")) + 
+      # Scale x breaks definition
+      scale_x_continuous(breaks = seq(0, 6 ,by = .4), limits = c(0, 6)) +
+      #Center text label
+      geom_text(label = paste(cilevel * 100, "%", sep = ""),
+                aes(x=mean,
+                    y = dnorm(mean, mean = mean, sd = se)/2,
+                    vjust = .5
+                    )) +
+      #Left text label
+      geom_text(label = paste((100 - 100*cilevel)/2, "%", sep = ""),
+                aes(x=left,
+                    y = dnorm(mean, mean = mean, sd = se)/3,
+                    hjust = 1
+                )) +
+      #Right text label
+      geom_text(label = paste((100 - 100*cilevel)/2, "%", sep = ""),
+                aes(x=right,
+                    y = dnorm(mean, mean = mean, sd = se)/3,
+                    hjust = 0
+                )) +
+      
+      #N text label
+      geom_text(label = paste("n = ", n, sep = ""),
+                aes(x=6,
+                    y = dnorm(mean, mean = mean, sd = se)* .8,
+                    hjust = 1
+                )) +
+      #SE text label
+      geom_text(label = paste("standard error = ", round(se, digits = 2), sep = ""),
+                aes(x=6,
+                    y = dnorm(mean, mean = mean, sd = se)* .6,
+                    hjust = 1
+                )) +
+      #Left arrow
+      geom_segment(x = mean,
+                    xend = left,
+                   y = dnorm(mean, mean = mean, sd = se) * .1,
+                   yend = dnorm(mean, mean = mean, sd = se) * .1,
+                   arrow = arrow(length = unit(.3,"cm"))) + 
+      #Right arrow
+      geom_segment(x = mean,
+                   xend = right,
+                   y = dnorm(mean, mean = mean, sd = se) * .1,
+                   yend = dnorm(mean, mean = mean, sd = se) * .1,
+                   arrow = arrow(length = unit(.3,"cm"))) +
+      #Title and labels for axes
+      ggtitle("Sampling distribution") + 
+      xlab("Average candy weight per sample") +
+      ylab("Density") + 
       #General theme
       theme_general() +
-      #Adjusting legend
-      theme(legend.position = "top",
-            legend.margin = margin(.1, .1, .1, .1, unit = "cm"),
-            legend.text = element_text(size = 9))
-      }
-    })
-  
-  #PLOT OF SAMPLING DISTRIBUTION
-  output$sampdistplot <- renderPlot({
-    if(length(samples$hist) == 0) {
-      ggplot() +
-        #Normal distribution in background
-        stat_function(data = data.frame(x = seq(0,6,by = .1)),
-                      aes(x = x,
-                          fill = "True distribution"),
-                      color = "black",
-                      geom = "area",
-                      alpha = .3,
-                      #function for scaling distribution to be visible in plot
-                      fun = function(x, mean, sd, n, bw) {
-                        dnorm(x = x, mean = mean, sd = sd) * n * bw
-                      },
-                      args = c(
-                        mean = mean,
-                        sd = sd/sqrt(N),
-                        n = 50,
-                        bw = .2
-                      )) +
-        #Mean line
-        geom_vline(aes(xintercept = mean,
-                       linetype = "True mean"),
-                   size = 1) +
-        #Left standard error line
-        geom_vline(aes(xintercept = mean - sd/sqrt(N),
-                       linetype = "± 1 Standard error"),
-                   size = .5
-        ) +
-        #Right standard error line
-        geom_vline(aes(xintercept = mean + sd/sqrt(N),
-                       linetype = "± 1 Standard error"),
-                   size = .5
-        ) +
-        #Zoom level
-        coord_cartesian(xlim = c(1,5)) + 
-        #Tickmarks
-        scale_x_continuous(breaks = seq(0,6,by = .5)) + 
-        #Legend definitions
-        scale_fill_manual("",values = c("True distribution" = unname(brewercolors["Green"]))) +
-        scale_linetype_manual("",values = c("± 1 Standard error" = "dashed",
-                                            "True mean" = "solid")) +
-        #General theme
-        theme_general() + 
-        #Setting title and axis labels
-        ggtitle("Sampling distribution") +
-        ylab("Count") + 
-        xlab("Means of sample weights") +
-        #Legend position adjustment
-        guides(linetype = guide_legend(nrow = 2,reverse = TRUE)) + 
-        theme(legend.position = "top",
-              legend.margin = margin(0, 0, 0, 0, unit = "cm"),
-              legend.direction = "horizontal",
-              legend.text = element_text(size = 8))
+      #Legend positioning
+      theme(legend.position = "bottom",
+            legend.direction = "horizontal")
       
-    } else {
-    binwidth = .2 #histogram bindwidth
-    
-    #data frame
-    df <- data.frame(mns = samples$hist)
-    
-    #PLOT
-    ggplot(df,aes(x = mns)) + 
-      #Normal distribution in background
-      stat_function(data = data.frame(x = seq(0,6,by = .1)),
-                    aes(x = x,
-                        fill = "True distribution"),
-                    color = "black",
-                    geom = "area",
-                    alpha = .3,
-                    #function for scaling distribution to be visible in plot
-                    fun = function(x, mean, sd, n, bw) {
-                      dnorm(x = x, mean = mean, sd = sd) * n * bw
-                    },
-                    args = c(
-                      mean = mean,
-                      sd = sd/sqrt(N),
-                      n = 50 + length(df$mns),
-                      bw = binwidth
-                    )) +
-      #Histogram
-      geom_histogram(binwidth = binwidth,
-                     fill = brewercolors["Blue"],
-                     color = "grey") +
-      #Mean line
-      geom_vline(aes(xintercept = mean,
-                     linetype = "True mean"),
-                    size = 1) +
-      #Left standard error line
-      geom_vline(aes(xintercept = mean - sd/sqrt(N),
-                     linetype = "± 1 Standard error"),
-                 size = .5
-                 ) +
-      #Right standard error line
-      geom_vline(aes(xintercept = mean + sd/sqrt(N),
-                     linetype = "± 1 Standard error"),
-                 size = .5
-      ) +
-      #Arrow left
-      geom_segment(aes(x = mean(df$mns, na.rm = TRUE),
-                       xend = mean(df$mns, na.rm = TRUE) - sd(df$mns, na.rm = TRUE),
-                       y = 0.5 + .01 * length(df$mns),
-                       yend = 0.5 + .01 * length(df$mns),
-                       colour = "± 1 Standard deviation (data)"),
-                   size = 1,
-                   arrow = arrow(length = unit(.2,"cm"))) +
-      #Arrow right
-      geom_segment(aes(x = mean(df$mns, na.rm = TRUE),
-                       xend = mean(df$mns, na.rm = TRUE) + sd(df$mns, na.rm = TRUE),
-                       y = 0.5 + .01 * length(df$mns),
-                       yend = 0.5 + .01 * length(df$mns),
-                       colour = "± 1 Standard deviation (data)"),
-                   size = 1,
-                   arrow = arrow(length = unit(.2,"cm"))) +
-      #Mean (data)
-      geom_point(aes(x = mean(df$mns, na.rm = TRUE),
-                     y = 0.5 + .01 * length(df$mns),
-                     colour = "± 1 Standard deviation (data)"),
-                 size = 3) +
-      #Zoom level
-      coord_cartesian(xlim = c(1,5)) + 
-      #Tickmarks
-      scale_x_continuous(breaks = seq(0,6,by = .5)) + 
-      #Legend definitions
-      scale_fill_manual("",values = c("True distribution" = unname(brewercolors["Green"]))) +
-      scale_color_manual("", values = c("± 1 Standard deviation (data)" = unname(brewercolors["Red"]))) +
-      scale_linetype_manual("",values = c("± 1 Standard error" = "dashed",
-                                          "True mean" = "solid")) +
-      #General theme
-      theme_general() + 
-      #Setting title and axis labels
-            ggtitle("Sampling distribution") +
-      ylab("Count") + 
-      xlab("Means of sample weights") +
-      #Legend position adjustment
-      guides(linetype = guide_legend(nrow = 2,reverse = TRUE)) + 
-      theme(legend.position = "top",
-            legend.margin = margin(0, 0, 0, 0, unit = "cm"),
-            legend.direction = "horizontal",
-            legend.text = element_text(size = 8))
-    }
-  })
+      
+    })
 })
