@@ -939,7 +939,7 @@ Interpret the results:
 |:------------------|----:|----:|----:|----:|----:|:--------:|
 | Constant | 1.44 | 0.52 | | 2.76 | .006 | [0.41, 2.47] |
 | Exposure to anti-smoking campaign| -0.54 |0.08 | -0.80 | -6.50 | < .001 | [-0.70, -0.37] |
-| Contact with smokers | 0.02 | 0.09 | 0.02 | 0.17 | .864 | [-0.16, .19] |
+| Contact with smokers | 0.02 | 0.09 | 0.02 | 0.17 | .864 | [-0.16, 0.19] |
 | Interaction exposure * contact | 0.04 | 0.02 | 0.34 | 2.80 | .005 | [0.01, 0.08] |
 | Smoking status | 0.26 | 0.20 | 0.06 | 1.28 | .201 | [-0.14, 0.66] |
 </div>
@@ -949,7 +949,7 @@ variable, *F* (4, 307) = 47.76, *p* < .001.
 * The effects of exposure and contact with smokers must be interpreted with care due to their interaction effect. These are conditional effects.
 * The estimated effect of exposure applies to adults who score zero on the variable contact with smokers. In this context, exposure to the campaign makes the predicted attitude towards smoking more negative (a 0.37 to 0.70 attitude decrease for an additional unit of exposure), *b* = -0.54, *t* = -6.50, *p* < .001, 95% CI [-0.70, -0.37].
 * Contact with smokers may make the attitude more positive but also more negative for adults who are not exposed to the anti-smoking campaign, *b* = 0.02, *t* = 0.17, *p* = .864, 95% CI [-0.16, 0.19].
-* The interaction effect is positive and statistically significantly different from zero, *b* = .04, *t* = 2.80, *p* = .005, 95% CI [0.13, 0.08]. For adults who have more contacts with smokers, the efect of exposure on attitude is less strongly negative. In other words, exposure seems to be less effective in making the attitude towards smoking more negative if adults have more contacts with smokers.
+* The interaction effect is positive and statistically significantly different from zero, *b* = .04, *t* = 2.80, *p* = .005, 95% CI [0.01, 0.08]. For adults who have more contacts with smokers, the efect of exposure on attitude is less strongly negative. In other words, exposure seems to be less effective in making the attitude towards smoking more negative if adults have more contacts with smokers.
 * The effect of smoking status is not statistically significantly different from zero, *b* = 0.26, *t* = 1.28, *p* = .201, 95% CI [-0.14, 0.66]. This variable is used as a covariate, so it does not have our interest. Therefore, effects of covariates are usually not interpreted. [<img src="icons/2question.png" width=161px align="right">](#question9.3.1)
 ```
 
@@ -1129,7 +1129,7 @@ FREQUENCIES VARIABLES=age supervision
   /STATISTICS=MEAN  
   /ORDER=ANALYSIS.  
 \* Subtract mean from variable.  
-COMPUTE age_c=age - 9.754.  
+COMPUTE age_c=age - 9.754.   
 VARIABLE LABELS age_c 'Age (mean-centered)'.  
 COMPUTE supervision_c=supervision - 5.992.  
 VARIABLE LABELS supervision_c 'Supervision (mean-centered)'.  
@@ -1180,7 +1180,7 @@ scores (linearity) but the variation in residuals seems to be a bit smaller at h
 Interpret the results:  
     
 * The regression model predicts 27 per cent of the differences in media literacy among children, *F* (4, 461) = 43.07, *p* < .001.
-* There is no remarkable difference between girls and boys, *t* = -0.13, *p* = .338, 95% CI [-0.40, 0.14]. Girls may be upto 0.14 more media literate on average than boys but they can also score on average 0.40 below the average score of boys on media literacy.
+* There is no remarkable difference between girls and boys, *t* = -0.96, *p* = .338, 95% CI [-0.40, 0.14]. Girls may be upto 0.14 more media literate on average than boys but they can also score on average 0.40 below the average score of boys on media literacy.
 * Age has a statistically significant positive effect on media literacy for children at average parental supervision, *t* = 7.80, *p* < .001, 95% CI [0.21, 0.36].
 * Parental supervision has a positive effect on media literacy for children at average age, *t* = 9.14, *p* < .001, 95% CI [0.32, 0.49].  
 * There is no statistically significant interaction effect between age and parental supervision on media literacy, *t* = -0.07, *p* =.943, 95% CI [-0.05, 0.05]. If there is an interaction effect in the population, it can be negative as well as positive.
@@ -1314,35 +1314,35 @@ Interpret the results:
 
 This is our starting point for calculating simple regression equations to be displayed in a scatterplot. We create regression lines for females (covariate value is 0) and we use the mean-centered variables:
 
-intention = constant + 0.165 * male + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo * brand_aw_c
+intention = constant + 0.165 * male + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo_c * brand_aw_c
 
 Enter the value of the constant and of females:
   
-intention = 5.896 + 0.165 * 0 + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo * brand_aw_c
+intention = 5.896 + 0.165 * 0 + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo_c * brand_aw_c
 
 This reduces to:
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo * brand_aw_c
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo_c * brand_aw_c
 
 * To add regression lines for different levels of brand awareness to a scatterplot of buying intention by ad exposure, plug in values for brand awareness.
 
 Effect of ad exposure at a low value of brand awareness (M - SD = 0 - 1.577 = -1.577, get the standard deviation from the regression descriptives):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * -1.577 + -0.092 * ad_expo * -1.577
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * -1.577 + -0.092 * ad_expo_c * -1.577
 
 Which simplifies to:
   
-intention = 5.896 + 0.122 * -1.577 + 0.279 * ad_expo_c + -0.092 * -1.577 * ad_expo
+intention = 5.896 + 0.122 * -1.577 + 0.279 * ad_expo_c + -0.092 * -1.577 * ad_expo_c
 
-intention = 5.896 + -0.192 + 0.279 * ad_expo_c + 0.145 * ad_expo
+intention = 5.896 + -0.192 + 0.279 * ad_expo_c + 0.145 * ad_expo_c
 
-intention = 5.704 + (0.279 + 0.145) * ad_expo
+intention = 5.704 + (0.279 + 0.145) * ad_expo_c
 
 intention = 5.704 + 0.424 * ad_expo_c
 
 Effect of ad exposure at a medium value of brand awareness (M = 0):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 0 + -0.092 * ad_expo * 0
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 0 + -0.092 * ad_expo_c * 0
 
 Which simplifies to:
   
@@ -1352,37 +1352,37 @@ intention = 5.896 + 0.279 * ad_expo_c
 
 Effect of ad exposure at a high value of brand awareness (M + SD = 0 + 1.577 = 1.577):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 1.577 + -0.092 * ad_expo * 1.577
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 1.577 + -0.092 * ad_expo_c * 1.577
 
 Which simplifies to:
   
-intention = 5.896 + 0.122 * 1.577 + 0.279 * ad_expo_c + -0.092 * 1.577 * ad_expo
+intention = 5.896 + 0.122 * 1.577 + 0.279 * ad_expo_c + -0.092 * 1.577 * ad_expo_c
 
-intention = 5.896 + 0.192 + 0.279 * ad_expo_c + -0.145 * ad_expo
+intention = 5.896 + 0.192 + 0.279 * ad_expo_c + -0.145 * ad_expo_c
 
-intention = 6.088 + (0.279 - 0.145) * ad_expo
+intention = 6.088 + (0.279 - 0.145) * ad_expo_c
 
-intention = 5.704 + 0.134 * ad_expo_c
+intention = 6.088 + 0.134 * ad_expo_c
 
 * To add regression lines for different levels of ad exposure to a scatterplot of buying intention by brand awareness, plug in values for ad exposure.
 
 Effect of brand awareness at a low value of ad exposure (M - SD = 0 - 1.636 = -1.636, get the standard deviation from the regression descriptives):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * -1.636 + -0.092 * ad_expo * -1.636
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * -1.636 + -0.092 * ad_expo_c * -1.636
 
 Which simplifies to:
   
-intention = 5.896 + 0.122 * -1.636 + 0.279 * ad_expo_c + -0.092 * -1.636 * ad_expo
+intention = 5.896 + 0.122 * -1.636 + 0.279 * ad_expo_c + -0.092 * -1.636 * ad_expo_c
 
-intention = 5.896 + -0.200 + 0.279 * ad_expo_c + 0.151 * ad_expo
+intention = 5.896 + -0.200 + 0.279 * ad_expo_c + 0.151 * ad_expo_c
 
-intention = 5.696 + (0.279 + 0.151) * ad_expo
+intention = 5.696 + (0.279 + 0.151) * ad_expo_c
 
-intention = 5.696 + 0.430 * ad_expo
+intention = 5.696 + 0.430 * ad_expo_c
 
 Effect of brand awareness at a medium value of ad exposure (M = 0):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 0 + -0.092 * ad_expo * 0
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 0 + -0.092 * ad_expo_c * 0
 
 Which simplifies to:
 
@@ -1392,17 +1392,17 @@ intention = 5.896 + 0.279 * ad_expo_c
 
 Effect of brand awareness at a high value of ad exposure (M + SD = 0 + 1.636 = 1.636):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 1.636 + -0.092 * ad_expo * 1.636
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 1.636 + -0.092 * ad_expo_c * 1.636
 
 Which simplifies to:
   
-intention = 5.896 + 0.122 * 1.636 + 0.279 * ad_expo_c + -0.092 * 1.636 * ad_expo
+intention = 5.896 + 0.122 * 1.636 + 0.279 * ad_expo_c + -0.092 * 1.636 * ad_expo_c
 
-intention = 5.896 + 0.200 + 0.279 * ad_expo_c + -0.151 * ad_expo
+intention = 5.896 + 0.200 + 0.279 * ad_expo_c + -0.151 * ad_expo_c
 
-intention = 6.096 + (0.279 + -0.151) * ad_expo
+intention = 6.096 + (0.279 + -0.151) * ad_expo_c
 
-intention = 6.096 + 0.128 * ad_expo [<img src="icons/2question.png" width=161px align="right">](#question9.3.6)
+intention = 6.096 + 0.128 * ad_expo_c [<img src="icons/2question.png" width=161px align="right">](#question9.3.6)
 ```
 
 ## Test Your Understanding
