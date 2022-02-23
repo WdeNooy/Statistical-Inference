@@ -8,8 +8,7 @@ shinyServer(function(input, output) {
   
   #Function for scaling and shifting the t-distribution
   dtshift <- function(x,mean,sd,df) dt(x = (x - mean)/sd, df = df)
-  under <- -.05 #margin below sampling distribution
-  
+
 output$mainplot <- renderPlot({
   
   # set limits of x axis
@@ -82,48 +81,41 @@ output$mainplot <- renderPlot({
     ) +
     #H0 distribution function
     stat_function(fun = dtshift,
-                  xlim = c(xmin, xmax),
                   args = list(mean = meanh0, sd = se, df = df),
                   n = 1000) +
-    #Hypothesized population (H0) mean line
-    geom_segment(aes(x = meanh0, xend = meanh0, 
-                     y = 0, yend = Inf)) +
     ##Sample
     #vertical line
     geom_vline(xintercept = meansample,
                colour = brewercolors["Red"]
     ) +
     geom_text(
-      aes(x = meansample, y = 0.5 * under,
-          label = paste0("Sample average: ", round(meansample, digits = 2)),
-          vjust = .5,
+      aes(x = meansample, y = Inf,
+          label = paste0("Sample mean:\n", round(meansample, digits = 2)),
+          vjust = 1.05,
           hjust = 1.05),
       colour = brewercolors["Red"]
     ) +
     theme_general() +
-    scale_x_continuous(name = "Average candy weight in a sample (grams)",
-                       limits = c(xmin, xmax),
-                       breaks = c(lefth0, righth0), 
-                       labels = c(round(lefth0, 2), round(righth0, 2)),
-    sec.axis = sec_axis(~ .,
-                       name = "Average candy weight in the population (grams)", 
+    scale_x_continuous(name = "Average candy weight in the population (grams)", 
+                       limits = c(xmin, xmax), 
                        breaks = if(input$steps == "step1") {
-                         c(meanh0)
+                         c(lefth0, meanh0, righth0)
                        } else {
-                         c(meanh0, meanha)
+                         c(lefth0, meanh0, righth0, meanha)
                        }, 
                        labels = if(input$steps == "step1") {
-                         c(paste0(round(meanh0, 1), "\nH0"))
+                         c(round(lefth0, 2), 
+                           paste0(round(meanh0, 1), "\nH0"), 
+                           round(righth0, 2))
                        } else {
-                         c(paste0(round(meanh0, 1), "\nH0"), 
+                         c(round(lefth0, 2), 
+                           paste0(round(meanh0, 1), "\nH0"), 
+                           round(righth0, 2),
                            paste0(round(meanha, 1), "\nH1"))
-                       })
+                       }
     ) +
-    scale_y_continuous(breaks = NULL, 
-                     limits = c(under, 0.45),
-                     name = "Probability density",
-                     expand = c(0, 0)) 
-    
+    scale_y_continuous(name = "Probability density", breaks = NULL)
+  
   #compose plot parts depending on step
   #only step 4 shows power
   if (input$steps == "step4") {
@@ -139,9 +131,9 @@ output$mainplot <- renderPlot({
                   n = 1000) +
     #power result
     geom_text(
-      aes(x = meanha + 0.01, y = 0.1, 
+      aes(x = meanha, y = 0.1, 
           label = paste0(round(power), "%"),
-          hjust = 0
+          hjust = 0.5
       ),
       colour = "black",
       size = 5
@@ -157,10 +149,7 @@ output$mainplot <- renderPlot({
                       fill = brewercolors["Yellow"],
                       alpha = 0.5,
                       args = list(mean = meanha, sd = se, df = df),
-                      n = 1000) +
-        #power boundary
-        geom_segment(aes(x = righth0, xend = righth0, 
-                         y = under, yend = dtshift(righth0, meanha, se, df)))
+                      n = 1000)
     }
   #Steps 2, 3 and 4 show the alternative sampling distribution
   if (input$steps != "step1") {
@@ -168,12 +157,9 @@ output$mainplot <- renderPlot({
       ##Ha
       #Ha distribution function
       stat_function(fun = dtshift,
-                    xlim = c(xmin, xmax),
                     args = list(mean = meanha, sd = se, df = df),
-                    n = 1000) +
-      #Hypothesized population (H1) mean line
-      geom_segment(aes(x = meanha, xend = meanha, 
-                       y = 0, yend = Inf))
+                    n = 1000)
+      
   }
   #All steps show the (non)rejection regions (on top)
   p +
@@ -192,13 +178,8 @@ output$mainplot <- renderPlot({
                    colour = brewercolors["Blue"], 
                    alpha = 0.5,
                    size = 1.5
-      ) +       
-      #Left rejection boundary
-      geom_segment(aes(x = lefth0, xend = lefth0, 
-                   y = under, yend = dtshift(lefth0, meanh0, se, df))) +       
-      #Right rejection boundary
-      geom_segment(aes(x = righth0, xend = righth0, 
-                     y = under, yend = dtshift(righth0, meanh0, se, df)))
+      ) 
+
   })
 
 })
