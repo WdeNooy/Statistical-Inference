@@ -1354,20 +1354,56 @@ knitr::kable(results, digits = 3, booktabs = TRUE,
              caption = "Predicting attitude towards smoking: regression analysis results.",
              col.names = c("B", "Std. Error", "Beta", "t", "Sig.", "Lower Bound", "Upper Bound")) %>%
   kable_styling(font_size = 12, full_width = F,
-                latex_options = c("scale_down", "HOLD_position"))
+                latex_options = c("scale_down", "HOLD_position")) %>%
+  column_spec(1, color = "white",
+              background = c("#FDAE61", "#2B83BA", "#ABDDA4", "#D7191C")) %>%
+  column_spec(2, color = c("#FDAE61", "#2B83BA", "#ABDDA4", "#D7191C"))
 # Helper function for displaying results within the text.
 source("report_n.R")
 #Cleanup (partial).
 rm(smokers, model_1, ci, results_2, model_2, z_attitude, z_status2, z_expostatus2, z_exposure)
 ```
 
-In Table \@ref(tab:dich-moderator-output), the effect of exposure on attitude depends on the value of smoking status because the model includes an interaction effect of exposure with smoking status. Non-smokers are the reference group on the smoking status dummy variable because they are coded 0. Therefore, the regression coefficient for exposure gives us the effect of exposure on smoking attitude **for non-smokers**. Its value is `r report_n(results[2, 1], digits = 2)`, so an additional unit of exposure predicts a smoking attitude among non-smokers that is `r report_n(abs(results[2, 1]), digits = 2)` points more negative. More exposure to the campaign goes together with a more negative attitude towards smoking for non-smokers. The *p* value for this effect tests the null hypothesis that the effect is zero in the population. If the exposure effect is statistically significant, we reject this null hypothesis.
+In Table \@ref(tab:dich-moderator-output), the effect of exposure on attitude depends on the value of smoking status because the model includes an interaction effect of exposure with smoking status (red). Non-smokers are the reference group on the smoking status dummy variable because they are coded 0. Therefore, the regression coefficient for exposure (blue) gives us the effect of exposure on smoking attitude **for non-smokers**. 
+If you want to check this, plug in 0 for the smoking status variable in the regression equation that we may construct from Table \@ref(tab:dich-moderator-output). 
 
-In a similar way, the effect of smoking status on attitude is conditional on exposure because smoking status and exposure are included in the interaction variable. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average `r report_n(results[3, 1], digits = 2)` more positive towards smoking than non-smokers. The *p* value tests the null hypothesis that the difference is zero for people without exposure (exposure = 0) to the anti-smoking campaign.
+```{=tex}
+\begin{equation}
+\small
+\begin{split}
+  attitude = &\ \color{#FDAE61}{constant} + \color{#2B83BA}{b_1*exposure} + \color{#ABDDA4}{b_2*status} + \color{#D7191C}{b_3*exposure*status}\\
+  attitude_{non-smoker} = &\ \color{#FDAE61}{0.900} + \color{#2B83BA}{-0.162*exposure} + \color{#ABDDA4}{1.980*0} + \color{#D7191C}{-0.327*exposure*0}\\
+  attitude_{non-smoker} = &\ \color{#FDAE61}{0.900} + \color{#2B83BA}{-0.162*exposure} + \color{#ABDDA4}{0} + \color{#D7191C}{0}\\
+  attitude_{non-smoker} = &\ \color{#FDAE61}{0.900} + \color{#2B83BA}{-0.162*exposure}
+\end{split}
+(\#eq:nonsmokers) 
+\normalsize
+\end{equation}
+```
+
+Multiplying by zero yields zero, so for non-smokers, the resulting effect of exposure on attitude is `r report_n(results[2, 1], digits = 2)`. An additional unit of exposure predicts a smoking attitude among non-smokers that is `r report_n(abs(results[2, 1]), digits = 2)` points more negative. More exposure to the campaign goes together with a more negative attitude towards smoking for non-smokers. The *p* value for this effect tests the null hypothesis that the effect is zero in the population. If the exposure effect is statistically significant, we reject this null hypothesis.
 
 Smokers are coded 1 on the (smoking) status variable and non-smokers are coded 0, so the regression coefficient for the interaction variable tells us that the slope of the exposure effect is `r report_n(abs(results[4, 1]), digits = 2)` lower for smokers than for non-smokers. The estimated slope of the exposure effect is `r report_n(results[2, 1], digits = 2)` for non-smokers. We can add the regression coefficient of the interaction variable to obtain the estimated slope for smokers, which is `r report_n(results[2, 1] + results[4, 1], digits = 2)`.
 
-Now we can compare the slopes (regression coefficients) for the two groups, which gives good insight into the nature of moderation in this example. The effect of exposure on attitude is more strongly negative for smokers than for non-smokers.
+If you want to check this, plug in 1 for the smoking status variable in the regression equation. Add the two effects of exposure in the equation to obtain the effect of exposure on attitude for smokers.
+
+```{=tex}
+\begin{equation}
+\small
+\begin{split}
+  attitude = &\ \color{#FDAE61}{constant} + \color{#2B83BA}{b_1*exposure} + \color{#ABDDA4}{b_2*status} + \color{#D7191C}{b_3*exposure*status}\\
+  attitude_{smoker} = &\ \color{#FDAE61}{0.900} + \color{#2B83BA}{-0.162*exposure} + \color{#ABDDA4}{1.980*1} + \color{#D7191C}{-0.327*exposure*1}\\
+  attitude_{smoker} = &\ \color{#FDAE61}{0.900} + \color{#2B83BA}{-0.162*exposure} + \color{#ABDDA4}{1.980} + \color{#D7191C}{-0.327*exposure}\\
+  attitude_{smoker} = &\ \color{#FDAE61}{0.900} + \color{#2B83BA}{-0.162*exposure} + \color{#D7191C}{-0.327*exposure} + \color{#ABDDA4}{1.980}\\
+  attitude_{smoker} = &\ \color{#FDAE61}{0.900} + (\color{#2B83BA}{-0.162} + \color{#D7191C}{-0.327})*exposure + \color{#ABDDA4}{1.980}\\
+  attitude_{smoker} = &\ \color{#FDAE61}{0.900} + -0.489*exposure + \color{#ABDDA4}{1.980}
+\end{split}
+(\#eq:smokers) 
+\normalsize
+\end{equation}
+```
+
+Now we can compare the slopes (regression coefficients) for the two groups, which gives good insight into the nature of moderation in this example. The effect of exposure on attitude is more strongly negative for smokers (`r report_n(results[2, 1] + results[4, 1], digits = 2)`) than for non-smokers (`r report_n(results[2, 1], digits = 2)`).
 
 The interaction variable is treated as an ordinary predictor in the estimation process, so it receives a confidence interval and a *p* value. The null hypothesis for the *p* value is that the interaction effect is zero in the population. In other words, the effect of exposure on attitude is hypothesized to be the same for smokers and non-smokers in the population; no moderation is expected in the population.
 
@@ -1376,6 +1412,8 @@ We know the confidence intervals and *p* values of the exposure effect for non-s
 If you want to know the confidence interval or *p* value of the exposure effect for smokers, you have to rerun the regression analysis using a different dummy variable for the moderator. You should create a dichotomous variable that assigns 0 to smokers and 1 to non-smokers, and an interaction variable created with this dichotomy. The regression coefficient of the exposure effect now expresses the effect for smokers because smokers are the reference group on the new dummy variable. The associated *p* value and confidence interval apply to the exposure effect for smokers.
 
 Interaction variables are used just like ordinary predictors, so the general assumptions of regression analysis apply. See Section \@ref(regr-inference) for a description of the assumptions and checks.
+
+In a similar way, the effect of smoking status on attitude is conditional on exposure because smoking status and exposure are included in the interaction variable. The regression coefficient for status tells us the difference between smokers and non-smokers who have 0 exposure. So, without exposure to the campaign, smokers are on average `r report_n(results[3, 1], digits = 2)` more positive towards smoking than non-smokers. The *p* value tests the null hypothesis that the difference is zero for people without exposure (exposure = 0) to the anti-smoking campaign.
 
 Let us conclude the interpretation with a warning. The standardized regression coefficients that SPSS reports for interaction effects or effects of predictors that are involved in interaction effects **must not be used**. They are calculated in the wrong way if the regression model includes an interaction variable. As a result, they are misleading.
 
@@ -1584,8 +1622,8 @@ results <- rbind(results[1:3,], results[5,], results[4,])
 # Adjust parameter names
 attributes(results)$dimnames[[1]][1] <- "(Constant)"
 attributes(results)$dimnames[[1]][2] <- "Exposure"
-attributes(results)$dimnames[[1]][3] <- "Status (smoker)"
-attributes(results)$dimnames[[1]][4] <- "Exposure*Status (smoker)"
+attributes(results)$dimnames[[1]][3] <- "Smoker (0 = no, 1 = yes))"
+attributes(results)$dimnames[[1]][4] <- "Exposure*Smoker"
 attributes(results)$dimnames[[1]][5] <- "Contact"
 # Table.
 options(knitr.kable.NA = '')
@@ -1593,7 +1631,10 @@ knitr::kable(results, digits = 3, booktabs = TRUE,
              caption = "Predicting attitude towards smoking: regression analysis results with contact as covariate.",
              col.names = c("B", "Std. Error", "Beta", "t", "Sig.", "Lower Bound", "Upper Bound")) %>%
   kable_styling(font_size = 12, full_width = F,
-                latex_options = c("scale_down", "HOLD_position"))
+                latex_options = c("scale_down", "HOLD_position")) %>%
+  column_spec(1, color = "white",
+              background = c("#FDAE61", "#2B83BA", "#ABDDA4", "#D7191C", "brown")) %>%
+  column_spec(2, color = c("#FDAE61", "#2B83BA", "#ABDDA4", "#D7191C", "brown"))
 # Helper function for displaying results within the text.
 source("report_n.R")
 # Store average covariate value for a later plot.
@@ -1608,33 +1649,35 @@ As a first step, use the estimated values of the regression coefficients in the 
 \begin{equation}
 \small
 \begin{split}
-  attitude = &\ `r report_n(results[1,1], 3)` + `r report_n(results[2,1], 3)`*exposure + `r report_n(results[3,1], 3)`*smoker + `r report_n(results[4,1], 3)`*exposure*smoker\\
-  &+ `r report_n(results[5,1], 3)`*contact 
+  attitude = &\ \color{#FDAE61}{`r report_n(results[1,1], 3)`} + \color{#2B83BA}{`r report_n(results[2,1], 3)`*exposure} + \color{#ABDDA4}{`r report_n(results[3,1], 3)`*smoker} + \color{#D7191C}{`r report_n(results[4,1], 3)`*exposure*smoker}\\
+  &+ \color{brown}{`r report_n(results[5,1], 3)`*contact}
 \end{split}
 (\#eq:intvarcov1) 
 \normalsize
 \end{equation}
 ```
-As a second step, choose an interesting value for every independent variable in the equation except the predictor. If we want to have the regression line for non-smokers, choose 0 for the *smoker* variable. For a numerical covariate such as *contact*, it is recommended to choose the mean. Average contact with smokers happens to be `r report_n(mean(smokers$contact),3)` in our example. Now replace the independent variables in the equation by the selected values and simplify the equation [Eq. \@ref(eq:intvarcov2)].
+
+As a second step, choose an interesting value for every independent variable in the equation except the predictor. If we want to have the regression line for smokers, choose 1 for the *smoker* variable. For a numerical covariate such as *contact*, it is recommended to choose the mean. Average contact with smokers happens to be <span style="color:Brown;">`r report_n(mean(smokers$contact),3)`</span> in our example. Now replace the independent variables in the equation by the selected values and simplify the equation [Eq. \@ref(eq:intvarcov2)].
 
 ```{=tex}
 \begin{equation}
 \small
 \begin{split}
-  attitude = &\ `r report_n(results[1,1], 3)` + `r report_n(results[2,1], 3)`*exposure + `r report_n(results[3,1], 3)`*smoker + `r report_n(results[4,1], 3)`*exposure*smoker\\
-  &+ `r report_n(results[5,1], 3)`*contact \\
-  attitude = &\ `r report_n(results[1,1], 3)` + `r report_n(results[2,1], 3)`*exposure + `r report_n(results[3,1], 3)`*0 + `r report_n(results[4,1], 3)`*exposure*0\\
-  &+ `r report_n(results[5,1], 3)`*`r report_n(mean(smokers$contact),3)` \\
-    attitude = &\ `r report_n(results[1,1], 3)` + `r report_n(results[2,1], 3)`*exposure + `r report_n(round(results[5,1], 3) * round(mean(smokers$contact), 3),3)` \\
-    attitude = &\ `r report_n(round(results[1,1], 3) + round(results[5,1],3) * round(mean(smokers$contact), 3), 3)` + `r report_n(results[2,1], 3)`*exposure
+  attitude = &\ \color{#FDAE61}{`r report_n(results[1,1], 3)`} + \color{#2B83BA}{`r report_n(results[2,1], 3)`*exposure} + \color{#ABDDA4}{`r report_n(results[3,1], 3)`*smoker} + \color{#D7191C}{`r report_n(results[4,1], 3)`*exposure*smoker}\\
+  &+ \color{brown}{`r report_n(results[5,1], 3)`*contact}\\
+  attitude = &\ \color{#FDAE61}{`r report_n(results[1,1], 3)`} + \color{#2B83BA}{`r report_n(results[2,1], 3)`*exposure} + \color{#ABDDA4}{`r report_n(results[3,1], 3)`*1} + \color{#D7191C}{`r report_n(results[4,1], 3)`*exposure*1} + \color{brown}{`r report_n(results[5,1], 3)`*`r report_n(round(mean(smokers$contact),3),3)`}\\
+  attitude = &\ \color{#FDAE61}{`r report_n(results[1,1], 3)`} + \color{#2B83BA}{`r report_n(results[2,1], 3)`*exposure} + \color{#ABDDA4}{`r report_n(results[3,1], 3)`} + \color{#D7191C}{`r report_n(results[4,1], 3)`*exposure} + \color{brown}{`r report_n(results[5,1] * round(mean(smokers$contact),3),3)`}\\
+  attitude = &\ (\color{#FDAE61}{`r report_n(results[1,1], 3)`} + \color{#ABDDA4}{`r report_n(results[3,1], 3)`}+ \color{brown}{`r report_n(results[5,1] * round(mean(smokers$contact),3),3)`}) + (\color{#2B83BA}{`r report_n(results[2,1], 3)`*exposure} + \color{#D7191C}{`r report_n(results[4,1], 3)`*exposure})\\
+  attitude = &\ `r report_n(round(results[1,1],3) + round(results[3,1],3) + (round(results[5,1],3) * round(mean(smokers$contact),3)),3)` + `r report_n(round(results[2,1],3) + round(results[4,1],3), 3)`*exposure
 \end{split}
 (\#eq:intvarcov2) 
 \normalsize
 \end{equation}
 ```
-The terms with *smoker* and *contact* drop from the equation, so *exposure* is the only independent variable that remains in the equation. Now, we can draw the simple regression line predicting attitude from exposure for non-smokers using this equation. Note that this is the regression line for people with average contact with smokers.
 
-Repeat these steps but plug in the score 1 for the *smoker* predictor to obtain the simple regression line for smokers. Figure \@ref(fig:dich-moderator-cov-plot) shows the two regression lines and their equations. The effect of exposure on attitude is more strongly negative for smokers than for non-smokers.
+The terms with *smoker* and *contact* disappear from the equation, so *exposure* is the only independent variable that remains in the equation. Now, we can draw the simple regression line predicting attitude from exposure for smokers using this equation. Note that this is the regression line for people with average contact with smokers.
+
+Repeat these steps but plug in the score 0 for the *smoker* predictor to obtain the simple regression line for non-smokers. Figure \@ref(fig:dich-moderator-cov-plot) shows the two regression lines and their equations. The effect of exposure on attitude is more strongly negative for smokers than for non-smokers.
 
 ```{r dich-moderator-cov-plot, echo=FALSE, out.width="600px", fig.pos='H', fig.align='center', fig.cap="The effects of exposure on attitude for non-smokers and smokers. Both smokers and non-smokers are assumed to have average contact with smokers."}
 #Create and show the plot.
@@ -1644,7 +1687,7 @@ ggplot(smokers, aes(x = exposure, y = attitude,
   geom_point() +
   geom_vline(xintercept = 0) +
   geom_abline(aes(
-      intercept = results[1,1] + results[5,1]*mean(smokers$contact), 
+      intercept = results[1,1] + results[5,1]*mean(contact), 
       slope = results[2,1],
                 colour = "Non-smoker"
       ),
@@ -1653,7 +1696,7 @@ ggplot(smokers, aes(x = exposure, y = attitude,
   geom_text(aes(x = 0.1, y = -4.9,
                 label = paste0(
                   "Non-smokers: attitude = ",
-                  report_n(round(results[1,1], 3) + round(results[5,1], 3)*round(mean(smokers$contact), 3),3),
+                  report_n(round(results[1,1], 3) + round(results[5,1], 3)*round(mean(contact), 3),3),
                   " + ",
                   report_n(results[2,1],3),
                   " * exposure"
@@ -1665,7 +1708,7 @@ ggplot(smokers, aes(x = exposure, y = attitude,
       show.legend = F
             ) +
   geom_abline(aes(
-      intercept = results[1,1] + results[3,1] + results[5,1]*mean(smokers$contact), 
+      intercept = results[1,1] + results[3,1] + results[5,1]*mean(contact), 
       slope = results[2,1] + results[4,1],
       colour = "Smoker"),
     show.legend = F
@@ -1673,7 +1716,7 @@ ggplot(smokers, aes(x = exposure, y = attitude,
   geom_text(aes(x = 9.9, y = 4.9,
                 label = paste0(
                   "Smokers: attitude = ",
-                  report_n(round(results[1,1], 3) + round(results[3,1], 3) + round(results[5,1], 3)*round(mean(smokers$contact), 3),3),
+                  report_n(round(results[1,1], 3) + round(results[3,1], 3) + round(results[5,1], 3)*round(mean(contact), 3),3),
                   " + ",
                   report_n(round(results[2,1], 3) + round(results[4,1], 3),3),
                   " * exposure"
