@@ -472,7 +472,7 @@ rm(model_1, ci, results_2, model_2)
 
 The regression model yields a *p* value and confidence interval for the predictor at the reference value of the moderator. In the model estimated in Table \@ref(tab:cont-moderator-output), for instance, we obtain a *p* value of `r report_n(results[2,5], 3)` and a 95% confidence interval of [`r report_n(results[2,6],2)`, `r report_n(results[2,7],2)`] for the effect of exposure on attitude. This is the conditional effect of exposure on attitude for cases that score zero on the moderator variable (contact with smokers).
 
-If the moderator variable *contact* is mean-centered, the *p* value tests the null hypothesis that the effect of exposure is zero for people who have average contact with smokers. The confidence interval tells us that the effect of exposure on attitude for people with average contacts with smokers ranges between `r report_n(results[2,6],2)` and `r report_n(results[2,7],2)` with 95% confidence. If the moderator is not mean-centered, the results apply to people who have no contact with smokers.
+If the moderator variable *contact* is mean-centered, the *p* value tests the null hypothesis that the effect of exposure is zero for people who have average contact with smokers. The confidence interval tells us that the effect of exposure on attitude for people with average contacts with smokers in the population ranges between `r report_n(results[2,6],2)` and `r report_n(results[2,7],2)` with 95% confidence. If the moderator is not mean-centered, the results apply to people who have no contact with smokers.
 
 Note that mean-centering of the moderator changes, so to speak, the regression line that we test. Instead of testing the effect of exposure for people with no smoker contact, we test the effect for people with average contact with smokers if the moderator is mean-centered. If we would like to get the *p* value or confidence interval for the regression line at one standard deviation above (or below) the mean, we have to center the moderator at that value before we estimate the regression model. In this course, however, we will not do so.
 
@@ -748,7 +748,7 @@ knitr::kable(table, booktabs = TRUE, align = c("l", "c"),
                 latex_options = c("HOLD_position"))
 ```
 
-As a next step, we discuss the size, statistical significance, and confidence intervals of the regression coefficients. If a predictor is involved in one or more interaction effects, we must be very clear about the reference value or reference group to which the effect applies. In the example below, non-smokers are the reference group on the smoking status variable because they have code zero. Average number of contacts with smokers is the reference value on the contact variable because this variable is mean-centered.
+As a next step, we discuss the size, statistical significance, and confidence intervals of the regression coefficients. If a predictor is involved in one or more interaction effects, we must be very clear about the reference value or reference group to which the effect applies. In the example below, non-smokers are the reference group on the smoking status variable because they are not represented by a dummy variable. Average number of contacts with smokers is the reference value on the contact variable because this variable is mean-centered.
 
 Exposure, in our example, has a negative predictive effect on attitude towards smoking (*b* = `r report_n(results[2,1])`) for non-smokers with average contacts with smokers, *t* = `r report_n(results[2,3])`, `r ifelse(results[2,4] < .0005, "p < .001", paste0("p = ", report_n(results[2,4], digits=3)))`, 95% CI [`r report_n(ci[2,1])`, `r report_n(ci[2,2])`]. Note that SPSS does not report the degrees of freedom for the *t* test on a regression coefficient, so we cannot report them.
 
@@ -1418,43 +1418,41 @@ intention = 6.088 + 0.134 * ad_expo_c
 
 * To add regression lines for different levels of ad exposure to a scatterplot of buying intention by brand awareness, plug in values for ad exposure.
 
+intention = 5.896 + 0.279 * ad_expo_c + 0.122 * brand_aw_c + -0.092 * ad_expo_c * brand_aw_c
+
 Effect of brand awareness at a low value of ad exposure (M - SD = 0 - 1.636 = -1.636, get the standard deviation from the regression descriptives):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * -1.636 + -0.092 * ad_expo_c * -1.636
+intention = 5.896 + 0.279 * -1.636 + 0.122 * brand_aw_c + -0.092 * -1.636 * brand_aw_c
 
 Which simplifies to:
   
-intention = 5.896 + 0.122 * -1.636 + 0.279 * ad_expo_c + -0.092 * -1.636 * ad_expo_c
+intention = 5.896 + -0.456 + 0.122 * brand_aw_c + 0.151 * brand_aw_c
 
-intention = 5.896 + -0.200 + 0.279 * ad_expo_c + 0.151 * ad_expo_c
+intention = (5.896 + -0.456) + (0.122 + 0.151) * brand_aw_c
 
-intention = 5.696 + (0.279 + 0.151) * ad_expo_c
-
-intention = 5.696 + 0.430 * ad_expo_c
+intention = 5.440 + 0.273 * brand_aw_c
 
 Effect of brand awareness at a medium value of ad exposure (M = 0):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 0 + -0.092 * ad_expo_c * 0
+intention = 5.896 + 0.279 * 0 + 0.122 * brand_aw_c + -0.092 * 0 * brand_aw_c
 
 Which simplifies to:
 
-intention = 5.896 + 0.279 * ad_expo_c + 0 + 0
+intention = 5.896 + 0 + 0.122 * brand_aw_c + 0
 
-intention = 5.896 + 0.279 * ad_expo_c
+intention = 5.896 + 0.122 * brand_aw_c
 
 Effect of brand awareness at a high value of ad exposure (M + SD = 0 + 1.636 = 1.636):
   
-intention = 5.896 + 0.279 * ad_expo_c + 0.122 * 1.636 + -0.092 * ad_expo_c * 1.636
+intention = 5.896 + 0.279 * 1.636 + 0.122 * brand_aw_c + -0.092 * 1.636 * brand_aw_c
 
 Which simplifies to:
   
-intention = 5.896 + 0.122 * 1.636 + 0.279 * ad_expo_c + -0.092 * 1.636 * ad_expo_c
+intention = 5.896 + 0.456 + 0.122 * brand_aw_c + -0.151 * brand_aw_c
 
-intention = 5.896 + 0.200 + 0.279 * ad_expo_c + -0.151 * ad_expo_c
+intention = (5.896 + 0.456) + (0.122 + -0.151) * brand_aw_c
 
-intention = 6.096 + (0.279 + -0.151) * ad_expo_c
-
-intention = 6.096 + 0.128 * ad_expo_c [<img src="icons/2question.png" width=161px align="right">](#question9.3.6)
+intention = 6.352 + -0.029 * brand_aw_c [<img src="icons/2question.png" width=161px align="right">](#question9.3.6)
 ```
 
 ## Test Your Understanding

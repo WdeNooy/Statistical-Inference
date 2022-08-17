@@ -480,7 +480,7 @@ This sounds like a paradox but it should not upset you. The unstandardized indir
 Answer to Question 1. 
 
 * There are four variables with incoming arrows in this model. Each of them can be a dependent variable in a regression model, so we can estimate four regression models.
-* The unstandardized and standardized regression coefficients tell us the (unstandardized or standardized) sizes of the direct effects in the path model.
+* The unstandardized regression coefficients tell us the (unstandardized) sizes of the direct effects in the path model.
 * For example, news site use has an unstandardized effect of -1.55 on newspaper reading time in the diagram. A difference of one unit of news site use predicts a decrease in newspaper reading time of 1.55 units. We are 95 per cent confident that this decrease is in between 0.6 and 2.5 units in the population. [<img src="icons/2question.png" width=161px align="right">](#question9.6.1)
 ```
   
@@ -570,7 +570,7 @@ results <- rbind(
   c("Age > News Site Use > Reading Time", "1.44", "", "[0.61; 2.17]")
 )
 knitr::kable(results, booktabs = TRUE,
-             caption = "Unstandardized effects in a model regressing newspaper reading time on age with one mediator (News Site Use) and two covariates (Education, Political Interest). OLS estimates for direct effects, bootstrap results for indirect effects, using 5,000 bootstraps and a bias-corrected method.", col.names = c("", "B", "", "95% CI"), align = c("l", "r", "l", "c")) %>%
+             caption = "Unstandardized effects in a model regressing newspaper reading time on age with one mediator (News Site Use) and two covariates (Education, Political Interest). Theoretical approximation for direct effects, bootstrap results for indirect effects, using 5,000 bootstraps.", col.names = c("", "B", "", "95% CI"), align = c("l", "r", "l", "c")) %>%
   footnote(general = "\\* _p_ < .05. \\*\\* _p_ < .01. \\*** _p_ < .001.",
            general_title = "Note.", title_format = c("italic"),
            footnote_as_chunk = T) %>%
@@ -862,10 +862,18 @@ Note that these are bootstrap results, so they may change from
 one analysis to the next. Your results are most likely to be
 not exactly the same as the ones reported here.
   
-* An age difference of ten years (remember that age was measured in decades)
-increases the predicted average newspaper reading time through news site use
-with slightly more than one minute. With 95% confidence, the increase is between 0.3 and 1.9 additional minutes.
-* The indirect effect is weak to moderate, *b\** = 0.16, 95% CI [0.05; 0.28] (bootstrapped). [<img src="icons/2question.png" width=161px align="right">](#question9.9.2)
+* An age difference of ten years (remember that age was measured in decades) increases the predicted average newspaper reading time through news site use with slightly more than one minute. With 95% confidence, the increase is between 0.3 and 1.9 additional minutes.
+* The indirect effect is weak to moderate, *b\** = 0.16, 95% CI [0.05; 0.28] (bootstrapped). 
+
+Direct effect of X on Y 
+
+<div style="font-size: 0.8em">
+| | Effect | se | t | p | LLCI | ULCI | c\'_cs
+|:----|----:|----:|----:|----:|----:|----:|----:|
+|  | 4.5450 | .4701 | 9.6672 | .0000 | 3.6199 | 5.4701 | .6670
+</div>
+
+If we compare the indirect effect to the direct effect (above table), the indirect (mediated) unstandardized effect (*b* = 1.12) is clearly smaller than the direct effect (*b* = 4.55); about 20 per cent (1.21) of the total effect (1.12 + 4.55) is mediated. [<img src="icons/2question.png" width=161px align="right">](#question9.9.2)
 ```
 
 <A name="answer9.9.3"></A>

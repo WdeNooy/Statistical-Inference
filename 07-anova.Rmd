@@ -1186,7 +1186,7 @@ donors$sex <- factor(donors$sex, labels = names(attributes(donors$sex)$labels))
 donors$endorser <- factor(donors$endorser, labels = names(attributes(donors$endorser)$labels))
 library(dplyr)
 d <- donors %>% group_by(sex, endorser) %>%
-  summarise(mean_willing = mean(willing_post))
+  summarise(mean_willing = mean(willing_post), .groups = "drop_last")
 library(ggplot2)
 ggplot(d, aes(x = endorser, y = mean_willing, group = sex, color = sex)) + 
   geom_path(size = 1) + 
