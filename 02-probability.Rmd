@@ -43,7 +43,7 @@ In Figure \@ref(fig:bootstrapping), an initial sample (left panel) has been draw
 
 <A name="question2.1.3"></A>
 ```{block2, type='rmdquestion'}
-3. Does the bootstrap sampling distribution resemble the true sampling distribution? Use the "Bootstrap 1000 samples" button and justify your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer2.1.3)
+3. Does the bootstrap sampling distribution resemble the true sampling distribution? Use the "Bootstrap 5,000 samples" button and justify your answer. [<img src="icons/2answer.png" width=115px align="right">](#answer2.1.3)
 ```
 
 <A name="question2.1.4"></A>
@@ -83,23 +83,7 @@ By the way, we often use the type of sampling described above, which is called _
 
 If we do allow the same person to be chosen more than once, we sample _with replacement_. The same person can occur more than once in a sample. Bootstrap samples are sampled with replacement from the original sample, so one bootstrap sample may differ from another. Some cases in the original sample may not be sampled for a bootstrap sample while other cases are sampled several times. You probably have noticed this in Figure \@ref(fig:replacement). Sampling with replacement allows us to obtain different bootstrap samples from the original sample, and still have bootstrap samples of the same size as the original sample.  
 
-### Calculating probabilities with replacement
-
-You may wonder whether it is OK to sample with replacement when we are bootstrapping. The short answer is: Yes it is. We usually calculate probabilities as if we sampled with replacement. Suppose we want to calculate the probability of picking two yellow candies from a population in which 20% of the candies are yellow. The probability of picking two yellow candies is then calculated as .200 times .200, that is, .040, using the probability of drawing a yellow candy twice.  
-
-In this calculation, we assume that the probability of drawing a yellow candy remains the same while we are sampling. This assumption is very convenient because it simplifies the calculation of probabilities. The probability of sampling the first yellow candy is assumed to be .200 and for the second yellow candy as well. We act as if the proportion of yellow candies in the population remains the same, namely 20 per cent, after we have sampled the first yellow candy. This can only be true if the yellow candy that we have sampled is immediately replaced by a new yellow candy from the population. Otherwise, the proportion of yellow candies in the population would decrease when we sample the first yellow candy. The probability of sampling a second yellow candy would be slightly lower than .200.
-
-### Calculating probabilities without replacement
-
-In practice, however, we never want the same respondent to participate twice in our research because this would not yield new information. In actual research, then, we sample _without_ replacement. A respondent does not risk being sampled more than once.
-
-How about calculating probabilities if we sample without replacement? If we do not put the sampled yellow candy back in the population, the number of yellow candies in the population is reduced by one after we have drawn the first yellow candy. The probability of drawing a second yellow candy should then be less than 20%. 
-
-If the population is large, the decrease in the probability is too small to be in any way relevant. For instance, if we have a population of one million candies and 20% is yellow, the probability of drawing the first yellow candy is 200,000 / 1,000,000 = .200. The probability of drawing the second yellow candy would be 199,999 / 999,999 = 0.1999992. The difference between the two probabilities (0,0000008) is negligible. 
-
-As you can see, calculating probabilities becomes complicated if we sample without replacement because each new draw has a new probability for drawing a yellow candy. But we can ignore the complications if the population is much larger than the sample because the probabilities hardly differ from the simple probabilities that we have if we sample with replacement. 
-
-In an empirical research project, then, we always sample respondents (and so on) _without_ replacement but our statistical software calculates probabilities as if we sampled _with_ replacement. This is perfectly fine as long as the population is much larger than the sample. If the sample contains a large share of the population, however, we should not trust the probabilities that our software reports because they can be wrong.
+In conclusion, we sample bootstrap samples in a different way (with replacement) than participants for our research (without replacement).
 
 ### Limitations to bootstrapping  
 

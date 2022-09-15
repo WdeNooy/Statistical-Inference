@@ -24,7 +24,7 @@ shinyUI(
                actionButton("bootstrapsmallaction", 
                             label = "Bootstrap one sample"),
                actionButton("bootstraplargeaction", 
-                            label = "Bootstrap 1000 samples"),
+                            label = "Bootstrap 5,000 samples"),
                actionButton("firstsampleaction",
                             label = "Draw new initial sample")
                )

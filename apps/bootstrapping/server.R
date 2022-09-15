@@ -38,6 +38,7 @@ shinyServer(function(input, output) {
 
   N = 25 # size of a single sample
   reps = 1000 # number of of repetitions for large bootstrap
+  # intentionally lower than reported 5,000 to save time
 
  # Reactive container for changing values
   samples = reactiveValues(

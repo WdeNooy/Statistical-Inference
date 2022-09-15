@@ -138,7 +138,7 @@ shinyServer(function(input, output) {
   })
   
   output$samplingdistplot <- renderPlot({
-    # replication of bootstrap samples
+    # replication of bootstrap samples - set below 5,000 for speed
     reps = 1000
     validate(
       need(samples$lastsample != "", "Can not sample from empty data set")
@@ -172,7 +172,7 @@ shinyServer(function(input, output) {
                      alpha = .6,
                      bins = 30,
                      aes(y = ..count../sum(..count..))) + 
-      ggtitle("1000 bootstrap samples from the initial sample") +
+      ggtitle("5,000 bootstrap samples from the initial sample") +
       scale_x_continuous(name = "Proportion of yellow candies",
                          limits = c(-0.2,1))+
       scale_y_continuous(name = "Probability",

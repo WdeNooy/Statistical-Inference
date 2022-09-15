@@ -21,5 +21,5 @@ shinyUI(
         actionButton("bootstrapsmallaction", label = "Bootstrap 1 Sample")), 
       verticalLayout(
         plotOutput("sampdistplot"),
-        actionButton("bootstraplargeaction", label = "Bootstrap 1000 Samples"))
+        actionButton("bootstraplargeaction", label = "Bootstrap 5,000 Samples"))
   )))
