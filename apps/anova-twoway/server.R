@@ -92,7 +92,7 @@ shinyServer(function(input, output) {
       ggplot(df, aes(x = x, y = y)) +
       
       geom_line(y = mean(df$y),
-                aes(linetype = "Grand Mean", colour = "black"),
+                aes(linetype = "Grand Mean"), colour = "black",
                 size = 1.3) +
       geom_point(size = 5, aes(fill = cat1, shape = cat2)) +
       scale_colour_manual(values = 
@@ -104,6 +104,7 @@ shinyServer(function(input, output) {
                             "Jolie" = unname(brewercolors["Blue"]),
                             "No Endorser" = unname(brewercolors["Green"]))) +
       scale_shape_manual(values = c("Men" = 21, "Women" = 22)) +
+      scale_linetype_manual(values = c("Grand Mean" = "solid")) +
       guides(colour = "none", # guide_legend(title = "Means:"),
              linetype = guide_legend(title = "Means:"),
              fill = "none",
@@ -163,11 +164,11 @@ shinyServer(function(input, output) {
         guides(colour = guide_legend(title = ""),
                linetype = guide_legend(title = "Means:"),
                fill = "none",
-               shape = "none") + # guide_legend(title = "Sex:")) # +
+               shape = "none") + 
         scale_linetype_manual( values = c("Grand Mean"  = "solid")) #,
-                                          # "Clooney"     = "solid",
-                                          # "Jolie"       = "solid",
-                                          # "No Endorser" = "solid")) 
+        #                                   # "Clooney"     = "solid",
+        #                                   # "Jolie"       = "solid",
+        #                                   # "No Endorser" = "solid")) 
     }
     
     #Plot With Only Sex Selected ----
