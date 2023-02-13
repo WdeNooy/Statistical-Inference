@@ -117,7 +117,8 @@ shinyServer(function(input, output) {
       #definition of cartesian coordinate
       coord_cartesian(xlim = c(0,6), ylim = NULL, expand = TRUE) + 
       #definition of break points on x axis
-      scale_x_continuous(breaks = 0:6) + 
+      scale_x_continuous(name = "Average candy weight per sample", breaks = 0:6) + 
+      scale_y_continuous(name = "count") +
       #definition of linetypes for legend
       scale_linetype_manual("Legend:",values=c("dashed", "solid", "dashed"))+
       #definition for coloring of the bars
